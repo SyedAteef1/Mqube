@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.2.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Barcode Label Designer & Printer Modernization (Industrial Logic)
@@ -22,7 +21,7 @@
 ---
 
 ## 1. Purpose
-To modernize and refactor the SMRITI 9 Tag & Barcode Label Printing and Designer subsystem according to the Stitch **Industrial Logic** design specifications and manual selection business rules.
+To modernize and refactor the TILEFLOW 9 Tag & Barcode Label Printing and Designer subsystem according to the Stitch **Industrial Logic** design specifications and manual selection business rules.
 
 ---
 
@@ -86,7 +85,7 @@ npm run build
 ---
 
 ## 10. Known Limitations
-- Direct hardware raw socket dispatch for Network TCP/IP requires local network access or SMRITI Agent bridge in production.
+- Direct hardware raw socket dispatch for Network TCP/IP requires local network access or TILEFLOW Agent bridge in production.
 
 ---
 

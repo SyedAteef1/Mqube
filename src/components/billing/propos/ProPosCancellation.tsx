@@ -1,22 +1,8 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from "react";
 import { CancelledBillRecord, ProPosCartItem } from "./types.ts";
 import { X, AlertTriangle, Search, ShieldAlert, CheckCircle } from "lucide-react";
 
-interface SmritiProPosCancelDlgProps {
+interface TileFlowProPosCancelDlgProps {
   onCancelBill: (record: CancelledBillRecord) => void;
   onClose: () => void;
 }
@@ -32,7 +18,7 @@ const CANCELLATION_REASONS = [
   "Other Operational Reason"
 ];
 
-export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
+export const TileFlowProPosCancelDlg: React.FC<TileFlowProPosCancelDlgProps> = ({
   onCancelBill,
   onClose
 }) => {
@@ -66,7 +52,7 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
           name: "Classic Leather Shoe",
           size: "8",
           color: "Black",
-          brand: "SMRITI",
+          brand: "MQube",
           salesStaff: "SM1",
           qty: 1,
           mrp: 2999,
@@ -100,10 +86,10 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#ba1a1a]/40 max-h-[88vh]">
+      <div className="bg-white dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#ba1a1a]/40 max-h-[88vh]">
         
         {/* Header Bar */}
-        <div className="px-6 py-4 border-b border-[#c4c5d5] dark:border-[#444653] bg-[#ffdad6] dark:bg-[#93000a]/30 flex justify-between items-center shrink-0">
+        <div className="px-6 py-4 border-b border-[#c6c6c6] dark:border-[#474747] bg-[#ffdad6] dark:bg-[#93000a]/30 flex justify-between items-center shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-[#ba1a1a] text-white rounded-xl shadow-xs">
               <ShieldAlert size={20} />
@@ -115,7 +101,7 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
                   Audit Logged
                 </span>
               </div>
-              <p className="text-xs text-[#565e74] dark:text-[#bec6e0]">
+              <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Cancelling an invoice reverses inventory movements and creates a void audit record.
               </p>
             </div>
@@ -123,7 +109,7 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
           <button 
             type="button"
             onClick={onClose}
-            className="text-[#565e74] hover:bg-white/40 p-1.5 rounded-lg transition"
+            className="text-[#5e5e5e] hover:bg-white/40 p-1.5 rounded-lg transition"
           >
             <X size={18} />
           </button>
@@ -133,22 +119,22 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
         <div className="p-6 flex flex-col gap-4 overflow-y-auto flex-1">
           
           {/* Invoice Search & Reason Selector */}
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 bg-[#f8f9fa] dark:bg-[#131b2e] p-4 rounded-xl border border-[#c4c5d5] dark:border-[#444653]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 bg-[#f9f9f9] dark:bg-[#1b1b1b] p-4 rounded-xl border border-[#c6c6c6] dark:border-[#474747]">
             
             <div className="md:col-span-6 flex flex-col gap-1">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Enter Bill / Invoice Number to Cancel
               </label>
               <div className="flex gap-2">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#757684]" size={15} />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#777777]" size={15} />
                   <input
                     type="text"
                     value={billNumberInput}
                     onChange={e => setBillNumberInput(e.target.value)}
                     onKeyDown={e => e.key === "Enter" && handleSearchBill()}
                     placeholder="e.g. INV-2024-001 or Bill No..."
-                    className="w-full pl-9 pr-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-white dark:bg-[#191c1e] text-xs font-mono font-bold outline-none focus:border-[#ba1a1a]"
+                    className="w-full pl-9 pr-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-white dark:bg-[#1c1c1c] text-xs font-mono font-bold outline-none focus:border-[#ba1a1a]"
                   />
                 </div>
                 <button
@@ -162,13 +148,13 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
             </div>
 
             <div className="md:col-span-6 flex flex-col gap-1">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Reason for Cancellation (Mandatory)
               </label>
               <select
                 value={selectedReason}
                 onChange={e => setSelectedReason(e.target.value)}
-                className="w-full px-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-white dark:bg-[#191c1e] text-xs font-semibold outline-none focus:border-[#ba1a1a]"
+                className="w-full px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-white dark:bg-[#1c1c1c] text-xs font-semibold outline-none focus:border-[#ba1a1a]"
               >
                 {CANCELLATION_REASONS.map(r => (
                   <option key={r} value={r}>{r}</option>
@@ -177,7 +163,7 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
             </div>
 
             <div className="md:col-span-8 flex flex-col gap-1">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Detailed Operational Notes / Customer Remark
               </label>
               <input
@@ -185,12 +171,12 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
                 value={reasonNotes}
                 onChange={e => setReasonNotes(e.target.value)}
                 placeholder="Enter remarks for audit trail..."
-                className="w-full px-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-white dark:bg-[#191c1e] text-xs outline-none focus:border-[#ba1a1a]"
+                className="w-full px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-white dark:bg-[#1c1c1c] text-xs outline-none focus:border-[#ba1a1a]"
               />
             </div>
 
             <div className="md:col-span-4 flex flex-col gap-1">
-              <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+              <label className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Manager Override PIN
               </label>
               <input
@@ -199,7 +185,7 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
                 onChange={e => setManagerPin(e.target.value)}
                 placeholder="4-digit PIN..."
                 maxLength={6}
-                className="w-full px-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-white dark:bg-[#191c1e] text-xs font-mono text-center outline-none focus:border-[#ba1a1a]"
+                className="w-full px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-white dark:bg-[#1c1c1c] text-xs font-mono text-center outline-none focus:border-[#ba1a1a]"
               />
             </div>
 
@@ -207,7 +193,7 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
 
           {/* Bill Preview Area */}
           {foundBill ? (
-            <div className="border border-[#ba1a1a]/30 rounded-xl overflow-hidden flex flex-col flex-1 bg-white dark:bg-[#191c1e]">
+            <div className="border border-[#ba1a1a]/30 rounded-xl overflow-hidden flex flex-col flex-1 bg-white dark:bg-[#1c1c1c]">
               <div className="px-4 py-2 bg-[#ffdad6]/40 dark:bg-[#93000a]/20 border-b border-[#ba1a1a]/30 flex justify-between items-center text-xs">
                 <span className="font-bold text-[#93000a] dark:text-[#ffdad6] font-mono">
                   PREVIEWING INVOICE: {foundBill.billNo}
@@ -219,7 +205,7 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
 
               <div className="overflow-y-auto max-h-44 p-1">
                 <table className="w-full text-left border-collapse text-xs">
-                  <thead className="bg-[#f8f9fa] dark:bg-[#131b2e] text-[10px] font-bold text-[#565e74] uppercase">
+                  <thead className="bg-[#f9f9f9] dark:bg-[#1b1b1b] text-[10px] font-bold text-[#5e5e5e] uppercase">
                     <tr>
                       <th className="p-2">#</th>
                       <th className="p-2">SKU</th>
@@ -229,10 +215,10 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
                       <th className="p-2 text-right">Total</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+                  <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
                     {foundBill.items.map((item, idx) => (
                       <tr key={item.id} className="opacity-75">
-                        <td className="p-2 font-mono text-[#757684]">{idx + 1}</td>
+                        <td className="p-2 font-mono text-[#777777]">{idx + 1}</td>
                         <td className="p-2 font-mono font-bold">{item.sku}</td>
                         <td className="p-2">{item.name}</td>
                         <td className="p-2 text-center font-mono">{item.qty}</td>
@@ -245,7 +231,7 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
               </div>
             </div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center p-8 border border-dashed border-[#c4c5d5] rounded-xl text-[#757684] text-center">
+            <div className="flex-1 flex flex-col items-center justify-center p-8 border border-dashed border-[#c6c6c6] rounded-xl text-[#777777] text-center">
               <Search size={32} className="opacity-30 mb-2" />
               <p className="text-xs font-semibold">Enter a Bill Number and click "Lookup Bill" to preview before voiding.</p>
             </div>
@@ -254,11 +240,11 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-4 bg-[#f8f9fa] dark:bg-[#131b2e] border-t border-[#c4c5d5] dark:border-[#444653] flex justify-between items-center shrink-0">
+        <div className="px-6 py-4 bg-[#f9f9f9] dark:bg-[#1b1b1b] border-t border-[#c6c6c6] dark:border-[#474747] flex justify-between items-center shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 text-xs font-bold text-[#565e74] hover:bg-[#e7e8e9] rounded-xl transition"
+            className="px-4 py-2 text-xs font-bold text-[#5e5e5e] hover:bg-[#e8e8e8] rounded-xl transition"
           >
             Abort / Cancel
           </button>
@@ -278,4 +264,4 @@ export const SmritiProPosCancelDlg: React.FC<SmritiProPosCancelDlgProps> = ({
   );
 };
 
-export default SmritiProPosCancelDlg;
+export default TileFlowProPosCancelDlg;

@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sprint 6 — Deployment Guide
-## Shoper9 → SMRITI Legacy Migration: Test Environment Activation
+## Shoper9 → TILEFLOW Legacy Migration: Test Environment Activation
 
-**Target environment:** `F:\Smriti9` (TEST — read from git pull only, never edit directly)  
+**Target environment:** `F:\TileFlow9` (TEST — read from git pull only, never edit directly)  
 **Source environment:** `F:\SMRITRretailNX` (DEV — all code lives here)  
 **Date:** 2026-08-24
 
@@ -23,9 +22,9 @@
 
 > **MANDATORY — Environment Rule**  
 > Per `AGENTS.md` Environment Policy:  
-> - `D:\Smriti_Retail_OS` = DEV → all code edits here  
-> - `F:\Smriti9` = TEST → receives code via `git pull` ONLY  
-> Never write files directly to `F:\Smriti9`.
+> - `D:\TileFlow_Retail_OS` = DEV → all code edits here  
+> - `F:\TileFlow9` = TEST → receives code via `git pull` ONLY  
+> Never write files directly to `F:\TileFlow9`.
 
 ---
 
@@ -51,8 +50,8 @@ python -m alembic current
 ## Step 1 — Pull into Test Environment
 
 ```powershell
-cd F:\Smriti9
-git pull origin smritiNX
+cd F:\TileFlow9
+git pull origin tileflowNX
 git log -6 --oneline
 # Confirm all 6 sprint commits are present
 ```
@@ -62,7 +61,7 @@ git log -6 --oneline
 ## Step 2 — Apply Alembic Migration v1371
 
 ```powershell
-cd F:\Smriti9\apps\smriti_retail_os\backend
+cd F:\TileFlow9\apps\tileflow_retail_os\backend
 
 # Verify current alembic head before upgrade
 python -m alembic current
@@ -77,7 +76,7 @@ python -m alembic current
 ```
 
 **What `upgrade head` does for v1371:**
-- Creates table `smriti_legacy_menu_map` (29 columns)
+- Creates table `tileflow_legacy_menu_map` (29 columns)
 - Creates `UniqueConstraint` on `(sh9_mnu_no, sh9_menu_opt)`
 - Creates `CHECK` constraint on `migration_status` enum
 - Creates `CHECK` constraint on non-negative ids
@@ -89,7 +88,7 @@ python -m alembic current
 ```
 INFO  [alembic.runtime.migration] Context impl PostgreSQLImpl.
 INFO  [alembic.runtime.migration] Will assume transactional DDL.
-INFO  [alembic.runtime.migration] Running upgrade v1370_tenant_capability_binding_status -> v1371_legacy_menu_map, Create smriti_legacy_menu_map table
+INFO  [alembic.runtime.migration] Running upgrade v1370_tenant_capability_binding_status -> v1371_legacy_menu_map, Create tileflow_legacy_menu_map table
 ```
 
 ---
@@ -97,14 +96,14 @@ INFO  [alembic.runtime.migration] Running upgrade v1370_tenant_capability_bindin
 ## Step 3 — Verify Table Created
 
 ```powershell
-# Connect to smritisys (or smriti_retail) Postgres and run:
+# Connect to tileflowsys (or tileflow_retail) Postgres and run:
 python -c "
 import os, sys
-sys.path.insert(0, 'F:/Smriti9/apps/smriti_retail_os/backend')
+sys.path.insert(0, 'F:/TileFlow9/apps/tileflow_retail_os/backend')
 import asyncio
 from sqlalchemy import text, create_engine
 
-db_url = open('F:/Smriti9/apps/smriti_retail_os/backend/.env').read()
+db_url = open('F:/TileFlow9/apps/tileflow_retail_os/backend/.env').read()
 db_url = [l.split('=',1)[1].strip() for l in db_url.splitlines() if l.startswith('DATABASE_URL=')][0]
 engine = create_engine(db_url.replace('+asyncpg',''))
 
@@ -114,7 +113,7 @@ with engine.connect() as conn:
                (SELECT count(*) FROM information_schema.columns 
                 WHERE table_name=t.table_name AND table_schema=''public'') AS cols
         FROM information_schema.tables t
-        WHERE table_schema=''public'' AND table_name=''smriti_legacy_menu_map''
+        WHERE table_schema=''public'' AND table_name=''tileflow_legacy_menu_map''
     '''))
     row = result.fetchone()
     if row:
@@ -122,7 +121,7 @@ with engine.connect() as conn:
     else:
         print('ERROR: Table not found -- upgrade may have failed')
 "
-# Expected: Table found: smriti_legacy_menu_map  Columns: 29
+# Expected: Table found: tileflow_legacy_menu_map  Columns: 29
 ```
 
 ---
@@ -130,7 +129,7 @@ with engine.connect() as conn:
 ## Step 4 — Seed the Table
 
 ```powershell
-cd F:\Smriti9\apps\smriti_retail_os
+cd F:\TileFlow9\apps\tileflow_retail_os
 
 # Dry-run first (no DB writes)
 python scripts/sh9_seed.py --dry-run
@@ -159,22 +158,22 @@ python scripts/sh9_seed.py
 ```powershell
 python -c "
 import sys
-sys.path.insert(0, 'F:/Smriti9/apps/smriti_retail_os/backend')
+sys.path.insert(0, 'F:/TileFlow9/apps/tileflow_retail_os/backend')
 from sqlalchemy import text, create_engine
 
-db_url = open('F:/Smriti9/apps/smriti_retail_os/backend/.env').read()
+db_url = open('F:/TileFlow9/apps/tileflow_retail_os/backend/.env').read()
 db_url = [l.split('=',1)[1].strip() for l in db_url.splitlines() if l.startswith('DATABASE_URL=')][0]
 engine = create_engine(db_url.replace('+asyncpg',''))
 
 with engine.connect() as conn:
     # Total rows
-    total = conn.execute(text('SELECT count(*) FROM smriti_legacy_menu_map')).scalar()
+    total = conn.execute(text('SELECT count(*) FROM tileflow_legacy_menu_map')).scalar()
     print(f'Total rows      : {total}')
 
     # Status breakdown
     rows = conn.execute(text('''
         SELECT migration_status, count(*) as cnt
-        FROM smriti_legacy_menu_map
+        FROM tileflow_legacy_menu_map
         GROUP BY migration_status
         ORDER BY cnt DESC
     ''')).fetchall()
@@ -201,7 +200,7 @@ Status breakdown:
 ## Step 6 — Restart FastAPI Backend
 
 ```powershell
-cd F:\Smriti9\apps\smriti_retail_os\backend
+cd F:\TileFlow9\apps\tileflow_retail_os\backend
 # Stop any running uvicorn instance, then:
 uvicorn app.main:app --reload --port 8000
 ```
@@ -239,11 +238,11 @@ Invoke-RestMethod `
 
 ## Step 8 — Verify Launchpad Tile Visible
 
-1. Open SMRITI Retail OS frontend in browser
+1. Open TILEFLOW Retail OS frontend in browser
 2. Login as MANAGER or SYSADMIN
 3. Navigate to **Fiori Launchpad**
 4. Scroll to **System & Operations** group
-5. Confirm tile: **"Shoper9 → SMRITI Migration"** (violet accent, `Migration` badge)
+5. Confirm tile: **"Shoper9 → TILEFLOW Migration"** (violet accent, `Migration` badge)
 6. Click tile → verify **LegacyMigDashTab** loads
 7. Verify arc-gauge shows ~96.9% coverage
 8. Click any status chip → verify Browse view opens with filtered rows
@@ -264,8 +263,8 @@ git commit -m "feat(migration): resolve pending entries -- [describe change]"
 git push
 
 # In TEST: pull + re-seed (idempotent)
-cd F:\Smriti9
-git pull origin smritiNX
+cd F:\TileFlow9
+git pull origin tileflowNX
 python scripts/sh9_seed.py
 # Expected: Inserted: 0, Updated: [n], Errors: 0
 ```
@@ -275,9 +274,9 @@ python scripts/sh9_seed.py
 ## Rollback (if needed)
 
 ```powershell
-cd F:\Smriti9\apps\smriti_retail_os\backend
+cd F:\TileFlow9\apps\tileflow_retail_os\backend
 
-# Downgrade: drops smriti_legacy_menu_map table
+# Downgrade: drops tileflow_legacy_menu_map table
 python -m alembic downgrade v1370_tenant_capability_binding_status
 
 # Confirm rollback
@@ -299,9 +298,9 @@ Pre-deployment
   [ ] TEST environment accessible
 
 Deployment
-  [ ] git pull into F:\Smriti9
+  [ ] git pull into F:\TileFlow9
   [ ] alembic upgrade head → v1371 applied
-  [ ] Table smriti_legacy_menu_map exists (29 columns)
+  [ ] Table tileflow_legacy_menu_map exists (29 columns)
   [ ] sh9_seed.py dry-run: 265 rows, 0 errors
   [ ] sh9_seed.py live: Inserted=265, Updated=0, Errors=0
   [ ] Row count verified: 265 total

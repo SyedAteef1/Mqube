@@ -1,13 +1,12 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-19
   Modified     : 2026-08-19
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # 03. Phase 3 — Config-Driven One-to-Many Alias Registry Design
@@ -32,7 +31,7 @@ export interface ConditionalTarget {
   transform?: 'identity' | 'uppercase' | 'trim' | 'number';
 }
 
-export interface SmritiFieldDefinition {
+export interface TileFlowFieldDefinition {
   key: string;
   label: string;
   required: boolean;

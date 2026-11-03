@@ -1,21 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-import { SmritiFieldDefinition, MappingContext } from "./types";
+import { TileFlowFieldDefinition, MappingContext } from "./types";
 import { normalizeHeader } from "./HeaderNormalizer";
 
-export const SMRITI_ITEM_MASTER_FIELDS: SmritiFieldDefinition[] = [
+export const TILEFLOW_ITEM_MASTER_FIELDS: TileFlowFieldDefinition[] = [
   {
     key: "code",
     label: "SKU CODE",
@@ -244,8 +230,8 @@ export const SMRITI_ITEM_MASTER_FIELDS: SmritiFieldDefinition[] = [
   { key: "a9", label: "ATTRIBUTE 9 (A9)", required: false, aliases: ["a9", "attr 9", "attribute 9", "attribute9", "season", "fit", "pattern", "occasion"], description: "Dynamic Attribute slot 9" }
 ];
 
-const CUSTOM_ALIASES_STORAGE_KEY = "smriti_header_custom_aliases";
-const REMOVED_ALIASES_STORAGE_KEY = "smriti_header_removed_aliases";
+const CUSTOM_ALIASES_STORAGE_KEY = "tileflow_header_custom_aliases";
+const REMOVED_ALIASES_STORAGE_KEY = "tileflow_header_removed_aliases";
 let inMemoryCustomAliases: Record<string, string[]> = {};
 let inMemoryRemovedAliases: Record<string, string[]> = {};
 
@@ -349,7 +335,7 @@ export function clearCustomAliases(): void {
   } catch {}
 }
 
-const CUSTOM_LABELS_STORAGE_KEY = "smriti_header_custom_labels";
+const CUSTOM_LABELS_STORAGE_KEY = "tileflow_header_custom_labels";
 let inMemoryCustomLabels: Record<string, string> = {};
 
 export function getCustomFieldLabels(): Record<string, string> {
@@ -380,11 +366,11 @@ export function setCustomFieldLabel(fieldKey: string, customLabel: string): void
   } catch {}
 }
 
-export function getSmritiItemMasterFields(customAttrs: { key: string; label: string; aliases?: string[] }[] = []): SmritiFieldDefinition[] {
+export function getTileFlowItemMasterFields(customAttrs: { key: string; label: string; aliases?: string[] }[] = []): TileFlowFieldDefinition[] {
   const customAliasMap = getCustomAliases();
   const removedAliasMap = getRemovedAliases();
 
-  const baseFieldsWithCustomAliases = SMRITI_ITEM_MASTER_FIELDS.map(f => {
+  const baseFieldsWithCustomAliases = TILEFLOW_ITEM_MASTER_FIELDS.map(f => {
     const extraAliases = customAliasMap[f.key] || [];
     const removedForField = (removedAliasMap[f.key] || []).map(r => r.toLowerCase().trim());
     const combined = Array.from(new Set([...f.aliases, ...extraAliases]));
@@ -395,7 +381,7 @@ export function getSmritiItemMasterFields(customAttrs: { key: string; label: str
     };
   });
 
-  const dynamicFields: SmritiFieldDefinition[] = customAttrs.map(attr => {
+  const dynamicFields: TileFlowFieldDefinition[] = customAttrs.map(attr => {
     const key = attr.key.startsWith("attr_") ? attr.key : `attr_${attr.key}`;
     const extraAliases = customAliasMap[key] || [];
     const removedForField = (removedAliasMap[key] || []).map(r => r.toLowerCase().trim());

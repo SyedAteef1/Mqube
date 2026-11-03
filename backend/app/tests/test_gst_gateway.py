@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import pytest
 from decimal import Decimal
 from sqlalchemy.future import select
@@ -38,7 +25,7 @@ async def test_e_invoice_payload_structure():
         invoice_no="INV-2026-001",
         invoice_date="17/08/2026",
         supplier_gstin="27ABCDE1234F1Z5",
-        supplier_name="SMRITI TEST STORE",
+        supplier_name="TILEFLOW TEST STORE",
         buyer_gstin="27XYZAB5678G2Z1",
         buyer_name="RETAIL BUYER PVT LTD",
         items=[
@@ -65,7 +52,7 @@ async def test_e_invoice_irn_generation_and_outbox(db_session):
         session=db_session,
         invoice_no="INV-EINV-001",
         supplier_gstin="27ABCDE1234F1Z5",
-        supplier_name="SMRITI STORE",
+        supplier_name="TILEFLOW STORE",
         buyer_gstin="27XYZAB5678G2Z1",
         buyer_name="BUYER CO",
         subtotal=1000.0,

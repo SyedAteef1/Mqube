@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.41.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 import psycopg2
 from psycopg2.extras import execute_values
@@ -60,19 +46,19 @@ def seed_capability_master_data():
     ]
 
     module_states = [
-        ("mod_pos", "MOD-POS", "smriti001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
-        ("mod_inv", "MOD-INV", "smriti001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
-        ("mod_sales", "MOD-SALES", "smriti001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
-        ("mod_purch", "MOD-PURCHASE", "smriti001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
-        ("mod_fin", "MOD-FINANCE", "smriti001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
-        ("mod_wms", "MOD-WMS", "smriti001", "ACTIVE", "v3.40.0", False, datetime.now(timezone.utc)),
-        ("mod_crm", "MOD-CRM", "smriti001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
+        ("mod_pos", "MOD-POS", "tileflow001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
+        ("mod_inv", "MOD-INV", "tileflow001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
+        ("mod_sales", "MOD-SALES", "tileflow001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
+        ("mod_purch", "MOD-PURCHASE", "tileflow001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
+        ("mod_fin", "MOD-FINANCE", "tileflow001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
+        ("mod_wms", "MOD-WMS", "tileflow001", "ACTIVE", "v3.40.0", False, datetime.now(timezone.utc)),
+        ("mod_crm", "MOD-CRM", "tileflow001", "ACTIVE", "v3.40.0", True, datetime.now(timezone.utc)),
     ]
 
-    # 1. SEED CONTROL PLANE (smritisys)
-    print("\n--- Seeding Capability Master Data into [smritisys] ---")
+    # 1. SEED CONTROL PLANE (tileflowsys)
+    print("\n--- Seeding Capability Master Data into [tileflowsys] ---")
     try:
-        conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+        conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
         cur = conn.cursor()
 
         # Platform Capabilities
@@ -142,12 +128,12 @@ def seed_capability_master_data():
 
         conn.commit()
         conn.close()
-        print("Successfully seeded control plane data in [smritisys].")
+        print("Successfully seeded control plane data in [tileflowsys].")
     except Exception as e:
-        print(f"Error seeding [smritisys]: {e}")
+        print(f"Error seeding [tileflowsys]: {e}")
 
-    # 2. SEED TENANT CAPABILITIES (smriti001, smriti002, smritisys)
-    for db_name in ["smriti001", "smriti002", "smritisys"]:
+    # 2. SEED TENANT CAPABILITIES (tileflow001, tileflow002, tileflowsys)
+    for db_name in ["tileflow001", "tileflow002", "tileflowsys"]:
         print(f"\n--- Seeding Tenant Capabilities into [{db_name}] ---")
         try:
             conn = psycopg2.connect(f"postgresql://postgres:postgres@localhost:5432/{db_name}")

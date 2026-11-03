@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import pytest
 from datetime import datetime, date, timedelta
@@ -27,7 +13,7 @@ from app.models.tenant import Company
 from app.services.eway_bill_service import EWayBillService
 
 
-TEST_DB_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001"
+TEST_DB_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001"
 
 
 @pytest.fixture
@@ -280,8 +266,8 @@ async def test_sales_invoice_eway_bill_generation(async_db: AsyncSession, tenant
 async def test_strict_statutory_validation_rejections(async_db: AsyncSession, tenant_ctx: TenantContext):
     """
     Test that strict_validation=True properly rejects:
-    1. Products without valid HSN code (raises HTTP 422 SMRITI-STAT-002)
-    2. Road transport transfers without vehicle numbers (raises HTTP 422 SMRITI-STAT-004)
+    1. Products without valid HSN code (raises HTTP 422 TILEFLOW-STAT-002)
+    2. Road transport transfers without vehicle numbers (raises HTTP 422 TILEFLOW-STAT-004)
     """
     from fastapi import HTTPException
     unique_suffix = uuid.uuid4().hex[:8]
@@ -350,7 +336,7 @@ async def test_strict_statutory_validation_rejections(async_db: AsyncSession, te
                 strict_validation=True
             )
         assert exc_vehicle.value.status_code == 422
-        assert "SMRITI-STAT-004" in exc_vehicle.value.detail
+        assert "TILEFLOW-STAT-004" in exc_vehicle.value.detail
 
         # Now fix vehicle number and assert missing HSN is rejected on E-Way payload
         transfer.vehicle_number = "MH-04-AB-9999"
@@ -363,7 +349,7 @@ async def test_strict_statutory_validation_rejections(async_db: AsyncSession, te
                 strict_validation=True
             )
         assert exc_hsn.value.status_code == 422
-        assert "SMRITI-STAT-002" in exc_hsn.value.detail
+        assert "TILEFLOW-STAT-002" in exc_hsn.value.detail
 
         # Case B: Delivery Challan in strict mode also rejects missing HSN
         with pytest.raises(HTTPException) as exc_dc_hsn:
@@ -372,7 +358,7 @@ async def test_strict_statutory_validation_rejections(async_db: AsyncSession, te
                 strict_validation=True
             )
         assert exc_dc_hsn.value.status_code == 422
-        assert "SMRITI-STAT-002" in exc_dc_hsn.value.detail
+        assert "TILEFLOW-STAT-002" in exc_dc_hsn.value.detail
 
     finally:
         await async_db.execute(text("DELETE FROM stock_transfer_items WHERE transfer_id = :tid"), {"tid": transfer_id})
@@ -482,13 +468,13 @@ async def test_strict_statutory_mode_config_toggle(async_db: AsyncSession, tenan
         with pytest.raises(HTTPException) as exc_info:
             await service.generate_transfer_eway_bill_payload(transfer_id=transfer_id)
         assert exc_info.value.status_code == 422
-        assert "SMRITI-STAT-002" in exc_info.value.detail
+        assert "TILEFLOW-STAT-002" in exc_info.value.detail
 
         with pytest.raises(HTTPException) as exc_override:
             # Client passing strict_validation=False in production cannot bypass statutory rules
             await service.generate_transfer_eway_bill_payload(transfer_id=transfer_id, strict_validation=False)
         assert exc_override.value.status_code == 422
-        assert "SMRITI-STAT-002" in exc_override.value.detail
+        assert "TILEFLOW-STAT-002" in exc_override.value.detail
 
     finally:
         settings.STRICT_STATUTORY_MODE = original_mode

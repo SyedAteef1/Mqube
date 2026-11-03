@@ -1,22 +1,9 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React from "react";
+import { useCompanyProfile } from "../../../lib/companyProfile.ts";
 import { ProPosCartItem, ProPosCustomer, ProPosTenderSplit } from "./types.ts";
 import { Printer, X, CheckCircle, QrCode } from "lucide-react";
 
-interface SmritiProPosTaxInvoiceReceiptProps {
+interface TileFlowProPosTaxInvoiceReceiptProps {
   billNo: string;
   billDate: string;
   customer?: ProPosCustomer;
@@ -31,7 +18,7 @@ interface SmritiProPosTaxInvoiceReceiptProps {
   onClose: () => void;
 }
 
-export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceReceiptProps> = ({
+export const TileFlowProPosTaxInvoiceReceipt: React.FC<TileFlowProPosTaxInvoiceReceiptProps> = ({
   billNo,
   billDate,
   customer,
@@ -45,6 +32,7 @@ export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceRecei
   changeDue = 0,
   onClose
 }) => {
+  const company = useCompanyProfile();
   const handlePrint = () => {
     window.print();
   };
@@ -56,7 +44,7 @@ export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceRecei
         {/* Screen Action Bar (Hidden when printing) */}
         <div className="px-6 py-3 border-b border-gray-200 bg-gray-50 flex justify-between items-center print:hidden">
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 bg-[#00288e] text-white rounded text-[10px] font-bold font-mono uppercase">
+            <span className="px-2 py-0.5 bg-[#272727] text-white rounded text-[10px] font-bold font-mono uppercase">
               Tax Invoice
             </span>
             <span className="text-xs font-bold text-gray-800">{billNo}</span>
@@ -65,7 +53,7 @@ export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceRecei
             <button
               type="button"
               onClick={handlePrint}
-              className="px-4 py-1.5 bg-[#00288e] hover:bg-[#1e40af] text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-1.5 bg-[#272727] hover:bg-[#414141] text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
             >
               <Printer size={14} />
               Print Receipt [Ctrl+P]
@@ -85,9 +73,10 @@ export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceRecei
           
           {/* Header Store Branding */}
           <div className="text-center space-y-1 border-b border-dashed border-gray-400 pb-3">
-            <h1 className="text-base font-bold tracking-wider uppercase font-sans">SMRITI RETAIL STORE</h1>
-            <p className="text-[11px]">Flagship Outlet #102, MG Road</p>
-            <p className="text-[10px] text-gray-600">GSTIN: 27AABCU9603R1ZM | Phone: +91 98765 43210</p>
+            <h1 className="text-base font-bold tracking-wider font-sans">{company.name}</h1>
+            {company.address && <p className="text-[10px] text-gray-600">{company.address}</p>}
+            {company.phone && <p className="text-[10px] text-gray-600">Phone: {company.phone}</p>}
+            <p className="text-[10px] text-gray-600">GSTIN: {company.gstin}</p>
             <p className="text-[10px] font-bold uppercase mt-1">TAX INVOICE / CASH MEMO</p>
           </div>
 
@@ -102,8 +91,7 @@ export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceRecei
               <strong>{billDate}</strong>
             </div>
             <div>
-              <span>Cashier: </span>
-              <span>{salesStaff}</span>
+              {salesStaff && <><span>Salesperson: </span><span>{salesStaff}</span></>}
             </div>
             <div className="text-right">
               <span>Time: </span>
@@ -111,7 +99,7 @@ export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceRecei
             </div>
             {customer && (
               <div className="col-span-2 pt-1 border-t border-dotted border-gray-300 mt-1">
-                <div><span>Customer: </span><strong>{customer.name}</strong> ({customer.phone || customer.code})</div>
+                <div><span>Customer: </span><strong>{customer.name}</strong>{customer.phone ? ` (${customer.phone})` : ""}</div>
                 {customer.gstin && (
                   <div className="text-[10px] text-gray-700">
                     <span>GSTIN: </span><strong className="font-mono">{customer.gstin}</strong>
@@ -201,7 +189,7 @@ export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceRecei
           <div className="border-t border-dashed border-gray-400 pt-3 text-center space-y-1 text-[10px] text-gray-600">
             <p className="font-bold text-gray-800">Thank you for shopping with us!</p>
             <p>Goods once sold can be exchanged within 7 days with original invoice.</p>
-            <p className="font-sans text-[9px] pt-1">Powered by SMRITI ProPOS v6.0.0</p>
+            <p className="font-sans text-[9px] pt-1">Powered by MQube POS v6.0.0</p>
           </div>
 
         </div>
@@ -211,4 +199,4 @@ export const SmritiProPosTaxInvoiceReceipt: React.FC<SmritiProPosTaxInvoiceRecei
   );
 };
 
-export default SmritiProPosTaxInvoiceReceipt;
+export default TileFlowProPosTaxInvoiceReceipt;

@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Docker Build Fix & Default User Seeding Walkthrough
 
 ## 1. Purpose
-This document details the configuration fixes and user seeding routines implemented to ensure that the entire SMRITI Retail OS Docker container stack compiles, builds, and starts successfully on the test environment, with ready-to-use default operator credentials.
+This document details the configuration fixes and user seeding routines implemented to ensure that the entire TILEFLOW Retail OS Docker container stack compiles, builds, and starts successfully on the test environment, with ready-to-use default operator credentials.
 
 ## 2. Scope
 - Resolve esbuild compiler platform package mapping errors under Alpine Docker Node.js environments.
@@ -51,7 +50,7 @@ This document details the configuration fixes and user seeding routines implemen
 - Queried user table entries using `psql` within the database container.
 
 ## 9. Verification Results
-- All 3 containers (`smriti-api`, `smriti-python-core`, `smriti-db`) are healthy and running.
+- All 3 containers (`tileflow-api`, `tileflow-python-core`, `tileflow-db`) are healthy and running.
 - The `users` table successfully contains 3 seeded records.
 
 ## 10. Known Limitations

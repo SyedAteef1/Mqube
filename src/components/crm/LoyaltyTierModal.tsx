@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.110.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -39,7 +38,7 @@ function buildSampleMembers(): LoyaltyMember[] {
   let m1Final = LoyaltyTierEngine.checkAnniversary(um1, NOW);
 
   let m2 = LoyaltyTierEngine.createMember({ memberId: "MBR-002", memberNo: "LYL-0002", name: "Rahul Mehta",     joinDate: "2023-03-10", initialTier: "GOLD" });
-  m2 = { ...m2, lastTierChangeAt: new Date("2026-07-01").toISOString() };   // Recent â€” downgrade locked
+  m2 = { ...m2, lastTierChangeAt: new Date("2026-07-01").toISOString() };   // Recent — downgrade locked
   m2 = LoyaltyTierEngine.accrue(m2, 8000, 800);     // Below GOLD threshold but cooldown active
 
   let m3 = LoyaltyTierEngine.createMember({ memberId: "MBR-003", memberNo: "LYL-0003", name: "Sunita Rao",      joinDate: "2022-01-15", initialTier: "PLATINUM" });
@@ -87,7 +86,7 @@ export const LoyaltyTierModal: React.FC<LoyaltyTierModalProps> = ({ isOpen, onCl
     }
   };
 
-  const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+  const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fadeIn">
@@ -259,7 +258,7 @@ export const LoyaltyTierModal: React.FC<LoyaltyTierModalProps> = ({ isOpen, onCl
 
             {activeTab === "SUMMARY" && (
               <div className="space-y-5">
-                <p className="text-sm font-bold text-slate-200">Tier Distribution â€” {members.length} Members</p>
+                <p className="text-sm font-bold text-slate-200">Tier Distribution — {members.length} Members</p>
                 <div className="grid grid-cols-2 gap-4">
                   {(["PLATINUM", "GOLD", "SILVER", "BRONZE"] as LoyaltyTier[]).map((tier) => {
                     const count = summary[tier];

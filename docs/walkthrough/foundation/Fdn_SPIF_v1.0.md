@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI Product Image Framework (SPIF) v1.0
+# Walkthrough: TILEFLOW Product Image Framework (SPIF) v1.0
 
 ## 1. Purpose
-This walkthrough documents the design, verification, and integration of the SMRITI Product Image Framework (SPIF) v1.0. This framework introduces centralized product image support, auto-optimization (standardizing inputs into high-performance WEBP format), tenant-isolated storage, React UI thumbnail/preview rendering, and dynamic configuration policies across inventory management.
+This walkthrough documents the design, verification, and integration of the TILEFLOW Product Image Framework (SPIF) v1.0. This framework introduces centralized product image support, auto-optimization (standardizing inputs into high-performance WEBP format), tenant-isolated storage, React UI thumbnail/preview rendering, and dynamic configuration policies across inventory management.
 
 ## 2. Scope
 The scope covers:

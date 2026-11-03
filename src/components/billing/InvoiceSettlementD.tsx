@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Stitch Distributor Invoice Settlement Studio
- */
-
 import React, { useState, useMemo, useEffect } from "react";
 import { 
   X, 
@@ -28,7 +13,7 @@ import {
 import { Customer } from "../../types.ts";
 import { SettlementPaymentRow, PaymentMode, CashDenominationState } from "./types.ts";
 
-interface SmritiInvoiceSettlementModalProps {
+interface TileFlowInvoiceSettlementModalProps {
   isOpen: boolean;
   billNo: string;
   billDate: string;
@@ -39,7 +24,7 @@ interface SmritiInvoiceSettlementModalProps {
   onClose: () => void;
 }
 
-export const SmritiInvoiceSettlementModal: React.FC<SmritiInvoiceSettlementModalProps> = ({
+export const TileFlowInvoiceSettlementModal: React.FC<TileFlowInvoiceSettlementModalProps> = ({
   isOpen,
   billNo,
   billDate,
@@ -303,6 +288,7 @@ export const SmritiInvoiceSettlementModal: React.FC<SmritiInvoiceSettlementModal
                             <option value="UPI">UPI</option>
                             <option value="Cheque">Cheque</option>
                             <option value="Credit Note">Credit Note</option>
+                            <option value="Credit">Credit</option>
                           </select>
                         </td>
                         <td className="p-1.5 border-r border-outline-variant">
@@ -390,7 +376,7 @@ export const SmritiInvoiceSettlementModal: React.FC<SmritiInvoiceSettlementModal
               </div>
 
               {/* Highlighted Banner */}
-              <div className="bg-[#315384] text-white p-3 rounded flex justify-between items-center shadow-xs">
+              <div className="bg-[#4f4f4f] text-white p-3 rounded flex justify-between items-center shadow-xs">
                 <span className="font-label-caps text-xs font-bold uppercase tracking-wider">Net Payable</span>
                 <span className="font-code-md font-bold text-xl">₹{netAmount.toFixed(2)}</span>
               </div>
@@ -492,4 +478,4 @@ export const SmritiInvoiceSettlementModal: React.FC<SmritiInvoiceSettlementModal
   );
 };
 
-export default SmritiInvoiceSettlementModal;
+export default TileFlowInvoiceSettlementModal;

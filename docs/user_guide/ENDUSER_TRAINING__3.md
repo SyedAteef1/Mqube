@@ -1,32 +1,26 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.2
   * Created    : 2026-07-18
   * Modified   : 2026-07-18
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# End-User Training — Authors & Product Metadata
 
 ## Product Details
-- Product Name: **SMRITI Retail OS**
+- Product Name: **TILEFLOW Retail OS**
 - Edition: **Enterprise Edition**
 - Release Number: **REL-2410-B**
 - Build Number: **BUILD-8092.44**
@@ -36,29 +30,23 @@
 - Print Engine Version: **v1.2**
 
 ## Primary Author
-- Name: **Jawahar Ramkripal Mallah**
+- Name: **Syed Ateef**
 - Role: **Chief Systems Architect & Creator**
-- Organization: **AITDL NETWORKS**
-- Product: **SMRITI Retail OS**
-- Website: **smritibooks.com**
+- Product: **TILEFLOW Retail OS**
+- Website: **tileflow.in**
 - Support Email: **jawahar.mallah@gmail.com**
-- Copyright: **© AITDL.com and SMRITIBooks.com. All Rights Reserved.**
-- License: **Proprietary Commercial Software**
+- License: **MIT Open Source License**
 
 ## Founders
 - **Pushpa Devi Jawahar Mallah**
   - Founder & Chairperson
   - Phone: **+91 9324117007**
-  - Email: **founder@aitdl.com**
 
-- **Jawahar Ramkripal Mallah**
+- **Syed Ateef**
   - Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  - Email: **founder@aitdl.com**
 
 ## Project Ownership
-- Organization: **AITDL NETWORKS**
-- Product Website: **smritibooks.com**
-- Partner Domain: **aitdl.com**
+- Product Website: **tileflow.in**
 - Release Focus: **Enterprise retail operations, POS, inventory, and CRM**
 
 ## How This Document Should Be Used

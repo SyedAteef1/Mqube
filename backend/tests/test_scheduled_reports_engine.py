@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.72.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import hashlib
 import os
 import pytest
@@ -165,7 +151,7 @@ async def test_02_schedule_crud_lifecycle(mock_session):
         export_format="XLSX",
         channels=["EMAIL", "WHATSAPP", "STATUTORY_VAULT"],
         recipients=RecipientConfig(
-            emails=["cfo@tattlythreads.com", "audit@smritibooks.com"],
+            emails=["cfo@tattlythreads.com", "audit@tileflow.in"],
             phone_numbers=["+919876543210"],
             vault_folder="statutory/2026/daily_sales"
         ),
@@ -230,7 +216,7 @@ async def test_04_multi_channel_dispatchers():
     assert email_res["status"] == "DELIVERED"
     assert email_res["channel"] == "EMAIL"
     assert email_res["envelope_hash"] == test_hash
-    assert "@smritibooks.com" in email_res["message_id"]
+    assert "@tileflow.in" in email_res["message_id"]
 
     # 2. WhatsApp Dispatcher
     wa_res = await WhatsAppDispatcher.dispatch(
@@ -243,7 +229,7 @@ async def test_04_multi_channel_dispatchers():
     )
     assert wa_res["status"] == "DELIVERED"
     assert wa_res["channel"] == "WHATSAPP"
-    assert "SMRITI Retail OS" in wa_res["summary_text"]
+    assert "TILEFLOW Retail OS" in wa_res["summary_text"]
     assert wa_res["envelope_hash"] == test_hash
 
     # 3. Statutory Vault Dispatcher

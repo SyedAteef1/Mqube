@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.18.0
-Created      : 2026-07-11
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import List, Optional, Dict, Any
 from datetime import datetime, date as datetime_date
 from decimal import Decimal
@@ -27,7 +13,7 @@ class SalesInvoiceItemBase(BaseModel):
     quantity: Decimal = Decimal("1.0000")
     price: Decimal = Field(..., ge=0)
     hsn_code: Optional[str] = Field(None, max_length=15, validation_alias=AliasChoices("hsn_code", "hsnCode"))
-    gst_rate: Optional[Decimal] = Field(Decimal("18.00"), validation_alias=AliasChoices("gst_rate", "gstRate"))
+    gst_rate: Optional[Decimal] = Field(None, validation_alias=AliasChoices("gst_rate", "gstRate"))
     tax_amount: Optional[Decimal] = Field(Decimal("0.00"), validation_alias=AliasChoices("tax_amount", "taxAmount"))
     total_amount: Optional[Decimal] = Field(Decimal("0.00"), validation_alias=AliasChoices("total_amount", "totalAmount"))
     mrp: Optional[Decimal] = None
@@ -38,6 +24,7 @@ class SalesInvoiceItemBase(BaseModel):
     igst_amount: Optional[Decimal] = Field(Decimal("0.00"), validation_alias=AliasChoices("igst_amount", "igstAmount"))
     is_tax_inclusive: Optional[bool] = Field(None, validation_alias=AliasChoices("is_tax_inclusive", "isTaxInclusive"))
     line_no: Optional[int] = Field(None, validation_alias=AliasChoices("line_no", "lineNo"))
+    sqft_requested: Optional[Decimal] = Field(None, gt=0, validation_alias=AliasChoices("sqft_requested", "sqftRequested"))
 
 class SalesInvoiceItemCreate(SalesInvoiceItemBase):
     pass
@@ -45,6 +32,8 @@ class SalesInvoiceItemCreate(SalesInvoiceItemBase):
 class SalesInvoiceItemResponse(SalesInvoiceItemBase):
     id: int
     invoice_id: str
+    sqft_per_box: Optional[Decimal] = None
+    sqft_billed: Optional[Decimal] = None
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -56,7 +45,7 @@ class SalesInvoiceBase(BaseModel):
     warehouse_id: Optional[str] = Field(None, max_length=50, validation_alias=AliasChoices("warehouse_id", "warehouseId"))
     tax_total: Decimal = Field(Decimal("0.00"), validation_alias=AliasChoices("tax_total", "taxTotal"))
     grand_total: Decimal = Field(Decimal("0.00"), validation_alias=AliasChoices("grand_total", "grandTotal"))
-    is_interstate: Optional[bool] = Field(False, validation_alias=AliasChoices("is_interstate", "isInterstate"))
+    is_interstate: Optional[bool] = Field(None, validation_alias=AliasChoices("is_interstate", "isInterstate"))
     eway_bill_no: Optional[str] = Field(None, max_length=50, validation_alias=AliasChoices("eway_bill_no", "eWayBillNo", "ewayBillNo"))
     payment_mode: Optional[str] = Field("CASH", validation_alias=AliasChoices("payment_mode", "paymentMode"))
     status: str = "Draft"

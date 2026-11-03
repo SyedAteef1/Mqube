@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.33.0
   Created      : 2026-08-26
   Modified     : 2026-08-26
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Shoper9 Template Blueprint Review & Audit Report
@@ -17,7 +16,7 @@
 **Audit Date**: 2026-08-26
 **Source Path**: `D:\Shoper9\Templates`
 **Total Source Files**: 21
-**Auditor**: SMRITI Automated Blueprint Engine
+**Auditor**: TILEFLOW Automated Blueprint Engine
 
 ---
 
@@ -57,7 +56,7 @@ The legacy SQL files contain redundant duplicate statements that have been filte
 ---
 
 ## 4. Hardcoded Legacy File Paths (30)
-The legacy configuration files contain Windows-specific absolute paths that must be overridden by SMRITI environment variables or tenant storage providers:
+The legacy configuration files contain Windows-specific absolute paths that must be overridden by TILEFLOW environment variables or tenant storage providers:
 
 | Profile | Parameter Code | Description | Legacy Value |
 |---|---|---|---|
@@ -126,7 +125,7 @@ Differences in parameter values between Retail and Distributor operational profi
 
 ## 6. Distributor Workflow Mappings (5)
 
-| Workflow ID | Business Capability | Legacy Shoper9 Menu | SMRITI Canonical Target | Status |
+| Workflow ID | Business Capability | Legacy Shoper9 Menu | TILEFLOW Canonical Target | Status |
 |---|---|---|---|---|
 | `WF-DC-SALES` | Sales Delivery Challan (Sales DC) | Sales -> DC Generation -> Sales DC (SR115500.EXE / PgmOpt 8) | `/distributor-invoicing (Delivery Challan Mode)` | `MAPPED` |
 | `WF-DC-APPROVAL` | Approval Issue Delivery Challan | Sales -> DC Generation -> Approval Issue DC (SR115500.EXE / PgmOpt 9) | `/distributor-invoicing (Approval Issue Mode)` | `MAPPED` |
@@ -137,7 +136,7 @@ Differences in parameter values between Retail and Distributor operational profi
 ---
 
 ## 7. Safety & Compliance Attestation
-- [x] Zero direct SQL execution against `smritisys`, `smriti001`, or `smriti002`.
+- [x] Zero direct SQL execution against `tileflowsys`, `tileflow001`, or `tileflow002`.
 - [x] Zero modifications, renames, or deletions in `D:\Shoper9\Templates`.
 - [x] All legacy character encodings preserved.
 - [x] Quarantined temporary files excluded from production schemas.

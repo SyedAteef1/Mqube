@@ -1,9 +1,7 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
 # Purpose      : Permanently delete all Native Windows SQL Server services, processes, and registry keys (Elevated)
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host " SMRITI: PERMANENT NATIVE SQL SERVER REMOVAL PROTOCOL" -ForegroundColor Cyan
+Write-Host " TILEFLOW: PERMANENT NATIVE SQL SERVER REMOVAL PROTOCOL" -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 # 1. Stop and Kill all native SQL processes
@@ -57,6 +55,6 @@ foreach ($f in $folders) {
 
 Write-Host "==========================================================" -ForegroundColor Green
 Write-Host " SUCCESS: ALL NATIVE SQL SERVERS PERMANENTLY REMOVED!" -ForegroundColor Green
-Write-Host " DOCKER SQL SERVER ('smriti-mssql') REMAINS 100% UNTOUCHED" -ForegroundColor Green
+Write-Host " DOCKER SQL SERVER ('tileflow-mssql') REMAINS 100% UNTOUCHED" -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Green
 Start-Sleep -Seconds 3

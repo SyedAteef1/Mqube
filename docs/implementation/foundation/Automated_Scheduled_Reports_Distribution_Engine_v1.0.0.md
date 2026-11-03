@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.72.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Automated Scheduled Reports & Distribution Engine (v1.0.0-GA)
 
 ## 1. Objective
-Establish an enterprise-grade, unattended asynchronous automated reporting and multi-channel distribution engine for SMRITI Retail OS. Enable automated execution of canonical registers, financial summaries, and statutory workbooks across Email, WhatsApp Business Cloud, and Statutory Cloud Vault channels with cryptographic SHA-256 integrity sealing.
+Establish an enterprise-grade, unattended asynchronous automated reporting and multi-channel distribution engine for TILEFLOW Retail OS. Enable automated execution of canonical registers, financial summaries, and statutory workbooks across Email, WhatsApp Business Cloud, and Statutory Cloud Vault channels with cryptographic SHA-256 integrity sealing.
 
 ## 2. Business Motivation
 Retail chains and enterprises require automated daily closing sales registers, periodic inventory valuation audits, and quarterly tax invoice reports delivered directly to executive stakeholders (CFO, Head of Retail, Auditors) without manual report downloads. Automated distribution guarantees timely visibility and compliance archiving.
@@ -31,7 +30,7 @@ Retail chains and enterprises require automated daily closing sales registers, p
 - FastAPI REST endpoints under `/api/v1/reporting/schedules`.
 
 ## 4. Current State
-Report execution was interactive via the SMRITI Reporting Hub and REST endpoints. Automation required manual trigger or external scripts.
+Report execution was interactive via the TILEFLOW Reporting Hub and REST endpoints. Automation required manual trigger or external scripts.
 
 ## 5. Gap Analysis
 - Missing background schedule master model (`ReportSchedule`).
@@ -47,7 +46,7 @@ Report execution was interactive via the SMRITI Reporting Hub and REST endpoints
 ## 7. Proposed Design
 ```text
 ┌─────────────────────────────────────────────────────────────┐
-│             SMRITI REPORT DISTRIBUTION ENGINE               │
+│             TILEFLOW REPORT DISTRIBUTION ENGINE               │
 ├─────────────────────────────────────────────────────────────┤
 │  1. Cron Evaluator -> (next_run_at calculation)             │
 │  2. Report Serialization -> (XLSX / PDF / CSV / JSON)       │

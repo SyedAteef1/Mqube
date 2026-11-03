@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.104.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -58,13 +57,13 @@ function buildSampleComplaints(): Complaint[] {
   c1 = ComplaintCRMEngine.assign(c1, "AGT-01", "Ramesh Verma", "SUP-01");
   c1 = ComplaintCRMEngine.recordFirstResponse(c1, "AGT-01", "We have logged your complaint and are investigating.", AS_OF_2H(now));
 
-  let c2 = ComplaintCRMEngine.openComplaint({ customerId: "C-002", customerName: "Arjun Mehta", branchCode: "BR-DEL-01", category: "BILLING_ERROR", priority: "CRITICAL", subject: "Overcharged by â‚¹5,000", description: "Invoice shows â‚¹5,000 more than the agreed price.", openedAt: now });
+  let c2 = ComplaintCRMEngine.openComplaint({ customerId: "C-002", customerName: "Arjun Mehta", branchCode: "BR-DEL-01", category: "BILLING_ERROR", priority: "CRITICAL", subject: "Overcharged by ₹5,000", description: "Invoice shows ₹5,000 more than the agreed price.", openedAt: now });
   c2 = ComplaintCRMEngine.checkSLABreaches(c2, AS_OF_50H(now)); // Auto-escalate
 
   let c3 = ComplaintCRMEngine.openComplaint({ customerId: "C-003", customerName: "Kavya Reddy", branchCode: "BR-MUM-01", category: "REFUND_NOT_RECEIVED", priority: "MEDIUM", subject: "Refund pending for 10 days", description: "Returned item 10 days ago but refund not credited yet.", openedAt: now });
   c3 = ComplaintCRMEngine.assign(c3, "AGT-02", "Sunita Rao", "SUP-01");
   c3 = ComplaintCRMEngine.recordFirstResponse(c3, "AGT-02", "Checking with finance team.", AS_OF_2H(now));
-  c3 = ComplaintCRMEngine.resolve(c3, { summary: "Refund processed â€” will credit in 2 business days.", resolvedBy: "AGT-02", asOf: AS_OF_50H(now) });
+  c3 = ComplaintCRMEngine.resolve(c3, { summary: "Refund processed — will credit in 2 business days.", resolvedBy: "AGT-02", asOf: AS_OF_50H(now) });
   c3 = ComplaintCRMEngine.close(c3, 4, "Good resolution, just took too long.", "AGT-02");
 
   let c4 = ComplaintCRMEngine.openComplaint({ customerId: "C-004", customerName: "Deepak Gupta", branchCode: "BR-BLR-01", category: "WRONG_ITEM", priority: "HIGH", subject: "Wrong size delivered", description: "Ordered L but received M.", relatedInvoiceNo: "INV-2026-0799", openedAt: now });
@@ -122,7 +121,7 @@ export const ComplaintCRMModal: React.FC<ComplaintCRMModalProps> = ({ isOpen, on
 
   const handleEscalate = () => {
     if (!selected) return;
-    update(ComplaintCRMEngine.escalate(selected, "Manual escalation â€” management review required.", "SUPERVISOR"));
+    update(ComplaintCRMEngine.escalate(selected, "Manual escalation — management review required.", "SUPERVISOR"));
     onNotification?.("Escalated", selected.ticketNo, "error");
   };
 

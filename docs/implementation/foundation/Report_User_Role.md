@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Report User Role & Audit Logging Implementation Plan (v3.16.0)
 
 ## 1. Objective
-Add a read-only **Report User** role to SMRITI Retail OS that blocks write operations at the backend/gateway API level, limits master/transaction forms to read-only views on the frontend, and records interaction events in audit trails.
+Add a read-only **Report User** role to TILEFLOW Retail OS that blocks write operations at the backend/gateway API level, limits master/transaction forms to read-only views on the frontend, and records interaction events in audit trails.
 
 ## 2. Business Motivation
 Allows management, auditors, and external tax consultants to inspect transactions, view ledgers, and download reports without the risk of accidental or malicious alterations to inventory levels or billing records.

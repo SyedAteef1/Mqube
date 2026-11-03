@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useRef } from "react";
 import { 
   X, 
@@ -301,7 +276,7 @@ export const FloatingWindowHost: React.FC<FloatingWindowHostProps> = ({ renderTa
               }`}
             >
               {/* Tabs Section */}
-              <div className="flex items-center space-x-1.5 overflow-x-auto smriti-hide-scrollbar max-w-[70%]">
+              <div className="flex items-center space-x-1.5 overflow-x-auto tileflow-hide-scrollbar max-w-[70%]">
                 {win.tabs.map((tab, idx) => {
                   const isTabActive = win.activeTabIndex === idx;
                   return (

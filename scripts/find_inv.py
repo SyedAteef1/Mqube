@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 cur.execute("SELECT id, invoice_no, company_id, branch_id FROM sales_invoices WHERE id LIKE '%60a109a6ab4c%' OR invoice_no LIKE '%60a109a6ab4c%';")
 print("Found matching:", cur.fetchall())

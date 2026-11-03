@@ -1,31 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.109.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Consignment Stock Engine
- *
- * Tracks vendor-owned stock held at a retailer's location:
- *   Consignment Plan : ACTIVE → SETTLED / EXPIRED / CANCELLED
- *   Movements        : RECEIVED, SOLD, RETURNED, ADJUSTED
- *   Settlement       : Sale-or-return — sold qty billed to retailer;
- *                      unsold qty returned to vendor
- *   Aging            : Days-on-floor per batch; configurable aging bands
- *                      (Fresh / Normal / Ageing / Critical)
- *   Return Schedule  : Engine computes which items are due for return
- *                      based on agreed consignment term (days)
- */
-
 export type ConsignmentStatus    = "ACTIVE" | "SETTLED" | "EXPIRED" | "CANCELLED";
 export type MovementType         = "RECEIVED" | "SOLD" | "RETURNED" | "ADJUSTED";
 export type AgingBand            = "FRESH" | "NORMAL" | "AGEING" | "CRITICAL";

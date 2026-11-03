@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-18
-Modified     : 2026-08-18
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import psycopg2
 
 COMPANY_NAME = "Tattly Threads"
@@ -85,10 +72,10 @@ def inspect_and_update(db_name, skip_companies=False):
     conn.close()
     print(f"  COMMITTED {db_name}")
 
-# smritisys — companies already updated for name+gst, now update branches there
-inspect_and_update("smritisys", skip_companies=True)
+# tileflowsys — companies already updated for name+gst, now update branches there
+inspect_and_update("tileflowsys", skip_companies=True)
 
-# smriti001 — might have a companies copy
-inspect_and_update("smriti001", skip_companies=False)
+# tileflow001 — might have a companies copy
+inspect_and_update("tileflow001", skip_companies=False)
 
 print("\n=== DONE ===")

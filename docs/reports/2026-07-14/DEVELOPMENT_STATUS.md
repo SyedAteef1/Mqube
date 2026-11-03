@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.0
   Created      : 2026-07-14
   Modified     : 2026-07-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
-# SMRITI Development Status Dashboard
+# TILEFLOW Development Status Dashboard
 
 *Generated: 14-Jul-26*
 *Branch: main | Last Commit: eaf69aa*
 
-## SMRITI Development Health Index (DHI)
+## TILEFLOW Development Health Index (DHI)
 ```
 DHI:      ████░░░░░░ 43% (Grade D)
 Release:  █████░░░░░ 55%
@@ -33,4 +32,4 @@ Security: ░░░░░░░░░░ 0%
 | Sales Studio | Sales & POS | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | 40% |
 | Billing Desk | Sales & POS | ✅ | ❌ | ❌ | ❌ | ❌ | ✅ | 36% |
 | CRM & Loyalty | Sales & POS | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ | 12% |
-| About SMRITI | System | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | 52% |
+| About TILEFLOW | System | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | 52% |

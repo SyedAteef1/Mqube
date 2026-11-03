@@ -8,26 +8,26 @@ conn.autocommit = True
 cur = conn.cursor()
 
 # Check if source exists
-cur.execute("SELECT 1 FROM pg_database WHERE datname='smritisys'")
+cur.execute("SELECT 1 FROM pg_database WHERE datname='tileflowsys'")
 result = cur.fetchone()
-print(f'smritisys exists: {result is not None}')
+print(f'tileflowsys exists: {result is not None}')
 
 # Check for active sessions
-cur.execute("SELECT COUNT(*) FROM pg_stat_activity WHERE datname='smritisys' AND pid <> pg_backend_pid()")
+cur.execute("SELECT COUNT(*) FROM pg_stat_activity WHERE datname='tileflowsys' AND pid <> pg_backend_pid()")
 active = cur.fetchone()[0]
-print(f'Active sessions on smritisys: {active}')
+print(f'Active sessions on tileflowsys: {active}')
 
 # Try creating clone
 try:
     print('\nAttempting to create clone...')
-    cur.execute('DROP DATABASE IF EXISTS smritisys_stage WITH (FORCE)')
-    print('  ✓ Dropped existing smritisys_stage')
+    cur.execute('DROP DATABASE IF EXISTS tileflowsys_stage WITH (FORCE)')
+    print('  ✓ Dropped existing tileflowsys_stage')
     
-    cur.execute('CREATE DATABASE smritisys_stage WITH TEMPLATE smritisys')
-    print('  ✓ Successfully created smritisys_stage from smritisys')
+    cur.execute('CREATE DATABASE tileflowsys_stage WITH TEMPLATE tileflowsys')
+    print('  ✓ Successfully created tileflowsys_stage from tileflowsys')
     
     # Verify clone exists
-    cur.execute("SELECT 1 FROM pg_database WHERE datname='smritisys_stage'")
+    cur.execute("SELECT 1 FROM pg_database WHERE datname='tileflowsys_stage'")
     if cur.fetchone():
         print('  ✓ Clone verified to exist')
     

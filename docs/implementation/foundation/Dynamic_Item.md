@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Retail OS Implementation Plan: Dynamic Item Master & Attribute Studio (v3.16.0)
+# TILEFLOW Retail OS Implementation Plan: Dynamic Item Master & Attribute Studio (v3.16.0)
 
 ## 1. Objective
-Redesign the **Item Master** to be fully dynamic, configurable, and industry-agnostic so that SMRITI Retail OS can support Footwear, Apparel, Grocery, Electronics, Pharma, Manufacturing, and any future business without code changes.
+Redesign the **Item Master** to be fully dynamic, configurable, and industry-agnostic so that TILEFLOW Retail OS can support Footwear, Apparel, Grocery, Electronics, Pharma, Manufacturing, and any future business without code changes.
 
 ## 2. Business Motivation
 Provide ready-made configurations and allow quick manual entry for a wide variety of retail verticals, eliminating database table/schema rebuilds or layout hardcoding on the frontend.

@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from typing import Dict, Any, List, Optional
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, Body
@@ -93,7 +80,7 @@ async def ai_chat(
 
     return {
         "reply": (
-            "**[Demo AI Mode]** SMRITI Assistant is running in offline fallback mode. "
+            "**[Demo AI Mode]** TILEFLOW Assistant is running in offline fallback mode. "
             "Your message has been received. Configure `GEMINI_API_KEY` if you need live generative intelligence "
             "from the upstream Gemini service."
         )

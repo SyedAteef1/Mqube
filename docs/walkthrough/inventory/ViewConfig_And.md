@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 5.6.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — View Configuration, Excel Mapping & Alias Stabilization (v5.6.0)
 
 ## 1. Purpose
-This walkthrough documents the full suite of operational fixes and enhancements applied to the SMRITI Retail OS Item Master, Attribute Management Studio, Bulk Excel Paste & Mapping Engine, and View Configuration subsystems.
+This walkthrough documents the full suite of operational fixes and enhancements applied to the TILEFLOW Retail OS Item Master, Attribute Management Studio, Bulk Excel Paste & Mapping Engine, and View Configuration subsystems.
 
 ## 2. Scope
 * `src/lib/headerMapping/HeaderAliasRegistry.ts`
@@ -46,7 +45,7 @@ This walkthrough documents the full suite of operational fixes and enhancements 
 
 ### 1. Persistent Alias Suppression Engine
 * Hardcoded default aliases in standard item definitions could not previously be removed because deleting them only cleared custom aliases from `localStorage`.
-* **Solution**: Introduced `REMOVED_ALIASES_STORAGE_KEY` (`smriti_header_removed_aliases`) to persist suppressed aliases. When clicking `×` on any alias chip, the alias is blacklisted and suppressed from all catalog resolvers (`getSmritiItemMasterFields`, `getUnifiedItemMasterFields`). Added a **Reset Defaults** action per attribute.
+* **Solution**: Introduced `REMOVED_ALIASES_STORAGE_KEY` (`tileflow_header_removed_aliases`) to persist suppressed aliases. When clicking `×` on any alias chip, the alias is blacklisted and suppressed from all catalog resolvers (`getTileFlowItemMasterFields`, `getUnifiedItemMasterFields`). Added a **Reset Defaults** action per attribute.
 
 ### 2. Multi-Delimiter Parser & Normalized Header Row Detection
 * When pasting tabular data copied from non-Excel documents or space-separated files, rows were not split correctly and `isKnownHeader` failed due to unnormalized strings.
@@ -61,7 +60,7 @@ This walkthrough documents the full suite of operational fixes and enhancements 
 * Added **Double-Click** transfers between Available (Hidden) and Selected (Visible) column lists.
 * Added **4-Way Reordering Controls**: Move to Top, Move Up, Move Down, Move to Bottom.
 * Added **Quick Presets**: Essential (8 Columns), Standard (14 Columns), and All Fields.
-* Configured `saveGlobalColumnOrder` to persist visible keys and broadcast `smriti_field_visibility_updated` across all client grids and reports.
+* Configured `saveGlobalColumnOrder` to persist visible keys and broadcast `tileflow_field_visibility_updated` across all client grids and reports.
 
 ## 6. Design Rationale
 Provides intuitive, frictionless controls where spreadsheet data auto-maps instantly on paste and column layouts reconfigure globally with zero page reload.
@@ -81,9 +80,9 @@ Provides intuitive, frictionless controls where spreadsheet data auto-maps insta
 ```
 dist/assets/index-CiYJfgIv.js  952.56 kB │ gzip: 213.90 kB
 ✓ built in 18.06s
-Container smriti-db   Healthy
-Container smriti-api  Healthy
-Container smriti-web  Started
+Container tileflow-db   Healthy
+Container tileflow-api  Healthy
+Container tileflow-web  Started
 ```
 
 ## 10. Known Limitations

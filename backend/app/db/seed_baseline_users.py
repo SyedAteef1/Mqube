@@ -1,19 +1,7 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-18
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 import json
+import os
+import uuid
 from sqlalchemy import select
 try:
     from app.db.session import async_session
@@ -28,6 +16,10 @@ try:
     from app.models.company_registry import CompanyDatabaseRegistry
     from app.models.user_assignment import UserCompanyAssignment, UserBranchAssignment
     from app.core.security import hash_password
+    from app.core.config import settings
+    from app.models.inventory import LocationType, Warehouse
+    from app.models.master_lookup import MasterType
+    from app.services.item_taxonomy import ensure_lookup_value
 except ImportError:
     from backend.app.db.session import async_session
     import backend.app.models.role
@@ -41,6 +33,10 @@ except ImportError:
     from backend.app.models.company_registry import CompanyDatabaseRegistry
     from backend.app.models.user_assignment import UserCompanyAssignment, UserBranchAssignment
     from backend.app.core.security import hash_password
+    from backend.app.core.config import settings
+    from backend.app.models.inventory import LocationType, Warehouse
+    from backend.app.models.master_lookup import MasterType
+    from backend.app.services.item_taxonomy import ensure_lookup_value
 
 
 async def seed():
@@ -61,13 +57,15 @@ async def seed():
                 db.add(r)
         await db.flush()
 
+        is_production = settings.ENVIRONMENT.strip().lower() in {"production", "prod"}
+
         # 1. Multiple Enterprise Companies with Branches & READY Registries
         enterprise_companies = [
             {
                 "id": "COMP-001",
-                "name": "Tattly Threads",
+                "name": "MQube Tiles & Sanitaryware",
                 "gst_number": "27AAXFT2508H1ZR",
-                "db_name": "smriti001",
+                "db_name": "tileflow001",
                 "branches": [
                     {"id": "BR-MAIN-001", "name": "Main Corporate Branch", "code": "MAIN"},
                     {"id": "BR-SOUTH-001", "name": "South Distribution Hub", "code": "SOUTH-01"},
@@ -75,9 +73,9 @@ async def seed():
             },
             {
                 "id": "COMP-002",
-                "name": "SMRITI Fashion & Lifestyle Hub",
+                "name": "TILEFLOW Fashion & Lifestyle Hub",
                 "gst_number": "27AABCS1429B1ZB",
-                "db_name": "smriti002",
+                "db_name": "tileflow002",
                 "branches": [
                     {"id": "BR-BND-001", "name": "Bandra Flagship Store", "code": "BANDRA-01"},
                     {"id": "BR-BKC-001", "name": "BKC Boutique Mall", "code": "BKC-01"},
@@ -85,15 +83,19 @@ async def seed():
             },
             {
                 "id": "COMP-003",
-                "name": "SMRITI Electronics & Digital Hyperstore",
+                "name": "TILEFLOW Electronics & Digital Hyperstore",
                 "gst_number": "27AABCS9988C1ZC",
-                "db_name": "smriti003",
+                "db_name": "tileflow003",
                 "branches": [
                     {"id": "BR-ADH-001", "name": "Andheri Mega Superstore", "code": "ANDHERI-01"},
                     {"id": "BR-THN-001", "name": "Thane Central Experience Center", "code": "THANE-01"},
                 ]
             },
         ]
+
+        if is_production:
+            # Only the owner's company. GSTIN and business details are entered by the owner in Business Profile.
+            enterprise_companies = [dict(enterprise_companies[0], gst_number=None)]
 
         for comp_def in enterprise_companies:
             # Company
@@ -107,8 +109,6 @@ async def seed():
                 )
                 db.add(comp)
             else:
-                comp.name = comp_def["name"]
-                comp.gst_number = comp_def["gst_number"]
                 comp.is_active = True
 
             # Database Registry (READY)
@@ -152,16 +152,27 @@ async def seed():
 
         # 2. Users: admin, sysadmin, manager, cashier with standard hashes
         users_to_seed = [
-            ("admin", "usr-admin", "admin@smritibooks.com", "Admin@123", UserRole.SYSADMIN, "role-sysadmin", None, None),
-            ("sysadmin", "usr-sysadmin-direct", "sysadmin_direct@smritibooks.com", "Admin@123", UserRole.SYSADMIN, "role-sysadmin", None, None),
-            ("usr_sysadmin", "usr-sysadmin", "sysadmin@smritibooks.com", "Admin@123", UserRole.SYSADMIN, "role-sysadmin", None, None),
-            ("usr_super", "usr-super", "super@smritibooks.com", "Admin@123", UserRole.SYSADMIN, "role-sysadmin", None, None),
-            ("manager", "usr-manager-direct", "manager@smritibooks.com", "Manager@123", UserRole.MANAGER, "role-manager", "COMP-001", "BR-MAIN-001"),
-            ("usr_manager", "usr-manager", "usr_manager@smritibooks.com", "Manager@123", UserRole.MANAGER, "role-manager", "COMP-001", "BR-MAIN-001"),
-            ("usr_store_manager_a", "usr-store-manager-a", "store_mgr_a@smritibooks.com", "Manager@123", UserRole.MANAGER, "role-manager", "COMP-001", "BR-MAIN-001"),
-            ("cashier", "usr-cashier-direct", "cashier@smritibooks.com", "Cashier@123", UserRole.CASHIER, "role-cashier", "COMP-001", "BR-MAIN-001"),
-            ("usr_cashier", "usr-cashier", "usr_cashier@smritibooks.com", "Cashier@123", UserRole.CASHIER, "role-cashier", "COMP-001", "BR-MAIN-001"),
+            ("admin", "usr-admin", "admin@tileflow.in", "Admin@123", UserRole.SYSADMIN, "role-sysadmin", None, None),
+            ("sysadmin", "usr-sysadmin-direct", "sysadmin_direct@tileflow.in", "Admin@123", UserRole.SYSADMIN, "role-sysadmin", None, None),
+            ("usr_sysadmin", "usr-sysadmin", "sysadmin@tileflow.in", "Admin@123", UserRole.SYSADMIN, "role-sysadmin", None, None),
+            ("usr_super", "usr-super", "super@tileflow.in", "Admin@123", UserRole.SYSADMIN, "role-sysadmin", None, None),
+            ("manager", "usr-manager-direct", "manager@tileflow.in", "Manager@123", UserRole.MANAGER, "role-manager", "COMP-001", "BR-MAIN-001"),
+            ("usr_manager", "usr-manager", "usr_manager@tileflow.in", "Manager@123", UserRole.MANAGER, "role-manager", "COMP-001", "BR-MAIN-001"),
+            ("usr_store_manager_a", "usr-store-manager-a", "store_mgr_a@tileflow.in", "Manager@123", UserRole.MANAGER, "role-manager", "COMP-001", "BR-MAIN-001"),
+            ("cashier", "usr-cashier-direct", "cashier@tileflow.in", "Cashier@123", UserRole.CASHIER, "role-cashier", "COMP-001", "BR-MAIN-001"),
+            ("usr_cashier", "usr-cashier", "usr_cashier@tileflow.in", "Cashier@123", UserRole.CASHIER, "role-cashier", "COMP-001", "BR-MAIN-001"),
         ]
+
+        # Production: never create the demo accounts and never reset an existing password.
+        # Only the owner's admin account is created, once, from the MQUBE_ADMIN_PASSWORD secret.
+        if is_production:
+            admin_password = os.getenv("MQUBE_ADMIN_PASSWORD", "")
+            if len(admin_password) < 12:
+                raise RuntimeError("MQUBE_ADMIN_PASSWORD (12+ characters) is required to create the first admin in production.")
+            users_to_seed = [
+                ("admin", "usr-admin", os.getenv("MQUBE_ADMIN_EMAIL", "admin@mqube.local"), admin_password,
+                 UserRole.SYSADMIN, "role-sysadmin", None, None),
+            ]
 
         for uname, target_id, email, pwd, role_enum, role_id, comp_id, target_branch_code in users_to_seed:
             
@@ -198,6 +209,8 @@ async def seed():
                 )
                 db.add(u)
                 await db.flush()
+            elif is_production:
+                pass  # existing account: leave password, role and status exactly as the owner set them
             else:
                 u.username = uname
                 u.email = email
@@ -212,7 +225,7 @@ async def seed():
                 u.branch_id = actual_branch_id
 
             # Assign all 3 companies to sysadmin roles, and COMP-001 to manager and cashier
-            target_comps = ["COMP-001", "COMP-002", "COMP-003"] if role_enum == UserRole.SYSADMIN else ["COMP-001"]
+            target_comps = ["COMP-001", "COMP-002", "COMP-003"] if role_enum == UserRole.SYSADMIN and not is_production else ["COMP-001"]
             for target_c in target_comps:
                 res_uca = await db.execute(
                     select(UserCompanyAssignment).where(
@@ -333,6 +346,12 @@ async def seed():
                 }
             ]
 
+            if is_production:
+                # No sample customers or made-up outstanding balances on a live system.
+                baseline_customers = [c for c in baseline_customers if c["id"] == "CUST-WALKIN"]
+                for c in baseline_customers:
+                    c["mobile"] = None
+
             for cust_data in baseline_customers:
                 c = await target_session.get(Customer, cust_data["id"])
                 if not c:
@@ -343,14 +362,49 @@ async def seed():
                         setattr(c, k, v)
             await target_session.commit()
 
+        async def _seed_starter_masters(company_db, comp_id, branch_code):
+            """A new company needs at least one showroom and one godown before stock can come in."""
+            existing = await company_db.execute(select(Warehouse.id).where(Warehouse.company_id == comp_id))
+            if existing.first() is None:
+                for wh_id, code, name, loc_type in (
+                    ("WH-SHOWROOM", "SHOWROOM", "Main Showroom", LocationType.SHOWROOM),
+                    ("WH-GODOWN", "GODOWN", "Main Godown", LocationType.GODOWN),
+                ):
+                    company_db.add(Warehouse(id=wh_id, uuid=str(uuid.uuid4()), code=code, name=name,
+                                             location_type=loc_type.value, company_id=comp_id, branch_id=branch_code))
+
+        # Item Master only accepts categories and brands that exist in the Master Registry.
+        for category in ("Floor Tiles", "Wall Tiles", "Parking Tiles", "Sanitaryware"):
+            await ensure_lookup_value(db, "category", "Category", category)
+        if not (await db.execute(select(MasterType.id).where(MasterType.code == "brand"))).first():
+            db.add(MasterType(code="brand", label="Brand", field_schema={}))
+        await db.flush()
+
         # Seed into control DB
         await _seed_crm_data(db, "COMP-001")
 
         # Seed into tenant company DBs
-        for comp_db in ["smriti001", "smriti002", "smriti003"]:
+        company_dbs = ["tileflow001"] if is_production else ["tileflow001", "tileflow002", "tileflow003"]
+        for comp_db in company_dbs:
             try:
                 comp_sm = get_company_sessionmaker(comp_db)
                 async with comp_sm() as cdb:
+                    # The company DB keeps its own copy of the company and branch rows (foreign keys need them).
+                    owner_def = next((c for c in enterprise_companies if c["db_name"] == comp_db), None)
+                    if owner_def:
+                        src_company = await db.get(Company, owner_def["id"])
+                        if src_company and not await cdb.get(Company, owner_def["id"]):
+                            cdb.add(Company(id=src_company.id, name=src_company.name,
+                                            gst_number=src_company.gst_number, is_active=True))
+                            await cdb.flush()
+                        # Tenant requests carry the branch code, so the company DB keys branches by code.
+                        for br_def in owner_def["branches"]:
+                            if not await cdb.get(Branch, br_def["code"]):
+                                cdb.add(Branch(id=br_def["code"], company_id=owner_def["id"],
+                                               name=br_def["name"], code=br_def["code"], is_active=True))
+                        await cdb.flush()
+                        await _seed_starter_masters(cdb, owner_def["id"], owner_def["branches"][0]["code"])
+                        await cdb.commit()
                     await _seed_crm_data(cdb, "COMP-001")
             except Exception as e:
                 print(f"Notice: seeding into company db {comp_db}: {e}")

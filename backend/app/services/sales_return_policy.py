@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-29
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import copy
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -51,7 +37,7 @@ class ResolvedSalesReturnPolicy:
 
 class SalesReturnPolicyResolver:
     """
-    Authoritative SMRITI Sales Return Policy Resolution Engine.
+    Authoritative TILEFLOW Sales Return Policy Resolution Engine.
     Evaluates versioned control-plane policies with deterministic precedence:
     GLOBAL -> TENANT -> BRANCH -> DOCUMENT_TYPE -> PRODUCT_CATEGORY -> CUSTOMER_GROUP -> TRANSACTION_CONTEXT
     """

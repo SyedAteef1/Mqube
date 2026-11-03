@@ -1,28 +1,15 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json, hashlib, argparse
 from datetime import datetime, timezone
 import psycopg2
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 BACKUP_DIR = r"F:\SMRITRretailNX\scratch\backups"
 
 # Approved TARGET_MODEL_V1 Baseline (34 Immutable IDs)
 TARGET_MODEL_V1_IDS = [
-    "menu-dashboard", "menu-user-profile", "menu-wiki", "menu-about-smriti", "menu-dev-tracker",
+    "menu-dashboard", "menu-user-profile", "menu-wiki", "menu-about-tileflow", "menu-dev-tracker",
     "menu-pos", "menu-sales", "menu-customer-master", "menu-crm", "menu-loyalty", "menu-profiles",
     "menu-inventory", "menu-item-master", "menu-barcode", "menu-stock-ledger", "menu-purchase", "menu-supplier-mgmt",
     "menu-business-ledger", "menu-accounting-sync", "menu-reports", "menu-report-designer",
@@ -37,8 +24,8 @@ TARGET_SPECIFICATIONS = {
     "menu-user-profile": {"title": "My Profile Dashboard", "route": "/user-profile", "module": "Dashboard & Operations", "parent_id": None, "sequence": 20, "permission": "PROFILE.ACCESS", "is_active": True},
 
     # 2. System & Knowledge Base
-    "menu-wiki": {"title": "SMRITI Gyan Kendra", "route": "/wiki", "module": "System & Knowledge Base", "parent_id": None, "sequence": 30, "permission": "WIKI.ACCESS", "is_active": True},
-    "menu-about-smriti": {"title": "About SMRITI Retail OS", "route": "/about-smriti", "module": "System & Knowledge Base", "parent_id": None, "sequence": 40, "permission": "ABOUT.ACCESS", "is_active": True},
+    "menu-wiki": {"title": "TILEFLOW Gyan Kendra", "route": "/wiki", "module": "System & Knowledge Base", "parent_id": None, "sequence": 30, "permission": "WIKI.ACCESS", "is_active": True},
+    "menu-about-tileflow": {"title": "About TILEFLOW Retail OS", "route": "/about-tileflow", "module": "System & Knowledge Base", "parent_id": None, "sequence": 40, "permission": "ABOUT.ACCESS", "is_active": True},
     "menu-dev-tracker": {"title": "Dev Intelligence Center", "route": "/dev-tracker", "module": "System & Knowledge Base", "parent_id": None, "sequence": 50, "permission": "SYSTEM.DEV", "is_active": True},
 
     # 3. Sales & POS (Parent: menu-pos)
@@ -89,7 +76,7 @@ def compute_hash(data_str: str) -> str:
 def run_migration_pipeline(dry_run=True):
     mode_str = "DRY-RUN (READ-ONLY)" if dry_run else "APPLY (TRANSACTIONAL MUTATION)"
     print("============================================================")
-    print(f"SMRITI MENU GOVERNANCE MIGRATION — MODE: {mode_str}")
+    print(f"TILEFLOW MENU GOVERNANCE MIGRATION — MODE: {mode_str}")
     print("============================================================")
 
     conn = psycopg2.connect(DB_PARAMS)
@@ -98,7 +85,7 @@ def run_migration_pipeline(dry_run=True):
     # ------------------------------------------------------------
     # REQUIREMENT 1: Immutable Menu ID Exact Match Invariant
     # ------------------------------------------------------------
-    cur.execute("SELECT id FROM smriti_menus WHERE is_deleted = false ORDER BY id;")
+    cur.execute("SELECT id FROM tileflow_menus WHERE is_deleted = false ORDER BY id;")
     live_ids = sorted([r[0] for r in cur.fetchall()])
     expected_ids = sorted(TARGET_MODEL_V1_IDS)
 
@@ -119,7 +106,7 @@ def run_migration_pipeline(dry_run=True):
     # ------------------------------------------------------------
     cur.execute("""
         SELECT id, title, route, icon, module, sequence, parent_id, permission, is_active 
-        FROM smriti_menus 
+        FROM tileflow_menus 
         ORDER BY id;
     """)
     live_rows = {r[0]: {"title": r[1], "route": r[2], "icon": r[3], "module": r[4], "sequence": r[5], "parent_id": r[6], "permission": r[7], "is_active": r[8]} for r in cur.fetchall()}
@@ -179,7 +166,7 @@ def run_migration_pipeline(dry_run=True):
             # Generate SQL
             parent_sql = f"'{target['parent_id']}'" if target['parent_id'] else "NULL"
             perm_sql = f"'{target['permission']}'" if target['permission'] else "NULL"
-            sql_stmt = f"""UPDATE smriti_menus SET title = '{target['title']}', module = '{target['module']}', parent_id = {parent_sql}, sequence = {target['sequence']}, permission = {perm_sql}, modified_at = NOW() WHERE id = '{menu_id}';"""
+            sql_stmt = f"""UPDATE tileflow_menus SET title = '{target['title']}', module = '{target['module']}', parent_id = {parent_sql}, sequence = {target['sequence']}, permission = {perm_sql}, modified_at = NOW() WHERE id = '{menu_id}';"""
             sql_diffs.append(sql_stmt)
         else:
             unchanged_count += 1
@@ -207,12 +194,12 @@ def run_migration_pipeline(dry_run=True):
     # ------------------------------------------------------------
     os.makedirs(BACKUP_DIR, exist_ok=True)
     ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-    backup_file = os.path.join(BACKUP_DIR, f"smriti_menus_backup_{ts}.json")
+    backup_file = os.path.join(BACKUP_DIR, f"tileflow_menus_backup_{ts}.json")
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     pre_audit_count = cur.fetchone()[0]
 
-    cur.execute("SELECT sha256_hash FROM smriti_audit_log WHERE sha256_hash IS NOT NULL ORDER BY changed_at DESC LIMIT 1;")
+    cur.execute("SELECT sha256_hash FROM tileflow_audit_log WHERE sha256_hash IS NOT NULL ORDER BY changed_at DESC LIMIT 1;")
     latest_audit_hash_row = cur.fetchone()
     latest_audit_hash = latest_audit_hash_row[0] if latest_audit_hash_row else "0000000000000000000000000000000000000000000000000000000000000000"
 
@@ -258,7 +245,7 @@ def run_migration_pipeline(dry_run=True):
                 
                 parent_sql = target["parent_id"]
                 cur.execute("""
-                    UPDATE smriti_menus 
+                    UPDATE tileflow_menus 
                     SET title = %s, module = %s, parent_id = %s, sequence = %s, permission = %s, modified_at = NOW()
                     WHERE id = %s;
                 """, (target["title"], target["module"], parent_sql, target["sequence"], target["permission"], menu_id))
@@ -268,13 +255,13 @@ def run_migration_pipeline(dry_run=True):
                 cur_h = compute_hash(new_hash_input)
 
                 cur.execute("""
-                    INSERT INTO smriti_audit_log (
+                    INSERT INTO tileflow_audit_log (
                         id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                         old_value, new_value, change_type, change_reason, change_source,
                         changed_by, changed_by_name, changed_at, sha256_hash, prev_hash
                     )
                     VALUES (
-                        %s, 'smritibus_default', %s, 'smriti_menus', %s, 'menu_governance_target_v1',
+                        %s, 'tileflowbus_default', %s, 'tileflow_menus', %s, 'menu_governance_target_v1',
                         %s, %s, 'UPDATE', 'Menu Governance Target Model v1.0 Migration',
                         'MenuMigEngine_v1', 'usr-super', 'System Admin', NOW(), %s, %s
                     );
@@ -296,7 +283,7 @@ def run_migration_pipeline(dry_run=True):
         conn.close()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="SMRITI Menu Governance Migration Engine")
+    parser = argparse.ArgumentParser(description="TILEFLOW Menu Governance Migration Engine")
     parser.add_argument("--apply", action="store_true", help="Execute transactional apply mode. Default is dry-run.")
     parser.add_argument("--dry-run", action="store_true", help="Explicit dry-run mode (default).")
     args = parser.parse_args()

@@ -1,37 +1,23 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-19
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect, useMemo } from "react";
 import { 
   CheckCircle2, AlertTriangle, HelpCircle, XCircle, ArrowRight,
   BookmarkPlus, Save, Trash2, X, Check, Tag, Eye, Plus, AlertCircle, Info
 } from "lucide-react";
 import { 
-  SmritiFieldDefinition, 
+  TileFlowFieldDefinition, 
   ColumnMappingResult, 
   HeaderMappingEngineResult, 
   SavedMappingProfile,
   MappingTarget,
   REUSE_WARNING_THRESHOLDS
 } from "../lib/headerMapping/types";
-import { SMRITI_ITEM_MASTER_FIELDS, addCustomAlias } from "../lib/headerMapping/HeaderAliasRegistry";
+import { TILEFLOW_ITEM_MASTER_FIELDS, addCustomAlias } from "../lib/headerMapping/HeaderAliasRegistry";
 import { defaultHeaderMappingEngine } from "../lib/headerMapping/HeaderMappingEngine";
 
 interface HeaderMapPrevewModalProps {
   isOpen: boolean;
   mappingResult: HeaderMappingEngineResult | null;
-  availableFields?: SmritiFieldDefinition[];
+  availableFields?: TileFlowFieldDefinition[];
   sampleRows?: string[][];
   onConfirm: (finalMappings: ColumnMappingResult[]) => void;
   onClose: () => void;
@@ -47,7 +33,7 @@ interface MultiTargetConfirmDialogState {
 export const HeaderMapPrevewModal: React.FC<HeaderMapPrevewModalProps> = ({
   isOpen,
   mappingResult,
-  availableFields = SMRITI_ITEM_MASTER_FIELDS,
+  availableFields = TILEFLOW_ITEM_MASTER_FIELDS,
   sampleRows = [],
   onConfirm,
   onClose
@@ -319,7 +305,7 @@ export const HeaderMapPrevewModal: React.FC<HeaderMapPrevewModalProps> = ({
       const normalizedHeader = col.sourceHeader.trim().toLowerCase().replace(/[-_.]/g, " ").replace(/\s+/g, " ");
       const mappedKey = profile.mappings[normalizedHeader];
       if (mappedKey) {
-        const field = SMRITI_ITEM_MASTER_FIELDS.find(f => f.key === mappedKey);
+        const field = TILEFLOW_ITEM_MASTER_FIELDS.find(f => f.key === mappedKey);
         const targetObj: MappingTarget = { target: mappedKey, targetLabel: field ? field.label : mappedKey };
         return {
           ...col,
@@ -355,7 +341,7 @@ export const HeaderMapPrevewModal: React.FC<HeaderMapPrevewModalProps> = ({
             <div>
               <h3 className="font-bold text-base tracking-wide font-display">HEADER AUTO-MAPPING PREVIEW</h3>
               <p className="text-xs text-slate-300">
-                Map source columns to one or multiple SMRITI fields. Multi-target mappings will automatically duplicate values across destination columns.
+                Map source columns to one or multiple MQube fields. Multi-target mappings will automatically duplicate values across destination columns.
               </p>
             </div>
           </div>
@@ -459,7 +445,7 @@ export const HeaderMapPrevewModal: React.FC<HeaderMapPrevewModalProps> = ({
                 <th className="p-2.5 w-1/4">Source Excel Header</th>
                 <th className="p-2.5 w-24">Confidence</th>
                 <th className="p-2.5 text-center w-8">Direction</th>
-                <th className="p-2.5">Target SMRITI Fields (1:Many Supported)</th>
+                <th className="p-2.5">Target MQube Fields (1:Many Supported)</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200">
@@ -554,7 +540,7 @@ export const HeaderMapPrevewModal: React.FC<HeaderMapPrevewModalProps> = ({
                       <ArrowRight size={14} className="inline-block mt-1" />
                     </td>
 
-                    {/* Target SMRITI Field Selection (Multi-Target Supported) */}
+                    {/* Target MQube Field Selection (Multi-Target Supported) */}
                     <td className="p-2.5 space-y-2">
                       {col.isAmbiguous && targetList.length === 0 && col.ambiguousCandidates ? (
                         <div className="space-y-1.5">

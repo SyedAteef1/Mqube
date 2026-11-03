@@ -10,7 +10,7 @@ import tempfile
 import shutil
 
 def main():
-    target_db = 'smriti_diag_fresh'
+    target_db = 'tileflow_diag_fresh'
     
     # Step 1: Create fresh database
     print("[PHASE 1] Creating fresh database...")

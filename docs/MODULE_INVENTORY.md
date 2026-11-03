@@ -1,18 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Audit Document
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Audit Document
 -->
 
-# SMRITI RETAIL OS — AUTHORITATIVE MODULE INVENTORY
 
 | Module ID | Purpose | Primary User | Primary Tasks | Primary Component | APIs / Routes | Backend Service & Tables | Status |
 |---|---|---|---|---|---|---|---|
@@ -39,4 +37,4 @@
 | **`dev-tracker`** | System health & release readiness | Systems Architect | DHI score, quality metrics, commit tracker | [`DevTrackerTab.tsx`](file:///F:/SMRITRretailNX/src/modules/dev_tracker/ui/DevTrackerTab.tsx) | `GET /api/v1/dev-tracker/*` | `backend/app/api/v1/dev_tracker.py`, `dev_metrics` | **`Done`** |
 | **`user-profile`** | User settings & credentials | All Users | Password change, avatar, theme preference | [`UserProfileTab.tsx`](file:///F:/SMRITRretailNX/src/components/UserProfileTab.tsx) | `GET/POST /api/v1/auth/me` | `backend/app/api/v1/auth.py`, `users` | **`Done`** |
 | **`ecommerce`** | eCommerce & omnichannel sync | Commerce Manager | Channel inventory reservation, online order intake, sync outbox | [`CompanyControlCent.tsx`](file:///F:/SMRITRretailNX/src/components/CompanyControlCent.tsx) | `POST /api/v1/ecom/*`, Outbox `ECOM_QUEUE` | `backend/app/services/ecom_reservation.py`, `sales_orders`, `products` | **`Partially Verified`** |
-| **`about`** | SMRITI version & system info | All Users | License verification, version details, system specs | [`AboutSmritiTab.tsx`](file:///F:/SMRITRretailNX/src/components/AboutSmritiTab.tsx) | Static / system state | `src/services/metadataRegistry.ts` | **`Done`** |
+| **`about`** | TILEFLOW version & system info | All Users | License verification, version details, system specs | [`AboutTileFlowTab.tsx`](file:///F:/SMRITRretailNX/src/components/AboutTileFlowTab.tsx) | Static / system state | `src/services/metadataRegistry.ts` | **`Done`** |

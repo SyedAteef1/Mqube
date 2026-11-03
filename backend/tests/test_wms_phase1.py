@@ -1,28 +1,14 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import psycopg2
 from decimal import Decimal
 from datetime import date, datetime, timedelta
 
-COMPANY_DB = "postgresql://postgres:postgres@localhost:5432/smriti001"
+COMPANY_DB = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 def test_wms_phase1_tables_and_scoped_constraints():
     """
     Assert that WMS tables (warehouses, product_batch_stocks, stock_transfers, stock_transfer_items)
-    exist with proper scoped unique indexes in company database smriti001.
+    exist with proper scoped unique indexes in company database tileflow001.
     """
     conn = psycopg2.connect(COMPANY_DB)
     cur = conn.cursor()
@@ -30,7 +16,7 @@ def test_wms_phase1_tables_and_scoped_constraints():
     # 1. Assert tables exist
     for table in ["warehouses", "product_batch_stocks", "stock_transfers", "stock_transfer_items"]:
         cur.execute("SELECT to_regclass(%s)", (f"public.{table}",))
-        assert cur.fetchone()[0] is not None, f"Expected table {table} to exist in smriti001."
+        assert cur.fetchone()[0] is not None, f"Expected table {table} to exist in tileflow001."
 
     # 2. Assert scoped unique indexes exist
     cur.execute("""
@@ -65,7 +51,7 @@ def test_wms_batch_stock_mutation_and_fefo_allocation():
     # Ensure warehouse exists
     cur.execute("SELECT id FROM warehouses WHERE code = 'WH-MAIN' AND is_deleted = false LIMIT 1;")
     wh_row = cur.fetchone()
-    assert wh_row is not None, "Expected WH-MAIN to exist in smriti001."
+    assert wh_row is not None, "Expected WH-MAIN to exist in tileflow001."
     wh_id = wh_row[0]
 
     unique_suffix = uuid.uuid4().hex[:8]
@@ -257,7 +243,7 @@ async def test_wms_service_async_lifecycle():
     from app.models.inventory import Product, Warehouse
     from app.db.session import get_company_sessionmaker
 
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     unique_suffix = uuid.uuid4().hex[:8]
     prod_id = f"prod-life-{unique_suffix}"

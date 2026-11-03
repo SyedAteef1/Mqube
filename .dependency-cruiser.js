@@ -1,19 +1,3 @@
-/**
- * SMRITI Retail OS — frontend/shared architecture contracts
- * Run: `npx depcruise src --config .dependency-cruiser.js --ts-config tsconfig.json`
- *
- * Companion to .importlinter (backend). See
- * SMRITI_Cross_Module_Validation_Audit_v1.0.md Section 1.2/10.
- *
- * This repo has a specific structural risk import-linter can't see:
- * src/components (browser, bundled by Vite) and src/routes (Node-only,
- * Express, used by server.ts) live under the SAME tsconfig
- * (`include: ["src", "server.ts", "vite.config.ts"]`, confirmed).
- * Nothing currently stops a component from importing server-side code —
- * if that ever happens, at best it's a broken build, at worst it's
- * server secrets/DB access code shipped into the browser bundle.
- */
-
 module.exports = {
   forbidden: [
     {

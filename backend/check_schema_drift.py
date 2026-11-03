@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Check for schema drift in smritisys."""
+"""Check for schema drift in tileflowsys."""
 
 import asyncio
 from sqlalchemy import text
@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 
 async def check_drift():
     """Check for schema drift between alembic_version and actual schema."""
-    url = 'postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys'
+    url = 'postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys'
     engine = create_async_engine(url)
     
     try:

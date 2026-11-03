@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.10.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-25
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Universal Backend Auto-Populate & Typeahead Service
- */
-
 import { apiFetchV1 } from "../lib/apiFetchV1.ts";
 import { Customer, Product, CustomerPriceGroup } from "../types.ts";
 import { getCustomers, getCustomerPriceGroups } from "./customerStore.ts";
@@ -80,9 +65,6 @@ export interface AutoPopulateHsnResult {
 const searchCache = new Map<string, { timestamp: number; data: any }>();
 const CACHE_TTL_MS = 15000;
 
-/**
- * Searches customers from backend in real-time as user types in any customer-related field.
- */
 export async function searchBackendCustomers(query: string): Promise<AutoPopulateCustomerResult[]> {
   const cleanQ = query.trim();
   if (!cleanQ) {
@@ -244,7 +226,7 @@ function mapToProductResult(p: any): AutoPopulateProductResult {
     size: p.size || "Standard",
     color: p.color || "Standard",
     gstPercentage: Number(p.gstPercentage || p.gst_percentage || p.gstRate || 18),
-    brand: p.brand || "SMRITI",
+    brand: p.brand || "MQube",
     category: p.category || "General",
     hsnCode: p.hsnCode || p.hsn_code || "6203",
     pricingMode: p.pricingMode || p.pricing_mode || "Fixed",

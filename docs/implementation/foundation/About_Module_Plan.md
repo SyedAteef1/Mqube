@@ -1,25 +1,24 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.4.0
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Implementation Plan: Complete "About SMRITI Retail OS" Module — v3.4.0
+# Implementation Plan: Complete "About TILEFLOW Retail OS" Module — v3.4.0
 
-This document defines the plan to implement the comprehensive **About SMRITI Retail OS** module.
+This document defines the plan to implement the comprehensive **About TILEFLOW Retail OS** module.
 
 ---
 
 ## 1. Objective
-Design and implement an enterprise-grade **About SMRITI Retail OS** module containing 20 sub-navigation items, internal search, responsive layout, print-friendly views, backend metadata integration, and unit tests.
+Design and implement an enterprise-grade **About TILEFLOW Retail OS** module containing 20 sub-navigation items, internal search, responsive layout, print-friendly views, backend metadata integration, and unit tests.
 
 ---
 
@@ -32,7 +31,7 @@ Provide users, operators, and auditors with a single, clear source of truth rega
 
 ### In Scope
 - **Backend API:** Implement `/api/changelog` in `server.ts` to return the `CHANGELOG.md` file dynamically.
-- **Frontend UI Component:** Completely redesign `src/components/AboutSmritiTab.tsx` with a responsive split-pane layout containing 20 menu items, search filtering, and print styles.
+- **Frontend UI Component:** Completely redesign `src/components/AboutTileFlowTab.tsx` with a responsive split-pane layout containing 20 menu items, search filtering, and print styles.
 - **Diagnostics Dashboard:** Read live browser navigator parameters and database connection health to display dynamic environment variables.
 - **Unit Testing:** Implement a regression test script `src/tests/about.test.ts` to validate endpoints and schema data.
 - **Footer/Navigation Links:** Unify sidebar and taskbar reference links to open the About module.
@@ -43,8 +42,8 @@ Provide users, operators, and auditors with a single, clear source of truth rega
 ---
 
 ## 4. Current State
-- `AboutSmritiTab.tsx` exists as a stub with only 4 sidebar sections (About, Author, Modules, System).
-- Lacks biographies for Chairperson Pushpa Devi Jawahar Mallah or CEO Jawahar Ramkripal Mallah.
+- `AboutTileFlowTab.tsx` exists as a stub with only 4 sidebar sections (About, Author, Modules, System).
+- Lacks biographies for Chairperson Pushpa Devi Jawahar Mallah or CEO Syed Ateef.
 - No internal search within the About tab.
 - No live connection log, changelog integration, privacy policy, or terms panels.
 
@@ -59,21 +58,21 @@ Provide users, operators, and auditors with a single, clear source of truth rega
 
 ## 6. Architecture Impact
 - **Endpoint Additions:** Adds a non-blocking Express GET router (`/api/changelog`).
-- **Layout Compliance:** Follows the SMRITI Platform Abstraction Layer (PAL) coding constitution with no direct platform-specific dependencies in UI layers.
+- **Layout Compliance:** Follows the TILEFLOW Platform Abstraction Layer (PAL) coding constitution with no direct platform-specific dependencies in UI layers.
 
 ---
 
 ## 7. Proposed Design
 
 ### Sidebar Categories & Navigation Structure
-The left sidebar inside `AboutSmritiTab.tsx` will be organized into four thematic groups containing the 20 required submenus:
+The left sidebar inside `AboutTileFlowTab.tsx` will be organized into four thematic groups containing the 20 required submenus:
 
 ```
 ├── 📊 OPERATIONAL OVERVIEW
 │   ├── Dashboard (Summary of version, environment, quick navigation cards)
-│   └── About SMRITI Retail OS (Product identity, logo, websites)
+│   └── About TILEFLOW Retail OS (Product identity, logo, websites)
 ├── 👥 LEADERSHIP & CULTURE
-│   ├── Founders (Chairperson Pushpa Devi Jawahar Mallah & CEO Jawahar Ramkripal Mallah profiles)
+│   ├── Founders (Chairperson Pushpa Devi Jawahar Mallah & CEO Syed Ateef profiles)
 │   ├── Our Story (Corporate evolution narrative and visual timeline)
 │   ├── Vision & Mission (Strategic directions)
 │   └── Core Values (Innovation, simplicity, trust, transparency, safety)
@@ -90,7 +89,6 @@ The left sidebar inside `AboutSmritiTab.tsx` will be organized into four themati
 │   └── Third-Party Licenses (Licenses of upstream dependencies)
 └── 📞 CHANNELS & CREDITS
     ├── Contact (Email links, sites, support channels)
-    ├── Credits (Contributors, AITDL network acknowledgments)
     ├── Version Information (Commit hashes, host OS, database engines)
     ├── Release Notes (Render of CHANGELOG.md via backend feed)
     └── System Information (Diagnostics, active plugins, storage, memory)
@@ -110,7 +108,7 @@ Tailored CSS print media queries (`@media print`) will hide sidebars and render 
 ---
 
 ## 9. Files Modified
-- [MODIFY] [AboutSmritiTab.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/AboutSmritiTab.tsx) — Replace pane with 20 sections, search bar, contact form, visual timelines, and diagnostic fields.
+- [MODIFY] [AboutTileFlowTab.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/AboutTileFlowTab.tsx) — Replace pane with 20 sections, search bar, contact form, visual timelines, and diagnostic fields.
 - [MODIFY] [server.ts](file:///d:/IMP/GitHub/SMRITRretailNX/server.ts) — Register `/api/changelog` router endpoint.
 - [MODIFY] [package.json](file:///d:/IMP/GitHub/SMRITRretailNX/package.json) — Add test execution command.
 
@@ -128,7 +126,7 @@ Tailored CSS print media queries (`@media print`) will hide sidebars and render 
 ---
 
 ## 12. Rollback Strategy
-`git checkout -- src/components/AboutSmritiTab.tsx server.ts package.json` and deletion of the test script file.
+`git checkout -- src/components/AboutTileFlowTab.tsx server.ts package.json` and deletion of the test script file.
 
 ---
 
@@ -147,7 +145,7 @@ Tailored CSS print media queries (`@media print`) will hide sidebars and render 
 
 ## 14. Test Plan
 - Assert GET `/api/metadata` schema structure.
-- Assert GET `/api/changelog` returns text containing `# SMRITI Retail OS — Changelog`.
+- Assert GET `/api/changelog` returns text containing `# TILEFLOW Retail OS — Changelog`.
 
 ---
 

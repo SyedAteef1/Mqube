@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.15.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Security Hardening and FastAPI Integration Walkthrough — Phase 3 to Phase 7
@@ -20,7 +19,7 @@ This document details the implementation of security fixes (Phase 3), the expans
 - Upgrading password hashing iterations to 600,000.
 - Extracting session resolution to a dedicated Express middleware and registering it globally.
 - Replacing string-based role name assertions with permission checks (`hasPermission`).
-- Securing the SMRITI Assistant AI and local Wiki search endpoints.
+- Securing the TILEFLOW Assistant AI and local Wiki search endpoints.
 - Implementing test coverage for the GST 2.0 price-tier calculation and voucher numbering sequence engines.
 - Automating CI builds and test executions via GitHub Actions.
 - Exposing the local FastAPI proxy and credentials configuration across services.
@@ -80,7 +79,7 @@ File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 - Consignment log parsing requires a valid partner configuration; testing local dry-runs is mock-dependent.
 
 ## 11. Future Work
-- Deploy frontend telemetry hooks to capture API metrics via the SMRITI Development Intelligence Center.
+- Deploy frontend telemetry hooks to capture API metrics via the TILEFLOW Development Intelligence Center.
 
 ## 12. Related ADRs
 - ADR-015: Role-Based Access Control and Permission-Level Enforcement

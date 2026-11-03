@@ -1,23 +1,22 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-19
   Modified     : 2026-08-19
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Governance & Pilot Readiness Specification
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Governance & Pilot Readiness Specification
 -->
 
-# SMRITI Retail OS — Pilot Supported vs Preview Modules Specification
+# TILEFLOW Retail OS — Pilot Supported vs Preview Modules Specification
 
 **Phases Complete:**  
 - **Phase 1 (Days 1–30)**: Stabilize Tier A Money Path & Launchpad Directory  
 - **Phase 2 (Days 31–60)**: Global Screen Extensions (DocumentStudio & LedgerScreen), B2B Tax Invoicing & Barcode Studio  
-**Branch:** `smritiNX`  
+**Branch:** `tileflowNX`  
 **Target Release:** v3.16.0  
 **Status:** Approved for Commercial Pilot Deployment  
 
@@ -25,7 +24,7 @@
 
 ## 1. Executive Summary
 
-This document establishes the official pilot deployment boundaries for SMRITI Retail OS. To guarantee operational stability, fiscal correctness, and strict multi-tenant database isolation, modules are formally classified into two tiers:
+This document establishes the official pilot deployment boundaries for TILEFLOW Retail OS. To guarantee operational stability, fiscal correctness, and strict multi-tenant database isolation, modules are formally classified into two tiers:
 - **Supported for Pilot (Tier A + Core Masters + DocumentStudio + LedgerScreen + Barcode Studio)**: Fully verified end-to-end, integrated with FastAPI + PostgreSQL transactional core, hardened tenant isolation, and protected against data corruption.
 - **Preview (Available for Staging / Evaluation)**: Functional for demonstration and evaluation, scheduled for subsequent hardware certification or secondary reporting extensions in Phase 3.
 
@@ -37,7 +36,7 @@ The following 18 modules are fully supported for commercial pilot operations:
 
 | Module Identifier | Display Name | Category | Backend Endpoint | Verification Scope |
 | :--- | :--- | :--- | :--- | :--- |
-| `dashboard` / `launchpad` | **SMRITI Launchpad** | Operations | `/api/v1/auth/me` | Unified workspace director with 33 canonical routes; neutral status indicators. |
+| `dashboard` / `launchpad` | **TILEFLOW Launchpad** | Operations | `/api/v1/auth/me` | Unified workspace director with 33 canonical routes; neutral status indicators. |
 | `pos` | **Billing Desk (POS)** | Sales & POS | `/api/v1/pos/`, `/api/v1/sales/` | Cashier shift management, barcode scanning, cart calculation, cash drawer reconciliation, receipt printing. |
 | `sales` | **Sales Studio** | Sales & POS | `/api/v1/sales/` | B2C retail invoice creation, multi-tender transactions, sales register, return processing. |
 | `create-tax-invoice` | **Create Tax Invoice (B2B)** | Sales & POS | `/api/v1/sales/invoices` | Full B2B statutory invoice UI with customer GSTIN validation, HSN rates, discount splits, and printable A4 invoice formats. |
@@ -54,7 +53,7 @@ The following 18 modules are fully supported for commercial pilot operations:
 | `approval-matrix` | **Approval Matrix Engine** | Data & Config | `/api/v1/workflow/` | Signing authority thresholds, discount approval workflows. |
 | `staff-management` | **Staff & HR Management** | Operations | `/api/v1/users/` | Operator accounts, role-based access control (RBAC), credentials management. |
 | `user-profile` | **My Profile Dashboard** | Operations | `/api/v1/auth/me` | Active session inspection, password update, security credentials. |
-| `about-smriti` | **About SMRITI** | System | `/api/v1/system/` | System diagnostic information, licensing, architectural compliance. |
+| `about-tileflow` | **About TILEFLOW** | System | `/api/v1/system/` | System diagnostic information, licensing, architectural compliance. |
 
 ---
 
@@ -77,7 +76,7 @@ These modules are enabled in the interface for operational evaluation:
 | `formulas` | **KPI Registry** | Preview | Analytical metric expressions registry in evaluation. |
 | `psv` | **Channel Visibility (PSV)** | Preview | Multi-channel partner stock telemetry in preview. |
 | `dev-tracker` | **Dev Intelligence Center** | Preview | Internal developer diagnostics and health monitor. |
-| `wiki` | **SMRITI Gyan Kendra** | Preview | Integrated markdown documentation viewer. |
+| `wiki` | **TILEFLOW Gyan Kendra** | Preview | Integrated markdown documentation viewer. |
 | `training-academy` | **Training Academy** | Preview | Training simulation tutorials for cashier onboarding. |
 
 ---
@@ -119,6 +118,6 @@ The 18 modules enumerated in **Section 2** represent the complete, hardened oper
 - Full cutover and deprecation of legacy studio paths is deferred to Phase 3.
 
 ### 6.4. Mandatory Database Migration Head Requirement
-All pilot tenant databases (`smritisys`, `smriti001`, etc.) MUST be migrated through `alembic upgrade head` (minimum revision `v1337_backfill_variant_id` or higher) prior to transaction recording.
+All pilot tenant databases (`tileflowsys`, `tileflow001`, etc.) MUST be migrated through `alembic upgrade head` (minimum revision `v1337_backfill_variant_id` or higher) prior to transaction recording.
 
 

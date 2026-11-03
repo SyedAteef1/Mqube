@@ -1,17 +1,3 @@
-"""
-SMRITI Retail OS — Gate 10 Responsive & Touch Interaction Audit Script
------------------------------------------------------------------------
-Verifies 4 viewports (1920x1080, 1440x900, 1024x768, 390x844) for:
-  - Horizontal scrollbar layout overflow (scrollWidth vs innerWidth)
-  - Touch target dimensions (minimum 44x44px per WCAG 2.1 AAA / Mobile UX standards)
-  - Modal dialog & form input viewport fitting
-  - Table horizontal scroll container usability
-
-Author: Jawahar Ramkripal Mallah
-Version: 3.17.0
-Copyright: © SMRITIBooks.com. All Rights Reserved.
-"""
-
 import asyncio
 import json
 import os
@@ -24,7 +10,7 @@ SUMMARY_PATH = os.path.join(os.getcwd(), "scratch", "responsive_touch_summary.js
 
 async def run_responsive_touch_audit():
     print("=" * 80)
-    print("SMRITI RETAIL OS — GATE 10 RESPONSIVE & TOUCH INTERACTION AUDIT")
+    print("TILEFLOW RETAIL OS — GATE 10 RESPONSIVE & TOUCH INTERACTION AUDIT")
     print("=" * 80)
 
     viewports = [

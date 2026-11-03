@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Sprint 38: Section 7 Shared Business Engines: Approval Matrix Engine Completion
 
 ## 1. Purpose
-This sprint delivers the authoritative **SMRITI Approval Matrix Engine** fulfilling **Blueprint Section 7: Shared Business Engines**. It establishes multi-tier threshold approval policies (`ApprovalPolicy`), transaction gating and enforcement checks, role-based authorization verification (RBAC fail-closed), hierarchical escalation workflows, and immutable decision audit tracking in PostgreSQL `ApprovalAction`.
+This sprint delivers the authoritative **TILEFLOW Approval Matrix Engine** fulfilling **Blueprint Section 7: Shared Business Engines**. It establishes multi-tier threshold approval policies (`ApprovalPolicy`), transaction gating and enforcement checks, role-based authorization verification (RBAC fail-closed), hierarchical escalation workflows, and immutable decision audit tracking in PostgreSQL `ApprovalAction`.
 
 ---
 
@@ -91,8 +90,8 @@ tests/t_approval.py::test_api_approval_endpoints PASSED                  [100%]
 
 ## 9. Verification Results
 - `6/6 tests green` in `t_approval.py`.
-- `111/111 full platform regression tests green` across all SMRITI modules.
-- SMRITI Naming Guard verified: `0 violations`.
+- `111/111 full platform regression tests green` across all TILEFLOW modules.
+- TILEFLOW Naming Guard verified: `0 violations`.
 - Evidence Level: `A` (Full Automated Suite + Concurrency-Safe DB Test).
 
 ---
@@ -114,4 +113,4 @@ tests/t_approval.py::test_api_approval_endpoints PASSED                  [100%]
 ---
 
 ## 13. Related RFCs
-- `RFC-APP-001`: SMRITI Approval Matrix & Governance Specification.
+- `RFC-APP-001`: TILEFLOW Approval Matrix & Governance Specification.

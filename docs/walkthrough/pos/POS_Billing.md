@@ -1,23 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.28.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Enterprise UI Refactor Walkthrough
 -->
 
 # Walkthrough: POS Billing Terminal Visual Refactor v3.28.0
 
 ## 1. Purpose
-This walkthrough documents the visual refactor of the **POS Billing & Quick Checkout Terminal** screen (`src/components/PosTerminalTab.tsx`). The goal was to modernize the lane checkout workspace and align it with the enterprise light theme (Fiori Horizon Inspired) visual standard of the SMRITI Design System.
+This walkthrough documents the visual refactor of the **POS Billing & Quick Checkout Terminal** screen (`src/components/PosTerminalTab.tsx`). The goal was to modernize the lane checkout workspace and align it with the enterprise light theme (Fiori Horizon Inspired) visual standard of the TILEFLOW Design System.
 
 ## 2. Scope
 - **Target Component**: `src/components/PosTerminalTab.tsx`.

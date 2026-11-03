@@ -1,21 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-09-01
- * Modified     : 2026-09-01
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Transaction Attachment Upload Panel Component
- * 
- * Purpose: Reusable UI component for uploading and managing attachments
- * across all sales and procurement transaction forms.
- */
-
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { Upload, X, FileText, Download, Eye, AlertCircle, CheckCircle } from "lucide-react";
 import type {

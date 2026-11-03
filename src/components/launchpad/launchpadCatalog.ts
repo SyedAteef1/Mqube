@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 4.2.0
- * Created      : 2026-08-20
- * Modified     : 2026-08-24
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { APP_VERSION } from "../../config/version.ts";
 
 export interface TileData {
@@ -412,7 +398,7 @@ export const LAUNCHPAD_CATALOG: TileData[] = [
   },
   {
     id: "wiki",
-    title: "SMRITI Gyan Kendra",
+    title: "MQube Gyan Kendra",
     subtitle: "Built-in documentation hub, operator walkthroughs & statutory GST guides",
     icon: "menu_book",
     tag: "Wiki Docs",
@@ -420,8 +406,8 @@ export const LAUNCHPAD_CATALOG: TileData[] = [
     group: "System & Operations",
   },
   {
-    id: "about-smriti",
-    title: "About SMRITI Retail OS",
+    id: "about-tileflow",
+    title: "About MQube",
     subtitle: "Architectural constitution, software licensing, versioning & creator credits",
     icon: "info",
     tag: `v${APP_VERSION}`,
@@ -439,7 +425,7 @@ export const LAUNCHPAD_CATALOG: TileData[] = [
   },
   {
     id: "legacy-migration",
-    title: "Shoper9 → SMRITI Migration",
+    title: "Shoper9 → MQube Migration",
     subtitle: "Legacy vaMenu lineage registry: 265 entries classified, coverage tracking & workspace parity dashboard",
     icon: "alt_route",
     tag: "Migration",
@@ -461,12 +447,6 @@ export const LAUNCHPAD_CATALOG: TileData[] = [
     accentColor: "emerald",
   },
 ];
-/**
- * Filter catalog by user role with strict deny-by-default semantics.
- * - Missing/null/empty role -> only tiles with NO role restriction (tile.roles undefined or empty)
- * - SYSADMIN / ADMIN -> sees all tiles
- * - Specific role -> sees tiles explicitly allowing that role
- */
 export function getVisibleLaunchpadTiles(userRoleRaw?: string | null): TileData[] {
   if (!userRoleRaw || typeof userRoleRaw !== "string" || !userRoleRaw.trim()) {
     // Deny-by-default: anonymous / unassigned users only see unrestricted tiles (if any)

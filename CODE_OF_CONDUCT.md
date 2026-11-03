@@ -1,27 +1,4 @@
-<!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
 
-  Founders
-
-  * Pushpa Devi Jawahar Mallah
-    * Founder & Chairperson
-    * Phone: +91 9324117007
-    * Email: founder@aitdl.com
-
-  * Jawahar Ramkripal Mallah
-    * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
-
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-  * Version    : 2.1.1
-  * Created    : 2026-07-10
-  * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
--->
 
 # Code of Conduct
 
@@ -102,7 +79,7 @@ Contributors are expected to:
 - Keep pull requests focused.
 - Report bugs responsibly.
 - Protect user privacy and security.
-- **Not bypass the SMRITI service layer with direct database access outside `core/platform/`.** All data access must route through the SMRITI Core Framework via `apiFetchV1` (client) or the repository layer (server). See `ARCHITECTURE.md §15` for the canonical patterns.
+- **Not bypass the TILEFLOW service layer with direct database access outside `core/platform/`.** All data access must route through the TILEFLOW Core Framework via `apiFetchV1` (client) or the repository layer (server). See `ARCHITECTURE.md §15` for the canonical patterns.
 
 ---
 
@@ -165,13 +142,13 @@ Reports will be handled confidentially whenever possible.
 
 # Attribution
 
-This Code of Conduct is inspired by the Contributor Covenant and adapted for the SMRITI Retail OS community.
+This Code of Conduct is inspired by the Contributor Covenant and adapted for the TILEFLOW Retail OS community.
 
 ---
 
-# About SMRITI Retail OS
+# About TILEFLOW Retail OS
 
-SMRITI Retail OS is an enterprise-grade Retail Operating System designed to help retailers, wholesalers, distributors, and multi-store businesses operate with intelligence, transparency, and reliability.
+TILEFLOW Retail OS is an enterprise-grade Retail Operating System designed to help retailers, wholesalers, distributors, and multi-store businesses operate with intelligence, transparency, and reliability.
 
 The project values:
 
@@ -186,8 +163,8 @@ The project values:
 
 # Maintainer
 
-**Jawahar Ramkripal Mallah**  
-support@smritibooks.com
+**Syed Ateef**  
+ateef@tileflow.in
 
 ---
 

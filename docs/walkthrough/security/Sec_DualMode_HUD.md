@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.14.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Dual-Mode Contextual Inspector HUD (Zero Data on Login & Full Active Capabilities in Session)
@@ -19,7 +18,7 @@ Configure the **Contextual Inspector HUD** (`ContextualInspectorHUD`) to safely 
 
 ## 2. Scope
 - Dual-mode HUD architecture:
-  - **Login Screen (`!isAuthenticated`)**: Displays "SMRITI Security Portal • Authentication Required" with zero entity queries or password exposure.
+  - **Login Screen (`!isAuthenticated`)**: Displays "TILEFLOW Security Portal • Authentication Required" with zero entity queries or password exposure.
   - **Logged-In Session (`isAuthenticated`)**: Activates all 18+ contextual categories, live query tracking, `Ctrl+K` Global Search, and `F2` Master Browse.
 - Safe focus tracking in `ActiveFieldContext.tsx` to handle authentication inputs without entity mapping.
 - Mount overlays at the top-level application tree in `App.tsx` while keeping `WorkspaceTaskbar` completely removed.

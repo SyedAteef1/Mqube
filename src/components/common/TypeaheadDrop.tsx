@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.9.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Reusable Typeahead Suggestions Dropdown
- */
-
 import React, { useEffect, useRef } from "react";
 import { User, Package, Check, Tag, Phone, ShieldCheck } from "lucide-react";
 
@@ -26,7 +11,7 @@ export interface TypeaheadOption {
   iconType?: "customer" | "product" | "hsn" | "general";
 }
 
-interface SmritiTypeaheadDropdownProps {
+interface TileFlowTypeaheadDropdownProps {
   isOpen: boolean;
   options: TypeaheadOption[];
   selectedIndex: number;
@@ -36,7 +21,7 @@ interface SmritiTypeaheadDropdownProps {
   emptyMessage?: string;
 }
 
-export const SmritiTypeaheadDropdown: React.FC<SmritiTypeaheadDropdownProps> = ({
+export const TileFlowTypeaheadDropdown: React.FC<TileFlowTypeaheadDropdownProps> = ({
   isOpen,
   options,
   selectedIndex,
@@ -64,7 +49,7 @@ export const SmritiTypeaheadDropdown: React.FC<SmritiTypeaheadDropdownProps> = (
   return (
     <div
       ref={dropdownRef}
-      className="absolute left-0 top-full mt-1 w-full max-h-64 overflow-y-auto bg-white dark:bg-[#1e293b] border border-[#94a3b8] dark:border-[#475569] rounded-md shadow-xl z-50 divide-y divide-gray-100 dark:divide-gray-800"
+      className="absolute left-0 top-full mt-1 w-full max-h-64 overflow-y-auto bg-white dark:bg-[#282828] border border-[#a1a1a1] dark:border-[#535353] rounded-md shadow-xl z-50 divide-y divide-gray-100 dark:divide-gray-800"
     >
       {isLoading ? (
         <div className="px-4 py-3 text-xs text-gray-500 flex items-center justify-center gap-2">
@@ -136,4 +121,4 @@ export const SmritiTypeaheadDropdown: React.FC<SmritiTypeaheadDropdownProps> = (
     </div>
   );
 };
-export { SmritiTypeaheadDropdown as TypeaheadDrop };
+export { TileFlowTypeaheadDropdown as TypeaheadDrop };

@@ -1,26 +1,12 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import psycopg2
 
-conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
 cur = conn.cursor()
 
 # Check tables
 cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public' AND table_name IN ('shift_cash_transactions', 'accounts', 'chart_of_accounts', 'journal_vouchers');")
 tables = [r[0] for r in cur.fetchall()]
-print("Existing tables in smriti001:", tables)
+print("Existing tables in tileflow001:", tables)
 
 if "shift_cash_transactions" in tables:
     cur.execute("""

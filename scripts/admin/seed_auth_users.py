@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.63.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 import uuid
 import asyncio
@@ -26,7 +12,7 @@ from app.core.security import hash_password
 DEFAULT_USERS = [
     {
         "username": "admin",
-        "email": "admin@smritibooks.com",
+        "email": "admin@tileflow.in",
         "full_name": "System Administrator",
         "role": UserRole.SYSADMIN,
         "password": "Admin@123",
@@ -35,7 +21,7 @@ DEFAULT_USERS = [
     },
     {
         "username": "sysadmin",
-        "email": "sysadmin@smritibooks.com",
+        "email": "sysadmin@tileflow.in",
         "full_name": "Chief System Admin",
         "role": UserRole.SYSADMIN,
         "password": "Admin@123",
@@ -44,7 +30,7 @@ DEFAULT_USERS = [
     },
     {
         "username": "usr_sysadmin",
-        "email": "usr_sysadmin@smritibooks.com",
+        "email": "usr_sysadmin@tileflow.in",
         "full_name": "System Administrator",
         "role": UserRole.SYSADMIN,
         "password": "Admin@123",
@@ -53,7 +39,7 @@ DEFAULT_USERS = [
     },
     {
         "username": "manager",
-        "email": "manager@smritibooks.com",
+        "email": "manager@tileflow.in",
         "full_name": "Store Operations Manager",
         "role": UserRole.MANAGER,
         "password": "Manager@123",
@@ -62,7 +48,7 @@ DEFAULT_USERS = [
     },
     {
         "username": "usr_manager",
-        "email": "usr_manager@smritibooks.com",
+        "email": "usr_manager@tileflow.in",
         "full_name": "Store Operations Manager",
         "role": UserRole.MANAGER,
         "password": "Manager@123",
@@ -71,7 +57,7 @@ DEFAULT_USERS = [
     },
     {
         "username": "cashier",
-        "email": "cashier@smritibooks.com",
+        "email": "cashier@tileflow.in",
         "full_name": "Senior POS Cashier",
         "role": UserRole.CASHIER,
         "password": "Cashier@123",
@@ -80,7 +66,7 @@ DEFAULT_USERS = [
     },
     {
         "username": "usr_cashier",
-        "email": "usr_cashier@smritibooks.com",
+        "email": "usr_cashier@tileflow.in",
         "full_name": "Senior POS Cashier",
         "role": UserRole.CASHIER,
         "password": "Cashier@123",
@@ -91,7 +77,7 @@ DEFAULT_USERS = [
 
 
 async def seed_users():
-    print("[*] Seeding and resetting standard SMRITI authentication accounts...")
+    print("[*] Seeding and resetting standard TILEFLOW authentication accounts...")
     async with async_session() as session:
         for u in DEFAULT_USERS:
             stmt = select(User).where(User.username == u["username"])

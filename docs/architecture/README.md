@@ -1,6 +1,6 @@
-# SMRITI Architecture Documentation
+# TILEFLOW Architecture Documentation
 
-This folder contains architecture-level documentation for SMRITI Retail OS.
+This folder contains architecture-level documentation for TILEFLOW Retail OS.
 
 ## Overview
 
@@ -44,7 +44,7 @@ The `decisions/` subfolder contains architecture decision records that document 
 
 ## Purpose
 
-These documents capture the target architecture for SMRITI's identity governance, barcode management, and modular product services.
+These documents capture the target architecture for TILEFLOW's identity governance, barcode management, and modular product services.
 
 ## Navigation
 

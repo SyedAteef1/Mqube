@@ -55,11 +55,11 @@ jspm_packages/
 # Aider AI Chat
 .aider*
 
-# SMRITI Branding Policy (do not commit to GitHub)
+# TILEFLOW Branding Policy (do not commit to GitHub)
 BRANDING_POLICY.md
 
-# SMRITI extracted images from sheets
-smriti_retail_os/public/extracted_images/
+# TILEFLOW extracted images from sheets
+tileflow_retail_os/public/extracted_images/
 
 # Local Dev Directories
 apps/
@@ -115,11 +115,11 @@ TT/**
 *.pdf
 *.csv
 
-# SMRITI Governance Exception: Legacy reference artifacts and naming maps
+# TILEFLOW Governance Exception: Legacy reference artifacts and naming maps
 # These are IMMUTABLE governance artifacts, not generated data.
 # They must be tracked by git without force-add.
 !docs/legacy/**/*.csv
-!docs/governance/SMRITI_RENAME_MAP_NGP_V2.csv
+!docs/governance/TILEFLOW_RENAME_MAP_NGP_V2.csv
 
 # Security, Certificates & Cryptographic Keys (NEVER COMMIT)
 backend/app/certs/
@@ -130,3 +130,11 @@ certs/
 *.pfx
 *.p12
 
+e2e/report/
+e2e/results/
+e2e/shots/
+
+# Playwright run output
+e2e/results*/
+test-results/
+playwright-report/

@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 5.4.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect, useMemo } from "react";
 import { 
   Plus, 
@@ -213,7 +199,7 @@ export interface DerivedGridRow {
   sourceIndex: number;
 }
 
-interface SmritiItemDetailsGridProps {
+interface TileFlowItemDetailsGridProps {
   products: Product[];
   viewConfig?: ItemViewConfigState;
   commonFields?: any;
@@ -224,7 +210,7 @@ interface SmritiItemDetailsGridProps {
   onNavigateToCommonFields?: () => void;
 }
 
-export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
+export const ItemDetailsGrid: React.FC<TileFlowItemDetailsGridProps> = ({
   products = [],
   viewConfig,
   commonFields,
@@ -259,8 +245,8 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
   // Listen to global visibility changes
   useEffect(() => {
     const handleVisChange = () => setVisibilityVersion(v => v + 1);
-    window.addEventListener("smriti_field_visibility_updated", handleVisChange);
-    return () => window.removeEventListener("smriti_field_visibility_updated", handleVisChange);
+    window.addEventListener("tileflow_field_visibility_updated", handleVisChange);
+    return () => window.removeEventListener("tileflow_field_visibility_updated", handleVisChange);
   }, []);
 
   // Load backend attribute definitions
@@ -291,8 +277,13 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
         mrp: p.mrp || p.price || 0,
         price: p.price || 0,
         costPrice: p.costPrice || (p as any).cost_price || 0,
+        buying_price: (p as any).buying_price ?? (p as any).buyingPrice ?? "",
         gst_percentage: (p as any).gst_percentage || (p as any).gstPercentage || commonFields?.gstPercentage || 18,
         hsn_code: (p as any).hsn_code || (p as any).hsnCode || commonFields?.hsnCode || "",
+        sqft_per_box: (p as any).sqft_per_box ?? "",
+        pieces_per_box: (p as any).pieces_per_box ?? "",
+        batch_shade_no: (p as any).batch_shade_no ?? "",
+        caliber_code: (p as any).caliber_code ?? "",
         barcode: p.barcode || "",
         uom: (p as any).uom || commonFields?.uom || "Pair",
         a1: p.attributes?.a1 || p.attributes?.heels || "",
@@ -321,7 +312,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
           barcode: "8901234567890",
           name: "Classic Leather Shoe",
           imageName: "shoe-classic-01",
-          brand: commonFields?.brand || "SMRITI",
+          brand: commonFields?.brand || "MQube",
           styleCode: "CLS-101",
           colour: "Black",
           size: "8",
@@ -331,7 +322,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
           price: 2499,
           costPrice: 1200,
           gst_percentage: commonFields?.gstPercentage || "18",
-          hsn_code: commonFields?.hsnCode || "6403",
+          hsn_code: commonFields?.hsnCode || "6907",
           uom: commonFields?.uom || "Pair",
           a1: "Low Heel",
           a2: "Full-Grain Leather",
@@ -717,7 +708,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
       barcode: `890${Math.floor(1000000000 + Math.random() * 9000000000)}`,
       name: "New Product Item",
       imageName: "",
-      brand: commonFields?.brand || "SMRITI",
+      brand: commonFields?.brand || "MQube",
       styleCode: "STYLE-01",
       colour: "Black",
       size: "M",
@@ -727,7 +718,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
       price: 1499,
       costPrice: 800,
       gst_percentage: commonFields?.gstPercentage || "18",
-      hsn_code: commonFields?.hsnCode || "6403",
+      hsn_code: commonFields?.hsnCode || "6907",
       uom: commonFields?.uom || "Pair",
       a1: "",
       a2: "",
@@ -913,6 +904,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
           cost_price: rawCp !== null && rawCp !== undefined && String(rawCp).trim() !== "" ? Number(rawCp) : null,
           gst_percentage: Number(row.gst_percentage || 18),
           hsn_code: String(row.hsn_code ?? "").trim(),
+          sqft_per_box: Number(row.sqft_per_box) > 0 ? Number(row.sqft_per_box) : null,
+          pieces_per_box: Number(row.pieces_per_box) > 0 ? Number(row.pieces_per_box) : null,
+          batch_shade_no: String(row.batch_shade_no ?? "").trim() || null,
+          caliber_code: String(row.caliber_code ?? "").trim() || null,
           attributes: {
             image_name: row.imageName || "",
             a1: row.a1 || "",
@@ -976,21 +971,21 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
   const currentClassicImageUrl = resolveProductImageUrl(currentClassicRecord.imageName);
 
   return (
-    <div className="h-full flex flex-col bg-[#f7f9fb] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] font-sans overflow-hidden">
+    <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] font-sans overflow-hidden">
       
       {/* Top Header Mode Bar */}
-      <div className="px-6 py-3 border-b border-[#c6c6cd] dark:border-[#45464d] bg-white dark:bg-[#131b2e] flex flex-wrap items-center justify-between gap-4 shrink-0 shadow-xs">
+      <div className="px-6 py-3 border-b border-[#c7c7c7] dark:border-[#464646] bg-white dark:bg-[#1b1b1b] flex flex-wrap items-center justify-between gap-4 shrink-0 shadow-xs">
         
         {/* Left: Mode Tabs & Title */}
         <div className="flex items-center gap-4">
-          <div className="flex items-center bg-[#e9edff] dark:bg-[#1d3054] p-1 rounded-lg border border-[#c4d2ff] dark:border-[#434654]">
+          <div className="flex items-center bg-[#ededed] dark:bg-[#2f2f2f] p-1 rounded-lg border border-[#d2d2d2] dark:border-[#464646]">
             <button
               type="button"
               onClick={() => setActiveMode("add")}
               className={`px-3 py-1 rounded text-xs font-bold transition ${
                 activeMode === "add"
-                  ? "bg-[#0052cc] text-white shadow-xs"
-                  : "text-[#515f74] dark:text-[#bec6e0] hover:text-[#0052cc]"
+                  ? "bg-[#494949] text-white shadow-xs"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:text-[#494949]"
               }`}
             >
               Adding Item Master
@@ -1000,8 +995,8 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
               onClick={() => setActiveMode("edit")}
               className={`px-3 py-1 rounded text-xs font-bold transition ${
                 activeMode === "edit"
-                  ? "bg-[#0052cc] text-white shadow-xs"
-                  : "text-[#515f74] dark:text-[#bec6e0] hover:text-[#0052cc]"
+                  ? "bg-[#494949] text-white shadow-xs"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:text-[#494949]"
               }`}
             >
               Editing Item Master
@@ -1012,21 +1007,21 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
               className={`px-3 py-1 rounded text-xs font-bold transition ${
                 activeMode === "delete"
                   ? "bg-[#ba1a1a] text-white shadow-xs"
-                  : "text-[#515f74] dark:text-[#bec6e0] hover:text-[#ba1a1a]"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:text-[#ba1a1a]"
               }`}
             >
               Deleting Item Master
             </button>
           </div>
 
-          <div className="flex items-center bg-[#f2f4f6] dark:bg-[#191c1e] p-1 rounded-lg border border-[#c6c6cd] dark:border-[#45464d]">
+          <div className="flex items-center bg-[#f4f4f4] dark:bg-[#1c1c1c] p-1 rounded-lg border border-[#c7c7c7] dark:border-[#464646]">
             <button
               type="button"
               onClick={() => setViewMode("grid")}
               className={`px-3 py-1 rounded text-xs font-bold transition flex items-center gap-1 ${
                 viewMode === "grid"
-                  ? "bg-white dark:bg-[#2d3133] text-[#0052cc] dark:text-[#dae2ff] shadow-xs"
-                  : "text-[#515f74] dark:text-[#bec6e0]"
+                  ? "bg-white dark:bg-[#303030] text-[#494949] dark:text-[#e2e2e2] shadow-xs"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6]"
               }`}
             >
               <LayoutGrid size={13} />
@@ -1037,8 +1032,8 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
               onClick={() => setViewMode("classic")}
               className={`px-3 py-1 rounded text-xs font-bold transition flex items-center gap-1 ${
                 viewMode === "classic"
-                  ? "bg-white dark:bg-[#2d3133] text-[#0052cc] dark:text-[#dae2ff] shadow-xs"
-                  : "text-[#515f74] dark:text-[#bec6e0]"
+                  ? "bg-white dark:bg-[#303030] text-[#494949] dark:text-[#e2e2e2] shadow-xs"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6]"
               }`}
             >
               <FileText size={13} />
@@ -1058,7 +1053,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
               onChange={(e) => setSearchFilter(e.target.value)}
               placeholder="Filter items..."
               aria-label="Filter items globally"
-              className="w-full pl-8 pr-7 py-1 bg-[#f2f4f6] dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded text-xs outline-none focus:border-[#0052cc]"
+              className="w-full pl-8 pr-7 py-1 bg-[#f4f4f4] dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded text-xs outline-none focus:border-[#494949]"
             />
             {searchFilter && (
               <button
@@ -1076,18 +1071,18 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
             type="button"
             onClick={() => setIsShortcutsModalOpen(true)}
             title="Help / Keyboard Shortcuts (F1)"
-            className="p-1.5 border border-[#c6c6cd] dark:border-[#45464d] rounded hover:bg-[#eceef0] dark:hover:bg-[#2d3133] transition"
+            className="p-1.5 border border-[#c7c7c7] dark:border-[#464646] rounded hover:bg-[#eeeeee] dark:hover:bg-[#303030] transition"
           >
-            <HelpCircle size={15} className="text-[#0052cc]" />
+            <HelpCircle size={15} className="text-[#494949]" />
           </button>
         </div>
       </div>
 
       {/* Common Fields Context Banner */}
       {commonFields && (
-        <div className="px-6 py-2 bg-[#e9edff] dark:bg-[#1d3054] border-b border-[#c4d2ff] dark:border-[#434654] flex flex-wrap items-center justify-between text-xs">
+        <div className="px-6 py-2 bg-[#ededed] dark:bg-[#2f2f2f] border-b border-[#d2d2d2] dark:border-[#464646] flex flex-wrap items-center justify-between text-xs">
           <div className="flex items-center gap-4">
-            <span className="font-bold text-[#003d9b] dark:text-[#b2c5ff] uppercase text-[10px]">Session Baseline Defaults:</span>
+            <span className="font-bold text-[#373737] dark:text-[#c5c5c5] uppercase text-[10px]">Session Baseline Defaults:</span>
             {commonFields.category && <span>Category: <strong>{commonFields.category}</strong></span>}
             {commonFields.brand && <span>Brand: <strong>{commonFields.brand}</strong></span>}
             {commonFields.vendorCode && <span>Vendor: <strong>{commonFields.vendorCode}</strong></span>}
@@ -1098,7 +1093,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
             <button
               type="button"
               onClick={onNavigateToCommonFields}
-              className="text-[#0052cc] dark:text-[#dae2ff] font-bold text-[11px] hover:underline"
+              className="text-[#494949] dark:text-[#e2e2e2] font-bold text-[11px] hover:underline"
             >
               Edit Common Fields (Alt+2) →
             </button>
@@ -1110,12 +1105,12 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
       <div className="flex-1 p-4 overflow-hidden min-h-0">
         
         {viewMode === "grid" ? (
-          <div className="h-full flex flex-col bg-white dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded-xl overflow-hidden shadow-xs">
+          <div className="h-full flex flex-col bg-white dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded-xl overflow-hidden shadow-xs">
             
             {/* Grid Header Info Bar */}
-            <div className="px-4 py-2 border-b border-[#eceef0] dark:border-[#45464d] bg-[#f2f4f6] dark:bg-[#131b2e] flex items-center justify-between text-xs">
+            <div className="px-4 py-2 border-b border-[#eeeeee] dark:border-[#464646] bg-[#f4f4f4] dark:bg-[#1b1b1b] flex items-center justify-between text-xs">
               <div className="flex items-center gap-3">
-                <span className="font-mono font-bold text-[#515f74] dark:text-[#bec6e0] text-[11px]">
+                <span className="font-mono font-bold text-[#5e5e5e] dark:text-[#c6c6c6] text-[11px]">
                   {filteredSortedRows.length} {filteredSortedRows.length !== gridRows.length ? `OF ${gridRows.length} ` : ""}RECORDS DISPLAYED
                 </span>
                 <span className="text-[11px] text-[#76777d]">
@@ -1135,18 +1130,18 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
 
               {/* Shortcuts hint */}
               <div className="hidden md:flex items-center gap-3 font-mono text-[10px] text-[#76777d]">
-                <span><kbd className="bg-white dark:bg-[#191c1e] px-1.5 py-0.5 border border-[#c6c6cd] rounded font-bold">F1</kbd> Help</span>
-                <span><kbd className="bg-white dark:bg-[#191c1e] px-1.5 py-0.5 border border-[#c6c6cd] rounded font-bold">F2</kbd> Codes</span>
-                <span><kbd className="bg-white dark:bg-[#191c1e] px-1.5 py-0.5 border border-[#c6c6cd] rounded font-bold">Ctrl+S</kbd> Ok</span>
+                <span><kbd className="bg-white dark:bg-[#1c1c1c] px-1.5 py-0.5 border border-[#c7c7c7] rounded font-bold">F1</kbd> Help</span>
+                <span><kbd className="bg-white dark:bg-[#1c1c1c] px-1.5 py-0.5 border border-[#c7c7c7] rounded font-bold">F2</kbd> Codes</span>
+                <span><kbd className="bg-white dark:bg-[#1c1c1c] px-1.5 py-0.5 border border-[#c7c7c7] rounded font-bold">Ctrl+S</kbd> Ok</span>
               </div>
             </div>
 
             {/* High Density Table */}
-            <div className="flex-1 overflow-auto bg-white dark:bg-[#191c1e]">
+            <div className="flex-1 overflow-auto bg-white dark:bg-[#1c1c1c]">
               <table className="w-full text-left border-collapse text-xs whitespace-nowrap">
-                <thead className="sticky top-0 bg-[#f2f4f6] dark:bg-[#131b2e] border-b border-[#c6c6cd] dark:border-[#45464d] z-20">
+                <thead className="sticky top-0 bg-[#f4f4f4] dark:bg-[#1b1b1b] border-b border-[#c7c7c7] dark:border-[#464646] z-20">
                   <tr>
-                    <th className="p-2 w-10 text-center border-r border-[#c6c6cd] dark:border-[#45464d] sticky left-0 z-30 bg-[#f2f4f6] dark:bg-[#131b2e] align-top">
+                    <th className="p-2 w-10 text-center border-r border-[#c7c7c7] dark:border-[#464646] sticky left-0 z-30 bg-[#f4f4f4] dark:bg-[#1b1b1b] align-top">
                       <div className="flex flex-col items-center gap-1.5 pt-0.5">
                         <input
                           type="checkbox"
@@ -1170,7 +1165,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                         )}
                       </div>
                     </th>
-                    <th className="p-2 w-12 text-center border-r border-[#c6c6cd] dark:border-[#45464d] font-mono text-[10px] text-[#76777d] align-top pt-2">
+                    <th className="p-2 w-12 text-center border-r border-[#c7c7c7] dark:border-[#464646] font-mono text-[10px] text-[#76777d] align-top pt-2">
                       #
                     </th>
                     {visibleColumns.map((col, cIdx) => {
@@ -1185,8 +1180,8 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                         <th
                           key={col.key}
                           aria-sort={ariaSortValue}
-                          className={`p-2 font-bold text-[#515f74] dark:text-[#bec6e0] uppercase text-[10px] border-r border-[#c6c6cd] dark:border-[#45464d] min-w-[130px] ${
-                            isFrozen ? "sticky left-[88px] z-30 bg-[#f2f4f6] dark:bg-[#131b2e] shadow-xs" : ""
+                          className={`p-2 font-bold text-[#5e5e5e] dark:text-[#c6c6c6] uppercase text-[10px] border-r border-[#c7c7c7] dark:border-[#464646] min-w-[130px] ${
+                            isFrozen ? "sticky left-[88px] z-30 bg-[#f4f4f4] dark:bg-[#1b1b1b] shadow-xs" : ""
                           }`}
                         >
                           <div className="flex flex-col gap-1">
@@ -1194,7 +1189,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                               type="button"
                               onClick={() => handleToggleSort(col.key)}
                               title={`Click to sort by ${col.label}${isRequiredCol ? ' (Required)' : ''}`}
-                              className="flex items-center justify-between gap-1 w-full text-left font-bold uppercase tracking-wider hover:text-[#0052cc] dark:hover:text-[#dae2ff] transition select-none group"
+                              className="flex items-center justify-between gap-1 w-full text-left font-bold uppercase tracking-wider hover:text-[#494949] dark:hover:text-[#e2e2e2] transition select-none group"
                             >
                               <span className="truncate flex items-center">
                                 {col.label}
@@ -1204,9 +1199,9 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                               </span>
                               <span className="shrink-0">
                                 {sortDirection === "asc" ? (
-                                  <ArrowUp size={12} className="text-[#0052cc] dark:text-[#8cb4ff]" aria-hidden="true" />
+                                  <ArrowUp size={12} className="text-[#494949] dark:text-[#b1b1b1]" aria-hidden="true" />
                                 ) : sortDirection === "desc" ? (
-                                  <ArrowDown size={12} className="text-[#0052cc] dark:text-[#8cb4ff]" aria-hidden="true" />
+                                  <ArrowDown size={12} className="text-[#494949] dark:text-[#b1b1b1]" aria-hidden="true" />
                                 ) : (
                                   <ArrowUpDown size={11} className="text-[#76777d] opacity-30 group-hover:opacity-100" aria-hidden="true" />
                                 )}
@@ -1220,7 +1215,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                                 placeholder="Filter..."
                                 value={filterValue}
                                 onChange={(e) => handleColumnFilterChange(col.key, e.target.value)}
-                                className="w-full pl-2 pr-5 py-0.5 text-[10px] font-normal normal-case bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded outline-none focus:border-[#0052cc] dark:focus:border-[#8cb4ff] text-[#191c1e] dark:text-[#eff1f3] placeholder:text-[#76777d]"
+                                className="w-full pl-2 pr-5 py-0.5 text-[10px] font-normal normal-case bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded outline-none focus:border-[#494949] dark:focus:border-[#b1b1b1] text-[#1c1c1c] dark:text-[#f1f1f1] placeholder:text-[#76777d]"
                               />
                               {filterValue && (
                                 <button
@@ -1240,7 +1235,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                     })}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+                <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
                   {filteredSortedRows.length === 0 ? (
                     <tr>
                       <td
@@ -1253,7 +1248,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                             <button
                               type="button"
                               onClick={handleClearAllFilters}
-                              className="text-[#0052cc] dark:text-[#dae2ff] font-bold hover:underline"
+                              className="text-[#494949] dark:text-[#e2e2e2] font-bold hover:underline"
                             >
                               Clear all active filters ({activeFilterCount})
                             </button>
@@ -1270,10 +1265,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                         <tr
                           key={row._id || sourceIndex}
                           className={`transition ${
-                            isSelected ? "bg-[#d5e3fd]/40" : "hover:bg-[#f7f9fb] dark:hover:bg-[#2d3133]"
+                            isSelected ? "bg-[#e2e2e2]/40" : "hover:bg-[#f9f9f9] dark:hover:bg-[#303030]"
                           }`}
                         >
-                          <td className="p-2 text-center border-r border-[#eceef0] dark:border-[#2d3133] sticky left-0 z-10 bg-inherit">
+                          <td className="p-2 text-center border-r border-[#eeeeee] dark:border-[#303030] sticky left-0 z-10 bg-inherit">
                             <input
                               type="checkbox"
                               aria-label={`Select row ${displayIdx + 1}`}
@@ -1289,7 +1284,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                               className="rounded"
                             />
                           </td>
-                          <td className="p-2 text-center font-mono text-[10px] text-[#76777d] border-r border-[#eceef0] dark:border-[#2d3133]">
+                          <td className="p-2 text-center font-mono text-[10px] text-[#76777d] border-r border-[#eeeeee] dark:border-[#303030]">
                             {displayIdx + 1}
                           </td>
                           {visibleColumns.map((col, cIdx) => {
@@ -1310,7 +1305,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                             return (
                               <td
                                 key={col.key}
-                                className={`p-1.5 border-r border-[#eceef0] dark:border-[#2d3133] ${
+                                className={`p-1.5 border-r border-[#eeeeee] dark:border-[#303030] ${
                                   isFrozen ? "sticky left-[88px] z-10 bg-inherit shadow-xs" : ""
                                 } ${
                                   isDuplicate
@@ -1318,7 +1313,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                                     : isBlankValue
                                     ? "bg-[#ffdad6]/20 dark:bg-[#93000a]/20"
                                     : isNonEditableInEditMode
-                                    ? "bg-[#e0e3e5] dark:bg-[#2d3133]/60"
+                                    ? "bg-[#e3e3e3] dark:bg-[#303030]/60"
                                     : ""
                                 }`}
                               >
@@ -1342,8 +1337,8 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                                         : isBlankValue
                                         ? "border border-[#ba1a1a] bg-[#ffdad6]/40 text-[#ba1a1a] dark:text-[#ffb4ab] placeholder:text-[#ba1a1a]"
                                         : isNonEditableInEditMode
-                                        ? "bg-transparent text-[#515f74] dark:text-[#bec6e0] cursor-not-allowed font-mono font-bold"
-                                        : "bg-transparent hover:bg-white dark:hover:bg-[#191c1e] focus:bg-white dark:focus:bg-[#191c1e] border border-transparent focus:border-[#0052cc]"
+                                        ? "bg-transparent text-[#5e5e5e] dark:text-[#c6c6c6] cursor-not-allowed font-mono font-bold"
+                                        : "bg-transparent hover:bg-white dark:hover:bg-[#1c1c1c] focus:bg-white dark:focus:bg-[#1c1c1c] border border-transparent focus:border-[#494949]"
                                     }`}
                                   />
                                   {isDuplicate && (
@@ -1365,7 +1360,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                                       type="button"
                                       onClick={() => handleOpenCodeGenerator(sourceIndex)}
                                       title="Auto-Generate SKU & Barcode (F2)"
-                                      className="p-1 text-[#0052cc] hover:bg-[#e9edff] rounded"
+                                      className="p-1 text-[#494949] hover:bg-[#ededed] rounded"
                                     >
                                       <Sparkles size={13} />
                                     </button>
@@ -1382,7 +1377,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                                         });
                                       }}
                                       onMouseLeave={() => setHoverPreview(null)}
-                                      className="cursor-pointer p-1 text-[#0052cc] hover:bg-[#e9edff] rounded"
+                                      className="cursor-pointer p-1 text-[#494949] hover:bg-[#ededed] rounded"
                                       title="Hover to preview resolved image"
                                     >
                                       <ImageIcon size={13} />
@@ -1403,10 +1398,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
           </div>
         ) : (
           /* Classic Single-Record View */
-          <div className="h-full overflow-y-auto bg-white dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded-xl p-6 shadow-xs space-y-6">
-            <div className="flex justify-between items-center border-b border-[#eceef0] dark:border-[#45464d] pb-4">
+          <div className="h-full overflow-y-auto bg-white dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded-xl p-6 shadow-xs space-y-6">
+            <div className="flex justify-between items-center border-b border-[#eeeeee] dark:border-[#464646] pb-4">
               <div>
-                <h2 className="text-base font-bold text-[#003d9b] dark:text-[#b2c5ff]">
+                <h2 className="text-base font-bold text-[#373737] dark:text-[#c5c5c5]">
                   Item Details — Classic View
                 </h2>
                 <p className="text-xs text-[#76777d]">Single-record inspector &amp; detailed attribute auditing.</p>
@@ -1416,7 +1411,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   type="button"
                   disabled={classicRecordIndex === 0}
                   onClick={() => setClassicRecordIndex(prev => Math.max(0, prev - 1))}
-                  className="p-1.5 border border-[#c6c6cd] dark:border-[#45464d] rounded hover:bg-[#eceef0] disabled:opacity-30"
+                  className="p-1.5 border border-[#c7c7c7] dark:border-[#464646] rounded hover:bg-[#eeeeee] disabled:opacity-30"
                 >
                   <ChevronLeft size={16} />
                 </button>
@@ -1427,7 +1422,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   type="button"
                   disabled={classicRecordIndex >= filteredSortedRows.length - 1}
                   onClick={() => setClassicRecordIndex(prev => Math.min(filteredSortedRows.length - 1, prev + 1))}
-                  className="p-1.5 border border-[#c6c6cd] dark:border-[#45464d] rounded hover:bg-[#eceef0] disabled:opacity-30"
+                  className="p-1.5 border border-[#c7c7c7] dark:border-[#464646] rounded hover:bg-[#eeeeee] disabled:opacity-30"
                 >
                   <ChevronRight size={16} />
                 </button>
@@ -1438,10 +1433,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 text-xs">
               
               {/* Basic Details */}
-              <div className="space-y-3 bg-[#f7f9fb] dark:bg-[#191c1e] p-4 rounded-xl border border-[#c6c6cd] dark:border-[#45464d]">
-                <h3 className="font-bold uppercase tracking-wider text-[#003d9b] dark:text-[#b2c5ff] text-[10px]">1. Identification</h3>
+              <div className="space-y-3 bg-[#f9f9f9] dark:bg-[#1c1c1c] p-4 rounded-xl border border-[#c7c7c7] dark:border-[#464646]">
+                <h3 className="font-bold uppercase tracking-wider text-[#373737] dark:text-[#c5c5c5] text-[10px]">1. Identification</h3>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     Stock No / SKU <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>
                   </label>
                   <input
@@ -1454,9 +1449,9 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                     className={`w-full p-2 border rounded font-mono font-bold ${
                       !currentClassicRecord.code?.toString().trim()
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     } ${
-                      activeMode === "edit" ? "bg-[#e0e3e5] dark:bg-[#2d3133] cursor-not-allowed text-[#515f74] dark:text-[#bec6e0]" : "bg-white dark:bg-[#2d3133]"
+                      activeMode === "edit" ? "bg-[#e3e3e3] dark:bg-[#303030] cursor-not-allowed text-[#5e5e5e] dark:text-[#c6c6c6]" : "bg-white dark:bg-[#303030]"
                     }`}
                   />
                   {!currentClassicRecord.code?.toString().trim() && (
@@ -1466,7 +1461,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   )}
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     Barcode (EAN-13) <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>
                   </label>
                   <input
@@ -1479,9 +1474,9 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                     className={`w-full p-2 border rounded font-mono font-bold ${
                       !currentClassicRecord.barcode?.toString().trim()
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     } ${
-                      activeMode === "edit" ? "bg-[#e0e3e5] dark:bg-[#2d3133] cursor-not-allowed text-[#515f74] dark:text-[#bec6e0]" : "bg-white dark:bg-[#2d3133]"
+                      activeMode === "edit" ? "bg-[#e3e3e3] dark:bg-[#303030] cursor-not-allowed text-[#5e5e5e] dark:text-[#c6c6c6]" : "bg-white dark:bg-[#303030]"
                     }`}
                   />
                   {!currentClassicRecord.barcode?.toString().trim() && (
@@ -1491,7 +1486,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   )}
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     Product Title / Name <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>
                   </label>
                   <input
@@ -1499,10 +1494,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                     data-field-key="product_name"
                     value={currentClassicRecord.name || ""}
                     onChange={(e) => handleCellChange(currentClassicSourceIndex, "name", e.target.value)}
-                    className={`w-full p-2 bg-white dark:bg-[#2d3133] border rounded font-bold ${
+                    className={`w-full p-2 bg-white dark:bg-[#303030] border rounded font-bold ${
                       !currentClassicRecord.name?.toString().trim()
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     }`}
                   />
                   {!currentClassicRecord.name?.toString().trim() && (
@@ -1512,7 +1507,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   )}
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     HSN Code <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>
                   </label>
                   <input
@@ -1520,10 +1515,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                     data-field-key="hsn_code"
                     value={currentClassicRecord.hsn_code || ""}
                     onChange={(e) => handleCellChange(currentClassicSourceIndex, "hsn_code", e.target.value)}
-                    className={`w-full p-2 bg-white dark:bg-[#2d3133] border rounded font-mono font-bold ${
+                    className={`w-full p-2 bg-white dark:bg-[#303030] border rounded font-mono font-bold ${
                       !currentClassicRecord.hsn_code?.toString().trim()
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     }`}
                   />
                   {!currentClassicRecord.hsn_code?.toString().trim() && (
@@ -1533,22 +1528,62 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   )}
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">Image Filename (Optional)</label>
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">Sq.Ft. per Box</label>
+                  <input
+                    type="number"
+                    data-field-key="sqft_per_box"
+                    value={currentClassicRecord.sqft_per_box ?? ""}
+                    onChange={(e) => handleCellChange(currentClassicSourceIndex, "sqft_per_box", e.target.value)}
+                    className="w-full p-2 bg-white dark:bg-[#303030] border border-[#c7c7c7] rounded font-mono font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">Pieces per Box</label>
+                  <input
+                    type="number"
+                    data-field-key="pieces_per_box"
+                    value={currentClassicRecord.pieces_per_box ?? ""}
+                    onChange={(e) => handleCellChange(currentClassicSourceIndex, "pieces_per_box", e.target.value)}
+                    className="w-full p-2 bg-white dark:bg-[#303030] border border-[#c7c7c7] rounded font-mono font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">Batch / Shade No</label>
+                  <input
+                    type="text"
+                    data-field-key="batch_shade_no"
+                    value={currentClassicRecord.batch_shade_no ?? ""}
+                    onChange={(e) => handleCellChange(currentClassicSourceIndex, "batch_shade_no", e.target.value)}
+                    className="w-full p-2 bg-white dark:bg-[#303030] border border-[#c7c7c7] rounded font-mono font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">Caliber Code</label>
+                  <input
+                    type="text"
+                    data-field-key="caliber_code"
+                    value={currentClassicRecord.caliber_code ?? ""}
+                    onChange={(e) => handleCellChange(currentClassicSourceIndex, "caliber_code", e.target.value)}
+                    className="w-full p-2 bg-white dark:bg-[#303030] border border-[#c7c7c7] rounded font-mono font-bold"
+                  />
+                </div>
+                <div>
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">Image Filename (Optional)</label>
                   <input
                     type="text"
                     data-field-key="product_name"
                     value={currentClassicRecord.imageName || ""}
                     onChange={(e) => handleCellChange(currentClassicSourceIndex, "imageName", e.target.value)}
-                    className="w-full p-2 bg-white dark:bg-[#2d3133] border border-[#c6c6cd] rounded font-mono text-xs"
+                    className="w-full p-2 bg-white dark:bg-[#303030] border border-[#c7c7c7] rounded font-mono text-xs"
                   />
                 </div>
               </div>
 
               {/* Pricing & Tax */}
-              <div className="space-y-3 bg-[#f7f9fb] dark:bg-[#191c1e] p-4 rounded-xl border border-[#c6c6cd] dark:border-[#45464d]">
-                <h3 className="font-bold uppercase tracking-wider text-[#003d9b] dark:text-[#b2c5ff] text-[10px]">2. Pricing &amp; Taxes</h3>
+              <div className="space-y-3 bg-[#f9f9f9] dark:bg-[#1c1c1c] p-4 rounded-xl border border-[#c7c7c7] dark:border-[#464646]">
+                <h3 className="font-bold uppercase tracking-wider text-[#373737] dark:text-[#c5c5c5] text-[10px]">2. Pricing &amp; Taxes</h3>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     Buying Price {!isExemptNonStockItem(currentClassicRecord) && <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>}
                   </label>
                   <input
@@ -1560,10 +1595,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                       handleCellChange(currentClassicSourceIndex, "buyingPrice", val);
                       handleCellChange(currentClassicSourceIndex, "buying_price", val);
                     }}
-                    className={`w-full p-2 bg-white dark:bg-[#2d3133] border rounded font-mono font-bold ${
+                    className={`w-full p-2 bg-white dark:bg-[#303030] border rounded font-mono font-bold ${
                       !isExemptNonStockItem(currentClassicRecord) && (Number(currentClassicRecord.buyingPrice || currentClassicRecord.buying_price) <= 0 || isNaN(Number(currentClassicRecord.buyingPrice || currentClassicRecord.buying_price)))
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     }`}
                   />
                   {!isExemptNonStockItem(currentClassicRecord) && (Number(currentClassicRecord.buyingPrice || currentClassicRecord.buying_price) <= 0 || isNaN(Number(currentClassicRecord.buyingPrice || currentClassicRecord.buying_price))) && (
@@ -1573,7 +1608,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   )}
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     Cost Price {!isExemptNonStockItem(currentClassicRecord) && <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>}
                   </label>
                   <input
@@ -1585,10 +1620,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                       handleCellChange(currentClassicSourceIndex, "costPrice", val);
                       handleCellChange(currentClassicSourceIndex, "cost_price", val);
                     }}
-                    className={`w-full p-2 bg-white dark:bg-[#2d3133] border rounded font-mono font-bold ${
+                    className={`w-full p-2 bg-white dark:bg-[#303030] border rounded font-mono font-bold ${
                       !isExemptNonStockItem(currentClassicRecord) && (Number(currentClassicRecord.costPrice || currentClassicRecord.cost_price) <= 0 || isNaN(Number(currentClassicRecord.costPrice || currentClassicRecord.cost_price)) || Number(currentClassicRecord.costPrice || currentClassicRecord.cost_price) > Number(currentClassicRecord.buyingPrice || currentClassicRecord.buying_price))
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     }`}
                   />
                   {!isExemptNonStockItem(currentClassicRecord) && (Number(currentClassicRecord.costPrice || currentClassicRecord.cost_price) <= 0 || isNaN(Number(currentClassicRecord.costPrice || currentClassicRecord.cost_price))) ? (
@@ -1602,7 +1637,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   ) : null}
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     Selling Price <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>
                   </label>
                   <input
@@ -1610,10 +1645,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                     data-field-key="selling_price"
                     value={currentClassicRecord.price ?? ""}
                     onChange={(e) => handleCellChange(currentClassicSourceIndex, "price", e.target.value === "" ? "" : Number(e.target.value))}
-                    className={`w-full p-2 bg-white dark:bg-[#2d3133] border rounded font-mono font-bold text-[#0c9488] ${
+                    className={`w-full p-2 bg-white dark:bg-[#303030] border rounded font-mono font-bold text-[#767676] ${
                       currentClassicRecord.price === "" || currentClassicRecord.price === null || currentClassicRecord.price === undefined || Number(currentClassicRecord.price) < 0 || isNaN(Number(currentClassicRecord.price))
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     }`}
                   />
                   {(currentClassicRecord.price === "" || currentClassicRecord.price === null || currentClassicRecord.price === undefined || Number(currentClassicRecord.price) < 0 || isNaN(Number(currentClassicRecord.price))) && (
@@ -1623,7 +1658,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   )}
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     MRP <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>
                   </label>
                   <input
@@ -1639,10 +1674,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                         handleCellChange(currentClassicSourceIndex, "sellingPrice", val);
                       }
                     }}
-                    className={`w-full p-2 bg-white dark:bg-[#2d3133] border rounded font-mono font-bold ${
+                    className={`w-full p-2 bg-white dark:bg-[#303030] border rounded font-mono font-bold ${
                       currentClassicRecord.mrp === "" || currentClassicRecord.mrp === null || currentClassicRecord.mrp === undefined || Number(currentClassicRecord.mrp) < 0 || isNaN(Number(currentClassicRecord.mrp)) || Number(currentClassicRecord.mrp) < Number(currentClassicRecord.price)
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     }`}
                   />
                   {(currentClassicRecord.mrp === "" || currentClassicRecord.mrp === null || currentClassicRecord.mrp === undefined || Number(currentClassicRecord.mrp) < 0 || isNaN(Number(currentClassicRecord.mrp))) ? (
@@ -1656,7 +1691,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                   ) : null}
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">
                     GST Tax Rate (%) <span className="text-[#ba1a1a] dark:text-[#ffb4ab] font-black">*</span>
                   </label>
                   <input
@@ -1664,10 +1699,10 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
                     data-field-key="gst_percentage"
                     value={currentClassicRecord.gst_percentage ?? ""}
                     onChange={(e) => handleCellChange(currentClassicSourceIndex, "gst_percentage", e.target.value)}
-                    className={`w-full p-2 bg-white dark:bg-[#2d3133] border rounded font-semibold ${
+                    className={`w-full p-2 bg-white dark:bg-[#303030] border rounded font-semibold ${
                       !currentClassicRecord.gst_percentage?.toString().trim()
                         ? "border-[#ba1a1a] bg-[#ffdad6]/30 text-[#ba1a1a]"
-                        : "border-[#c6c6cd]"
+                        : "border-[#c7c7c7]"
                     }`}
                   />
                   {!currentClassicRecord.gst_percentage?.toString().trim() && (
@@ -1679,46 +1714,46 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
               </div>
 
               {/* Dynamic Business Attributes */}
-              <div className="space-y-3 bg-[#f7f9fb] dark:bg-[#191c1e] p-4 rounded-xl border border-[#c6c6cd] dark:border-[#45464d]">
-                <h3 className="font-bold uppercase tracking-wider text-[#003d9b] dark:text-[#b2c5ff] text-[10px]">3. Attributes (A1..A3)</h3>
+              <div className="space-y-3 bg-[#f9f9f9] dark:bg-[#1c1c1c] p-4 rounded-xl border border-[#c7c7c7] dark:border-[#464646]">
+                <h3 className="font-bold uppercase tracking-wider text-[#373737] dark:text-[#c5c5c5] text-[10px]">3. Attributes (A1..A3)</h3>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">A1 (Heels / Heel Type)</label>
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">A1 (Heels / Heel Type)</label>
                   <input
                     type="text"
                     data-field-key="brand"
                     value={currentClassicRecord.a1 || ""}
                     onChange={(e) => handleCellChange(currentClassicSourceIndex, "a1", e.target.value)}
-                    className="w-full p-2 bg-white dark:bg-[#2d3133] border border-[#c6c6cd] rounded"
+                    className="w-full p-2 bg-white dark:bg-[#303030] border border-[#c7c7c7] rounded"
                   />
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">A2 (Upper Material)</label>
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">A2 (Upper Material)</label>
                   <input
                     type="text"
                     data-field-key="color"
                     value={currentClassicRecord.a2 || ""}
                     onChange={(e) => handleCellChange(currentClassicSourceIndex, "a2", e.target.value)}
-                    className="w-full p-2 bg-white dark:bg-[#2d3133] border border-[#c6c6cd] rounded"
+                    className="w-full p-2 bg-white dark:bg-[#303030] border border-[#c7c7c7] rounded"
                   />
                 </div>
                 <div>
-                  <label className="text-[#515f74] font-bold text-[10px] block mb-1">A3 (Outsole Material)</label>
+                  <label className="text-[#5e5e5e] font-bold text-[10px] block mb-1">A3 (Outsole Material)</label>
                   <input
                     type="text"
                     data-field-key="size"
                     value={currentClassicRecord.a3 || ""}
                     onChange={(e) => handleCellChange(currentClassicSourceIndex, "a3", e.target.value)}
-                    className="w-full p-2 bg-white dark:bg-[#2d3133] border border-[#c6c6cd] rounded"
+                    className="w-full p-2 bg-white dark:bg-[#303030] border border-[#c7c7c7] rounded"
                   />
                 </div>
               </div>
 
               {/* Resolved Image Preview */}
-              <div className="space-y-3 bg-[#f7f9fb] dark:bg-[#191c1e] p-4 rounded-xl border border-[#c6c6cd] dark:border-[#45464d] flex flex-col items-center justify-center">
-                <h3 className="font-bold uppercase tracking-wider text-[#003d9b] dark:text-[#b2c5ff] text-[10px] self-start">
+              <div className="space-y-3 bg-[#f9f9f9] dark:bg-[#1c1c1c] p-4 rounded-xl border border-[#c7c7c7] dark:border-[#464646] flex flex-col items-center justify-center">
+                <h3 className="font-bold uppercase tracking-wider text-[#373737] dark:text-[#c5c5c5] text-[10px] self-start">
                   4. Image Preview
                 </h3>
-                <div className="w-full h-44 rounded-lg border border-[#c6c6cd] dark:border-[#45464d] bg-white dark:bg-[#2d3133] flex items-center justify-center overflow-hidden p-2">
+                <div className="w-full h-44 rounded-lg border border-[#c7c7c7] dark:border-[#464646] bg-white dark:bg-[#303030] flex items-center justify-center overflow-hidden p-2">
                   <img
                     src={currentClassicImageUrl}
                     alt="Resolved Product"
@@ -1743,9 +1778,9 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
       {hoverPreview && (
         <div
           style={{ position: "fixed", left: hoverPreview.x, top: hoverPreview.y }}
-          className="z-50 bg-white dark:bg-[#191c1e] border-2 border-[#0052cc] p-2 rounded-xl shadow-2xl pointer-events-none animate-in fade-in zoom-in-95 duration-100"
+          className="z-50 bg-white dark:bg-[#1c1c1c] border-2 border-[#494949] p-2 rounded-xl shadow-2xl pointer-events-none animate-in fade-in zoom-in-95 duration-100"
         >
-          <div className="w-44 h-44 flex items-center justify-center overflow-hidden bg-[#f7f9fb] rounded-lg">
+          <div className="w-44 h-44 flex items-center justify-center overflow-hidden bg-[#f9f9f9] rounded-lg">
             <img
               src={hoverPreview.url}
               alt="Resolved Thumbnail"
@@ -1759,9 +1794,9 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
       )}
 
       {/* Enterprise Standard Footer Bar */}
-      <footer className="h-12 border-t border-[#c6c6cd] dark:border-[#45464d] bg-white dark:bg-[#131b2e] px-6 flex items-center justify-between shrink-0 shadow-xs text-xs">
+      <footer className="h-12 border-t border-[#c7c7c7] dark:border-[#464646] bg-white dark:bg-[#1b1b1b] px-6 flex items-center justify-between shrink-0 shadow-xs text-xs">
         <div className="flex items-center gap-2 font-mono text-[11px] text-[#76777d]">
-          <span>SMRITI Retail OS • Enterprise Item Master</span>
+          <span>MQube • Enterprise Item Master</span>
         </div>
 
         <div className="flex items-center gap-2">
@@ -1769,7 +1804,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
             <button
               type="button"
               onClick={handleAddRow}
-              className="px-3 py-1.5 border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#eceef0] rounded font-semibold transition"
+              className="px-3 py-1.5 border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#eeeeee] rounded font-semibold transition"
             >
               Add Row
             </button>
@@ -1780,7 +1815,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
               type="button"
               onClick={handleDuplicateSelected}
               disabled={selectedRowIndices.size === 0}
-              className="px-3 py-1.5 border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#eceef0] rounded font-semibold transition disabled:opacity-40"
+              className="px-3 py-1.5 border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#eeeeee] rounded font-semibold transition disabled:opacity-40"
             >
               Duplicate
             </button>
@@ -1789,16 +1824,16 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
           <button
             type="button"
             onClick={() => setIsReplaceModalOpen(true)}
-            className="px-3 py-1.5 border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#eceef0] rounded font-semibold transition flex items-center gap-1"
+            className="px-3 py-1.5 border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#eeeeee] rounded font-semibold transition flex items-center gap-1"
           >
-            <Replace size={13} className="text-[#0052cc]" />
+            <Replace size={13} className="text-[#494949]" />
             Replace Data
           </button>
 
           <button
             type="button"
             onClick={handlePrintManifest}
-            className="px-3 py-1.5 border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#eceef0] rounded font-semibold transition flex items-center gap-1"
+            className="px-3 py-1.5 border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#eeeeee] rounded font-semibold transition flex items-center gap-1"
           >
             <Printer size={13} />
             Print
@@ -1813,7 +1848,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
             filteredRecordsCount={gridRows.length}
             apiEndpoint="/products"
             searchTerm={searchFilter}
-            companyName="SMRITI Retail"
+            companyName="MQube Retail"
             onNotification={onNotification}
           />
 
@@ -1823,7 +1858,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
               populateRowsFromProducts();
               onNotification?.("Undo Applied", "Reset all unsaved matrix changes.", "success");
             }}
-            className="px-3 py-1.5 border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#eceef0] rounded font-semibold transition"
+            className="px-3 py-1.5 border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#eeeeee] rounded font-semibold transition"
           >
             Cancel
           </button>
@@ -1843,7 +1878,7 @@ export const ItemDetailsGrid: React.FC<SmritiItemDetailsGridProps> = ({
               type="button"
               onClick={handleSaveGridToDatabase}
               disabled={isSaving}
-              className="px-5 py-1.5 bg-[#0052cc] hover:bg-[#003d9b] text-white rounded font-bold transition flex items-center gap-1.5 shadow-xs disabled:opacity-50"
+              className="px-5 py-1.5 bg-[#494949] hover:bg-[#373737] text-white rounded font-bold transition flex items-center gap-1.5 shadow-xs disabled:opacity-50"
             >
               <Save size={14} />
               {isSaving ? "Saving..." : "Ok (Save to Database)"}

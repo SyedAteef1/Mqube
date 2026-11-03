@@ -1,32 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.110.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Customer Loyalty Tier Upgrade Engine
- *
- * Manages automated tier transitions for loyalty program members:
- *   Tiers           : BRONZE → SILVER → GOLD → PLATINUM
- *   Evaluation      : `evaluateTier()` checks cumulative spend/points
- *                     in the rolling evaluation window (months) and
- *                     proposes an upgrade, downgrade, or no change.
- *   Upgrade         : Immediate on crossing a threshold.
- *   Downgrade       : Subject to a cooldown period (months); engine
- *                     blocks downgrade if cooldown has not elapsed.
- *   Anniversary     : On membership anniversary, award bonus points.
- *   Audit Trail     : Every tier change is logged immutably.
- */
-
 export type LoyaltyTier    = "BRONZE" | "SILVER" | "GOLD" | "PLATINUM";
 export type TierChangeType = "UPGRADE" | "DOWNGRADE" | "NO_CHANGE" | "ANNIVERSARY_REWARD";
 

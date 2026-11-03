@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.11.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Dual-Field Item Auto-Search, Auto-Population & 14+ Attribute Inspection
@@ -23,7 +22,7 @@ In retail POS and wholesale operations, cashiers encounter different workflows: 
 ## 3. Scope
 - **Backend Product Search Expansion**: `ProductRepository.search` extended across `name`, `code`, `barcode`, `sku`, `style_code`, `brand`, `category`, `hsn_code`, and `attributes`.
 - **Frontend Universal Auto-Populate Service**: `searchBackendProducts` enriched to map 14+ item attributes into `AutoPopulateProductResult`.
-- **Universal Reusable Inspection Component**: Created `SmritiItemTypeaheadDropdown` featuring keyboard navigation (Up/Down, Enter, Esc), visual preview images, stock status, tax tags, and extended metadata.
+- **Universal Reusable Inspection Component**: Created `TileFlowItemTypeaheadDropdown` featuring keyboard navigation (Up/Down, Enter, Esc), visual preview images, stock status, tax tags, and extended metadata.
 - **ProPOS Billing Terminal Integration**: Dual inputs for `Barcode / Scan` and `Stock No / SKU` in `ProPosBillingTerm.tsx` with live inspection ribbon and instant auto-population.
 - **Distributor Invoicing Integration**: Dual inputs in `BillingTerm.tsx` with live typeahead and automatic field binding.
 - **Automated Test Coverage**: Vitest unit suite covering dual-field lookup and 14+ attribute extraction.

@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-11
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import json
 import socket
@@ -119,14 +106,14 @@ def _resolve_local_dev_postgres_url(conn_str: str) -> str:
 
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "SMRITI Retail OS"
+    PROJECT_NAME: str = "MQube"
     VERSION: str = "3.16.0"
     API_V1_STR: str = "/api/v1"
     ENVIRONMENT: str = "development"
     
     # Priority defaults
     PORT: int = 8000
-    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys"
+    DATABASE_URL: str = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys"
     JWT_SECRET_KEY: str  # Remove default — raise error if missing
     JWT_ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 480      # 8 hours — covers a full retail shift without interruption
@@ -136,7 +123,7 @@ class Settings(BaseSettings):
     
     # Platform profiles
     EDITION: str = "Enterprise Edition"
-    ORGANIZATION: str = "AITDL NETWORKS"
+    ORGANIZATION: str = "MQube"
     ALLOWED_ORIGINS: list[str] = [
         "http://localhost:3000",
         "http://127.0.0.1:3000",
@@ -174,9 +161,9 @@ def load_settings() -> Settings:
     if not base_settings.INTERNAL_SERVICE_KEY:
         raise ValueError("INTERNAL_SERVICE_KEY is required. Set it via the runtime environment or deployment secret manager.")
     
-    # 2. Layer JSON configs from smriti-config.json
+    # 2. Layer JSON configs from tileflow-config.json
     root_dir = Path(__file__).resolve().parent.parent.parent.parent
-    config_json_path = root_dir / "smriti-config.json"
+    config_json_path = root_dir / "tileflow-config.json"
     
     json_data = {}
     if config_json_path.exists():
@@ -184,7 +171,7 @@ def load_settings() -> Settings:
             with open(config_json_path, "r", encoding="utf-8") as f:
                 json_data = json.load(f)
         except Exception as e:
-            print(f"[SDIC Settings] Failed to parse smriti-config.json: {e}")
+            print(f"[SDIC Settings] Failed to parse tileflow-config.json: {e}")
             
     # Map json variables to settings if not explicitly overridden by environment variables
     db_url = os.getenv("DATABASE_URL")

@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 1.0.0
-* Created    : 2026-07-11
-* Modified   : 2026-07-11
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-"""
-
 import os
 from pathlib import Path
 from typing import Dict, Any
@@ -75,12 +50,12 @@ def write_reports(res: Dict[str, Any]) -> None:
     dev_bar = draw_progress_bar(res["releaseScores"]["developmentScore"])
     sec_bar = draw_progress_bar(res["releaseScores"]["securityScore"])
     
-    md_dev_status = f"""# SMRITI Development Status Dashboard
+    md_dev_status = f"""# TILEFLOW Development Status Dashboard
 
 *Generated: {res["timestamp"]}*
 *Branch: {res["gitInfo"]["branch"]} | Last Commit: {res["gitInfo"]["lastCommitHash"]}*
 
-## SMRITI Development Health Index (DHI)
+## TILEFLOW Development Health Index (DHI)
 ```
 DHI:      {dhi_bar} (Grade {res["releaseScores"]["grade"]})
 Release:  {draw_progress_bar(res["releaseScores"]["releaseScore"])}
@@ -117,7 +92,7 @@ Security: {sec_bar}
         module_progress_md += f"| {m['name']} | {m['category']} | {m['overallPercentage']}% | {m['riskRating']} |\n"
 
     # FEATURE_MATRIX.md
-    feature_matrix_md = f"# SMRITI Feature Matrix\n\n*Generated: {res['timestamp']}*\n\n"
+    feature_matrix_md = f"# TILEFLOW Feature Matrix\n\n*Generated: {res['timestamp']}*\n\n"
     feature_matrix_md += "| Module | UI Designed | Frontend | Backend | Business Logic | Validation | Security | Reports | Printing | Barcode |\n| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n"
     for m in res["modules"]:
         ui = "✅" if m["uiDesigned"] else "❌"
@@ -226,13 +201,13 @@ Security: {sec_bar}
     change_history_md += f"- **Last Commit Author:** {res['gitInfo']['lastCommitAuthor']} ({res['gitInfo']['lastCommitDate']})\n"
 
     reports_map = {
-        "EXECUTIVE_SUMMARY.md": f"""# Executive Summary: SMRITI Development Intelligence Center
+        "EXECUTIVE_SUMMARY.md": f"""# Executive Summary: TILEFLOW Development Intelligence Center
  
 *Scan Timestamp: {res["timestamp"]}*
 *Release Target: v{res["gitInfo"]["releaseVersion"]}*
 
 ## High-Level Engineering Indices
-- **SMRITI Development Health Index (DHI):** {res["releaseScores"]["dhi"]}% (Grade {res["releaseScores"]["grade"]})
+- **TILEFLOW Development Health Index (DHI):** {res["releaseScores"]["dhi"]}% (Grade {res["releaseScores"]["grade"]})
 - **Quality Score:** {res["releaseScores"]["qualityScore"]}%
 - **Security Score:** {res["releaseScores"]["securityScore"]}%
 - **Release Readiness Score:** {res["releaseScores"]["releaseScore"]}%

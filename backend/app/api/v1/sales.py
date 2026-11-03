@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-07-11
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import List, Optional
 from datetime import date
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, Response
@@ -71,6 +57,15 @@ async def list_sales_invoices_contract(
     if status or customer_id or q:
         return await repo.search(invoice_no=q, customer_id=customer_id, status=status, skip=skip, limit=limit)
     return await repo.get_all(skip=skip, limit=limit)
+
+
+@router.get("/invoices/next-number", summary="Next Free Invoice Number For A Prefix")
+async def next_invoice_number(
+    prefix: str = Query(..., min_length=1, max_length=50),
+    db: AsyncSession = Depends(get_company_db),
+    tenant_ctx: TenantContext = Depends(get_tenant_context),
+):
+    return {"next_number": await SalesService(db, tenant_ctx).next_invoice_number(prefix)}
 
 
 @router.get("/invoices/suspended", response_model=List[SalesInvoiceResponse], summary="List Suspended Invoices")

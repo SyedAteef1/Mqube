@@ -326,7 +326,7 @@
         "column_default": null
       },
       {
-        "name": "smriti_sku",
+        "name": "tileflow_sku",
         "data_type": "character varying",
         "is_nullable": false,
         "column_default": null
@@ -676,7 +676,7 @@
         "column_default": null
       },
       {
-        "name": "smriti_sku",
+        "name": "tileflow_sku",
         "data_type": "character varying",
         "is_nullable": false,
         "column_default": null
@@ -834,13 +834,13 @@
         "column_default": null
       },
       {
-        "name": "smriti_order_count",
+        "name": "tileflow_order_count",
         "data_type": "integer",
         "is_nullable": true,
         "column_default": null
       },
       {
-        "name": "smriti_gross_revenue",
+        "name": "tileflow_gross_revenue",
         "data_type": "numeric",
         "is_nullable": true,
         "column_default": null

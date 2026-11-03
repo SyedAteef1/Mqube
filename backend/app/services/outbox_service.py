@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import uuid
 import time
 from datetime import datetime, timezone
@@ -31,7 +18,7 @@ def generate_ulid_source_event_id() -> str:
 
 class OutboxService:
     """
-    Durable Transactional Outbox Service inside Smritibus_<CompanyCode>.
+    Durable Transactional Outbox Service inside TileFlowbus_<CompanyCode>.
     Writes integration outbox events atomically within the exact same database transaction
     as business transactions (sales invoices, stock movements).
     """

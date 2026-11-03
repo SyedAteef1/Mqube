@@ -1,27 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.94.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * GST e-Invoice IRN Generation & QR Code Printing Studio
- *
- * Implements the Indian Government e-Invoice schema (GSTN API v1.03):
- *   - Invoice Registration Number (IRN) as SHA-256 of SupplierGSTIN + DocNo + DocType + DocDate
- *   - QR payload per CBIC specification (pipe-delimited canonical string)
- *   - Acknowledgement Number (ACK) + Acknowledgement Date
- *   - Bulk print queue management
- */
-
 export type GSTDocType = "INV" | "CRN" | "DBN";   // Invoice / Credit Note / Debit Note
 
 export interface GSTParty {
@@ -52,7 +28,7 @@ export interface GSTLineItem {
 }
 
 export interface EInvoice {
-  invoiceId: string;            // Internal SMRITI doc ID
+  invoiceId: string;            // Internal MQube doc ID
   docType: GSTDocType;
   docNo: string;
   docDate: string;              // "DD/MM/YYYY"

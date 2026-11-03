@@ -36,7 +36,7 @@ for mod, t_list in canonical_40.items():
 
 print(f"Total Canonical Tables to check: {len(all_40)}")
 
-for db in ['smritisys', 'smriti001']:
+for db in ['tileflowsys', 'tileflow001']:
     conn = psycopg2.connect(f'postgresql://postgres:postgres@localhost:5432/{db}')
     cur = conn.cursor()
     cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' AND table_type = 'BASE TABLE';")

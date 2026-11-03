@@ -1,29 +1,23 @@
 #!/bin/bash
-# Project      : SMRITI Retail OS
-# Repository   : SMRITIRetailNX
-# Organization : AITDL NETWORKS
+# Repository   : TILEFLOWRetailNX
 # 
 # Founders
 # 
 # * Pushpa Devi Jawahar Mallah
 #   * Founder & Chairperson
 #   * Phone: +91 9324117007
-#   * Email: founder@aitdl.com
 # 
-# * Jawahar Ramkripal Mallah
+# * Syed Ateef
 #   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-#   * Email: founder@aitdl.com
 # 
-# * Websites: aitdl.com | erpnbook.com | smritibooks.com
 # 
 # * Version    : 3.1.0
 # * Created    : 2026-07-11
 # * Modified   : 2026-07-11
-# * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-# * License    : Proprietary Commercial Software
+# * License    : MIT Open Source License
 
 echo "====================================================================="
-echo "SMRITI Retail OS - Linux Docker Startup Launcher"
+echo "TILEFLOW Retail OS - Linux Docker Startup Launcher"
 echo "====================================================================="
 
 # 1. Check if docker is installed
@@ -34,7 +28,7 @@ fi
 
 # 2. Check if Docker daemon is running
 if ! docker info >/dev/null 2>&1; then
-  echo "[SMRITI] Docker daemon is not active. Attempting to start docker service..."
+  echo "[TILEFLOW] Docker daemon is not active. Attempting to start docker service..."
   sudo systemctl start docker
   
   # Wait for daemon
@@ -44,13 +38,13 @@ if ! docker info >/dev/null 2>&1; then
   done
 fi
 
-echo "[SMRITI] Docker daemon is active. Starting containers..."
+echo "[TILEFLOW] Docker daemon is active. Starting containers..."
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 cd "$DIR"
 
 docker compose up -d
 
 echo "====================================================================="
-echo "SMRITI Retail OS running in the background."
+echo "TILEFLOW Retail OS running in the background."
 echo "API endpoint: http://localhost:3000"
 echo "====================================================================="

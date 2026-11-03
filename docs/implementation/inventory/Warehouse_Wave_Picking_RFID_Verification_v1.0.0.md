@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.85.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Warehouse Wave Picking & RFID Bin Verification Studio (v1.0.0-GA)
 
 ## 1. Objective
-Establish a Warehouse Wave Picking & RFID Bin Verification Studio (`WarehouseWavePickingModal.tsx`) in SMRITI Retail OS, providing optimized aisle-by-aisle pick path routing, handheld RFID tag scanner verification, shortage tracking, and staging bay dispatch.
+Establish a Warehouse Wave Picking & RFID Bin Verification Studio (`WarehouseWavePickingModal.tsx`) in TILEFLOW Retail OS, providing optimized aisle-by-aisle pick path routing, handheld RFID tag scanner verification, shortage tracking, and staging bay dispatch.
 
 ## 2. Business Motivation
 Large distribution centers handling store replenishment require optimized picking paths to minimize worker travel time and RFID verification to eliminate shipment errors.
@@ -79,7 +78,7 @@ Non-destructive standalone modal component with dedicated test suite.
 - Run `npm test`.
 
 ## 15. Documentation Impact
-- Update SMRITI Warehouse Management & Logistics Operations Guide.
+- Update TILEFLOW Warehouse Management & Logistics Operations Guide.
 
 ## 16. Deployment Plan
 - Build and bundle with frontend client package.

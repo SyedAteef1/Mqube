@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-14
- * Modified     : 2026-08-19
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from 'react';
 import { ShoppingBag, CheckCircle2, Printer, CreditCard, DollarSign } from 'lucide-react';
 import { trainingStore, SimulatedSale } from '../../services/trainingStore';
@@ -148,7 +135,7 @@ export const Day4BillingSim: React.FC<{ onCompleteStep: () => void }> = ({ onCom
           {completedSale ? (
             <div className="bg-white text-slate-900 p-4 rounded font-mono text-[11px] space-y-2 border border-slate-300 shadow-md">
               <div className="text-center border-b border-slate-300 pb-2">
-                <div className="font-bold text-sm">SMRITI RETAIL OS STORE</div>
+                <div className="font-bold text-sm">MQube STORE</div>
                 <div className="text-[10px] text-slate-600">GSTIN: 27AABCS1429B1Z2</div>
                 <div className="text-[10px] text-slate-600">TAX INVOICE #{completedSale.invoiceNumber}</div>
               </div>

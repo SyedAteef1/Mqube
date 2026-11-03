@@ -1,12 +1,12 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 4.9.2
   Created      : 2026-08-18
   Modified     : 2026-08-18
-  Copyright    : (C) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    : (C) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Invoicing_2

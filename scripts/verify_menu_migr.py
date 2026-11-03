@@ -1,24 +1,11 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, psycopg2
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 TARGET_MODEL_V1_IDS = [
-    "menu-dashboard", "menu-user-profile", "menu-wiki", "menu-about-smriti", "menu-dev-tracker",
+    "menu-dashboard", "menu-user-profile", "menu-wiki", "menu-about-tileflow", "menu-dev-tracker",
     "menu-pos", "menu-sales", "menu-customer-master", "menu-crm", "menu-loyalty", "menu-profiles",
     "menu-inventory", "menu-item-master", "menu-barcode", "menu-stock-ledger", "menu-purchase", "menu-supplier-mgmt",
     "menu-business-ledger", "menu-accounting-sync", "menu-reports", "menu-report-designer",
@@ -32,7 +19,7 @@ def verify_migration():
     cur = conn.cursor()
 
     # 1. Exact 34-ID verification
-    cur.execute("SELECT id FROM smriti_menus WHERE is_deleted = false ORDER BY id;")
+    cur.execute("SELECT id FROM tileflow_menus WHERE is_deleted = false ORDER BY id;")
     live_ids = sorted([r[0] for r in cur.fetchall()])
     expected_ids = sorted(TARGET_MODEL_V1_IDS)
 
@@ -41,8 +28,8 @@ def verify_migration():
     # 2. Orphan parent check
     cur.execute("""
         SELECT m.id, m.parent_id 
-        FROM smriti_menus m 
-        LEFT JOIN smriti_menus p ON m.parent_id = p.id 
+        FROM tileflow_menus m 
+        LEFT JOIN tileflow_menus p ON m.parent_id = p.id 
         WHERE m.parent_id IS NOT NULL AND p.id IS NULL;
     """)
     orphans = cur.fetchall()
@@ -51,14 +38,14 @@ def verify_migration():
     # 3. Protected defaults check
     protected = ["menu-dashboard", "menu-inventory", "menu-sales", "menu-reports"]
     for def_id in protected:
-        cur.execute("SELECT id, title, route, is_active FROM smriti_menus WHERE id = %s;", (def_id,))
+        cur.execute("SELECT id, title, route, is_active FROM tileflow_menus WHERE id = %s;", (def_id,))
         row = cur.fetchone()
         assert row is not None and row[3] is True, f"Protected default '{def_id}' missing or inactive!"
 
     conn.close()
 
     print("============================================================")
-    print("SMRITI MENU GOVERNANCE MIGRATION VERIFICATION PASSED")
+    print("TILEFLOW MENU GOVERNANCE MIGRATION VERIFICATION PASSED")
     print("============================================================")
     print("  - Exact 34 Immutable IDs Verified (0 missing, 0 unexpected, 0 duplicate)")
     print("  - Orphan Parent Links Verified (0 orphans)")

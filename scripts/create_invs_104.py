@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import sys
 import io
@@ -146,7 +133,7 @@ def parse_items():
 
 def create_and_persist_invoices():
     grouped_items = parse_items()
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     
     # 1. Clean existing records if any
@@ -270,7 +257,7 @@ async def render_pdfs():
     os.makedirs(out_dir, exist_ok=True)
     os.makedirs(final_dir, exist_ok=True)
 
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     
     cur.execute("""
@@ -353,7 +340,7 @@ async def render_pdfs():
 def main():
     create_and_persist_invoices()
     asyncio.run(render_pdfs())
-    print("\n[SUCCESS] Invoices 104, 105, 106 created, persisted, and verified in smriti001 database and PDF exports.")
+    print("\n[SUCCESS] Invoices 104, 105, 106 created, persisted, and verified in tileflow001 database and PDF exports.")
 
 if __name__ == "__main__":
     main()

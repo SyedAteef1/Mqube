@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.32.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI 9 Purchase Order & Size Pivot Terminal Replacement
+# Walkthrough: TILEFLOW 9 Purchase Order & Size Pivot Terminal Replacement
 
 ## 1. Purpose
-This walkthrough documents the complete replacement of legacy Purchase Studio interfaces with the official **SMRITI 9 Purchase Order Generation & Size Pivot Terminal** (`F:\SMRITI\Purchase Order\stitch_invoice_management_system`).
+This walkthrough documents the complete replacement of legacy Purchase Studio interfaces with the official **TILEFLOW 9 Purchase Order Generation & Size Pivot Terminal** (`F:\TILEFLOW\Purchase Order\stitch_invoice_management_system`).
 
 ## 2. Scope
 - Purchase Order Generation master terminal (`src/components/purchase/PurchOrderGenTab.tsx`).
@@ -42,7 +41,7 @@ This walkthrough documents the complete replacement of legacy Purchase Studio in
 3. **Persistent Transactional Backend**: Direct integration with `/api/v1/purchase/orders` in FastAPI + PostgreSQL.
 
 ## 6. Design Rationale
-Faithfully reproduces the layout and aesthetics from `F:\SMRITI\Purchase Order\stitch_invoice_management_system` (`purchase_order_generation_smriti_9` and `purchase_order_size_pivot_grid_smriti_9`), retaining SMRITI 9 corporate blue accents, dense desktop tabular grids, and floating keyboard hints.
+Faithfully reproduces the layout and aesthetics from `F:\TILEFLOW\Purchase Order\stitch_invoice_management_system` (`purchase_order_generation_tileflow_9` and `purchase_order_size_pivot_grid_tileflow_9`), retaining TILEFLOW 9 corporate blue accents, dense desktop tabular grids, and floating keyboard hints.
 
 ## 7. Implementation Summary
 - Replaced legacy 2750-line `PurchaseStudioTab.tsx` with clean modular components in `src/components/purchase/`.
@@ -68,4 +67,4 @@ Faithfully reproduces the layout and aesthetics from `F:\SMRITI\Purchase Order\s
 - `ADR-0046`: Purchase Order Tactical Grid & Matrix Architecture.
 
 ## 13. Related RFCs
-- `RFC-0090`: SMRITI 9 Procurement & Size Matrix Specification.
+- `RFC-0090`: TILEFLOW 9 Procurement & Size Matrix Specification.

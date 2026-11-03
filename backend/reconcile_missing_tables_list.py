@@ -2,9 +2,9 @@ from sqlalchemy import create_engine, inspect
 from sqlalchemy.pool import NullPool
 
 dbs = {
-    'Fresh': 'postgresql://postgres:postgres@localhost:5432/smriti_diag_fresh_test',
-    'Control': 'postgresql://postgres:postgres@localhost:5432/smritisys',
-    'Tenant': 'postgresql://postgres:postgres@localhost:5432/smriti001'
+    'Fresh': 'postgresql://postgres:postgres@localhost:5432/tileflow_diag_fresh_test',
+    'Control': 'postgresql://postgres:postgres@localhost:5432/tileflowsys',
+    'Tenant': 'postgresql://postgres:postgres@localhost:5432/tileflow001'
 }
 
 all_tables = {}

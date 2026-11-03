@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: One-Command Installation Scripts — v3.16.0
@@ -68,7 +67,7 @@ Providing single-command installers ensures uniform developer onboarding and red
 Powershell.exe -ExecutionPolicy Bypass -File .\install.ps1
 # Output:
 # =====================================================================
-#  SMRITI Retail OS - PowerShell One-Command Installer
+#  TILEFLOW Retail OS - PowerShell One-Command Installer
 # =====================================================================
 # [1/5] Verifying system prerequisites...
 #   [OK] Git is installed (git version 2.53.0.windows.1)
@@ -89,9 +88,9 @@ Powershell.exe -ExecutionPolicy Bypass -File .\install.ps1
 #   Running npm install...
 #   [OK] Node.js dependencies installed successfully.
 # [5/5] Configuring Explorer visual folder icon (GREEN)...
-#   [OK] Configured folder icon to SMRITI visual green indicator (GREEN).
+#   [OK] Configured folder icon to TILEFLOW visual green indicator (GREEN).
 # =====================================================================
-#  SMRITI Retail OS installation complete!
+#  TILEFLOW Retail OS installation complete!
 # =====================================================================
 ```
 

@@ -42,7 +42,7 @@ pytest tests/test_stock_movement_ledger.py -v
 ```bash
 # Verify no hardcoded secrets remain
 grep -r "9a12c418-5a48-43d9-90b5-555a6d71b87a" .
-grep -r "smriti_secret_fallback_key" .
+grep -r "tileflow_secret_fallback_key" .
 grep -r "sgip_vault_master_secret" .
 # All should return empty ✅
 
@@ -236,7 +236,7 @@ python backend/generate_secrets.py --format env --output .env.prod
 docker secret create jwt_secret < /tmp/jwt_secret
 docker secret create internal_key < /tmp/internal_key
 docker secret create vault_key < /tmp/vault_key
-docker stack deploy -c docker-compose.yml smriti
+docker stack deploy -c docker-compose.yml tileflow
 ```
 
 ### Verify Build
@@ -249,8 +249,8 @@ pytest tests/ -v
 ### Deploy
 ```bash
 # Option 1: Docker
-docker build -t smriti:3.30.0 .
-docker push <registry>/smriti:3.30.0
+docker build -t tileflow:3.30.0 .
+docker push <registry>/tileflow:3.30.0
 
 # Option 2: Direct
 npm run build

@@ -1,20 +1,3 @@
-"""
-SMRITI Retail OS — Gate 9 axe-core WCAG 2.1 AA Scan Script
-----------------------------------------------------------
-Injects axe-core into Playwright browser context across all 7 heavy workspaces:
-  - POS Terminal
-  - Purchase Studio
-  - Item Master
-  - Customer Master
-  - Business Ledger
-  - Report Designer
-  - Master Management
-
-Author: Jawahar Ramkripal Mallah
-Version: 3.17.0
-Copyright: © SMRITIBooks.com. All Rights Reserved.
-"""
-
 import asyncio
 import json
 import os
@@ -29,7 +12,7 @@ AXE_SCRIPT_URL = "https://cdnjs.cloudflare.com/ajax/libs/axe-core/4.9.1/axe.min.
 
 async def run_axe_scan():
     print("=" * 80)
-    print("SMRITI RETAIL OS — GATE 9 AXE-CORE WCAG 2.1 AA SCAN")
+    print("TILEFLOW RETAIL OS — GATE 9 AXE-CORE WCAG 2.1 AA SCAN")
     print("=" * 80)
 
     async with async_playwright() as p:
@@ -40,7 +23,7 @@ async def run_axe_scan():
         context = await browser.new_context(viewport={"width": 1920, "height": 1080})
         page = await context.new_page()
 
-        print("Navigating to SMRITI Retail OS and authenticating...")
+        print("Navigating to TILEFLOW Retail OS and authenticating...")
         await page.goto(BASE_URL)
         await page.wait_for_timeout(1000)
 

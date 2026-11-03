@@ -1,19 +1,16 @@
 ﻿"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
+Project      : TILEFLOW Retail OS
+Repository   : TILEFLOWRetailNX
 
 Founders
 
 * Pushpa Devi Jawahar Mallah -- Founder & Chairperson
-* Jawahar Ramkripal Mallah   -- Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
+* Syed Ateef   -- Founder, CEO & Chief Software Architect
 
 * Version    : 3.31.0
 * Created    : 2026-08-24
 * Modified   : 2026-08-24
-* Copyright  : (c) AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
+* License    : MIT Open Source License
 
 Sprint 12 -- Physical Stock Management parity.
 Shoper9 MnuNo 350/351/352 (SR323400/SR211000).
@@ -172,7 +169,7 @@ async def create_stock_take(
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail={
-                "code":    "SMRITI-PERM-001",
+                "code":    "TILEFLOW-PERM-001",
                 "message": "You do not have permission to create a stock take session.",
                 "action":  "Contact your store manager or system administrator.",
             },
@@ -284,7 +281,7 @@ async def get_stock_take(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail={
-                "code":    "SMRITI-DATA-001",
+                "code":    "TILEFLOW-DATA-001",
                 "message": f"Stock take session '{take_id}' was not found.",
                 "action":  "Verify the session ID and try again.",
             },
@@ -457,7 +454,7 @@ async def approve_stock_take(
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail={
-                "code":    "SMRITI-PERM-001",
+                "code":    "TILEFLOW-PERM-001",
                 "message": "Only managers or administrators can approve stock takes.",
                 "action":  "Contact your store manager.",
             },
@@ -469,12 +466,12 @@ async def approve_stock_take(
     """), {"id": take_id})).fetchone()
 
     if not row:
-        raise HTTPException(status_code=404, detail={"code": "SMRITI-DATA-001",
+        raise HTTPException(status_code=404, detail={"code": "TILEFLOW-DATA-001",
             "message": f"Stock take session '{take_id}' not found."})
 
     if row[1] not in ("COMPLETED", "IN_PROGRESS"):
         raise HTTPException(status_code=422, detail={
-            "code":    "SMRITI-VAL-001",
+            "code":    "TILEFLOW-VAL-001",
             "message": f"Session is currently '{row[1]}'. Only COMPLETED sessions can be approved.",
             "action":  "Complete the count first before approving.",
         })
@@ -527,12 +524,12 @@ async def update_count_line(
 
     if not take_row:
         raise HTTPException(status_code=404, detail={
-            "code": "SMRITI-DATA-001",
+            "code": "TILEFLOW-DATA-001",
             "message": f"Stock take session '{take_id}' not found.",
         })
     if take_row[1] not in ("OPEN", "IN_PROGRESS"):
         raise HTTPException(status_code=422, detail={
-            "code": "SMRITI-VAL-001",
+            "code": "TILEFLOW-VAL-001",
             "message": f"Session is '{take_row[1]}'. Only OPEN or IN_PROGRESS sessions can be edited.",
             "action": "Reopen the session or create a new count.",
         })
@@ -545,7 +542,7 @@ async def update_count_line(
 
     if not line_row:
         raise HTTPException(status_code=404, detail={
-            "code": "SMRITI-DATA-001",
+            "code": "TILEFLOW-DATA-001",
             "message": f"Count line '{line_id}' not found in session.",
         })
 
@@ -609,13 +606,13 @@ async def complete_stock_take(
 
     if not row:
         raise HTTPException(status_code=404, detail={
-            "code":    "SMRITI-DATA-001",
+            "code":    "TILEFLOW-DATA-001",
             "message": f"Stock take session '{take_id}' not found.",
         })
 
     if row[1] not in ("OPEN", "IN_PROGRESS"):
         raise HTTPException(status_code=422, detail={
-            "code":    "SMRITI-VAL-001",
+            "code":    "TILEFLOW-VAL-001",
             "message": f"Session is already '{row[1]}'. Only OPEN or IN_PROGRESS sessions can be completed.",
             "action":  "Create a new session to perform another count.",
         })
@@ -629,7 +626,7 @@ async def complete_stock_take(
 
     if not counted or counted == 0:
         raise HTTPException(status_code=422, detail={
-            "code":    "SMRITI-VAL-002",
+            "code":    "TILEFLOW-VAL-002",
             "message": "Cannot complete a session with no counted lines.",
             "action":  "Enter counted quantities for at least one item before completing.",
         })

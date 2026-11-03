@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.80.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Implementation Plan: SMRITI Omnichannel Communicator & WhatsApp Gateway UI (v1.0.0-GA)
+# Implementation Plan: TILEFLOW Omnichannel Communicator & WhatsApp Gateway UI (v1.0.0-GA)
 
 ## 1. Objective
-Construct the central interactive Omnichannel Communicator Studio UI (`CommunicatorStudioTab.tsx`) in SMRITI Retail OS, providing unified WhatsApp Cloud API v19.0 direct messaging, batch campaign broadcasting, live template variable previews, and real-time delivery status webhook tracking (`SENT`, `DELIVERED`, `READ`, `FAILED`).
+Construct the central interactive Omnichannel Communicator Studio UI (`CommunicatorStudioTab.tsx`) in TILEFLOW Retail OS, providing unified WhatsApp Cloud API v19.0 direct messaging, batch campaign broadcasting, live template variable previews, and real-time delivery status webhook tracking (`SENT`, `DELIVERED`, `READ`, `FAILED`).
 
 ## 2. Business Motivation
 Modern retail requires automated customer engagement across omnichannel touchpoints: instant WhatsApp invoices upon POS billing, scheduled daily sales summaries to owners, loyalty point updates, and promotional broadcasts compliant with TRAI Quiet Hours regulations.
@@ -39,7 +38,7 @@ The backend communicator engine (`CommunicatorEngine`) and API routes (`/api/v1/
 ## 7. Proposed Design
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
-│                   SMRITI COMMUNICATOR STUDIO                           │
+│                   TILEFLOW COMMUNICATOR STUDIO                           │
 ├────────────────────────────────────────────────────────────────────────┤
 │  [ Direct Dispatch ]  [ Campaigns ]  [ Templates ]  [ Delivery Logs ]  │
 │  - Channel Selector: WhatsApp / SMS / Email                            │
@@ -80,7 +79,7 @@ Modular studio component that can be disabled or navigated away from without imp
 - Run `npm test` and `pytest tests/t_communicator.py`.
 
 ## 15. Documentation Impact
-- Update SMRITI Omnichannel Communicator Manual.
+- Update TILEFLOW Omnichannel Communicator Manual.
 
 ## 16. Deployment Plan
 - Build and bundle with frontend client package.

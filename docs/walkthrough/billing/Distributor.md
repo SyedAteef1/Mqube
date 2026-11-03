@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.7.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Distributor Invoicing, Multi-Tender Settlement & PDT Import Integration (Stitch UX)
@@ -17,12 +16,12 @@
 **Version:** 6.7.0  
 **Date:** 2026-08-22  
 **Area:** Billing & POS  
-**Author:** Jawahar Ramkripal Mallah  
+**Author:** Syed Ateef  
 
 ---
 
 ## 1. Purpose
-To implement the authentic Distributor Invoicing Terminal, Multi-Tender Settlement / Payment Studio, and PDT Import Dialog based on the user's pristine UX design specifications in `F:\SMRITI\Distributor\stitch_barcode_label_designer_and_printer`.
+To implement the authentic Distributor Invoicing Terminal, Multi-Tender Settlement / Payment Studio, and PDT Import Dialog based on the user's pristine UX design specifications in `F:\TILEFLOW\Distributor\stitch_barcode_label_designer_and_printer`.
 
 ---
 
@@ -56,7 +55,7 @@ To implement the authentic Distributor Invoicing Terminal, Multi-Tender Settleme
 - `src/components/billing/BillingTerm.tsx`: Complete overhaul to match Stitch Invoicing Terminal specification.
 - `src/components/billing/PdtImportModal.tsx`: Updated with file template selector, browse parser, and transaction import.
 - `src/components/billing/propos/ProPosWs.tsx`: Added `Distributor Invoicing` tab to the primary billing suite.
-- `src/components/PosTerminalTab.tsx`: Passed products, profiles, and shifts to `SmritiProPosWorkspace`.
+- `src/components/PosTerminalTab.tsx`: Passed products, profiles, and shifts to `TileFlowProPosWorkspace`.
 - `src/components/barcode/barcodeTransactionS.ts`: Exported `barcodeTransactionStore` helper object.
 - `src/tests/billingTerm.test.ts`: Added 5 unit tests for line items, transporter totals, split payments, cash denominations, and PDT parsing (5/5 PASS).
 - `CHANGELOG.md`: Appended v6.7.0 release notes.
@@ -71,7 +70,7 @@ To implement the authentic Distributor Invoicing Terminal, Multi-Tender Settleme
 ---
 
 ## 6. Design Rationale
-Implements the exact layout and industrial logic aesthetic (`#041632`, `#3e5f90`, `#fbf8fb`, `#a7c8ff`) defined in `F:\SMRITI\Distributor\stitch_barcode_label_designer_and_printer`.
+Implements the exact layout and industrial logic aesthetic (`#041632`, `#3e5f90`, `#fbf8fb`, `#a7c8ff`) defined in `F:\TILEFLOW\Distributor\stitch_barcode_label_designer_and_printer`.
 
 ---
 

@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Audit Document
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Audit Document
 -->
 
-# SMRITI RETAIL OS — USER TRAINING READINESS & LIVE E2E READINESS MATRIX
+# TILEFLOW RETAIL OS — USER TRAINING READINESS & LIVE E2E READINESS MATRIX
 
 **Overall Status:** `READY WITH EXPLICIT GAPS`  
 **Audit Date:** 2026-08-17  
@@ -23,16 +22,16 @@
 
 ## 1. Executive Summary & Readiness Gates
 
-This document establishes the authoritative User Training Readiness Matrix for the 3-Day SMRITI Retail OS User Training Program. Every business operation has been evaluated through real, authenticated FastAPI application APIs (`test_authenticated.py`), live PostgreSQL transaction audits, and the full 338-test regression baseline.
+This document establishes the authoritative User Training Readiness Matrix for the 3-Day TILEFLOW Retail OS User Training Program. Every business operation has been evaluated through real, authenticated FastAPI application APIs (`test_authenticated.py`), live PostgreSQL transaction audits, and the full 338-test regression baseline.
 
 ```
 ================================================================================
-SMRITI USER TRAINING & SYSTEM GO-LIVE GATES
+TILEFLOW USER TRAINING & SYSTEM GO-LIVE GATES
 ================================================================================
 
 1. Training Curriculum Software Readiness Gate : 100.0% (VERIFIED VIA APPLICATION APIs)
 2. System & API Architecture Gate              : 100.0% (VERIFIED)
-3. Runtime Multi-Company Isolation Gate        : 100.0% (VERIFIED - 0 MUTATIONS IN SMRITISYS)
+3. Runtime Multi-Company Isolation Gate        : 100.0% (VERIFIED - 0 MUTATIONS IN TILEFLOWSYS)
 4. Automated Test Suite Pass Gate              : 100.0% (338 / 338 PASS)
 5. Overall Readiness Classification            : READY WITH EXPLICIT GAPS
 6. Explicit Open Gaps:
@@ -63,12 +62,12 @@ Each business process is verified across five distinct, non-fungible dimensions:
 
 | # | Module / Operation | Authority DB | DB-Level | App-Level | Auth E2E | Print/PDF | Hardware | Status | Evidence & Test Output |
 |---|---|---|---|---|---|---|---|---|---|
-| 1.1 | **Supplier Master**<br>Add new supplier, GSTIN, contacts | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/purchase/suppliers/` -> 201 Created |
-| 1.2 | **Customer Group**<br>Credit limits, terms, payment rules | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/customer-groups` -> 201 Created |
-| 1.3 | **Customer Master**<br>Name, mobile, group linking | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/customers` -> 201 Created |
-| 1.4 | **Item Master (Product)**<br>SKU, barcode, Footwear category, MRP, Cost | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/inventory/` -> 201 Created (`stock=0`) |
-| 1.5 | **Barcode Generation**<br>EAN-13 / Code128 generation | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | VERIFIED | LAB STAGED | `VERIFIED` | Barcode SVG/canvas generation active |
-| 1.6 | **Master Search & Update**<br>Search SKU, verify details | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `GET /api/v1/inventory/?search=SKU` -> 200 OK |
+| 1.1 | **Supplier Master**<br>Add new supplier, GSTIN, contacts | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/purchase/suppliers/` -> 201 Created |
+| 1.2 | **Customer Group**<br>Credit limits, terms, payment rules | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/customer-groups` -> 201 Created |
+| 1.3 | **Customer Master**<br>Name, mobile, group linking | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/customers` -> 201 Created |
+| 1.4 | **Item Master (Product)**<br>SKU, barcode, Footwear category, MRP, Cost | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/inventory/` -> 201 Created (`stock=0`) |
+| 1.5 | **Barcode Generation**<br>EAN-13 / Code128 generation | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | VERIFIED | LAB STAGED | `VERIFIED` | Barcode SVG/canvas generation active |
+| 1.6 | **Master Search & Update**<br>Search SKU, verify details | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `GET /api/v1/inventory/?search=SKU` -> 200 OK |
 
 ---
 
@@ -76,12 +75,12 @@ Each business process is verified across five distinct, non-fungible dimensions:
 
 | # | Module / Operation | Authority DB | DB-Level | App-Level | Auth E2E | Print/PDF | Hardware | Status | Evidence & Test Output |
 |---|---|---|---|---|---|---|---|---|---|
-| 2.1 | **Purchase Order Creation**<br>PO 50 units @ ₹100 + 18% GST | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/purchase/orders/` -> 201 Created (`grand_total=5900.00`) |
-| 2.2 | **Goods Receipt (GRN)**<br>Receive 48 units (Short: 2 units) | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/purchase/purchase-receipts/` -> 201 Created |
-| 2.3 | **Inventory Increment**<br>Product stock increment (+48) | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `SELECT stock FROM products` -> 48.0 |
-| 2.4 | **Stock Movement Ledger**<br>Movement type `IN` logged | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `stock_movements` record created (`qty=48.00`, `movement_type='IN'`) |
-| 2.5 | **Supplier Ledger**<br>Supplier outstanding balance updated | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `suppliers.outstanding` updated (+5664.00) |
-| 2.6 | **Stock Audit & Ledger**<br>Audit movements by doc ref | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `GET /api/v1/inventory/ledger` -> 200 OK |
+| 2.1 | **Purchase Order Creation**<br>PO 50 units @ ₹100 + 18% GST | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/purchase/orders/` -> 201 Created (`grand_total=5900.00`) |
+| 2.2 | **Goods Receipt (GRN)**<br>Receive 48 units (Short: 2 units) | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/purchase/purchase-receipts/` -> 201 Created |
+| 2.3 | **Inventory Increment**<br>Product stock increment (+48) | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `SELECT stock FROM products` -> 48.0 |
+| 2.4 | **Stock Movement Ledger**<br>Movement type `IN` logged | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `stock_movements` record created (`qty=48.00`, `movement_type='IN'`) |
+| 2.5 | **Supplier Ledger**<br>Supplier outstanding balance updated | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `suppliers.outstanding` updated (+5664.00) |
+| 2.6 | **Stock Audit & Ledger**<br>Audit movements by doc ref | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `GET /api/v1/inventory/ledger` -> 200 OK |
 
 ---
 
@@ -89,16 +88,16 @@ Each business process is verified across five distinct, non-fungible dimensions:
 
 | # | Module / Operation | Authority DB | DB-Level | App-Level | Auth E2E | Print/PDF | Hardware | Status | Evidence & Test Output |
 |---|---|---|---|---|---|---|---|---|---|
-| 3.1 | **POS Shift Management**<br>Open POS Cashier Shift | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/pos/shifts/open` -> 200 OK |
-| 3.2 | **Sales Invoicing / POS Billing**<br>Sell 5 units @ ₹200 + 18% GST | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/sales/invoices` -> 201 Created (`grand_total=1180.00`) |
-| 3.3 | **Inventory Decrement**<br>Stock decrements from 48 -> 43 | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `SELECT stock FROM products` -> 43.0 |
-| 3.4 | **Sales Return & Credit Note**<br>Return 2 units (Restore stock 43 -> 45) | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/sales/returns` -> 201 Created (`stock=45.0`) |
-| 3.5 | **Tax Invoice Print Preview**<br>Authoritative HTML GST preview | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | VERIFIED | LAB STAGED | `VERIFIED` | `GET /api/v1/sales/invoices/{id}/html` -> 200 OK (3,150 bytes) |
-| 3.6 | **Invoice PDF Document**<br>Stream GST Tax Invoice PDF | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | VERIFIED | N/A | `VERIFIED` | `GET /api/v1/sales/invoices/{id}/pdf` -> 200 OK |
-| 3.7 | **eCommerce Reservation**<br>Reserve 3 units for online order | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/ecom/orders/reserve` -> 200 OK (`reserved_stock=3.0`) |
-| 3.8 | **eCommerce Webhook Ingress**<br>Ingress Shopify/Woo webhooks | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/ecom/webhooks/ingress` -> 200 OK (`COMP-001`, `COMP-002`) |
-| 3.9 | **PSV Shadow Audit**<br>Verify shadow projection layer | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `psv_parties`, `psv_stock_events` verified in all READY databases |
-| 3.10 | **Thermal Receipt Printing**<br>ESC/POS 80mm receipt generation | `smriti<Code>` | VERIFIED | VERIFIED | VERIFIED | VERIFIED | PENDING LAB | `READY WITH GAP` | Software rendering complete; physical thermal printer staged in store lab |
+| 3.1 | **POS Shift Management**<br>Open POS Cashier Shift | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/pos/shifts/open` -> 200 OK |
+| 3.2 | **Sales Invoicing / POS Billing**<br>Sell 5 units @ ₹200 + 18% GST | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/sales/invoices` -> 201 Created (`grand_total=1180.00`) |
+| 3.3 | **Inventory Decrement**<br>Stock decrements from 48 -> 43 | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `SELECT stock FROM products` -> 43.0 |
+| 3.4 | **Sales Return & Credit Note**<br>Return 2 units (Restore stock 43 -> 45) | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/sales/returns` -> 201 Created (`stock=45.0`) |
+| 3.5 | **Tax Invoice Print Preview**<br>Authoritative HTML GST preview | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | VERIFIED | LAB STAGED | `VERIFIED` | `GET /api/v1/sales/invoices/{id}/html` -> 200 OK (3,150 bytes) |
+| 3.6 | **Invoice PDF Document**<br>Stream GST Tax Invoice PDF | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | VERIFIED | N/A | `VERIFIED` | `GET /api/v1/sales/invoices/{id}/pdf` -> 200 OK |
+| 3.7 | **eCommerce Reservation**<br>Reserve 3 units for online order | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/ecom/orders/reserve` -> 200 OK (`reserved_stock=3.0`) |
+| 3.8 | **eCommerce Webhook Ingress**<br>Ingress Shopify/Woo webhooks | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `POST /api/v1/ecom/webhooks/ingress` -> 200 OK (`COMP-001`, `COMP-002`) |
+| 3.9 | **PSV Shadow Audit**<br>Verify shadow projection layer | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | N/A | N/A | `VERIFIED` | `psv_parties`, `psv_stock_events` verified in all READY databases |
+| 3.10 | **Thermal Receipt Printing**<br>ESC/POS 80mm receipt generation | `tileflow<Code>` | VERIFIED | VERIFIED | VERIFIED | VERIFIED | PENDING LAB | `READY WITH GAP` | Software rendering complete; physical thermal printer staged in store lab |
 
 ---
 
@@ -107,7 +106,7 @@ Each business process is verified across five distinct, non-fungible dimensions:
 ### 4.1 Authenticated Application E2E Test Suite Execution
 ```text
 ================================================================================
-SMRITI USER TRAINING READINESS — AUTHENTICATED APPLICATION-LEVEL E2E SUITE
+TILEFLOW USER TRAINING READINESS — AUTHENTICATED APPLICATION-LEVEL E2E SUITE
 ================================================================================
 
 --- [STEP 1] AUTHENTICATION & CONTROL PLANE SETUP ---
@@ -147,15 +146,15 @@ SMRITI USER TRAINING READINESS — AUTHENTICATED APPLICATION-LEVEL E2E SUITE
   [PASS] Webhook Ingress (COMP-002) -> 200 OK
 
 --- [STEP 8] PSV SHADOW LAYER MULTI-COMPANY AUDIT ---
-  [PASS] PSV in smriti001 (COMP-001): 0 parties, 3 events recorded.
-  [PASS] PSV in smriti002 (COMP-002): 0 parties, 2 events recorded.
+  [PASS] PSV in tileflow001 (COMP-001): 0 parties, 3 events recorded.
+  [PASS] PSV in tileflow002 (COMP-002): 0 parties, 2 events recorded.
 
 --- [STEP 9] CLEANING UP TEST ARTIFACTS ---
 
 --- FINAL PHYSICAL ROW AUDIT POST TEST RUN ---
-smritisys diff: {}
-smriti001 diff: {}
-smriti002 diff: {}
+tileflowsys diff: {}
+tileflow001 diff: {}
+tileflow002 diff: {}
 
 ================================================================================
 [PASS] AUTHENTICATED APPLICATION-LEVEL E2E TEST COMPLETED WITH 100% SUCCESS
@@ -172,10 +171,10 @@ smriti002 diff: {}
 ## 5. Architectural Reconciliation & Governance Attestation
 
 1. **Zero Database Simulation**: All business mutations executed strictly via FastAPI authenticated endpoints.
-2. **Zero Control Plane Contamination**: `smritisys` experienced zero operational table writes during business transactions.
-3. **Dual-Company Routing & Isolation**: Company 001 and Company 002 transactions were dynamically routed to `smriti001` and `smriti002` via `CompanyDatabaseResolver`.
+2. **Zero Control Plane Contamination**: `tileflowsys` experienced zero operational table writes during business transactions.
+3. **Dual-Company Routing & Isolation**: Company 001 and Company 002 transactions were dynamically routed to `tileflow001` and `tileflow002` via `CompanyDatabaseResolver`.
 4. **Authoritative Stock Ledger Reconciliation**: Stock movements trigger `trg_inventory_state_reconciliation` verified in PostgreSQL across `IN` and `OUT` events.
-5. **Exact Teardown Zero Delta**: Post-test physical table row comparison confirmed `{}` delta across `smritisys`, `smriti001`, and `smriti002`.
+5. **Exact Teardown Zero Delta**: Post-test physical table row comparison confirmed `{}` delta across `tileflowsys`, `tileflow001`, and `tileflow002`.
 
 ---
-*Signed & Certified: Chief Systems Architect & Creator — SMRITI Retail OS*
+*Signed & Certified: Chief Systems Architect & Creator — TILEFLOW Retail OS*

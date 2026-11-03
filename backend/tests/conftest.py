@@ -1,15 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.29.0
-Created      : 2026-08-17
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import sys, os
 import pytest
 import psycopg2
@@ -24,21 +12,21 @@ if sys.platform == "win32":
 # Architecture-Compliant Connection URLs
 # ============================================================
 # Control Plane: governance metadata, users, companies, menus, audit log
-CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/smritisys"
+CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 # Company 001 Operational DB: products, customers, suppliers, invoices, orders
-COMPANY_001_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+COMPANY_001_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 
 @pytest.fixture(autouse=True, scope="function")
 def seed_control_plane_test_assignments():
     """
-    Seeds Control Plane (smritisys) records: users, companies, branches,
-    user_company_assignments, company_database_registries, smriti_menus, smriti_audit_log.
+    Seeds Control Plane (tileflowsys) records: users, companies, branches,
+    user_company_assignments, company_database_registries, tileflow_menus, tileflow_audit_log.
 
     ARCHITECTURE RULE:
-    - smritisys = Control Plane ONLY
-    - Operational data (products, customers, suppliers, invoices) goes to smriti001
-    - This fixture seeds ONLY governance/routing metadata into smritisys
+    - tileflowsys = Control Plane ONLY
+    - Operational data (products, customers, suppliers, invoices) goes to tileflow001
+    - This fixture seeds ONLY governance/routing metadata into tileflowsys
 
     FAILURE POLICY (RC3 FIX):
     - Any failure in Control Plane seeding is a hard stop — it means the test
@@ -47,17 +35,17 @@ def seed_control_plane_test_assignments():
     - Uses pytest.fail() to immediately terminate the session with a clear message.
     """
     # ================================================================
-    # Seed Control Plane (smritisys)
+    # Seed Control Plane (tileflowsys)
     # ================================================================
     try:
         ctrl_conn = psycopg2.connect(CONTROL_PLANE_URL)
         ctrl_cur = ctrl_conn.cursor()
     except Exception as e:
         pytest.fail(
-            f"[Conftest FATAL] Cannot connect to Control Plane database (smritisys).\n"
+            f"[Conftest FATAL] Cannot connect to Control Plane database (tileflowsys).\n"
             f"  URL: {CONTROL_PLANE_URL}\n"
             f"  Error: {e}\n"
-            f"  Resolution: Ensure PostgreSQL is running and smritisys database exists. "
+            f"  Resolution: Ensure PostgreSQL is running and tileflowsys database exists. "
             f"Run: alembic upgrade head"
         )
 
@@ -65,7 +53,7 @@ def seed_control_plane_test_assignments():
         ctrl_cur.execute("ALTER TABLE IF EXISTS companies ADD COLUMN IF NOT EXISTS company_code VARCHAR(50);")
         ctrl_cur.execute("ALTER TABLE IF EXISTS companies ADD COLUMN IF NOT EXISTS logo_url VARCHAR(500);")
 
-        # 0. Insert governance companies into smritisys (Control Plane)
+        # 0. Insert governance companies into tileflowsys (Control Plane)
         ctrl_cur.execute("""
             INSERT INTO companies (id, uuid, name, gst_number, company_code, is_active, is_deleted, created_at, modified_at)
             VALUES ('COMP-001', %s, 'Tattly Threads', '27AAXFT2508H1ZR', '001', true, false, NOW(), NOW())
@@ -74,11 +62,11 @@ def seed_control_plane_test_assignments():
 
         ctrl_cur.execute("""
             INSERT INTO companies (id, uuid, name, company_code, is_active, is_deleted, created_at, modified_at)
-            VALUES ('comp-default', %s, 'SMRITI Default Company', 'DEF', true, false, NOW(), NOW())
-            ON CONFLICT (id) DO UPDATE SET name = 'SMRITI Default Company', company_code = 'DEF', is_active = true, is_deleted = false;
+            VALUES ('comp-default', %s, 'TILEFLOW Default Company', 'DEF', true, false, NOW(), NOW())
+            ON CONFLICT (id) DO UPDATE SET name = 'TILEFLOW Default Company', company_code = 'DEF', is_active = true, is_deleted = false;
         """, (str(uuid.uuid4()),))
 
-        # 0a. Insert default branch MAIN for COMP-001 into smritisys.
+        # 0a. Insert default branch MAIN for COMP-001 into tileflowsys.
         # The branches table has unique constraints on BOTH (id) AND (code),
         # and a foreign key from users.branch_id.
         # Strategy: if a branch with code='MAIN' already exists (any id), update it in place.
@@ -96,7 +84,7 @@ def seed_control_plane_test_assignments():
                 VALUES ('MAIN', %s, 'COMP-001', 'Main Branch', 'MAIN', true, false, NOW(), NOW());
             """, (str(uuid.uuid4()),))
 
-        # 0b. Seed roles with role-based permissions in smritisys
+        # 0b. Seed roles with role-based permissions in tileflowsys
         # roles table has unique constraint on (name) via ix_roles_name.
         ctrl_cur.execute("""
             INSERT INTO roles (id, uuid, name, permissions_json, is_system, is_active, is_deleted, created_at, modified_at)
@@ -107,24 +95,24 @@ def seed_control_plane_test_assignments():
             ON CONFLICT (id) DO UPDATE SET permissions_json = EXCLUDED.permissions_json, is_active = true, is_deleted = false;
         """, (str(uuid.uuid4()), str(uuid.uuid4()), str(uuid.uuid4())))
 
-        # 0c. Seed company_database_registries for COMP-001 -> smriti001
+        # 0c. Seed company_database_registries for COMP-001 -> tileflow001
         # RC2 FIX: This row must always be present for get_company_db to resolve COMP-001.
         # On a fresh database, this row is NOT created by Alembic migrations.
         # The conftest seeds it here as part of the test environment bootstrap.
-        # This requires smriti001 to exist as a physical PostgreSQL database.
+        # This requires tileflow001 to exist as a physical PostgreSQL database.
         ctrl_cur.execute("""
             INSERT INTO company_database_registries
                 (company_id, database_id, database_name, database_engine, host_reference,
                  port_reference, status, schema_version, provisioning_status, migration_status,
                  created_at, updated_at)
             VALUES
-                ('COMP-001', %s, 'smriti001', 'postgresql', 'localhost', 5432,
+                ('COMP-001', %s, 'tileflow001', 'postgresql', 'localhost', 5432,
                  'READY', '3.29.0', 'COMPLETED', 'UP_TO_DATE', NOW(), NOW())
             ON CONFLICT (company_id) DO UPDATE
-                SET database_name = 'smriti001', status = 'READY', updated_at = NOW();
+                SET database_name = 'tileflow001', status = 'READY', updated_at = NOW();
         """, (str(uuid.uuid4()),))
 
-        # 1. Clean and insert test users into smritisys.users (Control Plane auth table)
+        # 1. Clean and insert test users into tileflowsys.users (Control Plane auth table)
         users_data = [
             ("usr-super", "usr_super", "SYSADMIN", True),
             ("usr_sysadmin", "usr_sysadmin", "SYSADMIN", True),
@@ -171,7 +159,7 @@ def seed_control_plane_test_assignments():
             ctrl_cur.execute("SELECT id FROM users WHERE username = %s LIMIT 1;", (uname,))
             user_row = ctrl_cur.fetchone()
             if not user_row:
-                raise RuntimeError(f"User '{uname}' missing from smritisys.users before assignment seed")
+                raise RuntimeError(f"User '{uname}' missing from tileflowsys.users before assignment seed")
             actual_user_id = user_row[0]
             ctrl_cur.execute("""
                 INSERT INTO user_company_assignments (id, uuid, user_id, company_id, is_default, is_active, is_deleted, created_at, modified_at)
@@ -180,12 +168,12 @@ def seed_control_plane_test_assignments():
                 DO UPDATE SET is_active = true, is_deleted = false;
             """, (uca_id, str(uuid.uuid4()), actual_user_id, cid))
 
-        # 3. Seed smriti_menus (Control Plane — exactly 34 canonical immutable menus)
+        # 3. Seed tileflow_menus (Control Plane — exactly 34 canonical immutable menus)
         canonical_menus = [
             ("menu-dashboard", "Dashboard & Executive Hub", "/dashboard", "Dashboard & Operations", None, 10, "DASHBOARD.ACCESS"),
             ("menu-user-profile", "My Profile Dashboard", "/user-profile", "Dashboard & Operations", None, 20, "PROFILE.ACCESS"),
-            ("menu-wiki", "SMRITI Gyan Kendra", "/wiki", "System & Knowledge Base", None, 30, "WIKI.ACCESS"),
-            ("menu-about-smriti", "About SMRITI Retail OS", "/about-smriti", "System & Knowledge Base", None, 40, "ABOUT.ACCESS"),
+            ("menu-wiki", "TILEFLOW Gyan Kendra", "/wiki", "System & Knowledge Base", None, 30, "WIKI.ACCESS"),
+            ("menu-about-tileflow", "About TILEFLOW Retail OS", "/about-tileflow", "System & Knowledge Base", None, 40, "ABOUT.ACCESS"),
             ("menu-dev-tracker", "Dev Intelligence Center", "/dev-tracker", "System & Knowledge Base", None, 50, "SYSTEM.DEV"),
             ("menu-pos", "Billing Desk (Universal POS)", "/pos", "Sales & POS", None, 60, "POS.WORKSPACE.ACCESS"),
             ("menu-sales", "Sales Studio & Ledger", "/sales", "Sales & POS", "menu-pos", 70, "SALES.WORKSPACE.ACCESS"),
@@ -222,7 +210,7 @@ def seed_control_plane_test_assignments():
         for mid, mtitle, mroute, mmodule, mparent, mseq, mperm in canonical_menus:
             if mparent is None:
                 ctrl_cur.execute("""
-                    INSERT INTO smriti_menus (id, uuid, company_id, title, route, module, parent_id, sequence, permission, is_active, is_deleted, created_at, modified_at)
+                    INSERT INTO tileflow_menus (id, uuid, company_id, title, route, module, parent_id, sequence, permission, is_active, is_deleted, created_at, modified_at)
                     VALUES (%s, %s, NULL, %s, %s, %s, NULL, %s, %s, true, false, NOW(), NOW())
                     ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, route = EXCLUDED.route, module = EXCLUDED.module, sequence = EXCLUDED.sequence, permission = EXCLUDED.permission, is_active = true, is_deleted = false;
                 """, (mid, str(uuid.uuid4()), mtitle, mroute, mmodule, mseq, mperm))
@@ -231,12 +219,12 @@ def seed_control_plane_test_assignments():
         for mid, mtitle, mroute, mmodule, mparent, mseq, mperm in canonical_menus:
             if mparent is not None:
                 ctrl_cur.execute("""
-                    INSERT INTO smriti_menus (id, uuid, company_id, title, route, module, parent_id, sequence, permission, is_active, is_deleted, created_at, modified_at)
+                    INSERT INTO tileflow_menus (id, uuid, company_id, title, route, module, parent_id, sequence, permission, is_active, is_deleted, created_at, modified_at)
                     VALUES (%s, %s, NULL, %s, %s, %s, %s, %s, %s, true, false, NOW(), NOW())
                     ON CONFLICT (id) DO UPDATE SET title = EXCLUDED.title, route = EXCLUDED.route, module = EXCLUDED.module, parent_id = EXCLUDED.parent_id, sequence = EXCLUDED.sequence, permission = EXCLUDED.permission, is_active = true, is_deleted = false;
                 """, (mid, str(uuid.uuid4()), mtitle, mroute, mmodule, mparent, mseq, mperm))
 
-        # 4. Seed smriti_permissions (Control Plane — baseline action permissions)
+        # 4. Seed tileflow_permissions (Control Plane — baseline action permissions)
         baseline_perms = [
             ("perm-seed-001", "User:002:sales_billing:VOID", "sales_billing", "VOID", "User:002", False),
             ("perm-seed-002", "User:002:sales_billing:NEW", "sales_billing", "NEW", "User:002", True),
@@ -246,7 +234,7 @@ def seed_control_plane_test_assignments():
         ]
         for pid, pcode, pres, pact, pscope, pactive in baseline_perms:
             ctrl_cur.execute("""
-                INSERT INTO smriti_permissions (id, uuid, code, resource, action, scope, module, is_active, is_deleted, created_at, modified_at)
+                INSERT INTO tileflow_permissions (id, uuid, code, resource, action, scope, module, is_active, is_deleted, created_at, modified_at)
                 VALUES (%s, %s, %s, %s, %s, %s, 'core', %s, false, NOW(), NOW())
                 ON CONFLICT (id) DO UPDATE SET is_active = EXCLUDED.is_active, is_deleted = false;
             """, (pid, str(uuid.uuid4()), pcode, pres, pact, pscope, pactive))
@@ -283,13 +271,13 @@ def seed_control_plane_test_assignments():
             ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, is_active = true, is_deleted = false;
         """, (str(uuid.uuid4()), hk_json))
 
-        # 6. Seed smriti_audit_log (Control Plane)
-        ctrl_cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+        # 6. Seed tileflow_audit_log (Control Plane)
+        ctrl_cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
         acnt = ctrl_cur.fetchone()[0]
         if acnt < 40:
             for i in range(acnt, 40):
                 ctrl_cur.execute("""
-                        INSERT INTO smriti_audit_log (
+                        INSERT INTO tileflow_audit_log (
                             id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                             old_value, new_value, change_type, change_reason, change_source,
                             changed_by, changed_by_name, changed_at, sha256_hash
@@ -314,23 +302,23 @@ def seed_control_plane_test_assignments():
         except Exception:
             pass
         pytest.fail(
-            f"[Conftest FATAL] Failed to seed Control Plane (smritisys) test data.\n"
+            f"[Conftest FATAL] Failed to seed Control Plane (tileflowsys) test data.\n"
             f"  Error: {type(e).__name__}: {e}\n"
             f"  This means the test environment is not correctly set up.\n"
-            f"  Resolution: Verify smritisys schema is fully migrated (alembic upgrade head), "
+            f"  Resolution: Verify tileflowsys schema is fully migrated (alembic upgrade head), "
             f"all required tables exist, and COMP-001 / users / roles are insertable."
         )
 
     # ================================================================
-    # Verify Company 001 Operational DB (smriti001) is accessible
+    # Verify Company 001 Operational DB (tileflow001) is accessible
     # ================================================================
-    # RC2 FIX: smriti001 must exist as a physical PostgreSQL database.
+    # RC2 FIX: tileflow001 must exist as a physical PostgreSQL database.
     # It is NOT created by alembic migrations — it must be provisioned separately.
-    # This block checks reachability and fails loudly if smriti001 is missing,
+    # This block checks reachability and fails loudly if tileflow001 is missing,
     # rather than letting tests fail later with cryptic 500/401 errors.
     #
-    # If running in CI with a fresh environment, create smriti001 first:
-    #   createdb -U postgres smriti001
+    # If running in CI with a fresh environment, create tileflow001 first:
+    #   createdb -U postgres tileflow001
     #   alembic --name company upgrade head  (or equivalent company-schema migration)
     # ================================================================
     try:
@@ -392,19 +380,19 @@ def seed_control_plane_test_assignments():
     except pytest.fail.Exception:
         raise
     except Exception as e:
-        # Hard fail: smriti001 is inaccessible. Do not silently continue.
+        # Hard fail: tileflow001 is inaccessible. Do not silently continue.
         try:
             comp_conn.rollback()
             comp_conn.close()
         except Exception:
             pass
         pytest.fail(
-            f"[Conftest FATAL] Cannot connect to or seed Company 001 operational database (smriti001).\n"
+            f"[Conftest FATAL] Cannot connect to or seed Company 001 operational database (tileflow001).\n"
             f"  URL: {COMPANY_001_DB_URL}\n"
             f"  Error: {type(e).__name__}: {e}\n"
             f"  This database is NOT created by Alembic migrations — it must be provisioned separately.\n"
             f"  Resolution for CI/fresh environment:\n"
-            f"    1. psql -U postgres -c 'CREATE DATABASE smriti001;'\n"
-            f"    2. Run company-schema Alembic migration against smriti001\n"
-            f"  smriti001 must have the full company operational schema (products, customers, etc.)"
+            f"    1. psql -U postgres -c 'CREATE DATABASE tileflow001;'\n"
+            f"    2. Run company-schema Alembic migration against tileflow001\n"
+            f"  tileflow001 must have the full company operational schema (products, customers, etc.)"
         )

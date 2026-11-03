@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,13 +8,13 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\COMPANY_DATABASE_2.md"
 
 def audit_company_database_lifecycle():
     print("============================================================")
-    print("SMRITI COMPANY DATABASE LIFECYCLE MANAGEMENT ARCHITECTURE AUDIT")
+    print("TILEFLOW COMPANY DATABASE LIFECYCLE MANAGEMENT ARCHITECTURE AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -36,26 +23,26 @@ def audit_company_database_lifecycle():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
     # Check that 0 new company databases are created
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     # 2. 21 Lifecycle Operations Classification Matrix
     lifecycle_ops = [
         (1, "COMPANY_CREATE_REQUEST", "Tenant metadata validation", "IMPLEMENTED", "CompanyDatabaseProvisioner.validate_company"),
         (2, "COMPANY_CODE_ALLOCATION", "3-char alphanumeric allocation [A-Z0-9]", "IMPLEMENTED", "CompanyCodeAllocator.allocate_next_available_code"),
-        (3, "DATABASE_NAME_GENERATION", "smriti<A-Z0-9> server-side generation", "IMPLEMENTED", "generate_company_database_name"),
+        (3, "DATABASE_NAME_GENERATION", "tileflow<A-Z0-9> server-side generation", "IMPLEMENTED", "generate_company_database_name"),
         (4, "LICENSE_ENTITLEMENT_VALIDATION", "Licensing plan entitlement verification", "PARTIALLY_IMPLEMENTED", "SystemConfig / License Vault check"),
-        (5, "DATABASE_PROVISIONING", "PostgreSQL CREATE DATABASE smriti<CODE>", "IMPLEMENTED", "exec_comp001_prov.py"),
+        (5, "DATABASE_PROVISIONING", "PostgreSQL CREATE DATABASE tileflow<CODE>", "IMPLEMENTED", "exec_comp001_prov.py"),
         (6, "SCHEMA_INITIALIZATION", "SQLAlchemy ORM 45 tables initialization", "IMPLEMENTED", "Base.metadata.create_all"),
         (7, "HEALTH_CHECK", "Connectivity ping & table count check", "IMPLEMENTED", "information_schema ping"),
-        (8, "DATABASE_REGISTRATION", "Register in smritisys.company_database_registries", "IMPLEMENTED", "company_database_registries READY"),
+        (8, "DATABASE_REGISTRATION", "Register in tileflowsys.company_database_registries", "IMPLEMENTED", "company_database_registries READY"),
         (9, "COMPANY_ADMIN_ASSIGNMENT", "Assign initial Company Administrator", "IMPLEMENTED", "user_company_assignments"),
         (10, "READY", "Operational state active for transactions", "IMPLEMENTED", "CompanyDatabaseResolver routing"),
         (11, "SUSPEND", "Set status=SUSPENDED; deny connection routing", "PARTIALLY_IMPLEMENTED", "Resolver 403 status check"),
@@ -76,16 +63,16 @@ def audit_company_database_lifecycle():
     ])
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
         {"Metric": "Company Code Standard", "Value": "Alphanumeric 3-Character [A-Z0-9] (000 & SYS Reserved)"},
-        {"Metric": "Reference Company Business DB", "Value": "smriti001 (ACTIVE & READY for COMP-001)"},
+        {"Metric": "Reference Company Business DB", "Value": "tileflow001 (ACTIVE & READY for COMP-001)"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Total Lifecycle Operations Designed", "Value": "21 Operations (10 Creation + 11 Operational)"},
         {"Metric": "Fully Implemented Operations", "Value": "10 Operations (47.6%)"},
         {"Metric": "Partially Implemented Operations", "Value": "4 Operations (19.0%)"},
         {"Metric": "Missing Operations (To Implement)", "Value": "7 Operations (33.4%)"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
         {"Metric": "Final Status", "Value": "LIFECYCLE_ARCHITECTURE_AUDITED_PENDING_UI_GATE"}
     ])
 
@@ -130,24 +117,23 @@ def audit_company_database_lifecycle():
     # 4. Update Markdown Documentation Specification
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Company Database Lifecycle Management Specification v1.0
+# TILEFLOW Company Database Lifecycle Management Specification v1.0
 
 **Status: LIFECYCLE_ARCHITECTURE_AUDITED_PENDING_UI_GATE**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
@@ -179,16 +165,16 @@ PROVISION_FAILED ───► RECOVERY_REQUIRED ───► READY
 
 ## 3. Boundary & Isolation Governance
 
-- **`smritisys`**: Identity, Tenancy, DB Registry, RBAC Roles, Licensing, Menus, UI/UX, Audit.
-- **`smriti<CODE>`**: Operational Business System of Record (Sales, POS, Stock, Purchases, Ledgers).
+- **`tileflowsys`**: Identity, Tenancy, DB Registry, RBAC Roles, Licensing, Menus, UI/UX, Audit.
+- **`tileflow<CODE>`**: Operational Business System of Record (Sales, POS, Stock, Purchases, Ledgers).
 - **React Frontend**: Knows `company_id`. NEVER knows raw `database_name`.
 """)
 
     # 5. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -197,8 +183,8 @@ PROVISION_FAILED ───► RECOVERY_REQUIRED ───► READY
 
     print("\nLIFECYCLE ARCHITECTURE AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")

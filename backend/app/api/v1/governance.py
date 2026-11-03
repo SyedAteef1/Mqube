@@ -1,25 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah -- Founder & Chairperson
-* Jawahar Ramkripal Mallah   -- Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.28.0
-* Created    : 2026-08-24
-* Modified   : 2026-08-24
-* Copyright  : (c) AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-
-Sprint 8c -- Governance Masters parity.
-System Parameters, Year-End, Reopen-Day, Data-Rebuild, Archive, Promotions.
-Shoper9 EXE refs: SR426400, SR123000, SR428100, SR333100, SR320800, SR329700, SR430300.
-"""
-
 from datetime import datetime, timezone, date
 from decimal import Decimal
 from typing import Any, Dict, List, Optional
@@ -47,7 +25,7 @@ def _require_admin(current_user):
     if role not in ADMIN_ROLES:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="SMRITI-PERM-001: This operation requires ADMIN or SYSADMIN role."
+            detail="TILEFLOW-PERM-001: This operation requires ADMIN or SYSADMIN role."
         )
 
 
@@ -185,7 +163,7 @@ async def set_stock_number_method(
     if method.upper() not in allowed:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"SMRITI-VAL-001: method must be one of {sorted(allowed)}"
+            detail=f"TILEFLOW-VAL-001: method must be one of {sorted(allowed)}"
         )
     res = (await db.execute(
         select(SystemConfig).where(SystemConfig.key == STOCK_METHOD_KEY)
@@ -231,12 +209,12 @@ async def run_year_end(
     if role != "SYSADMIN":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="SMRITI-PERM-002: Year-End Process requires SYSADMIN role."
+            detail="TILEFLOW-PERM-002: Year-End Process requires SYSADMIN role."
         )
     if not confirm:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="SMRITI-VAL-002: Set confirm=true to authorise year-end closure."
+            detail="TILEFLOW-VAL-002: Set confirm=true to authorise year-end closure."
         )
 
     # Record governance config entry
@@ -329,18 +307,18 @@ async def data_rebuild(
     if role != "SYSADMIN":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="SMRITI-PERM-002: Data Rebuild requires SYSADMIN role."
+            detail="TILEFLOW-PERM-002: Data Rebuild requires SYSADMIN role."
         )
     if not confirm:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="SMRITI-VAL-002: Set confirm=true to authorise data rebuild."
+            detail="TILEFLOW-VAL-002: Set confirm=true to authorise data rebuild."
         )
     allowed_scopes = {"STOCK", "SALES", "ALL"}
     if scope.upper() not in allowed_scopes:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"SMRITI-VAL-001: scope must be one of {sorted(allowed_scopes)}"
+            detail=f"TILEFLOW-VAL-001: scope must be one of {sorted(allowed_scopes)}"
         )
     # Record governance event
     db.add(SystemConfig(
@@ -389,12 +367,12 @@ async def archive_database(
     if role != "SYSADMIN":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail="SMRITI-PERM-002: Database Archival requires SYSADMIN role."
+            detail="TILEFLOW-PERM-002: Database Archival requires SYSADMIN role."
         )
     if not confirm:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="SMRITI-VAL-002: Set confirm=true to authorise archival."
+            detail="TILEFLOW-VAL-002: Set confirm=true to authorise archival."
         )
     db.add(SystemConfig(
         key=f"ARCHIVE_{archive_before.isoformat()}_{archive_type.upper()}",
@@ -480,7 +458,7 @@ async def create_promotion(
     if promo_type.upper() not in allowed_types:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=f"SMRITI-VAL-001: promo_type must be one of {sorted(allowed_types)}"
+            detail=f"TILEFLOW-VAL-001: promo_type must be one of {sorted(allowed_types)}"
         )
     import uuid as _uuid
     now = datetime.now(timezone.utc)

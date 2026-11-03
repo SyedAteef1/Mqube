@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { apiFetchV1 } from "../lib/apiFetch.ts";
 import {
@@ -164,7 +139,7 @@ export const DataExchangeTab: React.FC<DataExchangeTabProps> = ({ onNotification
   // Search filter
   const [searchQuery, setSearchQuery] = useState("");
 
-  const SMRITI_INTERNAL_FIELDS = [
+  const TILEFLOW_INTERNAL_FIELDS = [
     { value: "sku", label: "Product SKU (Item Code)" },
     { value: "barcode", label: "EAN / Barcode" },
     { value: "quantity", label: "Transaction Quantity" },
@@ -438,7 +413,7 @@ export const DataExchangeTab: React.FC<DataExchangeTabProps> = ({ onNotification
   );
 
   return (
-    <div className="p-6 bg-[#f8fafc] min-h-screen">
+    <div className="p-6 bg-[#fafafa] min-h-screen">
       {/* Header section */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between border-b border-slate-200 pb-5 mb-6">
         <div>
@@ -451,13 +426,13 @@ export const DataExchangeTab: React.FC<DataExchangeTabProps> = ({ onNotification
             </h1>
           </div>
           <p className="text-sm text-slate-500 max-w-2xl">
-            Secure partner integration hub for SMRITI Retail OS. Manage isolated operational data exchanges with malls, franchises, distributors, and logistics partners.
+            Secure partner integration hub for MQube. Manage isolated operational data exchanges with malls, franchises, distributors, and logistics partners.
           </p>
         </div>
 
         <div className="mt-4 md:mt-0 flex gap-2">
           <button
-            onClick={() => { fetchPartners(); fetchLogs(); onNotification("Refresh", "State pulled from SMRITI databases.", "success"); }}
+            onClick={() => { fetchPartners(); fetchLogs(); onNotification("Refresh", "State pulled from MQube databases.", "success"); }}
             className="flex items-center gap-1 text-xs font-medium text-slate-600 bg-white border border-slate-200 px-3 py-2 rounded-lg hover:bg-slate-50 transition"
           >
             <RefreshCw className="h-3.5 w-3.5" /> Refresh State
@@ -614,7 +589,7 @@ export const DataExchangeTab: React.FC<DataExchangeTabProps> = ({ onNotification
                       </div>
                       <div className="flex items-center justify-between font-mono text-xs bg-white border border-slate-200 rounded px-1.5 py-1 text-slate-700">
                         <span className="truncate max-w-[170px]" title={partner.apiKey}>
-                          ••••••••••••{partner.apiKey.slice(-6)}
+                          ••••••••••••{partner.apiKey?.slice(-6)}
                         </span>
                         <button 
                           onClick={() => {
@@ -783,7 +758,7 @@ export const DataExchangeTab: React.FC<DataExchangeTabProps> = ({ onNotification
               </div>
 
               <p className="text-xs text-slate-500">
-                Direct the engine how to parse column headers from files uploaded by this partner. Map partner fields on the left to standard SMRITI internal properties on the right.
+                Direct the engine how to parse column headers from files uploaded by this partner. Map partner fields on the left to standard MQube internal properties on the right.
               </p>
 
               <div className="space-y-2 max-h-[350px] overflow-y-auto pr-2">
@@ -813,8 +788,8 @@ export const DataExchangeTab: React.FC<DataExchangeTabProps> = ({ onNotification
                         }}
                         className="w-full text-xs border border-slate-200 rounded px-2 py-1.5 bg-white"
                       >
-                        <option value="">-- Choose SMRITI Field --</option>
-                        {SMRITI_INTERNAL_FIELDS.map(f => (
+                        <option value="">-- Choose MQube Field --</option>
+                        {TILEFLOW_INTERNAL_FIELDS.map(f => (
                           <option key={f.value} value={f.value}>{f.label}</option>
                         ))}
                       </select>
@@ -890,7 +865,7 @@ export const DataExchangeTab: React.FC<DataExchangeTabProps> = ({ onNotification
                 <div>
                   <label className="block text-xs font-medium text-slate-600 mb-1">Source Intermediary</label>
                   <div className="w-full text-xs border border-slate-200 rounded-lg px-3 py-2 bg-slate-100 font-mono text-slate-600">
-                    SMRITI Gateway Secure-Ingress
+                    MQube Gateway Secure-Ingress
                   </div>
                 </div>
               </div>
@@ -942,7 +917,7 @@ export const DataExchangeTab: React.FC<DataExchangeTabProps> = ({ onNotification
                 {validationResult && (
                   <div className="flex items-center gap-1.5">
                     <span className="text-xs font-mono text-slate-400">
-                      Checksum: {validationResult.checksum.slice(0, 15)}...
+                      Checksum: {validationResult.checksum?.slice(0, 15)}...
                     </span>
                   </div>
                 )}

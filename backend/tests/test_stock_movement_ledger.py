@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.36.0
-Created      : 2026-08-27
-Modified     : 2026-08-27
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import uuid
 import pytest
@@ -38,8 +24,8 @@ def _get_auth_headers(company_id="COMP-001", branch_id="MAIN"):
         "role": "SYSADMIN",
         "company_id": company_id,
         "branch_id": branch_id,
-        "tenant_id": "smriti001",
-        "db_name": "smriti001",
+        "tenant_id": "tileflow001",
+        "db_name": "tileflow001",
         "is_active": True,
     })
     return {
@@ -113,7 +99,7 @@ async def test_completed_invoice_creates_outward_sale_movement():
     2. Assert OUTWARD_SALE movement is recorded with sales_invoices.id as reference_doc_id.
     3. Clean up test records completely to preserve production data state.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     async with session_factory() as session:
         tenant_ctx = TenantContext(
@@ -132,7 +118,7 @@ async def test_completed_invoice_creates_outward_sale_movement():
         )
         prod = res.scalars().first()
         if not prod:
-            pytest.skip("No stock-tracked product found in smriti001")
+            pytest.skip("No stock-tracked product found in tileflow001")
         prod.stock = Decimal("100.00")
         await session.flush()
 
@@ -188,7 +174,7 @@ async def test_draft_invoice_creates_no_movement():
     """
     Verifies that a Draft invoice does NOT create any stock movements.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     async with session_factory() as session:
         tenant_ctx = TenantContext(
@@ -253,7 +239,7 @@ async def test_sales_return_creates_return_inward_movement():
     2. Assert RETURN_INWARD movement with positive quantity is recorded.
     3. Clean up test records to preserve DB cleanliness.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     async with session_factory() as session:
         tenant_ctx = TenantContext(
@@ -354,7 +340,7 @@ async def test_no_stock_product_creates_no_movement():
     """
     Verifies that items with tracking_mode == 'No-stock' do NOT create stock movements.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     async with session_factory() as session:
         tenant_ctx = TenantContext(
@@ -427,7 +413,7 @@ async def test_repeated_processing_does_not_create_duplicates():
     Verifies that calling create_sales_invoice idempotently returns the existing invoice
     without creating duplicate stock movements.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     async with session_factory() as session:
         tenant_ctx = TenantContext(
@@ -445,7 +431,7 @@ async def test_repeated_processing_does_not_create_duplicates():
         )
         prod = res.scalars().first()
         if not prod:
-            pytest.skip("No stock-tracked product found in smriti001")
+            pytest.skip("No stock-tracked product found in tileflow001")
         prod.stock = Decimal("100.00")
         await session.flush()
 
@@ -534,7 +520,7 @@ async def test_stock_movement_ledger_live_api_runtime_response():
        correct quantity, canonical reference_doc_id, and tenant scope.
     4. Clean up test records completely.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     async with session_factory() as session:
         tenant_ctx = TenantContext(
@@ -652,7 +638,7 @@ def test_historical_apply_all_5_guards(tmp_path):
     # Guard 1: Missing dry-run report
     with pytest.raises(ValueError, match="CRITICAL GUARD 1/5: Apply mode requires a verified pre-existing dry-run report"):
         run_historical_stock_reconciliation(
-            database="smriti001",
+            database="tileflow001",
             mode="apply",
             dry_run_report="non_existent_report.json",
         )
@@ -660,7 +646,7 @@ def test_historical_apply_all_5_guards(tmp_path):
     # Guard 2: Missing backup file
     with pytest.raises(ValueError, match="CRITICAL GUARD 2/5: Apply mode requires a verified pre-migration backup file"):
         run_historical_stock_reconciliation(
-            database="smriti001",
+            database="tileflow001",
             mode="apply",
             dry_run_report=dummy_report,
             backup_file="non_existent_backup.sql",
@@ -669,7 +655,7 @@ def test_historical_apply_all_5_guards(tmp_path):
     # Guard 3: Missing review of missing mappings
     with pytest.raises(ValueError, match="CRITICAL GUARD 3/5: Apply mode requires explicit flag '--review-missing-mappings CONFIRMED_REVIEWED'"):
         run_historical_stock_reconciliation(
-            database="smriti001",
+            database="tileflow001",
             mode="apply",
             dry_run_report=dummy_report,
             backup_file=dummy_backup,
@@ -679,7 +665,7 @@ def test_historical_apply_all_5_guards(tmp_path):
     # Guard 4: Missing review of stock impact
     with pytest.raises(ValueError, match="CRITICAL GUARD 4/5: Apply mode requires explicit flag '--review-stock-impact CONFIRMED_REVIEWED'"):
         run_historical_stock_reconciliation(
-            database="smriti001",
+            database="tileflow001",
             mode="apply",
             dry_run_report=dummy_report,
             backup_file=dummy_backup,
@@ -690,7 +676,7 @@ def test_historical_apply_all_5_guards(tmp_path):
     # Guard 5: Missing exact operator confirmation text
     with pytest.raises(ValueError, match="CRITICAL GUARD 5/5: Apply mode requires exact confirmation text"):
         run_historical_stock_reconciliation(
-            database="smriti001",
+            database="tileflow001",
             mode="apply",
             dry_run_report=dummy_report,
             backup_file=dummy_backup,

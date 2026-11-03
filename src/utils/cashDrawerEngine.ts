@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.111.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Store Cash Drawer & Float Management Engine
- *
- * Manages the full cash drawer lifecycle for a POS terminal:
- *   Opening Float   : Cash counted per denomination at shift start
- *   Cash In / Out   : Petty cash movements with mandatory reason
- *   Denomination    : Denomination-level count → computed total
- *   Variance        : expectedCash vs actualCash → variance detection
- *   EOD             : End-of-day reconciliation snapshot; status BALANCED / SHORT / OVER
- *   Audit Log       : Immutable entry per action
- */
-
 export type DrawerStatus   = "CLOSED" | "OPEN" | "RECONCILED";
 export type MovementKind   = "CASH_IN" | "CASH_OUT" | "OPENING_FLOAT" | "SALE" | "REFUND";
 export type ReconcileStatus = "BALANCED" | "SHORT" | "OVER";

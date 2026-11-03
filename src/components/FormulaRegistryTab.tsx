@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState } from "react";
 import { Formula } from "../types";
 
@@ -54,9 +29,9 @@ export const FormulaRegistryTab: React.FC<FormulaRegistryTabProps> = ({
       {/* Description Header */}
       <div className="bg-theme-surface-1 p-6 rounded-xl border border-theme-divider flex justify-between items-start">
         <div className="space-y-1">
-          <h3 className="font-display font-semibold text-lg text-theme-body">SMRITI Formula Registry</h3>
+          <h3 className="font-display font-semibold text-lg text-theme-body">MQube Formula Registry</h3>
           <p className="text-xs text-theme-muted">
-            Locked, single-source of truth computed KPI mathematical definitions complying with SMRITI Explainability DOC-01 standards.
+            Locked, single-source of truth computed KPI mathematical definitions complying with MQube Explainability DOC-01 standards.
           </p>
         </div>
         <span className="text-xs bg-emerald-500 bg-opacity-20 text-emerald-400 font-mono font-bold px-2 py-0.5 rounded border border-emerald-500">RULE 15 ACTIVE</span>
@@ -79,8 +54,8 @@ export const FormulaRegistryTab: React.FC<FormulaRegistryTabProps> = ({
               onClick={() => setSelectedCategory(cat)}
               className={`text-xs px-3.5 py-2 rounded font-semibold border transition-all ${
                 selectedCategory === cat 
-                  ? "bg-[#2563EB] border-[#2563EB] text-theme-body" 
-                  : "bg-theme-surface-1 border-theme-divider text-theme-muted hover:border-[#2563EB]"
+                  ? "bg-[#606060] border-[#606060] text-theme-body" 
+                  : "bg-theme-surface-1 border-theme-divider text-theme-muted hover:border-[#606060]"
               }`}
             >
               {cat}
@@ -92,7 +67,7 @@ export const FormulaRegistryTab: React.FC<FormulaRegistryTabProps> = ({
       {/* Grid of registered formula cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {filteredFormulas.map(f => (
-          <div key={f.id} className="bg-theme-surface-1 rounded-xl p-5 border border-theme-divider flex flex-col justify-between hover:border-[#2563EB] transition-all">
+          <div key={f.id} className="bg-theme-surface-1 rounded-xl p-5 border border-theme-divider flex flex-col justify-between hover:border-[#606060] transition-all">
             <div className="space-y-3">
               <div className="flex justify-between items-start">
                 <span className="text-[10px] bg-theme-surface-3 text-theme-muted px-2 py-0.5 rounded border border-theme-divider">
@@ -107,7 +82,7 @@ export const FormulaRegistryTab: React.FC<FormulaRegistryTabProps> = ({
               </div>
 
               {/* Expression */}
-              <div className="bg-theme-surface-3 p-3 rounded font-mono text-xs text-[#2563EB] flex items-center justify-center text-center">
+              <div className="bg-theme-surface-3 p-3 rounded font-mono text-xs text-[#606060] flex items-center justify-center text-center">
                 {f.expression}
               </div>
             </div>
@@ -120,7 +95,7 @@ export const FormulaRegistryTab: React.FC<FormulaRegistryTabProps> = ({
 
               <button
                 onClick={() => onSelectFormula(f)}
-                className="bg-[#2563EB] hover:bg-opacity-95 text-theme-body text-xs font-semibold px-3 py-1.5 rounded flex items-center space-x-1"
+                className="bg-[#606060] hover:bg-opacity-95 text-theme-body text-xs font-semibold px-3 py-1.5 rounded flex items-center space-x-1"
               >
                 <span className="material-symbols-outlined text-xs">info</span>
                 <span>ⓘ Explain</span>

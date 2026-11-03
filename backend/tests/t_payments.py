@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 import pytest
@@ -39,8 +25,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -54,7 +40,7 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
 @pytest.mark.asyncio
 async def test_multi_tender_split_payment_processing():
     """Verify split multi-tender payment processing creates atomic transactions and allocations."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     invoice_id = f"INV-SPLIT-{unique_suffix.upper()}"
     idempotency_key = f"IDEM-PAY-{unique_suffix.upper()}"
@@ -87,7 +73,7 @@ async def test_multi_tender_split_payment_processing():
 @pytest.mark.asyncio
 async def test_idempotency_key_duplicate_prevention():
     """Verify submitting same idempotency key returns existing records without duplicate creation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     invoice_id = f"INV-IDEM-{unique_suffix.upper()}"
     idempotency_key = f"IDEM-ONCE-{unique_suffix.upper()}"
@@ -116,7 +102,7 @@ async def test_idempotency_key_duplicate_prevention():
 @pytest.mark.asyncio
 async def test_full_and_partial_refund_with_balance_guard():
     """Verify full and partial refunds with balance tracking and over-refund guard."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     idempotency_key = f"IDEM-REF-{unique_suffix.upper()}"
 
@@ -178,7 +164,7 @@ async def test_full_and_partial_refund_with_balance_guard():
 @pytest.mark.asyncio
 async def test_payment_allocation_across_invoices():
     """Verify allocating an unallocated payment across multiple invoices with limit enforcement."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     idempotency_key = f"IDEM-ALLOC-{unique_suffix.upper()}"
 
@@ -226,7 +212,7 @@ async def test_payment_allocation_across_invoices():
 @pytest.mark.asyncio
 async def test_payment_receipt_generation():
     """Verify generating structured official payment receipt."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     invoice_id = f"INV-RCPT-{unique_suffix.upper()}"
     idempotency_key = f"IDEM-RCPT-{unique_suffix.upper()}"

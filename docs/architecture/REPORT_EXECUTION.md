@@ -1,29 +1,28 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Report Execution & Data Integrity Forensic Audit Specification v1.0
+# TILEFLOW Report Execution & Data Integrity Forensic Audit Specification v1.0
 
 **Status: REPORT_EXECUTION_DATA_INTEGRITY_VERIFIED**  
 **Audit Timestamp:** 2026-08-15 07:50:46 UTC  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
 ## 1. Executive Summary
 
 ```text
-Report Definition -> Dataset Query -> Company Resolver -> smriti001 -> Live Business Records -> Grid / Chart / Dashboard -> Excel/PDF/CSV
+Report Definition -> Dataset Query -> Company Resolver -> tileflow001 -> Live Business Records -> Grid / Chart / Dashboard -> Excel/PDF/CSV
 ```
 
 - **Audit Score**: 20 / 20 Forensic Verification Points Passed (100%).
@@ -32,7 +31,6 @@ Report Definition -> Dataset Query -> Company Resolver -> smriti001 -> Live Busi
 
 ---
 
-## 2. Final Classification
 
 ```text
 FINAL STATUS: REPORT_EXECUTION_DATA_INTEGRITY_VERIFIED

@@ -1,29 +1,28 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 4.2.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Item Master Architecture & Refactoring Gate
+# TILEFLOW Item Master Architecture & Refactoring Gate
 
 **Status:** COMPLETE_VERIFIED (gap closure + residuals tracked)  
 **Gate Identifier:** `ITEM_MASTER_REFACTOR_APPLIED`  
 **Classification:** Enterprise Tier-1 Core Module  
-**Dependencies:** FastAPI + PostgreSQL (`smritisys` / `smriti001`), Product Identity Engine, Barcode Engine, Matrix Grid, Inventory Ledger
+**Dependencies:** FastAPI + PostgreSQL (`tileflowsys` / `tileflow001`), Product Identity Engine, Barcode Engine, Matrix Grid, Inventory Ledger
 
 ---
 
 ## 1. Executive Summary & Objective
 
-The Item Master (`item-master`) is the foundational catalogue repository of SMRITI Retail OS. It provides product SKU registration, style-size-colour variant definitions, secondary barcode mappings, HSN taxation slabs, and pricing rules.
+The Item Master (`item-master`) is the foundational catalogue repository of TILEFLOW Retail OS. It provides product SKU registration, style-size-colour variant definitions, secondary barcode mappings, HSN taxation slabs, and pricing rules.
 
 This gate document establishes the architectural baseline, canonical ID bindings, API communication contracts, and verification criteria for the Item Master refactor.
 

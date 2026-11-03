@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.93.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -132,7 +131,7 @@ export const OmniOrderStudioModal: React.FC<OmniOrderStudioModalProps> = ({ isOp
             </div>
             <div>
               <h2 className="text-base font-bold text-slate-100">Omnichannel Order Management & Click-and-Collect Studio</h2>
-              <p className="text-xs text-slate-400">POS Â· Web Â· App Â· WhatsApp â€” Unified Order Pool Â· BOPIS Â· Slot Reservation</p>
+              <p className="text-xs text-slate-400">POS Â· Web Â· App Â· WhatsApp — Unified Order Pool Â· BOPIS Â· Slot Reservation</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -162,7 +161,7 @@ export const OmniOrderStudioModal: React.FC<OmniOrderStudioModalProps> = ({ isOp
                       <span className="material-symbols-outlined text-slate-400 text-sm">{CHANNEL_ICONS[o.channel]}</span>
                       <span className="text-xs font-bold text-slate-200 font-mono truncate">{o.orderId}</span>
                     </div>
-                    <div className="text-[10px] text-slate-400 mt-0.5">{o.customerName} Â· â‚¹{o.orderTotal.toLocaleString("en-IN")}</div>
+                    <div className="text-[10px] text-slate-400 mt-0.5">{o.customerName} Â· ₹{o.orderTotal.toLocaleString("en-IN")}</div>
                     <span className={`inline-block mt-1.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${sc}`}>{o.status}</span>
                   </button>
                 );
@@ -223,19 +222,19 @@ export const OmniOrderStudioModal: React.FC<OmniOrderStudioModalProps> = ({ isOp
                           <tr key={line.lineId}>
                             <td className="py-2 px-3"><div className="text-slate-200 font-sans font-medium">{line.productName}</div><div className="text-[10px] text-slate-500">{line.sku}</div></td>
                             <td className="py-2 px-3 text-right text-slate-300">{line.qty}</td>
-                            <td className="py-2 px-3 text-right text-slate-400">â‚¹{line.unitPrice}</td>
-                            <td className="py-2 px-3 text-right text-amber-400 font-bold">â‚¹{line.lineTotal.toLocaleString("en-IN")}</td>
+                            <td className="py-2 px-3 text-right text-slate-400">₹{line.unitPrice}</td>
+                            <td className="py-2 px-3 text-right text-amber-400 font-bold">₹{line.lineTotal.toLocaleString("en-IN")}</td>
                             <td className="py-2 px-3 text-center">
                               {line.pickedQty !== undefined
                                 ? <span className="text-emerald-400 font-bold">{line.pickedQty}/{line.qty} âœ“</span>
-                                : <span className="text-slate-600">â€”</span>}
+                                : <span className="text-slate-600">—</span>}
                             </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                     <div className="border-t border-slate-800 px-3 py-2 flex justify-end">
-                      <span className="text-sm font-black text-slate-100 font-mono">â‚¹{selected.orderTotal.toLocaleString("en-IN")}</span>
+                      <span className="text-sm font-black text-slate-100 font-mono">₹{selected.orderTotal.toLocaleString("en-IN")}</span>
                     </div>
                   </div>
                 </div>
@@ -252,7 +251,7 @@ export const OmniOrderStudioModal: React.FC<OmniOrderStudioModalProps> = ({ isOp
                             <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${STATUS_STYLE[e.toStatus]}`}>{e.toStatus}</span>
                             <span className="text-slate-500 text-[10px] ml-auto font-mono">{new Date(e.timestamp).toLocaleTimeString("en-IN")}</span>
                           </div>
-                          {e.note && <p className="text-slate-400 mt-1">{e.note} <span className="text-slate-600">â€” {e.performedBy}</span></p>}
+                          {e.note && <p className="text-slate-400 mt-1">{e.note} <span className="text-slate-600">— {e.performedBy}</span></p>}
                         </div>
                       </div>
                     ))}

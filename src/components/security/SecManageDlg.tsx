@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.17.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-26
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Security & Access Control Studio Main Frame (Modern Light Theme)
- */
-
 import React, { useState, useEffect } from "react";
 import { MenuAccessView } from "./MenuAccessView.tsx";
 import { SecConfigView } from "./SecConfigView.tsx";
@@ -54,13 +39,13 @@ export type SecuritySidebarTab =
   | "My Profile"
   | "Manage Data Access";
 
-interface SmritiSecurityManagementModalProps {
+interface TileFlowSecurityManagementModalProps {
   isOpen: boolean;
   onClose: () => void;
   initialTab?: SecuritySidebarTab;
 }
 
-export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
+export const SecManageDlg: React.FC<TileFlowSecurityManagementModalProps> = ({
   isOpen,
   onClose,
   initialTab = "List Profiles",
@@ -147,29 +132,29 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
     <div className="fixed inset-0 z-[120] bg-black/50 flex items-center justify-center p-3 backdrop-blur-xs font-sans">
       {/* Modern Light Studio Window Container */}
       <div
-        className={`bg-white rounded-2xl border border-[#cbd5e1] shadow-2xl flex flex-col transition-all duration-200 overflow-hidden ${
+        className={`bg-white rounded-2xl border border-[#d4d4d4] shadow-2xl flex flex-col transition-all duration-200 overflow-hidden ${
           isMaximized ? "w-full h-full rounded-none" : "w-[1100px] h-[720px] max-w-[98vw] max-h-[96vh]"
         }`}
       >
         {/* 1. Global Studio Header */}
-        <div className="bg-white border-b border-[#e2e8f0] px-5 py-3.5 flex items-center justify-between select-none shrink-0">
+        <div className="bg-white border-b border-[#e7e7e7] px-5 py-3.5 flex items-center justify-between select-none shrink-0">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#1e40af]/10 text-[#1e40af] rounded-xl flex items-center justify-center border border-[#1e40af]/20">
+            <div className="w-9 h-9 bg-[#414141]/10 text-[#414141] rounded-xl flex items-center justify-center border border-[#414141]/20">
               <Shield className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2 text-[11px] font-mono text-[#64748b] leading-tight">
-                <span>SMRITI Control Plane</span>
+              <div className="flex items-center gap-2 text-[11px] font-mono text-[#727272] leading-tight">
+                <span>MQube Control Plane</span>
                 <span>/</span>
                 <span>Security & Governance</span>
                 <span>/</span>
-                <span className="text-[#1e40af] font-semibold">{activeTab}</span>
+                <span className="text-[#414141] font-semibold">{activeTab}</span>
               </div>
               <div className="flex items-center gap-2 mt-0.5">
-                <h2 className="text-base font-bold font-display text-[#0f172a] tracking-tight">
+                <h2 className="text-base font-bold font-display text-[#171717] tracking-tight">
                   Security & Access Control Studio
                 </h2>
-                <span className="px-2 py-0.5 bg-[#eff6ff] text-[#1e40af] text-[10px] font-mono font-bold border border-[#bfdbfe] rounded">
+                <span className="px-2 py-0.5 bg-[#f5f5f5] text-[#414141] text-[10px] font-mono font-bold border border-[#d8d8d8] rounded">
                   auth.security.rbac
                 </span>
               </div>
@@ -188,7 +173,7 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
               type="button"
               onClick={() => setIsMaximized(!isMaximized)}
               title={isMaximized ? "Restore Window" : "Maximize Window"}
-              className="p-2 text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9] rounded-lg transition-colors cursor-pointer"
+              className="p-2 text-[#727272] hover:text-[#171717] hover:bg-[#f4f4f4] rounded-lg transition-colors cursor-pointer"
             >
               {isMaximized ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
             </button>
@@ -196,7 +181,7 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
               type="button"
               onClick={onClose}
               title="Close Studio (Esc)"
-              className="p-2 text-[#64748b] hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+              className="p-2 text-[#727272] hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
             >
               <X className="w-4 h-4" />
             </button>
@@ -204,11 +189,11 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
         </div>
 
         {/* 2. Main Studio Work Area */}
-        <div className="flex-1 flex min-h-0 bg-[#f8fafc] overflow-hidden">
+        <div className="flex-1 flex min-h-0 bg-[#fafafa] overflow-hidden">
           {/* Left Navigation Sidebar (220px) */}
-          <aside className="w-56 bg-white border-r border-[#e2e8f0] flex flex-col justify-between select-none shrink-0 p-3">
+          <aside className="w-56 bg-white border-r border-[#e7e7e7] flex flex-col justify-between select-none shrink-0 p-3">
             <div className="space-y-1 overflow-y-auto">
-              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#94a3b8] px-2.5 py-1">
+              <div className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#a1a1a1] px-2.5 py-1">
                 Security Modules
               </div>
               {navItems.map((item) => {
@@ -221,11 +206,11 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                     onClick={() => setActiveTab(item.id)}
                     className={`w-full px-3 py-2 rounded-lg text-xs font-medium flex items-center gap-2.5 transition-all cursor-pointer truncate ${
                       isActive
-                        ? "bg-[#eff6ff] text-[#1e40af] font-bold border border-[#bfdbfe] shadow-xs"
-                        : "text-[#475569] hover:bg-[#f8fafc] hover:text-[#0f172a]"
+                        ? "bg-[#f5f5f5] text-[#414141] font-bold border border-[#d8d8d8] shadow-xs"
+                        : "text-[#535353] hover:bg-[#fafafa] hover:text-[#171717]"
                     }`}
                   >
-                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-[#1e40af]" : "text-[#64748b]"}`} />
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? "text-[#414141]" : "text-[#727272]"}`} />
                     <span className="truncate">{item.label}</span>
                   </button>
                 );
@@ -233,9 +218,9 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
             </div>
 
             {/* Bottom System Status */}
-            <div className="pt-3 border-t border-[#f1f5f9] space-y-2">
-              <div className="px-2 py-1.5 bg-[#f8fafc] rounded-lg border border-[#e2e8f0] text-[11px] font-mono text-[#64748b]">
-                <div className="text-[10px] text-[#94a3b8]">Cluster Status:</div>
+            <div className="pt-3 border-t border-[#f4f4f4] space-y-2">
+              <div className="px-2 py-1.5 bg-[#fafafa] rounded-lg border border-[#e7e7e7] text-[11px] font-mono text-[#727272]">
+                <div className="text-[10px] text-[#a1a1a1]">Cluster Status:</div>
                 <div className="text-emerald-700 font-bold flex items-center gap-1">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                   Postgres RBAC Active
@@ -244,7 +229,7 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="w-full py-1.5 px-3 bg-[#f1f5f9] hover:bg-[#e2e8f0] text-[#334155] font-semibold text-xs rounded-lg transition-colors cursor-pointer text-center"
+                className="w-full py-1.5 px-3 bg-[#f4f4f4] hover:bg-[#e7e7e7] text-[#3f3f3f] font-semibold text-xs rounded-lg transition-colors cursor-pointer text-center"
               >
                 Close Studio
               </button>
@@ -252,7 +237,7 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
           </aside>
 
           {/* Right Content Work Area */}
-          <main className="flex-1 flex flex-col min-h-0 overflow-hidden bg-[#f8fafc]">
+          <main className="flex-1 flex flex-col min-h-0 overflow-hidden bg-[#fafafa]">
             {activeTab === "Manage Menu Access" && <MenuAccessView onClose={onClose} />}
 
             {activeTab === "Configuration" && <SecConfigView onClose={onClose} />}
@@ -261,12 +246,12 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
               <div className="flex-1 overflow-y-auto p-6 space-y-5">
                 {/* Stats Cards Row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                  <div className="bg-white border border-[#e2e8f0] rounded-xl p-4 shadow-xs">
-                    <div className="flex items-center justify-between text-[#64748b] text-xs font-medium">
+                  <div className="bg-white border border-[#e7e7e7] rounded-xl p-4 shadow-xs">
+                    <div className="flex items-center justify-between text-[#727272] text-xs font-medium">
                       <span>Total Operators</span>
-                      <Users className="w-4 h-4 text-[#1e40af]" />
+                      <Users className="w-4 h-4 text-[#414141]" />
                     </div>
-                    <div className="mt-2 text-2xl font-bold font-display text-[#0f172a]">
+                    <div className="mt-2 text-2xl font-bold font-display text-[#171717]">
                       {users.length}
                     </div>
                     <div className="mt-1 text-[11px] text-emerald-700 font-medium">
@@ -274,34 +259,34 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                     </div>
                   </div>
 
-                  <div className="bg-white border border-[#e2e8f0] rounded-xl p-4 shadow-xs">
-                    <div className="flex items-center justify-between text-[#64748b] text-xs font-medium">
+                  <div className="bg-white border border-[#e7e7e7] rounded-xl p-4 shadow-xs">
+                    <div className="flex items-center justify-between text-[#727272] text-xs font-medium">
                       <span>Security Groups</span>
                       <UserCheck className="w-4 h-4 text-emerald-600" />
                     </div>
-                    <div className="mt-2 text-2xl font-bold font-display text-[#0f172a]">
+                    <div className="mt-2 text-2xl font-bold font-display text-[#171717]">
                       {initialSecurityGroups.length}
                     </div>
-                    <div className="mt-1 text-[11px] text-[#64748b]">
+                    <div className="mt-1 text-[11px] text-[#727272]">
                       Role-based hierarchies
                     </div>
                   </div>
 
-                  <div className="bg-white border border-[#e2e8f0] rounded-xl p-4 shadow-xs">
-                    <div className="flex items-center justify-between text-[#64748b] text-xs font-medium">
+                  <div className="bg-white border border-[#e7e7e7] rounded-xl p-4 shadow-xs">
+                    <div className="flex items-center justify-between text-[#727272] text-xs font-medium">
                       <span>POS Node Terminals</span>
                       <Shield className="w-4 h-4 text-purple-600" />
                     </div>
-                    <div className="mt-2 text-2xl font-bold font-display text-[#0f172a]">
+                    <div className="mt-2 text-2xl font-bold font-display text-[#171717]">
                       {initialSecurityNodes.length}
                     </div>
-                    <div className="mt-1 text-[11px] text-[#64748b]">
+                    <div className="mt-1 text-[11px] text-[#727272]">
                       Terminal-bound restrictions
                     </div>
                   </div>
 
-                  <div className="bg-white border border-[#e2e8f0] rounded-xl p-4 shadow-xs">
-                    <div className="flex items-center justify-between text-[#64748b] text-xs font-medium">
+                  <div className="bg-white border border-[#e7e7e7] rounded-xl p-4 shadow-xs">
+                    <div className="flex items-center justify-between text-[#727272] text-xs font-medium">
                       <span>Account Lockouts</span>
                       <Lock className="w-4 h-4 text-rose-600" />
                     </div>
@@ -315,55 +300,55 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                 </div>
 
                 {/* Quick Action Cards */}
-                <div className="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-xs space-y-4">
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#0f172a] font-mono">
+                <div className="bg-white border border-[#e7e7e7] rounded-xl p-5 shadow-xs space-y-4">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#171717] font-mono">
                     Security Governance Modules
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div
                       onClick={() => setActiveTab("Manage Menu Access")}
-                      className="p-4 bg-[#f8fafc] hover:bg-[#eff6ff] border border-[#e2e8f0] hover:border-[#bfdbfe] rounded-xl cursor-pointer transition-all space-y-2 group"
+                      className="p-4 bg-[#fafafa] hover:bg-[#f5f5f5] border border-[#e7e7e7] hover:border-[#d8d8d8] rounded-xl cursor-pointer transition-all space-y-2 group"
                     >
                       <div className="flex items-center justify-between">
-                        <span className="material-symbols-outlined text-2xl text-[#1e40af]">
+                        <span className="material-symbols-outlined text-2xl text-[#414141]">
                           account_tree
                         </span>
-                        <ArrowRight className="w-4 h-4 text-[#94a3b8] group-hover:text-[#1e40af] transition-colors" />
+                        <ArrowRight className="w-4 h-4 text-[#a1a1a1] group-hover:text-[#414141] transition-colors" />
                       </div>
-                      <h4 className="font-bold text-xs text-[#0f172a]">Menu Access Control</h4>
-                      <p className="text-[11px] text-[#64748b] leading-relaxed">
+                      <h4 className="font-bold text-xs text-[#171717]">Menu Access Control</h4>
+                      <p className="text-[11px] text-[#727272] leading-relaxed">
                         Configure user, group, and node level menu rights and operations matrix.
                       </p>
                     </div>
 
                     <div
                       onClick={() => setActiveTab("Manage Users")}
-                      className="p-4 bg-[#f8fafc] hover:bg-[#eff6ff] border border-[#e2e8f0] hover:border-[#bfdbfe] rounded-xl cursor-pointer transition-all space-y-2 group"
+                      className="p-4 bg-[#fafafa] hover:bg-[#f5f5f5] border border-[#e7e7e7] hover:border-[#d8d8d8] rounded-xl cursor-pointer transition-all space-y-2 group"
                     >
                       <div className="flex items-center justify-between">
                         <span className="material-symbols-outlined text-2xl text-emerald-600">
                           group
                         </span>
-                        <ArrowRight className="w-4 h-4 text-[#94a3b8] group-hover:text-emerald-600 transition-colors" />
+                        <ArrowRight className="w-4 h-4 text-[#a1a1a1] group-hover:text-emerald-600 transition-colors" />
                       </div>
-                      <h4 className="font-bold text-xs text-[#0f172a]">Operator Accounts</h4>
-                      <p className="text-[11px] text-[#64748b] leading-relaxed">
+                      <h4 className="font-bold text-xs text-[#171717]">Operator Accounts</h4>
+                      <p className="text-[11px] text-[#727272] leading-relaxed">
                         Manage cashier profiles, assign branch terminals, and unlock operator accounts.
                       </p>
                     </div>
 
                     <div
                       onClick={() => setActiveTab("Configuration")}
-                      className="p-4 bg-[#f8fafc] hover:bg-[#eff6ff] border border-[#e2e8f0] hover:border-[#bfdbfe] rounded-xl cursor-pointer transition-all space-y-2 group"
+                      className="p-4 bg-[#fafafa] hover:bg-[#f5f5f5] border border-[#e7e7e7] hover:border-[#d8d8d8] rounded-xl cursor-pointer transition-all space-y-2 group"
                     >
                       <div className="flex items-center justify-between">
                         <span className="material-symbols-outlined text-2xl text-purple-600">
                           tune
                         </span>
-                        <ArrowRight className="w-4 h-4 text-[#94a3b8] group-hover:text-purple-600 transition-colors" />
+                        <ArrowRight className="w-4 h-4 text-[#a1a1a1] group-hover:text-purple-600 transition-colors" />
                       </div>
-                      <h4 className="font-bold text-xs text-[#0f172a]">Security Configuration</h4>
-                      <p className="text-[11px] text-[#64748b] leading-relaxed">
+                      <h4 className="font-bold text-xs text-[#171717]">Security Configuration</h4>
+                      <p className="text-[11px] text-[#727272] leading-relaxed">
                         Password complexity requirements, session timeouts, and housekeeping retention.
                       </p>
                     </div>
@@ -376,29 +361,29 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h3 className="text-sm font-bold text-[#0f172a] font-display">
+                    <h3 className="text-sm font-bold text-[#171717] font-display">
                       Operator Accounts Registry
                     </h3>
-                    <p className="text-xs text-[#64748b]">
+                    <p className="text-xs text-[#727272]">
                       Maintain cashier accounts, security roles, and branch terminal associations.
                     </p>
                   </div>
                   <div className="relative w-64">
-                    <Search className="w-3.5 h-3.5 text-[#94a3b8] absolute left-3 top-2.5" />
+                    <Search className="w-3.5 h-3.5 text-[#a1a1a1] absolute left-3 top-2.5" />
                     <input
                       type="text"
                       placeholder="Search operator..."
                       value={userSearch}
                       onChange={(e) => setUserSearch(e.target.value)}
-                      className="w-full bg-white border border-[#cbd5e1] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#0f172a] focus:outline-none focus:border-[#1e40af]"
+                      className="w-full bg-white border border-[#d4d4d4] rounded-lg pl-8 pr-3 py-1.5 text-xs text-[#171717] focus:outline-none focus:border-[#414141]"
                     />
                   </div>
                 </div>
 
-                <div className="bg-white border border-[#e2e8f0] rounded-xl overflow-hidden shadow-xs text-xs">
+                <div className="bg-white border border-[#e7e7e7] rounded-xl overflow-hidden shadow-xs text-xs">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="bg-[#f8fafc] border-b border-[#e2e8f0] font-mono text-[11px] text-[#475569]">
+                      <tr className="bg-[#fafafa] border-b border-[#e7e7e7] font-mono text-[11px] text-[#535353]">
                         <th className="px-4 py-2.5">Operator ID</th>
                         <th className="px-4 py-2.5">Full Name</th>
                         <th className="px-4 py-2.5">Security Group</th>
@@ -407,22 +392,22 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                         <th className="px-4 py-2.5 text-center">Actions</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#f1f5f9]">
+                    <tbody className="divide-y divide-[#f4f4f4]">
                       {users
                         .filter((u) => u.name.toLowerCase().includes(userSearch.toLowerCase()) || u.id.includes(userSearch))
                         .map((u) => (
-                          <tr key={u.id} className="hover:bg-[#f8fafc] transition-colors">
-                            <td className="px-4 py-3 font-mono font-bold text-[#1e40af]">{u.id}</td>
-                            <td className="px-4 py-3 font-semibold text-[#0f172a] flex items-center gap-2">
-                              <div className="w-6 h-6 rounded-full bg-[#eff6ff] text-[#1e40af] font-bold text-[10px] flex items-center justify-center border border-[#bfdbfe]">
+                          <tr key={u.id} className="hover:bg-[#fafafa] transition-colors">
+                            <td className="px-4 py-3 font-mono font-bold text-[#414141]">{u.id}</td>
+                            <td className="px-4 py-3 font-semibold text-[#171717] flex items-center gap-2">
+                              <div className="w-6 h-6 rounded-full bg-[#f5f5f5] text-[#414141] font-bold text-[10px] flex items-center justify-center border border-[#d8d8d8]">
                                 {u.name.slice(0, 2).toUpperCase()}
                               </div>
                               {u.name}
                             </td>
-                            <td className="px-4 py-3 font-mono text-[#475569]">
+                            <td className="px-4 py-3 font-mono text-[#535353]">
                               {initialSecurityGroups.find((g) => g.id === u.groupId)?.name || u.groupId}
                             </td>
-                            <td className="px-4 py-3 font-mono text-[#64748b]">{u.companyCode}</td>
+                            <td className="px-4 py-3 font-mono text-[#727272]">{u.companyCode}</td>
                             <td className="px-4 py-3 text-center">
                               <span
                                 className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
@@ -438,7 +423,7 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                               <button
                                 type="button"
                                 onClick={() => handleToggleLock(u.id)}
-                                className="px-2.5 py-1 bg-white hover:bg-[#f1f5f9] border border-[#cbd5e1] rounded-md font-semibold text-[11px] text-[#334155] cursor-pointer"
+                                className="px-2.5 py-1 bg-white hover:bg-[#f4f4f4] border border-[#d4d4d4] rounded-md font-semibold text-[11px] text-[#3f3f3f] cursor-pointer"
                               >
                                 {u.isLocked ? "Unlock" : "Lock"}
                               </button>
@@ -454,36 +439,36 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
             {activeTab === "Manage Groups" && (
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 <div>
-                  <h3 className="text-sm font-bold text-[#0f172a] font-display">
+                  <h3 className="text-sm font-bold text-[#171717] font-display">
                     Security Groups & Role Hierarchy
                   </h3>
-                  <p className="text-xs text-[#64748b]">
+                  <p className="text-xs text-[#727272]">
                     Define role scopes, supervisor overrides, and group-level permission assignments.
                   </p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {initialSecurityGroups.map((g) => (
-                    <div key={g.id} className="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-xs space-y-3">
+                    <div key={g.id} className="bg-white border border-[#e7e7e7] rounded-xl p-5 shadow-xs space-y-3">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
-                          <div className="w-8 h-8 rounded-lg bg-[#eff6ff] text-[#1e40af] flex items-center justify-center font-bold font-mono text-xs border border-[#bfdbfe]">
+                          <div className="w-8 h-8 rounded-lg bg-[#f5f5f5] text-[#414141] flex items-center justify-center font-bold font-mono text-xs border border-[#d8d8d8]">
                             {g.id}
                           </div>
                           <div>
-                            <h4 className="font-bold text-xs text-[#0f172a]">{g.name}</h4>
-                            <p className="text-[10px] font-mono text-[#64748b]">{g.companyName}</p>
+                            <h4 className="font-bold text-xs text-[#171717]">{g.name}</h4>
+                            <p className="text-[10px] font-mono text-[#727272]">{g.companyName}</p>
                           </div>
                         </div>
                         <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 text-[10px] font-mono font-bold rounded border border-emerald-200">
                           Active Policy
                         </span>
                       </div>
-                      <div className="pt-2 border-t border-[#f1f5f9] flex items-center justify-between text-xs text-[#64748b]">
+                      <div className="pt-2 border-t border-[#f4f4f4] flex items-center justify-between text-xs text-[#727272]">
                         <span>Assigned Members: <strong>{users.filter((u) => u.groupId === g.id).length}</strong></span>
                         <button
                           type="button"
                           onClick={() => setActiveTab("Manage Menu Access")}
-                          className="text-[#1e40af] hover:underline font-semibold text-xs cursor-pointer"
+                          className="text-[#414141] hover:underline font-semibold text-xs cursor-pointer"
                         >
                           Edit Group Rights &rarr;
                         </button>
@@ -497,24 +482,24 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
             {activeTab === "Change Password" && (
               <div className="flex-1 overflow-y-auto p-6 max-w-xl mx-auto space-y-5">
                 <div className="text-center space-y-1">
-                  <div className="w-12 h-12 rounded-2xl bg-[#eff6ff] text-[#1e40af] flex items-center justify-center mx-auto border border-[#bfdbfe]">
+                  <div className="w-12 h-12 rounded-2xl bg-[#f5f5f5] text-[#414141] flex items-center justify-center mx-auto border border-[#d8d8d8]">
                     <KeyRound className="w-6 h-6" />
                   </div>
-                  <h3 className="text-base font-bold text-[#0f172a] font-display">
+                  <h3 className="text-base font-bold text-[#171717] font-display">
                     Administrative Password Reset
                   </h3>
-                  <p className="text-xs text-[#64748b]">
+                  <p className="text-xs text-[#727272]">
                     Enforce immediate password change for any operator account across the cluster.
                   </p>
                 </div>
 
-                <form onSubmit={handleResetPassword} className="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-xs space-y-4 text-xs">
+                <form onSubmit={handleResetPassword} className="bg-white border border-[#e7e7e7] rounded-xl p-5 shadow-xs space-y-4 text-xs">
                   <div>
-                    <label className="block text-[#475569] font-medium mb-1">Target Operator</label>
+                    <label className="block text-[#535353] font-medium mb-1">Target Operator</label>
                     <select
                       value={passwordTargetUser}
                       onChange={(e) => setPasswordTargetUser(e.target.value)}
-                      className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg px-3 py-2 text-[#0f172a] font-semibold focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                      className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg px-3 py-2 text-[#171717] font-semibold focus:bg-white focus:outline-none focus:border-[#414141]"
                     >
                       {users.map((u) => (
                         <option key={u.id} value={u.id}>
@@ -525,24 +510,24 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                   </div>
 
                   <div>
-                    <label className="block text-[#475569] font-medium mb-1">New Password</label>
+                    <label className="block text-[#535353] font-medium mb-1">New Password</label>
                     <input
                       type="password"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg px-3 py-2 text-[#0f172a] focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                      className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg px-3 py-2 text-[#171717] focus:bg-white focus:outline-none focus:border-[#414141]"
                       placeholder="Minimum 8 characters with digits"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[#475569] font-medium mb-1">Confirm New Password</label>
+                    <label className="block text-[#535353] font-medium mb-1">Confirm New Password</label>
                     <input
                       type="password"
                       value={confirmPassword}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg px-3 py-2 text-[#0f172a] focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                      className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg px-3 py-2 text-[#171717] focus:bg-white focus:outline-none focus:border-[#414141]"
                       placeholder="Re-enter password to verify"
                       required
                     />
@@ -550,7 +535,7 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
 
                   <button
                     type="submit"
-                    className="w-full py-2.5 bg-[#1e40af] hover:bg-[#1d4ed8] text-white font-bold rounded-lg text-xs transition-all shadow-xs cursor-pointer"
+                    className="w-full py-2.5 bg-[#414141] hover:bg-[#4e4e4e] text-white font-bold rounded-lg text-xs transition-all shadow-xs cursor-pointer"
                   >
                     Reset & Enforce Password
                   </button>
@@ -561,18 +546,18 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
             {activeTab === "Unlock Users" && (
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 <div>
-                  <h3 className="text-sm font-bold text-[#0f172a] font-display">
+                  <h3 className="text-sm font-bold text-[#171717] font-display">
                     Account Lockout & Remediation Portal
                   </h3>
-                  <p className="text-xs text-[#64748b]">
+                  <p className="text-xs text-[#727272]">
                     Review and unlock cashier accounts locked due to consecutive authentication failures.
                   </p>
                 </div>
 
-                <div className="bg-white border border-[#e2e8f0] rounded-xl overflow-hidden shadow-xs text-xs">
+                <div className="bg-white border border-[#e7e7e7] rounded-xl overflow-hidden shadow-xs text-xs">
                   <table className="w-full text-left border-collapse">
                     <thead>
-                      <tr className="bg-[#f8fafc] border-b border-[#e2e8f0] font-mono text-[11px] text-[#475569]">
+                      <tr className="bg-[#fafafa] border-b border-[#e7e7e7] font-mono text-[11px] text-[#535353]">
                         <th className="px-4 py-2.5">User ID</th>
                         <th className="px-4 py-2.5">Operator Name</th>
                         <th className="px-4 py-2.5">Assigned Terminal</th>
@@ -580,12 +565,12 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                         <th className="px-4 py-2.5 text-center">Quick Action</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-[#f1f5f9]">
+                    <tbody className="divide-y divide-[#f4f4f4]">
                       {users.map((u) => (
-                        <tr key={u.id} className="hover:bg-[#f8fafc]">
-                          <td className="px-4 py-3 font-mono font-bold text-[#1e40af]">{u.id}</td>
-                          <td className="px-4 py-3 font-semibold text-[#0f172a]">{u.name}</td>
-                          <td className="px-4 py-3 font-mono text-[#64748b]">{u.companyCode}</td>
+                        <tr key={u.id} className="hover:bg-[#fafafa]">
+                          <td className="px-4 py-3 font-mono font-bold text-[#414141]">{u.id}</td>
+                          <td className="px-4 py-3 font-semibold text-[#171717]">{u.name}</td>
+                          <td className="px-4 py-3 font-mono text-[#727272]">{u.companyCode}</td>
                           <td className="px-4 py-3 text-center">
                             <span
                               className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold ${
@@ -607,7 +592,7 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                                 Unlock Account
                               </button>
                             ) : (
-                              <span className="text-[#94a3b8] text-[11px] font-mono">No action required</span>
+                              <span className="text-[#a1a1a1] text-[11px] font-mono">No action required</span>
                             )}
                           </td>
                         </tr>
@@ -621,16 +606,16 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
             {activeTab === "Activity Log Report" && (
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 <div>
-                  <h3 className="text-sm font-bold text-[#0f172a] font-display">
+                  <h3 className="text-sm font-bold text-[#171717] font-display">
                     Immutable Security Audit Log Stream
                   </h3>
-                  <p className="text-xs text-[#64748b]">
-                    Live audit trail recorded directly into PostgreSQL table smriti_audit_log.
+                  <p className="text-xs text-[#727272]">
+                    Live audit trail recorded directly into PostgreSQL table tileflow_audit_log.
                   </p>
                 </div>
-                <div className="bg-white border border-[#e2e8f0] rounded-xl p-4 shadow-xs space-y-3 font-mono text-xs">
-                  <div className="flex items-center justify-between pb-2 border-b border-[#f1f5f9] text-[11px] text-[#64748b]">
-                    <span>Table: smriti_audit_log</span>
+                <div className="bg-white border border-[#e7e7e7] rounded-xl p-4 shadow-xs space-y-3 font-mono text-xs">
+                  <div className="flex items-center justify-between pb-2 border-b border-[#f4f4f4] text-[11px] text-[#727272]">
+                    <span>Table: tileflow_audit_log</span>
                     <span className="text-emerald-700 font-bold">SHA-256 Tamper Protected</span>
                   </div>
                   <div className="space-y-2">
@@ -639,14 +624,14 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
                       { event: "MENU_PERMISSION_UPDATE", user: "001 (SYSADMIN)", time: "5 mins ago", ip: "127.0.0.1" },
                       { event: "SECURITY_POLICY_SAVED", user: "001 (SYSADMIN)", time: "12 mins ago", ip: "127.0.0.1" },
                     ].map((log, i) => (
-                      <div key={i} className="p-2.5 bg-[#f8fafc] border border-[#e2e8f0] rounded-lg flex items-center justify-between">
+                      <div key={i} className="p-2.5 bg-[#fafafa] border border-[#e7e7e7] rounded-lg flex items-center justify-between">
                         <div className="flex items-center gap-2">
-                          <span className="px-1.5 py-0.5 bg-[#eff6ff] text-[#1e40af] font-bold text-[10px] rounded border border-[#bfdbfe]">
+                          <span className="px-1.5 py-0.5 bg-[#f5f5f5] text-[#414141] font-bold text-[10px] rounded border border-[#d8d8d8]">
                             {log.event}
                           </span>
-                          <span className="text-[#0f172a] font-semibold">{log.user}</span>
+                          <span className="text-[#171717] font-semibold">{log.user}</span>
                         </div>
-                        <div className="text-[#64748b] text-[11px]">
+                        <div className="text-[#727272] text-[11px]">
                           <span>{log.time}</span> | <span>{log.ip}</span>
                         </div>
                       </div>
@@ -658,21 +643,21 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
 
             {activeTab === "My Profile" && (
               <div className="flex-1 overflow-y-auto p-6 max-w-xl mx-auto space-y-4">
-                <div className="bg-white border border-[#e2e8f0] rounded-2xl p-6 shadow-xs text-center space-y-3">
-                  <div className="w-16 h-16 rounded-full bg-[#eff6ff] text-[#1e40af] font-bold text-xl flex items-center justify-center mx-auto border-2 border-[#bfdbfe]">
+                <div className="bg-white border border-[#e7e7e7] rounded-2xl p-6 shadow-xs text-center space-y-3">
+                  <div className="w-16 h-16 rounded-full bg-[#f5f5f5] text-[#414141] font-bold text-xl flex items-center justify-center mx-auto border-2 border-[#d8d8d8]">
                     AD
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-[#0f172a]">Admin User (SYSADMIN)</h3>
-                    <p className="text-xs font-mono text-[#64748b]">ID: 001 | Role: SYSTEM ADMINISTRATOR</p>
+                    <h3 className="text-base font-bold text-[#171717]">Admin User (SYSADMIN)</h3>
+                    <p className="text-xs font-mono text-[#727272]">ID: 001 | Role: SYSTEM ADMINISTRATOR</p>
                   </div>
-                  <div className="pt-3 border-t border-[#f1f5f9] grid grid-cols-2 gap-3 text-left text-xs font-mono">
-                    <div className="p-2.5 bg-[#f8fafc] rounded-lg border border-[#e2e8f0]">
-                      <span className="text-[10px] text-[#94a3b8] block">Current Branch</span>
-                      <strong className="text-[#0f172a]">Branch 01 (Main Store)</strong>
+                  <div className="pt-3 border-t border-[#f4f4f4] grid grid-cols-2 gap-3 text-left text-xs font-mono">
+                    <div className="p-2.5 bg-[#fafafa] rounded-lg border border-[#e7e7e7]">
+                      <span className="text-[10px] text-[#a1a1a1] block">Current Branch</span>
+                      <strong className="text-[#171717]">Branch 01 (Main Store)</strong>
                     </div>
-                    <div className="p-2.5 bg-[#f8fafc] rounded-lg border border-[#e2e8f0]">
-                      <span className="text-[10px] text-[#94a3b8] block">Access Clearance</span>
+                    <div className="p-2.5 bg-[#fafafa] rounded-lg border border-[#e7e7e7]">
+                      <span className="text-[10px] text-[#a1a1a1] block">Access Clearance</span>
                       <strong className="text-emerald-700">Full System Access</strong>
                     </div>
                   </div>
@@ -683,18 +668,18 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
             {activeTab === "Manage Data Access" && (
               <div className="flex-1 overflow-y-auto p-6 space-y-4">
                 <div>
-                  <h3 className="text-sm font-bold text-[#0f172a] font-display">
+                  <h3 className="text-sm font-bold text-[#171717] font-display">
                     Multi-Tenant Data Boundary Control
                   </h3>
-                  <p className="text-xs text-[#64748b]">
+                  <p className="text-xs text-[#727272]">
                     Enforce strict company-level and store branch-level transactional data isolation.
                   </p>
                 </div>
-                <div className="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-xs space-y-3 text-xs">
-                  <div className="flex items-center justify-between pb-3 border-b border-[#f1f5f9]">
+                <div className="bg-white border border-[#e7e7e7] rounded-xl p-5 shadow-xs space-y-3 text-xs">
+                  <div className="flex items-center justify-between pb-3 border-b border-[#f4f4f4]">
                     <div>
-                      <h4 className="font-bold text-[#0f172a]">Strict Branch Isolation Policy</h4>
-                      <p className="text-[11px] text-[#64748b]">Prevent billing operators from querying inventory outside assigned branch.</p>
+                      <h4 className="font-bold text-[#171717]">Strict Branch Isolation Policy</h4>
+                      <p className="text-[11px] text-[#727272]">Prevent billing operators from querying inventory outside assigned branch.</p>
                     </div>
                     <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 font-bold text-[10px] font-mono rounded border border-emerald-200">
                       ENFORCED
@@ -707,13 +692,13 @@ export const SecManageDlg: React.FC<SmritiSecurityManagementModalProps> = ({
         </div>
 
         {/* 3. Bottom Status Bar */}
-        <div className="bg-[#f8fafc] border-t border-[#e2e8f0] px-4 py-2 flex items-center justify-between text-[11px] text-[#64748b] select-none font-mono shrink-0">
+        <div className="bg-[#fafafa] border-t border-[#e7e7e7] px-4 py-2 flex items-center justify-between text-[11px] text-[#727272] select-none font-mono shrink-0">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-[#0f172a]">SMRITI Retail OS</span>
+            <span className="font-bold text-[#171717]">MQube</span>
             <span>&bull;</span>
             <span>Control Plane Security Engine v6.17</span>
           </div>
-          <div className="text-[#1e40af] font-semibold">
+          <div className="text-[#414141] font-semibold">
             Press Esc to Close
           </div>
         </div>

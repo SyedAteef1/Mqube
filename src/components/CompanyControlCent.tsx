@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from 'react';
 import { 
   Building2, Database, Layers, Settings, Users, Shield, 
@@ -34,13 +21,13 @@ export const CompanyControlCenter: React.FC<CompanyControlCenterProps> = ({
   const companyData = {
     companyId: companyId,
     companyCode: '001',
-    companyName: 'Tattly Threads',
-    legalName: 'Tattly Threads',
+    companyName: 'MQube Tiles & Sanitaryware',
+    legalName: 'MQube Tiles & Sanitaryware',
     status: 'READY',
-    companyAdmin: 'Jawahar Ramkripal Mallah',
+    companyAdmin: 'Syed Ateef',
     branches: ['Main Corporate Branch - Mumbai', 'South Distribution Hub'],
     database: {
-      databaseName: 'smriti001',
+      databaseName: 'tileflow001',
       provisioningStatus: 'READY',
       healthStatus: 'HEALTHY',
       schemaVersion: '3.16.0',
@@ -68,7 +55,7 @@ export const CompanyControlCenter: React.FC<CompanyControlCenterProps> = ({
               <Building2 className="w-6 h-6" />
             </div>
             <div>
-              <h2 className="text-xl font-bold text-slate-100">SMRITI Company Control Center</h2>
+              <h2 className="text-xl font-bold text-slate-100">MQube Company Control Center</h2>
               <p className="text-xs text-slate-400 font-mono">
                 Company: {companyData.companyName} | Code: <span className="text-amber-400">{companyData.companyCode}</span>
               </p>
@@ -234,7 +221,7 @@ export const CompanyControlCenter: React.FC<CompanyControlCenterProps> = ({
 
         {/* Footer */}
         <div className="bg-slate-800 border-t border-slate-700 p-4 flex items-center justify-between text-xs text-slate-400 font-mono">
-          <span>Control Plane: <strong className="text-slate-200">smritisys</strong></span>
+          <span>Control Plane: <strong className="text-slate-200">tileflowsys</strong></span>
           <span>Role Authorization: <strong className="text-amber-400">{userRole}</strong></span>
         </div>
       </div>

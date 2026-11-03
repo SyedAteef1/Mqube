@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Import items from Tax Invoices Excel to smriti001 itemmaster
+Import items from Tax Invoices Excel to tileflow001 itemmaster
 Extracts unique Article-Color-Size combinations and creates products
 """
 import openpyxl
@@ -13,7 +13,7 @@ from uuid import uuid4
 file_path = 'Tax_Invoices_TT_18_to_137_Article_Color_Size_Split.xlsx'
 
 print("=" * 80)
-print("IMPORT: Tax Invoice Items to smriti001 Itemmaster")
+print("IMPORT: Tax Invoice Items to tileflow001 Itemmaster")
 print("=" * 80)
 
 # Read Excel file
@@ -55,11 +55,11 @@ for row_idx, row in enumerate(ws.iter_rows(min_row=2, values_only=True), 2):
 print(f"   Read {row_count} rows from Excel")
 print(f"   Found {len(unique_products)} unique SKU codes")
 
-# Connect to smriti001
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+# Connect to tileflow001
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
-print(f"\n✓ Connected to smriti001")
+print(f"\n✓ Connected to tileflow001")
 
 # Get company ID for Tattly Threads
 cur.execute("SELECT id FROM companies WHERE name LIKE '%Tattly%' LIMIT 1")

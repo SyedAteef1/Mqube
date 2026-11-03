@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Vertical Slice 2 — Universal Party Master & Universal Item Master Canonicalization
 
 ## 1. Purpose
-Establish the canonical Universal Party Master (`parties`, `party_roles`, `customer_profiles`, `supplier_profiles`) and Universal Item Master (`items`, `item_variants`, `item_barcodes`) in the SMRITI tenant data plane (`smritiXXX`). This eliminates data redundancy for multi-role entities (e.g. entities that act as both Customer and Supplier) and standardizes SKU dimensions, barcodes, and variant lookups across POS, B2B Sales, Procurement, and WMS.
+Establish the canonical Universal Party Master (`parties`, `party_roles`, `customer_profiles`, `supplier_profiles`) and Universal Item Master (`items`, `item_variants`, `item_barcodes`) in the TILEFLOW tenant data plane (`tileflowXXX`). This eliminates data redundancy for multi-role entities (e.g. entities that act as both Customer and Supplier) and standardizes SKU dimensions, barcodes, and variant lookups across POS, B2B Sales, Procurement, and WMS.
 
 ---
 
 ## 2. Scope
-- **Tenant Data Plane (`smritiXXX`) Only**: Zero business entity or catalog masters are written to `smritisys`.
+- **Tenant Data Plane (`tileflowXXX`) Only**: Zero business entity or catalog masters are written to `tileflowsys`.
 - **Universal Party Model**: Core identity + polymorphic role assignments (`CUSTOMER`, `SUPPLIER`, `DEALER`, `DISTRIBUTOR`, `EMPLOYEE`, `TRANSPORTER`, `SALESMAN`) + specialized profile extensions (`CustomerProfile`, `SupplierProfile`).
 - **Universal Item Model**: Core item master + multi-attribute variant dimensions (`ItemVariant`) + high-speed barcode mapping (`ItemBarcode`) + batch inventory integration (`ProductBatchStock`).
 - **Backward Compatibility**: Non-destructive integration preserving legacy `customers`, `suppliers`, and `products` queries.

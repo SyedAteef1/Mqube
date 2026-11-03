@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import sys
 import asyncio
 import logging
@@ -21,7 +8,7 @@ sys.path.insert(0, "backend")
 from app.db.provisioning import sanitize_company_db_name, provision_postgresql_database
 from app.services.control_registry import ControlDatabaseRegistryService
 
-logger = logging.getLogger("smriti.migration_engine")
+logger = logging.getLogger("tileflow.migration_engine")
 
 
 class MultiDbMigrationEngine:
@@ -40,10 +27,10 @@ class MultiDbMigrationEngine:
     ) -> Dict[str, Any]:
         """
         Executes Blue/Green migration workflow:
-          Phase 1: Provision target database Smritibus_<CompanyCode>.
+          Phase 1: Provision target database TileFlowbus_<CompanyCode>.
           Phase 2: Perform historical table copy.
           Phase 3: Run delta sync catch-up.
-          Phase 4: Register active mapping in SmritiSys Control Database.
+          Phase 4: Register active mapping in TileFlowSys Control Database.
         """
         clean_code = company_code.strip().upper()
         target_db_name = sanitize_company_db_name(clean_code)
@@ -57,7 +44,7 @@ class MultiDbMigrationEngine:
 
         logger.info(f"[Migration] Phase 2: Historical ETL from source to '{target_db_name}' completed.")
         logger.info(f"[Migration] Phase 3: Delta sync catch-up completed.")
-        logger.info(f"[Migration] Phase 4: Registering active mapping in SmritiSys...")
+        logger.info(f"[Migration] Phase 4: Registering active mapping in TileFlowSys...")
 
         return {
             "status": "COMPLETED",
@@ -70,10 +57,10 @@ class MultiDbMigrationEngine:
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-    print("=== SMRITI MULTI-DB MIGRATION ENGINE CLI ===")
+    print("=== TILEFLOW MULTI-DB MIGRATION ENGINE CLI ===")
     if len(sys.argv) > 1:
         comp_code = sys.argv[1]
-        res = asyncio.run(MultiDbMigrationEngine.execute_migration_pipeline(comp_code, "postgresql+asyncpg://localhost/smritisys"))
+        res = asyncio.run(MultiDbMigrationEngine.execute_migration_pipeline(comp_code, "postgresql+asyncpg://localhost/tileflowsys"))
         print(res)
     else:
         print("Usage: python backend/scripts/migrate_to_multidb.py <COMPANY_CODE>")

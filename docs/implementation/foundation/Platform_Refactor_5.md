@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Vertical Slice 7 — Outbox and Analytics Plane
 
 ## 1. Objective
-Implement the Transactional Outbox Event Ledger (`outbox_events`) in the tenant data plane (`smritiXXX`) to guarantee zero dual-write event publishing failures, coupled with an asynchronous outbox dispatcher and authoritative operational analytics reporting derived directly from system-of-record ledgers.
+Implement the Transactional Outbox Event Ledger (`outbox_events`) in the tenant data plane (`tileflowXXX`) to guarantee zero dual-write event publishing failures, coupled with an asynchronous outbox dispatcher and authoritative operational analytics reporting derived directly from system-of-record ledgers.
 
 ---
 
@@ -36,7 +35,7 @@ When transactional operations occur (such as confirming a sales invoice or recei
 3. **Authoritative Operational Analytics Engine**:
    - Real-time revenue aggregation, tender volume breakdown, and stock movement velocity computed directly from `sales_invoices`, `payment_transactions`, and `stock_movements`.
 4. **Tenant Isolation**:
-   - All outbox events and analytical aggregations remain strictly scoped to individual tenant databases (`smritiXXX`).
+   - All outbox events and analytical aggregations remain strictly scoped to individual tenant databases (`tileflowXXX`).
 
 ### Out-of-Scope (Deferred)
 - External Kafka / RabbitMQ cluster brokers (dispatched via abstract stream adapter).
@@ -56,7 +55,7 @@ When transactional operations occur (such as confirming a sales invoice or recei
 | **Event Reliability** | In-memory/Ad-hoc | Transactional Outbox table (`outbox_events`) within DB commit |
 | **Concurrency Safety** | Risk of double-processing | Row-locked dispatch (`SKIP LOCKED`) |
 | **Analytics Truth** | UI ad-hoc counts | Aggregations computed directly against authoritative Postgres ledgers |
-| **Data Plane Boundary** | Tenant DB | Strictly tenant data plane (`smritiXXX`) |
+| **Data Plane Boundary** | Tenant DB | Strictly tenant data plane (`tileflowXXX`) |
 
 ---
 
@@ -135,7 +134,7 @@ Additive DDL tables. If rollback is required, business operations proceed normal
 1. Test transactional outbox event insertion during sales invoice confirmation.
 2. Test locked batch dispatching transitioning events to `DISPATCHED`.
 3. Test operational analytics queries for daily sales, tender breakdowns, and stock velocity.
-4. Verify tenant isolation between `smriti001` and `smriti002`.
+4. Verify tenant isolation between `tileflow001` and `tileflow002`.
 
 ---
 
@@ -153,7 +152,7 @@ Additive DDL tables. If rollback is required, business operations proceed normal
 ---
 
 ## 16. Deployment Plan
-1. Apply Alembic migration `v1342_canonical_outbox` to all tenant databases (`alembic -x db=smritiXXX upgrade head`).
+1. Apply Alembic migration `v1342_canonical_outbox` to all tenant databases (`alembic -x db=tileflowXXX upgrade head`).
 2. Deploy consolidated outbox models and domain services (`OutboxService`, `UnifiedOutboxAnalyticsService`).
 3. Validate automated test suite execution.
 

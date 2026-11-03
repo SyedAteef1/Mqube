@@ -12,7 +12,7 @@ from app.api.deps import TenantContext
 from app.services.reports import ReportsService
 
 async def main():
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as db:
         tenant = TenantContext(company_id="COMP-001", branch_id="MAIN")
         svc = ReportsService(db, tenant)

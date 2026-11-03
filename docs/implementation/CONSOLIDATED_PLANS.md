@@ -1,31 +1,26 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.2
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS — Consolidated Implementation Plans Ledger
+# TILEFLOW Retail OS — Consolidated Implementation Plans Ledger
 
-This document serves as the master chronological repository of all technical implementation plans generated during the SMRITI Retail OS engineering lifecycle.
+This document serves as the master chronological repository of all technical implementation plans generated during the TILEFLOW Retail OS engineering lifecycle.
 
 ---
 
@@ -34,25 +29,25 @@ This document serves as the master chronological repository of all technical imp
 *Original File: [Sales_Studio.md](./sales/Sales_Studio.md)*
 
 ### 1. Objective
-Expand and modularize the Sales & Commerce Studio (`SalesStudioTab.tsx`) to match the structural patterns of SMRITI modules like `CrmLoyaltyTab.tsx`. This includes modernizing navigation, integrating smooth route animations, and standardizing scrolling behavior.
+Expand and modularize the Sales & Commerce Studio (`SalesStudioTab.tsx`) to match the structural patterns of TILEFLOW modules like `CrmLoyaltyTab.tsx`. This includes modernizing navigation, integrating smooth route animations, and standardizing scrolling behavior.
 
 ### 2. Business Motivation
-A consistent design language and standardized container architecture are critical for reducing developer cognitive load and improving user interfaces. Aligning `SalesStudioTab.tsx` with other SMRITI modules ensures consistent aesthetics, reliable layout overflows, and predictable route transition animations.
+A consistent design language and standardized container architecture are critical for reducing developer cognitive load and improving user interfaces. Aligning `SalesStudioTab.tsx` with other TILEFLOW modules ensures consistent aesthetics, reliable layout overflows, and predictable route transition animations.
 
 ### 3. Scope
 - Move `SalesStudioTab.tsx`'s inner tab-bar selector into a top-level header navigation element matching `CrmLoyaltyTab.tsx`.
 - Integrate `motion.div` from `motion/react` to provide micro-animations during subview shifts.
-- Wrap all main contents in a dedicated `SmritiScrollArea` to ensure standardized overflow behavior across screen sizes.
+- Wrap all main contents in a dedicated `TileFlowScrollArea` to ensure standardized overflow behavior across screen sizes.
 - Verify that Quotations, Sales Orders, Sales Invoices, Sales Returns, and Customer views continue to load data correctly.
 
 ### 4. Current State
 - `SalesStudioTab.tsx` was using an in-body pill-bar selector button row as its primary subview navigation.
 - The root component returned a top-level standard `div` without unified header, title/subtitle, or layout integrations.
-- Body content had hardcoded or native browser scroll behaviors, which led to visual drift compared to the rest of SMRITI.
+- Body content had hardcoded or native browser scroll behaviors, which led to visual drift compared to the rest of TILEFLOW.
 
 ### 5. Gap Analysis
 - **Navigation Layout Gap**: Standardized modular tabs are styled with bottom-border indicators and high-contrast tab states at the header level. Sales Studio was using localized pill buttons.
-- **Scroll Overflows Gap**: Outer page structure didn't utilize `SmritiScrollArea` for consistent custom scrollbars.
+- **Scroll Overflows Gap**: Outer page structure didn't utilize `TileFlowScrollArea` for consistent custom scrollbars.
 - **Micro-Animations Gap**: Layout changes loaded abruptly rather than smoothly transitioning through a subtle vertical-slide fade-in effect.
 
 ### 6. Architecture Impact
@@ -77,12 +72,12 @@ None.
 
 ### 10. Dependencies
 - `motion/react` (animations)
-- `./SmritiScrollArea.tsx` (scrolling container)
+- `./TileFlowScrollArea.tsx` (scrolling container)
 
 ### 11. Risks
 - **Visual Overlap**: Incorrect CSS flex properties could cause headers to scroll out of view.
-  - *Mitigation*: Used standard `flex-1 overflow-hidden` wrapper style alongside `SmritiScrollArea`.
-- **Import Errors**: Incorrect importing of `motion` or `SmritiScrollArea` could break compilation.
+  - *Mitigation*: Used standard `flex-1 overflow-hidden` wrapper style alongside `TileFlowScrollArea`.
+- **Import Errors**: Incorrect importing of `motion` or `TileFlowScrollArea` could break compilation.
   - *Mitigation*: Run `npm run lint` and `npm run build` immediately following changes.
 
 ### 12. Rollback Strategy
@@ -119,7 +114,7 @@ None.
 *Original File: [CRM_Audit_And_POS.md](./sales/CRM_Audit_And_POS.md)*
 
 ### 1. Objective
-Upgrading the core architecture and user interface of SMRITI Retail OS, focusing on unified customer CRM data synchronization, global backend audit logging, and split-payment, keyboard-driven POS Terminal enhancements.
+Upgrading the core architecture and user interface of TILEFLOW Retail OS, focusing on unified customer CRM data synchronization, global backend audit logging, and split-payment, keyboard-driven POS Terminal enhancements.
 
 ### 2. Business Motivation
 Aligning the isolated frontend prototype systems (CRM local storage cache fallbacks) into the centralized JSON backend database server. Auto-capturing all mutation API requests in the audit activity log, and closing critical cashier efficiency gaps in POS checkout registers.
@@ -202,7 +197,7 @@ None.
 ---
 
 ### 1. Objective
-This document defines the approved architectural blueprint and implementation plan for **SMRITI Retail OS**. Based on strategic alignment, the system will maintain its modular Node.js Express backend, migrate to a **PostgreSQL** database, and preserve strict business module boundaries to ensure long-term stability and hot-swappable scalability.
+This document defines the approved architectural blueprint and implementation plan for **TILEFLOW Retail OS**. Based on strategic alignment, the system will maintain its modular Node.js Express backend, migrate to a **PostgreSQL** database, and preserve strict business module boundaries to ensure long-term stability and hot-swappable scalability.
 
 ### 2. Business Motivation
 - **Database Durability:** Transitioning from file database serialization to standard SQL database models prevents race condition overwrites and ensures ACID compliance.
@@ -210,7 +205,7 @@ This document defines the approved architectural blueprint and implementation pl
 - **AI Microservices Preparedness:** Isolating Python analytics from Node business logic ensures high-throughput asynchronous execution of ML forecasting scripts.
 
 ### 3. Scope
-- Create the standard DDL schema script defining all SMRITI tables (customers, products, POS profiles, shifts, invoices, PSV ledger channels, and system audit logs).
+- Create the standard DDL schema script defining all TILEFLOW tables (customers, products, POS profiles, shifts, invoices, PSV ledger channels, and system audit logs).
 - Build the node-postgres pool manager loading connection strings dynamically from `.env` files.
 - Build the database initializer module executing table creation DDLs and seeding initial data from `db_store.json` on startup.
 - Hook database initialization asynchronously inside `server.ts` before the server starts listening on ports.
@@ -235,7 +230,7 @@ See schema, pool connection, and products/checkout refactored endpoints in:
 | File Path | Description |
 | :--- | :--- |
 | `src/db/pool.ts` | PostgreSQL client pool configuration |
-| `src/db/schema.sql` | DDL schema script mapping SMRITI entities |
+| `src/db/schema.sql` | DDL schema script mapping TILEFLOW entities |
 | `src/db/init.ts` | DB initializer executing SQL schemas and import flat-file seed JSON |
 
 ### 9. Files Modified
@@ -286,14 +281,14 @@ Completed.
 ---
 
 ### 1. Objective
-Enable SMRITI Retail OS to start automatically, persist data, and recover from hardware reboots or power failures with zero manual interventions using a single, unified Docker command.
+Enable TILEFLOW Retail OS to start automatically, persist data, and recover from hardware reboots or power failures with zero manual interventions using a single, unified Docker command.
 
 ### 2. Business Motivation
 In retail shop environments, cashiers and managers should not be expected to manually boot databases, execute node scripts, or run CLI commands. Containerizing the system and configuring OS-level startup scripts ensures the POS is always ready for billing immediately upon turning on the machine.
 
 ### 3. Scope
 - Create a multi-stage production `Dockerfile`.
-- Create a `docker-compose.yml` file orchestrating PostgreSQL and SMRITI API services.
+- Create a `docker-compose.yml` file orchestrating PostgreSQL and TILEFLOW API services.
 - Define container health checks (blocking API initialization until PostgreSQL is healthy).
 - Persist database records using host docker volumes.
 - Create Windows startup batch scripts (`startup.bat`) and Linux shell scripts (`startup.sh`) that run container up configurations.
@@ -350,7 +345,6 @@ Completed.
 - [Docker Orchestration & Auto-Startup Walkthrough](../../walkthrough/devops/Docker.md)
 
 ---
-## [2026-07-11] v3.3.0 — Project Header Standardization
 *Area: `foundation` | Original File: [Project_Header.md](./foundation/Project_Header.md)*
 
 # Implementation Plan: Project Header Standardization — v3.3.0
@@ -377,13 +371,12 @@ Branding, ownership, and copyright attributions must be uniform across all sourc
 ---
 
 ## 4. Current State
-- Files contain varying, older header configurations naming Jawahar Ramkripal Mallah alone.
+- Files contain varying, older header configurations naming Syed Ateef alone.
 - Some newer or configuration files (e.g., `vite.config.ts`) lack standard headers.
 
 ---
 
 ## 5. Gap Analysis
-- Missing founders' metadata (Pushpa Devi Jawahar Mallah) and organization details (AITDL NETWORKS) in the current files.
 - Inconsistent header formats across newly created utilities and config scripts.
 
 ---
@@ -399,50 +392,22 @@ Branding, ownership, and copyright attributions must be uniform across all sourc
 
 #### A. JavaScript, TypeScript, CSS, SCSS, SQL (`/** ... */`)
 ```typescript
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : {Version}
- * * Created    : {Created}
- * * Modified   : {Modified}
- * * Copyright  : {Copyright}
- * * License    : {License}
- */
 ```
 
 #### B. Shell, PowerShell, Python (`# ...`)
 ```python
-# Project      : SMRITI Retail OS
-# Repository   : SMRITIRetailNX
-# Organization : AITDL NETWORKS
+# Project      : TILEFLOW Retail OS
+# Repository   : TILEFLOWRetailNX
 # 
 # Founders
 # 
 # * Pushpa Devi Jawahar Mallah
 #   * Founder & Chairperson
 #   * Phone: +91 9324117007
-#   * Email: founder@aitdl.com
 # 
-# * Jawahar Ramkripal Mallah
+# * Syed Ateef
 #   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-#   * Email: founder@aitdl.com
 # 
-# * Websites: aitdl.com | erpnbook.com | smritibooks.com
 # 
 # * Version    : {Version}
 # * Created    : {Created}
@@ -454,22 +419,18 @@ Branding, ownership, and copyright attributions must be uniform across all sourc
 #### C. HTML, Markdown (`<!-- ... -->`)
 ```html
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : {Version}
   * Created    : {Created}
@@ -481,22 +442,18 @@ Branding, ownership, and copyright attributions must be uniform across all sourc
 
 #### D. Windows Batch (`REM ...`)
 ```batch
-REM Project      : SMRITI Retail OS
-REM Repository   : SMRITIRetailNX
-REM Organization : AITDL NETWORKS
+REM Project      : TILEFLOW Retail OS
+REM Repository   : TILEFLOWRetailNX
 REM 
 REM Founders
 REM 
 REM * Pushpa Devi Jawahar Mallah
 REM   * Founder & Chairperson
 REM   * Phone: +91 9324117007
-REM   * Email: founder@aitdl.com
 REM 
-REM * Jawahar Ramkripal Mallah
+REM * Syed Ateef
 REM   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-REM   * Email: founder@aitdl.com
 REM 
-REM * Websites: aitdl.com | erpnbook.com | smritibooks.com
 REM 
 REM * Version    : {Version}
 REM * Created    : {Created}
@@ -569,17 +526,17 @@ Completed.
 
 ---
 
-## [2026-07-11] v3.4.0 — About SMRITI Retail OS
+## [2026-07-11] v3.4.0 — About TILEFLOW Retail OS
 *Area: `foundation` | Original File: [About_Module_Plan.md](./foundation/About_Module_Plan.md)*
 
-# Implementation Plan: Complete "About SMRITI Retail OS" Module — v3.4.0
+# Implementation Plan: Complete "About TILEFLOW Retail OS" Module — v3.4.0
 
-This document defines the plan to implement the comprehensive **About SMRITI Retail OS** module.
+This document defines the plan to implement the comprehensive **About TILEFLOW Retail OS** module.
 
 ---
 
 ## 1. Objective
-Design and implement an enterprise-grade **About SMRITI Retail OS** module containing 20 sub-navigation items, internal search, responsive layout, print-friendly views, backend metadata integration, and unit tests.
+Design and implement an enterprise-grade **About TILEFLOW Retail OS** module containing 20 sub-navigation items, internal search, responsive layout, print-friendly views, backend metadata integration, and unit tests.
 
 ---
 
@@ -592,7 +549,7 @@ Provide users, operators, and auditors with a single, clear source of truth rega
 
 ### In Scope
 - **Backend API:** Implement `/api/changelog` in `server.ts` to return the `CHANGELOG.md` file dynamically.
-- **Frontend UI Component:** Completely redesign `src/components/AboutSmritiTab.tsx` with a responsive split-pane layout containing 20 menu items, search filtering, and print styles.
+- **Frontend UI Component:** Completely redesign `src/components/AboutTileFlowTab.tsx` with a responsive split-pane layout containing 20 menu items, search filtering, and print styles.
 - **Diagnostics Dashboard:** Read live browser navigator parameters and database connection health to display dynamic environment variables.
 - **Unit Testing:** Implement a regression test script `src/tests/about.test.ts` to validate endpoints and schema data.
 - **Footer/Navigation Links:** Unify sidebar and taskbar reference links to open the About module.
@@ -603,8 +560,8 @@ Provide users, operators, and auditors with a single, clear source of truth rega
 ---
 
 ## 4. Current State
-- `AboutSmritiTab.tsx` exists as a stub with only 4 sidebar sections (About, Author, Modules, System).
-- Lacks biographies for Chairperson Pushpa Devi Jawahar Mallah or CEO Jawahar Ramkripal Mallah.
+- `AboutTileFlowTab.tsx` exists as a stub with only 4 sidebar sections (About, Author, Modules, System).
+- Lacks biographies for Chairperson Pushpa Devi Jawahar Mallah or CEO Syed Ateef.
 - No internal search within the About tab.
 - No live connection log, changelog integration, privacy policy, or terms panels.
 
@@ -619,21 +576,21 @@ Provide users, operators, and auditors with a single, clear source of truth rega
 
 ## 6. Architecture Impact
 - **Endpoint Additions:** Adds a non-blocking Express GET router (`/api/changelog`).
-- **Layout Compliance:** Follows the SMRITI Platform Abstraction Layer (PAL) coding constitution with no direct platform-specific dependencies in UI layers.
+- **Layout Compliance:** Follows the TILEFLOW Platform Abstraction Layer (PAL) coding constitution with no direct platform-specific dependencies in UI layers.
 
 ---
 
 ## 7. Proposed Design
 
 ### Sidebar Categories & Navigation Structure
-The left sidebar inside `AboutSmritiTab.tsx` will be organized into four thematic groups containing the 20 required submenus:
+The left sidebar inside `AboutTileFlowTab.tsx` will be organized into four thematic groups containing the 20 required submenus:
 
 ```
 ├── 📊 OPERATIONAL OVERVIEW
 │   ├── Dashboard (Summary of version, environment, quick navigation cards)
-│   └── About SMRITI Retail OS (Product identity, logo, websites)
+│   └── About TILEFLOW Retail OS (Product identity, logo, websites)
 ├── 👥 LEADERSHIP & CULTURE
-│   ├── Founders (Chairperson Pushpa Devi Jawahar Mallah & CEO Jawahar Ramkripal Mallah profiles)
+│   ├── Founders (Chairperson Pushpa Devi Jawahar Mallah & CEO Syed Ateef profiles)
 │   ├── Our Story (Corporate evolution narrative and visual timeline)
 │   ├── Vision & Mission (Strategic directions)
 │   └── Core Values (Innovation, simplicity, trust, transparency, safety)
@@ -650,7 +607,6 @@ The left sidebar inside `AboutSmritiTab.tsx` will be organized into four themati
 │   └── Third-Party Licenses (Licenses of upstream dependencies)
 └── 📞 CHANNELS & CREDITS
     ├── Contact (Email links, sites, support channels)
-    ├── Credits (Contributors, AITDL network acknowledgments)
     ├── Version Information (Commit hashes, host OS, database engines)
     ├── Release Notes (Render of CHANGELOG.md via backend feed)
     └── System Information (Diagnostics, active plugins, storage, memory)
@@ -670,7 +626,7 @@ Tailored CSS print media queries (`@media print`) will hide sidebars and render 
 ---
 
 ## 9. Files Modified
-- [MODIFY] [AboutSmritiTab.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/AboutSmritiTab.tsx) — Replace pane with 20 sections, search bar, contact form, visual timelines, and diagnostic fields.
+- [MODIFY] [AboutTileFlowTab.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/AboutTileFlowTab.tsx) — Replace pane with 20 sections, search bar, contact form, visual timelines, and diagnostic fields.
 - [MODIFY] [server.ts](file:///d:/IMP/GitHub/SMRITRretailNX/server.ts) — Register `/api/changelog` router endpoint.
 - [MODIFY] [package.json](file:///d:/IMP/GitHub/SMRITRretailNX/package.json) — Add test execution command.
 
@@ -688,7 +644,7 @@ Tailored CSS print media queries (`@media print`) will hide sidebars and render 
 ---
 
 ## 12. Rollback Strategy
-`git checkout -- src/components/AboutSmritiTab.tsx server.ts package.json` and deletion of the test script file.
+`git checkout -- src/components/AboutTileFlowTab.tsx server.ts package.json` and deletion of the test script file.
 
 ---
 
@@ -707,7 +663,7 @@ Tailored CSS print media queries (`@media print`) will hide sidebars and render 
 
 ## 14. Test Plan
 - Assert GET `/api/metadata` schema structure.
-- Assert GET `/api/changelog` returns text containing `# SMRITI Retail OS — Changelog`.
+- Assert GET `/api/changelog` returns text containing `# TILEFLOW Retail OS — Changelog`.
 
 ---
 
@@ -737,11 +693,11 @@ Completed.
 
 ---
 
-## [2026-07-11] v3.5.0 — SMRITI Development Intelligence Center (SDIC)
+## [2026-07-11] v3.5.0 — TILEFLOW Development Intelligence Center (SDIC)
 *Original File: [Dev_Tracker_Plan.md](./foundation/Dev_Tracker_Plan.md)*
 
 ### 1. Objective
-Design and implement an automated **SMRITI Development Intelligence Center (SDIC)** that scans codebase files, routers, schemas, tests, and documentation, generates 15 live markdown reports in the workspace root, tracks historical metrics, and renders an interactive dashboard page.
+Design and implement an automated **TILEFLOW Development Intelligence Center (SDIC)** that scans codebase files, routers, schemas, tests, and documentation, generates 15 live markdown reports in the workspace root, tracks historical metrics, and renders an interactive dashboard page.
 
 ### 2. Business Motivation
 Provide real-time, evidence-based metrics showing codebase health, technical debt levels, and release scores without requiring manual maintenance.
@@ -783,14 +739,14 @@ None.
 
 ---
 
-## [2026-07-11] v3.6.0 — SMRITI FastAPI Core Backend
+## [2026-07-11] v3.6.0 — TILEFLOW FastAPI Core Backend
 *Original File: [FastAPI_Core_Plan.md](./foundation/FastAPI_Core_Plan.md)*
 
 ### 1. Objective
-Design and implement a top-level **FastAPI core backend** for SMRITI Retail OS, featuring SQLAlchemy 2.x, Alembic, Pydantic settings, security middleware, Ruff linting, and pytest suites.
+Design and implement a top-level **FastAPI core backend** for TILEFLOW Retail OS, featuring SQLAlchemy 2.x, Alembic, Pydantic settings, security middleware, Ruff linting, and pytest suites.
 
 ### 2. Business Motivation
-Establish the long-term, production-grade Python environment mapping SMRITI services, enabling advanced GenAI/Gemini orchestration, database migrations, and clean architecture isolation.
+Establish the long-term, production-grade Python environment mapping TILEFLOW services, enabling advanced GenAI/Gemini orchestration, database migrations, and clean architecture isolation.
 
 ### 3. Scope
 - **Directory Isolation:** Setup root `backend/` folder separate from frontend/Node components.

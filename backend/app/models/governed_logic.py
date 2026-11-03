@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 from sqlalchemy import (
@@ -32,7 +18,7 @@ from ..db.base import BaseEntity
 
 class FormulaDefinition(BaseEntity):
     """
-    Centralized, versioned mathematical and KPI formula definition in Control Plane (smritisys).
+    Centralized, versioned mathematical and KPI formula definition in Control Plane (tileflowsys).
     No arbitrary executable code; uses structured JSON AST for deterministic calculation.
     """
     __tablename__ = "formula_definitions"
@@ -55,7 +41,7 @@ class FormulaDefinition(BaseEntity):
 
 class BusinessRuleDefinition(BaseEntity):
     """
-    Centralized, versioned declarative business rules (smritisys).
+    Centralized, versioned declarative business rules (tileflowsys).
     Encodes conditions and actions for discounts, promotions, return windows, credit limits.
     """
     __tablename__ = "business_rule_definitions"
@@ -79,7 +65,7 @@ class BusinessRuleDefinition(BaseEntity):
 
 class PolicyDefinition(BaseEntity):
     """
-    Centralized, versioned statutory, compliance, and governance policy definitions (smritisys).
+    Centralized, versioned statutory, compliance, and governance policy definitions (tileflowsys).
     Encodes GST calculation rules, invoice return windows, rounding policies, cancellation limits.
     """
     __tablename__ = "policy_definitions"
@@ -100,7 +86,7 @@ class PolicyDefinition(BaseEntity):
 
 class WorkflowDefinition(BaseEntity):
     """
-    Centralized, versioned state machine and document approval workflow definitions (smritisys).
+    Centralized, versioned state machine and document approval workflow definitions (tileflowsys).
     Defines allowed states, transitions, required roles, and transition hooks.
     """
     __tablename__ = "workflow_definitions"

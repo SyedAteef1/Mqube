@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 from datetime import datetime, date
@@ -52,8 +38,8 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -67,7 +53,7 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
 @pytest.mark.asyncio
 async def test_territory_and_dealer_assignment_lifecycle():
     """Verify territory creation and dealer territorial credit allocation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -113,7 +99,7 @@ async def test_territory_and_dealer_assignment_lifecycle():
 @pytest.mark.asyncio
 async def test_route_and_route_stops_ordered_sequence():
     """Verify delivery route creation and sequential stop management."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -190,7 +176,7 @@ async def test_route_and_route_stops_ordered_sequence():
 @pytest.mark.asyncio
 async def test_primary_and_secondary_distribution_orders_gst():
     """Verify primary and secondary distribution order pricing and statutory GST calculation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -255,7 +241,7 @@ async def test_primary_and_secondary_distribution_orders_gst():
 @pytest.mark.asyncio
 async def test_loading_sheet_aggregation_and_order_status_progression():
     """Verify vehicle loading sheet consolidating orders and updating status to LOADED."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -321,7 +307,7 @@ async def test_loading_sheet_aggregation_and_order_status_progression():
 @pytest.mark.asyncio
 async def test_claims_submission_review_and_credit_note_generation():
     """Verify distribution claim submission, review, approval, and Credit Note generation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -376,7 +362,7 @@ async def test_claims_submission_review_and_credit_note_generation():
 @pytest.mark.asyncio
 async def test_route_trip_financial_and_stock_settlement():
     """Verify route trip cash, cheque, UPI, credit, and returned stock reconciliation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:

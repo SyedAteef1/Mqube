@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.25.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI Global Export Center (Multi-Format, Multi-Scope, Universal Engine)
+# Walkthrough: TILEFLOW Global Export Center (Multi-Format, Multi-Scope, Universal Engine)
 
 ## 1. Purpose
-Implement an enterprise-wide, zero-dependency **Global Export Center** across the SMRITI Retail OS application. The Export Center empowers business users to export records from any table, grid, ledger, master, or report into **CSV**, **Excel (XLSX)**, and **Plain Text (TXT)** with full scope selection (**Current Page**, **All Records via safe auto-pagination**, **Filtered Records**, and **Selected Rows**), automated sensitive data sanitization, context retention, and custom column toggling.
+Implement an enterprise-wide, zero-dependency **Global Export Center** across the TILEFLOW Retail OS application. The Export Center empowers business users to export records from any table, grid, ledger, master, or report into **CSV**, **Excel (XLSX)**, and **Plain Text (TXT)** with full scope selection (**Current Page**, **All Records via safe auto-pagination**, **Filtered Records**, and **Selected Rows**), automated sensitive data sanitization, context retention, and custom column toggling.
 
 ## 2. Scope
 - Universal Core Export Engine: `src/services/globalExportService.ts`

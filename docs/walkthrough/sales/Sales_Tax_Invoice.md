@@ -1,19 +1,18 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Walkthrough — Tattly Threads Tax Invoice Format Master Replication v1.0
 
 ## 1. Purpose
-Achieve 100% forensic and geometric reproduction of the authoritative original Tattly Threads Tax Invoices (`F:\SMRITRretailNX\TT\B` and `C:\Users\netma\Downloads\Tax_Invoice_Tattly_Threads\`) within the SMRITI Retail OS FastAPI backend canonical rendering engine (`InvoicePdfService`), ensuring zero financial data loss, exact point-by-point grid geometry, Code 128 barcode retention, GST E-Invoice QR code retention, and dynamic multi-page pagination matching.
+Achieve 100% forensic and geometric reproduction of the authoritative original Tattly Threads Tax Invoices (`F:\SMRITRretailNX\TT\B` and `C:\Users\netma\Downloads\Tax_Invoice_Tattly_Threads\`) within the TILEFLOW Retail OS FastAPI backend canonical rendering engine (`InvoicePdfService`), ensuring zero financial data loss, exact point-by-point grid geometry, Code 128 barcode retention, GST E-Invoice QR code retention, and dynamic multi-page pagination matching.
 
 ## 2. Scope
 - Authoritative original PDF scan of 30 invoices in `F:\SMRITRretailNX\TT\B` (`TT2026-2027/74` to `TT2026-2027/103`).
@@ -32,7 +31,7 @@ Achieve 100% forensic and geometric reproduction of the authoritative original T
 - [`F:\SMRITRretailNX\backend\app\services\invoice_pdf_service.py`](file:///F:/SMRITRretailNX/backend/app/services/invoice_pdf_service.py)
 
 ## 5. Architecture Decisions
-- Preserved Single Source-of-Truth in PostgreSQL `smriti001` and FastAPI `InvoicePdfService`.
+- Preserved Single Source-of-Truth in PostgreSQL `tileflow001` and FastAPI `InvoicePdfService`.
 - Implemented Playwright Headless Chromium print engine with zero CSS column overflow and deterministic table layout.
 - Designed dynamic pagination engine handling single-page, 2-page, 3-page, 4-page, and 5-page documents based on item row count and address wrapping lines.
 

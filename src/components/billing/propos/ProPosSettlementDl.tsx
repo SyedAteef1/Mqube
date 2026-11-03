@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useMemo, useEffect } from "react";
 import { ProPosCustomer, ProPosTenderSplit } from "./types.ts";
 import { 
@@ -28,14 +14,14 @@ import {
   AlertCircle
 } from "lucide-react";
 
-interface SmritiPosSettlementProps {
+interface TileFlowPosSettlementProps {
   netAmount: number;
   customer?: ProPosCustomer;
   onSettle: (tenders: ProPosTenderSplit, changeDue: number) => void;
   onClose: () => void;
 }
 
-type TenderMode = "CASH" | "CARD" | "UPI" | "GIFT_VOUCHER" | "LOYALTY" | "CREDIT_NOTE";
+type TenderMode = "CASH" | "CARD" | "UPI" | "CHEQUE" | "CREDIT" | "GIFT_VOUCHER" | "LOYALTY" | "CREDIT_NOTE";
 
 interface AppliedPayment {
   id: string;
@@ -46,7 +32,7 @@ interface AppliedPayment {
   reference?: string;
 }
 
-export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
+export const TileFlowPosSettlement: React.FC<TileFlowPosSettlementProps> = ({
   netAmount,
   customer,
   onSettle,
@@ -57,6 +43,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
   const [appliedPayments, setAppliedPayments] = useState<AppliedPayment[]>([]);
   const [cardAuthCode, setCardAuthCode] = useState<string>("");
   const [upiRefNo, setUpiRefNo] = useState<string>("");
+  const [chequeNo, setChequeNo] = useState<string>("");
+  const [chequeBank, setChequeBank] = useState<string>("");
   const [voucherCode, setVoucherCode] = useState<string>("");
 
   const totalPaid = useMemo(() => {
@@ -109,6 +97,11 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
     } else if (selectedMode === "UPI") {
       subLabel = upiRefNo ? `Ref: ${upiRefNo}` : "Dynamic QR Paid";
       ref = upiRefNo;
+    } else if (selectedMode === "CHEQUE") {
+      subLabel = chequeNo ? `Cheque ${chequeNo}${chequeBank ? `, ${chequeBank}` : ""}` : "Cheque";
+      ref = chequeNo;
+    } else if (selectedMode === "CREDIT") {
+      subLabel = "Balance due from customer";
     } else if (selectedMode === "GIFT_VOUCHER") {
       subLabel = voucherCode ? `Code: ${voucherCode}` : "Voucher Applied";
       ref = voucherCode;
@@ -119,7 +112,7 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
     const newPayment: AppliedPayment = {
       id: `pay-${Date.now()}`,
       mode: selectedMode,
-      label: selectedMode === "CASH" ? "Cash" : selectedMode === "CARD" ? "Credit/Debit Card" : selectedMode === "UPI" ? "UPI / Instant QR" : selectedMode === "GIFT_VOUCHER" ? "Gift Voucher" : selectedMode === "LOYALTY" ? "Loyalty Redemption" : "Credit Note",
+      label: selectedMode === "CHEQUE" ? "Cheque" : selectedMode === "CREDIT" ? "Credit" : selectedMode === "CASH" ? "Cash" : selectedMode === "CARD" ? "Credit/Debit Card" : selectedMode === "UPI" ? "UPI / Instant QR" : selectedMode === "GIFT_VOUCHER" ? "Gift Voucher" : selectedMode === "LOYALTY" ? "Loyalty Redemption" : "Credit Note",
       subLabel,
       amount: amt,
       reference: ref
@@ -129,6 +122,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
     setKeypadInput("");
     setCardAuthCode("");
     setUpiRefNo("");
+    setChequeNo("");
+    setChequeBank("");
     setVoucherCode("");
   };
 
@@ -151,6 +146,10 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
         cash: cashTotal,
         card: cardTotal,
         upi: upiTotal,
+        cheque: appliedPayments.filter(p => p.mode === "CHEQUE").reduce((a, b) => a + b.amount, 0),
+        chequeNo: appliedPayments.find(p => p.mode === "CHEQUE")?.reference,
+        chequeBank: appliedPayments.find(p => p.mode === "CHEQUE")?.subLabel.split(", ")[1],
+        credit: appliedPayments.filter(p => p.mode === "CREDIT").reduce((a, b) => a + b.amount, 0),
         giftVoucher: voucherTotal,
         loyaltyPointsRedeemed: 0,
         loyaltyAmount: loyaltyTotal,
@@ -170,6 +169,10 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
       cash: cashTotal,
       card: cardTotal,
       upi: upiTotal,
+      cheque: appliedPayments.filter(p => p.mode === "CHEQUE").reduce((a, b) => a + b.amount, 0),
+      chequeNo: appliedPayments.find(p => p.mode === "CHEQUE")?.reference,
+      chequeBank: appliedPayments.find(p => p.mode === "CHEQUE")?.subLabel.split(", ")[1],
+      credit: appliedPayments.filter(p => p.mode === "CREDIT").reduce((a, b) => a + b.amount, 0),
       giftVoucher: voucherTotal,
       loyaltyPointsRedeemed: 0,
       loyaltyAmount: loyaltyTotal,
@@ -194,35 +197,33 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-      <div className="w-full max-w-5xl bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-[#c4c5d5] dark:border-[#444653] max-h-[92vh]">
+      <div className="w-full max-w-5xl bg-white dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-[#c6c6c6] dark:border-[#474747] max-h-[92vh]">
         
         {/* Header */}
-        <header className="flex justify-between items-center px-6 py-3 border-b border-[#c4c5d5] dark:border-[#444653] bg-white dark:bg-[#131b2e] shrink-0">
+        <header className="flex justify-between items-center px-6 py-3 border-b border-[#c6c6c6] dark:border-[#474747] bg-white dark:bg-[#1b1b1b] shrink-0">
           <div className="flex items-center gap-3">
-            <span className="text-base font-bold text-[#00288e] dark:text-[#a8b8ff] tracking-tight">ProPOS Billing</span>
-            <div className="h-4 w-px bg-[#c4c5d5] dark:bg-[#444653]"></div>
-            <h1 className="text-base font-semibold">Bill Settlement &amp; Multi-Tender</h1>
+            <h1 className="text-base font-semibold">Take payment</h1>
           </div>
           <button 
             type="button"
             onClick={onClose}
-            className="p-1 hover:bg-[#f3f4f5] dark:hover:bg-[#2d3133] rounded-lg transition"
+            className="p-1 hover:bg-[#f4f4f4] dark:hover:bg-[#303030] rounded-lg transition"
           >
             <X size={18} />
           </button>
         </header>
 
         {/* Amount KPI Header Bar */}
-        <div className="bg-[#f3f4f5] dark:bg-[#1d222e] px-6 py-3 border-b border-[#c4c5d5] dark:border-[#444653] grid grid-cols-3 gap-4 shrink-0 text-center">
-          <div className="bg-white dark:bg-[#131b2e] p-3 rounded-xl border border-[#c4c5d5] dark:border-[#444653] shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Net Payable</span>
-            <div className="text-2xl font-bold font-mono text-[#00288e] dark:text-[#a8b8ff] mt-0.5">
+        <div className="bg-[#f4f4f4] dark:bg-[#222222] px-6 py-3 border-b border-[#c6c6c6] dark:border-[#474747] grid grid-cols-3 gap-4 shrink-0 text-center">
+          <div className="bg-white dark:bg-[#1b1b1b] p-3 rounded-xl border border-[#c6c6c6] dark:border-[#474747] shadow-xs">
+            <span className="text-xs font-medium text-[#5e5e5e] dark:text-[#c6c6c6]">Bill amount</span>
+            <div className="text-2xl font-bold font-mono text-[#272727] dark:text-[#bababa] mt-0.5">
               ₹{netAmount.toFixed(2)}
             </div>
           </div>
-          <div className="bg-white dark:bg-[#131b2e] p-3 rounded-xl border border-[#c4c5d5] dark:border-[#444653] shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Total Tendered</span>
-            <div className="text-2xl font-bold font-mono text-[#0c9488] mt-0.5">
+          <div className="bg-white dark:bg-[#1b1b1b] p-3 rounded-xl border border-[#c6c6c6] dark:border-[#474747] shadow-xs">
+            <span className="text-xs font-medium text-[#5e5e5e] dark:text-[#c6c6c6]">Received</span>
+            <div className="text-2xl font-bold font-mono text-[#767676] mt-0.5">
               ₹{totalPaid.toFixed(2)}
             </div>
           </div>
@@ -231,8 +232,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
               ? "bg-[#ffdad6]/40 dark:bg-[#93000a]/20 border-[#ba1a1a]" 
               : "bg-[#dcfce7] dark:bg-[#166534]/30 border-[#16a34a]"
           }`}>
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-              {balanceRemaining > 0 ? "Balance Remaining" : "Change to Return"}
+            <span className="text-xs font-medium text-[#5e5e5e] dark:text-[#c6c6c6]">
+              {balanceRemaining > 0 ? "Balance due" : "Change to return"}
             </span>
             <div className={`text-2xl font-bold font-mono mt-0.5 ${
               balanceRemaining > 0 ? "text-[#ba1a1a]" : "text-[#16a34a]"
@@ -246,8 +247,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
         <div className="flex-1 flex overflow-hidden min-h-[380px]">
           
           {/* Left Column: Payment Modes */}
-          <div className="w-56 p-3 border-r border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e] flex flex-col gap-2 shrink-0">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] px-1 mb-1">
+          <div className="w-56 p-3 border-r border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex flex-col gap-2 shrink-0">
+            <span className="text-xs font-medium text-[#5e5e5e] dark:text-[#c6c6c6] px-1 mb-1">
               Select Tender Mode
             </span>
 
@@ -256,8 +257,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
               onClick={() => setSelectedMode("CASH")}
               className={`flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition ${
                 selectedMode === "CASH"
-                  ? "bg-[#00288e] text-white shadow-md"
-                  : "bg-white dark:bg-[#2d3133] hover:bg-[#e7e8e9] dark:hover:bg-[#3f465c] border border-[#c4c5d5] dark:border-[#444653]"
+                  ? "bg-[#272727] text-white shadow-md"
+                  : "bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] dark:hover:bg-[#464646] border border-[#c6c6c6] dark:border-[#474747]"
               }`}
             >
               <Banknote size={18} />
@@ -269,8 +270,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
               onClick={() => setSelectedMode("CARD")}
               className={`flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition ${
                 selectedMode === "CARD"
-                  ? "bg-[#00288e] text-white shadow-md"
-                  : "bg-white dark:bg-[#2d3133] hover:bg-[#e7e8e9] dark:hover:bg-[#3f465c] border border-[#c4c5d5] dark:border-[#444653]"
+                  ? "bg-[#272727] text-white shadow-md"
+                  : "bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] dark:hover:bg-[#464646] border border-[#c6c6c6] dark:border-[#474747]"
               }`}
             >
               <CreditCard size={18} />
@@ -282,8 +283,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
               onClick={() => setSelectedMode("UPI")}
               className={`flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition ${
                 selectedMode === "UPI"
-                  ? "bg-[#00288e] text-white shadow-md"
-                  : "bg-white dark:bg-[#2d3133] hover:bg-[#e7e8e9] dark:hover:bg-[#3f465c] border border-[#c4c5d5] dark:border-[#444653]"
+                  ? "bg-[#272727] text-white shadow-md"
+                  : "bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] dark:hover:bg-[#464646] border border-[#c6c6c6] dark:border-[#474747]"
               }`}
             >
               <QrCode size={18} />
@@ -295,8 +296,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
               onClick={() => setSelectedMode("GIFT_VOUCHER")}
               className={`flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition ${
                 selectedMode === "GIFT_VOUCHER"
-                  ? "bg-[#00288e] text-white shadow-md"
-                  : "bg-white dark:bg-[#2d3133] hover:bg-[#e7e8e9] dark:hover:bg-[#3f465c] border border-[#c4c5d5] dark:border-[#444653]"
+                  ? "bg-[#272727] text-white shadow-md"
+                  : "bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] dark:hover:bg-[#464646] border border-[#c6c6c6] dark:border-[#474747]"
               }`}
             >
               <Gift size={18} />
@@ -308,8 +309,8 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
               onClick={() => setSelectedMode("LOYALTY")}
               className={`flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition ${
                 selectedMode === "LOYALTY"
-                  ? "bg-[#00288e] text-white shadow-md"
-                  : "bg-white dark:bg-[#2d3133] hover:bg-[#e7e8e9] dark:hover:bg-[#3f465c] border border-[#c4c5d5] dark:border-[#444653]"
+                  ? "bg-[#272727] text-white shadow-md"
+                  : "bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] dark:hover:bg-[#464646] border border-[#c6c6c6] dark:border-[#474747]"
               }`}
             >
               <Award size={18} />
@@ -318,11 +319,37 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
 
             <button
               type="button"
+              onClick={() => setSelectedMode("CHEQUE")}
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition-all ${
+                selectedMode === "CHEQUE"
+                  ? "bg-[#272727] text-white shadow-md"
+                  : "bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] dark:hover:bg-[#464646]"
+              }`}
+            >
+              <FileText size={18} />
+              <span>Cheque</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setSelectedMode("CREDIT")}
+              className={`flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition-all ${
+                selectedMode === "CREDIT"
+                  ? "bg-[#272727] text-white shadow-md"
+                  : "bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] dark:hover:bg-[#464646]"
+              }`}
+            >
+              <FileText size={18} />
+              <span>Credit</span>
+            </button>
+
+            <button
+              type="button"
               onClick={() => setSelectedMode("CREDIT_NOTE")}
               className={`flex items-center gap-3 px-3 py-3 rounded-xl text-xs font-bold transition ${
                 selectedMode === "CREDIT_NOTE"
-                  ? "bg-[#00288e] text-white shadow-md"
-                  : "bg-white dark:bg-[#2d3133] hover:bg-[#e7e8e9] dark:hover:bg-[#3f465c] border border-[#c4c5d5] dark:border-[#444653]"
+                  ? "bg-[#272727] text-white shadow-md"
+                  : "bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] dark:hover:bg-[#464646] border border-[#c6c6c6] dark:border-[#474747]"
               }`}
             >
               <FileText size={18} />
@@ -334,11 +361,11 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
           <div className="flex-1 p-6 flex flex-col justify-between overflow-y-auto">
             <div>
               <div className="flex justify-between items-center mb-1">
-                <span className="text-xs font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-                  Tender Amount for {selectedMode}
+                <span className="text-xs font-medium text-[#5e5e5e] dark:text-[#c6c6c6]">
+                  Amount ({selectedMode})
                 </span>
-                <span className="text-xs font-mono text-[#00288e] dark:text-[#a8b8ff]">
-                  Auto-Balance: ₹{balanceRemaining.toFixed(2)}
+                <span className="text-xs font-mono text-[#272727] dark:text-[#bababa]">
+                  Balance ₹{balanceRemaining.toFixed(2)}
                 </span>
               </div>
 
@@ -348,7 +375,7 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
                   value={keypadInput}
                   onChange={e => setKeypadInput(e.target.value)}
                   placeholder="0.00"
-                  className="w-full text-3xl font-mono font-bold text-right px-4 py-3 bg-white dark:bg-[#131b2e] border-2 border-[#00288e] dark:border-[#a8b8ff] rounded-xl outline-none shadow-inner"
+                  className="w-full text-3xl font-mono font-bold text-right px-4 py-3 bg-white dark:bg-[#1b1b1b] border-2 border-[#272727] dark:border-[#bababa] rounded-xl outline-none shadow-inner"
                 />
               </div>
 
@@ -360,7 +387,7 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
                     value={cardAuthCode}
                     onChange={e => setCardAuthCode(e.target.value)}
                     placeholder="Enter Card Auth Code / Last 4 Digits..."
-                    className="w-full text-xs px-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-lg outline-none bg-white dark:bg-[#131b2e]"
+                    className="w-full text-xs px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg outline-none bg-white dark:bg-[#1b1b1b]"
                   />
                 </div>
               )}
@@ -372,11 +399,30 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
                     value={upiRefNo}
                     onChange={e => setUpiRefNo(e.target.value)}
                     placeholder="Enter UPI Transaction Reference (UTR)..."
-                    className="flex-1 text-xs px-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-lg outline-none bg-white dark:bg-[#131b2e]"
+                    className="flex-1 text-xs px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg outline-none bg-white dark:bg-[#1b1b1b]"
                   />
                   <span className="px-3 py-2 bg-[#dcfce7] text-[#166534] rounded-lg text-xs font-bold">
                     Scan Verified
                   </span>
+                </div>
+              )}
+
+              {selectedMode === "CHEQUE" && (
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <input
+                    type="text"
+                    value={chequeNo}
+                    onChange={e => setChequeNo(e.target.value)}
+                    placeholder="Cheque Number"
+                    className="text-xs px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-white dark:bg-[#303030]"
+                  />
+                  <input
+                    type="text"
+                    value={chequeBank}
+                    onChange={e => setChequeBank(e.target.value)}
+                    placeholder="Bank Name"
+                    className="text-xs px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-white dark:bg-[#303030]"
+                  />
                 </div>
               )}
 
@@ -387,7 +433,7 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
                     value={voucherCode}
                     onChange={e => setVoucherCode(e.target.value)}
                     placeholder="Scan / Enter 16-digit Voucher Code..."
-                    className="w-full text-xs px-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-lg outline-none bg-white dark:bg-[#131b2e]"
+                    className="w-full text-xs px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-lg outline-none bg-white dark:bg-[#1b1b1b]"
                   />
                 </div>
               )}
@@ -399,7 +445,7 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
                     key={num}
                     type="button"
                     onClick={() => handleKeypadDigit(num)}
-                    className="py-3 bg-white dark:bg-[#2d3133] hover:bg-[#f3f4f5] dark:hover:bg-[#3f465c] border border-[#c4c5d5] dark:border-[#444653] rounded-xl font-bold font-mono text-lg shadow-xs transition active:scale-95"
+                    className="py-3 bg-white dark:bg-[#303030] hover:bg-[#f4f4f4] dark:hover:bg-[#464646] border border-[#c6c6c6] dark:border-[#474747] rounded-xl font-bold font-mono text-lg shadow-xs transition active:scale-95"
                   >
                     {num}
                   </button>
@@ -410,7 +456,7 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
                 <button
                   type="button"
                   onClick={handleKeypadClear}
-                  className="py-2.5 bg-[#e7e8e9] dark:bg-[#3f465c] font-bold text-xs rounded-xl hover:bg-[#d9dadb] transition"
+                  className="py-2.5 bg-[#e8e8e8] dark:bg-[#464646] font-bold text-xs rounded-xl hover:bg-[#d9dadb] transition"
                 >
                   Clear Keypad
                 </button>
@@ -418,7 +464,7 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
                   type="button"
                   onClick={handleAddPayment}
                   disabled={!keypadInput || parseFloat(keypadInput) <= 0}
-                  className="py-2.5 bg-[#00288e] text-white font-bold text-xs rounded-xl hover:bg-[#1e40af] transition shadow-xs disabled:opacity-40"
+                  className="py-2.5 bg-[#272727] text-white font-bold text-xs rounded-xl hover:bg-[#414141] transition shadow-xs disabled:opacity-40"
                 >
                   + Add Payment ({selectedMode})
                 </button>
@@ -427,16 +473,16 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
           </div>
 
           {/* Right Column: Applied Payments Drawer */}
-          <div className="w-80 p-4 border-l border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e] flex flex-col shrink-0">
-            <div className="flex justify-between items-center pb-2 border-b border-[#c4c5d5] dark:border-[#444653] mb-3">
-              <span className="text-xs font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+          <div className="w-80 p-4 border-l border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex flex-col shrink-0">
+            <div className="flex justify-between items-center pb-2 border-b border-[#c6c6c6] dark:border-[#474747] mb-3">
+              <span className="text-xs font-medium text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Applied Tenders ({appliedPayments.length})
               </span>
             </div>
 
             <div className="flex-1 overflow-y-auto space-y-2">
               {appliedPayments.length === 0 ? (
-                <div className="h-full flex flex-col items-center justify-center text-[#757684] text-center p-4">
+                <div className="h-full flex flex-col items-center justify-center text-[#777777] text-center p-4">
                   <Banknote size={32} className="opacity-30 mb-2" />
                   <p className="text-xs font-semibold">No payments added yet.</p>
                   <p className="text-[11px] mt-0.5">Select a tender mode and click Add Payment or press F10 to pay in full.</p>
@@ -445,19 +491,19 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
                 appliedPayments.map(p => (
                   <div
                     key={p.id}
-                    className="p-3 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] rounded-xl shadow-xs flex justify-between items-center"
+                    className="p-3 bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] rounded-xl shadow-xs flex justify-between items-center"
                   >
                     <div>
-                      <div className="text-xs font-bold text-[#191c1d] dark:text-white flex items-center gap-1.5">
-                        {p.mode === "CASH" && <Banknote size={14} className="text-[#00288e]" />}
-                        {p.mode === "CARD" && <CreditCard size={14} className="text-[#00288e]" />}
-                        {p.mode === "UPI" && <QrCode size={14} className="text-[#00288e]" />}
+                      <div className="text-xs font-bold text-[#1b1b1b] dark:text-white flex items-center gap-1.5">
+                        {p.mode === "CASH" && <Banknote size={14} className="text-[#272727]" />}
+                        {p.mode === "CARD" && <CreditCard size={14} className="text-[#272727]" />}
+                        {p.mode === "UPI" && <QrCode size={14} className="text-[#272727]" />}
                         {p.label}
                       </div>
-                      <div className="text-[10px] text-[#565e74] dark:text-[#bec6e0]">{p.subLabel}</div>
+                      <div className="text-[10px] text-[#5e5e5e] dark:text-[#c6c6c6]">{p.subLabel}</div>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="font-mono font-bold text-xs text-[#00288e] dark:text-[#a8b8ff]">
+                      <span className="font-mono font-bold text-xs text-[#272727] dark:text-[#bababa]">
                         ₹{p.amount.toFixed(2)}
                       </span>
                       <button
@@ -500,11 +546,11 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <footer className="flex justify-between items-center px-6 py-4 border-t border-[#c4c5d5] dark:border-[#444653] bg-[#f3f4f5] dark:bg-[#131b2e] shrink-0">
+        <footer className="flex justify-between items-center px-6 py-4 border-t border-[#c6c6c6] dark:border-[#474747] bg-[#f4f4f4] dark:bg-[#1b1b1b] shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2.5 rounded-xl border border-[#c4c5d5] dark:border-[#444653] bg-white dark:bg-[#2d3133] hover:bg-[#e7e8e9] font-bold text-xs transition"
+            className="px-5 py-2.5 rounded-xl border border-[#c6c6c6] dark:border-[#474747] bg-white dark:bg-[#303030] hover:bg-[#e8e8e8] font-bold text-xs transition"
           >
             ← Back to Bill (Esc)
           </button>
@@ -512,7 +558,7 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
           <button
             type="button"
             onClick={handleFinalSettle}
-            className="px-8 py-3 rounded-xl bg-[#00288e] hover:bg-[#1e40af] text-white font-bold text-sm shadow-lg flex items-center gap-2 transition active:scale-95"
+            className="px-8 py-3 rounded-xl bg-[#272727] hover:bg-[#414141] text-white font-bold text-sm shadow-lg flex items-center gap-2 transition active:scale-95"
           >
             <Printer size={16} />
             <span>Settle &amp; Print [F10]</span>
@@ -524,4 +570,4 @@ export const SmritiPosSettlement: React.FC<SmritiPosSettlementProps> = ({
   );
 };
 
-export default SmritiPosSettlement;
+export default TileFlowPosSettlement;

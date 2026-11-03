@@ -1,24 +1,15 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
-# Version      : 3.14.2
-# Created      : 2026-07-11
-# Modified     : 2026-07-11
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
-# Classification: Internal
+# MQube API server (FastAPI). Built and run by deploy/docker-compose.prod.yml.
+FROM python:3.12-slim AS runtime
 
-FROM python:3.11-slim AS runtime
-RUN apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/*
-
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
 WORKDIR /app
 
-COPY requirements.txt production.txt dev.txt ./
+COPY requirements.txt production.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
+RUN chmod +x entrypoint.sh && useradd --create-home mqube && chown -R mqube /app
+USER mqube
 
-RUN chmod +x entrypoint.sh
 EXPOSE 8000
 ENTRYPOINT ["./entrypoint.sh"]

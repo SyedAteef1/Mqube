@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import json
 import socket
 import uuid
@@ -49,7 +36,7 @@ class PrinterService:
         mrp: float,
         size: str = "",
         color: str = "",
-        brand: str = "SMRITI",
+        brand: str = "TILEFLOW",
         width_mm: float = 50.0,
         height_mm: float = 25.0
     ) -> str:
@@ -303,7 +290,7 @@ class PrinterService:
                         import win32print
                         hPrinter = win32print.OpenPrinter(usb_target)
                         try:
-                            win32print.StartDocPrinter(hPrinter, 1, ("SMRITI Print Job", None, "RAW"))
+                            win32print.StartDocPrinter(hPrinter, 1, ("TILEFLOW Print Job", None, "RAW"))
                             try:
                                 win32print.StartPagePrinter(hPrinter)
                                 win32print.WritePrinter(hPrinter, raw_bytes)
@@ -375,7 +362,7 @@ class PrinterService:
         tspl_ok = "BARCODE" in tspl and "PRINT" in tspl
 
         # 3. Test ESC/POS engine
-        escpos = cls.generate_escpos_receipt("SMRITI STORE", "INV-TEST-001", [{"name": "Test", "quantity": 1, "price": 100, "total_amount": 100}], 100.0, 18.0, 118.0)
+        escpos = cls.generate_escpos_receipt("TILEFLOW STORE", "INV-TEST-001", [{"name": "Test", "quantity": 1, "price": 100, "total_amount": 100}], 100.0, 18.0, 118.0)
         escpos_ok = len(escpos) > 0 and escpos.startswith(b"\x1b\x40")
 
         # 4. Probe configured port (non-blocking short probe)

@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.29.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Commercial Pilot Origin-Gap Remediation & Field Readiness (v3.29.0)
@@ -21,7 +20,7 @@
 ---
 
 ## 1. Purpose
-This implementation completes the formal pre-flight hardening, origin-truth verification, multi-database schema synchronization, and operational documentation required for deploying SMRITI Retail OS into commercial pilot operations.
+This implementation completes the formal pre-flight hardening, origin-truth verification, multi-database schema synchronization, and operational documentation required for deploying TILEFLOW Retail OS into commercial pilot operations.
 
 ---
 
@@ -32,7 +31,7 @@ This implementation completes the formal pre-flight hardening, origin-truth veri
 - **D4 (Deny-by-Default RBAC):** Fixed privilege escalation fallback in Fiori Launchpad and navigation resolver (`(role || "SYSADMIN")` removed).
 - **D5 (Scope Freeze):** Established formal commercial pilot scope boundary (Section 6 of `docs/PHASE1_PILOT.md`).
 - **D6 (Database Migration Requirement):** Updated `CompanyDatabaseProvisioner` to require `alembic upgrade head` with minimum revision `v1337_backfill_variant_id`.
-- **Database Migration:** Discovered and upgraded all operational and control plane databases (`smritisys`, `smriti001`, `smriti_test_fresh`) to Alembic HEAD (`v1338_company_isolated_barcodes`).
+- **Database Migration:** Discovered and upgraded all operational and control plane databases (`tileflowsys`, `tileflow001`, `tileflow_test_fresh`) to Alembic HEAD (`v1338_company_isolated_barcodes`).
 - **Runbook:** Authored end-to-end commercial pilot go-live runbook (`docs/PILOT_GO_LIVE.md`).
 
 ---
@@ -71,8 +70,8 @@ This implementation completes the formal pre-flight hardening, origin-truth veri
 ---
 
 ## 7. Implementation Summary
-- Verified that all 6 deliverable items (D1–D6) exist on `origin/smritiNX`.
-- All operational databases are at Alembic HEAD (`v1338_company_isolated_barcodes`) with 0 NULL `variant_id`s in `smriti001`.
+- Verified that all 6 deliverable items (D1–D6) exist on `origin/tileflowNX`.
+- All operational databases are at Alembic HEAD (`v1338_company_isolated_barcodes`) with 0 NULL `variant_id`s in `tileflow001`.
 - Software dispatch endpoints for barcode printing and cash drawer hooks were validated.
 - All test suites (20 Vitest files, 39 Pytest tests, TypeScript linter) pass with 100% success.
 
@@ -95,7 +94,7 @@ Vitest Suite:               PASS (128/128 passed)
 Pytest Suite:               PASS (39/39 passed)
 Alembic Revision:           PASS (v1338_company_isolated_barcodes - HEAD)
 Catalog Variant Integrity:  PASS (0 NULL variant_ids)
-Remote Repository Sync:     PASS (Pushed to origin/smritiNX and origin/main)
+Remote Repository Sync:     PASS (Pushed to origin/tileflowNX and origin/main)
 
 OVERALL VERDICT: GO_SOFTWARE (Ready for Staging & Store Field Validation)
 ```

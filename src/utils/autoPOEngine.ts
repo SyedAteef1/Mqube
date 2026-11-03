@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.122.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Purchase Order Auto-Generation Engine
- *
- * Detects reorder-point breaches and auto-generates POs:
- *   Breach Detection : `detectBreaches()` — stock < reorderPoint → breach record
- *   PO Generation   : `generatePO()` — one PO per supplier from breach list
- *   Consolidation   : `consolidatePOs()` — merge multi-SKU breaches per supplier
- *   MOQ Enforcement : suggestedQty = max(reorderQty, supplierMOQ)
- *   Status flow     : DRAFT → SUBMITTED → ACKNOWLEDGED → CANCELLED
- */
-
 export type AutoPOStatus  = "DRAFT" | "SUBMITTED" | "ACKNOWLEDGED" | "CANCELLED";
 export type BreachSeverity = "CRITICAL" | "LOW" | "NORMAL";  // critical = stockOut
 

@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — Master Canonical Report Registry Seed Catalog.
-Enforces Invariant 1: Single Source of Truth for all 21 Canonical Reports.
-Enforces Invariant 3: Shoper 9 aliases isolated to metadata adapter.
-"""
-
 from typing import Dict, List
 from ..schemas.report_registry import ReportRegistryEntry, StudioType, ReportContractStatus
 

@@ -1,15 +1,14 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-07-16
   Modified     : 2026-07-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Auth Module — Strangler-Fig Migration v3.21.0
@@ -69,8 +68,8 @@ Previous bridge pattern sent the password twice: once to Express (session), once
 to FastAPI (JWT). This was fragile and a potential security concern. Replaced with
 a single POST to FastAPI /api/v1/auth/login.
 
-### D. smriti_session_token cleared
-localStorage.removeItem("smriti_session_token") called on new FastAPI login
+### D. tileflow_session_token cleared
+localStorage.removeItem("tileflow_session_token") called on new FastAPI login
 and on logout. Cleans up the legacy localStorage key.
 
 ### E. Sessions UI — Security Gateway placeholder (Q2 resolved)
@@ -91,7 +90,7 @@ Create/update payloads mapped from camelCase to snake_case (full_name, branch_id
   browser sessions from before the migration continue to work until they expire.
 - The FastAPI UserResponse.role field is compatible with the frontend { role, name }
   shape used by App.tsx and all tab components.
-- piFetchV1 automatically sends Authorization: Bearer <smriti_jwt_token>, so
+- piFetchV1 automatically sends Authorization: Bearer <tileflow_jwt_token>, so
   no per-call token handling is needed in components.
 
 ---
@@ -139,7 +138,7 @@ Result : 161 passed (full suite, zero regressions)
 ✅ Profile CRUD → apiFetchV1
 ✅ Staff CRUD → apiFetchV1 with snake_case mapping
 ✅ requireAuth accepts FastAPI JWT (middleware updated first)
-✅ smriti_session_token cleared on login and logout
+✅ tileflow_session_token cleared on login and logout
 ✅ Sessions UI → Security Gateway placeholder (not broken UI)
 ✅ 27/27 auth + user management tests pass
 ✅ 161/161 full regression suite passes

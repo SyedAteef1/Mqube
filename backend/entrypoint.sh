@@ -1,33 +1,25 @@
 #!/bin/sh
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
-# Version      : 3.14.0
-# Created      : 2026-07-11
-# Modified     : 2026-07-11
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
-# Classification: Internal
-
+# Starts the MQube API: migrate every database, create first-run records, then serve.
 set -e
-
 export PYTHONPATH=/app
 
-# Optionally skip migrations (for controlled environments). Set SKIP_MIGRATIONS=true to disable.
 if [ "${SKIP_MIGRATIONS:-false}" != "true" ]; then
-    echo "Running Alembic database migrations..."
-    alembic upgrade head
+    base="${DATABASE_URL%/*}"
+    for db in tileflowsys ${COMPANY_DATABASES:-tileflow001}; do
+        echo "Migrating database $db..."
+        alembic -x db_url="$base/$db" upgrade head
+    done
 else
-    echo "SKIP_MIGRATIONS=true, skipping Alembic migrations."
+    echo "SKIP_MIGRATIONS=true, skipping migrations."
 fi
 
-echo "Seeding baseline users and company registries..."
-python -m app.db.seed_baseline_users || echo "Notice: Seeding completed or skipped."
+echo "Creating first-run records (safe to repeat)..."
+python -m app.db.seed_baseline_users
 
-echo "Starting SMRITI FastAPI Python Core..."
+echo "Starting MQube API..."
 exec gunicorn app.main:app \
-        -k uvicorn.workers.UvicornWorker \
-        -b 0.0.0.0:8000 \
-        --workers "${GUNICORN_WORKERS:-2}" \
-        --timeout 120
+    -k uvicorn.workers.UvicornWorker \
+    -b 0.0.0.0:8000 \
+    --workers "${GUNICORN_WORKERS:-2}" \
+    --timeout 120 \
+    --forwarded-allow-ips="*"

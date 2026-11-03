@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.78.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from "react";
 import { apiFetchV1 } from "../../../lib/apiFetchV1";
 
@@ -143,7 +129,7 @@ export const ComplianceDispatchModal: React.FC<ComplianceDispatchModalProps> = (
       const mockAck = "112610998877665";
       setIrn(mockIrn);
       setAckNo(mockAck);
-      setSignedQr("SMRITI_SIGNED_QR_MOCK_PAYLOAD_v1.03");
+      setSignedQr("TILEFLOW_SIGNED_QR_MOCK_PAYLOAD_v1.03");
       onNotification?.(
         "E-Invoice Generated",
         `IRN generated successfully for ${invoice.doc_no}.`,

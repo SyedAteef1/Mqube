@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-smoke_auth_boot.py
-=======================================
-Admin smoke-test utility: issues an HTTP POST to /api/v1/auth/bootstrap to
-confirm the endpoint is reachable and the admin account seeding response is
-correct. Intended for use immediately after deploying a fresh instance.
-
-Usage:
-    python scripts/admin/smoke_auth_boot.py
-
-SECURITY NOTE: Targets 127.0.0.1:8001 by default. Verify BOOTSTRAP_URL
-below before pointing at any non-local server.
-"""
-
 import json
 import urllib.request
 import urllib.error
@@ -31,7 +6,7 @@ BOOTSTRAP_URL = "http://127.0.0.1:8001/api/v1/auth/bootstrap"
 PAYLOAD = {
     "username": "admin",
     "password": "Admin@123",
-    "email": "admin@smriti.local",
+    "email": "admin@tileflow.local",
 }
 
 

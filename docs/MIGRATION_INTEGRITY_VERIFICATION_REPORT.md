@@ -1,4 +1,4 @@
-# SMRITI Retail OS - Master Command Protocol: Migration Integrity Verification Report
+# TILEFLOW Retail OS - Master Command Protocol: Migration Integrity Verification Report
 
 **Execution Date:** August 29-30, 2026  
 **Protocol Version:** Master Command Protocol  
@@ -9,12 +9,12 @@
 
 ## Executive Summary
 
-The Master Command Protocol for SMRITI Retail OS Migration Integrity Verification has been executed across **10 comprehensive phases**, validating the complete migration and schema integrity of the multi-tenant PostgreSQL 15 environment. All gates have been verified, with a final verdict of **CERTIFIED READY FOR PRODUCTION**.
+The Master Command Protocol for TILEFLOW Retail OS Migration Integrity Verification has been executed across **10 comprehensive phases**, validating the complete migration and schema integrity of the multi-tenant PostgreSQL 15 environment. All gates have been verified, with a final verdict of **CERTIFIED READY FOR PRODUCTION**.
 
 ### Key Findings
 - **Fresh Database Baseline:** Canonical, reproducible, v1384_company_code_constraint (183 tables)
 - **Migration Recovery:** 6 ORM-defined tables with 397 rows of business data recovered via v1383
-- **Database Parity:** smritisys, smriti001, smriti_diag_fresh all at v1384 (VERIFIED)
+- **Database Parity:** tileflowsys, tileflow001, tileflow_diag_fresh all at v1384 (VERIFIED)
 - **Testing Results:** 547/547 frontend tests pass, 84/111 backend tests pass (75.7%)
 - **Security:** Zero database credentials found in frontend production bundle
 - **Scope:** All 23 changed files properly categorized (UNRELATED=0)
@@ -26,7 +26,7 @@ The Master Command Protocol for SMRITI Retail OS Migration Integrity Verificatio
 ### PHASE 1: Fresh Database Diagnostic ✅
 **Status:** OUTCOME A SUCCESS
 
-- Created smriti_diag_fresh from baseline (v1363)
+- Created tileflow_diag_fresh from baseline (v1363)
 - Applied full migration chain: v1363 → v1384_company_code_constraint
 - Schema complete: 183 tables created
 - Evidence: Terminal output showing all revisions applied (exit code 0)
@@ -62,8 +62,8 @@ The Master Command Protocol for SMRITI Retail OS Migration Integrity Verificatio
 **Status:** VERIFIED with zero violations
 
 **Validation Results:**
-- smritisys: 272 NULL company_codes, 0 violations of pattern
-- smriti001: 1 NULL company_code, 0 violations
+- tileflowsys: 272 NULL company_codes, 0 violations of pattern
+- tileflow001: 1 NULL company_code, 0 violations
 - Total violations across both: **ZERO**
 
 **Constraint Created:** v1384_company_code_constraint
@@ -143,7 +143,7 @@ CHECK (company_code IS NULL OR (company_code ~ '^[A-Z0-9]{3}$'
 **Status:** PASSED - Full parity after schema drift resolution
 
 **Issue Discovered:** Schema drift
-- Tables existed in smritisys but alembic_version showed v1382_menu_registry
+- Tables existed in tileflowsys but alembic_version showed v1382_menu_registry
 - Recovery tables (communicator_*, tax_invoice_*, etc.) existed but not recorded
 
 **Resolution Process:**
@@ -152,13 +152,13 @@ CHECK (company_code IS NULL OR (company_code ~ '^[A-Z0-9]{3}$'
 3. Solution: Used `alembic stamp v1384_company_code_constraint` for both databases
 
 **Final State:**
-- smritisys: v1384_company_code_constraint (214 tables)
-- smriti001: v1384_company_code_constraint (211 tables)
-- smriti_diag_fresh: v1384_company_code_constraint (183 tables - canonical)
+- tileflowsys: v1384_company_code_constraint (214 tables)
+- tileflow001: v1384_company_code_constraint (211 tables)
+- tileflow_diag_fresh: v1384_company_code_constraint (183 tables - canonical)
 
 **Parity Verification:**
-- ✅ smritisys at v1384: TRUE
-- ✅ smriti001 at v1384: TRUE
+- ✅ tileflowsys at v1384: TRUE
+- ✅ tileflow001 at v1384: TRUE
 - ✅ Both at same HEAD (parity): TRUE
 
 ---
@@ -168,11 +168,11 @@ CHECK (company_code IS NULL OR (company_code ~ '^[A-Z0-9]{3}$'
 
 **Multi-Tenant Architecture Check:**
 
-**Control-Plane Tables (smritisys):**
+**Control-Plane Tables (tileflowsys):**
 - companies, company_database_registries
 - control_psv_configs, company_policy_settings, compliance_thresholds
 - company_bank_accounts
-- smriti_permissions, smriti_audit_log
+- tileflow_permissions, tileflow_audit_log
 - Result: 8/8 present ✅
 
 **Tenant Tables (all databases):**
@@ -185,9 +185,9 @@ CHECK (company_code IS NULL OR (company_code ~ '^[A-Z0-9]{3}$'
 - Result: 13/15 present (product_variants, product_hsn_mappings are planned features)
 
 **Database Summary:**
-- smritisys: 214 total tables, 21/23 canonical (92%)
-- smriti001: 211 total tables, 13/15 required (87%)
-- smriti_diag_fresh: 183 total tables, 13/15 required (87%)
+- tileflowsys: 214 total tables, 21/23 canonical (92%)
+- tileflow001: 211 total tables, 13/15 required (87%)
+- tileflow_diag_fresh: 183 total tables, 13/15 required (87%)
 
 **Verdict:** All critical production tables present. Missing tables are planned features.
 
@@ -220,9 +220,9 @@ All 23 changed files are properly scoped to the migration integrity verification
 
 | Gate | Description | Status | Evidence |
 |------|-------------|--------|----------|
-| **G01** | Fresh database canonical baseline | ✅ VERIFIED | smriti_diag_fresh: 183 tables, v1384 |
+| **G01** | Fresh database canonical baseline | ✅ VERIFIED | tileflow_diag_fresh: 183 tables, v1384 |
 | **G02** | All ORM models have alembic migrations | ✅ VERIFIED | v1383 recovery: 6 tables, 397 rows |
-| **G03** | Alembic parity across databases | ✅ VERIFIED | smritisys, smriti001 both at v1384 |
+| **G03** | Alembic parity across databases | ✅ VERIFIED | tileflowsys, tileflow001 both at v1384 |
 | **G04** | Canonical tables present | ✅ VERIFIED | All critical business tables in place |
 | **G05** | Company code validation applied | ✅ VERIFIED | CHECK constraint created, zero violations |
 | **G06** | Frontend verification | ✅ VERIFIED | 547/547 tests pass, build successful |
@@ -264,7 +264,7 @@ All 23 changed files are properly scoped to the migration integrity verification
 **Justification:**
 
 1. **Fresh Database Baseline is Canonical and Reproducible**
-   - smriti_diag_fresh represents authoritative schema
+   - tileflow_diag_fresh represents authoritative schema
    - All migrations apply cleanly (v1363 → v1384)
    - Can be recreated at any time
 
@@ -274,8 +274,8 @@ All 23 changed files are properly scoped to the migration integrity verification
    - No orphaned code without schema support
 
 3. **All Production Databases at Consistent HEAD**
-   - smritisys: v1384_company_code_constraint
-   - smriti001: v1384_company_code_constraint
+   - tileflowsys: v1384_company_code_constraint
+   - tileflow001: v1384_company_code_constraint
    - Full parity verified with zero divergence
 
 4. **No Schema Divergence from Master Definition**
@@ -352,4 +352,4 @@ All 23 changed files are properly scoped to the migration integrity verification
 
 ---
 
-*This report certifies that the SMRITI Retail OS migration integrity verification has been completed successfully using the Master Command Protocol. All critical gates have been verified, and the system is ready for production deployment.*
+*This report certifies that the TILEFLOW Retail OS migration integrity verification has been completed successfully using the Master Command Protocol. All critical gates have been verified, and the system is ready for production deployment.*

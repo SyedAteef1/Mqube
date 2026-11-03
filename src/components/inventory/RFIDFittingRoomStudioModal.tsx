@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.89.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -172,7 +171,7 @@ export const RFIDFittingRoomStudioModal: React.FC<RFIDFittingRoomStudioModalProp
                               <div className="text-xs font-semibold text-slate-200 truncate">{g.productName}</div>
                               <div className="text-[10px] text-slate-400 font-mono">{g.rfidTag} Â· {g.category} Â· Size {g.size}</div>
                             </div>
-                            <div className="text-xs font-bold text-emerald-400 font-mono">â‚¹{g.sellingPrice}</div>
+                            <div className="text-xs font-bold text-emerald-400 font-mono">₹{g.sellingPrice}</div>
                           </button>
                         ))}
                       </div>
@@ -206,7 +205,7 @@ export const RFIDFittingRoomStudioModal: React.FC<RFIDFittingRoomStudioModalProp
                                 <div className="text-slate-400 text-[10px] mt-0.5">{rec.reason}</div>
                               </div>
                               <div className="text-right flex-shrink-0">
-                                <div className="text-emerald-400 font-bold font-mono">â‚¹{rec.recommendedPrice}</div>
+                                <div className="text-emerald-400 font-bold font-mono">₹{rec.recommendedPrice}</div>
                                 <div className="text-[10px] text-amber-400">{Math.round(rec.affinity * 100)}% match</div>
                               </div>
                             </div>
@@ -290,7 +289,7 @@ export const RFIDFittingRoomStudioModal: React.FC<RFIDFittingRoomStudioModalProp
                               <td className="py-2 text-center text-cyan-400 font-bold">{s.trialCount}</td>
                               <td className="py-2 text-center text-emerald-400 font-bold">{s.purchaseCount}</td>
                               <td className="py-2 text-right font-bold text-amber-400">
-                                {s.trialCount > 0 ? `${Math.round((s.purchaseCount / s.trialCount) * 100)}%` : "â€”"}
+                                {s.trialCount > 0 ? `${Math.round((s.purchaseCount / s.trialCount) * 100)}%` : "—"}
                               </td>
                             </tr>
                           ))}

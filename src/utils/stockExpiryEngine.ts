@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.117.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Stock Expiry & Batch Tracking Engine
- *
- * Manages batch/lot-level inventory with expiry lifecycle:
- *   Registration : `registerBatch()` — batch, lot, MFG/EXP dates, qty
- *   FEFO Picking : `fefoAllocation()` — First-Expired-First-Out allocation plan
- *   Alerts       : `nearExpiryBatches()` — configurable day-threshold
- *   Quarantine   : `quarantineBatch()` / `releaseFromQuarantine()` — freeze stock
- *   Expiry       : `expireBatch()` / `expireBatch()` — auto-mark EXPIRED
- *   Report       : `batchReport()` — per-SKU batch summary with aging
- */
-
 export type BatchStatus =
   | "AVAILABLE"
   | "RESERVED"

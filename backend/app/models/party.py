@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from datetime import datetime, timezone
 from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey, Text, text, Date, UniqueConstraint
 from sqlalchemy.orm import relationship
@@ -21,7 +7,7 @@ from ..db.base import BaseEntity
 
 class Party(BaseEntity):
     """
-    Universal Party Master in SMRITI Tenant Data Plane (smritiXXX).
+    Universal Party Master in TILEFLOW Tenant Data Plane (tileflowXXX).
     Canonical identity for any legal, business, or operational entity:
     Customer, Supplier, Dealer, Distributor, Transporter, Employee, or Salesman.
     """

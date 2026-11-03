@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 from datetime import datetime, date, timezone
 from decimal import Decimal
@@ -78,8 +65,8 @@ def test_dashboard_kpi_matching_underlying_dataset():
 
 def test_cross_company_isolation_enforcement():
     """Verify cross-company tenant isolation blocks unauthorized access."""
-    active_company_id = "smriti001"
-    requested_company_id = "smritiABC"
+    active_company_id = "tileflow001"
+    requested_company_id = "tileflowABC"
 
     is_authorized = (active_company_id == requested_company_id)
     assert is_authorized is False

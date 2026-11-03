@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-23
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { CashDenominations, POSZReportData } from "./types.ts";
 import ProPosDenomination, { calculateDenominationTotal } from "./ProPosDenomination.tsx";
@@ -35,7 +21,7 @@ import {
   Receipt
 } from "lucide-react";
 
-interface SmritiProPosShiftCloseModalProps {
+interface TileFlowProPosShiftCloseModalProps {
   shiftId: string;
   registerId?: string;
   onShiftClosed: (zReport: POSZReportData) => void;
@@ -43,7 +29,7 @@ interface SmritiProPosShiftCloseModalProps {
   onNotification?: (title: string, message: string, type: "success" | "error" | "info") => void;
 }
 
-export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalProps> = ({
+export const TileFlowProPosShiftCloseModal: React.FC<TileFlowProPosShiftCloseModalProps> = ({
   shiftId,
   registerId = "REG-01",
   onShiftClosed,
@@ -188,22 +174,22 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-xs p-4 animate-in fade-in duration-150 overflow-y-auto font-sans">
-      <div className="bg-white dark:bg-[#1e232a] border border-[#c4c5d5] dark:border-[#444653] w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col my-8">
+      <div className="bg-white dark:bg-[#222222] border border-[#c6c6c6] dark:border-[#474747] w-full max-w-4xl rounded-3xl shadow-2xl overflow-hidden flex flex-col my-8">
         
         {/* Modal Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-[#e2e8f0] dark:border-[#334155] bg-[#f8faff] dark:bg-[#131b2e]">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-[#e7e7e7] dark:border-[#3f3f3f] bg-[#fafafa] dark:bg-[#1b1b1b]">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-[#00288e] text-white shadow-xs">
+            <div className="p-2.5 rounded-2xl bg-[#272727] text-white shadow-xs">
               <Lock size={20} />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#00288e] dark:text-[#a8b8ff] flex items-center gap-2">
+              <h3 className="text-base font-bold text-[#272727] dark:text-[#bababa] flex items-center gap-2">
                 <span>Shift Reconciliation &amp; Z-Report Closeout</span>
-                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#dde1ff] dark:bg-[#1e40af] text-[#00288e] dark:text-white">
+                <span className="text-[11px] font-mono px-2 py-0.5 rounded bg-[#e2e2e2] dark:bg-[#414141] text-[#272727] dark:text-white">
                   {zReportData?.shift_code || shiftId}
                 </span>
               </h3>
-              <p className="text-[11px] text-[#64748b] dark:text-[#94a3b8]">
+              <p className="text-[11px] text-[#727272] dark:text-[#a1a1a1]">
                 Physical Denomination Counting • Tender Reconciliation • Dual-Entry General Ledger Balancing
               </p>
             </div>
@@ -211,7 +197,7 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-[#64748b] hover:text-[#0f172a] dark:text-[#94a3b8] dark:hover:text-white rounded-xl hover:bg-[#e2e8f0] dark:hover:bg-[#334155] transition"
+            className="p-2 text-[#727272] hover:text-[#171717] dark:text-[#a1a1a1] dark:hover:text-white rounded-xl hover:bg-[#e7e7e7] dark:hover:bg-[#3f3f3f] transition"
           >
             <X size={18} />
           </button>
@@ -225,30 +211,30 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
             </div>
 
             <div>
-              <h2 className="text-xl font-bold text-[#1e293b] dark:text-white">
+              <h2 className="text-xl font-bold text-[#282828] dark:text-white">
                 Shift Successfully Closed &amp; Reconciled
               </h2>
-              <p className="text-xs text-[#64748b] dark:text-[#94a3b8] mt-1">
+              <p className="text-xs text-[#727272] dark:text-[#a1a1a1] mt-1">
                 Z-Report has been committed to PostgreSQL. Dual-entry General Ledger balancing entries posted.
               </p>
             </div>
 
             {/* Quick Summary Strip */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-2xl bg-[#f8fafc] dark:bg-[#0f172a] p-4 rounded-2xl border border-[#e2e8f0] dark:border-[#334155]">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full max-w-2xl bg-[#fafafa] dark:bg-[#171717] p-4 rounded-2xl border border-[#e7e7e7] dark:border-[#3f3f3f]">
               <div className="text-left">
-                <span className="text-[10px] font-bold uppercase text-[#64748b]">Total Sales</span>
-                <div className="text-sm font-mono font-bold text-[#00288e] dark:text-[#a8b8ff]">
+                <span className="text-[10px] font-bold uppercase text-[#727272]">Total Sales</span>
+                <div className="text-sm font-mono font-bold text-[#272727] dark:text-[#bababa]">
                   ₹{closedResult.total_sales?.toFixed(2)}
                 </div>
               </div>
               <div className="text-left">
-                <span className="text-[10px] font-bold uppercase text-[#64748b]">Counted Cash</span>
+                <span className="text-[10px] font-bold uppercase text-[#727272]">Counted Cash</span>
                 <div className="text-sm font-mono font-bold text-[#16a34a]">
                   ₹{closedResult.actual_cash_counted?.toFixed(2)}
                 </div>
               </div>
               <div className="text-left">
-                <span className="text-[10px] font-bold uppercase text-[#64748b]">Cash Variance</span>
+                <span className="text-[10px] font-bold uppercase text-[#727272]">Cash Variance</span>
                 <div className={`text-sm font-mono font-bold ${
                   Math.abs(closedResult.cash_variance || 0) < 0.01 ? "text-[#16a34a]" : "text-[#ba1a1a]"
                 }`}>
@@ -256,8 +242,8 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
                 </div>
               </div>
               <div className="text-left">
-                <span className="text-[10px] font-bold uppercase text-[#64748b]">GL Balancing Voucher</span>
-                <div className="text-xs font-mono font-bold text-[#0f172a] dark:text-[#f8fafc] truncate">
+                <span className="text-[10px] font-bold uppercase text-[#727272]">GL Balancing Voucher</span>
+                <div className="text-xs font-mono font-bold text-[#171717] dark:text-[#fafafa] truncate">
                   {closedResult.shift_close_voucher_id || "BALANCED"}
                 </div>
               </div>
@@ -268,7 +254,7 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
               <button
                 type="button"
                 onClick={handlePrintSlip}
-                className="px-6 py-2.5 bg-[#00288e] hover:bg-[#1e40af] text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2"
+                className="px-6 py-2.5 bg-[#272727] hover:bg-[#414141] text-white text-xs font-bold rounded-xl shadow-md transition flex items-center gap-2"
               >
                 <Printer size={15} />
                 <span>Print Official Z-Report Slip</span>
@@ -276,7 +262,7 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
               <button
                 type="button"
                 onClick={onClose}
-                className="px-6 py-2.5 bg-[#f1f5f9] dark:bg-[#334155] text-[#334155] dark:text-[#f8fafc] hover:bg-[#e2e8f0] text-xs font-bold rounded-xl transition"
+                className="px-6 py-2.5 bg-[#f4f4f4] dark:bg-[#3f3f3f] text-[#3f3f3f] dark:text-[#fafafa] hover:bg-[#e7e7e7] text-xs font-bold rounded-xl transition"
               >
                 Done
               </button>
@@ -288,37 +274,37 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
             
             {/* KPI Cards: Shift Performance & Drawer Net Expected Cash */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-              <div className="p-3 bg-[#f8fafc] dark:bg-[#0f172a] rounded-2xl border border-[#e2e8f0] dark:border-[#334155]">
-                <span className="text-[10px] font-bold uppercase text-[#64748b]">Opening Float</span>
-                <div className="text-sm font-mono font-bold text-[#0f172a] dark:text-[#f8fafc] mt-0.5">
+              <div className="p-3 bg-[#fafafa] dark:bg-[#171717] rounded-2xl border border-[#e7e7e7] dark:border-[#3f3f3f]">
+                <span className="text-[10px] font-bold uppercase text-[#727272]">Opening Float</span>
+                <div className="text-sm font-mono font-bold text-[#171717] dark:text-[#fafafa] mt-0.5">
                   ₹{(zReportData?.opening_float || 0).toFixed(2)}
                 </div>
               </div>
 
-              <div className="p-3 bg-[#f8fafc] dark:bg-[#0f172a] rounded-2xl border border-[#e2e8f0] dark:border-[#334155]">
-                <span className="text-[10px] font-bold uppercase text-[#64748b]">Cash Sales (+)</span>
+              <div className="p-3 bg-[#fafafa] dark:bg-[#171717] rounded-2xl border border-[#e7e7e7] dark:border-[#3f3f3f]">
+                <span className="text-[10px] font-bold uppercase text-[#727272]">Cash Sales (+)</span>
                 <div className="text-sm font-mono font-bold text-[#16a34a] mt-0.5">
                   +₹{(zReportData?.cash_sales || 0).toFixed(2)}
                 </div>
               </div>
 
-              <div className="p-3 bg-[#f8fafc] dark:bg-[#0f172a] rounded-2xl border border-[#e2e8f0] dark:border-[#334155]">
-                <span className="text-[10px] font-bold uppercase text-[#64748b]">Cash Drops (-)</span>
+              <div className="p-3 bg-[#fafafa] dark:bg-[#171717] rounded-2xl border border-[#e7e7e7] dark:border-[#3f3f3f]">
+                <span className="text-[10px] font-bold uppercase text-[#727272]">Cash Drops (-)</span>
                 <div className="text-sm font-mono font-bold text-[#ba1a1a] mt-0.5">
                   -₹{(zReportData?.cash_drops_total || 0).toFixed(2)}
                 </div>
               </div>
 
-              <div className="p-3 bg-[#f8fafc] dark:bg-[#0f172a] rounded-2xl border border-[#e2e8f0] dark:border-[#334155]">
-                <span className="text-[10px] font-bold uppercase text-[#64748b]">Till Expenses (-)</span>
+              <div className="p-3 bg-[#fafafa] dark:bg-[#171717] rounded-2xl border border-[#e7e7e7] dark:border-[#3f3f3f]">
+                <span className="text-[10px] font-bold uppercase text-[#727272]">Till Expenses (-)</span>
                 <div className="text-sm font-mono font-bold text-[#ba1a1a] mt-0.5">
                   -₹{(zReportData?.till_expenses_total || 0).toFixed(2)}
                 </div>
               </div>
 
-              <div className="p-3 bg-[#dde1ff] dark:bg-[#1e40af]/30 rounded-2xl border border-[#00288e]/30 col-span-2 md:col-span-1">
-                <span className="text-[10px] font-bold uppercase text-[#00288e] dark:text-[#a8b8ff]">Net Expected Cash</span>
-                <div className="text-base font-mono font-bold text-[#00288e] dark:text-white mt-0.5">
+              <div className="p-3 bg-[#e2e2e2] dark:bg-[#414141]/30 rounded-2xl border border-[#272727]/30 col-span-2 md:col-span-1">
+                <span className="text-[10px] font-bold uppercase text-[#272727] dark:text-[#bababa]">Net Expected Cash</span>
+                <div className="text-base font-mono font-bold text-[#272727] dark:text-white mt-0.5">
                   ₹{expectedCash.toFixed(2)}
                 </div>
               </div>
@@ -334,19 +320,19 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
             </div>
 
             {/* Step 2: Non-Cash Tender Batch Settlements */}
-            <div className="bg-white dark:bg-[#202427] border border-[#c4c5d5] dark:border-[#444653] rounded-2xl p-4 shadow-sm space-y-3">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#191c1d] dark:text-white pb-2 border-b border-[#e2e8f0] dark:border-[#334155]">
+            <div className="bg-white dark:bg-[#232323] border border-[#c6c6c6] dark:border-[#474747] rounded-2xl p-4 shadow-sm space-y-3">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#1b1b1b] dark:text-white pb-2 border-b border-[#e7e7e7] dark:border-[#3f3f3f]">
                 Non-Cash Tender Settlements (EDC / Gateway Reconcile)
               </h4>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* EDC Card */}
-                <div className="flex items-center justify-between p-3 rounded-xl border border-[#e2e8f0] dark:border-[#334155] bg-[#fbfcfd] dark:bg-[#191c1e]">
+                <div className="flex items-center justify-between p-3 rounded-xl border border-[#e7e7e7] dark:border-[#3f3f3f] bg-[#fcfcfc] dark:bg-[#1c1c1c]">
                   <div className="flex items-center gap-2">
-                    <CreditCard size={16} className="text-[#00288e] dark:text-[#a8b8ff]" />
+                    <CreditCard size={16} className="text-[#272727] dark:text-[#bababa]" />
                     <div>
-                      <div className="text-xs font-bold text-[#1e293b] dark:text-[#f8fafc]">Card Machine Batch (EDC)</div>
-                      <div className="text-[10px] text-[#64748b]">System: ₹{(zReportData?.card_sales || 0).toFixed(2)}</div>
+                      <div className="text-xs font-bold text-[#282828] dark:text-[#fafafa]">Card Machine Batch (EDC)</div>
+                      <div className="text-[10px] text-[#727272]">System: ₹{(zReportData?.card_sales || 0).toFixed(2)}</div>
                     </div>
                   </div>
                   <input
@@ -354,17 +340,17 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
                     step="any"
                     value={actualCard}
                     onChange={(e) => setActualCard(e.target.value)}
-                    className="w-28 px-2 py-1 text-right font-mono font-bold text-xs rounded-lg border border-[#cbd5e1] dark:border-[#475569] bg-white dark:bg-[#0f172a] outline-none"
+                    className="w-28 px-2 py-1 text-right font-mono font-bold text-xs rounded-lg border border-[#d4d4d4] dark:border-[#535353] bg-white dark:bg-[#171717] outline-none"
                   />
                 </div>
 
                 {/* UPI / QR */}
-                <div className="flex items-center justify-between p-3 rounded-xl border border-[#e2e8f0] dark:border-[#334155] bg-[#fbfcfd] dark:bg-[#191c1e]">
+                <div className="flex items-center justify-between p-3 rounded-xl border border-[#e7e7e7] dark:border-[#3f3f3f] bg-[#fcfcfc] dark:bg-[#1c1c1c]">
                   <div className="flex items-center gap-2">
-                    <QrCode size={16} className="text-[#00288e] dark:text-[#a8b8ff]" />
+                    <QrCode size={16} className="text-[#272727] dark:text-[#bababa]" />
                     <div>
-                      <div className="text-xs font-bold text-[#1e293b] dark:text-[#f8fafc]">UPI / Dynamic QR Batch</div>
-                      <div className="text-[10px] text-[#64748b]">System: ₹{(zReportData?.upi_sales || 0).toFixed(2)}</div>
+                      <div className="text-xs font-bold text-[#282828] dark:text-[#fafafa]">UPI / Dynamic QR Batch</div>
+                      <div className="text-[10px] text-[#727272]">System: ₹{(zReportData?.upi_sales || 0).toFixed(2)}</div>
                     </div>
                   </div>
                   <input
@@ -372,7 +358,7 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
                     step="any"
                     value={actualUpi}
                     onChange={(e) => setActualUpi(e.target.value)}
-                    className="w-28 px-2 py-1 text-right font-mono font-bold text-xs rounded-lg border border-[#cbd5e1] dark:border-[#475569] bg-white dark:bg-[#0f172a] outline-none"
+                    className="w-28 px-2 py-1 text-right font-mono font-bold text-xs rounded-lg border border-[#d4d4d4] dark:border-[#535353] bg-white dark:bg-[#171717] outline-none"
                   />
                 </div>
               </div>
@@ -380,7 +366,7 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
 
             {/* Step 3: Shift Notes & Explanation if variance exists */}
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#475569] dark:text-[#cbd5e1] mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#535353] dark:text-[#d4d4d4] mb-1.5">
                 Cashier Closing Remarks / Handover Notes {Math.abs(cashVariance) >= 0.01 ? "(Required for Variance Audit)" : "(Optional)"}
               </label>
               <textarea
@@ -388,16 +374,16 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
                 value={closingNotes}
                 onChange={(e) => setClosingNotes(e.target.value)}
                 placeholder="Enter shift handover notes, reason for any variance, or physical cash drop envelope reference..."
-                className="w-full px-3 py-2 text-xs rounded-xl border border-[#cbd5e1] dark:border-[#475569] bg-[#f8fafc] dark:bg-[#0f172a] text-[#0f172a] dark:text-[#f8fafc] focus:border-[#00288e] focus:ring-2 focus:ring-[#00288e]/20 outline-none transition"
+                className="w-full px-3 py-2 text-xs rounded-xl border border-[#d4d4d4] dark:border-[#535353] bg-[#fafafa] dark:bg-[#171717] text-[#171717] dark:text-[#fafafa] focus:border-[#272727] focus:ring-2 focus:ring-[#272727]/20 outline-none transition"
               />
             </div>
 
             {/* Bottom Actions */}
-            <div className="flex justify-between items-center pt-4 border-t border-[#e2e8f0] dark:border-[#334155]">
+            <div className="flex justify-between items-center pt-4 border-t border-[#e7e7e7] dark:border-[#3f3f3f]">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 text-xs font-bold text-[#64748b] dark:text-[#94a3b8] hover:bg-[#f1f5f9] dark:hover:bg-[#334155] rounded-xl transition"
+                className="px-4 py-2 text-xs font-bold text-[#727272] dark:text-[#a1a1a1] hover:bg-[#f4f4f4] dark:hover:bg-[#3f3f3f] rounded-xl transition"
               >
                 Cancel
               </button>
@@ -406,7 +392,7 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
                 type="button"
                 disabled={closing || loading}
                 onClick={handleCloseShift}
-                className="px-8 py-3 bg-[#00288e] hover:bg-[#1e40af] text-white text-xs font-bold rounded-2xl shadow-lg transition disabled:opacity-40 flex items-center gap-2"
+                className="px-8 py-3 bg-[#272727] hover:bg-[#414141] text-white text-xs font-bold rounded-2xl shadow-lg transition disabled:opacity-40 flex items-center gap-2"
               >
                 {closing ? (
                   <span>Locking Register &amp; Balancing GL...</span>
@@ -427,4 +413,4 @@ export const SmritiProPosShiftCloseModal: React.FC<SmritiProPosShiftCloseModalPr
   );
 };
 
-export default SmritiProPosShiftCloseModal;
+export default TileFlowProPosShiftCloseModal;

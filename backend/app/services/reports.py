@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah — Founder & Chairperson
-* Jawahar Ramkripal Mallah  — Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.23.0
-* Created    : 2026-07-11
-* Modified   : 2026-08-15
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-"""
-
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import date, datetime, timezone
 from typing import List, Dict, Any, Optional
@@ -845,7 +827,7 @@ class ReportsService:
         )
 
     # ──────────────────────────────────────────────────────────────
-    # SMRITI Standard Statutory Tax Invoices & Footwear Matrix Services
+    # TILEFLOW Standard Statutory Tax Invoices & Footwear Matrix Services
     # ──────────────────────────────────────────────────────────────
 
     @staticmethod
@@ -1318,7 +1300,7 @@ class ReportsService:
             stmt = stmt.where(
                 (SalesOrder.company_id == self.tenant.company_id) | 
                 (SalesOrder.company_id == "COMP-001") | 
-                (SalesOrder.company_id == "smriti001") | 
+                (SalesOrder.company_id == "tileflow001") | 
                 (SalesOrder.company_id.is_(None))
             )
         if self.tenant and self.tenant.branch_id:
@@ -2365,7 +2347,7 @@ class ReportsService:
         # ─────────────────────────────────────────────────────────────────
         ws1 = wb.create_sheet(title="Executive Summary")
         ws1.views.sheetView[0].showGridLines = True
-        ws1.cell(row=1, column=1, value="SMRITI RETAIL OS — SALES ORDERS EXECUTIVE SUMMARY").font = f_title
+        ws1.cell(row=1, column=1, value="MQube — SALES ORDERS EXECUTIVE SUMMARY").font = f_title
         ws1.cell(row=2, column=1, value=f"Generated: {datetime.now().strftime('%d-%m-%Y %H:%M')} | Supplier: TATTLY THREADS (27AAXFT2508H1ZR)").font = Font(size=9, italic=True, color="64748B")
 
         kpis = [

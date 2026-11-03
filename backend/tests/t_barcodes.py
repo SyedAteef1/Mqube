@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 import pytest
@@ -40,8 +26,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -98,9 +84,9 @@ async def test_code128_and_qr_code_generation():
     assert gen_c128.symbology == "CODE128"
 
     gen_qr = BarcodesEngine.generate_barcode_value(
-        BarcodeGenerateRequest(symbology="QR_CODE", seed_digits="https://smritiretail.com/item/1001")
+        BarcodeGenerateRequest(symbology="QR_CODE", seed_digits="https://tileflowretail.com/item/1001")
     )
-    assert gen_qr.barcode_value == "https://smritiretail.com/item/1001"
+    assert gen_qr.barcode_value == "https://tileflowretail.com/item/1001"
     assert gen_qr.symbology == "QR_CODE"
 
 
@@ -119,7 +105,7 @@ async def test_zpl_thermal_label_compilation_and_dpi_scaling():
             barcode="8901234567897",
             mrp=Decimal("1999.00"),
             selling_price=Decimal("1499.00"),
-            brand="SMRITI DENIM",
+            brand="TILEFLOW DENIM",
         )
     )
     assert "^XA" in res_203.compiled_command_stream
@@ -189,7 +175,7 @@ async def test_tspl_and_esc_pos_label_compilation():
 @pytest.mark.asyncio
 async def test_batch_label_print_dispatch_and_audit_history():
     """Verify multi-item batch label print dispatch and PostgreSQL PrintHistory audit logging."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     bc1 = f"890{unique_suffix.upper()[:9].zfill(9)}1"
     bc2 = f"890{unique_suffix.upper()[:9].zfill(9)}2"

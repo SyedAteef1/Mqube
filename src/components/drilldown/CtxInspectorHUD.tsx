@@ -1,25 +1,9 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.14.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-22
- * Copyright    : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Target UI    : Contextual Field Inspector HUD (Secure Login Portal & Authenticated Intelligence)
- */
-
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useActiveField } from "../../context/ActiveFieldContext.tsx";
 import { useDrillDown } from "./drilldown_store.tsx";
 
-const HUD_HIDDEN_STORAGE_KEY = "smriti_hud_is_hidden";
+const HUD_HIDDEN_STORAGE_KEY = "tileflow_hud_is_hidden";
 
 export const ContextualInspectorHUD: React.FC = () => {
   const { category, fieldLabel, fieldValue, isInputFocused } = useActiveField();
@@ -33,7 +17,7 @@ export const ContextualInspectorHUD: React.FC = () => {
     }
   });
 
-  const token = typeof window !== "undefined" ? (localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token")) : null;
+  const token = typeof window !== "undefined" ? (localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token")) : null;
   const isAuthenticated = Boolean(token);
 
   // Auto-expand HUD when focus moves to a contextual field in an authenticated session
@@ -67,7 +51,7 @@ export const ContextualInspectorHUD: React.FC = () => {
           type="button"
           onClick={handleUnhide}
           title="Show Contextual Field Assistant"
-          className="p-2 bg-[#24389c]/80 hover:bg-[#24389c] text-white rounded-full shadow-lg backdrop-blur transition-all flex items-center gap-1.5 text-[11px] font-semibold opacity-60 hover:opacity-100 cursor-pointer"
+          className="p-2 bg-[#3b3b3b]/80 hover:bg-[#3b3b3b] text-white rounded-full shadow-lg backdrop-blur transition-all flex items-center gap-1.5 text-[11px] font-semibold opacity-60 hover:opacity-100 cursor-pointer"
         >
           <span className="material-symbols-outlined text-[16px]">visibility</span>
           <span>Show Assistant</span>
@@ -97,23 +81,23 @@ export const ContextualInspectorHUD: React.FC = () => {
             initial={{ opacity: 0, y: 15, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 15, scale: 0.95 }}
-            className="pointer-events-auto bg-white/95 backdrop-blur-md border border-[#c5c5d4] shadow-2xl rounded-2xl p-3.5 w-80 text-[#0b1c30] border-l-4 border-l-[#24389c] cursor-default"
+            className="pointer-events-auto bg-white/95 backdrop-blur-md border border-[#c6c6c6] shadow-2xl rounded-2xl p-3.5 w-80 text-[#1a1a1a] border-l-4 border-l-[#3b3b3b] cursor-default"
           >
             {/* Header Bar with Drag Handle */}
-            <div className="flex items-center justify-between pb-2 border-b border-[#e1e2ec] cursor-grab active:cursor-grabbing">
+            <div className="flex items-center justify-between pb-2 border-b border-[#e3e3e3] cursor-grab active:cursor-grabbing">
               <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[#757684] text-[16px]" title="Drag anywhere">
+                <span className="material-symbols-outlined text-[#777777] text-[16px]" title="Drag anywhere">
                   drag_indicator
                 </span>
-                <span className="material-symbols-outlined text-[#24389c] text-[18px]">
+                <span className="material-symbols-outlined text-[#3b3b3b] text-[18px]">
                   {!isAuthenticated ? "lock" :
                    category === "product" ? "barcode_scanner" :
                    category === "customer" ? "person_search" :
                    category === "supplier" ? "local_shipping" :
                    category === "invoice" ? "receipt_long" : "info"}
                 </span>
-                <span className="text-xs font-bold text-[#0b1c30] truncate">
-                  {!isAuthenticated ? "SMRITI Security Portal" : fieldLabel}
+                <span className="text-xs font-bold text-[#1a1a1a] truncate">
+                  {!isAuthenticated ? "MQube Security Portal" : fieldLabel}
                 </span>
               </div>
               
@@ -126,7 +110,7 @@ export const ContextualInspectorHUD: React.FC = () => {
                     setIsMinimized(true);
                   }}
                   title="Minimize to Floating Pill"
-                  className="p-1 text-[#757684] hover:text-[#0b1c30] hover:bg-slate-100 rounded-md transition-colors cursor-pointer"
+                  className="p-1 text-[#777777] hover:text-[#1a1a1a] hover:bg-slate-100 rounded-md transition-colors cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[14px]">remove</span>
                 </button>
@@ -139,7 +123,7 @@ export const ContextualInspectorHUD: React.FC = () => {
                     handleHide();
                   }}
                   title="Hide Assistant"
-                  className="p-1 text-[#757684] hover:text-red-600 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
+                  className="p-1 text-[#777777] hover:text-red-600 hover:bg-red-50 rounded-md transition-colors cursor-pointer"
                 >
                   <span className="material-symbols-outlined text-[14px]">close</span>
                 </button>
@@ -154,7 +138,7 @@ export const ContextualInspectorHUD: React.FC = () => {
                     <span className="material-symbols-outlined text-[16px]">verified_user</span>
                     <span className="font-semibold text-[11px]">System Ready • Authentication Required</span>
                   </div>
-                  <p className="text-[11px] text-[#757684] leading-relaxed">
+                  <p className="text-[11px] text-[#777777] leading-relaxed">
                     Please log in with your credentials to access business records, tactical search, and contextual tools.
                   </p>
                 </div>
@@ -162,9 +146,9 @@ export const ContextualInspectorHUD: React.FC = () => {
                 <>
                   {category === "product" && (
                     <div className="text-xs space-y-1.5">
-                      <div className="flex items-center justify-between text-[#565975]">
+                      <div className="flex items-center justify-between text-[#5a5a5a]">
                         <span>Target Entity:</span>
-                        <span className="font-semibold text-[#0b1c30] bg-slate-100 px-1.5 py-0.5 rounded">
+                        <span className="font-semibold text-[#1a1a1a] bg-slate-100 px-1.5 py-0.5 rounded">
                           Product / Barcode
                         </span>
                       </div>
@@ -174,7 +158,7 @@ export const ContextualInspectorHUD: React.FC = () => {
                           <span className="font-mono text-indigo-700 font-bold truncate block">{fieldValue}</span>
                         </div>
                       ) : (
-                        <p className="text-[11px] text-[#757684] italic">
+                        <p className="text-[11px] text-[#777777] italic">
                           Scan or type barcode/SKU to inspect stock, MRP, tax rate, and variants.
                         </p>
                       )}
@@ -183,9 +167,9 @@ export const ContextualInspectorHUD: React.FC = () => {
 
                   {category === "customer" && (
                     <div className="text-xs space-y-1.5">
-                      <div className="flex items-center justify-between text-[#565975]">
+                      <div className="flex items-center justify-between text-[#5a5a5a]">
                         <span>Target Entity:</span>
-                        <span className="font-semibold text-[#0b1c30] bg-slate-100 px-1.5 py-0.5 rounded">
+                        <span className="font-semibold text-[#1a1a1a] bg-slate-100 px-1.5 py-0.5 rounded">
                           Customer / Client
                         </span>
                       </div>
@@ -195,7 +179,7 @@ export const ContextualInspectorHUD: React.FC = () => {
                           <span className="font-mono text-indigo-700 font-bold truncate block">{fieldValue}</span>
                         </div>
                       ) : (
-                        <p className="text-[11px] text-[#757684] italic">
+                        <p className="text-[11px] text-[#777777] italic">
                           Enter mobile number or name to inspect loyalty points and credit limits.
                         </p>
                       )}
@@ -204,7 +188,7 @@ export const ContextualInspectorHUD: React.FC = () => {
 
                   {category === "supplier" && (
                     <div className="text-xs space-y-1.5">
-                      <p className="text-[11px] text-[#757684]">
+                      <p className="text-[11px] text-[#777777]">
                         Supplier mode active. Search vendor details, GSTIN, and pending PO balances.
                       </p>
                     </div>
@@ -212,7 +196,7 @@ export const ContextualInspectorHUD: React.FC = () => {
 
                   {category === "invoice" && (
                     <div className="text-xs space-y-1.5">
-                      <p className="text-[11px] text-[#757684]">
+                      <p className="text-[11px] text-[#777777]">
                         Invoice mode active. Search historical tax invoices, dates, and amounts.
                       </p>
                     </div>
@@ -220,7 +204,7 @@ export const ContextualInspectorHUD: React.FC = () => {
 
                   {category === "general" && (
                     <div className="text-xs space-y-1.5">
-                      <p className="text-[11px] text-[#757684]">
+                      <p className="text-[11px] text-[#777777]">
                         Global search assistant ready. Press Ctrl+K to search all entities.
                       </p>
                     </div>
@@ -239,7 +223,7 @@ export const ContextualInspectorHUD: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setSearchOpen(true)}
-                className="w-full py-1.5 bg-[#24389c] hover:bg-[#1b2b7b] text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
+                className="w-full py-1.5 bg-[#3b3b3b] hover:bg-[#2d2d2d] text-white text-xs font-semibold rounded-lg transition-colors flex items-center justify-center gap-1.5 shadow-xs cursor-pointer"
               >
                 <span className="material-symbols-outlined text-[15px]">search</span>
                 <span>Search in {category === "product" ? "Product Catalog" : category === "customer" ? "Customer Directory" : "Global System"}</span>
@@ -254,7 +238,7 @@ export const ContextualInspectorHUD: React.FC = () => {
             dragElastic={0.05}
             initial={{ scale: 0.9 }}
             animate={{ scale: 1 }}
-            className="pointer-events-auto flex items-center gap-1 bg-[#24389c] text-white pl-3 pr-1 py-1.5 rounded-full shadow-xl hover:bg-[#1b2b7b] transition-all text-xs font-semibold cursor-grab active:cursor-grabbing"
+            className="pointer-events-auto flex items-center gap-1 bg-[#3b3b3b] text-white pl-3 pr-1 py-1.5 rounded-full shadow-xl hover:bg-[#2d2d2d] transition-all text-xs font-semibold cursor-grab active:cursor-grabbing"
           >
             <button
               type="button"

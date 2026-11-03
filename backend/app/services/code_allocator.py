@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import os, psycopg2, re
 from typing import Optional
 
@@ -18,7 +5,7 @@ DB_HOST = os.getenv("POSTGRES_HOST") or os.getenv("DATABASE_HOST") or "localhost
 DB_PORT = os.getenv("POSTGRES_PORT") or 5432
 DB_USER = os.getenv("POSTGRES_USER") or "postgres"
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD") or "postgres"
-CONTROL_PLANE_DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/smritisys"
+CONTROL_PLANE_DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/tileflowsys"
 
 class CompanyCodeAllocator:
     """

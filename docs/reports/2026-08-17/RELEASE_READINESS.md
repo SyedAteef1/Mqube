@@ -5,7 +5,7 @@
 | Module | Production Ready | Missing Dependencies |
 | :--- | :---: | :--- |
 | Executive Hub | ✅ YES | None |
-| SMRITI Gyan Kendra | ❌ NO | Unit tests missing |
+| TILEFLOW Gyan Kendra | ❌ NO | Unit tests missing |
 | Billing Desk | ✅ YES | None |
 | Sales Studio | ✅ YES | None |
 | Create Tax Invoice (B2B) | ❌ NO | Unit tests missing |
@@ -34,6 +34,6 @@
 | Terms & Conditions | ❌ NO | None |
 | Data Exchange Hub | ❌ NO | None |
 | Company Setup Wizard | ❌ NO | None |
-| About SMRITI | ✅ YES | None |
+| About TILEFLOW | ✅ YES | None |
 | Dev Intelligence Center | ❌ NO | None |
 | Audit Logs | ❌ NO | None |

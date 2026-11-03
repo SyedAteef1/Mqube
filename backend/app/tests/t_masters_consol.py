@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.17.0
-Created      : 2026-07-14
-Modified     : 2026-07-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -65,7 +51,7 @@ async def _setup_admin_and_auth_headers(db_session):
     user = User(
         id=f"usr-admin-{s}",
         username=f"admin_user_{s}",
-        email=f"admin_{s}@smriti.test",
+        email=f"admin_{s}@tileflow.test",
         hashed_password=hash_password("Admin@1234"),
         role=UserRole.SYSADMIN,
         is_active=True,

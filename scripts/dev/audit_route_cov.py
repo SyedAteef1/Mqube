@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-audit_route_cov.py
-==========================================
-Development audit: cross-references all registered FastAPI backend routes
-against all frontend fetch/apiFetchV1/apiFetch/axios calls found in src/.
-Reports exact matches, unmatched frontend paths, potential /api/ -> /api/v1/
-mappings, and backend routes never referenced by any frontend file.
-
-Output is written to scripts/dev/frontend_backend_route_coverage.json.
-
-Usage:
-    python scripts/dev/audit_route_cov.py
-"""
-
 import os
 import sys
 import re

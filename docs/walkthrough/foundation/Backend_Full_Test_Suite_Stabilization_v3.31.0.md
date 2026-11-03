@@ -1,28 +1,27 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.31.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Backend Full Test Suite Stabilization & Multi-Tenant Isolation Verification
 
 ## 1. Purpose
-This walkthrough documents the full stabilization and verification of all standard (`test_*.py`) and auxiliary (`t_*.py`) backend test suites in SMRITI Retail OS, achieving a 100% test pass rate (221/221 backend tests passed, 325/325 frontend tests passed, 0 TypeScript errors).
+This walkthrough documents the full stabilization and verification of all standard (`test_*.py`) and auxiliary (`t_*.py`) backend test suites in TILEFLOW Retail OS, achieving a 100% test pass rate (221/221 backend tests passed, 325/325 frontend tests passed, 0 TypeScript errors).
 
 ## 2. Scope
 - Verification and repair of 19 standard pytest modules (`backend/app/tests/test_*.py`).
 - Verification and repair of 14 auxiliary pytest modules (`backend/app/tests/t_*.py`).
 - Resolution of FastAPI dependency injection overrides for `get_company_db`, `get_ecom_webhook_session`, and `get_tenant_context`.
 - Mitigation of tenant key collisions using dynamic UUID isolation across test transactions.
-- Alignment of target database resolution (`smritisys` vs `postgres`) in database management diagnostics.
+- Alignment of target database resolution (`tileflowsys` vs `postgres`) in database management diagnostics.
 
 ## 3. Files Created
 - `docs/walkthrough/foundation/Backend_Full_Test_Suite_Stabilization_v3.31.0.md`
@@ -57,7 +56,7 @@ Ensures repeatable, deterministic, headless execution of test suites on developm
 - Fixed `test_services.py` credit limit validation check and tax inclusive flags.
 - Updated `t_ecom_connect.py` webhook authentication headers (`X-Internal-Service-Key`).
 - Updated `t_api_v1_migr.py` company setup test by clearing `SystemConfig` `setup_completed` prior to invocation and handling uppercase branch normalization.
-- Re-pointed database manager inspection tests in `t_db_manager.py` to the migrated schema database `smritisys`.
+- Re-pointed database manager inspection tests in `t_db_manager.py` to the migrated schema database `tileflowsys`.
 - Stabilized dynamic attribute and product identity test models with complete schema attributes (`price`, `mrp`, `gst_percentage`, `hsn_code`, `is_active`).
 
 ## 8. Tests Executed

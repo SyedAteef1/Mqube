@@ -1,24 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 4.0.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Implementation Plan: SMRITI Product Image Framework (SPIF) v1.0
+# Implementation Plan: TILEFLOW Product Image Framework (SPIF) v1.0
 
 ## 1. Objective
-Implement the SMRITI Product Image Framework (SPIF) v1.0: a centralized service, database model, API suite, and reusable UI components that handle primary product images, multiple gallery media assets, responsive display configurations, and offline caching across all transaction and inventory consoles.
+Implement the TILEFLOW Product Image Framework (SPIF) v1.0: a centralized service, database model, API suite, and reusable UI components that handle primary product images, multiple gallery media assets, responsive display configurations, and offline caching across all transaction and inventory consoles.
 
 ## 2. Business Motivation
-Align SMRITI Retail OS with enterprise standards (matching SAP, Dynamics, NetSuite). Displaying item images during checkout, physical verification, and order entry directly reduces operator selection errors, speeds up processing time, and enhances overall usability.
+Align TILEFLOW Retail OS with enterprise standards (matching SAP, Dynamics, NetSuite). Displaying item images during checkout, physical verification, and order entry directly reduces operator selection errors, speeds up processing time, and enhances overall usability.
 
 ## 3. Scope
 - **Data Models:** Add database columns for primary images, galleries, and barcodes/QR mapping to the PostgreSQL schema and TypeScript types.
@@ -29,7 +28,7 @@ Align SMRITI Retail OS with enterprise standards (matching SAP, Dynamics, NetSui
 - **Transactions Integration:** Integrate images in POS billing, Sales Orders, Purchase Orders, and Stock Ledgers.
 
 ## 4. Current State
-Products in SMRITI currently lack image fields. Core transaction screens (POS, Sales, Purchase) display only SKU, name, code, barcode, stock, and pricing parameters.
+Products in TILEFLOW currently lack image fields. Core transaction screens (POS, Sales, Purchase) display only SKU, name, code, barcode, stock, and pricing parameters.
 
 ## 5. Gap Analysis
 - No image storage metadata or path definition in the database models.
@@ -38,7 +37,7 @@ Products in SMRITI currently lack image fields. Core transaction screens (POS, S
 - No transactional layout configurations to toggle images on/off per screen density.
 
 ## 6. Architecture Impact
-SPIF adheres to SMRITI PAL inward dependency rules. The image upload service handles file verification and standardizes formats (converting JPG/PNG to Optimized WEBP).
+SPIF adheres to TILEFLOW PAL inward dependency rules. The image upload service handles file verification and standardizes formats (converting JPG/PNG to Optimized WEBP).
 ```text
 UI Grids (POS, Sales, etc.) ──> Reusable <ProductImage /> Component
                                          │ (Uses Cache Storage offline fallback)

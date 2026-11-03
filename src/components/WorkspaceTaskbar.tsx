@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -33,7 +8,7 @@ import {
 } from "lucide-react";
 import { useWorkspace, FloatingWindow } from "../contexts/WorkspaceContext.tsx";
 import { useLayoutEngine } from "../layout_engine/layout_store.tsx";
-import { SmritiScrollArea } from "./SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.tsx";
 
 interface PinnedWorkspace {
   tabId: string;
@@ -61,19 +36,19 @@ export const WorkspaceTaskbar: React.FC = () => {
 
   // Taskbar general preferences
   const [isCollapsed, setIsCollapsed] = useState<boolean>(() => {
-    return localStorage.getItem("smriti_taskbar_collapsed") === "true";
+    return localStorage.getItem("tileflow_taskbar_collapsed") === "true";
   });
   const [autoHide, setAutoHide] = useState<boolean>(() => {
-    return localStorage.getItem("smriti_taskbar_autohide") === "true";
+    return localStorage.getItem("tileflow_taskbar_autohide") === "true";
   });
   const [isHovered, setIsHovered] = useState(false);
   const [taskbarOrder, setTaskbarOrder] = useState<string[]>(() => {
-    const saved = localStorage.getItem("smriti_taskbar_order");
+    const saved = localStorage.getItem("tileflow_taskbar_order");
     return saved ? JSON.parse(saved) : [];
   });
   
   const [pinnedWorkspaces, setPinnedWorkspaces] = useState<PinnedWorkspace[]>(() => {
-    const saved = localStorage.getItem("smriti_taskbar_pinned");
+    const saved = localStorage.getItem("tileflow_taskbar_pinned");
     return saved ? JSON.parse(saved) : [
       { tabId: "pos", title: "Billing Desk", icon: "point_of_sale" },
       { tabId: "dashboard", title: "Executive Hub", icon: "dashboard" },
@@ -106,23 +81,23 @@ export const WorkspaceTaskbar: React.FC = () => {
 
     if (JSON.stringify(updatedOrder) !== JSON.stringify(taskbarOrder)) {
       setTaskbarOrder(updatedOrder);
-      localStorage.setItem("smriti_taskbar_order", JSON.stringify(updatedOrder));
+      localStorage.setItem("tileflow_taskbar_order", JSON.stringify(updatedOrder));
     }
   }, [floatingWindows]);
 
   // Persist pinned
   useEffect(() => {
-    localStorage.setItem("smriti_taskbar_pinned", JSON.stringify(pinnedWorkspaces));
+    localStorage.setItem("tileflow_taskbar_pinned", JSON.stringify(pinnedWorkspaces));
   }, [pinnedWorkspaces]);
 
   // Persist autoHide
   useEffect(() => {
-    localStorage.setItem("smriti_taskbar_autohide", String(autoHide));
+    localStorage.setItem("tileflow_taskbar_autohide", String(autoHide));
   }, [autoHide]);
 
   // Persist isCollapsed
   useEffect(() => {
-    localStorage.setItem("smriti_taskbar_collapsed", String(isCollapsed));
+    localStorage.setItem("tileflow_taskbar_collapsed", String(isCollapsed));
   }, [isCollapsed]);
 
   // Close menus when clicking outside
@@ -193,7 +168,7 @@ export const WorkspaceTaskbar: React.FC = () => {
       newOrder[index] = newOrder[targetIdx];
       newOrder[targetIdx] = temp;
       setTaskbarOrder(newOrder);
-      localStorage.setItem("smriti_taskbar_order", JSON.stringify(newOrder));
+      localStorage.setItem("tileflow_taskbar_order", JSON.stringify(newOrder));
     }
   };
 
@@ -306,7 +281,7 @@ export const WorkspaceTaskbar: React.FC = () => {
                         onClick={(e) => e.stopPropagation()}
                       />
                     </div>
-                    <SmritiScrollArea className="flex-1 max-h-64 p-2">
+                    <TileFlowScrollArea className="flex-1 max-h-64 p-2">
                       {filteredModules.map((mod) => (
                         <button
                           key={`launcher-${mod.id}`}
@@ -334,7 +309,7 @@ export const WorkspaceTaskbar: React.FC = () => {
                       {filteredModules.length === 0 && (
                         <p className="text-[11px] text-theme-muted text-center py-4">No matching modules</p>
                       )}
-                    </SmritiScrollArea>
+                    </TileFlowScrollArea>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -398,7 +373,7 @@ export const WorkspaceTaskbar: React.FC = () => {
             {/* Horizontal scroll box */}
             <div
               ref={itemsContainerRef}
-              className="w-full flex items-center space-x-2 overflow-x-auto smriti-hide-scrollbar px-7 py-1"
+              className="w-full flex items-center space-x-2 overflow-x-auto tileflow-hide-scrollbar px-7 py-1"
             >
               <AnimatePresence initial={false}>
                 {taskbarOrder.map((id, index) => {
@@ -765,7 +740,7 @@ export const WorkspaceTaskbar: React.FC = () => {
               </div>
 
               {/* Window Bento List */}
-              <SmritiScrollArea className="flex-1 p-6">
+              <TileFlowScrollArea className="flex-1 p-6">
                 {floatingWindows.filter(w => 
                   w.tabs.some(t => t.title.toLowerCase().includes(windowSearchQuery.toLowerCase()))
                 ).length === 0 ? (
@@ -872,7 +847,7 @@ export const WorkspaceTaskbar: React.FC = () => {
                     })}
                   </div>
                 )}
-              </SmritiScrollArea>
+              </TileFlowScrollArea>
 
               {/* Bento Footer */}
               <div className="px-6 py-4 border-t border-theme-divider/70 bg-theme-surface-2/40 flex items-center justify-between text-xs text-theme-muted">

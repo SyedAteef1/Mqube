@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import re
 import uuid
@@ -52,12 +38,12 @@ class EphemeralTenantHarness:
         }
 
     @classmethod
-    def generate_ephemeral_db_name(cls, prefix: str = "smrititst") -> str:
+    def generate_ephemeral_db_name(cls, prefix: str = "tileflowtst") -> str:
         """
-        Generates a 9-character compliant tenant database name matching the regex ^smriti[a-z0-9]{3}$.
+        Generates a 9-character compliant tenant database name matching the regex ^tileflow[a-z0-9]{3}$.
         """
         suffix = uuid.uuid4().hex[:3].lower()
-        return f"smriti{suffix}"
+        return f"tileflow{suffix}"
 
     @classmethod
     def create_ephemeral_database(cls, db_name: str) -> Dict[str, Any]:
@@ -218,7 +204,7 @@ class EphemeralTenantHarness:
             id=f"usr-admin-{uuid.uuid4().hex[:6]}",
             uuid=str(uuid.uuid4()),
             username=f"admin_{uuid.uuid4().hex[:4]}",
-            email=f"admin_{uuid.uuid4().hex[:4]}@smritibooks.com",
+            email=f"admin_{uuid.uuid4().hex[:4]}@tileflow.in",
             hashed_password="hashed_admin_password",
             role=UserRole.SYSADMIN,
             company_id=company_id,
@@ -230,7 +216,7 @@ class EphemeralTenantHarness:
             id=f"usr-cashier-{uuid.uuid4().hex[:6]}",
             uuid=str(uuid.uuid4()),
             username=f"cashier_{uuid.uuid4().hex[:4]}",
-            email=f"cashier_{uuid.uuid4().hex[:4]}@smritibooks.com",
+            email=f"cashier_{uuid.uuid4().hex[:4]}@tileflow.in",
             hashed_password="hashed_cashier_password",
             role=UserRole.CASHIER,
             company_id=company_id,

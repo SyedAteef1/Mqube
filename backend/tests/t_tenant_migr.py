@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -148,7 +134,7 @@ async def test_ephemeral_forward_only_migration_guard_verification(ephemeral_db)
     """
     Verify migration lifecycle governance.
 
-    As of v1346_pos_cash_denominations, the SMRITI Financial Data Governance
+    As of v1346_pos_cash_denominations, the TILEFLOW Financial Data Governance
     policy classifies migrations that touch financial transaction history as
     FORWARD-ONLY. Attempting to downgrade through v1346 must raise
     NotImplementedError — this is the expected, policy-enforced behaviour.
@@ -237,9 +223,9 @@ async def test_ephemeral_tenant_seeding_and_double_entry_transaction(ephemeral_d
 
         await session.commit()
 
-    # 4. Verify multi-tenant isolation: This JV must NOT exist in smriti001
-    smriti001_maker = get_company_sessionmaker("smriti001")
-    async with smriti001_maker() as s1:
+    # 4. Verify multi-tenant isolation: This JV must NOT exist in tileflow001
+    tileflow001_maker = get_company_sessionmaker("tileflow001")
+    async with tileflow001_maker() as s1:
         stmt = select(JournalVoucher).where(JournalVoucher.id == jv.id)
         res = (await s1.execute(stmt)).scalar_one_or_none()
         assert res is None

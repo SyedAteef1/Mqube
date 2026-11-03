@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 1.0.0
- * * Created    : 2026-07-11
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import { ScanResult } from "../models/interfaces.ts";
 
 function drawProgressBar(percentage: number): string {
@@ -35,10 +10,10 @@ function drawProgressBar(percentage: number): string {
 export function generateDevelopmentStatus(res: ScanResult): string {
   const overallBar = drawProgressBar(res.releaseScores.dhi);
   
-  let md = `# SMRITI Development Status Dashboard\n\n`;
+  let md = `# MQube Development Status Dashboard\n\n`;
   md += `*Generated: ${res.timestamp}*\n`;
   md += `*Branch: ${res.gitInfo.branch} | Last Commit: ${res.gitInfo.lastCommitHash}*\n\n`;
-  md += `## SMRITI Development Health Index (DHI)\n`;
+  md += `## MQube Development Health Index (DHI)\n`;
   md += `\`\`\`\n`;
   md += `DHI:      ${overallBar} (Grade ${res.releaseScores.grade})\n`;
   md += `Release:  ${drawProgressBar(res.releaseScores.releaseScore)}\n`;
@@ -57,11 +32,11 @@ export function generateDevelopmentStatus(res: ScanResult): string {
 
 // 2. EXECUTIVE_SUMMARY.md
 export function generateExecutiveSummary(res: ScanResult): string {
-  return `# Executive Summary: SMRITI Development Intelligence Center\n\n
+  return `# Executive Summary: MQube Development Intelligence Center\n\n
 *Scan Timestamp: ${res.timestamp}*\n
 *Release Target: v${res.gitInfo.releaseVersion}*\n\n
 ## High-Level Engineering Indices\n
-- **SMRITI Development Health Index (DHI):** ${res.releaseScores.dhi}% (Grade ${res.releaseScores.grade})
+- **MQube Development Health Index (DHI):** ${res.releaseScores.dhi}% (Grade ${res.releaseScores.grade})
 - **Quality Score:** ${res.releaseScores.qualityScore}% (Deductions based on TODOs and Code Smells)
 - **Security Score:** ${res.releaseScores.securityScore}%
 - **Release Readiness Score:** ${res.releaseScores.releaseScore}%
@@ -118,7 +93,7 @@ export function generateModuleProgress(res: ScanResult): string {
 
 // 4. FEATURE_MATRIX.md
 export function generateFeatureMatrix(res: ScanResult): string {
-  let md = `# SMRITI Feature & Capabilities Matrix\n\n`;
+  let md = `# MQube Feature & Capabilities Matrix\n\n`;
   md += `*Generated: ${res.timestamp}*\n\n`;
   md += `| Module | UI | Logic | DB | API | Auth | Reports | Print | Barcode | AI |\n`;
   md += `| :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |\n`;

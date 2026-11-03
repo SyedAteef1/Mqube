@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.25.0
- * * Created    : 2026-07-10
- * * Modified   : 2026-08-16
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import {
   Sliders,
@@ -94,11 +69,11 @@ export const LayoutManager: React.FC<LayoutManagerProps> = ({
           {/* Brand Logo & Info */}
           <div className="flex items-center space-x-3">
             <div className="w-7 h-7 rounded-lg bg-theme-primary flex items-center justify-center font-bold text-sm font-display text-white shadow-xs">
-              S
+              M
             </div>
             <div className="flex items-center space-x-2">
               <h1 className="font-display font-bold text-sm tracking-tight text-theme-body">
-                SMRITI Retail OS
+                MQube
               </h1>
               <span className="text-[9px] bg-theme-surface-2 text-theme-muted border border-theme-divider rounded px-1.5 py-0.5 font-mono font-semibold">
                 LANE 01

@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.9.0
-Created      : 2026-07-11
-Modified     : 2026-07-11
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import asyncio
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -369,7 +356,7 @@ async def test_concurrent_duplicate_barcode_returns_400_not_500(db_session, db_e
     failure_response = next(r for r in results if r.status_code == 400)
     detail = failure_response.json().get("detail", "")
     # Accept both the Python-level service message ("already exists") AND the
-    # DB-level SMRITI handler message ("conflict") — both are correct 400s.
+    # DB-level TILEFLOW handler message ("conflict") — both are correct 400s.
     assert ("already exists" in detail or "conflict" in detail.lower()), (
         f"400 detail should be business-language, got: {detail!r}"
     )

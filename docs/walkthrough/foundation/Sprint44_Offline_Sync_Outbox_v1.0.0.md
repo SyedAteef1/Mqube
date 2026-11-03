@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.60.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Sprint 44: P2 Offline-First Foundation & Transactional Outbox Event Architecture
@@ -29,7 +28,7 @@ To certify Blueprint Section 10 across both architectural domains:
 ---
 
 ## 2. Scope
-- Verification and hardening of `POSOfflineSyncQueue` model and schema fixtures across PostgreSQL tenant databases (`smriti001`, `smriti002`).
+- Verification and hardening of `POSOfflineSyncQueue` model and schema fixtures across PostgreSQL tenant databases (`tileflow001`, `tileflow002`).
 - Validation of `OfflineConflictResolutionEngine` 5-tier conflict resolution across sequential and concurrent soak loads.
 - Validation of `OutboxService`, `UnifiedOutboxAnalyticsService`, and `OutboxQueueWorker` asynchronous event dispatch cycles.
 - Execution of 19 automated integration and concurrent soak tests covering oversell, price drift, credit limits, retry storms, governance snapshot binding, transactional atomicity, rollback guarantees, and DLQ handling.
@@ -126,7 +125,7 @@ tests/t_soak_conflict.py::test_sustained_rolling_load_20_cycles_two_terminals PA
 
 ======================= 19 passed, 9 warnings in 31.43s =======================
 ```
-- SMRITI Naming Guard: `0 naming violations`.
+- TILEFLOW Naming Guard: `0 naming violations`.
 
 ---
 

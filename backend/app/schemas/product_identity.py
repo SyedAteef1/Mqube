@@ -1,19 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-07-18
-Modified     : 2026-07-18
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from datetime import datetime
 from decimal import Decimal
 from typing import Optional, Dict, Any, List

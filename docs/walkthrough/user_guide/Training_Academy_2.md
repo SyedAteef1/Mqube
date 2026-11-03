@@ -1,32 +1,31 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Training Academy Phase 1 Foundation Walkthrough — v1.0
+# TILEFLOW Training Academy Phase 1 Foundation Walkthrough — v1.0
 
 ## 1. Purpose
-This walkthrough documents the successful implementation of **Phase 1 Foundation** for the **SMRITI Training Academy** (`src/components/training/TrainingAcademyTab.tsx`), providing an operational, interactive onboarding and certification system embedded inside SMRITI Retail OS with **100% strict isolation from production business data**.
+This walkthrough documents the successful implementation of **Phase 1 Foundation** for the **TILEFLOW Training Academy** (`src/components/training/TrainingAcademyTab.tsx`), providing an operational, interactive onboarding and certification system embedded inside TILEFLOW Retail OS with **100% strict isolation from production business data**.
 
 ## 2. Scope
 - Session-based sandbox store implementation (`src/services/trainingStore.ts`).
 - Academy UI tab component (`src/components/training/TrainingAcademyTab.tsx`) with 7-day curriculum grid, 7-step methodology runner, and Live Training State View.
-- FastAPI backend routes (`backend/app/api/v1/training.py`) and `SmritiTraining` schema models (`backend/app/models/training.py`).
+- FastAPI backend routes (`backend/app/api/v1/training.py`) and `TileFlowTraining` schema models (`backend/app/models/training.py`).
 - Public certificate verification endpoint (`GET /api/v1/training/certificates/{certificate_id}/verify`).
 - Production isolation test suite (`backend/tests/t_prod_isolate.py`).
 
 ## 3. Files Created
 - [`src/services/trainingStore.ts`](file:///F:/SMRITRretailNX/src/services/trainingStore.ts): Session-based isolated training store (`TRAIN-YYYY-XXX`).
 - [`src/components/training/TrainingAcademyTab.tsx`](file:///F:/SMRITRretailNX/src/components/training/TrainingAcademyTab.tsx): Interactive Academy UI container with 7-day roadmap, methodology runner, and Live Training State View.
-- [`backend/app/models/training.py`](file:///F:/SMRITRretailNX/backend/app/models/training.py): SQLAlchemy models for `SmritiTraining` database schema.
+- [`backend/app/models/training.py`](file:///F:/SMRITRretailNX/backend/app/models/training.py): SQLAlchemy models for `TileFlowTraining` database schema.
 - [`backend/app/api/v1/training.py`](file:///F:/SMRITRretailNX/backend/app/api/v1/training.py): FastAPI training routes, session management, and public certificate verification endpoint.
 - [`backend/tests/t_prod_isolate.py`](file:///F:/SMRITRretailNX/backend/tests/t_prod_isolate.py): Automated production isolation test suite.
 - [`docs/walkthrough/user_guide/Training_Academy_2.md`](file:///F:/SMRITRretailNX/docs/walkthrough/user_guide/Training_Academy_2.md): This walkthrough document.
@@ -38,8 +37,8 @@ This walkthrough documents the successful implementation of **Phase 1 Foundation
 - [`docs/walkthrough/README.md`](file:///F:/SMRITRretailNX/docs/walkthrough/README.md): Registered this walkthrough document.
 
 ## 5. Architecture Decisions
-- **Golden Isolation Rule**: No training operation may mutate production data in `Smritibus_<CompanyCode>`.
-- **Dedicated Training Schema (`SmritiTraining`)**: Training progress and certificate records are stored in a dedicated training schema.
+- **Golden Isolation Rule**: No training operation may mutate production data in `TileFlowbus_<CompanyCode>`.
+- **Dedicated Training Schema (`TileFlowTraining`)**: Training progress and certificate records are stored in a dedicated training schema.
 - **Header Isolation Policy**: Training routes reject requests containing `X-Company-Code` header pointing to production databases.
 - **Deterministic Day 5 Verification**: Validates expected business state (`PO=50, GRN=48, Short=2, Stock=+48, Sales=-5, Stock=43`).
 
@@ -47,7 +46,7 @@ This walkthrough documents the successful implementation of **Phase 1 Foundation
 Teaching software through interactive simulation rather than static videos improves knowledge retention. Running simulations inside an isolated session sandbox (`TRAIN-YYYY-XXX`) guarantees zero risk of live business ledger contamination.
 
 ## 7. Implementation Summary
-- Integrated `TrainingAcademyTab.tsx` into SMRITI Retail OS tab layout.
+- Integrated `TrainingAcademyTab.tsx` into TILEFLOW Retail OS tab layout.
 - Added session store supporting isolated simulated Items, POs, GRNs, Stock, and POS Sales.
 - Implemented backend FastAPI training endpoints and public QR verification endpoint.
 - Developed production isolation test suite verifying 4/4 assertions.

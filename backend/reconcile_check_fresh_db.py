@@ -11,7 +11,7 @@ with engine.connect() as conn:
     # Check which databases exist
     result = conn.execute(text("""
         SELECT datname FROM pg_database 
-        WHERE datname IN ('smritisys', 'smriti001', 'smriti_diag_fresh', 'smriti_diag_fresh_test')
+        WHERE datname IN ('tileflowsys', 'tileflow001', 'tileflow_diag_fresh', 'tileflow_diag_fresh_test')
         ORDER BY datname
     """))
     
@@ -22,12 +22,12 @@ with engine.connect() as conn:
     
     print()
     print("Non-existent databases:")
-    for db in ['smritisys', 'smriti001', 'smriti_diag_fresh', 'smriti_diag_fresh_test']:
+    for db in ['tileflowsys', 'tileflow001', 'tileflow_diag_fresh', 'tileflow_diag_fresh_test']:
         if db not in existing:
             print(f"  MISSING {db}")
     
     # If fresh_test exists, check its tables
-    if 'smriti_diag_fresh_test' in existing:
+    if 'tileflow_diag_fresh_test' in existing:
         print()
         print("FRESH TEST DATABASE SCHEMA CHECK:")
         try:
@@ -37,7 +37,7 @@ with engine.connect() as conn:
             cursor = conn2.cursor()
             cursor.execute("""
                 SELECT COUNT(*) FROM information_schema.tables 
-                WHERE table_schema = 'public' AND table_catalog = 'smriti_diag_fresh_test'
+                WHERE table_schema = 'public' AND table_catalog = 'tileflow_diag_fresh_test'
             """)
             count = cursor.fetchone()[0]
             print(f"  Table count: {count}")
@@ -45,7 +45,7 @@ with engine.connect() as conn:
             # Check alembic_version
             try:
                 cursor.execute("""
-                    SELECT version_num FROM smriti_diag_fresh_test.public.alembic_version
+                    SELECT version_num FROM tileflow_diag_fresh_test.public.alembic_version
                     ORDER BY version_num DESC LIMIT 1
                 """)
                 version = cursor.fetchone()

@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-07-12
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import json
 import socket
 from typing import List, Dict, Any, Optional
@@ -301,10 +288,10 @@ async def print_labels(
             except Exception:
                 mrp_str = str(mrp_val)
 
-            brand_val = item.get("brand") or "SMRITI"
-            if not brand_val or brand_val == "SMRITI":
+            brand_val = item.get("brand") or "TILEFLOW"
+            if not brand_val or brand_val == "TILEFLOW":
                 attrs = item.get("attributes") or {}
-                brand_val = attrs.get("brand") or "SMRITI"
+                brand_val = attrs.get("brand") or "TILEFLOW"
 
             raw_stream = prn_template
             
@@ -336,10 +323,10 @@ async def print_labels(
             except Exception:
                 mrp_str = str(mrp_val)
 
-            brand_val = item.get("brand") or "SMRITI"
-            if not brand_val or brand_val == "SMRITI":
+            brand_val = item.get("brand") or "TILEFLOW"
+            if not brand_val or brand_val == "TILEFLOW":
                 attrs = item.get("attributes") or {}
-                brand_val = attrs.get("brand") or "SMRITI"
+                brand_val = attrs.get("brand") or "TILEFLOW"
 
             raw_stream = f"""^XA
 ^SZ2^JMA
@@ -501,7 +488,7 @@ async def print_labels(
                         import win32print
                         hPrinter = win32print.OpenPrinter(usb_target)
                         try:
-                            win32print.StartDocPrinter(hPrinter, 1, ("SMRITI Barcode Label", None, "RAW"))
+                            win32print.StartDocPrinter(hPrinter, 1, ("TILEFLOW Barcode Label", None, "RAW"))
                             try:
                                 win32print.StartPagePrinter(hPrinter)
                                 win32print.WritePrinter(hPrinter, payload.encode('utf-8'))
@@ -746,7 +733,7 @@ async def printer_diagnostics(
     current_user: User = Depends(get_current_user),
 ):
     """
-    Hardware-Independent Diagnostics Endpoint for SMRITI Printing Subsystem.
+    Hardware-Independent Diagnostics Endpoint for TILEFLOW Printing Subsystem.
     Evaluates Zebra ZPL, TSC TSPL, and ESC/POS Engines and checks printer connectivity.
     """
     return await PrinterService.run_diagnostics(db, company_id=tenant_ctx.company_id)
@@ -776,12 +763,12 @@ async def test_print(
 
     if fmt == "TSPL":
         payload = PrinterService.generate_tspl_label(
-            item_code="TEST-SKU", barcode="8901234567890", name="SMRITI TEST LABEL", price=100.0, mrp=150.0
+            item_code="TEST-SKU", barcode="8901234567890", name="TILEFLOW TEST LABEL", price=100.0, mrp=150.0
         )
         is_binary = False
     elif fmt == "ESCPOS":
         payload = PrinterService.generate_escpos_receipt(
-            store_name="SMRITI RETAIL LAB",
+            store_name="TILEFLOW RETAIL LAB",
             invoice_no="TEST-RECEIPT-001",
             items=[{"name": "Test Item 1", "quantity": 1, "price": 100.0, "total_amount": 100.0}],
             subtotal=100.0,
@@ -792,7 +779,7 @@ async def test_print(
         is_binary = True
     else:
         payload = PrinterService.generate_zpl_label(
-            item_code="TEST-SKU", barcode="8901234567890", name="SMRITI TEST LABEL", price=100.0, mrp=150.0
+            item_code="TEST-SKU", barcode="8901234567890", name="TILEFLOW TEST LABEL", price=100.0, mrp=150.0
         )
         is_binary = False
 
@@ -801,7 +788,7 @@ async def test_print(
         payload_data=payload,
         user_name=current_user.username,
         item_code="TEST-SKU",
-        item_name="SMRITI Diagnostics Test Print",
+        item_name="TILEFLOW Diagnostics Test Print",
         barcode="8901234567890",
         quantity=1,
         is_binary=is_binary,

@@ -1,19 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.28.0
- * Created      : 2026-07-13
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Target UI    : Label Printing Section (Fiori Horizon Inspired Light Theme)
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   Printer, Upload, CheckCircle2, AlertTriangle, RefreshCw, 
@@ -415,7 +399,7 @@ export const LabelPrintingSection: React.FC<LabelPrintingSectionProps> = ({
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = `SMRITI_labels_batch_${Date.now()}.prn`;
+        link.download = `TILEFLOW_labels_batch_${Date.now()}.prn`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

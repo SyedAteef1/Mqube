@@ -28,10 +28,10 @@ HKLM:\SOFTWARE\WOW6432Node\Microsoft\Microsoft SQL Server exists: False
  4. CHECKING DOCKER CONTAINER STATUS
 ==================================================
 NAMES          IMAGE                                        STATUS                   PORTS
-smriti-mssql   mcr.microsoft.com/mssql/server:2022-latest   Up 6 minutes (healthy)   0.0.0.0:1433->1433/tcp, [::]:1433->1433/tcp
-smriti-web     dce047f6bace                                 Up 40 hours (healthy)    0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
-smriti-api     89771b2783c9                                 Up 40 hours (healthy)    0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
-smriti-db      postgres:15-alpine                           Up 40 hours (healthy)    0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
+tileflow-mssql   mcr.microsoft.com/mssql/server:2022-latest   Up 6 minutes (healthy)   0.0.0.0:1433->1433/tcp, [::]:1433->1433/tcp
+tileflow-web     dce047f6bace                                 Up 40 hours (healthy)    0.0.0.0:3000->3000/tcp, [::]:3000->3000/tcp
+tileflow-api     89771b2783c9                                 Up 40 hours (healthy)    0.0.0.0:8000->8000/tcp, [::]:8000->8000/tcp
+tileflow-db      postgres:15-alpine                           Up 40 hours (healthy)    0.0.0.0:5432->5432/tcp, [::]:5432->5432/tcp
 
 ==================================================
  5. TESTING DOCKER SQL SERVER LIVE CONNECTIVITY
@@ -47,6 +47,6 @@ master                                                                          
 tempdb                                                                                                                                           160 ONLINE                                                      
 model                                                                                                                                            160 ONLINE                                                      
 msdb                                                                                                                                             160 ONLINE                                                      
-smriti_legacy_2014                                                                                                                               120 ONLINE                                                      
+tileflow_legacy_2014                                                                                                                               120 ONLINE                                                      
 
 (5 rows affected)

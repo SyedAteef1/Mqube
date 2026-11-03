@@ -5,7 +5,7 @@
 | Module | Auth Complete | Authz Complete | Security Status |
 | :--- | :---: | :---: | :--- |
 | Executive Hub | ✅ | ✅ | Secure |
-| SMRITI Gyan Kendra | ✅ | ✅ | Secure |
+| TILEFLOW Gyan Kendra | ✅ | ✅ | Secure |
 | Billing Desk | ✅ | ✅ | Secure |
 | Sales Studio | ✅ | ✅ | Secure |
 | Create Tax Invoice (B2B) | ✅ | ✅ | Secure |
@@ -34,6 +34,6 @@
 | Terms & Conditions | ✅ | ✅ | Secure |
 | Data Exchange Hub | ✅ | ✅ | Secure |
 | Company Setup Wizard | ✅ | ✅ | Secure |
-| About SMRITI | ✅ | ✅ | Secure |
+| About TILEFLOW | ✅ | ✅ | Secure |
 | Dev Intelligence Center | ✅ | ✅ | Secure |
 | Audit Logs | ✅ | ✅ | Secure |

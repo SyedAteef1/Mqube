@@ -1,32 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.105.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Inter-Store Purchase Order (IPO) Engine
- *
- * Manages branch-to-branch stock requisition and fulfillment:
- *   IPO Lifecycle   : DRAFT → SUBMITTED → APPROVED → PICKING → DISPATCHED
- *                     → AUTO_GRN → CLOSED / DISPUTED / CANCELLED
- *
- *   Auto-GRN        : On DISPATCHED confirmation, engine auto-generates a
- *                     GRN at the receiving branch with full line-level
- *                     received qty and variance flags.
- *
- *   Fulfillment     : Fulfilling branch can partially fulfill lines
- *                     (PARTIAL_FULFILLMENT) with unfulfilled qty tracked.
- */
-
 export type IPOStatus =
   | "DRAFT" | "SUBMITTED" | "APPROVED" | "PICKING"
   | "DISPATCHED" | "AUTO_GRN" | "CLOSED" | "DISPUTED" | "CANCELLED";

@@ -1,6 +1,6 @@
 import psycopg2
 
-databases_to_check = ['smritisys', 'smriti001']
+databases_to_check = ['tileflowsys', 'tileflow001']
 
 for db_name in databases_to_check:
     try:

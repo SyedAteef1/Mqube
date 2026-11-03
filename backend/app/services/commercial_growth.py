@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime, timezone
@@ -33,7 +19,7 @@ def _quantize_currency(val: float | Decimal) -> Decimal:
 
 class CommercialGrowthEngine:
     """
-    SMRITI Commercial Growth Engine (CGE).
+    TILEFLOW Commercial Growth Engine (CGE).
     Unified transactional engine for:
     1. Loyalty points accrual, tier graduation & redemption.
     2. Promotions, campaign stacking & coupon evaluation.
@@ -51,7 +37,7 @@ class CommercialGrowthEngine:
         customer_id: str,
         card_number: Optional[str] = None
     ) -> LoyaltyMember:
-        """Finds or enrolls a customer into the SMRITI Loyalty Program."""
+        """Finds or enrolls a customer into the TILEFLOW Loyalty Program."""
         stmt = select(LoyaltyMember).where(
             LoyaltyMember.customer_id == customer_id,
             LoyaltyMember.company_id == company_id,

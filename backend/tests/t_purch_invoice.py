@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import pytest
 import psycopg2
 from decimal import Decimal
@@ -23,7 +10,7 @@ def test_purchase_invoice_and_stock_verification():
     - Supplier Purchase Bill posting updates outstanding balance to Grand Total (Rs 5040.00)
     - Supplier Payment registration reduces outstanding balance
     """
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
 
     sup_code = "SUP-BILL-TEST-001"
@@ -37,7 +24,7 @@ def test_purchase_invoice_and_stock_verification():
     cur.execute("""
         INSERT INTO suppliers (id, uuid, tenant_id, code, name, gst_number, city, state, outstanding, is_active)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 5040.00, true);
-    """, (sup_code, "uuid-sup-bill-test", "smritibus_default", sup_code, "Supplier Bill Test Pvt Ltd", "27AAACB1234F1Z1", "Mumbai", "Maharashtra"))
+    """, (sup_code, "uuid-sup-bill-test", "tileflowbus_default", sup_code, "Supplier Bill Test Pvt Ltd", "27AAACB1234F1Z1", "Mumbai", "Maharashtra"))
     conn.commit()
 
     # 2. Verify Initial Outstanding
@@ -52,7 +39,7 @@ def test_purchase_invoice_and_stock_verification():
             id, uuid, tenant_id, supplier_id, amount, payment_date, payment_mode, reference_no, notes, is_active
         )
         VALUES (%s, %s, %s, %s, 5040.00, CURRENT_DATE, 'BANK_TRANSFER', 'REF-PAY-001', 'Settled GRN Bill', true);
-    """, ("PAY-TEST-001", "uuid-pay-test-001", "smritibus_default", sup_code))
+    """, ("PAY-TEST-001", "uuid-pay-test-001", "tileflowbus_default", sup_code))
     
     cur.execute("UPDATE suppliers SET outstanding = 0.00 WHERE id = %s;", (sup_code,))
     conn.commit()

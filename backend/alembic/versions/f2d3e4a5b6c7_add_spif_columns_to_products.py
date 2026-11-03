@@ -1,15 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.0.0
-Created      : 2026-07-13
-Modified     : 2026-07-13
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 """add spif columns to products
 
 Revision ID: f2d3e4a5b6c7

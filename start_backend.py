@@ -3,7 +3,6 @@ import os
 import sys
 from pathlib import Path
 
-# Add project root to path
 root = Path(__file__).parent
 backend_root = root / 'backend'
 sys.path.insert(0, str(backend_root))

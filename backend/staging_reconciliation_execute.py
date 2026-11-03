@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """
-SMRITI Brownfield Reconciliation — Staging Execution Only
+TILEFLOW Brownfield Reconciliation — Staging Execution Only
 ==========================================================
 
 This script executes the brownfield reconciliation against DISPOSABLE STAGING CLONES only.
-Production databases (smritisys, smriti001) are never modified.
+Production databases (tileflowsys, tileflow001) are never modified.
 
 PHASES:
 1. Create staging clones from production sources
@@ -23,9 +23,9 @@ from pathlib import Path
 from datetime import datetime
 
 # Configuration
-PROD_SOURCES = [('smritisys', 'smritisys_stage'), ('smriti001', 'smriti001_stage')]
-CONTROL_PLANE = 'smritisys_stage'
-COMPANY_001_DB = 'smriti001_stage'
+PROD_SOURCES = [('tileflowsys', 'tileflowsys_stage'), ('tileflow001', 'tileflow001_stage')]
+CONTROL_PLANE = 'tileflowsys_stage'
+COMPANY_001_DB = 'tileflow001_stage'
 POSTGRES_CREDS = {
     'user': 'postgres',
     'password': 'postgres',
@@ -276,7 +276,7 @@ class StagingReconciliation:
         report_file = self.backend_dir / 'STAGING_RECONCILIATION_REPORT.txt'
         with open(report_file, 'w', encoding='utf-8') as f:
             f.write('=' * 80 + '\n')
-            f.write('SMRITI BROWNFIELD RECONCILIATION — STAGING EXECUTION REPORT\n')
+            f.write('TILEFLOW BROWNFIELD RECONCILIATION — STAGING EXECUTION REPORT\n')
             f.write(f'Generated: {self.report["timestamp"]}\n')
             f.write('=' * 80 + '\n\n')
 

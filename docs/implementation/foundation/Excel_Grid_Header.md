@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Excel Grid Header Paste Mapping
@@ -65,7 +64,7 @@ Revert changes to `ExcelGridEntrySec.tsx` via Git.
 Execute `npm run lint` and `npm run test`.
 
 ## 15. Documentation Impact
-Update SMRITI Developer Guide and user instructions.
+Update TILEFLOW Developer Guide and user instructions.
 
 ## 16. Deployment Plan
 Standard compilation release pipeline.

@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 4.7.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Statutory A4 Tax Invoice Print & PDF Engine Integration Walkthrough — v4.7.0
+# TILEFLOW Statutory A4 Tax Invoice Print & PDF Engine Integration Walkthrough — v4.7.0
 
 ## 1. Purpose
-This walkthrough documents the review, integration, and verification of the **SMRITI OS Statutory A4 Tax Invoice Print & PDF Engine** (`TaxInvoiceA4.tsx` & `TaxInvoicePrintPag.tsx`) imported from client template repository `F:\Smriti-Clients Data\Tattly Threads\exports\exported_pdf_invoices\SMRITI_STATUTORY_A4_PRINT_ENGINE_TEMPLATES` into core SMRITI Retail OS product codebase.
+This walkthrough documents the review, integration, and verification of the **TILEFLOW OS Statutory A4 Tax Invoice Print & PDF Engine** (`TaxInvoiceA4.tsx` & `TaxInvoicePrintPag.tsx`) imported from client template repository `F:\TileFlow-Clients Data\Tattly Threads\exports\exported_pdf_invoices\TILEFLOW_STATUTORY_A4_PRINT_ENGINE_TEMPLATES` into core TILEFLOW Retail OS product codebase.
 
 ## 2. Scope
 - Importing React A4 Tax Invoice template [`src/components/templates/TaxInvoiceA4.tsx`](file:///F:/SMRITRretailNX/src/components/templates/TaxInvoiceA4.tsx).
@@ -43,10 +42,10 @@ This walkthrough documents the review, integration, and verification of the **SM
 - **Playwright & Browser Print Compatibility**: Uses CSS `@media print` A4 dimensions with Playwright PDF bottom margin template support (`Page X of Y`).
 
 ## 6. Design Rationale
-Providing a statutory A4 tax invoice print page directly in SMRITI Retail OS guarantees compliance with Indian GSTN requirements and permits instant, pixel-perfect A4 invoice printing and PDF exports.
+Providing a statutory A4 tax invoice print page directly in TILEFLOW Retail OS guarantees compliance with Indian GSTN requirements and permits instant, pixel-perfect A4 invoice printing and PDF exports.
 
 ## 7. Implementation Summary
-- Reviewed all files from `SMRITI_STATUTORY_A4_PRINT_ENGINE_TEMPLATES`.
+- Reviewed all files from `TILEFLOW_STATUTORY_A4_PRINT_ENGINE_TEMPLATES`.
 - Integrated frontend React components, backend services, and unit test suites.
 - Executed Pytest calculation suite (`2/2 PASSED`).
 - Executed Vite production bundle build (`20.37s`).

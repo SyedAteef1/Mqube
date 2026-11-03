@@ -1,25 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah -- Founder & Chairperson
-* Jawahar Ramkripal Mallah   -- Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.28.0
-* Created    : 2026-08-24
-* Modified   : 2026-08-24
-* Copyright  : (c) AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-
-Sprint 8d -- Inventory & Stock Report parity.
-Shoper9 MnuNo 430/450 Stock Ledger Reports.
-EXE refs: SR202500, SR203000, SR241700, SR233600, SR202800, SR212600.
-"""
-
 from datetime import date, datetime, timezone, timedelta
 from decimal import Decimal
 from typing import Dict, List, Optional

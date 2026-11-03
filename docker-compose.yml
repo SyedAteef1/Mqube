@@ -1,50 +1,40 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
-# Version      : 3.15.0
-# Created      : 2026-07-11
-# Modified     : 2026-07-12
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
-# Classification: Internal
 
 services:
   db:
     image: postgres:15-alpine
-    container_name: smriti-db
+    container_name: tileflow-db
     restart: unless-stopped
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
-      POSTGRES_DB: ${POSTGRES_DB:-smritisys}
+      POSTGRES_DB: ${POSTGRES_DB:-tileflowsys}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - smriti_db_volume:/var/lib/postgresql/data
+      - tileflow_db_volume:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d smritisys"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d tileflowsys"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 10s
 
-  smriti-web:
+  tileflow-web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: smriti-web
+    container_name: tileflow-web
     restart: unless-stopped
     ports:
       - "${PORT:-3000}:3000"
     environment:
-      DATABASE_URL: "postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-smritisys}"
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-tileflowsys}"
       DATABASE_PROVIDER: "postgres"
       SYNC_PROVIDER: "postgres"
       CACHE_PROVIDER: "memory"
       STORAGE_PROVIDER: "filesystem"
       GEMINI_API_KEY: "${GEMINI_API_KEY}"
-      PYTHON_CORE_HOST: "smriti-api:8000"
+      PYTHON_CORE_HOST: "tileflow-api:8000"
     volumes:
       - ./.git:/usr/src/app/.git
       - ./dist:/usr/src/app/dist
@@ -52,7 +42,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-      smriti-api:
+      tileflow-api:
         condition: service_healthy
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:3000/ || exit 1"]
@@ -61,16 +51,16 @@ services:
       retries: 3
       start_period: 20s
 
-  smriti-api:
+  tileflow-api:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: smriti-api
+    container_name: tileflow-api
     restart: unless-stopped
     ports:
       - "${BACKEND_API_PORT:-8000}:8000"
     environment:
-      DATABASE_URL: "postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-smritisys}"
+      DATABASE_URL: "postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-postgres}@db:5432/${POSTGRES_DB:-tileflowsys}"
       GEMINI_API_KEY: "${GEMINI_API_KEY}"
       JWT_SECRET_KEY: "${JWT_SECRET_KEY:?Set JWT_SECRET_KEY in .env — see .env.example}"
       INTERNAL_SERVICE_KEY: "${INTERNAL_SERVICE_KEY:?Set INTERNAL_SERVICE_KEY in .env — see .env.example}"
@@ -93,7 +83,7 @@ services:
 
   mssql:
     image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: smriti-mssql
+    container_name: tileflow-mssql
     restart: unless-stopped
     environment:
       ACCEPT_EULA: "Y"
@@ -102,7 +92,7 @@ services:
     ports:
       - "${MSSQL_PORT:-1433}:1433"
     volumes:
-      - smriti_mssql_volume:/var/opt/mssql
+      - tileflow_mssql_volume:/var/opt/mssql
     healthcheck:
       test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD:-netmanthan@123}\" -C -Q \"SELECT 1\" || /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P \"$${MSSQL_SA_PASSWORD:-netmanthan@123}\" -Q \"SELECT 1\" || exit 1"]
       interval: 15s
@@ -111,8 +101,8 @@ services:
       start_period: 20s
 
 volumes:
-  smriti_db_volume:
-    name: smriti_db_volume
-  smriti_mssql_volume:
-    name: smriti_mssql_volume
+  tileflow_db_volume:
+    name: tileflow_db_volume
+  tileflow_mssql_volume:
+    name: tileflow_mssql_volume
 

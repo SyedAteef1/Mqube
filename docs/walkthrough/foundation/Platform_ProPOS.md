@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Vertical Slice 15 — Frontend ProPOS Cashier Physical Denominations, Cash Movements & Shift Closeout UI
 
 ## 1. Purpose
-This walkthrough documents the frontend delivery for Vertical Slice 15 in SMRITI Retail OS. It provides an intuitive, high-speed cashier user interface for Indian Currency physical denomination breakdown counting, mid-shift cash drops (safe transfers), till petty expense disbursals, and day-end shift closeout reconciliation with automated dual-entry General Ledger balancing.
+This walkthrough documents the frontend delivery for Vertical Slice 15 in TILEFLOW Retail OS. It provides an intuitive, high-speed cashier user interface for Indian Currency physical denomination breakdown counting, mid-shift cash drops (safe transfers), till petty expense disbursals, and day-end shift closeout reconciliation with automated dual-entry General Ledger balancing.
 
 ## 2. Scope
 - Physical cash denomination counter component with live row multiplier calculations and live variance tracking against system expected cash.
@@ -38,12 +37,12 @@ This walkthrough documents the frontend delivery for Vertical Slice 15 in SMRITI
 6. `backend/app/api/v1/pos.py`: Added contract route alias `/pos/shifts/active/{register_id}`.
 
 ## 5. Architecture Decisions
-- **Real-Time Client-Side Denomination Computation**: Cash denomination counts are computed dynamically in `SmritiProPosDenominationInput` to provide sub-millisecond feedback while cashiers physically count cash bundles.
+- **Real-Time Client-Side Denomination Computation**: Cash denomination counts are computed dynamically in `TileFlowProPosDenominationInput` to provide sub-millisecond feedback while cashiers physically count cash bundles.
 - **Contract URL Alignment**: API requests use canonical `/api/v1/pos/shifts/*` endpoints via `src/lib/apiFetchV1.ts`.
 - **Stateless Balancing GL Voucher Confirmation**: When a cash drop, till expense, or shift variance is finalized, the returned General Ledger Journal Voucher ID is surfaced to the cashier.
 
 ## 6. Design Rationale
-- **Color-Coded Currency Notes**: Each denomination row in `SmritiProPosDenominationInput` features recognizable Indian currency accent colors (e.g., magenta for ₹2000, olive for ₹500, orange for ₹200, purple for ₹100, cyan for ₹50, green for ₹20, brown for ₹10) allowing swift visual verification during rush hours.
+- **Color-Coded Currency Notes**: Each denomination row in `TileFlowProPosDenominationInput` features recognizable Indian currency accent colors (e.g., magenta for ₹2000, olive for ₹500, orange for ₹200, purple for ₹100, cyan for ₹50, green for ₹20, brown for ₹10) allowing swift visual verification during rush hours.
 - **Immediate Variance Detection**: Variance badges dynamically switch from green (`Balanced`) to amber (`Overage`) or red (`Shortage`), prompting cashier explanations.
 
 ## 7. Implementation Summary

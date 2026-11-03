@@ -1,30 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.119.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Customer Credit Limit & Outstanding Engine
- *
- * Manages B2B customer credit lifecycle:
- *   Limit Setup  : `setLimit()` — credit limit, payment terms, grace days
- *   Invoice Post : `postInvoice()` — adds to outstanding, checks utilisation
- *   Payment Post : `postPayment()` — reduces outstanding; allocates to oldest first
- *   Credit Hold  : `holdCredit()` / `releaseCredit()` — freeze further credit sales
- *   Aging Report : `agingReport()` — 5-bucket aging by customer
- *   Utilisation  : `utilisationPct = outstandingAmt / creditLimit × 100`
- *   Breach Alert : `utilisationPct > 100` → limit breached
- */
-
 export type CreditAccountStatus = "ACTIVE" | "ON_HOLD" | "SUSPENDED" | "CLOSED";
 export type InvoiceStatus       = "OPEN" | "PARTIALLY_PAID" | "PAID" | "OVERDUE" | "WRITTEN_OFF";
 export type AgingBucket         = "CURRENT" | "OVERDUE_30" | "OVERDUE_60" | "OVERDUE_90" | "CRITICAL";

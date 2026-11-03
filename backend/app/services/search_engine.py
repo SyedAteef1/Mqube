@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import time
 from decimal import Decimal
 from typing import Dict, Any, List, Optional, Set
@@ -38,7 +24,7 @@ from ..schemas.search import (
 
 class UniversalSearchEngine:
     """
-    Authoritative SMRITI Universal Search Engine (Section 7).
+    Authoritative TILEFLOW Universal Search Engine (Section 7).
     Executes permission-aware, multi-domain omni-search across Parties, Items, Barcodes,
     Documents, Warehouses, and Transactions with relevance ranking and fast POS scanning.
     """

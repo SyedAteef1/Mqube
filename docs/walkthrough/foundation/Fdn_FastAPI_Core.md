@@ -1,25 +1,24 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.6.0
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI FastAPI Core Backend Framework — v3.6.0
+# Walkthrough: TILEFLOW FastAPI Core Backend Framework — v3.6.0
 
-This walkthrough details the design, implementation, and verification of the top-level SMRITI core backend in FastAPI.
+This walkthrough details the design, implementation, and verification of the top-level TILEFLOW core backend in FastAPI.
 
 ---
 
 ## 1. Purpose
-Establish the Python FastAPI core backend for SMRITI Retail OS separate from frontend Node resources, configuring SQLAlchemy 2.x connection pooling, Alembic migrations, and security middleware.
+Establish the Python FastAPI core backend for TILEFLOW Retail OS separate from frontend Node resources, configuring SQLAlchemy 2.x connection pooling, Alembic migrations, and security middleware.
 
 ---
 
@@ -69,7 +68,7 @@ Establish the Python FastAPI core backend for SMRITI Retail OS separate from fro
 ---
 
 ## 6. Design Rationale
-Decoupling the FastAPI backend from the Node server enables SMRITI to migrate modules incrementally, utilizing Python's mature data science and machine learning libraries while maintaining UI compatibility.
+Decoupling the FastAPI backend from the Node server enables TILEFLOW to migrate modules incrementally, utilizing Python's mature data science and machine learning libraries while maintaining UI compatibility.
 
 ---
 
@@ -107,4 +106,4 @@ None.
 ---
 
 ## 13. Related RFCs
-- SMRITI FastAPI Core Plan (`FastAPI_Core_Plan.md`).
+- TILEFLOW FastAPI Core Plan (`FastAPI_Core_Plan.md`).

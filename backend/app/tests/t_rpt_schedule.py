@@ -1,16 +1,4 @@
 """
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.21.0
- * Created      : 2026-07-16
- * Modified     : 2026-07-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
 """
 
 import uuid
@@ -81,7 +69,7 @@ VALID_PAYLOAD = {
     "frequency":        "DAILY",
     "execution_time":   "08:00",
     "delivery_channel": "EMAIL",
-    "delivery_target":  "test@smritibooks.com",
+    "delivery_target":  "test@tileflow.in",
     "delivery_format":  "PDF",
 }
 
@@ -111,7 +99,7 @@ async def test_create_schedule_returns_201(setup_tenant_and_user):
     data = res.json()
     assert data["report_id"]        == "RPT-SAL-001"
     assert data["delivery_channel"] == "EMAIL"
-    assert data["delivery_target"]  == "test@smritibooks.com"
+    assert data["delivery_target"]  == "test@tileflow.in"
     assert data["frequency"]        == "DAILY"
     assert data["cron_expression"]  == "0 8 * * *"   # derived from DAILY + 08:00
     assert data["id"].startswith("SCH-")

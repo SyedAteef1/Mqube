@@ -1,32 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-FORWARD-ONLY MIGRATION -- Integration Hub Connector Registry (Blueprint ss45)
-
-Creates smritisys-resident metadata tables that close the named gap identified
-in the Blueprint v1.0 verification report (2026-08-24):
-  - integration_registry     -- named integrations catalogue
-  - connector_registry       -- connector type definitions
-  - provider_registry        -- external provider catalogue
-  - integration_credentials_reference  -- credentials pointer (no secrets stored)
-  - integration_policies     -- per-integration policy definitions
-  - integration_versions     -- version lineage for integrations
-
-Blueprint Rule 08: Integration Hub definitions belong in smritisys.
-Blueprint Rule 09: No credentials or executable business logic in smritisys.
-Actual secrets are referenced by ID only; stored in environment/secret manager.
-"""
-
 from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
@@ -182,5 +153,5 @@ def upgrade():
 def downgrade():
     raise NotImplementedError(
         "v1369_integration_hub_registry is a FORWARD-ONLY migration. "
-        "Downgrade is blocked by SMRITI Data Governance Policy."
+        "Downgrade is blocked by TILEFLOW Data Governance Policy."
     )

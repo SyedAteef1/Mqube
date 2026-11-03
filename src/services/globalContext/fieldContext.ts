@@ -1,20 +1,8 @@
 /**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
-/**
  * FieldContextRegistry
  * ====================
  * Centralised, authoritative configuration for every searchable entity context
- * in SMRITI Retail OS.
+ * in MQube.
  *
  * Adding a NEW context (e.g. Warehouse, Salesperson) requires ONLY adding one
  * entry here — no new modal, no new search logic, no new grid component.
@@ -614,7 +602,7 @@ const menuContext: FieldContextDescriptor = {
   entityType: "menu",
   label: "Menus & Workspaces",
   icon: "apps",
-  description: "Search authorized SMRITI workspaces and operational menus.",
+  description: "Search authorized MQube workspaces and operational menus.",
   searchPlaceholder: "Search menus - billing, reports, barcode, stock...",
   insertValueKeys: ["title", "id"],
   columns: [

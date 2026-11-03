@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 export type BusinessContext =
   | 'launchpad'
   | 'sales'
@@ -51,7 +38,7 @@ export interface ResolvedNavigation {
 
 const LAUNCHPAD_ITEM: ContextualMenuItem = {
   id: 'launchpad',
-  title: 'SMRITI Launchpad',
+  title: 'MQube Launchpad',
   icon: 'grid_view',
 };
 
@@ -213,7 +200,7 @@ export function resolveNavigation(query: NavigationQuery): ResolvedNavigation {
           { id: 'staff-management', title: 'Staff & Role Governance', icon: 'group' },
           { id: 'dev-tracker', title: 'Dev Intelligence Center', icon: 'bug_report' },
           { id: 'wiki', title: 'System Documentation Wiki', icon: 'import_contacts' },
-          { id: 'about-smriti', title: 'About SMRITI OS', icon: 'info' },
+          { id: 'about-tileflow', title: 'About MQube OS', icon: 'info' },
         ],
         nextBestAction: {
           id: 'dev-tracker',

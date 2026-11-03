@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.88.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 export type LoyaltyTier = "BRONZE" | "SILVER" | "GOLD" | "PLATINUM" | "DIAMOND";
 export type PointsEventType = "EARN_PURCHASE" | "EARN_BONUS" | "REDEEM" | "EXPIRE" | "TIER_UPGRADE_BONUS";
 

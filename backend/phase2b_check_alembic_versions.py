@@ -22,13 +22,13 @@ def check_db_version(db_name):
 print("[PHASE 2B] Checking alembic_version in all databases...")
 print("="*70)
 
-databases = ['smriti_diag_fresh', 'smriti001', 'smritisys']
+databases = ['tileflow_diag_fresh', 'tileflow001', 'tileflowsys']
 for db_name in databases:
     version = check_db_version(db_name)
     print(f"{db_name:25s}: {version}")
 
 print("="*70)
 print("\nINTERPRETATION:")
-print("  - If smriti001 is at an OLD version, it means migrations were NOT applied")
-print("  - If smriti001 is at v1382_menu_registry, schema divergence is REAL problem")
-print("  - If smritisys is at different version, control-plane may be out of sync")
+print("  - If tileflow001 is at an OLD version, it means migrations were NOT applied")
+print("  - If tileflow001 is at v1382_menu_registry, schema divergence is REAL problem")
+print("  - If tileflowsys is at different version, control-plane may be out of sync")

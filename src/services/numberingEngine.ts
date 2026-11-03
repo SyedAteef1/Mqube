@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 export type NumberingMode = "Auto" | "Manual" | "Hybrid";
 export type ResetRule = "Never" | "Daily" | "Monthly" | "Quarterly" | "Financial Year" | "Calendar Year" | "Branch";
 
@@ -90,7 +65,7 @@ export class NumberingEngine {
       effectiveTo: "2027-03-31",
       tallyVoucherType: "Sales",
       dateLockEnabled: true,
-      companyCode: "SMRITI_IND"
+      companyCode: "TILEFLOW_IND"
     },
     {
       id: "SER-002",
@@ -109,7 +84,7 @@ export class NumberingEngine {
       effectiveFrom: "2026-01-01",
       effectiveTo: "2099-12-31",
       tallyVoucherType: "Purchase Order",
-      companyCode: "SMRITI_MUM"
+      companyCode: "TILEFLOW_MUM"
     }
   ];
 

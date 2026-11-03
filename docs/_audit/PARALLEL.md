@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : ? SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    : ? tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: PARALLEL DEVELOPMENT & CERTIFICATION STATUS REPORT
 -->
 
-# SMRITI RETAIL OS ? PARALLEL DEVELOPMENT + ARCHITECTURE CERTIFICATION STATUS
+# TILEFLOW RETAIL OS ? PARALLEL DEVELOPMENT + ARCHITECTURE CERTIFICATION STATUS
 
 **Master Execution Policy:** Continuous Product Development in Parallel with Certification Remediation  
 **Governance Directive Reference:** [`docs/AI_AGENT.md`](file:///F:/SMRITRretailNX/docs/AI_AGENT.md)  
@@ -38,14 +37,14 @@
 ================================================================================
 TRACK 2 ARCHITECTURE CERTIFICATION STATUS
 ================================================================================
-- Schema Reconciliation    : VERIFIED (283 Base Tables + 1 View in smritisys; 99 in smriti001/002)
+- Schema Reconciliation    : VERIFIED (283 Base Tables + 1 View in tileflowsys; 99 in tileflow001/002)
 - Database Routing         : VERIFIED (14 Connection Sites; 0 Unauthorized Engine Bypasses)
-- Runtime Write Ownership  : VERIFIED (Live Test: 7 Tables Mutated in smriti001 & smriti002; 0 in smritisys)
+- Runtime Write Ownership  : VERIFIED (Live Test: 7 Tables Mutated in tileflow001 & tileflow002; 0 in tileflowsys)
 - Runtime Read Isolation   : VERIFIED (Company 001 sees only C001 data; Company 002 sees only C002 data)
 - 179 Non-CompanyDB Tables: PRESERVED RESIDUE (142 Scaffolding; 16 Legacy; 6 Migration; 15 Residue; 0 Writes)
-- 79 smritisys Residue     : STATICALLY RECONCILED (Schema Residue Only; 0 Operational Writes)
-- PSV Shadow Layer         : ARCHITECTURE VERIFIED (100% Company-Local; SmritiPSV Dropped)
-- eCommerce Core Channel   : ARCHITECTURE VERIFIED (Company-Local Orders/Reservations; SmritiEcom Dropped)
+- 79 tileflowsys Residue     : STATICALLY RECONCILED (Schema Residue Only; 0 Operational Writes)
+- PSV Shadow Layer         : ARCHITECTURE VERIFIED (100% Company-Local; TileFlowPSV Dropped)
+- eCommerce Core Channel   : ARCHITECTURE VERIFIED (Company-Local Orders/Reservations; TileFlowEcom Dropped)
 - Barcode Software         : VERIFIED (Software Pipeline Verified; Physical Printer Pending)
 - Business Process Matrix  : VERIFIED (14/16 Training Steps Implemented & Runtime Verified)
 - Documentation Sync       : RECONCILED & UPDATED (Zero Contradictions; 4 Canonical Statuses)
@@ -62,7 +61,6 @@ TRACK 2 ARCHITECTURE CERTIFICATION STATUS
 
 ---
 
-## 4. Open Gaps & Priority Classification
 
 ### Priority P0 (Mandatory Routing & Isolation Gates) ? **ALL PASSED**
 - [x] Company 001 + Company 002 positive write routing proof (**PASS**)
@@ -71,7 +69,7 @@ TRACK 2 ARCHITECTURE CERTIFICATION STATUS
 
 ### Priority P1 (Architecture Clarification & Scaffolding Classification) ? **ALL COMPLETED**
 - [x] 179 legacy table runtime retirement classification report ([`LEGACY_TABLE.md`](file:///F:/SMRITRretailNX/docs/_audit/LEGACY_TABLE.md)) (**DONE**)
-- [x] 79 operational residue tables in `smritisys` audited (**DONE**)
+- [x] 79 operational residue tables in `tileflowsys` audited (**DONE**)
 - [x] PSV company-local shadow projection certified (**DONE**)
 - [x] eCommerce company-local core channel certified (**DONE**)
 - [x] Barcode software pipeline certified; physical printer hardware marked pending (**DONE**)

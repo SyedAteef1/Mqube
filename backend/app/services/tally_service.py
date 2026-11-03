@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.23.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from decimal import Decimal
 from typing import Dict, Any, Optional
 import xml.etree.ElementTree as ET
@@ -27,7 +13,7 @@ from ..models.tenant import Company
 
 class TallyIntegrationService:
     """
-    SMRITI TallyPrime Integration & Schema Export Hub (Section 12).
+    TILEFLOW TallyPrime Integration & Schema Export Hub (Section 12).
     Generates standard, validated Tally XML DTD envelopes for financial vouchers and invoices.
     """
 
@@ -185,7 +171,7 @@ class TallyIntegrationService:
         ET.SubElement(voucher, "DATE").text = date_str
         ET.SubElement(voucher, "VOUCHERTYPENAME").text = "Journal"
         ET.SubElement(voucher, "VOUCHERNUMBER").text = jv.voucher_no
-        ET.SubElement(voucher, "NARRATION").text = jv.narration or "SMRITI GL Journal Posting"
+        ET.SubElement(voucher, "NARRATION").text = jv.narration or "TILEFLOW GL Journal Posting"
 
         for gle in entries:
             acc_name = gle.account_id

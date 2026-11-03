@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.9.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 from datetime import date
 from decimal import Decimal
@@ -140,7 +126,7 @@ CANONICAL_CUSTOMERS = [
         "customer_group_id": "CG-Retail",
         "name": "Walk-In / Cash Customer",
         "mobile": "9999999999",
-        "email": "cash@smritiretail.com",
+        "email": "cash@tileflowretail.com",
         "outstanding": Decimal("0.00"),
         "status": "Active",
         "created_date": date(2026, 7, 10),
@@ -177,7 +163,7 @@ CANONICAL_CUSTOMERS = [
         "customer_group_id": "CG-Branches",
         "name": "Branch - South Delhi",
         "mobile": "9911223344",
-        "email": "southdelhi@smriti.com",
+        "email": "southdelhi@tileflow.com",
         "outstanding": Decimal("0.00"),
         "status": "Active",
         "created_date": date(2026, 7, 10),
@@ -189,7 +175,7 @@ CANONICAL_CUSTOMERS = [
         "customer_group_id": "CG-Franchises",
         "name": "Franchise - Mumbai Central",
         "mobile": "9922334455",
-        "email": "mumbaifranchise@smriti.com",
+        "email": "mumbaifranchise@tileflow.com",
         "outstanding": Decimal("120000.00"),
         "status": "Active",
         "created_date": date(2026, 7, 10),

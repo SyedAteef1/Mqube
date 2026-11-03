@@ -1,15 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import asyncio
 import uuid
 import json
@@ -45,12 +33,12 @@ def get_db_table_counts(db_name):
 
 async def run_training_readiness_e2e():
     print("================================================================================")
-    print("SMRITI USER TRAINING READINESS — LIVE END-TO-END EXECUTION SUITE")
+    print("TILEFLOW USER TRAINING READINESS — LIVE END-TO-END EXECUTION SUITE")
     print("================================================================================")
     
-    init_sys = get_db_table_counts("smritisys")
-    init_001 = get_db_table_counts("smriti001")
-    init_002 = get_db_table_counts("smriti002")
+    init_sys = get_db_table_counts("tileflowsys")
+    init_001 = get_db_table_counts("tileflow001")
+    init_002 = get_db_table_counts("tileflow002")
     
     tag = f"TRN-{uuid.uuid4().hex[:6]}"
     now = datetime.now(timezone.utc)
@@ -287,7 +275,7 @@ async def run_training_readiness_e2e():
     # PHASE 10: PSV MULTI-COMPANY VERIFICATION
     # ──────────────────────────────────────────────────────────────────────────
     print("\n--- [PHASE 10] PSV SHADOW LAYER COMPANY AUDIT ---")
-    conn_sys = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn_sys = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur_sys = conn_sys.cursor()
     cur_sys.execute("SELECT company_id, database_name FROM company_database_registries WHERE status = 'READY';")
     ready_comps = cur_sys.fetchall()
@@ -338,18 +326,18 @@ async def run_training_readiness_e2e():
         await s.execute(text("DELETE FROM products WHERE id = :id;"), {"id": prod_id})
         await s.commit()
 
-    post_sys = get_db_table_counts("smritisys")
-    post_001 = get_db_table_counts("smriti001")
-    post_002 = get_db_table_counts("smriti002")
+    post_sys = get_db_table_counts("tileflowsys")
+    post_001 = get_db_table_counts("tileflow001")
+    post_002 = get_db_table_counts("tileflow002")
     
     diff_s = {t: post_sys[t] - init_sys[t] for t in init_sys if post_sys[t] != init_sys[t]}
     diff_1 = {t: post_001[t] - init_001[t] for t in init_001 if post_001[t] != init_001[t]}
     diff_2 = {t: post_002[t] - init_002[t] for t in init_002 if post_002[t] != init_002[t]}
 
     print("\n--- FINAL PHYSICAL ROW AUDIT POST TRAINING RUN ---")
-    print(f"smritisys diff: {diff_s}")
-    print(f"smriti001 diff: {diff_1}")
-    print(f"smriti002 diff: {diff_2}")
+    print(f"tileflowsys diff: {diff_s}")
+    print(f"tileflow001 diff: {diff_1}")
+    print(f"tileflow002 diff: {diff_2}")
     assert len(diff_s) == 0 and len(diff_1) == 0 and len(diff_2) == 0, "FAIL: Residual cleanup variance!"
     print("\n================================================================================")
     print("[PASS] USER TRAINING READINESS E2E EXECUTION COMPLETED WITH 100% PASS & CLEAN TEARDOWN")

@@ -2,18 +2,18 @@
 title: "Sprint 27: P1.4 Formula, Rule, Policy, and Workflow Engines (Governed Logic)"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
 # Walkthrough: Sprint 27 — P1.4 Formula, Rule, Policy, and Workflow Engines (Governed Logic)
 
 ## 1. Purpose
-This sprint fulfills **Blueprint Section 5: P1 Governed Logic and Reproducibility (P1.4 Formula, Rule, Policy, and Workflow Engines)**. It consolidates versioned registries in `smritisys` and deterministic execution engines for:
+This sprint fulfills **Blueprint Section 5: P1 Governed Logic and Reproducibility (P1.4 Formula, Rule, Policy, and Workflow Engines)**. It consolidates versioned registries in `tileflowsys` and deterministic execution engines for:
 - Mathematical & financial formulas (AST-based, pure Decimal arithmetic, zero arbitrary code execution).
 - Declarative business rules (condition trees + action emitters for pricing, discounts, loyalty, and credit limits).
 - Statutory, tax, and retail policies (GST intrastate/interstate place of supply, cash till limits, rounding).
@@ -29,7 +29,7 @@ This sprint fulfills **Blueprint Section 5: P1 Governed Logic and Reproducibilit
 
 ## 3. Files Created
 - [`backend/app/schemas/gov_logic.py`](file:///F:/SMRITRretailNX/backend/app/schemas/gov_logic.py) — Pydantic schemas for formulas, rules, policies, workflows, and validation.
-- [`backend/app/db/seed_gov_logic.py`](file:///F:/SMRITRretailNX/backend/app/db/seed_gov_logic.py) — Authoritative seeder for canonical formulas, rules, policies, and workflows into `smritisys`.
+- [`backend/app/db/seed_gov_logic.py`](file:///F:/SMRITRretailNX/backend/app/db/seed_gov_logic.py) — Authoritative seeder for canonical formulas, rules, policies, and workflows into `tileflowsys`.
 - [`backend/tests/t_gov_logic.py`](file:///F:/SMRITRretailNX/backend/tests/t_gov_logic.py) — 9-part integration test suite.
 - [`docs/walkthrough/foundation/Sprint27_Governed_Logic_Engines_v1.0.0.md`](file:///F:/SMRITRretailNX/docs/walkthrough/foundation/Sprint27_Governed_Logic_Engines_v1.0.0.md) — This walkthrough.
 
@@ -41,7 +41,7 @@ This sprint fulfills **Blueprint Section 5: P1 Governed Logic and Reproducibilit
 - [`CHANGELOG.md`](file:///F:/SMRITRretailNX/CHANGELOG.md) — Registered `v3.43.0`.
 
 ## 5. Architecture Decisions
-- **Zero Arbitrary Code Execution**: No `eval()`, `exec()`, or runtime code compilation is allowed in `smritisys` or runtime evaluation. All calculations execute through structured JSON ASTs.
+- **Zero Arbitrary Code Execution**: No `eval()`, `exec()`, or runtime code compilation is allowed in `tileflowsys` or runtime evaluation. All calculations execute through structured JSON ASTs.
 - **Deterministic Decimal Arithmetic**: All monetary and percentage calculations use Python `Decimal` with explicit rounding modes (`ROUND_HALF_UP`) to prevent floating-point drift.
 - **Fail-Closed Workflow Transitions**: Undefined transitions or transitions initiated by users lacking required roles fail closed with explicit validation errors.
 

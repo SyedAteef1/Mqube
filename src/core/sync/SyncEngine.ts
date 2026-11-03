@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.0.0
- * * Created    : 2026-07-11
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import { ISyncRepository } from "../interfaces/db.js";
 import { SyncQueueItem } from "../domain/entities.js";
 
@@ -42,10 +17,10 @@ export class SyncEngine {
    */
   start(intervalMs = 30000) {
     if (this.syncInterval) return;
-    console.log(`[SMRITI SyncEngine] Starting background sync worker (Interval: ${intervalMs}ms)...`);
+    console.log(`[MQube SyncEngine] Starting background sync worker (Interval: ${intervalMs}ms)...`);
     this.syncInterval = setInterval(() => this.processQueue(), intervalMs);
     // Trigger initial run asynchronously
-    this.processQueue().catch(err => console.error("[SMRITI SyncEngine] Error in sync run:", err));
+    this.processQueue().catch(err => console.error("[MQube SyncEngine] Error in sync run:", err));
   }
 
   /**
@@ -55,7 +30,7 @@ export class SyncEngine {
     if (this.syncInterval) {
       clearInterval(this.syncInterval);
       this.syncInterval = null;
-      console.log("[SMRITI SyncEngine] Sync worker stopped.");
+      console.log("[MQube SyncEngine] Sync worker stopped.");
     }
   }
 
@@ -72,10 +47,10 @@ export class SyncEngine {
       payload: JSON.stringify(payload),
       deviceId: this.deviceId
     });
-    console.log(`[SMRITI SyncEngine] Enqueued sync change [${uuid}] for module: ${module}`);
+    console.log(`[MQube SyncEngine] Enqueued sync change [${uuid}] for module: ${module}`);
     
     // Attempt fast replication trigger in the background
-    this.processQueue().catch(err => console.error("[SMRITI SyncEngine] Async process queue error:", err));
+    this.processQueue().catch(err => console.error("[MQube SyncEngine] Async process queue error:", err));
     
     return syncItem;
   }
@@ -94,15 +69,15 @@ export class SyncEngine {
         return;
       }
 
-      console.log(`[SMRITI SyncEngine] Processing ${pendingItems.length} pending items...`);
+      console.log(`[MQube SyncEngine] Processing ${pendingItems.length} pending items...`);
 
       for (const item of pendingItems) {
         try {
           await this.syncItem(item);
           await this.syncRepo.updateStatus(item.id!, "synced");
-          console.log(`[SMRITI SyncEngine] Successfully synced uuid: ${item.uuid}`);
+          console.log(`[MQube SyncEngine] Successfully synced uuid: ${item.uuid}`);
         } catch (error) {
-          console.error(`[SMRITI SyncEngine] Failed to sync uuid: ${item.uuid}. Error:`, error);
+          console.error(`[MQube SyncEngine] Failed to sync uuid: ${item.uuid}. Error:`, error);
           await this.syncRepo.incrementRetry(item.id!);
           if (item.retryCount >= 5) {
             await this.syncRepo.updateStatus(item.id!, "failed", new Date().toISOString());
@@ -110,7 +85,7 @@ export class SyncEngine {
         }
       }
     } catch (error) {
-      console.error("[SMRITI SyncEngine] Critical error processing sync queue:", error);
+      console.error("[MQube SyncEngine] Critical error processing sync queue:", error);
     } finally {
       this.isSyncing = false;
     }

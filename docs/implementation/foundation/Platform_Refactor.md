@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Vertical Slice 5 — Approval, Workflow, and Communicator Engines
 
 ## 1. Objective
-Unify multi-tier document approval governance (Draft -> Pending Approval -> Approved / Rejected -> Cancelled), configurable threshold matrices, and multi-channel communicator dispatch ledgers (Email, SMS, WhatsApp) inside the tenant data plane (`smritiXXX`).
+Unify multi-tier document approval governance (Draft -> Pending Approval -> Approved / Rejected -> Cancelled), configurable threshold matrices, and multi-channel communicator dispatch ledgers (Email, SMS, WhatsApp) inside the tenant data plane (`tileflowXXX`).
 
 ---
 
@@ -36,7 +35,7 @@ In large retail networks and distribution operations, high-value purchase orders
    - Variable substitution engine (`{{customer_name}}`, `{{invoice_no}}`, `{{amount}}`).
    - Delivery status tracking (`QUEUED`, `SENT`, `DELIVERED`, `FAILED`).
 3. **Tenant Isolation**:
-   - All approval records and communication logs reside strictly inside `smritiXXX`.
+   - All approval records and communication logs reside strictly inside `tileflowXXX`.
 
 ### Out-of-Scope (Deferred)
 - External SMS/WhatsApp third-party aggregator live HTTP webhooks (handled in external compliance gateways).
@@ -56,7 +55,7 @@ In large retail networks and distribution operations, high-value purchase orders
 | **Approval Lifecycle** | Ad-hoc flags | Governed state machine with threshold policies and multi-tier sign-off |
 | **Approval Audit** | Basic modified_by | Immutable `approval_actions` ledger recording every decision |
 | **Communication** | Decentralized | Centralized `communicator_templates` and `communicator_logs` dispatch tracking |
-| **Data Plane Boundary** | Tenant DB | Strictly tenant data plane (`smritiXXX`) |
+| **Data Plane Boundary** | Tenant DB | Strictly tenant data plane (`tileflowXXX`) |
 
 ---
 
@@ -118,7 +117,7 @@ Additive DDL tables. If rollback is required, existing invoice workflows execute
 1. Test approval request submission for high-value transactions.
 2. Test approver authorization and decision execution (`APPROVE` / `REJECT`).
 3. Test communicator template variable rendering for WhatsApp and SMS.
-4. Verify tenant isolation between `smriti001` and `smriti002`.
+4. Verify tenant isolation between `tileflow001` and `tileflow002`.
 
 ---
 
@@ -136,7 +135,7 @@ Additive DDL tables. If rollback is required, existing invoice workflows execute
 ---
 
 ## 16. Deployment Plan
-1. Apply DDL to tenant databases (`smriti001`, `smriti002`).
+1. Apply DDL to tenant databases (`tileflow001`, `tileflow002`).
 2. Deploy backend service models.
 3. Validate automated test execution.
 

@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect(host='localhost', user='postgres', password='postgres', dbname='smritisys')
+conn = psycopg2.connect(host='localhost', user='postgres', password='postgres', dbname='tileflowsys')
 cur = conn.cursor()
 cur.execute("SELECT version FROM alembic_version;")
 result = cur.fetchone()

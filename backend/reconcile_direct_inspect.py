@@ -2,7 +2,7 @@ from sqlalchemy import text, create_engine, inspect
 from sqlalchemy.pool import NullPool
 
 # Connect to fresh test DB directly using sync engine
-url = 'postgresql://postgres:postgres@localhost:5432/smriti_diag_fresh_test'
+url = 'postgresql://postgres:postgres@localhost:5432/tileflow_diag_fresh_test'
 engine = create_engine(url, poolclass=NullPool)
 
 print("FRESH TEST DATABASE DIRECT INSPECTION:")

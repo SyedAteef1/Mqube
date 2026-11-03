@@ -1,17 +1,4 @@
 /**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
-/**
  * Normalizes a column header string for comparison.
  * - Trims leading/trailing whitespace
  * - Converts to lower case

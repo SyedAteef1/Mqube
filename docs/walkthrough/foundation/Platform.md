@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Multi-Tenant Ephemeral Database CI/CD Test Harness & Clean-Slate Migration Verification
@@ -44,7 +43,7 @@ Provide an automated, isolated CI/CD testing harness that dynamically provisions
 ## 5. Architecture Decisions
 1. **Subprocess Alembic Execution**: Running Alembic inside pytest-asyncio event loops previously caused `RuntimeError: asyncio.run() cannot be called from a running event loop`. Alembic operations are now invoked via subprocess (`sys.executable -m alembic -x db=...`), ensuring clean, non-clashing execution.
 2. **Cascading Downgrade Safety**: In PostgreSQL, dropping parent tables referenced by foreign keys fails without `CASCADE`. All root table downgrade routines were hardened with `CASCADE` drops.
-3. **Control Plane Registry Cache Bypassing**: In dynamic test environments, ephemeral database names (`smriti<hex>`) are automatically added to `_verified_company_databases` to allow `get_company_async_engine` to instantiate pooled engines without requiring manual control-plane rows.
+3. **Control Plane Registry Cache Bypassing**: In dynamic test environments, ephemeral database names (`tileflow<hex>`) are automatically added to `_verified_company_databases` to allow `get_company_async_engine` to instantiate pooled engines without requiring manual control-plane rows.
 
 ## 6. Design Rationale
 In a multi-database multi-tenant ERP/Retail OS, testing solely against static pre-existing databases masks latent migration bugs (such as missing downgrade logic or unnamed foreign key constraints). The ephemeral test harness guarantees that any new tenant database provisioned in production will migrate flawlessly from scratch and seed standard accounting ledgers without manual intervention.
@@ -63,10 +62,10 @@ python -m pytest tests/t_tenant_migr.py -v
 All 6 test cases passed:
 1. `test_ephemeral_clean_slate_schema_verification`: All 24+ core tables and alembic head revision verified on fresh database.
 2. `test_ephemeral_symmetrical_downgrade_and_reupgrade`: Downgrade to `base` drops all custom tables; re-upgrade to `head` recreates all tables cleanly.
-3. `test_ephemeral_tenant_seeding_and_double_entry_transaction`: Seed baseline tenant, post ₹100,000 double-entry capital infusion JV, verify trial balance equality ($\sum \text{Debits} == \sum \text{Credits}$), and assert multi-tenant isolation against `smriti001`.
+3. `test_ephemeral_tenant_seeding_and_double_entry_transaction`: Seed baseline tenant, post ₹100,000 double-entry capital infusion JV, verify trial balance equality ($\sum \text{Debits} == \sum \text{Credits}$), and assert multi-tenant isolation against `tileflow001`.
 4. `test_ephemeral_chart_of_accounts_completeness`: Verify presence of all standard nominal, asset, liability, equity, income, expense, overage (`4050`), shortage (`5070`), and FX accounts (`4030`, `4040`, `5050`, `5060`).
 5. `test_ephemeral_multi_currency_fx_in_clean_database`: Verify USD/INR rate insertion and foreign currency voucher posting.
-6. `test_ephemeral_concurrent_tenants_isolation`: Concurrently provision two ephemeral databases (`smriti...a` and `smriti...b`) and verify strict physical data separation.
+6. `test_ephemeral_concurrent_tenants_isolation`: Concurrently provision two ephemeral databases (`tileflow...a` and `tileflow...b`) and verify strict physical data separation.
 
 ## 9. Verification Results
 ```text

@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.97.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Multi-Branch Stock Transfer & Inter-Branch Requisition Engine
- *
- * Manages the full lifecycle of inter-branch stock movements:
- *   - Requisition: requesting branch raises a stock requirement
- *   - Approval: fulfilling branch approves and reserves stock
- *   - Dispatch: goods dispatched with logistics reference
- *   - In-Transit tracking: intermediate status with expected arrival
- *   - Receiving confirmation: QC check, accepted / short / rejected qty
- *   - Audit trail per transition
- */
-
 export type TransferStatus =
   | "DRAFT"
   | "SUBMITTED"

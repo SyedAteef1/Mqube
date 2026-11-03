@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITIDocker Repository Creation — v3.16.0
+# Walkthrough: TILEFLOWDocker Repository Creation — v3.16.0
 
 ## 1. Purpose
-This walkthrough documents the creation and deployment of the standalone `SMRITIDocker` repository containing all containerization configurations, orchestration logic, and automatic startup scripts for SMRITI Retail OS.
+This walkthrough documents the creation and deployment of the standalone `TILEFLOWDocker` repository containing all containerization configurations, orchestration logic, and automatic startup scripts for TILEFLOW Retail OS.
 
 ---
 
 ## 2. Scope
-- Create a new Git repository at `D:\IMP\GitHub\SMRITIDocker`.
+- Create a new Git repository at `D:\IMP\GitHub\TILEFLOWDocker`.
 - Copy Docker orchestration files (`Dockerfile`, `docker-compose.yml`, `startup.bat`, `startup.sh`, `backend/Dockerfile`, `backend/entrypoint.sh`, `.dockerignore`, `.env.example`).
 - Initialize local Git tracking, perform initial commit, and create a corresponding private repository on GitHub under the authenticated `aitdlnetwork` account.
 - Add remote, push master branch, and document files.
@@ -28,7 +27,7 @@ This walkthrough documents the creation and deployment of the standalone `SMRITI
 ---
 
 ## 3. Files Created
-In the new repository `SMRITIDocker`:
+In the new repository `TILEFLOWDocker`:
 - `README.md`
 - `.dockerignore`
 - `Dockerfile`
@@ -57,12 +56,12 @@ In `SMRITRretailNX` (this repository):
 ---
 
 ## 6. Design Rationale
-Separating the Docker orchestration files into a standalone repository (`SMRITIDocker`) allows system administrators and DevOps teams to maintain, audit, and distribute container deployment configurations independently of the core codebase.
+Separating the Docker orchestration files into a standalone repository (`TILEFLOWDocker`) allows system administrators and DevOps teams to maintain, audit, and distribute container deployment configurations independently of the core codebase.
 
 ---
 
 ## 7. Implementation Summary
-1. Created the directory `D:\IMP\GitHub\SMRITIDocker` and initialized Git.
+1. Created the directory `D:\IMP\GitHub\TILEFLOWDocker` and initialized Git.
 2. Copied all core Docker configurations and startup launcher scripts preserving relative paths.
 3. Created a detailed `README.md` outlining repository purpose and usage directions.
 4. Committed all files locally and created the repository on GitHub using `gh repo create`.
@@ -75,8 +74,8 @@ Separating the Docker orchestration files into a standalone repository (`SMRITID
 # Verified git remote connection and status
 git remote -v
 # Output:
-# origin  https://github.com/aitdlnetwork/SMRITIDocker.git (fetch)
-# origin  https://github.com/aitdlnetwork/SMRITIDocker.git (push)
+# origin  https://github.com/aitdlnetwork/TILEFLOWDocker.git (fetch)
+# origin  https://github.com/aitdlnetwork/TILEFLOWDocker.git (push)
 ```
 
 ---
@@ -94,7 +93,7 @@ None.
 ---
 
 ## 11. Future Work
-- Integrate GitHub Actions/CI/CD pipelines in `SMRITIDocker` to automatically build and push Docker images to registries (e.g. Docker Hub or GitHub Packages).
+- Integrate GitHub Actions/CI/CD pipelines in `TILEFLOWDocker` to automatically build and push Docker images to registries (e.g. Docker Hub or GitHub Packages).
 
 ---
 

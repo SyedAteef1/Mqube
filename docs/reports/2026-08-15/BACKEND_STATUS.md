@@ -5,7 +5,7 @@
 | Service Module | Backend Started | Backend Complete | Business Logic | Security Check | Authentication |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | Executive Hub | ✓ | ✓ | ✓ | ✓ | ✓ |
-| SMRITI Gyan Kendra | ✓ | ✓ | ✓ | ✓ | ✓ |
+| TILEFLOW Gyan Kendra | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Billing Desk | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Sales Studio | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Customer Master | ✓ | ✓ | ✓ | ✓ | ✓ |
@@ -33,6 +33,6 @@
 | Terms & Conditions | ✕ | ✓ | ✓ | ✓ | ✓ |
 | Data Exchange Hub | ✕ | ✓ | ✓ | ✓ | ✓ |
 | Company Setup Wizard | ✕ | ✓ | ✓ | ✓ | ✓ |
-| About SMRITI | ✓ | ✓ | ✓ | ✓ | ✓ |
+| About TILEFLOW | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Dev Intelligence Center | ✓ | ✓ | ✓ | ✓ | ✓ |
 | Audit Logs | ✓ | ✓ | ✓ | ✓ | ✓ |

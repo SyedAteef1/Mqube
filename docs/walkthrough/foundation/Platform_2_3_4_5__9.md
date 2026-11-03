@@ -1,17 +1,15 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Platform Refactor Slice 10: Financial Reporting & Authoritative Accounting REST API Router
 
 ## 1. Purpose
 Expose canonical, secure, multi-tenant REST API endpoints under `/api/v1/accounting` for the Double-Entry General Ledger, Real-Time Financial Statements (Trial Balance, P&L), Bank Reconciliation Statements (BRS), Fiscal Period Lockouts, and Period-End Balance Snapshots.
@@ -34,7 +32,7 @@ Expose canonical, secure, multi-tenant REST API endpoints under `/api/v1/account
 - `docs/implementation/README.md` — Appended Slice 10 entry.
 
 ## 5. Architecture Decisions
-- **Statutory Invariant Enforcement via HTTP**: Unbalanced vouchers (`Debit != Credit`) and backdated entries in closed fiscal periods return structured HTTP 400 errors (`SMRITI-GL-001` and `SMRITI-GL-006`).
+- **Statutory Invariant Enforcement via HTTP**: Unbalanced vouchers (`Debit != Credit`) and backdated entries in closed fiscal periods return structured HTTP 400 errors (`TILEFLOW-GL-001` and `TILEFLOW-GL-006`).
 - **Dependency Injected Multi-Tenancy**: All endpoints leverage `get_company_db` and `get_tenant_context` to guarantee zero cross-tenant database leakage.
 
 ## 6. Design Rationale

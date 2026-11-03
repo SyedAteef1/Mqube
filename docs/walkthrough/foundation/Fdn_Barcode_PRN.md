@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Barcode PRN Dynamic Field Mapping System — v3.16.0
@@ -73,7 +72,6 @@ $env:JWT_SECRET_KEY="9a12c418-5a48-43d9-90b5-555a6d71b87a"; $env:SGIP_VAULT_MAST
 # ============================= test session starts =============================
 # platform win32 -- Python 3.11.6, pytest-8.2.1, pluggy-1.6.0
 # rootdir: D:\IMP\GitHub\SMRITRretailNX\backend
-# configfile: pyproject.toml
 # plugins: anyio-4.14.2, asyncio-0.23.7, cov-5.0.0
 # asyncio: mode=Mode.AUTO
 # collected 3 items

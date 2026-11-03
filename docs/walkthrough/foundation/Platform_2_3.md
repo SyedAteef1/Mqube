@@ -1,38 +1,37 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Platform Accounting Fiscal Period Lockouts & Bank Reconciliation Statement (BRS) Engine v6.16.0
 
 ## 1. Purpose
-This document details the implementation of **Fiscal Period Governance & Backdating Lockout** and the **Authoritative Bank Reconciliation Statement (BRS) Engine** as part of Slice 9 in the SMRITI Retail OS transactional general ledger architecture.
+This document details the implementation of **Fiscal Period Governance & Backdating Lockout** and the **Authoritative Bank Reconciliation Statement (BRS) Engine** as part of Slice 9 in the TILEFLOW Retail OS transactional general ledger architecture.
 
 ---
 
 ## 2. Scope
 - Definition of `FiscalYear` (e.g., `FY2026-27`) and `FiscalPeriod` (Monthly partitions: `OPEN`, `SOFT_CLOSED`, `HARD_LOCKED`).
-- Invariant enforcement rejecting journal vouchers falling in locked or closed accounting periods with HTTP 400 (`SMRITI-GL-006`).
+- Invariant enforcement rejecting journal vouchers falling in locked or closed accounting periods with HTTP 400 (`TILEFLOW-GL-006`).
 - Definition of `BankStatement` and `BankStatementLine` for banking ledgers (`Account` head 1020).
 - Domain logic for parsing and persisting bank statement lines with deposits, withdrawals, and balance tracking.
 - Automated two-way matching between bank statement lines and GL ledger entries with date tolerance windowing.
 - Authoritative Bank Reconciliation Statement (BRS) calculation ($\text{Book Balance} + \text{Unpresented Cheques} - \text{Uncredited Deposits} = \text{Bank Balance}$).
-- Alembic database migration `v1344_fiscal_period_brs` applied across tenant databases (`smriti001`, `smriti002`).
+- Alembic database migration `v1344_fiscal_period_brs` applied across tenant databases (`tileflow001`, `tileflow002`).
 - 6 comprehensive automated unit and integration tests (bringing platform regression test suite to 83 passed tests).
 
 ---
 
 ## 3. Files Created
 - `backend/alembic/versions/v1344_fiscal_period_brs.py`: Forward-only migration creating `fiscal_years`, `fiscal_periods`, `bank_statements`, and `bank_statement_lines` tables and indexes.
-- `backend/tests/t_fiscal_period.py`: Integration test suite covering fiscal periods, backdating lockouts (`SMRITI-GL-006`), bank statement ingestion, auto-reconciliation, and BRS calculations.
+- `backend/tests/t_fiscal_period.py`: Integration test suite covering fiscal periods, backdating lockouts (`TILEFLOW-GL-006`), bank statement ingestion, auto-reconciliation, and BRS calculations.
 
 ---
 
@@ -44,7 +43,7 @@ This document details the implementation of **Fiscal Period Governance & Backdat
 ---
 
 ## 5. Architecture Decisions
-- **Hard Lockout Invariant**: Once a fiscal period transitions to `HARD_LOCKED`, `post_journal_voucher` synchronously blocks any vouchers with transaction dates falling in that window (`SMRITI-GL-006`), guaranteeing compliance with statutory auditing standards.
+- **Hard Lockout Invariant**: Once a fiscal period transitions to `HARD_LOCKED`, `post_journal_voucher` synchronously blocks any vouchers with transaction dates falling in that window (`TILEFLOW-GL-006`), guaranteeing compliance with statutory auditing standards.
 - **Two-Way Bank Matching**: Automated reconciliation matches bank deposits to GL debits (customer payments) and bank withdrawals to GL credits (vendor disbursements) with a configurable $\pm 5$-day value date window.
 - **BRS Mathematical Invariant**: Reconciliation asserts $\text{Book Balance} - \text{Uncredited Deposits} + \text{Unpresented Cheques} = \text{Bank Statement Balance}$, flagging any discrepancy in `difference`.
 
@@ -59,7 +58,7 @@ This document details the implementation of **Fiscal Period Governance & Backdat
 ## 7. Implementation Summary
 - `create_fiscal_year_with_periods`: Automatically divides a Financial Year into 12 monthly periods (April to March in Indian statutory format).
 - `lock_fiscal_period`: Updates period status to `HARD_LOCKED` or `SOFT_CLOSED`.
-- `assert_fiscal_period_open`: Validates transaction date against closed periods and raises `HTTP 400` (`SMRITI-GL-006`).
+- `assert_fiscal_period_open`: Validates transaction date against closed periods and raises `HTTP 400` (`TILEFLOW-GL-006`).
 - `import_bank_statement`: Persists header and line items for bank statement imports.
 - `auto_reconcile_bank_statement`: Reconciles unmatched lines against General Ledger entries.
 - `get_bank_reconciliation_statement`: Computes book balance, statement balance, uncredited deposits, unpresented cheques, and reconciliation equality.
@@ -79,11 +78,11 @@ python -m pytest tests/t_route_boundary.py tests/t_univ_party.py tests/t_univ_it
 - 13/13 tests passed in `t_unified_ledger.py` in 7.88s.
 - 83/83 master platform tests passed in 48.15s.
 - Verified 12 monthly period partitioning.
-- Verified backdated voucher rejection in locked periods (`SMRITI-GL-006`).
+- Verified backdated voucher rejection in locked periods (`TILEFLOW-GL-006`).
 - Verified bank statement line ingestion and balance tracking.
 - Verified automated two-way bank deposit/withdrawal matching.
 - Verified Bank Reconciliation Statement (BRS) calculation and balance equality.
-- Verified multi-tenant database isolation between `smriti001` and `smriti002`.
+- Verified multi-tenant database isolation between `tileflow001` and `tileflow002`.
 
 ---
 

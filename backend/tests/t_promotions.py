@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal
@@ -42,8 +28,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -57,7 +43,7 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
 @pytest.mark.asyncio
 async def test_percentage_and_fixed_discount_evaluation():
     """Verify percentage and fixed discount evaluation on cart items."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     now = datetime.now(timezone.utc)
 
@@ -107,7 +93,7 @@ async def test_percentage_and_fixed_discount_evaluation():
 @pytest.mark.asyncio
 async def test_buy_x_get_y_bogo_evaluation():
     """Verify Buy-2-Get-1-Free (BXGY) offer mechanics on cart items."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     now = datetime.now(timezone.utc)
     item_id = f"itm_bogo_{unique_suffix}"
@@ -161,7 +147,7 @@ async def test_buy_x_get_y_bogo_evaluation():
 @pytest.mark.asyncio
 async def test_coupon_validation_and_usage_limits():
     """Verify coupon code application and enforcement of usage limits."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     coupon_code = f"SAVE50-{unique_suffix.upper()}"
     now = datetime.now(timezone.utc)
@@ -234,7 +220,7 @@ async def test_coupon_validation_and_usage_limits():
 @pytest.mark.asyncio
 async def test_exclusive_promotion_override():
     """Verify exclusive promotions override and suppress all other standard promotions."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     now = datetime.now(timezone.utc)
     item_id = f"itm_ex_{unique_suffix}"
@@ -302,7 +288,7 @@ async def test_exclusive_promotion_override():
 @pytest.mark.asyncio
 async def test_multi_campaign_stacking_and_safety_cap():
     """Verify combining stackable promotions and adhering to max_stacked_discount_percent safety cap."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     now = datetime.now(timezone.utc)
     item_id = f"itm_stk_{unique_suffix}"

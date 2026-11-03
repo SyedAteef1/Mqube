@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.120.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Sales Return & Exchange Engine
- *
- * Manages customer return and exchange flows post-sale:
- *   Return Order : `createReturn()` — line-level qty, reason, restock decision
- *   Exchange     : `createExchange()` — return lines + exchange lines, price diff
- *   Restock      : RESALEABLE | DAMAGED | DISPOSE per line
- *   Refund       : ORIGINAL_METHOD | STORE_CREDIT | EXCHANGE_CREDIT
- *   Status flow  : DRAFT → APPROVED → REFUNDED/EXCHANGED | REJECTED
- *   Audit        : Append-only per order
- */
-
 export type ReturnLineReason  = "DEFECTIVE" | "WRONG_ITEM" | "SIZE_ISSUE" | "CHANGE_OF_MIND" | "DAMAGED_IN_TRANSIT" | "OTHER";
 export type RestockDecision   = "RESALEABLE" | "DAMAGED" | "DISPOSE";
 export type RefundMethod      = "ORIGINAL_METHOD" | "STORE_CREDIT" | "EXCHANGE_CREDIT";

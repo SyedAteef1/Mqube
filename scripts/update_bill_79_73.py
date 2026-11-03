@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.9.5
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 import psycopg2
 from pathlib import Path
@@ -25,7 +11,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 def update_invoice_79():
     print("=== UPDATING BILL 79 FROM BILL 73 MASTER ATTRIBUTES ===")
     
-    for dbname in ["smriti001", "smritisys"]:
+    for dbname in ["tileflow001", "tileflowsys"]:
         try:
             conn = psycopg2.connect(host="localhost", port=5432, user="postgres", password="postgres", dbname=dbname)
             cur = conn.cursor()

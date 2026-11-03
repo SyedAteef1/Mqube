@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.63.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 import uuid
 import asyncio
@@ -32,9 +18,9 @@ from app.models.inventory import Product, StockMovement, ProductBatchStock
 
 class Shoper9TenantMigrator:
     """
-    Automated Legacy Shoper 9 to SMRITI Retail OS ETL Ingestion Engine.
+    Automated Legacy Shoper 9 to TILEFLOW Retail OS ETL Ingestion Engine.
     Executes idempotent, transactional migration of Master Data, Opening Stock,
-    and Opening Financial Balances into SMRITI PostgreSQL Tenant Data Planes.
+    and Opening Financial Balances into TILEFLOW PostgreSQL Tenant Data Planes.
     """
 
     def __init__(self, tenant_db_name: str, company_id: str, dry_run: bool = False):
@@ -280,8 +266,8 @@ async def load_csv_rows(file_path: str) -> List[Dict[str, Any]]:
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="SMRITI Legacy Shoper 9 ETL Ingestion Engine")
-    parser.add_argument("--tenant-db", default="smriti001", help="Target Tenant Database Name (e.g. smriti001)")
+    parser = argparse.ArgumentParser(description="TILEFLOW Legacy Shoper 9 ETL Ingestion Engine")
+    parser.add_argument("--tenant-db", default="tileflow001", help="Target Tenant Database Name (e.g. tileflow001)")
     parser.add_argument("--company-id", default="COMP-001", help="Target Company ID")
     parser.add_argument("--dry-run", action="store_true", help="Perform pre-flight validation without committing")
     parser.add_argument("--csv-parties", help="Path to Customers/Vendors CSV export")
@@ -290,7 +276,7 @@ async def main():
     parser.add_argument("--export-dir", help="Directory containing Shoper 9 dump files (CustMaster.csv, ItemMaster.csv, StockBal.csv)")
     args = parser.parse_args()
 
-    print(f"[*] Initializing SMRITI Shoper 9 Migrator for {args.tenant_db} (Company: {args.company_id})...")
+    print(f"[*] Initializing TILEFLOW Shoper 9 Migrator for {args.tenant_db} (Company: {args.company_id})...")
     migrator = Shoper9TenantMigrator(args.tenant_db, args.company_id, args.dry_run)
 
     # 1. Parties
@@ -353,7 +339,7 @@ async def main():
                 await session.commit()
                 print("[OK] All legacy data successfully committed to PostgreSQL!")
 
-            print("\n================ SMRITI MIGRATION SUMMARY ================")
+            print("\n================ TILEFLOW MIGRATION SUMMARY ================")
             for k, v in migrator.stats.items():
                 print(f" - {k.replace('_', ' ').title()}: {v}")
             print("==========================================================")

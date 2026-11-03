@@ -1,20 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — 3-Tier Inventory State & Snapshot Engine.
-Enforces Invariant 6: Bounded historical valuation without full ledger replay.
-"""
-
 import hashlib
 from datetime import date, datetime, timezone
 from decimal import Decimal, ROUND_HALF_UP

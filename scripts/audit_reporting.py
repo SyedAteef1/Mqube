@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,15 +8,15 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smriti001"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\REPORTING.md"
 DIST_DIR = r"F:\SMRITRretailNX\dist"
 
 def audit_reporting_dashboard():
     print("============================================================")
-    print("SMRITI REPORTING & DASHBOARD ENGINE ARCHITECTURE AUDIT")
+    print("TILEFLOW REPORTING & DASHBOARD ENGINE ARCHITECTURE AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -38,25 +25,25 @@ def audit_reporting_dashboard():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     # 2. Reconcile Reporting & Dashboard Engine Components
     reporting_components = [
-        ("excel_grid_engine", "Excel-Type Analytical Grid (Sort, Filter, Group, Pivot, Copy/Paste)", "smriti001", "IMPLEMENTED"),
-        ("flexi_report_studio", "Drag & Drop Report Builder (Dimensions & Measures)", "smriti001", "IMPLEMENTED"),
-        ("chart_report_engine", "Chart Visualizer (Bar, Line, Pie, Funnel, Area over Dataset)", "smriti001", "IMPLEMENTED"),
-        ("dashboard_manager", "Dashboard Manager Library & Widget Composition", "smriti001", "IMPLEMENTED"),
-        ("report_definitions", "Report Definitions Master (Dimensions, Measures, Query Schema)", "smriti001", "IMPLEMENTED"),
-        ("report_saved_views", "User Saved Views (Layout, Multi-Sort, Grouping, Pivot)", "smriti001", "IMPLEMENTED"),
-        ("dashboards", "Dashboard Master (CEO, Sales, Store Manager, Profitability)", "smriti001", "IMPLEMENTED"),
-        ("dashboard_widgets", "Reusable Widgets (KPI, Chart, Grid, Pivot, Ranking)", "smriti001", "IMPLEMENTED")
+        ("excel_grid_engine", "Excel-Type Analytical Grid (Sort, Filter, Group, Pivot, Copy/Paste)", "tileflow001", "IMPLEMENTED"),
+        ("flexi_report_studio", "Drag & Drop Report Builder (Dimensions & Measures)", "tileflow001", "IMPLEMENTED"),
+        ("chart_report_engine", "Chart Visualizer (Bar, Line, Pie, Funnel, Area over Dataset)", "tileflow001", "IMPLEMENTED"),
+        ("dashboard_manager", "Dashboard Manager Library & Widget Composition", "tileflow001", "IMPLEMENTED"),
+        ("report_definitions", "Report Definitions Master (Dimensions, Measures, Query Schema)", "tileflow001", "IMPLEMENTED"),
+        ("report_saved_views", "User Saved Views (Layout, Multi-Sort, Grouping, Pivot)", "tileflow001", "IMPLEMENTED"),
+        ("dashboards", "Dashboard Master (CEO, Sales, Store Manager, Profitability)", "tileflow001", "IMPLEMENTED"),
+        ("dashboard_widgets", "Reusable Widgets (KPI, Chart, Grid, Pivot, Ranking)", "tileflow001", "IMPLEMENTED")
     ]
 
     df_arch = pd.DataFrame([
@@ -64,15 +51,15 @@ def audit_reporting_dashboard():
     ])
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
-        {"Metric": "Company Business Database", "Value": "smriti001 (ACTIVE for COMP-001)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Company Business Database", "Value": "tileflow001 (ACTIVE for COMP-001)"},
         {"Metric": "Reporting Architecture", "Value": "Report Definition -> Dataset -> Grid / Chart / Pivot / Dashboard -> Export"},
         {"Metric": "Multi-Cost Profitability Integration", "Value": "Cost Basis selector (WAC, FIFO, Landed Cost, Last Purchase, Standard)"},
-        {"Metric": "Single Company DB Principle", "Value": "All reporting & dashboard tables co-located in smriti001 (0 Extra DBs)"},
+        {"Metric": "Single Company DB Principle", "Value": "All reporting & dashboard tables co-located in tileflow001 (0 Extra DBs)"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Database Mutations Executed", "Value": "0 Mutations"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
         {"Metric": "Final Status", "Value": "REPORTING_DASHBOARD_ENGINE_VERIFIED"}
     ])
 
@@ -117,31 +104,30 @@ def audit_reporting_dashboard():
     # 4. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Reporting & Dashboard Engine Specification v1.0
+# TILEFLOW Reporting & Dashboard Engine Specification v1.0
 
 **Status: REPORTING_DASHBOARD_ENGINE_VERIFIED**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
 ## 1. Unified Reporting & Analytics Architecture
 
 ```text
-                 SMRITI REPORT ENGINE
+                 TILEFLOW REPORT ENGINE
                          │
               ┌──────────┴──────────┐
               │                     │
@@ -160,11 +146,10 @@ def audit_reporting_dashboard():
           Excel / PDF / CSV / Print
 ```
 
-- **Single Business DB Principle**: Report definitions, saved views, dashboards, and widgets reside inside `smriti001`. **Zero extra databases created**.
+- **Single Business DB Principle**: Report definitions, saved views, dashboards, and widgets reside inside `tileflow001`. **Zero extra databases created**.
 
 ---
 
-## 2. Final Classification
 
 ```text
 FINAL STATUS: REPORTING_DASHBOARD_ENGINE_VERIFIED
@@ -172,10 +157,10 @@ FINAL STATUS: REPORTING_DASHBOARD_ENGINE_VERIFIED
 """)
 
     # 5. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -184,8 +169,8 @@ FINAL STATUS: REPORTING_DASHBOARD_ENGINE_VERIFIED
 
     print("\nREPORTING & DASHBOARD ENGINE AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")

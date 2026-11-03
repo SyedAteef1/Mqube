@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.42.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 from httpx import AsyncClient, ASGITransport
 
@@ -29,8 +15,8 @@ def _get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001") -> d
             "role": role,
             "company_id": company_id,
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -89,7 +75,7 @@ async def test_resolve_user_workspace_cashier_persona():
         assert res.status_code == 200
         data = res.json()
         assert data["persona"] == "PROF_CASHIER"
-        assert "theme-smriti-default" in data["theme_code"]
+        assert "theme-tileflow-default" in data["theme_code"]
 
 
 @pytest.mark.asyncio

@@ -1,15 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
@@ -47,7 +35,7 @@ async def test_ecom_webhook_ingress_routing():
             "X-Internal-Service-Key": settings.INTERNAL_SERVICE_KEY,
         }
         response = await ac.post("/api/v1/ecom/webhooks/ingress", json=payload, headers=headers)
-        assert response.status_code == 200
+        assert response.status_code == 200, response.text
         data = response.json()
         assert data["received"] is True
         assert data["order_id"] == unique_ord

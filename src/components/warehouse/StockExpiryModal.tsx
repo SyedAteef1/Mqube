@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.117.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -72,7 +71,7 @@ export const StockExpiryModal: React.FC<StockExpiryModalProps> = ({ isOpen, onCl
     try {
       const updated = StockExpiryEngine.quarantineBatch(selected, "Manual QC hold", selected.availableQty, "QC-001");
       setBatches((prev) => prev.map((b) => b.batchId === updated.batchId ? updated : b));
-      onNotification?.("Quarantined", `${updated.batchNo} â€” ${updated.quarantinedQty} units held`, "info");
+      onNotification?.("Quarantined", `${updated.batchNo} — ${updated.quarantinedQty} units held`, "info");
     } catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
@@ -81,7 +80,7 @@ export const StockExpiryModal: React.FC<StockExpiryModalProps> = ({ isOpen, onCl
     try {
       const updated = StockExpiryEngine.releaseFromQuarantine(selected, selected.quarantinedQty, "QC-001");
       setBatches((prev) => prev.map((b) => b.batchId === updated.batchId ? updated : b));
-      onNotification?.("Released", `${updated.batchNo} â€” ${updated.availableQty} units released`, "success");
+      onNotification?.("Released", `${updated.batchNo} — ${updated.availableQty} units released`, "success");
     } catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
@@ -158,8 +157,8 @@ export const StockExpiryModal: React.FC<StockExpiryModalProps> = ({ isOpen, onCl
                   {[
                     { label: "MFG Date",    value: selected.mfgDate },
                     { label: "Expiry Date", value: selected.expiryDate },
-                    { label: "Unit Cost",   value: `â‚¹${selected.unitCost}` },
-                    { label: "Supplier",    value: selected.supplierId ?? "â€”" },
+                    { label: "Unit Cost",   value: `₹${selected.unitCost}` },
+                    { label: "Supplier",    value: selected.supplierId ?? "—" },
                   ].map((m) => (
                     <div key={m.label} className="flex items-center justify-between px-3 py-2 bg-slate-800/30 border border-slate-700/60 rounded-lg">
                       <span className="text-slate-500">{m.label}</span>

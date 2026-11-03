@@ -1,7 +1,7 @@
 import psycopg2
 import sys
 
-DBs = ['smritisys', 'smriti001']
+DBs = ['tileflowsys', 'tileflow001']
 
 for db_name in DBs:
     try:

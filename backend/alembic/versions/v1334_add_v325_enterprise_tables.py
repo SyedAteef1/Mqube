@@ -38,7 +38,7 @@ def upgrade() -> None:
     )
     from app.models.profitability import TransactionCostSnapshot, ProductCostValuation, InvoiceProfitabilityLedger
     from app.models.reporting import ReportDefinition, ReportSavedView, Dashboard, DashboardWidget
-    from app.models.ui_control_plane import SmritiWorkspaceProfile, SmritiTheme, SmritiThemeVariant
+    from app.models.ui_control_plane import TileFlowWorkspaceProfile, TileFlowTheme, TileFlowThemeVariant
 
     target_tables = [
         CommissionParticipant.__table__,
@@ -69,9 +69,9 @@ def upgrade() -> None:
         ReportSavedView.__table__,
         Dashboard.__table__,
         DashboardWidget.__table__,
-        SmritiWorkspaceProfile.__table__,
-        SmritiTheme.__table__,
-        SmritiThemeVariant.__table__,
+        TileFlowWorkspaceProfile.__table__,
+        TileFlowTheme.__table__,
+        TileFlowThemeVariant.__table__,
     ]
 
     for table in target_tables:

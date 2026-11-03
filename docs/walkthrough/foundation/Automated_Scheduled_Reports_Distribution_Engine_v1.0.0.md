@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.72.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Automated Scheduled Reports & Distribution Engine (v1.0.0-GA)
 
 ## 1. Purpose
-Documents the implementation and verification of the SMRITI Automated Scheduled Reports & Multi-Channel Distribution Engine, enabling unattended scheduled report generation, format serialization, parallel delivery, and forensic audit sealing.
+Documents the implementation and verification of the TILEFLOW Automated Scheduled Reports & Multi-Channel Distribution Engine, enabling unattended scheduled report generation, format serialization, parallel delivery, and forensic audit sealing.
 
 ## 2. Scope
 - Cron expression evaluation and deterministic scheduling.
@@ -76,4 +75,4 @@ python -m pytest tests/test_scheduled_reports_engine.py tests/test_sgip_einvoice
 - `ADR-024`: Governed Metric Dictionary & Canonical Report Registry.
 
 ## 13. Related RFCs
-- `RFC-089`: SMRITI Automated Report Scheduling & Distribution Architecture.
+- `RFC-089`: TILEFLOW Automated Report Scheduling & Distribution Architecture.

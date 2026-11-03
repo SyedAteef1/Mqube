@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 from fastapi import APIRouter, HTTPException, Depends, status
 from pydantic import BaseModel, Field
 from typing import List, Dict, Any, Optional
@@ -78,12 +65,12 @@ def validate_company_code(payload: ValidateCodeRequest):
 
 @router.get("/companies")
 def list_companies(current_user: User = Depends(require_role(UserRole.SYSADMIN))):
-    """Lists companies accessible to the logged-in user from smritisys Control Plane registry."""
+    """Lists companies accessible to the logged-in user from tileflowsys Control Plane registry."""
     try:
         conn = psycopg2.connect(CONTROL_PLANE_DB_URL)
         cur = conn.cursor()
         cur.execute("""
-            SELECT c.id, c.name, COALESCE(c.company_code, '001'), COALESCE(r.database_name, 'smriti001'), COALESCE(r.status, 'READY')
+            SELECT c.id, c.name, COALESCE(c.company_code, '001'), COALESCE(r.database_name, 'tileflow001'), COALESCE(r.status, 'READY')
             FROM companies c
             LEFT JOIN company_database_registries r ON c.id = r.company_id
             WHERE c.is_active = true AND c.is_deleted = false AND c.id = 'COMP-001';
@@ -110,7 +97,7 @@ def list_companies(current_user: User = Depends(require_role(UserRole.SYSADMIN))
             "company_code": "001",
             "company_name": "Tattly Retail Pvt Ltd",
             "status": "READY",
-            "database_name": "smriti001"
+            "database_name": "tileflow001"
         }
     ]
 

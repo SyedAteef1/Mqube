@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.22.0
-Created      : 2026-07-11
-Modified     : 2026-08-23
-Copyright    : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import sys
 import os
 import datetime
@@ -44,6 +19,7 @@ from .api.v1 import (
     approval_matrix,
     attributes,
     auth,
+    business_profile,
     assignments,
     barcode,
     barcodes,
@@ -111,7 +87,7 @@ from .api.v1 import (
     cge_unified,
 )
 from .core.config import settings
-from .core.constants import SMRITI_BANNER
+from .core.constants import TILEFLOW_BANNER
 from .core.error_handlers import register_error_handlers
 from .core.logging import logger
 from .db.session import verify_db_connectivity
@@ -122,19 +98,19 @@ STARTUP_TIME = time.time()
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    """SMRITI startup: log banner and ensure baseline users and company registries are seeded."""
-    print(SMRITI_BANNER)
-    logger.info(f"[SMRITI] Starting FastAPI Python Core on port {settings.PORT}...")
-    logger.info(f"[SMRITI] Mode: {settings.EDITION} | Version: {settings.VERSION}")
+    """TILEFLOW startup: log banner and ensure baseline users and company registries are seeded."""
+    print(TILEFLOW_BANNER)
+    logger.info(f"[TILEFLOW] Starting FastAPI Python Core on port {settings.PORT}...")
+    logger.info(f"[TILEFLOW] Mode: {settings.EDITION} | Version: {settings.VERSION}")
     
     # Auto-seed baseline users and company registries idempotently on container startup
     if "pytest" not in sys.modules and not os.environ.get("PYTEST_CURRENT_TEST"):
         try:
             from .db.seed_baseline_users import seed as seed_baseline_users
             await seed_baseline_users()
-            logger.info("[SMRITI Startup] Baseline users, companies, and database registries verified/seeded successfully.")
+            logger.info("[TILEFLOW Startup] Baseline users, companies, and database registries verified/seeded successfully.")
         except Exception as e:
-            logger.warning(f"[SMRITI Startup] Notice during baseline user auto-seeding: {e}")
+            logger.warning(f"[TILEFLOW Startup] Notice during baseline user auto-seeding: {e}")
 
     yield
 
@@ -143,7 +119,7 @@ app = FastAPI(
     title=settings.PROJECT_NAME,
     lifespan=lifespan,
     version=settings.VERSION,
-    description="SMRITI Retail OS - Enterprise Python Core Backend Service",
+    description="MQube - Enterprise Python Core Backend Service",
     docs_url="/docs",
     redoc_url="/redoc"
 )
@@ -169,6 +145,7 @@ app.include_router(workflow.router,     prefix=settings.API_V1_STR + "/workflow"
 app.include_router(metadata.router,     prefix=settings.API_V1_STR)
 app.include_router(changelog.router, prefix=settings.API_V1_STR)
 app.include_router(dev_tracker.router, prefix=settings.API_V1_STR)
+app.include_router(business_profile.router, prefix=settings.API_V1_STR + "/company", tags=["Business Profile"])
 app.include_router(auth.router,      prefix=settings.API_V1_STR + "/auth",          tags=["Authentication"])
 app.include_router(users.router,     prefix=settings.API_V1_STR + "/users",         tags=["User Management"])
 app.include_router(inventory.router,         prefix=settings.API_V1_STR + "/inventory",          tags=["Inventory"])
@@ -241,7 +218,7 @@ app.include_router(cge.router, prefix=settings.API_V1_STR + "/cge", tags=["Comme
 app.include_router(sync.router, prefix=settings.API_V1_STR + "/sync", tags=["Offline-First Synchronization"])
 app.include_router(analytics.router, prefix=settings.API_V1_STR + "/analytics", tags=["Analytics & Intelligence Plane"])
 app.include_router(integration.router, prefix=settings.API_V1_STR + "/integration", tags=["Integration Hub & Audit"])
-app.include_router(legacy_menu_map.router, prefix=settings.API_V1_STR + "/legacy-menu-map", tags=["Legacy Migration Registry"])  # Sprint 2/3: read-only Shoper9->SMRITI lineage
+app.include_router(legacy_menu_map.router, prefix=settings.API_V1_STR + "/legacy-menu-map", tags=["Legacy Migration Registry"])  # Sprint 2/3: read-only Shoper9->TILEFLOW lineage
 app.include_router(scheduled_reports.router, prefix=settings.API_V1_STR)
 
 
@@ -277,7 +254,7 @@ async def liveness_check():
 @app.get("/version", tags=["Health Diagnostics"])
 async def version_check():
     """
-    Fetch SMRITI core build specification version.
+    Fetch TILEFLOW core build specification version.
     """
     return {
         "name": settings.PROJECT_NAME,

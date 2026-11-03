@@ -1,22 +1,9 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-19
- * Modified     : 2026-08-19
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import { describe, it, expect } from "vitest";
 import { HeaderMappingEngine } from "../lib/headerMapping/HeaderMappingEngine.ts";
-import { SMRITI_ITEM_MASTER_FIELDS } from "../lib/headerMapping/HeaderAliasRegistry.ts";
+import { TILEFLOW_ITEM_MASTER_FIELDS } from "../lib/headerMapping/HeaderAliasRegistry.ts";
 
 describe("Phase 3 Refactor: Config-Driven One-to-Many Alias Registry", () => {
-  const engine = new HeaderMappingEngine(SMRITI_ITEM_MASTER_FIELDS);
+  const engine = new HeaderMappingEngine(TILEFLOW_ITEM_MASTER_FIELDS);
 
   it("should perform exact match on canonical field label", () => {
     const result = engine.mapHeaders(["ITEM NAME"]);

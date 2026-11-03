@@ -1,31 +1,18 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json, hashlib, glob
 from datetime import datetime, timezone
 import psycopg2
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 BACKUP_DIR = r"F:\SMRITRretailNX\scratch\backups"
 
 def run_audited_rollback():
     print("============================================================")
-    print("SMRITI MENU GOVERNANCE — HARDENED AUDITED ROLLBACK ENGINE")
+    print("TILEFLOW MENU GOVERNANCE — HARDENED AUDITED ROLLBACK ENGINE")
     print("============================================================")
 
-    backup_files = glob.glob(os.path.join(BACKUP_DIR, "smriti_menus_backup_*.json"))
+    backup_files = glob.glob(os.path.join(BACKUP_DIR, "tileflow_menus_backup_*.json"))
     if not backup_files:
         print("❌ FAIL: No backup files found in scratch/backups directory!")
         sys.exit(1)
@@ -41,7 +28,7 @@ def run_audited_rollback():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT sha256_hash FROM smriti_audit_log WHERE sha256_hash IS NOT NULL ORDER BY changed_at DESC LIMIT 1;")
+    cur.execute("SELECT sha256_hash FROM tileflow_audit_log WHERE sha256_hash IS NOT NULL ORDER BY changed_at DESC LIMIT 1;")
     latest_hash_row = cur.fetchone()
     prev_h = latest_hash_row[0] if latest_hash_row else "00000000000000000000000000000000"
 
@@ -53,7 +40,7 @@ def run_audited_rollback():
         for menu_id, old_data in menus_backup.items():
             parent_sql = old_data["parent_id"]
             cur.execute("""
-                UPDATE smriti_menus
+                UPDATE tileflow_menus
                 SET title = %s, module = %s, parent_id = %s, sequence = %s, permission = %s, modified_at = NOW()
                 WHERE id = %s;
             """, (old_data["title"], old_data["module"], parent_sql, old_data["sequence"], old_data["permission"], menu_id))
@@ -63,13 +50,13 @@ def run_audited_rollback():
             cur_h = hashlib.sha256(new_hash_input.encode('utf-8')).hexdigest()
 
             cur.execute("""
-                INSERT INTO smriti_audit_log (
+                INSERT INTO tileflow_audit_log (
                     id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                     old_value, new_value, change_type, change_reason, change_source,
                     changed_by, changed_by_name, changed_at, sha256_hash, prev_hash
                 )
                 VALUES (
-                    %s, 'smritibus_default', %s, 'smriti_menus', %s, 'menu_governance_rollback',
+                    %s, 'tileflowbus_default', %s, 'tileflow_menus', %s, 'menu_governance_rollback',
                     'MIGRATED_STATE', %s, 'ROLLBACK', 'Menu Governance Rollback Execution',
                     'MenuRollbackEngine', 'usr-super', 'System Admin', NOW(), %s, %s
                 );

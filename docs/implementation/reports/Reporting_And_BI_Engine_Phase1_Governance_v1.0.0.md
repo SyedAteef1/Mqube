@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.35.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Reporting & BI Engine — Phase 1 (Governance & Data Contracts)
 
 ## 1. Objective
-Establish the foundational data contracts, Central Report Registry, and Governed Metric Dictionary for the SMRITI Retail OS Reporting & BI Engine v1.0.0-GA. Enforce the unidirectional authority chain:
+Establish the foundational data contracts, Central Report Registry, and Governed Metric Dictionary for the TILEFLOW Retail OS Reporting & BI Engine v1.0.0-GA. Enforce the unidirectional authority chain:
 $$\text{Business Policy} \longrightarrow \text{Governed Metric Layer} \longrightarrow \text{Report Registry} \longrightarrow \text{Security Policy} \longrightarrow \text{Query Engine} \longrightarrow \text{UI}$$
 
 ## 2. Business Motivation
@@ -81,7 +80,7 @@ Previous reports were rendered via disparate helper endpoints and queries in `re
 - Generate Walkthrough upon completion.
 
 ## 16. Deployment Plan
-- Deploy to development environment `D:\Smriti_Retail_OS`, run test suite, sync to test `F:\Smriti9`.
+- Deploy to development environment `D:\TileFlow_Retail_OS`, run test suite, sync to test `F:\TileFlow9`.
 
 ## 17. Status
 In Progress (Phase 1 Execution)

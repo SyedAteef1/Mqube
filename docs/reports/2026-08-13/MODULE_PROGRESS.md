@@ -10,4 +10,4 @@
 | Sales Studio | Sales & POS | 40% | High |
 | Billing Desk | Sales & POS | 36% | High |
 | CRM & Loyalty | Sales & POS | 12% | Critical |
-| About SMRITI | System | 52% | High |
+| About TILEFLOW | System | 52% | High |

@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.18.0
   Created      : 2026-07-14
   Modified     : 2026-07-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Architectural Debt Registry
+# TILEFLOW Architectural Debt Registry
 
 This log tracks architectural debt, compromises, and design gaps discovered during major directives or refactoring. Every entry details the debt description, tracking ID, associated impact, and planned resolution.
 

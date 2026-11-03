@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.115.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState } from "react";
@@ -39,7 +38,7 @@ const REASON_LABELS: Record<ReturnReason, string> = {
   OTHER:             "Other",
 };
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 function buildSampleOrders(): PRTVOrder[] {
   const o1 = PRTVEngine.createReturn({
@@ -77,13 +76,13 @@ export const PRTVModal: React.FC<PRTVModalProps> = ({ isOpen, onClose, onNotific
 
   const handleApprove = () => {
     if (!selected) return;
-    try { update(PRTVEngine.approve(selected, "PURCHASE-MGR-001")); onNotification?.("Approved", `${selected.prtvNo} â€” Debit Note generated`, "success"); }
+    try { update(PRTVEngine.approve(selected, "PURCHASE-MGR-001")); onNotification?.("Approved", `${selected.prtvNo} — Debit Note generated`, "success"); }
     catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
   const handleAcknowledge = () => {
     if (!selected) return;
-    try { update(PRTVEngine.acknowledge(selected, "VENDOR-PORTAL")); onNotification?.("Acknowledged", `${selected.prtvNo} â€” Vendor confirmed receipt`, "success"); }
+    try { update(PRTVEngine.acknowledge(selected, "VENDOR-PORTAL")); onNotification?.("Acknowledged", `${selected.prtvNo} — Vendor confirmed receipt`, "success"); }
     catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
@@ -91,13 +90,13 @@ export const PRTVModal: React.FC<PRTVModalProps> = ({ isOpen, onClose, onNotific
     if (!selected) return;
     try {
       update(PRTVEngine.settle(selected, "ACCOUNTS-001", `PAYABLE-${Date.now()}`, selected.netReturnAmt));
-      onNotification?.("Settled", `${selected.prtvNo} â€” ${fmt(selected.netReturnAmt)} settled`, "success");
+      onNotification?.("Settled", `${selected.prtvNo} — ${fmt(selected.netReturnAmt)} settled`, "success");
     } catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
   const handleReject = () => {
     if (!selected) return;
-    try { update(PRTVEngine.reject(selected, "MGR-001", "Vendor dispute â€” quality contested")); onNotification?.("Rejected", selected.prtvNo, "error"); }
+    try { update(PRTVEngine.reject(selected, "MGR-001", "Vendor dispute — quality contested")); onNotification?.("Rejected", selected.prtvNo, "error"); }
     catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
@@ -202,7 +201,7 @@ export const PRTVModal: React.FC<PRTVModalProps> = ({ isOpen, onClose, onNotific
                 selected.debitNote ? (
                   <div className="bg-slate-800/20 border border-sky-500/20 rounded-xl p-5 space-y-3">
                     <div className="flex items-center justify-between">
-                      <p className="text-sm font-bold text-slate-200">Debit Note â€” {selected.debitNote.debitNoteNo}</p>
+                      <p className="text-sm font-bold text-slate-200">Debit Note — {selected.debitNote.debitNoteNo}</p>
                       <p className="text-[10px] text-slate-500">{new Date(selected.debitNote.generatedAt).toLocaleDateString("en-IN")}</p>
                     </div>
                     {[
@@ -225,7 +224,7 @@ export const PRTVModal: React.FC<PRTVModalProps> = ({ isOpen, onClose, onNotific
                     )}
                     {selected.settlement && (
                       <div className="p-3 bg-emerald-950/20 border border-emerald-500/20 rounded-lg text-xs mt-2">
-                        <p className="text-emerald-400 font-bold">Settled â€” {fmt(selected.settlement.settledAmt)} against {selected.settlement.payableRef}</p>
+                        <p className="text-emerald-400 font-bold">Settled — {fmt(selected.settlement.settledAmt)} against {selected.settlement.payableRef}</p>
                       </div>
                     )}
                   </div>

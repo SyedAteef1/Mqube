@@ -1,27 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 4.9.0
   * Created    : 2026-08-24
   * Modified   : 2026-08-24
-  * Copyright  : © SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
-  * Classification: Internal
+  * Copyright  :  tileflow.in. Open Source - Permissive Use
+  * License    : MIT Open Source License
+  * Classification: Open Source
 -->
 
 # Walkthrough: Tattly Threads Batch Tax Invoice Generation (107–128)
@@ -32,12 +28,12 @@ This document records the end-to-end execution and verification of 22 canonical 
 ## 2. Scope
 - Parsing 132 dispatch matrix line items across 22 unique Store/SIS locations.
 - Matching Store Codes to Purchase Orders, Site Names, Delivery Site Addresses, Recipient Billing Addresses, and State GSTINs.
-- Transactional persistence into PostgreSQL database `smriti001` (`sales_invoices`, `sales_invoice_items`, `invoice_document_artifacts`).
+- Transactional persistence into PostgreSQL database `tileflow001` (`sales_invoices`, `sales_invoice_items`, `invoice_document_artifacts`).
 - High-fidelity Playwright headless browser rendering of 22 canonical A4 Tax Invoice PDF artifacts with embedded Code128 barcodes, GST QR codes, and brand identity assets.
 
 ## 3. Files Created
-- `F:\Smriti-Clients Data\Tattly Threads\24_08_26\Tax_Invoice_Store_PO_Address_Confirmation_2026-08-24.xlsx`: Pre-creation verification Excel workbook with 2 sheets.
-- `F:\Smriti-Clients Data\Tattly Threads\24_08_26\Invoices\SIS_*_TaxInvoice_TT2026-2027_*.pdf`: 22 authoritative A4 Tax Invoice PDF documents.
+- `F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Tax_Invoice_Store_PO_Address_Confirmation_2026-08-24.xlsx`: Pre-creation verification Excel workbook with 2 sheets.
+- `F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Invoices\SIS_*_TaxInvoice_TT2026-2027_*.pdf`: 22 authoritative A4 Tax Invoice PDF documents.
 - `F:\SMRITRretailNX\exports\tt_batch_107_128\SIS_*_TaxInvoice_TT2026-2027_*.pdf`: System exports mirrored archive.
 
 ## 4. Files Modified

@@ -1,18 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.26.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: Zero-Touch Automated GST & Customer Classification Engine
 
 ## 1. Purpose
 To deliver a fail-safe, zero-touch GST calculation and classification system where business owners can configure store details once and cashiers cannot produce invalid tax invoices.

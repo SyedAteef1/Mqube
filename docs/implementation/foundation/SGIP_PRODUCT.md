@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 > **Status: Phase 0 — Constitution Only.**
@@ -17,9 +16,9 @@
 > the target architecture and governance rules for when implementation
 > begins. Do not cite this document as evidence of a built capability.
 
-# SMRITI Government Integration Platform (SGIP) — Product Constitution
+# TILEFLOW Government Integration Platform (SGIP) — Product Constitution
 
-This constitution serves as the authoritative architectural foundation and governance contract for all compliance integrations in SMRITI Retail OS. All AI agents, engineers, and modules must conform to these policies.
+This constitution serves as the authoritative architectural foundation and governance contract for all compliance integrations in TILEFLOW Retail OS. All AI agents, engineers, and modules must conform to these policies.
 
 ---
 
@@ -74,7 +73,7 @@ api_version: v1
 status: active
 display_name: E-Way Bill Integration
 description: Standard dynamic GSTN/NIC E-Way Bill compliant transaction gateway
-documentation_url: https://smritibooks.com/docs/ewaybill
+documentation_url: https://tileflow.in/docs/ewaybill
 minimum_platform_version: 3.16.0
 authentication:
   type: token

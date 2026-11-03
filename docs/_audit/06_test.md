@@ -1,16 +1,16 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal -- Audit Artifact
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source -- Audit Artifact
 -->
 
-# SMRITI Retail OS -- Test & Verification Audit
+# TILEFLOW Retail OS -- Test & Verification Audit
 ## Phase 6: Tests and Verification Evidence
 
 **Audit Date:** 2026-08-17
@@ -61,12 +61,11 @@
 
 ## 3. Test Content vs. Documentation Claims
 
-### Claim: "CompanyDatabaseResolver rejects unauthorized users with 403"
 Evidence: t_multi_comp_db.py test_company_db_resolver_unauthorized_user (line 40-44): raises HTTPException status 403
 Status: ALIGNED (test assertion matches claim)
 
-### Claim: "34 immutable smriti_menus rows in smritisys"
-Evidence: t_multi_comp_db.py test_menu_governance_34_immutable_ids (line 52-59): SELECT COUNT(*) FROM smriti_menus; asserts == 34
+### Claim: "34 immutable tileflow_menus rows in tileflowsys"
+Evidence: t_multi_comp_db.py test_menu_governance_34_immutable_ids (line 52-59): SELECT COUNT(*) FROM tileflow_menus; asserts == 34
 Status: PARTIALLY_VERIFIED (test asserts it; live execution result not confirmed in this session)
 
 ### Claim: "Anonymous requests to control center return 401"
@@ -103,7 +102,7 @@ Status: ALIGNED
 
 ### backend/app/tests/conftest.py:
 - Modified: 2026-08-17 (most recent)
-- Uses AsyncSession, settings.DATABASE_URL (smritisys)
+- Uses AsyncSession, settings.DATABASE_URL (tileflowsys)
 - Creates tables via Base.metadata.create_all -- bypasses Alembic
 - Therefore: tables are created from ORM models directly. ProductIdentity tables WILL exist in the in-memory/test DB even if migration is broken.
 - This means the JSONB migration bug does NOT block the app-level tests (backend/app/tests/) because they use create_all, not Alembic.

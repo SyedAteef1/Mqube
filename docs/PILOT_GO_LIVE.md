@@ -1,31 +1,30 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.29.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Retail OS — Commercial Pilot Go-Live Runbook
+# TILEFLOW Retail OS — Commercial Pilot Go-Live Runbook
 
 **Version:** v3.29.0  
 **Target Release:** Commercial Pilot Release  
-**Branch:** `smritiNX`  
+**Branch:** `tileflowNX`  
 **Classification:** Internal & Field Operations  
 
 ---
 
 ## 1. Executive Summary & Scope
 
-This runbook provides the definitive, step-by-step operating procedure for deploying and running SMRITI Retail OS in commercial pilot retail environments. It covers environment configuration, database migration, operator provisioning, daily checkout operations, non-destructive backup/recovery, and emergency escalation.
+This runbook provides the definitive, step-by-step operating procedure for deploying and running TILEFLOW Retail OS in commercial pilot retail environments. It covers environment configuration, database migration, operator provisioning, daily checkout operations, non-destructive backup/recovery, and emergency escalation.
 
 **Supported Pilot Modules (18 Core Workspaces):**
-- **Operations:** SMRITI Launchpad, Staff & HR Management, User Profile, About SMRITI.
+- **Operations:** TILEFLOW Launchpad, Staff & HR Management, User Profile, About TILEFLOW.
 - **Sales & POS:** Billing Desk (POS), Sales Studio, Create Tax Invoice (B2B), POS Profiles & Counters, Customer Master.
 - **Inventory & Sourcing:** Item Master & Catalog, Supplier Directory, Purchase Studio, Stock Movement Ledger.
 - **Documents & Data:** Barcode Studio, Document Series Engine, Commercial Terms Engine, Approval Matrix, Security & Audit Logs.
@@ -40,7 +39,7 @@ Before launching services, verify that all mandatory environment variables are p
 
 | Variable Name | Required Scope | Description / Example |
 |---|---|---|
-| `DATABASE_URL` | Backend / Alembic | `postgresql+asyncpg://postgres:<SECRET>@localhost:5432/smritisys` |
+| `DATABASE_URL` | Backend / Alembic | `postgresql+asyncpg://postgres:<SECRET>@localhost:5432/tileflowsys` |
 | `FASTAPI_BASE_URL` | Frontend / Express Proxy | `http://localhost:8000` (or `http://python-core:8000` in Docker) |
 | `JWT_SECRET_KEY` | Backend | High-entropy 256-bit cryptographic secret for token signing |
 | `JWT_ACCESS_TOKEN_EXPIRE_MINUTES` | Backend | `480` (8 hours for retail cashier shifts) |
@@ -54,7 +53,7 @@ Before launching services, verify that all mandatory environment variables are p
 ### Step 3.1. Verify Database Reachability
 ```bash
 # Verify connection to PostgreSQL control plane
-psql -U postgres -h localhost -d smritisys -c "SELECT version();"
+psql -U postgres -h localhost -d tileflowsys -c "SELECT version();"
 ```
 
 ### Step 3.2. Execute Alembic Migrations to HEAD
@@ -75,7 +74,7 @@ alembic upgrade head
 
 ### Step 3.3. Verify Product Variant Integrity
 ```sql
--- In the operational company database (e.g. smriti001):
+-- In the operational company database (e.g. tileflow001):
 SELECT count(*) AS total_products, 
        count(CASE WHEN variant_id IS NULL THEN 1 END) AS null_variant_ids 
 FROM products;
@@ -87,7 +86,7 @@ FROM products;
 ## 4. Operator Provisioning & Role-Based Access Control (RBAC)
 
 ### Step 4.1. Role Assignment Architecture
-SMRITI enforces **deny-by-default** access control:
+TILEFLOW enforces **deny-by-default** access control:
 - **CASHIER**: Access restricted to `pos`, `item-master`, `stock-ledger`, `create-tax-invoice`, `barcode`. Administrative workspaces are hidden.
 - **MANAGER**: Operational oversight including `purchase`, `supplier-mgmt`, `crm`, `staff-management`, `audit-logs`.
 - **SYSADMIN**: Full access to all 33 workspaces, company database settings, and system configuration.
@@ -142,8 +141,8 @@ graph LR
 ### Step 6.1. Pre-Deployment Database Snapshot (Mandatory Before Upgrades)
 ```bash
 # Create timestamped snapshot of control plane and company databases
-pg_dump -U postgres -h localhost -F c -b -v -f "backup_smritisys_$(date +%Y%m%d_%H%M%S).dump" smritisys
-pg_dump -U postgres -h localhost -F c -b -v -f "backup_smriti001_$(date +%Y%m%d_%H%M%S).dump" smriti001
+pg_dump -U postgres -h localhost -F c -b -v -f "backup_tileflowsys_$(date +%Y%m%d_%H%M%S).dump" tileflowsys
+pg_dump -U postgres -h localhost -F c -b -v -f "backup_tileflow001_$(date +%Y%m%d_%H%M%S).dump" tileflow001
 ```
 
 ### Step 6.2. Non-Destructive Rollback Protocol
@@ -153,7 +152,7 @@ pg_dump -U postgres -h localhost -F c -b -v -f "backup_smriti001_$(date +%Y%m%d_
 2. Checkout the previous stable Git commit or tag (e.g. `git checkout v3.28.0`).
 3. Restore the pre-deployment database dump using `pg_restore`:
    ```bash
-   pg_restore -U postgres -h localhost -d smriti001 --clean "backup_smriti001_<TIMESTAMP>.dump"
+   pg_restore -U postgres -h localhost -d tileflow001 --clean "backup_tileflow001_<TIMESTAMP>.dump"
    ```
 4. Restart application services and verify login and stock balance integrity.
 
@@ -176,7 +175,5 @@ In the event of an operational anomaly, data mismatch, or hardware failure durin
 
 - **Level 1 (Store Supervisor):** Restart browser session, verify network connectivity to `http://localhost:8000`, check physical printer paper roll.
 - **Level 2 (Systems Architect):**
-  - **Chief Systems Architect:** Jawahar Ramkripal Mallah
-  - **Email:** `support@smritibooks.com` | `founder@aitdl.com`
-  - **Websites:** [smritibooks.com](https://smritibooks.com) | [erpnbook.com](https://erpnbook.com) | [aitdl.com](https://aitdl.com)
+  - **Chief Systems Architect:** Syed Ateef
   - **Phone:** +91 9324117007

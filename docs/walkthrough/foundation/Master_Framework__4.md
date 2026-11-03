@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Master Framework — Phase A Walkthrough
+# TILEFLOW Master Framework — Phase A Walkthrough
 
 ## 1. Purpose
-Document the successful creation and application of the database migration for SMRITI Master Framework foundation tables.
+Document the successful creation and application of the database migration for TILEFLOW Master Framework foundation tables.
 
 ## 2. Scope
 This walkthrough documents Phase A only, which comprises:
@@ -24,7 +23,7 @@ This walkthrough documents Phase A only, which comprises:
 * Verifying indices and database schema via `psql`.
 
 ## 3. Files Created
-* `backend/alembic/versions/a3e4b5c6d7e8_add_smriti_master_framework_tables.py`
+* `backend/alembic/versions/a3e4b5c6d7e8_add_tileflow_master_framework_tables.py`
 
 ## 4. Files Modified
 * None.

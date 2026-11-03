@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-11
-Modified     : 2026-07-13
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from typing import List, Optional, Dict, Any
 from datetime import datetime
 from decimal import Decimal
@@ -37,7 +24,7 @@ class ProductBase(BaseModel):
     buying_price: Optional[Decimal] = None
     cost_price: Optional[Decimal] = None
     sku: Optional[str] = Field(None, max_length=100)
-    hsn_code: str = Field(..., max_length=15, description="HSN Code")
+    hsn_code: str = Field("6907", max_length=15, description="HSN Code")
     pricing_mode: Optional[str] = "Fixed"
     tracking_mode: Optional[str] = "Standard"
     variant_template_id: Optional[str] = Field(None, max_length=50)
@@ -45,6 +32,10 @@ class ProductBase(BaseModel):
     attributes: Optional[Dict[str, Any]] = Field(default_factory=dict)
     primary_image_url: Optional[str] = Field(None, max_length=512)
     gallery_images: Optional[List[str]] = Field(default_factory=list)
+    sqft_per_box: Optional[Decimal] = Field(None, gt=0, description="Sq.Ft. covered by one box")
+    pieces_per_box: Optional[int] = Field(None, gt=0)
+    batch_shade_no: Optional[str] = Field(None, max_length=100)
+    caliber_code: Optional[str] = Field(None, max_length=50)
 
     @field_validator("code", "name", "barcode", "hsn_code", mode="before")
     @classmethod
@@ -180,6 +171,10 @@ class ProductUpdate(BaseModel):
     attributes: Optional[Dict[str, Any]] = None
     primary_image_url: Optional[str] = None
     gallery_images: Optional[List[str]] = None
+    sqft_per_box: Optional[Decimal] = Field(None, gt=0)
+    pieces_per_box: Optional[int] = Field(None, gt=0)
+    batch_shade_no: Optional[str] = Field(None, max_length=100)
+    caliber_code: Optional[str] = Field(None, max_length=50)
 
     @field_validator("code", "name", "barcode", "hsn_code", mode="before")
     @classmethod

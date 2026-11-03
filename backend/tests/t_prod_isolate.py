@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version      : 3.16.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import pytest
 from fastapi.testclient import TestClient
 from app.main import app
@@ -52,7 +27,7 @@ def test_production_header_rejection():
     response = client.post(
         "/api/v1/training/sessions",
         json={"trainee_name": "Invalid Trainee"},
-        headers={"X-Company-Code": "SMRITIBUS_PROD_1001"}
+        headers={"X-Company-Code": "TILEFLOWBUS_PROD_1001"}
     )
     assert response.status_code == 400
     assert "Header Violation" in response.json()["detail"]
@@ -75,7 +50,7 @@ def test_certificate_issuance_and_public_verification():
     assert cert_res.status_code == 200
     cert_data = cert_res.json()
     cert_id = cert_data["certificate_id"]
-    assert cert_id.startswith("SMRITI-CERT-")
+    assert cert_id.startswith("TILEFLOW-CERT-")
     assert cert_data["status"] == "VALID"
 
     # 3. Verify Public Read-Only Verification Endpoint

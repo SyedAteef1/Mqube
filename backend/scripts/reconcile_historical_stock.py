@@ -1,25 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.36.1
-Created      : 2026-08-30
-Modified     : 2026-08-30
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Historical Stock Reconciliation Safety Guard Module.
-
-dry-run mode: performs a read-only analysis of the target database and
-              writes a JSON report to output_file (if given). No writes.
-apply mode:   enforces all 5 safety guards before authorising posting.
-
-PRODUCTION RULE: No DDL. No DML. No schema changes.
-"""
-
 import json
 import os
 from typing import Optional

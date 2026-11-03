@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-07-11
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from datetime import datetime, date
 from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey, Date, DateTime, Text
 from sqlalchemy.orm import relationship
@@ -69,7 +55,7 @@ class Customer(BaseEntity):
 
 
 class CrmLead(BaseEntity):
-    """SMRITI Commercial Growth Engine - Lead Master."""
+    """TILEFLOW Commercial Growth Engine - Lead Master."""
     __tablename__ = "crm_leads"
 
     lead_no = Column(String(50), nullable=False, unique=True, index=True)
@@ -85,7 +71,7 @@ class CrmLead(BaseEntity):
 
 
 class CrmOpportunity(BaseEntity):
-    """SMRITI Commercial Growth Engine - Deal / Opportunity Pipeline."""
+    """TILEFLOW Commercial Growth Engine - Deal / Opportunity Pipeline."""
     __tablename__ = "crm_opportunities"
 
     opp_no = Column(String(50), nullable=False, unique=True, index=True)
@@ -100,7 +86,7 @@ class CrmOpportunity(BaseEntity):
 
 
 class CrmCampaign(BaseEntity):
-    """SMRITI Commercial Growth Engine - Marketing & Outreach Campaign."""
+    """TILEFLOW Commercial Growth Engine - Marketing & Outreach Campaign."""
     __tablename__ = "crm_campaigns"
 
     campaign_no = Column(String(50), nullable=False, unique=True, index=True)

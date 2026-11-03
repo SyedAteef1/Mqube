@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 4.10.0
- * Created      : 2026-08-24
- * Modified     : 2026-08-24
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { TaxHeaderBar } from "./components/TaxHeaderBar.tsx";
 import { TaxInvoiceDoc } from "./components/TaxInvoiceDoc.tsx";
@@ -25,7 +11,7 @@ import { apiFetchV1 } from "../../lib/apiFetchV1.ts";
 import { ExportColumnDefinition } from "../export/types.ts";
 import { X, Search } from "lucide-react";
 
-export interface SmritiDistributorTaxInvoiceWorkspaceProps {
+export interface TileFlowDistributorTaxInvoiceWorkspaceProps {
   initialInvoiceId?: string;
   onExit?: () => void;
   onNotification?: (title: string, msg: string, type?: "success" | "error" | "info" | "warning") => void;
@@ -53,7 +39,7 @@ const DEFAULT_DOC_STATE: TaxInvoiceDocumentState = {
   documentRemarks: "",
 };
 
-export const DistTaxInvoice: React.FC<SmritiDistributorTaxInvoiceWorkspaceProps> = ({
+export const DistTaxInvoice: React.FC<TileFlowDistributorTaxInvoiceWorkspaceProps> = ({
   initialInvoiceId,
   onExit,
   onNotification,
@@ -406,7 +392,7 @@ export const DistTaxInvoice: React.FC<SmritiDistributorTaxInvoiceWorkspaceProps>
           Ready... F2: Search | F11: Direct Entry | F6: Discounts | F7/F8: Settlement | F12: Suspend | Ctrl+4: AddOns
         </span>
         <span className="font-label-caps text-label-caps text-primary dark:text-primary-fixed">
-          © 2026 smritisys.com
+           2026 MQube
         </span>
       </footer>
 

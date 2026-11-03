@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Import items using REAL EAN/Barcode data from TT.CSV
-Extracts products with actual EAN codes and imports to smriti001
+Extracts products with actual EAN codes and imports to tileflow001
 """
 import csv
 import psycopg2
@@ -62,11 +62,11 @@ with open(barcode_file, 'r', encoding='utf-8') as f:
 print(f"   Read {row_count} rows from CSV")
 print(f"   Found {len(products_with_barcodes)} unique products with real barcodes")
 
-# Connect to smriti001
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+# Connect to tileflow001
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
-print(f"\n✓ Connected to smriti001")
+print(f"\n✓ Connected to tileflow001")
 
 # Get company ID for Tattly Threads
 cur.execute("SELECT id FROM companies WHERE name LIKE '%Tattly%' LIMIT 1")

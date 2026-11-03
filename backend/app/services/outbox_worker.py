@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-14
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 import logging
 from datetime import datetime, timezone
@@ -21,7 +7,7 @@ from ..models.outbox import IntegrationOutboxEvent
 from .outbox_analytics import UnifiedOutboxAnalyticsService
 from ..db.session import get_company_sessionmaker
 
-logger = logging.getLogger("smriti.outbox_worker")
+logger = logging.getLogger("tileflow.outbox_worker")
 
 
 class OutboxQueueWorker:

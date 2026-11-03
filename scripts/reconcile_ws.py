@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, re, psycopg2
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -23,10 +10,10 @@ def reconcile_counts():
     items = re.findall(pattern, content, re.MULTILINE | re.DOTALL)
     frontend_count = len(items)
 
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
 
-    cur.execute("SELECT id, title, route FROM smriti_menus ORDER BY sequence;")
+    cur.execute("SELECT id, title, route FROM tileflow_menus ORDER BY sequence;")
     rows = cur.fetchall()
     total_db = len(rows)
 
@@ -45,7 +32,7 @@ def reconcile_counts():
     print(f"3. Inserted new rows                                 = 30")
     print(f"4. Updated existing default rows                    = 2 (menu-inventory, menu-sales)")
     print(f"5. Untouched default rows                            = 2 (menu-dashboard, menu-reports)")
-    print(f"6. Final DB rows in smriti_menus                      = {total_db}")
+    print(f"6. Final DB rows in tileflow_menus                      = {total_db}")
     print(f"7. Duplicate menu IDs                                = 0")
     print(f"8. Orphan menus                                      = 0")
     print("\nExplanation of 30 vs 32 Discrepancy:")

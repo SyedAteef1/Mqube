@@ -1,17 +1,4 @@
 /**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-07-12
- * Modified     : 2026-08-26
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
-/**
  * Safely parses any input into a guaranteed finite number.
  * Returns fallback (default 0) if value is null, undefined, NaN, Infinity, -Infinity, or non-numeric string.
  */

@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.80.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI Omnichannel Communicator & WhatsApp Gateway UI (v1.0.0-GA)
+# Walkthrough: TILEFLOW Omnichannel Communicator & WhatsApp Gateway UI (v1.0.0-GA)
 
 ## 1. Purpose
-Documents the implementation and testing of the SMRITI Omnichannel Communicator Studio, providing retail enterprises with a unified interface for WhatsApp Cloud API messaging, SMS/Email dispatches, template interpolation, and live webhook delivery status tracking.
+Documents the implementation and testing of the TILEFLOW Omnichannel Communicator Studio, providing retail enterprises with a unified interface for WhatsApp Cloud API messaging, SMS/Email dispatches, template interpolation, and live webhook delivery status tracking.
 
 ## 2. Scope
 - Omnichannel Communicator Studio (`CommunicatorStudioTab.tsx`).

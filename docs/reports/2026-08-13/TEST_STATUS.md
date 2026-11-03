@@ -10,4 +10,4 @@
 | Sales Studio | ❌ | ❌ | No test suite found |
 | Billing Desk | ❌ | ❌ | No test suite found |
 | CRM & Loyalty | ✅ | ❌ | Fully covered with assertions |
-| About SMRITI | ✅ | ✅ | Fully covered with assertions |
+| About TILEFLOW | ✅ | ✅ | Fully covered with assertions |

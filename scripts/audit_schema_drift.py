@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 import psycopg2
 
@@ -28,11 +15,11 @@ from app.compliance import models as compliance_models
 
 def run_readonly_schema_drift_audit(target_dbs=None):
     print("==========================================================")
-    print("SMRITI READ-ONLY ORM VS POSTGRES DATABASE SCHEMA DRIFT AUDIT")
+    print("TILEFLOW READ-ONLY ORM VS POSTGRES DATABASE SCHEMA DRIFT AUDIT")
     print("==========================================================")
 
     if not target_dbs:
-        target_dbs = ["smriti001", "smritisys"]
+        target_dbs = ["tileflow001", "tileflowsys"]
 
     results = {}
 
@@ -115,5 +102,5 @@ def run_readonly_schema_drift_audit(target_dbs=None):
     return results
 
 if __name__ == "__main__":
-    dbs = sys.argv[1:] if len(sys.argv) > 1 else ["smriti001", "smritisys"]
+    dbs = sys.argv[1:] if len(sys.argv) > 1 else ["tileflow001", "tileflowsys"]
     run_readonly_schema_drift_audit(dbs)

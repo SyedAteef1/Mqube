@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.29.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Retail OS — Hybrid Thermal Print Architecture Spike (Server TCP vs QZ Tray vs PRN)
+# TILEFLOW Retail OS — Hybrid Thermal Print Architecture Spike (Server TCP vs QZ Tray vs PRN)
 
 **Version:** v3.29.0  
 **Status:** Feature-Flagged Spike (Default: `server_tcp`)  
@@ -21,11 +20,11 @@
 
 ## 1. Architecture Overview & Hybrid Dispatch Model
 
-SMRITI Retail OS supports a **hybrid tri-mode print architecture** that accommodates diverse store infrastructure configurations:
+TILEFLOW Retail OS supports a **hybrid tri-mode print architecture** that accommodates diverse store infrastructure configurations:
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           SMRITI Web Client                                 │
+│                           TILEFLOW Web Client                                 │
 │  (LabelPrintingSection / BarcodeStudioTab / POS Billing / Sales Studio)     │
 └───────────────┬─────────────────────────────────────────────┬───────────────┘
                 │ 1. POST /api/v1/barcode/print                │
@@ -106,7 +105,7 @@ SMRITI Retail OS supports a **hybrid tri-mode print architecture** that accommod
 > [!WARNING]
 > **DO NOT COMMIT PRIVATE SIGNING KEYS OR CERTIFICATES TO THE REPOSITORY.**
 - In production, configure QZ Tray with the domain certificate and server-side request signing endpoint.
-- For local pilot testing, allow the SMRITI origin when prompted by QZ Tray ("Remember this decision").
+- For local pilot testing, allow the TILEFLOW origin when prompted by QZ Tray ("Remember this decision").
 
 ### Step 4.3. Feature Flag Configuration
 In frontend `.env`:

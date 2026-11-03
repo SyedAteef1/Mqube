@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI Platform Architecture Refactor — Routing Boundary Hardening & Canonicalization (Milestone 1)
+# Walkthrough: TILEFLOW Platform Architecture Refactor — Routing Boundary Hardening & Canonicalization (Milestone 1)
 
 ## 1. Purpose
-Execute Milestone 1 of the SMRITI Master Architecture Blueprint v1.0: Canonicalize the Company, User, and Database Routing models, eliminate demo fallbacks, and harden the Universal Database Resolver into the sole, fail-closed path to company databases.
+Execute Milestone 1 of the TILEFLOW Master Architecture Blueprint v1.0: Canonicalize the Company, User, and Database Routing models, eliminate demo fallbacks, and harden the Universal Database Resolver into the sole, fail-closed path to company databases.
 
 ---
 
@@ -35,7 +34,7 @@ Execute Milestone 1 of the SMRITI Master Architecture Blueprint v1.0: Canonicali
 ---
 
 ## 4. Files Modified
-- `backend/app/services/db_resolver.py`: Removed credential-bearing connection URLs from returned payloads, removed `"Tattly Threads"` demo fallbacks, enforced `companies` and `company_database_registries` lookup in `smritisys`, rejected empty/missing company context.
+- `backend/app/services/db_resolver.py`: Removed credential-bearing connection URLs from returned payloads, removed `"Tattly Threads"` demo fallbacks, enforced `companies` and `company_database_registries` lookup in `tileflowsys`, rejected empty/missing company context.
 - `backend/app/db/session.py`: Hardened `resolve_company_database_name` to fail closed if company context is missing or database is not in `READY` status; hardened `get_company_async_engine` to reject unverified/arbitrary database names.
 - `backend/app/api/deps.py`: Hardened `get_tenant_context` to reject missing tenant company context without defaulting.
 - `backend/app/services/control_registry.py`: Migrated active usage from `ControlCompanyDatabase` to canonical `CompanyDatabaseRegistry` and aligned `READY`/`ACTIVE` status.
@@ -48,13 +47,13 @@ Execute Milestone 1 of the SMRITI Master Architecture Blueprint v1.0: Canonicali
 
 ## 5. Architecture Decisions
 1. **Freeze Invariants**:
-   - `smritisys` owns platform metadata, identity, menus, capabilities, policies, and routing.
-   - `smritiXXX` owns company masters, transactions, inventory, and accounting.
+   - `tileflowsys` owns platform metadata, identity, menus, capabilities, policies, and routing.
+   - `tileflowXXX` owns company masters, transactions, inventory, and accounting.
    - `stock_movements` and financial ledgers remain authoritative.
 2. **Canonical Model per Concept**:
-   - Company: `Company` (`companies` in `smritisys`)
-   - User: `User` (`users` in `smritisys`)
-   - Database Routing: `CompanyDatabaseRegistry` (`company_database_registries` in `smritisys`)
+   - Company: `Company` (`companies` in `tileflowsys`)
+   - User: `User` (`users` in `tileflowsys`)
+   - Database Routing: `CompanyDatabaseRegistry` (`company_database_registries` in `tileflowsys`)
 3. **Fail-Closed & Zero Credential Leaks**:
    - All tenant database requests must resolve strictly against verified entries in `companies` and `company_database_registries` with status `READY`.
    - Application payloads return sanitized database references; raw credential strings or database connection URLs are never exposed.
@@ -69,14 +68,14 @@ A controlled migration protects live business data and continuous uptime by esta
 ---
 
 ## 7. Implementation Summary
-- **Universal Resolver**: `CompanyDatabaseResolver` connects to `smritisys` and enforces:
+- **Universal Resolver**: `CompanyDatabaseResolver` connects to `tileflowsys` and enforces:
   1. Mandatory non-empty company context (`400 Bad Request` on empty/missing).
   2. Company registration in `companies` (where `is_active=true` and `is_deleted=false`).
   3. User authorization in `user_company_assignments` (or `SYSADMIN` role).
   4. Database entry in `company_database_registries` with status `READY`.
-  5. Database naming conformity: `^smriti(?!000)(?!SYS)[A-Z0-9]{3}$`.
+  5. Database naming conformity: `^tileflow(?!000)(?!SYS)[A-Z0-9]{3}$`.
   6. Zero credential leakage: Payload returns metadata only (`database_name`, `company_name`, `status`, `schema_version`).
-- **Session Layer**: `resolve_company_database_name` and `get_company_async_engine` in `session.py` delegate to `smritisys` registry lookup, reject arbitrary database names, and fail closed if unverified.
+- **Session Layer**: `resolve_company_database_name` and `get_company_async_engine` in `session.py` delegate to `tileflowsys` registry lookup, reject arbitrary database names, and fail closed if unverified.
 
 ---
 
@@ -142,10 +141,10 @@ backend\tests\t_wms_phase4.py ......             [100%]
 ---
 
 ## 12. Related ADRs
-- `ADR-001`: Multi-Company Database Architecture and Separation of Control Plane (`smritisys`) and Data Planes (`smritiXXX`).
+- `ADR-001`: Multi-Company Database Architecture and Separation of Control Plane (`tileflowsys`) and Data Planes (`tileflowXXX`).
 - `ADR-002`: Authoritative Ledger Sourcing for Stock and Financial Transactions.
 
 ---
 
 ## 13. Related RFCs
-- `RFC-001`: SMRITI Enterprise Business Operating Platform Master Architecture Blueprint v1.0.
+- `RFC-001`: TILEFLOW Enterprise Business Operating Platform Master Architecture Blueprint v1.0.

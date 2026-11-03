@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-
-Alembic v1374 -- Sprint 18.
-Adds customer_id column to sales_returns for denormalized REVERSAL hook queries.
-This eliminates the need to join back to sales_invoices to determine customer
-when processing loyalty reversals, improving REDEEM hook latency.
-"""
-
 from alembic import op
 import sqlalchemy as sa
 

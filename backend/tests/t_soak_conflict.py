@@ -1,32 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.24.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-PURPOSE
--------
-This is the ACTUAL concurrent offline soak test suite for SMRITI.
-
-Unlike the sequential scenario tests in t_conflict_res.py,
-every test here fires multiple simultaneous coroutines via asyncio.gather (or, for the
-REST surface, via concurrent httpx calls) so that the engine processes competing writes
-against the same shared resource at the same time.
-
-This directly verifies the named gap that was cited in
-docs/architecture/PLATFORM.md:
-  "Long-running multi-client conflict resolution under genuine concurrent offline drift
-   (asyncio.gather / concurrent writes to the same record) has not been verified and
-   requires physical soak testing before this row can move to Verified."
-"""
-
 import sys
 import uuid
 import asyncio
@@ -65,8 +36,8 @@ def get_jwt_token(company_id: str = "COMP-001", branch_id: str = "BR-001") -> st
             "role": UserRole.SYSADMIN.value,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -157,7 +128,7 @@ async def test_concurrent_oversell_asyncio_gather_5_terminals():
       - No resolution raises an unhandled exception
       - Idempotent: no duplicate SalesInvoice rows for the same invoice_no
     """
-    db_name = "smriti001"
+    db_name = "tileflow001"
     company_id = "COMP-001"
     branch_id = "BR-001"
     n_terminals = 5
@@ -247,7 +218,7 @@ async def test_concurrent_retry_storm_same_invoice_no_idempotency():
       - All remaining 7 are DEDUPLICATED — not re-posted, not double-decremented
       - No concurrent database integrity violation
     """
-    db_name = "smriti001"
+    db_name = "tileflow001"
     company_id = "COMP-001"
     branch_id = "BR-001"
     n_retries = 8
@@ -328,7 +299,7 @@ async def test_concurrent_http_push_5_terminals_via_httpx_gather():
       - Combined: the engine consistently routes over-sold terminals to ACCEPTED_WARN
         or NEEDS_REVIEW — never silently succeeds when stock is exhausted
     """
-    db_name = "smriti001"
+    db_name = "tileflow001"
     prod_id = f"prod_http_soak_{uuid.uuid4().hex[:8]}"
 
     sessionmaker = get_company_sessionmaker(db_name)
@@ -400,7 +371,7 @@ async def test_sustained_rolling_load_20_cycles_two_terminals():
       - Total ACCEPTED across all cycles never exceeds (cycles × stock_increment)
         since stock is re-seeded at 10 per cycle via an explicit refill
     """
-    db_name = "smriti001"
+    db_name = "tileflow001"
     company_id = "COMP-001"
     branch_id = "BR-001"
     cycles = 20

@@ -1,19 +1,5 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.29.1
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { AttributeDefinition } from "../types.ts";
-import { SmritiFieldDefinition } from "../lib/headerMapping/types.ts";
+import { TileFlowFieldDefinition } from "../lib/headerMapping/types.ts";
 import { ItemMasterFieldDefinition } from "../components/itemMaster/types.ts";
 import { getCustomAliases, getRemovedAliases } from "../lib/headerMapping/HeaderAliasRegistry.ts";
 import { normalizeHeader } from "../lib/headerMapping/HeaderNormalizer.ts";
@@ -38,9 +24,6 @@ export interface UnifiedItemField {
   attributeId?: string;
 }
 
-/**
- * Authoritative Core Standard Retail Fields Definition
- */
 export const CORE_STANDARD_ITEM_FIELDS: UnifiedItemField[] = [
   {
     id: "stockNo",
@@ -360,11 +343,11 @@ export function getUnifiedItemMasterFields(
 }
 
 /**
- * Converts the unified field catalog into SmritiFieldDefinitions for HeaderMappingEngine
+ * Converts the unified field catalog into TileFlowFieldDefinitions for HeaderMappingEngine
  */
 export function getUnifiedHeaderMappingFields(
   dynamicDefinitions: AttributeDefinition[] = []
-): SmritiFieldDefinition[] {
+): TileFlowFieldDefinition[] {
   const catalog = resolveItemMasterCatalog(dynamicDefinitions);
   const customAliasMap = getCustomAliases();
   const removedAliasMap = getRemovedAliases();
@@ -441,8 +424,8 @@ export function serializeProductAttributes(
   return attributesPayload;
 }
 
-const GLOBAL_COLUMN_ORDER_KEY = "smriti_global_attribute_column_order";
-const GLOBAL_FIELD_VISIBILITY_KEY = "smriti_global_field_visibility";
+const GLOBAL_COLUMN_ORDER_KEY = "tileflow_global_attribute_column_order";
+const GLOBAL_FIELD_VISIBILITY_KEY = "tileflow_global_field_visibility";
 
 /**
  * Saves the global visible fields list and column arrangement across the entire application
@@ -452,7 +435,7 @@ export function saveGlobalFieldVisibility(visibleKeys: string[]): void {
     localStorage.setItem(GLOBAL_FIELD_VISIBILITY_KEY, JSON.stringify(visibleKeys));
     localStorage.setItem(GLOBAL_COLUMN_ORDER_KEY, JSON.stringify(visibleKeys));
     if (typeof window !== "undefined") {
-      window.dispatchEvent(new CustomEvent("smriti_field_visibility_updated", { detail: { visibleKeys } }));
+      window.dispatchEvent(new CustomEvent("tileflow_field_visibility_updated", { detail: { visibleKeys } }));
     }
   } catch (err) {
     console.error("Failed to save global field visibility:", err);

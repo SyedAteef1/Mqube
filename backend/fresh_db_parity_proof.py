@@ -1,5 +1,5 @@
 """
-SMRITI Fresh DB Schema Parity + Upgrade/Downgrade Proof
+TILEFLOW Fresh DB Schema Parity + Upgrade/Downgrade Proof
 ========================================================
 Sections:
   1. Create disposable PostgreSQL database
@@ -8,7 +8,7 @@ Sections:
   4. downgrade v1392 → v1391 → verify
   5. Drop & recreate → alembic upgrade head again
   6. Drop disposable DB
-  7. Production safety: 0 DDL/DML on smritisys or smriti001
+  7. Production safety: 0 DDL/DML on tileflowsys or tileflow001
   8. Print FINAL REPORT
 """
 
@@ -36,7 +36,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 PG_ADMIN_URL   = "postgresql://postgres:postgres@localhost:5432/postgres"
 PG_SYNC_BASE   = "postgresql://postgres:postgres@localhost:5432"
 PG_ASYNC_BASE  = "postgresql+asyncpg://postgres:postgres@localhost:5432"
-DISP_DB        = "smriti_fresh_parity_test"
+DISP_DB        = "tileflow_fresh_parity_test"
 BACKEND_DIR    = os.path.dirname(os.path.abspath(__file__))
 ALEMBIC_INI    = os.path.join(BACKEND_DIR, "alembic.ini")
 
@@ -105,7 +105,7 @@ def run_alembic(args: list, target_db: str = DISP_DB) -> tuple[int, str]:
 # ---------------------------------------------------------------------------
 # v1390, v1391, v1392 canonical tables (key items to verify)
 # ---------------------------------------------------------------------------
-V1390_TABLES = ["company_database_registries", "smriti_permissions"]
+V1390_TABLES = ["company_database_registries", "tileflow_permissions"]
 
 V1391_TABLES = [
     # Canonical tables from v1391_missing_platform_tables.py (AST-verified)
@@ -205,7 +205,7 @@ def check_parity():
 
     # --- v1390 tables ---
     v1390_ok = True
-    print("\n    [v1390] company_database_registries + smriti_permissions")
+    print("\n    [v1390] company_database_registries + tileflow_permissions")
     for t in V1390_TABLES:
         if t in live_tables:
             print(f"      ✓ {t} EXISTS")
@@ -328,14 +328,14 @@ def drop_disposable():
 # ---------------------------------------------------------------------------
 def verify_production_safety():
     print("\n[7] Production Safety Verification")
-    # smritisys and smriti001 are intentionally NOT touched in this script.
+    # tileflowsys and tileflow001 are intentionally NOT touched in this script.
     # We confirm the disposable DB name is not either of those.
-    assert DISP_DB not in ("smritisys", "smriti001"), "SAFETY VIOLATION: Disposable DB name collides with production!"
-    print(f"    ✓ Disposable DB '{DISP_DB}' ≠ smritisys ≠ smriti001")
-    print(f"    Production DDL on smritisys : {REPORT['production_ddl']}")
-    print(f"    Production DML on smritisys : {REPORT['production_dml']}")
-    print(f"    Production DDL on smriti001 : {REPORT['production_ddl']}")
-    print(f"    Production DML on smriti001 : {REPORT['production_dml']}")
+    assert DISP_DB not in ("tileflowsys", "tileflow001"), "SAFETY VIOLATION: Disposable DB name collides with production!"
+    print(f"    ✓ Disposable DB '{DISP_DB}' ≠ tileflowsys ≠ tileflow001")
+    print(f"    Production DDL on tileflowsys : {REPORT['production_ddl']}")
+    print(f"    Production DML on tileflowsys : {REPORT['production_dml']}")
+    print(f"    Production DDL on tileflow001 : {REPORT['production_ddl']}")
+    print(f"    Production DML on tileflow001 : {REPORT['production_dml']}")
     print(f"    Production stamp            : {REPORT['production_stamp']}")
     print(f"    Production upgrade          : {REPORT['production_upgrade']}")
 
@@ -345,7 +345,7 @@ def verify_production_safety():
 # ---------------------------------------------------------------------------
 def print_final_report():
     print("\n" + "="*66)
-    print("SMRITI — FRESH DB SCHEMA PARITY & UPGRADE/DOWNGRADE REPORT")
+    print("TILEFLOW — FRESH DB SCHEMA PARITY & UPGRADE/DOWNGRADE REPORT")
     print("="*66)
     print(f"  Fresh DB Created       : {REPORT['fresh_db_created']}")
     print(f"  Alembic upgrade head   : {REPORT['alembic_upgrade']}")

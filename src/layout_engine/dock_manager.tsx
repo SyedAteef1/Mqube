@@ -1,33 +1,8 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useRef, useState, useEffect } from "react";
 import { useLayoutEngine } from "./layout_store.js";
 import { useResponsiveLayout } from "./responsive_manager.js";
 import { NavigationRenderer } from "./NavRenderer.js";
-import { SmritiScrollArea } from "../components/SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../components/TileFlowScrollArea.tsx";
 import { useWorkspace } from "../contexts/WorkspaceContext.tsx";
 import { WorkspaceToolbar } from "../components/WorkspaceToolbar.tsx";
 
@@ -132,12 +107,12 @@ export const DockManager: React.FC<DockManagerProps> = ({
         )}
 
         {/* Workspace content */}
-        <SmritiScrollArea className="flex-1 bg-theme-base select-text h-full relative flex flex-col" fadeColorClass="from-theme-base">
+        <TileFlowScrollArea className="flex-1 bg-theme-base select-text h-full relative flex flex-col" fadeColorClass="from-theme-base">
           <WorkspaceToolbar currentTabId={activeTab} />
           <div className="p-6 flex-1">
             {children}
           </div>
-        </SmritiScrollArea>
+        </TileFlowScrollArea>
       </div>
     );
   };
@@ -147,12 +122,12 @@ export const DockManager: React.FC<DockManagerProps> = ({
     return (
       <div ref={containerRef} className="flex-1 flex overflow-hidden relative">
         {/* Workspace content (first) */}
-        <SmritiScrollArea className="flex-1 bg-theme-base select-text h-full relative flex flex-col" fadeColorClass="from-theme-base">
+        <TileFlowScrollArea className="flex-1 bg-theme-base select-text h-full relative flex flex-col" fadeColorClass="from-theme-base">
           <WorkspaceToolbar currentTabId={activeTab} />
           <div className="p-6 flex-1">
             {children}
           </div>
-        </SmritiScrollArea>
+        </TileFlowScrollArea>
 
         {/* Navigation Panel (second) */}
         {!focusMode && (
@@ -195,12 +170,12 @@ export const DockManager: React.FC<DockManagerProps> = ({
         )}
         
         {/* Workspace Content */}
-        <SmritiScrollArea className="flex-1 bg-theme-base select-text h-full relative flex flex-col" fadeColorClass="from-theme-base">
+        <TileFlowScrollArea className="flex-1 bg-theme-base select-text h-full relative flex flex-col" fadeColorClass="from-theme-base">
           <WorkspaceToolbar currentTabId={activeTab} />
           <div className="p-6 flex-1">
             {children}
           </div>
-        </SmritiScrollArea>
+        </TileFlowScrollArea>
       </div>
     );
   };
@@ -210,12 +185,12 @@ export const DockManager: React.FC<DockManagerProps> = ({
     return (
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Workspace Content */}
-        <SmritiScrollArea className="flex-1 bg-theme-base select-text h-full relative flex flex-col" fadeColorClass="from-theme-base">
+        <TileFlowScrollArea className="flex-1 bg-theme-base select-text h-full relative flex flex-col" fadeColorClass="from-theme-base">
           <WorkspaceToolbar currentTabId={activeTab} />
           <div className="p-6 flex-1">
             {children}
           </div>
-        </SmritiScrollArea>
+        </TileFlowScrollArea>
 
         {/* Navigation Panel */}
         {!focusMode && (

@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Platform Refactor Slice 11: Multi-Currency General Ledger Valuation, Exchange Rate Tables & Realized/Unrealized FX Engine
@@ -21,12 +20,12 @@ Extend the Authoritative Double-Entry Accounting Engine to support international
 - Symmetrical forward-and-reverse database migration: `backend/alembic/versions/v1345_multicurrency_fx.py` with complete `downgrade()` dropping added columns and tables.
 - Domain service methods in `UnifiedAccountingLedgerService`:
   - `validate_currency_code`: Enforces 3-letter ISO uppercase format (`^[A-Z]{3}$`).
-  - `set_exchange_rate`: Enforces rate bounds ($0 < \text{rate} \le 100,000,000$), rate type validation (`SPOT`, `CLOSING`, `AVERAGE`, `CUSTOM`), and prevents identical currency pairing (`SMRITI-GL-011`).
+  - `set_exchange_rate`: Enforces rate bounds ($0 < \text{rate} \le 100,000,000$), rate type validation (`SPOT`, `CLOSING`, `AVERAGE`, `CUSTOM`), and prevents identical currency pairing (`TILEFLOW-GL-011`).
   - `get_exchange_rate`: Resolves effective point-in-time rates or returns `1.000000` for identical currencies.
-  - Multi-currency `post_journal_voucher`: Enforces foreign currency debit/credit equality (`SMRITI-GL-010`) and base currency double-entry invariant ($\sum \text{Debits} == \sum \text{Credits}$).
-  - `reconcile_foreign_settlement_fx`: Enforces over-settlement boundary protection (`SMRITI-GL-009`), currency consistency (`SMRITI-GL-014`), and settlement pair idempotency.
+  - Multi-currency `post_journal_voucher`: Enforces foreign currency debit/credit equality (`TILEFLOW-GL-010`) and base currency double-entry invariant ($\sum \text{Debits} == \sum \text{Credits}$).
+  - `reconcile_foreign_settlement_fx`: Enforces over-settlement boundary protection (`TILEFLOW-GL-009`), currency consistency (`TILEFLOW-GL-014`), and settlement pair idempotency.
   - `calculate_unrealized_fx_revaluation`: Enforces fiscal period open check and periodic MTM run idempotency (`is_idempotent_cached`).
-  - `assert_voucher_immutable`: Enforces append-only immutable ledger policy (`SMRITI-GL-015`).
+  - `assert_voucher_immutable`: Enforces append-only immutable ledger policy (`TILEFLOW-GL-015`).
 - REST API router endpoints in `backend/app/api/v1/accounting.py` protected by RBAC `require_role(UserRole.SYSADMIN, UserRole.MANAGER)`.
 - Automated test suites: `backend/tests/t_multicurrency.py` (12/12 passed) and `backend/tests/test_accounting_api.py` (9/9 passed).
 - Master platform regression suite: 104/104 passed across all 17 test suites.
@@ -48,10 +47,10 @@ Extend the Authoritative Double-Entry Accounting Engine to support international
 
 ## 5. Architecture Decisions
 - **Base Currency Double-Entry Invariant**: The ledger preserves strict double-entry balance ($\sum \text{Debits} == \sum \text{Credits}$) in the company's Base Currency (INR). `debit_amount` and `credit_amount` reflect converted base values, while `foreign_debit_amount`, `foreign_credit_amount`, `foreign_currency`, and `exchange_rate` retain transactional provenance.
-- **Foreign Currency Balancing Invariant**: For vouchers in a uniform foreign currency, $\sum \text{foreign\_debit} == \sum \text{foreign\_credit}$ is asserted before base currency conversion (`SMRITI-GL-010`).
-- **Settlement Idempotency & Over-Settlement Protection**: `reconcile_foreign_settlement_fx` indexes settlement pairs via `reference_doc_id = f"{invoice_voucher_id}:{payment_voucher_id}"`, preventing double-posting and rejecting settlement amounts exceeding invoice foreign totals (`SMRITI-GL-009`).
+- **Foreign Currency Balancing Invariant**: For vouchers in a uniform foreign currency, $\sum \text{foreign\_debit} == \sum \text{foreign\_credit}$ is asserted before base currency conversion (`TILEFLOW-GL-010`).
+- **Settlement Idempotency & Over-Settlement Protection**: `reconcile_foreign_settlement_fx` indexes settlement pairs via `reference_doc_id = f"{invoice_voucher_id}:{payment_voucher_id}"`, preventing double-posting and rejecting settlement amounts exceeding invoice foreign totals (`TILEFLOW-GL-009`).
 - **Idempotent Mark-to-Market Revaluation**: `calculate_unrealized_fx_revaluation` indexes period revaluations via `reference_doc_no = f"MTM-{company_id}-{as_of_date.isoformat()}"`, caching runs and preventing duplicate periodic vouchers.
-- **Immutable Ledger Policy**: Posted journal vouchers and general ledger entries cannot be mutated or deleted directly (`SMRITI-GL-015`); adjustments require reversing vouchers.
+- **Immutable Ledger Policy**: Posted journal vouchers and general ledger entries cannot be mutated or deleted directly (`TILEFLOW-GL-015`); adjustments require reversing vouchers.
 
 ## 6. Design Rationale
 Decoupled multi-currency storage at the line level allows mixed-currency complex journal vouchers while ensuring trial balance, profit & loss, and balance sheets calculate instantaneously from base currency aggregates without expensive runtime joins or conversion delays.

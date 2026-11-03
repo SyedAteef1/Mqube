@@ -1,19 +1,6 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.8.0
-Created      : 2026-07-11
-Modified     : 2026-07-11
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import uuid as uuid_pkg
 from datetime import datetime, timezone
-from sqlalchemy import Column, String, Boolean, DateTime, ForeignKey
+from sqlalchemy import Column, String, Boolean, DateTime, ForeignKey, Text
 from sqlalchemy.orm import relationship
 from ..db.base import Base
 
@@ -26,6 +13,14 @@ class Company(Base):
     gst_number = Column(String(15), nullable=True)
     company_code = Column(String(50), nullable=True, unique=True, index=True)
     logo_url = Column(String(500), nullable=True)
+    address = Column(Text, nullable=True)
+    phone = Column(String(50), nullable=True)
+    email = Column(String(255), nullable=True)
+    bank_name = Column(String(255), nullable=True)
+    bank_account_name = Column(String(255), nullable=True)
+    bank_account_no = Column(String(50), nullable=True)
+    bank_ifsc = Column(String(20), nullable=True)
+    bank_branch = Column(String(255), nullable=True)
     is_active = Column(Boolean, default=True)
     is_deleted = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), default=datetime.utcnow)

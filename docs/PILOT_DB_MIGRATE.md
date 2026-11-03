@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.29.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Retail OS — Pilot Database Migration & Alembic Head Results
+# TILEFLOW Retail OS — Pilot Database Migration & Alembic Head Results
 
 **Date:** 2026-08-20  
 **Version:** v3.29.0  
@@ -23,11 +22,11 @@
 
 | Database Name | Role / Scope | Current Revision | Head Status | `variant_id` NULL Count | Status |
 |---|---|---|---|---|---|
-| `smritisys` | Control Plane & Tenant Registry | `v1338_company_isolated_barcodes` | HEAD | N/A (Control Plane) | PASS |
-| `smriti001` | Operational Tenant (COMP-001 - Tattly Threads) | `v1338_company_isolated_barcodes` | HEAD | 0 / 588 products | PASS |
-| `smriti_test_fresh` | Staging Test Fixture | `v1338_company_isolated_barcodes` | HEAD | 0 products | PASS |
+| `tileflowsys` | Control Plane & Tenant Registry | `v1338_company_isolated_barcodes` | HEAD | N/A (Control Plane) | PASS |
+| `tileflow001` | Operational Tenant (COMP-001 - Tattly Threads) | `v1338_company_isolated_barcodes` | HEAD | 0 / 588 products | PASS |
+| `tileflow_test_fresh` | Staging Test Fixture | `v1338_company_isolated_barcodes` | HEAD | 0 products | PASS |
 
-*Note: `smriti001` is the single registered operational company database in `smritisys.company_database_registries`.*
+*Note: `tileflow001` is the single registered operational company database in `tileflowsys.company_database_registries`.*
 
 ---
 
@@ -59,7 +58,7 @@ INFO  [alembic.runtime.migration] Will assume transactional DDL.
 ```sql
 SELECT count(*) FROM products WHERE variant_id IS NULL;
 ```
-**Output:** `0` (Zero rows with NULL `variant_id` in `smriti001`)
+**Output:** `0` (Zero rows with NULL `variant_id` in `tileflow001`)
 
 ---
 

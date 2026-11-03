@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.35.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Reporting & BI Engine Phase 12 — Integration, Reconciliation & Certification v1.0.0-GA
 
 ## 1. Purpose
-Document the execution and verification of the 12-stage Master Integration & Certification Suite, validating all non-negotiable architectural invariants of the SMRITI Reporting & BI Engine v1.0.0-GA.
+Document the execution and verification of the 12-stage Master Integration & Certification Suite, validating all non-negotiable architectural invariants of the TILEFLOW Reporting & BI Engine v1.0.0-GA.
 
 ## 2. Scope
 - Verification of 22 canonical reports across 5 business studios.
@@ -85,4 +84,4 @@ npm test
 - ADR-002: Central Report Registry & Governed Metric Dictionary
 
 ## 13. Related RFCs
-- RFC-RPT-001: SMRITI Reporting & BI Engine v1.0.0-GA Architecture
+- RFC-RPT-001: TILEFLOW Reporting & BI Engine v1.0.0-GA Architecture

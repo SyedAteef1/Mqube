@@ -1,20 +1,7 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 from typing import List, Optional
 from pydantic import BaseModel, Field
 
-class SmritiMenuBase(BaseModel):
+class TileFlowMenuBase(BaseModel):
     title: str
     route: Optional[str] = None
     icon: Optional[str] = None
@@ -26,10 +13,10 @@ class SmritiMenuBase(BaseModel):
     badge: Optional[str] = None
     is_active: bool = True
 
-class SmritiMenuCreate(SmritiMenuBase):
+class TileFlowMenuCreate(TileFlowMenuBase):
     id: str
 
-class SmritiMenuUpdate(BaseModel):
+class TileFlowMenuUpdate(BaseModel):
     title: Optional[str] = None
     route: Optional[str] = None
     icon: Optional[str] = None
@@ -39,7 +26,7 @@ class SmritiMenuUpdate(BaseModel):
     parent_id: Optional[str] = None
     is_active: Optional[bool] = None
 
-class SmritiMenuResponse(SmritiMenuBase):
+class TileFlowMenuResponse(TileFlowMenuBase):
     id: str
     uuid: str
     company_id: Optional[str] = None
@@ -48,7 +35,7 @@ class SmritiMenuResponse(SmritiMenuBase):
     class Config:
         from_attributes = True
 
-class MenuNode(SmritiMenuResponse):
+class MenuNode(TileFlowMenuResponse):
     children: List["MenuNode"] = Field(default_factory=list)
 
 MenuNode.model_rebuild()

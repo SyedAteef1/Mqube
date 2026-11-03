@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.8.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { Product } from "../../types.ts";
 
 export type PortType = "USB" | "COM 1" | "COM 2" | "COM 3" | "COM 4" | "LPT 1" | "Network TCP/IP" | "QZ Tray Thermal" | "PRN File Download";

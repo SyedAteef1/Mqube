@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-07-13
- * Modified     : 2026-07-13
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect } from "vitest";
 
 // Local helper to mirror the getFullImageUrl URL resolver logic in ProductImage.tsx
@@ -23,7 +9,7 @@ function getFullImageUrl(path?: string): string {
   return `/api/v1${path.startsWith("/") ? "" : "/"}${path}`;
 }
 
-describe("SMRITI Product Image Framework (SPIF) Helpers", () => {
+describe("MQube Product Image Framework (SPIF) Helpers", () => {
   describe("URL Resolution Helper", () => {
     it("should return an empty string if no path is provided", () => {
       expect(getFullImageUrl()).toBe("");

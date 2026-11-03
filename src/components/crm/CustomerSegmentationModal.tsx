@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.98.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -34,7 +33,7 @@ const COHORT_META: Record<MicroCohort, { color: string; icon: string; desc: stri
   PROMISING:           { color: "text-blue-300 bg-blue-500/20 border-blue-500/30",          icon: "star_half",    desc: "Recent buyers, still low spend" },
   NEED_ATTENTION:      { color: "text-orange-300 bg-orange-500/20 border-orange-500/30",    icon: "notifications_active", desc: "Regular buyers, recency declining" },
   AT_RISK:             { color: "text-amber-300 bg-amber-500/20 border-amber-500/30",       icon: "warning",      desc: "Previously frequent, haven't bought recently" },
-  CANT_LOSE_THEM:      { color: "text-rose-300 bg-rose-500/20 border-rose-500/30",          icon: "gpp_maybe",   desc: "High value, low recency â€” act now" },
+  CANT_LOSE_THEM:      { color: "text-rose-300 bg-rose-500/20 border-rose-500/30",          icon: "gpp_maybe",   desc: "High value, low recency — act now" },
   HIBERNATING:         { color: "text-violet-300 bg-violet-500/20 border-violet-500/30",    icon: "bedtime",      desc: "Low recency and frequency" },
   LOST:                { color: "text-slate-400 bg-slate-700/30 border-slate-600/30",        icon: "person_off",   desc: "Very long since last purchase" },
 };
@@ -140,8 +139,8 @@ export const CustomerSegmentationModal: React.FC<CustomerSegmentationModalProps>
         <div className="grid grid-cols-4 gap-0 border-b border-slate-800 divide-x divide-slate-800 bg-slate-950/30">
           {[
             { label: "Total Customers", value: report.totalCustomers, color: "text-slate-300" },
-            { label: "Avg Lifetime Value", value: `â‚¹${report.avgLifetimeValue.toLocaleString("en-IN")}`, color: "text-fuchsia-400" },
-            { label: "Avg Order Value", value: `â‚¹${report.avgOrderValue.toLocaleString("en-IN")}`, color: "text-sky-400" },
+            { label: "Avg Lifetime Value", value: `₹${report.avgLifetimeValue.toLocaleString("en-IN")}`, color: "text-fuchsia-400" },
+            { label: "Avg Order Value", value: `₹${report.avgOrderValue.toLocaleString("en-IN")}`, color: "text-sky-400" },
             { label: "Top Cohort", value: report.topCohortByCount.replace(/_/g, " "), color: "text-yellow-400" },
           ].map((m) => (
             <div key={m.label} className="px-5 py-3 text-center">
@@ -231,9 +230,9 @@ export const CustomerSegmentationModal: React.FC<CustomerSegmentationModalProps>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
                     {[
-                      { label: "Lifetime Value", value: `â‚¹${seg.lifetimeValue.toLocaleString("en-IN")}`, color: "text-slate-200" },
+                      { label: "Lifetime Value", value: `₹${seg.lifetimeValue.toLocaleString("en-IN")}`, color: "text-slate-200" },
                       { label: "Transactions", value: seg.totalTransactions, color: "text-slate-300" },
-                      { label: "Avg Order", value: `â‚¹${seg.avgOrderValue.toLocaleString("en-IN")}`, color: "text-slate-300" },
+                      { label: "Avg Order", value: `₹${seg.avgOrderValue.toLocaleString("en-IN")}`, color: "text-slate-300" },
                       { label: "Days Since Buy", value: seg.daysSinceLastPurchase, color: seg.daysSinceLastPurchase > 180 ? "text-rose-400" : "text-slate-300" },
                     ].map((m) => (
                       <div key={m.label} className="bg-slate-900/60 rounded-xl p-2 text-center border border-slate-800/40">

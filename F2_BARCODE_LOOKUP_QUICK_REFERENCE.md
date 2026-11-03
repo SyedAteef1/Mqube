@@ -22,7 +22,7 @@
 | **Category** | Product Category | Apparel |
 | **Size** | Size Code | 36 |
 | **Color** | Color Name | CREAM |
-| **Brand** | Brand Name | SMRITI |
+| **Brand** | Brand Name | TILEFLOW |
 | **Rate (₹)** | Selling Price | 999.00 |
 | **MRP (₹)** | Max Retail Price | 999.00 |
 | **Avail Qty** | Available Stock | 1000 |

@@ -1,31 +1,26 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.2
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS — User Guide & Help Manual
+# TILEFLOW Retail OS — User Guide & Help Manual
 
-Welcome to the SMRITI Retail OS user and operation manual. This document guides store operators, managers, and cashiers on standard workflow practices.
+Welcome to the TILEFLOW Retail OS user and operation manual. This document guides store operators, managers, and cashiers on standard workflow practices.
 
 
 

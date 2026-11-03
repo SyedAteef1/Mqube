@@ -1,19 +1,4 @@
 /**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-07-10
- * Modified     : 2026-08-21
- * Copyright    : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
-/**
  * GlobalSearch — Context-Aware Search Modal (Ctrl+K)
  * =====================================================
  * Refactored to use:
@@ -35,7 +20,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useDrillDown } from "./drilldown_store.tsx";
 import { useActiveField } from "../../context/ActiveFieldContext.tsx";
-import { SmritiScrollArea } from "../SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../TileFlowScrollArea.tsx";
 import {
   EntityContextType,
   getContextDescriptor,
@@ -138,7 +123,7 @@ export const GlobalSearch: React.FC = () => {
   // Global keyboard shortcut (Ctrl+K to open)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const token = typeof window !== "undefined" ? (localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token")) : null;
+      const token = typeof window !== "undefined" ? (localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token")) : null;
       if (!token) return;
 
       if ((e.ctrlKey || e.metaKey) && e.key === "k") {
@@ -171,7 +156,7 @@ export const GlobalSearch: React.FC = () => {
   const handleSelectRow = useCallback(
     (row: any) => {
       if (selectedCategory === "menu" || row?._entityType === "Menu") {
-        window.dispatchEvent(new CustomEvent("smriti_navigate_module", {
+        window.dispatchEvent(new CustomEvent("tileflow_navigate_module", {
           detail: { moduleId: row.id, title: row.title },
         }));
         setSearchOpen(false);
@@ -219,7 +204,7 @@ export const GlobalSearch: React.FC = () => {
     }
   };
 
-  const token = typeof window !== "undefined" ? (localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token")) : null;
+  const token = typeof window !== "undefined" ? (localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token")) : null;
   if (!searchOpen || !token) return null;
 
   return (
@@ -242,18 +227,18 @@ export const GlobalSearch: React.FC = () => {
           initial={{ opacity: 0, scale: 0.96, y: -20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: -20 }}
-          className="relative w-full max-w-5xl bg-white border border-[#c5c5d4] shadow-2xl rounded-2xl overflow-hidden font-sans flex flex-col"
+          className="relative w-full max-w-5xl bg-white border border-[#c6c6c6] shadow-2xl rounded-2xl overflow-hidden font-sans flex flex-col"
           style={{ maxHeight: "88vh" }}
         >
           {/* ── Header ──────────────────────────────────────────────────────── */}
-          <div className="bg-[#00296d] text-white px-5 py-3.5 flex items-center justify-between shrink-0">
+          <div className="bg-[#252525] text-white px-5 py-3.5 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5">
               <span className="material-symbols-outlined text-[22px] text-indigo-200">
                 {descriptor.icon}
               </span>
               <div>
                 <h2 className="text-sm font-bold tracking-wide flex items-center gap-2">
-                  SMRITI Context Search
+                  MQube Context Search
                   <span className="text-[10px] font-mono bg-white/15 text-indigo-100 px-2 py-0.5 rounded-full border border-white/20">
                     Cursor: {fieldLabel}
                   </span>
@@ -269,15 +254,15 @@ export const GlobalSearch: React.FC = () => {
           </div>
 
           {/* ── Search Input ─────────────────────────────────────────────────── */}
-          <div className="flex items-center px-5 py-3 border-b border-[#e1e2ec] bg-[#f8f9ff] shrink-0 gap-3">
-            <span className="material-symbols-outlined text-[#565975] text-[22px]">search</span>
+          <div className="flex items-center px-5 py-3 border-b border-[#e3e3e3] bg-[#f9f9f9] shrink-0 gap-3">
+            <span className="material-symbols-outlined text-[#5a5a5a] text-[22px]">search</span>
             <input
               ref={inputRef}
               type="text"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder={descriptor.searchPlaceholder}
-              className="flex-1 bg-transparent border-none text-[#0b1c30] text-sm font-medium focus:outline-none placeholder:text-[#8d90a5]"
+              className="flex-1 bg-transparent border-none text-[#1a1a1a] text-sm font-medium focus:outline-none placeholder:text-[#919191]"
             />
             {query && (
               <button
@@ -286,7 +271,7 @@ export const GlobalSearch: React.FC = () => {
                   setQuery("");
                   setSelectedIndex(0);
                 }}
-                className="p-1 text-[#565975] hover:text-[#0b1c30] rounded-full"
+                className="p-1 text-[#5a5a5a] hover:text-[#1a1a1a] rounded-full"
               >
                 <span className="material-symbols-outlined text-[18px]">close</span>
               </button>
@@ -294,15 +279,15 @@ export const GlobalSearch: React.FC = () => {
           </div>
 
           {/* ── Context / Entity Tabs ────────────────────────────────────────── */}
-          <div className="flex items-center gap-1.5 px-4 py-2 bg-[#f0f2fa] border-b border-[#e1e2ec] overflow-x-auto shrink-0 select-none">
+          <div className="flex items-center gap-1.5 px-4 py-2 bg-[#f2f2f2] border-b border-[#e3e3e3] overflow-x-auto shrink-0 select-none">
             {/* "All" tab */}
             <button
               type="button"
               onClick={() => setSelectedCategory("general")}
               className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all shrink-0 ${
                 selectedCategory === "general"
-                  ? "bg-[#00296d] text-white shadow-sm"
-                  : "bg-white text-[#44475b] hover:bg-indigo-50 border border-[#c5c5d4]/60"
+                  ? "bg-[#252525] text-white shadow-sm"
+                  : "bg-white text-[#484848] hover:bg-indigo-50 border border-[#c6c6c6]/60"
               }`}
             >
               <span className="material-symbols-outlined text-[15px]">hub</span>
@@ -323,8 +308,8 @@ export const GlobalSearch: React.FC = () => {
                   }}
                   className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-semibold transition-all shrink-0 ${
                     isSelected
-                      ? "bg-[#00296d] text-white shadow-sm"
-                      : "bg-white text-[#44475b] hover:bg-indigo-50 border border-[#c5c5d4]/60"
+                      ? "bg-[#252525] text-white shadow-sm"
+                      : "bg-white text-[#484848] hover:bg-indigo-50 border border-[#c6c6c6]/60"
                   }`}
                 >
                   <span className="material-symbols-outlined text-[15px]">{tab.icon}</span>
@@ -332,7 +317,7 @@ export const GlobalSearch: React.FC = () => {
                   {isCursorActive && (
                     <span
                       className={`w-2 h-2 rounded-full animate-pulse ${
-                        isSelected ? "bg-emerald-400" : "bg-[#00296d]"
+                        isSelected ? "bg-emerald-400" : "bg-[#252525]"
                       }`}
                     />
                   )}

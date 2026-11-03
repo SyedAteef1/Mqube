@@ -1,0 +1,20 @@
+{
+  "app": {
+    "productName": "TILEFLOW Retail OS",
+    "edition": "Enterprise Edition",
+    "releaseNumber": "REL-2410-B",
+    "buildNumber": "BUILD-8092.44",
+    "environment": "Production",
+    "uiVersion": "SRLE v1.0",
+    "workflowEngineVersion": "v1.4",
+    "printEngineVersion": "v1.2"
+  },
+  "author": {
+    "authorName": "Syed Ateef",
+    "role": "Chief Systems Architect & Creator",
+    "product": "TILEFLOW Retail OS",
+    "website": "tileflow.in",
+    "supportEmail": "jawahar.mallah@gmail.com",
+    "license": "MIT Open Source License"
+  }
+}

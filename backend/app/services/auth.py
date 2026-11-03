@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.22.0
-* Created    : 2026-07-11
-* Modified   : 2026-08-13
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-"""
-
 import uuid
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -195,35 +170,7 @@ class AuthService:
     async def switch_context(self, user: User, req: TenantContextSwitchRequest) -> dict:
         """Dynamically switch active company/branch context and return updated tokens."""
         if user.role != UserRole.SYSADMIN:
-            # Verify company assignment
-            comp_res = await self.db.execute(
-                select(UserCompanyAssignment).where(
-                    UserCompanyAssignment.user_id == user.id,
-                    UserCompanyAssignment.company_id == req.target_company_id,
-                    UserCompanyAssignment.is_deleted == False,
-                    UserCompanyAssignment.is_active == True,
-                )
-            )
-            if not comp_res.scalars().first():
-                raise HTTPException(
-                    status_code=403,
-                    detail="Access denied: You are not assigned to the specified target company.",
-                )
-
-            # Verify branch assignment
-            br_res = await self.db.execute(
-                select(UserBranchAssignment).where(
-                    UserBranchAssignment.user_id == user.id,
-                    UserBranchAssignment.branch_id == req.target_branch_id,
-                    UserBranchAssignment.is_deleted == False,
-                    UserBranchAssignment.is_active == True,
-                )
-            )
-            if not br_res.scalars().first():
-                raise HTTPException(
-                    status_code=403,
-                    detail="Access denied: You are not assigned to the specified target branch.",
-                )
+            await self._verify_context_access(user, req)
 
         payload = _build_token_payload(user, company_id=req.target_company_id, branch_id=req.target_branch_id)
         user.company_id = req.target_company_id
@@ -238,6 +185,39 @@ class AuthService:
             "password_reset_required": user.status == "PendingPasswordChange",
             "user":          user,
         }
+
+    async def _verify_context_access(self, user: User, req: TenantContextSwitchRequest) -> None:
+        """Apply the same access rule as /auth/tenants: assignments first, then the user's home scope."""
+        company_rows = (await self.db.execute(
+            select(UserCompanyAssignment.company_id).where(
+                UserCompanyAssignment.user_id == user.id,
+                UserCompanyAssignment.is_deleted == False,
+                UserCompanyAssignment.is_active == True,
+            )
+        )).scalars().all()
+        allowed_companies = set(company_rows) or {user.company_id}
+        if req.target_company_id not in allowed_companies:
+            raise HTTPException(
+                status_code=403,
+                detail="Access denied: You are not assigned to the specified target company.",
+            )
+
+        branch_rows = (await self.db.execute(
+            select(UserBranchAssignment.branch_id).where(
+                UserBranchAssignment.user_id == user.id,
+                UserBranchAssignment.is_deleted == False,
+                UserBranchAssignment.is_active == True,
+            )
+        )).scalars().all()
+        if branch_rows:
+            branch_allowed = req.target_branch_id in branch_rows
+        else:
+            branch_allowed = req.target_company_id == user.company_id and req.target_branch_id == user.branch_id
+        if not branch_allowed:
+            raise HTTPException(
+                status_code=403,
+                detail="Access denied: You are not assigned to the specified target branch.",
+            )
 
     # ------------------------------------------------------------------
     # Refresh

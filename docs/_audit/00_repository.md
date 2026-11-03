@@ -1,21 +1,20 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal -- Audit Artifact
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source -- Audit Artifact
 -->
 
-# SMRITI Retail OS -- Repository Inventory
+# TILEFLOW Retail OS -- Repository Inventory
 ## Phase 0: Repository Baseline
 
 **Audit Date:** 2026-08-17
-**Auditor:** SMRITI Documentation Reconciliation Engine v2.0
+**Auditor:** TILEFLOW Documentation Reconciliation Engine v2.0
 
 ---
 
@@ -24,11 +23,11 @@
 | Field | Value |
 |---|---|
 | **Repository Root** | F:\SMRITRretailNX |
-| **Branch** | smritiNX |
+| **Branch** | tileflowNX |
 | **Latest Commit** | 41855c17daf5fdf1f281c4f0bd5f8c78ab344ca5 |
 | **Commit Date** | 2026-08-17 05:46:04 +0530 |
 | **Commit Message** | docs: update development status report with latest commit metadata |
-| **Remote Origin** | origin/smritiNX -- up to date |
+| **Remote Origin** | origin/tileflowNX -- up to date |
 
 ---
 
@@ -56,7 +55,7 @@ STOP CONDITION NOTE: Pre-existing unstaged application-code changes exist. Audit
 |---|---|---|
 | Frontend | React + Vite + TypeScript | vite.config.ts, src/ |
 | Backend | Python / FastAPI | backend/app/ |
-| Database | PostgreSQL | smritisys (Control Plane) |
+| Database | PostgreSQL | tileflowsys (Control Plane) |
 | ORM | SQLAlchemy (async) | backend/app/db/session.py |
 | Migrations | Alembic | backend/alembic/ |
 | Test Framework | Pytest (async) | backend/app/tests/, backend/tests/ |
@@ -74,7 +73,7 @@ Migration to j6k7l8m9n0o (product identity tables) ERRORED with:
   DETAIL: Token "'" is invalid.
 
 This is caused by JSONB server_default=text("'{}'") syntax failure.
-STATUS: Some tables in the latest migrations (product_identity engine, v1333-v1335) may NOT exist in the current smritisys database.
+STATUS: Some tables in the latest migrations (product_identity engine, v1333-v1335) may NOT exist in the current tileflowsys database.
 
 ---
 
@@ -82,10 +81,10 @@ STATUS: Some tables in the latest migrations (product_identity engine, v1333-v13
 
 | Setting | Value |
 |---|---|
-| DATABASE_URL (primary) | postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys |
-| CONTROL_DATABASE_URL | postgresql+asyncpg://postgres:postgres@localhost:5432/SmritiSys |
-| PSV_DATABASE_URL | postgresql+asyncpg://postgres:postgres@localhost:5432/SmritiPSV |
-| ECOM_DATABASE_URL | postgresql+asyncpg://postgres:postgres@localhost:5432/SmritiEcom |
+| DATABASE_URL (primary) | postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys |
+| CONTROL_DATABASE_URL | postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowSys |
+| PSV_DATABASE_URL | postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowPSV |
+| ECOM_DATABASE_URL | postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowEcom |
 | USE_MULTI_DB_ROUTER | False (feature flagged OFF) |
 
-INCONSISTENCY: CONTROL_DATABASE_URL uses mixed-case SmritiSys vs lowercase smritisys in DATABASE_URL.
+INCONSISTENCY: CONTROL_DATABASE_URL uses mixed-case TileFlowSys vs lowercase tileflowsys in DATABASE_URL.

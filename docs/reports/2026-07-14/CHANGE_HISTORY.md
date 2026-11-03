@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.0
   Created      : 2026-07-14
   Modified     : 2026-07-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Change History Log
@@ -17,5 +16,5 @@
 
 - **Current Active Branch:** `main`
 - **Last Commit Hash:** `eaf69aa`
-- **Last Commit Message:** "Refactor SMRITI Wiki to SMRITI Gyan Kendra"
-- **Last Commit Author:** Jawahar Ramkripal Mallah (2026-07-14)
+- **Last Commit Message:** "Refactor TILEFLOW Wiki to TILEFLOW Gyan Kendra"
+- **Last Commit Author:** Syed Ateef (2026-07-14)

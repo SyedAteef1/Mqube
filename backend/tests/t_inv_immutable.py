@@ -1,23 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.8.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITITAXINVOICE IMMUTABILITY & INTEGRITY GUARD TEST SUITE
-================================================================================
-Protects SMRITITAXINVOICE against layout breakage, CSS drift, column corruption,
-unauthorized database mutation, and accidental template modification.
-================================================================================
-"""
-
 import os
 import sys
 import pytest
@@ -31,24 +11,24 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, Asyn
 from sqlalchemy.future import select
 
 from app.services.tax_invoice_spec import (
-    SMRITITAXINVOICE_TEMPLATE_CODE,
-    SMRITITAXINVOICE_VERSION,
-    SMRITITAXINVOICE_STATUS,
-    SMRITI_A4_WIDTH_PT,
-    SMRITI_A4_HEIGHT_PT,
-    SMRITI_INTERSTATE_COLUMNS,
-    SMRITI_INTRASTATE_COLUMNS,
-    SMRITI_ITEM_ROW_HEIGHT_PT,
-    SMRITI_SUBTOTAL_ROW_HEIGHT_PT,
-    verify_smrititaxinvoice_integrity,
+    TILEFLOWTAXINVOICE_TEMPLATE_CODE,
+    TILEFLOWTAXINVOICE_VERSION,
+    TILEFLOWTAXINVOICE_STATUS,
+    TILEFLOW_A4_WIDTH_PT,
+    TILEFLOW_A4_HEIGHT_PT,
+    TILEFLOW_INTERSTATE_COLUMNS,
+    TILEFLOW_INTRASTATE_COLUMNS,
+    TILEFLOW_ITEM_ROW_HEIGHT_PT,
+    TILEFLOW_SUBTOTAL_ROW_HEIGHT_PT,
+    verify_tileflowtaxinvoice_integrity,
     verify_golden_css_integrity,
     load_golden_css,
 )
 from app.models.tax_inv_template import TaxInvoiceTemplate, TaxInvoiceTemplateVersion
 from app.services.invoice_pdf_service import InvoicePdfService, paginate_items
 
-DB_SYNC_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
-DB_ASYNC_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001"
+DB_SYNC_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+DB_ASYNC_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001"
 
 
 @pytest.fixture(scope="module")
@@ -67,17 +47,17 @@ async def async_session():
     await engine.dispose()
 
 
-def test_01_smrititaxinvoice_persisted_in_database_and_frozen(sync_db):
-    """Verifies that SMRITITAXINVOICE exists in PostgreSQL and is FROZEN."""
+def test_01_tileflowtaxinvoice_persisted_in_database_and_frozen(sync_db):
+    """Verifies that TILEFLOWTAXINVOICE exists in PostgreSQL and is FROZEN."""
     cur = sync_db.cursor()
     cur.execute("""
         SELECT template_code, template_name, status, current_version, is_default, is_active
         FROM tax_invoice_templates
         WHERE template_code = %s;
-    """, (SMRITITAXINVOICE_TEMPLATE_CODE,))
+    """, (TILEFLOWTAXINVOICE_TEMPLATE_CODE,))
     row = cur.fetchone()
-    assert row is not None, "SMRITITAXINVOICE must exist in tax_invoice_templates"
-    assert row[0] == "SMRITITAXINVOICE"
+    assert row is not None, "TILEFLOWTAXINVOICE must exist in tax_invoice_templates"
+    assert row[0] == "TILEFLOWTAXINVOICE"
     assert row[2] == "FROZEN"
     assert row[3] == "V1"
     assert row[4] is True  # is_default
@@ -91,11 +71,11 @@ def test_02_database_trigger_strictly_blocks_unauthorized_updates(sync_db):
         cur.execute("""
             UPDATE tax_invoice_templates
             SET layout_configuration = '{"corrupted": true}'::jsonb
-            WHERE template_code = 'SMRITITAXINVOICE';
+            WHERE template_code = 'TILEFLOWTAXINVOICE';
         """)
         sync_db.commit()
     sync_db.rollback()
-    assert "SMRITI-GOV-ERR" in str(exc_info.value)
+    assert "TILEFLOW-GOV-ERR" in str(exc_info.value)
     assert "FROZEN and IMMUTABLE" in str(exc_info.value)
 
 
@@ -105,17 +85,17 @@ def test_03_database_trigger_strictly_blocks_deletion(sync_db):
     with pytest.raises(psycopg2.Error) as exc_info:
         cur.execute("""
             DELETE FROM tax_invoice_templates
-            WHERE template_code = 'SMRITITAXINVOICE';
+            WHERE template_code = 'TILEFLOWTAXINVOICE';
         """)
         sync_db.commit()
     sync_db.rollback()
-    assert "SMRITI-GOV-ERR" in str(exc_info.value)
+    assert "TILEFLOW-GOV-ERR" in str(exc_info.value)
     assert "Deletion is prohibited" in str(exc_info.value)
 
 
 def test_04_python_spec_cryptographic_integrity_hash():
     """Verifies that the frozen Python layout specification is cryptographically valid and untampered."""
-    assert verify_smrititaxinvoice_integrity() is True
+    assert verify_tileflowtaxinvoice_integrity() is True
 
 
 def test_04b_golden_css_artifact_integrity():
@@ -129,29 +109,29 @@ def test_04b_golden_css_artifact_integrity():
 
 def test_05_grid_columns_and_geometry_immutability():
     """Verifies exact point geometry and 100% column allocation."""
-    assert SMRITI_A4_WIDTH_PT == 595.92
-    assert SMRITI_A4_HEIGHT_PT == 842.88
-    assert SMRITI_ITEM_ROW_HEIGHT_PT == 20.47
-    assert SMRITI_SUBTOTAL_ROW_HEIGHT_PT == 20.47
+    assert TILEFLOW_A4_WIDTH_PT == 595.92
+    assert TILEFLOW_A4_HEIGHT_PT == 842.88
+    assert TILEFLOW_ITEM_ROW_HEIGHT_PT == 20.47
+    assert TILEFLOW_SUBTOTAL_ROW_HEIGHT_PT == 20.47
 
     # Interstate 10 columns
-    assert len(SMRITI_INTERSTATE_COLUMNS) == 10
-    assert SMRITI_INTERSTATE_COLUMNS["sl_no"] == "3.5%"
-    assert SMRITI_INTERSTATE_COLUMNS["item_description"] == "28.0%"
-    assert SMRITI_INTERSTATE_COLUMNS["hsn_sac"] == "8.0%"
-    assert SMRITI_INTERSTATE_COLUMNS["qty"] == "5.5%"
-    assert SMRITI_INTERSTATE_COLUMNS["mrp"] == "10.0%"
-    assert SMRITI_INTERSTATE_COLUMNS["discount_pct"] == "6.5%"
-    assert SMRITI_INTERSTATE_COLUMNS["taxable_value"] == "11.0%"
-    assert SMRITI_INTERSTATE_COLUMNS["tax_pct"] == "5.0%"
-    assert SMRITI_INTERSTATE_COLUMNS["igst"] == "9.0%"
-    assert SMRITI_INTERSTATE_COLUMNS["amount"] == "13.5%"
+    assert len(TILEFLOW_INTERSTATE_COLUMNS) == 10
+    assert TILEFLOW_INTERSTATE_COLUMNS["sl_no"] == "3.5%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["item_description"] == "28.0%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["hsn_sac"] == "8.0%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["qty"] == "5.5%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["mrp"] == "10.0%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["discount_pct"] == "6.5%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["taxable_value"] == "11.0%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["tax_pct"] == "5.0%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["igst"] == "9.0%"
+    assert TILEFLOW_INTERSTATE_COLUMNS["amount"] == "13.5%"
 
     # Intrastate 12 columns
-    assert len(SMRITI_INTRASTATE_COLUMNS) == 12
-    assert SMRITI_INTRASTATE_COLUMNS["mrp"] == "9.5%"
-    assert SMRITI_INTRASTATE_COLUMNS["cgst"] == "8.5%"
-    assert SMRITI_INTRASTATE_COLUMNS["sgst"] == "8.5%"
+    assert len(TILEFLOW_INTRASTATE_COLUMNS) == 12
+    assert TILEFLOW_INTRASTATE_COLUMNS["mrp"] == "9.5%"
+    assert TILEFLOW_INTRASTATE_COLUMNS["cgst"] == "8.5%"
+    assert TILEFLOW_INTRASTATE_COLUMNS["sgst"] == "8.5%"
 
 
 def test_06_pagination_multi_page_mathematical_consistency():
@@ -186,15 +166,15 @@ def test_06_pagination_multi_page_mathematical_consistency():
 
 
 @pytest.mark.asyncio
-async def test_07_pdf_render_end_to_end_smrititaxinvoice():
-    """Verifies that SMRITITAXINVOICE template can be queried and loaded via AsyncSession."""
+async def test_07_pdf_render_end_to_end_tileflowtaxinvoice():
+    """Verifies that TILEFLOWTAXINVOICE template can be queried and loaded via AsyncSession."""
     engine = create_async_engine(DB_ASYNC_URL, echo=False)
     session_maker = async_sessionmaker(engine, expire_on_commit=False)
     async with session_maker() as session:
-        stmt = select(TaxInvoiceTemplate).where(TaxInvoiceTemplate.template_code == "SMRITITAXINVOICE")
+        stmt = select(TaxInvoiceTemplate).where(TaxInvoiceTemplate.template_code == "TILEFLOWTAXINVOICE")
         res = await session.execute(stmt)
         tpl = res.scalars().first()
         assert tpl is not None
-        assert tpl.template_code == "SMRITITAXINVOICE"
+        assert tpl.template_code == "TILEFLOWTAXINVOICE"
         assert tpl.status == "FROZEN"
     await engine.dispose()

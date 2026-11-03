@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Analyze Purchase Orders 18-137 to preview items for import to smriti001
+Analyze Purchase Orders 18-137 to preview items for import to tileflow001
 """
 import psycopg2
 
@@ -9,7 +9,7 @@ print("ANALYZING PURCHASE ORDERS 18-137 FOR ITEM IMPORT")
 print("=" * 80)
 
 # Connect to control plane
-conn_sys = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smritisys')
+conn_sys = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflowsys')
 cur_sys = conn_sys.cursor()
 
 # Check purchase orders in range 18-137
@@ -72,13 +72,13 @@ cur_sys.execute('''
 unique_count = cur_sys.fetchone()[0]
 print(f"\n✓ Unique products in PO 18-137: {unique_count}")
 
-# Check what's already in smriti001
-conn_co = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+# Check what's already in tileflow001
+conn_co = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur_co = conn_co.cursor()
 
 cur_co.execute('SELECT COUNT(*) FROM products')
-smriti001_count = cur_co.fetchone()[0]
-print(f"\n✓ Current products in smriti001: {smriti001_count}")
+tileflow001_count = cur_co.fetchone()[0]
+print(f"\n✓ Current products in tileflow001: {tileflow001_count}")
 
 cur_sys.close()
 conn_sys.close()

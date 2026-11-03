@@ -1,13 +1,3 @@
-"""v1388 -- Platform, predictive analytics, and audit tables.
-
-Revision ID: v1388_platform_analytics
-Revises: v1387_ecommerce_psv_party
-Create Date: 2026-08-30 00:00:03.000000
-
-Project      : SMRITI Retail OS
-Author       : Migration Integrity Protocol
-Description  : Add Platform capabilities, workspace templates, predictive demand/distribution models, PDT twin caches, demand signals, module audit logs, module states, tally configs, and CGE unified policies for v3.25.0 canonical schema.
-"""
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql

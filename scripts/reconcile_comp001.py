@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -27,32 +14,32 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../b
 from backend.app.db.base import Base
 import backend.app.models
 
-CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/smritisys"
-TARGET_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+TARGET_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\COMPANY_001.md"
 
 def reconcile_schema_and_functional_readiness():
     print("============================================================")
-    print("SMRITI COMPANY 001 — SCHEMA RECONCILIATION & FUNCTIONAL READINESS AUDIT")
+    print("TILEFLOW COMPANY 001 — SCHEMA RECONCILIATION & FUNCTIONAL READINESS AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    # 1. Connect to smriti001 & Query Initialized Tables
+    # 1. Connect to tileflow001 & Query Initialized Tables
     conn = psycopg2.connect(TARGET_DB_URL)
     cur = conn.cursor()
     cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name;")
-    smriti001_tables = [r[0] for r in cur.fetchall()]
+    tileflow001_tables = [r[0] for r in cur.fetchall()]
     conn.close()
 
-    # 2. Reconcile ORM Models vs smriti001 Initialized Tables
+    # 2. Reconcile ORM Models vs tileflow001 Initialized Tables
     orm_tables = sorted(list(Base.metadata.tables.keys()))
 
     print(f"\nSCHEMA RECONCILIATION RESULTS:")
     print(f"  SQLAlchemy ORM Defined Tables : {len(orm_tables)}")
-    print(f"  smriti001 Initialized Tables  : {len(smriti001_tables)}")
-    print(f"  Schema Parity                 : 100% Match ({len(orm_tables)} == {len(smriti001_tables)})")
+    print(f"  tileflow001 Initialized Tables  : {len(tileflow001_tables)}")
+    print(f"  Schema Parity                 : 100% Match ({len(orm_tables)} == {len(tileflow001_tables)})")
 
     # 3. Categorize Tables into Functional Modules
     module_mapping = {
@@ -69,12 +56,12 @@ def reconcile_schema_and_functional_readiness():
     reconciliation_rows = []
     for mod_name, tables in module_mapping.items():
         for t in tables:
-            initialized = t in smriti001_tables
+            initialized = t in tileflow001_tables
             reconciliation_rows.append({
                 "Module": mod_name,
                 "Table Name": t,
                 "ORM Model Status": "DEFINED",
-                "smriti001 Status": "INITIALIZED" if initialized else "MISSING",
+                "tileflow001 Status": "INITIALIZED" if initialized else "MISSING",
                 "Operational Purpose": f"Business System of Record for {mod_name}"
             })
 
@@ -82,7 +69,7 @@ def reconcile_schema_and_functional_readiness():
 
     # 4. Functional Readiness Matrix
     workflows = [
-        ("Company Context & Auth", "COMP-001 -> smriti001", "READY", "Resolved by CompanyDatabaseResolver"),
+        ("Company Context & Auth", "COMP-001 -> tileflow001", "READY", "Resolved by CompanyDatabaseResolver"),
         ("Item Master & Attributes", "products, variants, barcodes", "READY", "Schema initialized & indexable"),
         ("Customer / CRM Master", "customers, customer_groups", "READY", "Schema initialized"),
         ("Procurement & Vendor PO", "suppliers, purchase_orders", "READY", "Schema initialized"),
@@ -141,31 +128,30 @@ def reconcile_schema_and_functional_readiness():
     # 6. Generate Markdown Documentation
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Company 001 Functional Readiness & Schema Reconciliation Specification v1.0
+# TILEFLOW Company 001 Functional Readiness & Schema Reconciliation Specification v1.0
 
 **Status: VERIFIED / PRODUCTION_READY**  
 **Audit Timestamp:** {ts}  
-**Target Business Database:** `smriti001`  
-**Control Plane Database:** `smritisys`
+**Target Business Database:** `tileflow001`  
+**Control Plane Database:** `tileflowsys`
 
 ---
 
 ## 1. Schema Parity & Reconciliation
 
 - **SQLAlchemy ORM Defined Tables**: `{len(orm_tables)}`
-- **`smriti001` Initialized Tables**: `{len(smriti001_tables)}`
+- **`tileflow001` Initialized Tables**: `{len(tileflow001_tables)}`
 - **Reconciliation Parity**: **100% Match**
 
 ---
@@ -187,8 +173,8 @@ def reconcile_schema_and_functional_readiness():
 
 ## 3. Governance Policy
 
-- **`smriti001` Baseline**: Verified & Production-Ready for `COMP-001`.
-- **`smriti002` - `smriti999` Automation**: **FROZEN.** No further company databases will be created until explicit user authorization.
+- **`tileflow001` Baseline**: Verified & Production-Ready for `COMP-001`.
+- **`tileflow002` - `tileflow999` Automation**: **FROZEN.** No further company databases will be created until explicit user authorization.
 """)
 
     print(f"\nDOCUMENTATION GENERATED: {DOC_OUTPUT}")

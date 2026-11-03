@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — Governed Metric Dictionary (v1.0.0-GA).
-Single Source of Truth for all Retail & Financial KPI Mathematical Definitions.
-Enforces Invariant 2: No KPI defines its own formula outside this dictionary.
-"""
-
 from decimal import Decimal, ROUND_HALF_UP
 from enum import Enum
 from typing import Dict, Any, Optional, List, Callable

@@ -1,37 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.14.4
-Created      : 2026-07-11
-Modified     : 2026-07-11
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-
-add_missing_core_tables
-
-Revision ID: a1b2c3d4e5f6
-Revises: 12b68ccebec7
-Create Date: 2026-07-11 21:56:00.000000
-
-This migration creates all core tables that were previously managed
-by the Node.js schema.sql DDL file, allowing safe removal of that
-file and full unification of schema management under Alembic.
-
-Tables created (idempotently via CREATE TABLE IF NOT EXISTS):
-  - customer_groups
-  - customers
-  - products
-  - pos_profiles
-  - shifts (legacy Node schema - profile-based)
-  - sales_invoices
-  - sales_invoice_items
-  - psv_parties
-  - psv_sku_tracking
-  - audit_logs
-  - sync_queue
-"""
 from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa

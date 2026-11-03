@@ -1,24 +1,10 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import select
 from app.main import app
 from app.core.security import create_access_token
 from app.models.auth import UserRole
-from app.models.ui_control_plane import SmritiTheme, SmritiWorkspaceProfile
+from app.models.ui_control_plane import TileFlowTheme, TileFlowWorkspaceProfile
 from app.models.capability_template import WorkspaceTemplate
 from app.db.session import get_company_sessionmaker
 
@@ -54,14 +40,14 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
 
 
 def test_themes_and_variants_api(client):
-    """Verify active themes and color variants returned from smriti_themes in control plane."""
+    """Verify active themes and color variants returned from tileflow_themes in control plane."""
     headers = get_auth_headers("SYSADMIN")
     res = client.get("/api/v1/ui/themes", headers=headers)
     assert res.status_code == 200
     themes = res.json()
     assert len(themes) >= 1
 
-    obsidian = next((t for t in themes if "Obsidian" in t["theme_name"] or t["id"] == "theme_smriti_obsidian"), None)
+    obsidian = next((t for t in themes if "Obsidian" in t["theme_name"] or t["id"] == "theme_tileflow_obsidian"), None)
     assert obsidian is not None
     assert len(obsidian["variants"]) >= 2
     variant_types = {v["variant"] for v in obsidian["variants"]}
@@ -70,7 +56,7 @@ def test_themes_and_variants_api(client):
 
 
 def test_workspace_profiles_api(client):
-    """Verify standard persona workspace profiles returned from smriti_workspace_profiles."""
+    """Verify standard persona workspace profiles returned from tileflow_workspace_profiles."""
     headers = get_auth_headers("SYSADMIN")
     res = client.get("/api/v1/ui/workspace-profiles", headers=headers)
     assert res.status_code == 200
@@ -138,8 +124,8 @@ def test_resolved_menus_cashier_pruning_and_security(client):
 
 @pytest.mark.asyncio
 async def test_database_backed_workspace_templates():
-    """Verify SmritiSys contains populated workspace templates with included capability bundles."""
-    sessionmaker = get_company_sessionmaker("smritisys")
+    """Verify TileFlowSys contains populated workspace templates with included capability bundles."""
+    sessionmaker = get_company_sessionmaker("tileflowsys")
     async with sessionmaker() as session:
         res = await session.execute(select(WorkspaceTemplate))
         templates = res.scalars().all()

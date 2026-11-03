@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.81.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   ThreeWayMatchingModal,
@@ -19,7 +5,7 @@ import {
 } from "../components/purchase/ThreeWayMatchingModal";
 import * as apiFetchModule from "../lib/apiFetchV1";
 
-describe("SMRITI Purchase Studio 3-Way Auto-Reconciliation Engine", () => {
+describe("MQube Purchase Studio 3-Way Auto-Reconciliation Engine", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });

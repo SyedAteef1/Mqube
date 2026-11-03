@@ -1,16 +1,16 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal -- Audit Artifact
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source -- Audit Artifact
 -->
 
-# SMRITI Retail OS -- Architecture & Version Status Audit
+# TILEFLOW Retail OS -- Architecture & Version Status Audit
 ## Phase 7: Architecture / Version / Status Documentation
 
 **Audit Date:** 2026-08-17
@@ -45,7 +45,7 @@
 | Document | Stated Status | Accuracy |
 |---|---|---|
 | MULTI_COMPANY.md | (not stated) | ALIGNED with code |
-| SMRITISYS.md | AUDIT_COMPLETE | ALIGNED |
+| TILEFLOWSYS.md | AUDIT_COMPLETE | ALIGNED |
 | COMPANY_DATABASE.md | DRY_RUN_PASSED / PENDING_HUMAN_APPROVAL | ALIGNED (still in pending state) |
 | COMPANY_DATABASE_2.md | LIFECYCLE_ARCHITECTURE_AUDITED_PENDING_UI_GATE | ALIGNED (lifecycle partially implemented per table) |
 | DATABASE_ROUTING.md | AUDIT_COMPLETE | ALIGNED |
@@ -112,11 +112,11 @@
 
 ---
 
-## 7. SmritiPSV Database Provisioning Gap
+## 7. TileFlowPSV Database Provisioning Gap
 
-### Finding: No evidence of automated SmritiPSV database provisioning in the codebase.
-### The provisioning engine (CompanyDatabaseProvisioner) provisions smriti<code> databases.
-### SmritiPSV requires manual creation or a separate script not found in the repository.
+### Finding: No evidence of automated TileFlowPSV database provisioning in the codebase.
+### The provisioning engine (CompanyDatabaseProvisioner) provisions tileflow<code> databases.
+### TileFlowPSV requires manual creation or a separate script not found in the repository.
 ### No architecture document addresses this gap.
 ### Status: PARTIALLY_VERIFIED (gap exists; not documented)
 

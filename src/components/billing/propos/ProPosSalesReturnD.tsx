@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-29
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useMemo } from "react";
 import { ReturnItem } from "./types.ts";
 import {
@@ -37,7 +23,7 @@ interface ExtendedReturnItem extends ReturnItem {
   taxAmount?: number;
 }
 
-interface SmritiProPosSalesReturnModalProps {
+interface TileFlowProPosSalesReturnModalProps {
   onProcessReturn: (returnDetails: {
     originalBillNo?: string;
     items: ReturnItem[];
@@ -49,7 +35,7 @@ interface SmritiProPosSalesReturnModalProps {
   onClose: () => void;
 }
 
-export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModalProps> = ({
+export const TileFlowProPosSalesReturnModal: React.FC<TileFlowProPosSalesReturnModalProps> = ({
   onProcessReturn,
   onClose,
 }) => {
@@ -199,33 +185,33 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#c4c5d5] dark:border-[#444653] max-h-[92vh]">
+      <div className="bg-white dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] w-full max-w-5xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#c6c6c6] dark:border-[#474747] max-h-[92vh]">
         
         {/* Header */}
-        <div className="px-6 py-4 border-b border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e] flex justify-between items-center shrink-0">
+        <div className="px-6 py-4 border-b border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex justify-between items-center shrink-0">
           <div className="flex items-center gap-3">
             <div className="p-2 bg-[#ffdad6] dark:bg-[#93000a] text-[#ba1a1a] dark:text-white rounded-xl">
               <RotateCcw size={18} />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[#191c1d] dark:text-white">
+              <h2 className="text-base font-bold text-[#1b1b1b] dark:text-white">
                 Sales Return &amp; Credit Note Processing
               </h2>
-              <p className="text-xs text-[#565e74] dark:text-[#bec6e0]">
+              <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Authoritative POS item return with real-time stock replenishment and policy verification.
               </p>
             </div>
           </div>
 
           {/* Mode Switcher */}
-          <div className="flex items-center bg-[#e7e8e9] dark:bg-[#2d3133] p-1 rounded-xl">
+          <div className="flex items-center bg-[#e8e8e8] dark:bg-[#303030] p-1 rounded-xl">
             <button
               type="button"
               onClick={() => setReturnMode("WITH_REFERENCE")}
               className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
                 returnMode === "WITH_REFERENCE"
-                  ? "bg-white dark:bg-[#131b2e] text-[#00288e] dark:text-[#a8b8ff] shadow-xs"
-                  : "text-[#565e74] dark:text-[#bec6e0]"
+                  ? "bg-white dark:bg-[#1b1b1b] text-[#272727] dark:text-[#bababa] shadow-xs"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6]"
               }`}
             >
               With Original Bill
@@ -235,8 +221,8 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
               onClick={() => setReturnMode("BLIND_RETURN")}
               className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
                 returnMode === "BLIND_RETURN"
-                  ? "bg-white dark:bg-[#131b2e] text-[#ba1a1a] dark:text-[#ffdad6] shadow-xs"
-                  : "text-[#565e74] dark:text-[#bec6e0]"
+                  ? "bg-white dark:bg-[#1b1b1b] text-[#ba1a1a] dark:text-[#ffdad6] shadow-xs"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6]"
               }`}
             >
               Blind Return (Manager)
@@ -246,7 +232,7 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
           <button
             type="button"
             onClick={onClose}
-            className="text-[#565e74] hover:bg-[#f3f4f5] p-1.5 rounded-lg transition"
+            className="text-[#5e5e5e] hover:bg-[#f4f4f4] p-1.5 rounded-lg transition"
           >
             <X size={18} />
           </button>
@@ -261,26 +247,26 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
         )}
 
         {/* Search / Bill Reference Area */}
-        <div className="p-6 pb-4 grid grid-cols-1 md:grid-cols-12 gap-4 bg-[#f8f9fa] dark:bg-[#131b2e] border-b border-[#c4c5d5] dark:border-[#444653] shrink-0">
+        <div className="p-6 pb-4 grid grid-cols-1 md:grid-cols-12 gap-4 bg-[#f9f9f9] dark:bg-[#1b1b1b] border-b border-[#c6c6c6] dark:border-[#474747] shrink-0">
           <div className="md:col-span-6 flex flex-col gap-1">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+            <label className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
               Original Invoice / Slip Number
             </label>
             <form onSubmit={handleLoadBill} className="flex gap-2">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#757684]" size={15} />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#777777]" size={15} />
                 <input
                   type="text"
                   value={billNumberInput}
                   onChange={(e) => setBillNumberInput(e.target.value)}
                   placeholder="Scan or enter Invoice No (e.g. INV-001)..."
-                  className="w-full pl-9 pr-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-xl bg-white dark:bg-[#191c1e] text-xs font-mono font-bold outline-none focus:border-[#00288e]"
+                  className="w-full pl-9 pr-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-xl bg-white dark:bg-[#1c1c1c] text-xs font-mono font-bold outline-none focus:border-[#272727]"
                 />
               </div>
               <button
                 type="submit"
                 disabled={loadingContext || !billNumberInput.trim()}
-                className="px-4 py-2 bg-[#00288e] text-white rounded-xl text-xs font-bold hover:bg-[#1e40af] transition shrink-0 flex items-center gap-1.5 disabled:opacity-50"
+                className="px-4 py-2 bg-[#272727] text-white rounded-xl text-xs font-bold hover:bg-[#414141] transition shrink-0 flex items-center gap-1.5 disabled:opacity-50"
               >
                 {loadingContext ? <Loader2 size={13} className="animate-spin" /> : <Search size={13} />}
                 <span>Load Bill</span>
@@ -289,7 +275,7 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
           </div>
 
           <div className="md:col-span-6 flex flex-col gap-1">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+            <label className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
               Refund Settlement Method
             </label>
             <div className="grid grid-cols-3 gap-2">
@@ -298,8 +284,8 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
                 onClick={() => setRefundMode("CREDIT_NOTE")}
                 className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                   refundMode === "CREDIT_NOTE"
-                    ? "bg-[#00288e] text-white shadow-xs"
-                    : "bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653]"
+                    ? "bg-[#272727] text-white shadow-xs"
+                    : "bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747]"
                 }`}
               >
                 <FileText size={13} />
@@ -310,8 +296,8 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
                 onClick={() => setRefundMode("CASH")}
                 className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                   refundMode === "CASH"
-                    ? "bg-[#00288e] text-white shadow-xs"
-                    : "bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653]"
+                    ? "bg-[#272727] text-white shadow-xs"
+                    : "bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747]"
                 }`}
               >
                 <Banknote size={13} />
@@ -322,8 +308,8 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
                 onClick={() => setRefundMode("ORIGINAL_PAYMENT")}
                 className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                   refundMode === "ORIGINAL_PAYMENT"
-                    ? "bg-[#00288e] text-white shadow-xs"
-                    : "bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653]"
+                    ? "bg-[#272727] text-white shadow-xs"
+                    : "bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747]"
                 }`}
               >
                 <CreditCard size={13} />
@@ -335,16 +321,16 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
 
         {/* Invoice Context Header Banner */}
         {returnContext && (
-          <div className="px-6 py-2 bg-[#f0f4ff] dark:bg-[#1a233b] border-b border-[#c4c5d5] dark:border-[#444653] flex flex-wrap items-center justify-between text-xs text-[#2e3135] dark:text-[#c4c5d5]">
+          <div className="px-6 py-2 bg-[#f4f4f4] dark:bg-[#232323] border-b border-[#c6c6c6] dark:border-[#474747] flex flex-wrap items-center justify-between text-xs text-[#313131] dark:text-[#c6c6c6]">
             <div className="flex items-center gap-4">
-              <span className="flex items-center gap-1 font-mono font-bold text-[#00288e] dark:text-[#a8b8ff]">
+              <span className="flex items-center gap-1 font-mono font-bold text-[#272727] dark:text-[#bababa]">
                 <FileText size={13} /> #{returnContext.invoice_no || returnContext.invoice_id}
               </span>
-              <span className="flex items-center gap-1 text-[#565e74] dark:text-[#bec6e0]">
+              <span className="flex items-center gap-1 text-[#5e5e5e] dark:text-[#c6c6c6]">
                 <Calendar size={13} /> {returnContext.invoice_date}
               </span>
               {returnContext.customer && (
-                <span className="flex items-center gap-1 text-[#565e74] dark:text-[#bec6e0]">
+                <span className="flex items-center gap-1 text-[#5e5e5e] dark:text-[#c6c6c6]">
                   <User size={13} /> {returnContext.customer.name}
                 </span>
               )}
@@ -360,7 +346,7 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
         {/* Return Items Grid */}
         <div className="p-6 flex-1 flex flex-col overflow-hidden">
           <div className="flex justify-between items-center mb-2">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+            <span className="text-xs font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
               Eligible Items from Original Invoice ({returnItems.length})
             </span>
             <span className="text-xs font-bold font-mono text-[#ba1a1a]">
@@ -368,10 +354,10 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
             </span>
           </div>
 
-          <div className="border border-[#c4c5d5] dark:border-[#444653] rounded-xl overflow-hidden flex-1 flex flex-col">
+          <div className="border border-[#c6c6c6] dark:border-[#474747] rounded-xl overflow-hidden flex-1 flex flex-col">
             <div className="overflow-auto flex-1">
               <table className="w-full text-left border-collapse text-xs">
-                <thead className="bg-[#edeeef] dark:bg-[#131b2e] sticky top-0 text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] border-b border-[#c4c5d5] dark:border-[#444653]">
+                <thead className="bg-[#eeeeee] dark:bg-[#1b1b1b] sticky top-0 text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] border-b border-[#c6c6c6] dark:border-[#474747]">
                   <tr>
                     <th className="px-3 py-2.5 w-10 text-center">#</th>
                     <th className="px-3 py-2.5 w-28">SKU</th>
@@ -385,13 +371,13 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
                     <th className="px-3 py-2.5 text-right w-28">Refund Value</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+                <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
                   {returnItems.length === 0 ? (
                     <tr>
-                      <td colSpan={10} className="px-6 py-12 text-center text-[#757684]">
+                      <td colSpan={10} className="px-6 py-12 text-center text-[#777777]">
                         {loadingContext ? (
                           <div className="flex items-center justify-center gap-2">
-                            <Loader2 size={16} className="animate-spin text-[#00288e]" />
+                            <Loader2 size={16} className="animate-spin text-[#272727]" />
                             <span>Loading return context...</span>
                           </div>
                         ) : (
@@ -410,8 +396,8 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
                             isReturning ? "bg-[#ffdad6]/20 dark:bg-[#93000a]/10 font-medium" : "opacity-75"
                           }`}
                         >
-                          <td className="px-3 py-2 text-center font-mono text-[#757684]">{idx + 1}</td>
-                          <td className="px-3 py-2 font-mono font-bold text-[#00288e] dark:text-[#a8b8ff]">
+                          <td className="px-3 py-2 text-center font-mono text-[#777777]">{idx + 1}</td>
+                          <td className="px-3 py-2 font-mono font-bold text-[#272727] dark:text-[#bababa]">
                             {item.sku}
                           </td>
                           <td className="px-3 py-2">{item.name}</td>
@@ -426,7 +412,7 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
                               max={maxAllowed}
                               value={item.returnQty}
                               onChange={(e) => handleQtyChange(idx, parseInt(e.target.value, 10) || 0)}
-                              className="w-16 h-7 px-2 border border-[#ba1a1a] rounded-lg text-center font-mono font-bold text-xs bg-white dark:bg-[#191c1e] text-[#ba1a1a] outline-none"
+                              className="w-16 h-7 px-2 border border-[#ba1a1a] rounded-lg text-center font-mono font-bold text-xs bg-white dark:bg-[#1c1c1c] text-[#ba1a1a] outline-none"
                             />
                           </td>
                           <td className="px-3 py-2 text-right font-mono">
@@ -437,7 +423,7 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
                               disabled={!isReturning}
                               value={item.returnReason}
                               onChange={(e) => handleReasonChange(idx, e.target.value)}
-                              className="w-full text-[11px] p-1 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-white dark:bg-[#191c1e] outline-none"
+                              className="w-full text-[11px] p-1 border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-white dark:bg-[#1c1c1c] outline-none"
                             >
                               <option value="Size Mismatch / Fit Issue">Size Mismatch / Fit Issue</option>
                               <option value="Customer Changed Mind">Customer Changed Mind</option>
@@ -450,7 +436,7 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
                               disabled={!isReturning}
                               value={item.condition}
                               onChange={(e) => handleConditionChange(idx, e.target.value as any)}
-                              className="w-full text-[11px] p-1 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-white dark:bg-[#191c1e] outline-none"
+                              className="w-full text-[11px] p-1 border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-white dark:bg-[#1c1c1c] outline-none"
                             >
                               <option value="Good">Good (Restock)</option>
                               <option value="Defective">Defective</option>
@@ -471,18 +457,18 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
         </div>
 
         {/* Footer Summary & Actions */}
-        <div className="px-6 py-4 bg-[#f8f9fa] dark:bg-[#131b2e] border-t border-[#c4c5d5] dark:border-[#444653] flex justify-between items-center shrink-0">
+        <div className="px-6 py-4 bg-[#f9f9f9] dark:bg-[#1b1b1b] border-t border-[#c6c6c6] dark:border-[#474747] flex justify-between items-center shrink-0">
           <div className="flex items-center gap-6">
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Total Refund Payable
               </span>
               <span className="text-2xl font-bold font-mono text-[#ba1a1a]">
                 -₹{totalRefundValue.toFixed(2)}
               </span>
             </div>
-            <div className="h-8 w-px bg-[#c4c5d5] dark:bg-[#444653]"></div>
-            <span className="text-xs text-[#565e74] dark:text-[#bec6e0]">
+            <div className="h-8 w-px bg-[#c6c6c6] dark:bg-[#474747]"></div>
+            <span className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">
               Mode: <strong>{refundMode}</strong>
             </span>
           </div>
@@ -492,7 +478,7 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
               type="button"
               onClick={onClose}
               disabled={submitting}
-              className="px-5 py-2.5 border border-[#c4c5d5] dark:border-[#444653] bg-white dark:bg-[#2d3133] rounded-xl text-xs font-bold hover:bg-[#e7e8e9] transition disabled:opacity-50"
+              className="px-5 py-2.5 border border-[#c6c6c6] dark:border-[#474747] bg-white dark:bg-[#303030] rounded-xl text-xs font-bold hover:bg-[#e8e8e8] transition disabled:opacity-50"
             >
               Cancel
             </button>
@@ -513,4 +499,4 @@ export const SmritiProPosSalesReturnModal: React.FC<SmritiProPosSalesReturnModal
   );
 };
 
-export default SmritiProPosSalesReturnModal;
+export default TileFlowProPosSalesReturnModal;

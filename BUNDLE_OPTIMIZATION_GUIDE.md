@@ -1,11 +1,11 @@
-# Bundle Optimization Guide - SMRITI Retail OS
+# Bundle Optimization Guide - TILEFLOW Retail OS
 
 ## Current State Analysis
 
 **Current Bundle Sizes:**
 - Main bundle: **2.7 MB** (target: <1 MB)
 - Largest chunks:
-  - smriti-report-designer: 448 MB 🔴
+  - tileflow-report-designer: 448 MB 🔴
   - vendor-core: 886 MB 🔴
   - index: 2,691 MB 🔴
 - Build warning: "Some chunks are larger than 500 kB after minification"

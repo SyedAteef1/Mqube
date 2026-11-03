@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-13
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   FileSpreadsheet, Download, Upload, CheckCircle2, 
@@ -79,7 +54,7 @@ export const BulkImportSection: React.FC<BulkImportSectionProps> = ({
           if (i === 0) {
             row["TemplateStyleCode"] = "TSH-COT";
             row["BaseName"] = "Classic Cotton T-Shirt";
-            row["Brand"] = "SMRITI";
+            row["Brand"] = "MQube";
             row["Category"] = "Apparel";
             row["HSN"] = "61091000";
             row["Price"] = "799";
@@ -142,7 +117,7 @@ export const BulkImportSection: React.FC<BulkImportSectionProps> = ({
         onNotification("Passed Validation", "All spreadsheet rows are valid and formatted perfectly.", "success");
       }
     } catch (e: any) {
-      onNotification("Connection Error", e.message || "Failed to validate records with SMRITI.", "error");
+      onNotification("Connection Error", e.message || "Failed to validate records with MQube.", "error");
     } finally {
       setLoading(false);
     }
@@ -166,7 +141,7 @@ export const BulkImportSection: React.FC<BulkImportSectionProps> = ({
         })
       });
 
-      onNotification("Import Complete", `Successfully imported ${data.count} items into SMRITI Catalog.`, "success");
+      onNotification("Import Complete", `Successfully imported ${data.count} items into MQube Catalog.`, "success");
       setRows([]);
       setValidationResults([]);
       setHasValidated(false);
@@ -188,7 +163,7 @@ export const BulkImportSection: React.FC<BulkImportSectionProps> = ({
       <div className="bg-theme-surface-1 p-5 rounded-2xl border border-theme-divider flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h4 className="font-display font-bold text-sm text-theme-body flex items-center space-x-2">
-            <FileSpreadsheet size={16} className="text-[#38bdf8]" />
+            <FileSpreadsheet size={16} className="text-[#a5a5a5]" />
             <span>Attribute-Aware Bulk Spreadsheet Importer</span>
           </h4>
           <p className="text-[11px] text-theme-muted mt-0.5">Select your business attribute group to compile a bespoke, validated CSV import sheet</p>
@@ -272,7 +247,7 @@ export const BulkImportSection: React.FC<BulkImportSectionProps> = ({
                               type="text"
                               value={row[h] || ""}
                               onChange={(e) => handleCellChange(rowIndex, h, e.target.value)}
-                              className={`w-full bg-theme-surface-2 border rounded text-xs px-2.5 py-1.5 text-white placeholder-[#5b6576] focus:outline-none focus:border-blue-500 font-mono ${
+                              className={`w-full bg-theme-surface-2 border rounded text-xs px-2.5 py-1.5 text-white placeholder-[#646464] focus:outline-none focus:border-blue-500 font-mono ${
                                 hasCellErr ? "border-rose-500 bg-rose-950/20" : "border-theme-divider"
                               }`}
                             />
@@ -318,7 +293,7 @@ export const BulkImportSection: React.FC<BulkImportSectionProps> = ({
         {/* Workspace Operations */}
         <div className="flex items-center justify-between pt-2 border-t border-theme-divider/40">
           <span className="text-[10px] font-mono text-theme-muted">
-            Data validation is strictly active. SMRITI checks value options instantly.
+            Data validation is strictly active. MQube checks value options instantly.
           </span>
 
           <div className="flex items-center space-x-3">

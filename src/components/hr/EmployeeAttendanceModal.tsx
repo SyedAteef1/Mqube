@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.121.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -31,7 +30,7 @@ const STATUS_COLOR: Record<string, string> = {
   HOLIDAY:  "text-slate-400 bg-slate-700/10 border-slate-600/20",
 };
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 const PROFILES: EmployeeProfile[] = [
   { empId: "EMP-001", name: "Priya Sharma",  branchCode: "BR-MUM-01", designation: "Sales Associate", baseSalary: 25000, commissionType: "FLAT_PCT",  flatPct: 1.5, targetAmt: 200000, targetBonusPct: 10 },
@@ -171,7 +170,7 @@ export const EmployeeAttendanceModal: React.FC<EmployeeAttendanceModalProps> = (
                   <div key={r.recordId} className="flex items-center justify-between px-3 py-2 bg-slate-800/20 border border-slate-800/50 rounded-lg text-xs">
                     <span className="text-slate-400 font-mono">{r.date}</span>
                     <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${STATUS_COLOR[r.status]}`}>{r.status}</span>
-                    <span className="text-slate-500 font-mono">{r.clockInTime ?? "â€”"} â†’ {r.clockOutTime ?? "â€”"}</span>
+                    <span className="text-slate-500 font-mono">{r.clockInTime ?? "—"} â†’ {r.clockOutTime ?? "—"}</span>
                     <span className="text-slate-400 font-mono">{r.hoursWorked != null ? `${r.hoursWorked}h` : r.leaveType ?? ""}</span>
                   </div>
                 ))}

@@ -1,5 +1,5 @@
 """
-PHASE 2B: Check if extra tables in smriti001 contain data
+PHASE 2B: Check if extra tables in tileflow001 contain data
 Critical for deciding: can we drop them or do they have business records?
 """
 import psycopg2
@@ -22,11 +22,11 @@ extra_tables = [
     'tenant_capability_bindings', 'user_workspace_configs'
 ]
 
-print("[PHASE 2B] Checking row counts in extra tables (smriti001)")
+print("[PHASE 2B] Checking row counts in extra tables (tileflow001)")
 print("="*70)
 
 conn = psycopg2.connect(
-    host='localhost', port=5432, user='postgres', password='postgres', database='smriti001'
+    host='localhost', port=5432, user='postgres', password='postgres', database='tileflow001'
 )
 cur = conn.cursor()
 
@@ -67,4 +67,4 @@ if len(tables_with_data) > 0:
     print("  Need schema recovery strategy or migration path")
 else:
     print("✓ All extra tables are EMPTY - Safe to drop")
-    print("  Can remediate smriti001 by dropping orphaned tables")
+    print("  Can remediate tileflow001 by dropping orphaned tables")

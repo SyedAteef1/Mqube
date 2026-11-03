@@ -5,7 +5,7 @@
 | Module | UI Designed | Frontend Started | Frontend Complete | Overall UI Score |
 | :--- | :---: | :---: | :---: | :---: |
 | Executive Hub | ✅ | ✅ | ✅ | 100% |
-| SMRITI Gyan Kendra | ✅ | ✅ | ✅ | 100% |
+| TILEFLOW Gyan Kendra | ✅ | ✅ | ✅ | 100% |
 | Billing Desk | ✅ | ✅ | ✅ | 100% |
 | Sales Studio | ✅ | ✅ | ✅ | 100% |
 | Create Tax Invoice (B2B) | ❌ | ❌ | ❌ | 0% |
@@ -34,6 +34,6 @@
 | Terms & Conditions | ✅ | ✅ | ✅ | 100% |
 | Data Exchange Hub | ✅ | ✅ | ✅ | 100% |
 | Company Setup Wizard | ❌ | ❌ | ❌ | 0% |
-| About SMRITI | ✅ | ✅ | ✅ | 100% |
+| About TILEFLOW | ✅ | ✅ | ✅ | 100% |
 | Dev Intelligence Center | ✅ | ✅ | ✅ | 100% |
 | Audit Logs | ✅ | ✅ | ✅ | 100% |

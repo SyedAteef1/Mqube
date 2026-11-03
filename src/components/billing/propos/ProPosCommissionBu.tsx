@@ -1,22 +1,8 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from "react";
 import { CommissionRule } from "./types.ts";
 import { Award, Plus, Trash2, Save, User, Percent, ShieldCheck } from "lucide-react";
 
-export const SmritiCommissionBuildilder: React.FC = () => {
+export const TileFlowCommissionBuildilder: React.FC = () => {
   const [commissionRules, setCommissionRules] = useState<CommissionRule[]>([
     {
       id: "comm-1",
@@ -75,17 +61,17 @@ export const SmritiCommissionBuildilder: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-[#f8f9fa] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] overflow-y-auto p-6 font-sans">
+    <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] overflow-y-auto p-6 font-sans">
       <div className="max-w-5xl mx-auto w-full space-y-6">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c4c5d5] dark:border-[#444653]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c6c6c6] dark:border-[#474747]">
           <div>
-            <h1 className="text-xl font-bold text-[#00288e] dark:text-[#a8b8ff] flex items-center gap-2">
+            <h1 className="text-xl font-bold text-[#272727] dark:text-[#bababa] flex items-center gap-2">
               <Award size={22} />
               Sales Staff Commission &amp; Incentive Rule Builder
             </h1>
-            <p className="text-xs text-[#565e74] dark:text-[#bec6e0] mt-0.5">
+            <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6] mt-0.5">
               Define tiered volume commissions, brand kickers, and salesperson reward structures.
             </p>
           </div>
@@ -94,7 +80,7 @@ export const SmritiCommissionBuildilder: React.FC = () => {
             <button
               type="button"
               onClick={handleAddRow}
-              className="px-4 py-2 bg-[#00288e] text-white rounded-xl text-xs font-bold hover:bg-[#1e40af] transition flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-2 bg-[#272727] text-white rounded-xl text-xs font-bold hover:bg-[#414141] transition flex items-center gap-1.5 shadow-sm"
             >
               <Plus size={14} />
               Add Commission Slab
@@ -103,28 +89,28 @@ export const SmritiCommissionBuildilder: React.FC = () => {
         </div>
 
         {/* Rule Table */}
-        <div className="bg-white dark:bg-[#2d3133] rounded-2xl border border-[#c4c5d5] dark:border-[#444653] overflow-hidden shadow-xs">
+        <div className="bg-white dark:bg-[#303030] rounded-2xl border border-[#c6c6c6] dark:border-[#474747] overflow-hidden shadow-xs">
           <table className="w-full text-left border-collapse text-xs">
-            <thead className="bg-[#f8f9fa] dark:bg-[#131b2e] text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] border-b border-[#c4c5d5] dark:border-[#444653]">
+            <thead className="bg-[#f9f9f9] dark:bg-[#1b1b1b] text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] border-b border-[#c6c6c6] dark:border-[#474747]">
               <tr>
                 <th className="px-4 py-3">Salesperson Code</th>
                 <th className="px-4 py-3">Staff Name</th>
                 <th className="px-4 py-3">Category Filter</th>
                 <th className="px-4 py-3 text-right">Min Sales (₹)</th>
                 <th className="px-4 py-3 text-right">Max Sales (₹)</th>
-                <th className="px-4 py-3 text-right text-[#00288e] dark:text-[#a8b8ff]">Commission %</th>
+                <th className="px-4 py-3 text-right text-[#272727] dark:text-[#bababa]">Commission %</th>
                 <th className="px-4 py-3 text-center">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+            <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
               {commissionRules.map(r => (
-                <tr key={r.id} className="hover:bg-[#f8f9fa] dark:hover:bg-[#131b2e] transition">
+                <tr key={r.id} className="hover:bg-[#f9f9f9] dark:hover:bg-[#1b1b1b] transition">
                   <td className="px-4 py-3 font-mono font-bold">{r.salesStaffCode}</td>
                   <td className="px-4 py-3 font-semibold">{r.staffName}</td>
                   <td className="px-4 py-3">{r.category}</td>
                   <td className="px-4 py-3 text-right font-mono">₹{r.tierMin.toLocaleString()}</td>
                   <td className="px-4 py-3 text-right font-mono">₹{r.tierMax.toLocaleString()}</td>
-                  <td className="px-4 py-3 text-right font-mono font-bold text-sm text-[#00288e] dark:text-[#a8b8ff]">
+                  <td className="px-4 py-3 text-right font-mono font-bold text-sm text-[#272727] dark:text-[#bababa]">
                     {r.commissionPct.toFixed(1)}%
                   </td>
                   <td className="px-4 py-3 text-center">
@@ -148,4 +134,4 @@ export const SmritiCommissionBuildilder: React.FC = () => {
   );
 };
 
-export default SmritiCommissionBuildilder;
+export default TileFlowCommissionBuildilder;

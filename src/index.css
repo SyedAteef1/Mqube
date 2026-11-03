@@ -1,18 +1,6 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-07-10
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 @import "tailwindcss";
-@import "./smriti_scroll.css";
+@import "./tileflow_scroll.css";
+@import "./design_tokens.css";
 
 @theme {
 	--font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -78,7 +66,7 @@
 
 @layer base {
 	:root, [data-theme="light"] {
-		/* SMRITI Enterprise Light Design Tokens — Fiori Horizon Inspired */
+		/* MQube Enterprise Light Design Tokens — Fiori Horizon Inspired */
 		/* Surfaces */
 		--c-theme-base: #F5F6F7;
 		--c-theme-surface-1: #FFFFFF;
@@ -137,7 +125,7 @@
 	}
 
 	[data-theme="dark"], .dark {
-		/* SMRITI Enterprise Dark Design Tokens — Fiori Horizon Inspired */
+		/* MQube Enterprise Dark Design Tokens — Fiori Horizon Inspired */
 		/* Surfaces */
 		--c-theme-base: #121721;
 		--c-theme-surface-1: #1A2232;
@@ -362,6 +350,13 @@
   .print-only-container, .print-only-container * {
     visibility: visible;
   }
+  /* A document being printed replaces any other print layout on the page. */
+  body:has(.print-engine-job) .print-only-container:not(.print-engine-job) {
+    display: none !important;
+  }
+  .print-engine-job .invoice-print-container > div {
+    padding: 10mm 12mm 12mm 12mm !important;
+  }
   .print-only-container {
     position: absolute;
     left: 0;
@@ -379,7 +374,7 @@
   }
 }
 
-/* SMRITI Industrial Logic Design System Tokens (Stitch Barcode Label Designer & Printer) */
+/* MQube Industrial Logic Design System Tokens (Stitch Barcode Label Designer & Printer) */
 :root {
   --color-surface: #fbf8fb;
   --color-surface-dim: #dbd9dc;
@@ -423,19 +418,19 @@
 .border-outline { border-color: #75777e; }
 .border-outline-variant { border-color: #c5c6ce; }
 .border-surface-variant { border-color: #e4e2e5; }
-.bg-primary { background-color: #041632; }
-.text-primary { color: #041632; }
-.text-primary-fixed { color: #d7e2ff; }
+.bg-primary { background-color: #141414; }
+.text-primary { color: #141414; }
+.text-primary-fixed { color: #e2e2e2; }
 .text-on-primary { color: #ffffff; }
-.bg-primary-container { background-color: #1b2b48; }
-.text-on-primary-container { color: #8393b5; }
-.bg-secondary { background-color: #3e5f90; }
-.text-secondary { color: #3e5f90; }
+.bg-primary-container { background-color: #2a2a2a; }
+.text-on-primary-container { color: #929292; }
+.bg-secondary { background-color: #5c5c5c; }
+.text-secondary { color: #5c5c5c; }
 .text-on-secondary { color: #ffffff; }
-.bg-secondary-container { background-color: #a7c8ff; }
-.text-on-secondary-container { color: #315384; }
-.bg-secondary-fixed { background-color: #d5e3ff; }
-.text-on-secondary-fixed { color: #001b3c; }
+.bg-secondary-container { background-color: #c5c5c5; }
+.text-on-secondary-container { color: #4f4f4f; }
+.bg-secondary-fixed { background-color: #e2e2e2; }
+.text-on-secondary-fixed { color: #181818; }
 .border-error { border-color: #ba1a1a; }
 .text-error { color: #ba1a1a; }
 .bg-error-container { background-color: #ffdad6; }

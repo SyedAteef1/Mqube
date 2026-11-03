@@ -20,7 +20,6 @@ res = subprocess.run(["git", "ls-files", "*.html", "*.htm"], cwd=str(repo_root),
 tracked_set = set(f.strip() for f in res.stdout.splitlines() if f.strip())
 
 # 3. Categorize each file
-# Categories: RUNTIME_UI, PRINT_PDF, EMAIL_TEMPLATE, STATIC, LEGACY, GENERATED, TEST_FIXTURE, UNKNOWN
 def classify(path_str):
     p = path_str.lower()
     if path_str == "index.html" or path_str == "src/index.html":

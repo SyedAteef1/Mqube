@@ -1,23 +1,22 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.0
   Created      : 2026-07-16
   Modified     : 2026-07-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
-# Executive Summary: SMRITI Development Intelligence Center
+# Executive Summary: TILEFLOW Development Intelligence Center
  
 *Scan Timestamp: 15-Jul-26*
 *Release Target: v3.16.0*
 
 ## High-Level Engineering Indices
-- **SMRITI Development Health Index (DHI):** 43% (Grade D)
+- **TILEFLOW Development Health Index (DHI):** 43% (Grade D)
 - **Quality Score:** 40%
 - **Security Score:** 0%
 - **Release Readiness Score:** 55%

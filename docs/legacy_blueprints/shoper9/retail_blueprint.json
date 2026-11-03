@@ -1,7 +1,7 @@
 {
   "profile": "Retail",
   "version": "18.0",
-  "description": "SMRITI Retail Profile based on Shoper9 Retail template",
+  "description": "TILEFLOW Retail Profile based on Shoper9 Retail template",
   "scope": [
     "POS billing",
     "Retail pricing & barcode lookup",

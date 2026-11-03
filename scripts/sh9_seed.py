@@ -1,32 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Sprint 2 -- Legacy Menu Map Seed Script
-
-Reads: docs/legacy/shoper/SH9_MAP_MATRIX.csv  (265 rows, Sprint 1 output)
-Upserts: smriti_legacy_menu_map table
-
-Idempotent: re-running updates existing rows (no duplicates).
-Use this script after:
-  1. Running alembic upgrade head (v1371 must be applied first)
-  2. Any update to SH9_MAP_MATRIX.csv (e.g. after re-running sh9_map.py)
-
-Usage:
-  python scripts/sh9_seed.py [--dry-run] [--db-url postgresql://...]
-
-If --db-url is not provided, reads DATABASE_URL from backend/.env
-"""
-
 import sys
 import os
 import csv
@@ -90,10 +61,10 @@ def build_row(r: dict) -> dict:
         "sh9_pgm_opt":     csv_to_int(r.get("pgmopt","0")),
         "sh9_allow_closed":csv_to_int(r.get("AllowWhenTrnClosed","0")),
         "sh9_multi_inst":  csv_to_int(r.get("MultiInstance","0")),
-        "smriti_menu_id":  r.get("SmritiMenuId","")[:80] or None,
-        "smriti_workspace":r.get("SmritiWorkspace","")[:120] or None,
-        "smriti_module":   r.get("SmritiModule","")[:50] or None,
-        "smriti_action":   r.get("SmritiAction","")[:60] or None,
+        "tileflow_menu_id":  r.get("TileFlowMenuId","")[:80] or None,
+        "tileflow_workspace":r.get("TileFlowWorkspace","")[:120] or None,
+        "tileflow_module":   r.get("TileFlowModule","")[:50] or None,
+        "tileflow_action":   r.get("TileFlowAction","")[:60] or None,
         "document_type":   r.get("DocumentType","")[:60] or None,
         "migration_status":status,
         "migration_notes": r.get("Notes",""),
@@ -125,12 +96,12 @@ def run(db_url: str, dry_run: bool) -> None:
         print("\n[DRY RUN] Sample rows (first 3):")
         for r in rows[:3]:
             print(f"  id={r['id']:<20} sh9=({r['sh9_mnu_no']},{r['sh9_menu_opt']}) "
-                  f"ws={r['smriti_workspace']} status={r['migration_status']}")
+                  f"ws={r['tileflow_workspace']} status={r['migration_status']}")
         print(f"\n[DRY RUN] Would upsert {len(rows)} rows. No DB changes made.")
         return
 
     engine = sa.create_engine(db_url, echo=False)
-    TABLE = "smriti_legacy_menu_map"
+    TABLE = "tileflow_legacy_menu_map"
 
     inserted = 0
     updated  = 0
@@ -162,10 +133,10 @@ def run(db_url: str, dry_run: bool) -> None:
                             sh9_pgm_opt     = :sh9_pgm_opt,
                             sh9_allow_closed= :sh9_allow_closed,
                             sh9_multi_inst  = :sh9_multi_inst,
-                            smriti_menu_id  = :smriti_menu_id,
-                            smriti_workspace= :smriti_workspace,
-                            smriti_module   = :smriti_module,
-                            smriti_action   = :smriti_action,
+                            tileflow_menu_id  = :tileflow_menu_id,
+                            tileflow_workspace= :tileflow_workspace,
+                            tileflow_module   = :tileflow_module,
+                            tileflow_action   = :tileflow_action,
                             document_type   = :document_type,
                             migration_status= :migration_status,
                             migration_notes = :migration_notes,
@@ -185,8 +156,8 @@ def run(db_url: str, dry_run: bool) -> None:
                             is_active, is_deleted, deleted_at, deleted_by, version,
                             sh9_mnu_no, sh9_menu_opt, sh9_mnu_name, sh9_mnu_cap,
                             sh9_exe_name, sh9_pgm_opt, sh9_allow_closed, sh9_multi_inst,
-                            smriti_menu_id, smriti_workspace, smriti_module,
-                            smriti_action, document_type,
+                            tileflow_menu_id, tileflow_workspace, tileflow_module,
+                            tileflow_action, document_type,
                             migration_status, migration_notes, source_file, map_version
                         ) VALUES (
                             :id, :uuid, :company_id, :branch_id,
@@ -194,8 +165,8 @@ def run(db_url: str, dry_run: bool) -> None:
                             :is_active, :is_deleted, :deleted_at, :deleted_by, :version,
                             :sh9_mnu_no, :sh9_menu_opt, :sh9_mnu_name, :sh9_mnu_cap,
                             :sh9_exe_name, :sh9_pgm_opt, :sh9_allow_closed, :sh9_multi_inst,
-                            :smriti_menu_id, :smriti_workspace, :smriti_module,
-                            :smriti_action, :document_type,
+                            :tileflow_menu_id, :tileflow_workspace, :tileflow_module,
+                            :tileflow_action, :document_type,
                             :migration_status, :migration_notes, :source_file, :map_version
                         )
                     """), r)
@@ -222,7 +193,7 @@ def run(db_url: str, dry_run: bool) -> None:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Seed smriti_legacy_menu_map from SH9_MAP_MATRIX.csv"
+        description="Seed tileflow_legacy_menu_map from SH9_MAP_MATRIX.csv"
     )
     parser.add_argument("--db-url", default=None,
                         help="PostgreSQL DSN (default: reads from backend/.env)")

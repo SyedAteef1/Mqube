@@ -5,9 +5,9 @@ print("TABLE COMPARISON: FRESH VS PRODUCTION")
 print("=" * 70)
 
 dbs = {
-    'Fresh (test)': 'postgresql://postgres:postgres@localhost:5432/smriti_diag_fresh_test',
-    'Control (prod)': 'postgresql://postgres:postgres@localhost:5432/smritisys',
-    'Tenant (prod)': 'postgresql://postgres:postgres@localhost:5432/smriti001'
+    'Fresh (test)': 'postgresql://postgres:postgres@localhost:5432/tileflow_diag_fresh_test',
+    'Control (prod)': 'postgresql://postgres:postgres@localhost:5432/tileflowsys',
+    'Tenant (prod)': 'postgresql://postgres:postgres@localhost:5432/tileflow001'
 }
 
 all_tables = {}

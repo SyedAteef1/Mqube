@@ -1,20 +1,7 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import openpyxl
 
-base = r"F:\Smriti-Clients Data\Tattly Threads\Invoice"
+base = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice"
 excel_files = [
     "All_86_Bills_Audit_12_and_14_Aug.xlsx",
     "Tattly_Threads_Consolidated_PO_Extraction2.xlsx",

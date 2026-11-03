@@ -2,11 +2,11 @@
 title: "Sprint 32: Section 7 Shared Business Engines: Pricing Engine Completion"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 

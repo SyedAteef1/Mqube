@@ -1,26 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-reset_test_pwd.py
-============================
-Admin utility: resets the test_user account password in the control-plane
-database to 'password123' for local development and integration testing.
-
-Usage:
-    python scripts/admin/reset_test_pwd.py
-
-SECURITY NOTE: Never run this script against a production database.
-"""
-
 import os
 import sys
 import asyncio

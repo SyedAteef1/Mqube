@@ -1,35 +1,10 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React from "react";
 
 export const GoodsReceiptNoteA4: React.FC<{ data: any }> = ({ data }) => {
   return (
     <div className="w-[210mm] min-h-[297mm] bg-white text-black p-[20mm] mx-auto box-border text-sm font-sans">
       <div className="text-center border-b-2 border-black pb-4 mb-6">
-        <h1 className="text-3xl font-bold font-display uppercase tracking-wider">{data.companyName || "SMRITI Enterprise"}</h1>
+        <h1 className="text-3xl font-bold font-display uppercase tracking-wider">{data.companyName || "MQube Enterprise"}</h1>
         <h2 className="text-xl font-bold text-gray-700 mt-2">GOODS RECEIPT NOTE (GRN)</h2>
       </div>
 

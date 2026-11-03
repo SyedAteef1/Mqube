@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.17.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-26
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Security Management — Menu Access Control View (Modern Light Theme)
- */
-
 import React, { useState, useEffect, useMemo } from "react";
 import {
   MenuAccessSubjectType,
@@ -51,11 +36,11 @@ import {
   X,
 } from "lucide-react";
 
-interface SmritiMenuAccessViewProps {
+interface TileFlowMenuAccessViewProps {
   onClose: () => void;
 }
 
-export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
+export const MenuAccessView: React.FC<TileFlowMenuAccessViewProps> = ({
   onClose,
 }) => {
   const [subjectType, setSubjectType] = useState<MenuAccessSubjectType>("User");
@@ -247,12 +232,12 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#f8fafc] text-[#0f172a] text-xs font-sans select-none overflow-hidden">
+    <div className="flex flex-col h-full bg-[#fafafa] text-[#171717] text-xs font-sans select-none overflow-hidden">
       {/* 1. Scope & Target Selector Bar */}
-      <div className="p-4 bg-white border-b border-[#e2e8f0] flex flex-col gap-3 shadow-2xs">
+      <div className="p-4 bg-white border-b border-[#e7e7e7] flex flex-col gap-3 shadow-2xs">
         {/* Subject Type Segmented Control */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-1.5 bg-[#f1f5f9] p-1 rounded-lg border border-[#e2e8f0]">
+          <div className="flex items-center gap-1.5 bg-[#f4f4f4] p-1 rounded-lg border border-[#e7e7e7]">
             {(["User", "Group", "Node"] as MenuAccessSubjectType[]).map((type) => {
               const isActive = subjectType === type;
               return (
@@ -265,8 +250,8 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                   }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md font-semibold text-xs transition-all cursor-pointer ${
                     isActive
-                      ? "bg-white text-[#1e40af] shadow-xs font-bold"
-                      : "text-[#64748b] hover:text-[#0f172a]"
+                      ? "bg-white text-[#414141] shadow-xs font-bold"
+                      : "text-[#727272] hover:text-[#171717]"
                   }`}
                 >
                   {type === "User" && <User className="w-3.5 h-3.5" />}
@@ -279,8 +264,8 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
           </div>
 
           {/* Quick Target Summary Badge */}
-          <div className="flex items-center gap-2 bg-[#eff6ff] border border-[#bfdbfe] px-3 py-1 rounded-lg text-[11px] font-mono text-[#1e40af]">
-            <Shield className="w-3.5 h-3.5 text-[#1e40af]" />
+          <div className="flex items-center gap-2 bg-[#f5f5f5] border border-[#d8d8d8] px-3 py-1 rounded-lg text-[11px] font-mono text-[#414141]">
+            <Shield className="w-3.5 h-3.5 text-[#414141]" />
             <span>Target: <strong>{subjectType} {activeSubjectMeta.id} ({activeSubjectMeta.name})</strong></span>
           </div>
         </div>
@@ -288,7 +273,7 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
         {/* Identity Inputs Row */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex items-center gap-2">
-            <label className="w-24 text-[#475569] font-medium shrink-0">
+            <label className="w-24 text-[#535353] font-medium shrink-0">
               {subjectType} ID:
             </label>
             <div className="flex items-center gap-1.5 flex-1">
@@ -296,12 +281,12 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                 type="text"
                 readOnly
                 value={selectedSubjectId}
-                className="w-24 px-3 py-1.5 bg-[#f8fafc] border border-[#cbd5e1] rounded-lg text-xs font-mono font-bold text-[#0f172a]"
+                className="w-24 px-3 py-1.5 bg-[#fafafa] border border-[#d4d4d4] rounded-lg text-xs font-mono font-bold text-[#171717]"
               />
               <button
                 type="button"
                 onClick={() => setShowBrowseModal(true)}
-                className="px-3 py-1.5 bg-[#eff6ff] hover:bg-[#dbeafe] text-[#1e40af] border border-[#bfdbfe] rounded-lg font-bold text-xs flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
+                className="px-3 py-1.5 bg-[#f5f5f5] hover:bg-[#e8e8e8] text-[#414141] border border-[#d8d8d8] rounded-lg font-bold text-xs flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
               >
                 <Search className="w-3.5 h-3.5" />
                 Browse
@@ -310,25 +295,25 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                 type="text"
                 readOnly
                 value={activeSubjectMeta.name}
-                className="flex-1 px-3 py-1.5 bg-[#f8fafc] border border-[#cbd5e1] rounded-lg text-xs font-semibold text-[#0f172a] truncate"
+                className="flex-1 px-3 py-1.5 bg-[#fafafa] border border-[#d4d4d4] rounded-lg text-xs font-semibold text-[#171717] truncate"
               />
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <label className="w-24 text-[#475569] font-medium shrink-0">Company:</label>
+            <label className="w-24 text-[#535353] font-medium shrink-0">Company:</label>
             <div className="flex items-center gap-1.5 flex-1">
               <input
                 type="text"
                 readOnly
                 value={companyCode}
-                className="w-20 px-3 py-1.5 bg-[#f8fafc] border border-[#cbd5e1] rounded-lg text-xs font-mono text-[#64748b]"
+                className="w-20 px-3 py-1.5 bg-[#fafafa] border border-[#d4d4d4] rounded-lg text-xs font-mono text-[#727272]"
               />
               <input
                 type="text"
                 readOnly
                 value={companyName}
-                className="flex-1 px-3 py-1.5 bg-[#f8fafc] border border-[#cbd5e1] rounded-lg text-xs font-semibold text-[#0f172a] truncate"
+                className="flex-1 px-3 py-1.5 bg-[#fafafa] border border-[#d4d4d4] rounded-lg text-xs font-semibold text-[#171717] truncate"
               />
             </div>
           </div>
@@ -337,21 +322,21 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
 
       {/* 2. Main Menu Permissions Matrix Grid */}
       <div className="flex-1 p-4 flex flex-col min-h-0">
-        <div className="flex items-center justify-between pb-2 text-[11px] text-[#64748b]">
+        <div className="flex items-center justify-between pb-2 text-[11px] text-[#727272]">
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={handleExpandAll}
-              className="px-2.5 py-1 bg-white hover:bg-[#f1f5f9] border border-[#cbd5e1] rounded-md font-semibold text-xs text-[#334155] flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
+              className="px-2.5 py-1 bg-white hover:bg-[#f4f4f4] border border-[#d4d4d4] rounded-md font-semibold text-xs text-[#3f3f3f] flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
             >
-              <Plus className="w-3 h-3 text-[#1e40af]" /> Expand All
+              <Plus className="w-3 h-3 text-[#414141]" /> Expand All
             </button>
             <button
               type="button"
               onClick={handleCollapseAll}
-              className="px-2.5 py-1 bg-white hover:bg-[#f1f5f9] border border-[#cbd5e1] rounded-md font-semibold text-xs text-[#334155] flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
+              className="px-2.5 py-1 bg-white hover:bg-[#f4f4f4] border border-[#d4d4d4] rounded-md font-semibold text-xs text-[#3f3f3f] flex items-center gap-1 cursor-pointer transition-colors shadow-2xs"
             >
-              <Minus className="w-3 h-3 text-[#1e40af]" /> Collapse All
+              <Minus className="w-3 h-3 text-[#414141]" /> Collapse All
             </button>
           </div>
 
@@ -364,51 +349,51 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
         </div>
 
         {/* Tree Table */}
-        <div className="flex-1 overflow-auto bg-white border border-[#e2e8f0] rounded-xl shadow-xs">
+        <div className="flex-1 overflow-auto bg-white border border-[#e7e7e7] rounded-xl shadow-xs">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="bg-[#f8fafc] border-b border-[#e2e8f0] sticky top-0 z-10 text-[11px] font-mono text-[#475569]">
-                <th className="w-10 p-2.5 text-center border-r border-[#e2e8f0]">Tree</th>
-                <th className="p-2.5 border-r border-[#e2e8f0] font-bold min-w-[280px]">
+              <tr className="bg-[#fafafa] border-b border-[#e7e7e7] sticky top-0 z-10 text-[11px] font-mono text-[#535353]">
+                <th className="w-10 p-2.5 text-center border-r border-[#e7e7e7]">Tree</th>
+                <th className="p-2.5 border-r border-[#e7e7e7] font-bold min-w-[280px]">
                   Menu Description & Module
                 </th>
                 <th className="p-2.5 font-bold">Granular Operational Rights</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#f1f5f9]">
+            <tbody className="divide-y divide-[#f4f4f4]">
               {menuTree.map((rootMenu) => {
                 const isExpanded = !!expandedMenus[rootMenu.menuId];
                 return (
                   <React.Fragment key={rootMenu.menuId}>
                     {/* Root Level Row */}
-                    <tr className="bg-[#f8fafc]/60 hover:bg-[#eff6ff] font-bold transition-colors">
-                      <td className="p-2 text-center border-r border-[#e2e8f0]">
+                    <tr className="bg-[#fafafa]/60 hover:bg-[#f5f5f5] font-bold transition-colors">
+                      <td className="p-2 text-center border-r border-[#e7e7e7]">
                         {rootMenu.children && rootMenu.children.length > 0 && (
                           <button
                             type="button"
                             onClick={() => handleToggleExpand(rootMenu.menuId)}
-                            className="w-5 h-5 bg-white border border-[#cbd5e1] hover:border-[#1e40af] rounded text-center flex items-center justify-center cursor-pointer transition-colors mx-auto"
+                            className="w-5 h-5 bg-white border border-[#d4d4d4] hover:border-[#414141] rounded text-center flex items-center justify-center cursor-pointer transition-colors mx-auto"
                           >
                             {isExpanded ? (
-                              <ChevronDown className="w-3.5 h-3.5 text-[#1e40af]" />
+                              <ChevronDown className="w-3.5 h-3.5 text-[#414141]" />
                             ) : (
-                              <ChevronRight className="w-3.5 h-3.5 text-[#64748b]" />
+                              <ChevronRight className="w-3.5 h-3.5 text-[#727272]" />
                             )}
                           </button>
                         )}
                       </td>
-                      <td className="p-2 border-r border-[#e2e8f0]">
+                      <td className="p-2 border-r border-[#e7e7e7]">
                         <label className="flex items-center gap-2.5 cursor-pointer">
                           <input
                             type="checkbox"
                             checked={rootMenu.isAccessible}
                             onChange={() => handleToggleParent(rootMenu.menuId)}
-                            className="w-4 h-4 rounded text-[#1e40af] focus:ring-[#1e40af] cursor-pointer"
+                            className="w-4 h-4 rounded text-[#414141] focus:ring-[#414141] cursor-pointer"
                           />
-                          <span className="text-[#0f172a] font-semibold">{rootMenu.menuName}</span>
+                          <span className="text-[#171717] font-semibold">{rootMenu.menuName}</span>
                         </label>
                       </td>
-                      <td className="p-2 text-xs text-[#64748b] font-mono">
+                      <td className="p-2 text-xs text-[#727272] font-mono">
                         {rootMenu.isAccessible ? (
                           <span className="text-emerald-700 font-bold">Module Root Enabled</span>
                         ) : (
@@ -422,10 +407,10 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                       rootMenu.children?.map((child) => (
                         <tr
                           key={child.menuId}
-                          className="hover:bg-[#f8fafc] border-b border-[#f1f5f9] transition-colors"
+                          className="hover:bg-[#fafafa] border-b border-[#f4f4f4] transition-colors"
                         >
-                          <td className="p-2 text-center border-r border-[#e2e8f0]" />
-                          <td className="p-2 pl-9 border-r border-[#e2e8f0]">
+                          <td className="p-2 text-center border-r border-[#e7e7e7]" />
+                          <td className="p-2 pl-9 border-r border-[#e7e7e7]">
                             <label className="flex items-center gap-2.5 cursor-pointer">
                               <input
                                 type="checkbox"
@@ -433,9 +418,9 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                                 onChange={() =>
                                   handleToggleChild(rootMenu.menuId, child.menuId)
                                 }
-                                className="w-4 h-4 rounded text-[#1e40af] focus:ring-[#1e40af] cursor-pointer"
+                                className="w-4 h-4 rounded text-[#414141] focus:ring-[#414141] cursor-pointer"
                               />
-                              <span className={child.isAccessible ? "text-[#0f172a] font-semibold" : "text-[#94a3b8]"}>
+                              <span className={child.isAccessible ? "text-[#171717] font-semibold" : "text-[#a1a1a1]"}>
                                 {child.menuName}
                               </span>
                             </label>
@@ -450,10 +435,10 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                                       key={op}
                                       className={`flex items-center gap-1.5 px-2 py-0.5 rounded border transition-all cursor-pointer ${
                                         !child.isAccessible
-                                          ? "opacity-40 border-transparent text-[#94a3b8]"
+                                          ? "opacity-40 border-transparent text-[#a1a1a1]"
                                           : isAllowed
-                                          ? "bg-[#eff6ff] border-[#bfdbfe] text-[#1e40af] font-bold"
-                                          : "bg-white border-[#e2e8f0] text-[#64748b] hover:border-[#cbd5e1]"
+                                          ? "bg-[#f5f5f5] border-[#d8d8d8] text-[#414141] font-bold"
+                                          : "bg-white border-[#e7e7e7] text-[#727272] hover:border-[#d4d4d4]"
                                       }`}
                                     >
                                       <input
@@ -467,7 +452,7 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                                             op
                                           )
                                         }
-                                        className="w-3.5 h-3.5 rounded text-[#1e40af] focus:ring-[#1e40af] cursor-pointer"
+                                        className="w-3.5 h-3.5 rounded text-[#414141] focus:ring-[#414141] cursor-pointer"
                                       />
                                       <span className="font-mono text-[10px] uppercase">
                                         {op}
@@ -489,16 +474,16 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
       </div>
 
       {/* 3. Footer Action Bar */}
-      <div className="p-3 bg-white border-t border-[#e2e8f0] flex items-center justify-between shrink-0">
-        <div className="text-[11px] font-mono text-[#64748b] flex items-center gap-2">
-          <Layers className="w-3.5 h-3.5 text-[#1e40af]" />
+      <div className="p-3 bg-white border-t border-[#e7e7e7] flex items-center justify-between shrink-0">
+        <div className="text-[11px] font-mono text-[#727272] flex items-center gap-2">
+          <Layers className="w-3.5 h-3.5 text-[#414141]" />
           <span>Active Policy: <strong>Two-Pass Permission Cascade</strong></span>
         </div>
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={handleCancel}
-            className="px-4 py-2 bg-white hover:bg-[#f1f5f9] text-[#334155] border border-[#cbd5e1] rounded-lg font-semibold text-xs flex items-center gap-1.5 cursor-pointer transition-colors shadow-2xs"
+            className="px-4 py-2 bg-white hover:bg-[#f4f4f4] text-[#3f3f3f] border border-[#d4d4d4] rounded-lg font-semibold text-xs flex items-center gap-1.5 cursor-pointer transition-colors shadow-2xs"
           >
             <RotateCcw className="w-3.5 h-3.5" /> Cancel
           </button>
@@ -506,7 +491,7 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
             type="button"
             onClick={handleSave}
             disabled={isSaving}
-            className="px-5 py-2 bg-[#1e40af] hover:bg-[#1d4ed8] text-white rounded-lg font-bold text-xs flex items-center gap-1.5 cursor-pointer transition-all shadow-xs active:scale-98"
+            className="px-5 py-2 bg-[#414141] hover:bg-[#4e4e4e] text-white rounded-lg font-bold text-xs flex items-center gap-1.5 cursor-pointer transition-all shadow-xs active:scale-98"
           >
             <Save className="w-3.5 h-3.5" />
             {isSaving ? "Saving Policy..." : "Save Restrictions"}
@@ -517,18 +502,18 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
       {/* Browse Modal */}
       {showBrowseModal && (
         <div className="fixed inset-0 z-50 bg-black/40 flex items-center justify-center p-4 backdrop-blur-2xs">
-          <div className="bg-white border border-[#e2e8f0] rounded-2xl shadow-2xl p-5 w-96 font-sans space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-[#e2e8f0] font-bold text-sm text-[#0f172a]">
+          <div className="bg-white border border-[#e7e7e7] rounded-2xl shadow-2xl p-5 w-96 font-sans space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-[#e7e7e7] font-bold text-sm text-[#171717]">
               <span>Select {subjectType} Target</span>
               <button
                 type="button"
                 onClick={() => setShowBrowseModal(false)}
-                className="p-1 rounded-lg text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9] cursor-pointer"
+                className="p-1 rounded-lg text-[#727272] hover:text-[#171717] hover:bg-[#f4f4f4] cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
-            <div className="py-1 max-h-64 overflow-y-auto divide-y divide-[#f1f5f9] border border-[#e2e8f0] rounded-xl">
+            <div className="py-1 max-h-64 overflow-y-auto divide-y divide-[#f4f4f4] border border-[#e7e7e7] rounded-xl">
               {subjectType === "User" &&
                 users.map((u) => (
                   <div
@@ -537,10 +522,10 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                       setSelectedSubjectId(u.id);
                       setShowBrowseModal(false);
                     }}
-                    className="px-4 py-2.5 hover:bg-[#eff6ff] cursor-pointer flex justify-between items-center text-xs transition-colors"
+                    className="px-4 py-2.5 hover:bg-[#f5f5f5] cursor-pointer flex justify-between items-center text-xs transition-colors"
                   >
-                    <span className="font-mono text-[#1e40af] font-bold">{u.id}</span>
-                    <span className="font-semibold text-[#0f172a]">{u.name}</span>
+                    <span className="font-mono text-[#414141] font-bold">{u.id}</span>
+                    <span className="font-semibold text-[#171717]">{u.name}</span>
                   </div>
                 ))}
               {subjectType === "Group" &&
@@ -551,10 +536,10 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                       setSelectedSubjectId(g.id);
                       setShowBrowseModal(false);
                     }}
-                    className="px-4 py-2.5 hover:bg-[#eff6ff] cursor-pointer flex justify-between items-center text-xs transition-colors"
+                    className="px-4 py-2.5 hover:bg-[#f5f5f5] cursor-pointer flex justify-between items-center text-xs transition-colors"
                   >
-                    <span className="font-mono text-[#1e40af] font-bold">{g.id}</span>
-                    <span className="font-semibold text-[#0f172a]">{g.name}</span>
+                    <span className="font-mono text-[#414141] font-bold">{g.id}</span>
+                    <span className="font-semibold text-[#171717]">{g.name}</span>
                   </div>
                 ))}
               {subjectType === "Node" &&
@@ -565,10 +550,10 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
                       setSelectedSubjectId(n.id);
                       setShowBrowseModal(false);
                     }}
-                    className="px-4 py-2.5 hover:bg-[#eff6ff] cursor-pointer flex justify-between items-center text-xs transition-colors"
+                    className="px-4 py-2.5 hover:bg-[#f5f5f5] cursor-pointer flex justify-between items-center text-xs transition-colors"
                   >
-                    <span className="font-mono text-[#1e40af] font-bold">{n.id}</span>
-                    <span className="font-semibold text-[#0f172a]">{n.name}</span>
+                    <span className="font-mono text-[#414141] font-bold">{n.id}</span>
+                    <span className="font-semibold text-[#171717]">{n.name}</span>
                   </div>
                 ))}
             </div>
@@ -576,7 +561,7 @@ export const MenuAccessView: React.FC<SmritiMenuAccessViewProps> = ({
               <button
                 type="button"
                 onClick={() => setShowBrowseModal(false)}
-                className="px-4 py-2 bg-white hover:bg-[#f1f5f9] border border-[#cbd5e1] rounded-lg font-semibold text-xs text-[#334155] cursor-pointer"
+                className="px-4 py-2 bg-white hover:bg-[#f4f4f4] border border-[#d4d4d4] rounded-lg font-semibold text-xs text-[#3f3f3f] cursor-pointer"
               >
                 Close
               </button>

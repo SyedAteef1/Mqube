@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import re
 import uuid
 import json
@@ -142,7 +128,7 @@ class EmailMockAdapter(BaseCommAdapter):
         if "@" not in recipient or "." not in recipient:
             return False, "", {"status": "FAILED", "reason": "INVALID_EMAIL"}, "Invalid email address format"
 
-        msg_id = f"ses_{uuid.uuid4().hex[:16]}@smritibooks.com"
+        msg_id = f"ses_{uuid.uuid4().hex[:16]}@tileflow.in"
         resp = {
             "status": "DELIVERED_TO_GATEWAY",
             "message_id": msg_id,
@@ -183,7 +169,7 @@ class PushMockAdapter(BaseCommAdapter):
 
 class CommunicatorEngine:
     """
-    Authoritative SMRITI Communicator Engine (Blueprint Section 7).
+    Authoritative TILEFLOW Communicator Engine (Blueprint Section 7).
     Governs template registration, variable rendering, provider dispatch,
     TRAI quiet hours & DLT compliance, multi-channel fallback, and delivery tracking.
     """

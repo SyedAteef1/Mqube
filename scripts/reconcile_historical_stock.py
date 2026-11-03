@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.36.0
-Created      : 2026-08-27
-Modified     : 2026-08-27
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import argparse
 import json
 import os
@@ -36,7 +22,7 @@ def decimal_serializer(obj):
 
 
 def run_historical_stock_reconciliation(
-    database: str = "smriti001",
+    database: str = "tileflow001",
     db_url: Optional[str] = None,
     source: str = "invoices",
     mode: str = "dry-run",
@@ -358,7 +344,7 @@ def run_historical_stock_reconciliation(
         json.dump(result, f, indent=2, default=decimal_serializer)
 
     print("\n" + "=" * 60)
-    print(f" SMRITI HISTORICAL STOCK RECONCILIATION ({('APPLY' if is_apply else 'DRY-RUN')})")
+    print(f" TILEFLOW HISTORICAL STOCK RECONCILIATION ({('APPLY' if is_apply else 'DRY-RUN')})")
     print("=" * 60)
     print(f" Database                   : {database}")
     print(f" Invoices analyzed          : {invoices_analyzed}")
@@ -378,8 +364,8 @@ def run_historical_stock_reconciliation(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="SMRITI Historical Stock Reconciliation Engine")
-    parser.add_argument("--database", default="smriti001", help="Database name (default: smriti001)")
+    parser = argparse.ArgumentParser(description="TILEFLOW Historical Stock Reconciliation Engine")
+    parser.add_argument("--database", default="tileflow001", help="Database name (default: tileflow001)")
     parser.add_argument("--db-url", default=None, help="Full database connection URL")
     parser.add_argument("--source", default="invoices", help="Source to reconcile (default: invoices)")
     parser.add_argument("--mode", default="dry-run", choices=["dry-run", "apply"], help="Execution mode (default: dry-run)")

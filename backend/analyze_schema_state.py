@@ -5,7 +5,7 @@ but not yet stamped in alembic_version.
 """
 import psycopg2
 
-conn = psycopg2.connect(host='localhost', user='postgres', password='postgres', dbname='smritisys')
+conn = psycopg2.connect(host='localhost', user='postgres', password='postgres', dbname='tileflowsys')
 cur = conn.cursor()
 
 # Check which tables from v1385-v1391 exist
@@ -14,7 +14,7 @@ tables_by_migration = {
     'v1386_dist': ['distribution_centers', 'warehouse_zones'],
     'v1387_ecom': ['ecom_channels', 'party_addresses'],
     'v1388_plat': ['platform_capabilities', 'workspace_templates', 'module_states'],
-    'v1390_ctrl': ['company_database_registries', 'smriti_permissions', 'smriti_audit_log'],
+    'v1390_ctrl': ['company_database_registries', 'tileflow_permissions', 'tileflow_audit_log'],
     'v1391_plat': ['pdt_model_registry', 'pdt_distribution_predictions', 'tally_configs'],
 }
 
@@ -71,8 +71,8 @@ print()
 if not v1390_complete:
     print("❌ CRITICAL: v1390 tables are MISSING")
     print("   - company_database_registries")
-    print("   - smriti_permissions")
-    print("   - smriti_audit_log")
+    print("   - tileflow_permissions")
+    print("   - tileflow_audit_log")
     print()
     print("ACTION: These tables MUST be created before production tests can pass.")
     print()

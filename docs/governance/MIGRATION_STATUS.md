@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.18.0
   Created      : 2026-07-14
   Modified     : 2026-07-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Migration Status Registry
+# TILEFLOW Migration Status Registry
 
-This ledger tracks the migration of SMRITI components from the legacy Express backend and file-system persistence (`db_store.json`) to the FastAPI backend and PostgreSQL transactional persistence layer.
+This ledger tracks the migration of TILEFLOW components from the legacy Express backend and file-system persistence (`db_store.json`) to the FastAPI backend and PostgreSQL transactional persistence layer.
 
 | Module | Express Enabled | FastAPI Enabled | Frontend Caller | Tests Pass | Migration Status | Cutover Completed |
 |---|---|---|---|---|---|---|
@@ -34,19 +33,19 @@ This ledger tracks the migration of SMRITI components from the legacy Express ba
 Every active migration feature flag must be documented below.
 
 ### 1. `USE_FASTAPI_SALES`
-* **Owner:** Jawahar Ramkripal Mallah
+* **Owner:** Syed Ateef
 * **Target Removal Version:** v3.19.0
 * **Target Removal Date:** 2026-08-15
 * **Reason:** Gates frontend redirection of Sales invoices, quotations, orders, and returns to FastAPI.
 
 ### 2. `USE_FASTAPI_PURCHASE`
-* **Owner:** Jawahar Ramkripal Mallah
+* **Owner:** Syed Ateef
 * **Target Removal Version:** v3.19.0
 * **Target Removal Date:** 2026-08-15
 * **Reason:** Gates frontend redirection of Purchase orders, receipts, suppliers, and configs to FastAPI.
 
 ### 3. `USE_FASTAPI_POS`
-* **Owner:** Jawahar Ramkripal Mallah
+* **Owner:** Syed Ateef
 * **Target Removal Version:** v3.19.0
 * **Target Removal Date:** 2026-08-15
 * **Reason:** Gates frontend redirection of POS shift open/close and register logs to FastAPI.

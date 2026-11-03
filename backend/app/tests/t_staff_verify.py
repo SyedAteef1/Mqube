@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-13
-Modified     : 2026-07-13
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 import uuid
 import pytest
@@ -157,7 +143,7 @@ async def test_staff_user_response_schema_verification(db_session):
         date_of_birth="1995-05-15",
         alternate_mobile="9876543211",
         emergency_contact="Jane Spouse - 9876543212",
-        address="Flat 401, SMRITI Apartments, Andheri West",
+        address="Flat 401, TILEFLOW Apartments, Andheri West",
         city="Mumbai",
         state="Maharashtra",
         country="India",
@@ -202,7 +188,7 @@ async def test_staff_user_response_schema_verification(db_session):
     assert data["dateOfBirth"] == "1995-05-15"
     assert data["alternateMobile"] == "9876543211"
     assert data["emergencyContact"] == "Jane Spouse - 9876543212"
-    assert data["address"] == "Flat 401, SMRITI Apartments, Andheri West"
+    assert data["address"] == "Flat 401, TILEFLOW Apartments, Andheri West"
     assert data["city"] == "Mumbai"
     assert data["state"] == "Maharashtra"
     assert data["country"] == "India"

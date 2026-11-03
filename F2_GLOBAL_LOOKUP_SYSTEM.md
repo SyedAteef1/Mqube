@@ -2,7 +2,7 @@
 
 ## Overview
 
-A **unified global F2 key system** has been implemented across the SMRITI Retail OS application. Press **F2** on any input field to instantly access context-aware data lookups for that field.
+A **unified global F2 key system** has been implemented across the TILEFLOW Retail OS application. Press **F2** on any input field to instantly access context-aware data lookups for that field.
 
 ---
 
@@ -458,4 +458,4 @@ For issues or enhancements, refer to the codebase:
 
 **Version**: 1.0.0  
 **Last Updated**: 2026-09-01  
-**Author**: Jawahar Ramkripal Mallah
+**Author**: Syed Ateef

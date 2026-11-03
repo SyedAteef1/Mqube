@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { useActiveField, ActiveFieldCategory } from "../../context/ActiveFieldContext.tsx";
 import { apiFetchV1 } from "../../lib/apiFetchV1.ts";
@@ -216,7 +202,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
   // Column Configurations per category
   const [columns, setColumns] = useState<Record<string, ColumnDefinition[]>>(() => {
     try {
-      const saved = localStorage.getItem("smriti_f2_browse_columns");
+      const saved = localStorage.getItem("tileflow_f2_browse_columns");
       if (saved) return JSON.parse(saved);
     } catch (e) {}
     return DEFAULT_COLUMNS;
@@ -243,9 +229,9 @@ export const GlobalF2BrowseModal: React.FC = () => {
   // Granular Item Master Registries
   const [articlesList] = useState<any[]>([
     { code: "ART-OXF-01", name: "Oxford Button-Down Executive Shirt", category: "Apparel", brand: "Oxford Club", season: "SS26", mrp: 1999.00 },
-    { code: "ART-DNM-02", name: "Selvedge Raw Denim Slim Jeans", category: "Apparel", brand: "SMRITI", season: "AW26", mrp: 2999.00 },
+    { code: "ART-DNM-02", name: "Selvedge Raw Denim Slim Jeans", category: "Apparel", brand: "MQube", season: "AW26", mrp: 2999.00 },
     { code: "ART-POLO-03", name: "Supima Pique Cotton Polo Tee", category: "Apparel", brand: "Urban Street", season: "SS26", mrp: 1299.00 },
-    { code: "ART-LIN-04", name: "Mandarin Collar Pure Linen Tunic", category: "Apparel", brand: "SMRITI", season: "SS26", mrp: 2499.00 }
+    { code: "ART-LIN-04", name: "Mandarin Collar Pure Linen Tunic", category: "Apparel", brand: "MQube", season: "SS26", mrp: 2499.00 }
   ]);
 
   const [colorsList] = useState<any[]>([
@@ -271,7 +257,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
   ]);
 
   const [brandsList] = useState<any[]>([
-    { code: "BRD-SMRITI", name: "SMRITI Heritage", origin: "India", tier: "Luxury Premium", status: "Active" },
+    { code: "BRD-MQube", name: "MQube Heritage", origin: "India", tier: "Luxury Premium", status: "Active" },
     { code: "BRD-OXFORD", name: "Oxford Club", origin: "United Kingdom", tier: "Formal Executive", status: "Active" },
     { code: "BRD-URBAN", name: "Urban Street Athleisure", origin: "India", tier: "Casual Lifestyle", status: "Active" },
     { code: "BRD-RAYMOND", name: "Raymond Fine Tailoring", origin: "India", tier: "Heritage Luxury", status: "Active" }
@@ -317,9 +303,9 @@ export const GlobalF2BrowseModal: React.FC = () => {
   ]);
 
   const [storesList] = useState<any[]>([
-    { code: "STR-001", name: "SMRITI Flagship — Bandra West", city: "Mumbai", state: "Maharashtra", address: "14 Linking Road, Bandra West, Mumbai 400050", posCount: 4, status: "Active" },
-    { code: "STR-002", name: "SMRITI Heritage — Connaught Place", city: "New Delhi", state: "Delhi", address: "Block B, Inner Circle, CP, New Delhi 110001", posCount: 6, status: "Active" },
-    { code: "STR-003", name: "SMRITI Express — Indiranagar", city: "Bengaluru", state: "Karnataka", address: "100 Feet Road, HAL 2nd Stage, Bengaluru 560038", posCount: 3, status: "Active" }
+    { code: "STR-001", name: "MQube Flagship — Bandra West", city: "Mumbai", state: "Maharashtra", address: "14 Linking Road, Bandra West, Mumbai 400050", posCount: 4, status: "Active" },
+    { code: "STR-002", name: "MQube Heritage — Connaught Place", city: "New Delhi", state: "Delhi", address: "Block B, Inner Circle, CP, New Delhi 110001", posCount: 6, status: "Active" },
+    { code: "STR-003", name: "MQube Express — Indiranagar", city: "Bengaluru", state: "Karnataka", address: "100 Feet Road, HAL 2nd Stage, Bengaluru 560038", posCount: 3, status: "Active" }
   ]);
 
   const [hsnList] = useState<any[]>([
@@ -366,7 +352,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
   // Load Data
   useEffect(() => {
     if (!isF2ModalOpen) return;
-    const token = typeof window !== "undefined" ? (localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token")) : null;
+    const token = typeof window !== "undefined" ? (localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token")) : null;
     if (!token) return;
 
     const loadData = async () => {
@@ -382,7 +368,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
             category: p.category || "Apparel",
             size: p.size || "32",
             color: p.color || "Beige",
-            brand: p.brand || "SMRITI",
+            brand: p.brand || "MQube",
             selling_price: parseFloat(p.selling_price || p.price) || 999.00,
             mrp: parseFloat(p.mrp) || 999.00,
             stock: p.stock !== undefined ? p.stock : 45,
@@ -390,10 +376,10 @@ export const GlobalF2BrowseModal: React.FC = () => {
           })));
         } else {
           setProductsList([
-            { id: "1", sku: "8887462974641", barcode: "8887462974641", name: "regular straight Med Beige", category: "Apparel", size: "32", color: "Beige", brand: "SMRITI", selling_price: 999.00, mrp: 999.00, stock: 45, imageUrl: null },
-            { id: "2", sku: "8887462974825", barcode: "8887462974825", name: "regular straight Med Beige", category: "Apparel", size: "34", color: "Beige", brand: "SMRITI", selling_price: 999.00, mrp: 999.00, stock: 32, imageUrl: null },
+            { id: "1", sku: "8887462974641", barcode: "8887462974641", name: "regular straight Med Beige", category: "Apparel", size: "32", color: "Beige", brand: "MQube", selling_price: 999.00, mrp: 999.00, stock: 45, imageUrl: null },
+            { id: "2", sku: "8887462974825", barcode: "8887462974825", name: "regular straight Med Beige", category: "Apparel", size: "34", color: "Beige", brand: "MQube", selling_price: 999.00, mrp: 999.00, stock: 32, imageUrl: null },
             { id: "3", sku: "SKU-OXF-001", barcode: "8901234567890", name: "Oxford Cotton Executive Shirt", category: "Apparel", size: "40", color: "Sky Blue", brand: "Oxford Club", selling_price: 1499.00, mrp: 1999.00, stock: 60, imageUrl: null },
-            { id: "4", sku: "SKU-DNM-002", barcode: "8909876543210", name: "Slim Fit Raw Denim Jeans", category: "Apparel", size: "32", color: "Dark Indigo", brand: "SMRITI", selling_price: 2499.00, mrp: 2999.00, stock: 28, imageUrl: null }
+            { id: "4", sku: "SKU-DNM-002", barcode: "8909876543210", name: "Slim Fit Raw Denim Jeans", category: "Apparel", size: "32", color: "Dark Indigo", brand: "MQube", selling_price: 2499.00, mrp: 2999.00, stock: 28, imageUrl: null }
           ]);
         }
       } catch (e) {
@@ -406,7 +392,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
           setCustomersList(custs);
         } else {
           setCustomersList([
-            { code: "C01", name: "Customer01 (Walk-in)", phone: "9876543210", loyaltyTier: "Gold", loyaltyPoints: 1200, currentBalance: 0, gstin: "", address: "Walk-in Retail Counter, Store 01" },
+            { code: "C01", name: "Walk-in Customer", phone: "", loyaltyTier: "Gold", loyaltyPoints: 1200, currentBalance: 0, gstin: "", address: "Walk-in Retail Counter, Store 01" },
             { code: "C02", name: "Vikram Malhotra", phone: "9820011223", loyaltyTier: "Platinum", loyaltyPoints: 4500, currentBalance: 12500.00, gstin: "27AAAPM1234K1Z1", address: "Flat 402, Sea Green Apts, Worli, Mumbai 400018" },
             { code: "C03", name: "Ananya Deshmukh", phone: "9819988776", loyaltyTier: "Gold", loyaltyPoints: 2300, currentBalance: 0, gstin: "", address: "B-12, Green Acres, Viman Nagar, Pune 411014" }
           ]);
@@ -450,7 +436,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
   // Save Settings
   const handleSaveSettings = () => {
     try {
-      localStorage.setItem("smriti_f2_browse_columns", JSON.stringify(columns));
+      localStorage.setItem("tileflow_f2_browse_columns", JSON.stringify(columns));
       alert("Search & display column settings saved successfully.");
     } catch (e) {
       console.error(e);
@@ -614,7 +600,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
     }
   };
 
-  const token = typeof window !== "undefined" ? (localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token")) : null;
+  const token = typeof window !== "undefined" ? (localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token")) : null;
   if (!isF2ModalOpen || !token) return null;
 
   return (
@@ -622,33 +608,33 @@ export const GlobalF2BrowseModal: React.FC = () => {
       className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/65 backdrop-blur-xs p-3 select-none animate-fadeIn font-sans"
       onKeyDown={handleKeyDown}
     >
-      <div className="bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] w-full max-w-6xl h-[92vh] rounded-2xl shadow-2xl border border-[#c4c5d5] dark:border-[#444653] overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] w-full max-w-6xl h-[92vh] rounded-2xl shadow-2xl border border-[#c6c6c6] dark:border-[#474747] overflow-hidden flex flex-col">
         
         {/* ========================================================================= */}
         {/* 1. TOP HEADER & CATEGORY RIBBON                                           */}
         {/* ========================================================================= */}
-        <header className="px-4 py-2.5 bg-[#edeae1] dark:bg-[#131b2e] border-b border-[#c4c5d5] dark:border-[#444653] flex items-center justify-between shrink-0">
+        <header className="px-4 py-2.5 bg-[#edeae1] dark:bg-[#1b1b1b] border-b border-[#c6c6c6] dark:border-[#474747] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-3">
-            <div className="p-1.5 bg-[#00288e] text-white rounded-lg shadow-xs">
+            <div className="p-1.5 bg-[#272727] text-white rounded-lg shadow-xs">
               <Filter size={15} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h2 className="text-sm font-bold tracking-tight text-[#191c1d] dark:text-white">
+                <h2 className="text-sm font-bold tracking-tight text-[#1b1b1b] dark:text-white">
                   Universal Master Browse &amp; Lookup Engine
                 </h2>
-                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-[#00288e] text-white">
+                <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-[#272727] text-white">
                   F2 Active
                 </span>
               </div>
-              <p className="text-[11px] text-[#565e74] dark:text-[#bec6e0]">
-                Active Field: <span className="font-bold text-[#00288e] dark:text-[#a8b8ff]">{fieldLabel}</span> ({fieldName || "Target"})
+              <p className="text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6]">
+                Active Field: <span className="font-bold text-[#272727] dark:text-[#bababa]">{fieldLabel}</span> ({fieldName || "Target"})
               </p>
             </div>
           </div>
 
           {/* Master Categories Switcher Tabs */}
-          <div className="flex items-center gap-1 bg-[#f3f4f5] dark:bg-[#1d222e] p-1 rounded-xl border border-[#c4c5d5] dark:border-[#444653] overflow-x-auto max-w-[620px]">
+          <div className="flex items-center gap-1 bg-[#f4f4f4] dark:bg-[#222222] p-1 rounded-xl border border-[#c6c6c6] dark:border-[#474747] overflow-x-auto max-w-[620px]">
             {[
               { id: "supplier", label: "Supplier / Party", icon: Building2 },
               { id: "product", label: "Stock / Items", icon: Package },
@@ -682,8 +668,8 @@ export const GlobalF2BrowseModal: React.FC = () => {
                   }}
                   className={`px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 cursor-pointer whitespace-nowrap ${
                     isActive
-                      ? "bg-[#00288e] text-white shadow-xs"
-                      : "text-[#565e74] dark:text-[#bec6e0] hover:bg-[#edeae1] dark:hover:bg-[#2d3133]"
+                      ? "bg-[#272727] text-white shadow-xs"
+                      : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:bg-[#edeae1] dark:hover:bg-[#303030]"
                   }`}
                 >
                   <Icon size={12} />
@@ -696,7 +682,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
           <button
             type="button"
             onClick={closeF2Modal}
-            className="text-[#565e74] hover:bg-[#f3f4f5] p-1.5 rounded-lg transition cursor-pointer"
+            className="text-[#5e5e5e] hover:bg-[#f4f4f4] p-1.5 rounded-lg transition cursor-pointer"
             title="Close [Esc]"
           >
             <X size={18} />
@@ -710,15 +696,15 @@ export const GlobalF2BrowseModal: React.FC = () => {
           
           {/* Left Panel: Display / Search Selection (Hierarchical Criteria) */}
           {showFilterPanel && (
-            <aside className="w-80 bg-[#f8f9fa] dark:bg-[#131b2e] border-r border-[#c4c5d5] dark:border-[#444653] flex flex-col shrink-0 overflow-hidden shadow-inner">
-              <div className="p-2.5 bg-[#edeae1] dark:bg-[#1d222e] border-b border-[#c4c5d5] dark:border-[#444653] flex items-center justify-between">
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#00288e] dark:text-[#a8b8ff]">
+            <aside className="w-80 bg-[#f9f9f9] dark:bg-[#1b1b1b] border-r border-[#c6c6c6] dark:border-[#474747] flex flex-col shrink-0 overflow-hidden shadow-inner">
+              <div className="p-2.5 bg-[#edeae1] dark:bg-[#222222] border-b border-[#c6c6c6] dark:border-[#474747] flex items-center justify-between">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-[#272727] dark:text-[#bababa]">
                   Display / Search Selection
                 </span>
                 <button
                   type="button"
                   onClick={() => setShowFilterPanel(false)}
-                  className="text-[10px] font-bold text-[#565e74] hover:underline flex items-center gap-0.5 cursor-pointer"
+                  className="text-[10px] font-bold text-[#5e5e5e] hover:underline flex items-center gap-0.5 cursor-pointer"
                   title="Hide Display / Search Selection"
                 >
                   <span>&lt;&lt; Hide</span>
@@ -726,8 +712,8 @@ export const GlobalF2BrowseModal: React.FC = () => {
               </div>
 
               {/* Any Column Global Filter Box */}
-              <div className="p-2.5 bg-white dark:bg-[#191c1e] border-b border-[#c4c5d5] dark:border-[#444653] space-y-1">
-                <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] flex items-center gap-1">
+              <div className="p-2.5 bg-white dark:bg-[#1c1c1c] border-b border-[#c6c6c6] dark:border-[#474747] space-y-1">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] flex items-center gap-1">
                   <Filter size={10} />
                   <span>[Any Column] Filter</span>
                 </label>
@@ -739,13 +725,13 @@ export const GlobalF2BrowseModal: React.FC = () => {
                     setPage(1);
                   }}
                   placeholder="Filter across any column..."
-                  className="w-full h-7 px-2 bg-[#f8f9fa] dark:bg-[#131b2e] border border-[#c4c5d5] dark:border-[#444653] rounded text-xs outline-none focus:border-[#00288e]"
+                  className="w-full h-7 px-2 bg-[#f9f9f9] dark:bg-[#1b1b1b] border border-[#c6c6c6] dark:border-[#474747] rounded text-xs outline-none focus:border-[#272727]"
                 />
               </div>
 
               {/* Column Selection & Hierarchical Criteria Table */}
               <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
-                <p className="text-[10px] text-[#565e74] dark:text-[#bec6e0] italic px-1">
+                <p className="text-[10px] text-[#5e5e5e] dark:text-[#c6c6c6] italic px-1">
                   Reorder using ▲/▼ to change hierarchical filtering sequence:
                 </p>
 
@@ -756,8 +742,8 @@ export const GlobalF2BrowseModal: React.FC = () => {
                       key={col.key} 
                       className={`p-2 rounded-lg border transition space-y-1 ${
                         col.visible 
-                          ? "bg-white dark:bg-[#191c1e] border-[#c4c5d5] dark:border-[#444653]" 
-                          : "bg-[#f3f4f5]/60 dark:bg-[#191c1e]/40 border-dashed border-[#c4c5d5]/60 opacity-60"
+                          ? "bg-white dark:bg-[#1c1c1c] border-[#c6c6c6] dark:border-[#474747]" 
+                          : "bg-[#f4f4f4]/60 dark:bg-[#1c1c1c]/40 border-dashed border-[#c6c6c6]/60 opacity-60"
                       }`}
                     >
                       <div className="flex items-center justify-between">
@@ -766,7 +752,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                             type="checkbox"
                             checked={col.visible}
                             onChange={() => handleToggleColumnVisibility(idx)}
-                            className="rounded text-[#00288e]"
+                            className="rounded text-[#272727]"
                           />
                           <span className="truncate max-w-[140px]">{col.label}</span>
                         </label>
@@ -777,7 +763,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                             type="button"
                             disabled={idx === 0}
                             onClick={() => handleMoveColumn(idx, "UP")}
-                            className="p-1 text-gray-500 hover:text-[#00288e] disabled:opacity-20 cursor-pointer"
+                            className="p-1 text-gray-500 hover:text-[#272727] disabled:opacity-20 cursor-pointer"
                             title="Move Up"
                           >
                             <ArrowUp size={11} />
@@ -786,7 +772,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                             type="button"
                             disabled={idx === currentColumns.length - 1}
                             onClick={() => handleMoveColumn(idx, "DOWN")}
-                            className="p-1 text-gray-500 hover:text-[#00288e] disabled:opacity-20 cursor-pointer"
+                            className="p-1 text-gray-500 hover:text-[#272727] disabled:opacity-20 cursor-pointer"
                             title="Move Down"
                           >
                             <ArrowDown size={11} />
@@ -805,7 +791,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                             }));
                             setPage(1);
                           }}
-                          className="h-6 px-1 text-[10px] font-semibold border border-[#c4c5d5] dark:border-[#444653] rounded bg-[#f8f9fa] dark:bg-[#131b2e] outline-none"
+                          className="h-6 px-1 text-[10px] font-semibold border border-[#c6c6c6] dark:border-[#474747] rounded bg-[#f9f9f9] dark:bg-[#1b1b1b] outline-none"
                         >
                           <option value="Contains">Contains</option>
                           <option value="Equal">Equal</option>
@@ -825,7 +811,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                             setPage(1);
                           }}
                           placeholder="Value..."
-                          className="flex-1 h-6 px-1.5 text-[11px] border border-[#c4c5d5] dark:border-[#444653] rounded bg-white dark:bg-[#131b2e] outline-none focus:border-[#00288e]"
+                          className="flex-1 h-6 px-1.5 text-[11px] border border-[#c6c6c6] dark:border-[#474747] rounded bg-white dark:bg-[#1b1b1b] outline-none focus:border-[#272727]"
                         />
                       </div>
                     </div>
@@ -834,11 +820,11 @@ export const GlobalF2BrowseModal: React.FC = () => {
               </div>
 
               {/* Settings Action Buttons */}
-              <div className="p-2 border-t border-[#c4c5d5] dark:border-[#444653] bg-[#edeae1] dark:bg-[#1d222e] flex justify-between gap-1.5">
+              <div className="p-2 border-t border-[#c6c6c6] dark:border-[#474747] bg-[#edeae1] dark:bg-[#222222] flex justify-between gap-1.5">
                 <button
                   type="button"
                   onClick={handleSaveSettings}
-                  className="flex-1 py-1 px-2 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] hover:bg-[#f3f4f5] text-[11px] font-bold rounded flex items-center justify-center gap-1 cursor-pointer"
+                  className="flex-1 py-1 px-2 bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] hover:bg-[#f4f4f4] text-[11px] font-bold rounded flex items-center justify-center gap-1 cursor-pointer"
                   title="Save column configuration"
                 >
                   <Save size={11} />
@@ -848,7 +834,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleApplyDefault}
-                  className="flex-1 py-1 px-2 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] hover:bg-[#f3f4f5] text-[11px] font-bold rounded flex items-center justify-center gap-1 cursor-pointer"
+                  className="flex-1 py-1 px-2 bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] hover:bg-[#f4f4f4] text-[11px] font-bold rounded flex items-center justify-center gap-1 cursor-pointer"
                   title="Revert to defaults"
                 >
                   <RotateCcw size={11} />
@@ -869,11 +855,11 @@ export const GlobalF2BrowseModal: React.FC = () => {
 
           {/* Collapsed Panel Reopen Button */}
           {!showFilterPanel && (
-            <div className="bg-[#edeae1] dark:bg-[#1d222e] border-r border-[#c4c5d5] dark:border-[#444653] p-1 flex flex-col justify-start">
+            <div className="bg-[#edeae1] dark:bg-[#222222] border-r border-[#c6c6c6] dark:border-[#474747] p-1 flex flex-col justify-start">
               <button
                 type="button"
                 onClick={() => setShowFilterPanel(true)}
-                className="p-1 text-xs font-bold text-[#00288e] hover:bg-white dark:hover:bg-[#2d3133] rounded transition cursor-pointer"
+                className="p-1 text-xs font-bold text-[#272727] hover:bg-white dark:hover:bg-[#303030] rounded transition cursor-pointer"
                 title="Show Display / Search Selection"
               >
                 &gt;&gt;
@@ -882,19 +868,19 @@ export const GlobalF2BrowseModal: React.FC = () => {
           )}
 
           {/* Right Main Area: Picture/Address Area (Top) + Search Result Grid (Center) */}
-          <main className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-[#131b2e]">
+          <main className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-[#1b1b1b]">
             
             {/* Top Right: Picture & Info Header Area */}
-            <section className="bg-[#f8f9fa] dark:bg-[#191c1e] p-3 border-b border-[#c4c5d5] dark:border-[#444653] flex items-center justify-between gap-4 shrink-0 shadow-2xs">
+            <section className="bg-[#f9f9f9] dark:bg-[#1c1c1c] p-3 border-b border-[#c6c6c6] dark:border-[#474747] flex items-center justify-between gap-4 shrink-0 shadow-2xs">
               
               {/* Context Summary */}
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-[#00288e] dark:text-[#a8b8ff] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-[#272727] dark:text-[#bababa] uppercase tracking-wider">
                     {activeTab === "product" || activeTab === "article" ? "Item / Style Details & Picture" : "Master Entity Details"}
                   </span>
                   {activeSelectedItem && (
-                    <span className="text-xs font-mono font-bold px-2 py-0.5 bg-[#edeae1] dark:bg-[#252836] rounded text-[#191c1d] dark:text-white">
+                    <span className="text-xs font-mono font-bold px-2 py-0.5 bg-[#edeae1] dark:bg-[#282828] rounded text-[#1b1b1b] dark:text-white">
                       {activeSelectedItem.sku || activeSelectedItem.code}
                     </span>
                   )}
@@ -902,10 +888,10 @@ export const GlobalF2BrowseModal: React.FC = () => {
 
                 {activeSelectedItem ? (
                   <div className="mt-1 text-xs space-y-0.5">
-                    <p className="font-bold text-sm text-[#191c1d] dark:text-white truncate">
+                    <p className="font-bold text-sm text-[#1b1b1b] dark:text-white truncate">
                       {activeSelectedItem.name}
                     </p>
-                    <p className="text-[11px] text-[#565e74] dark:text-[#bec6e0] truncate">
+                    <p className="text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6] truncate">
                       {activeSelectedItem.address || activeSelectedItem.description || activeSelectedItem.specification || `${activeSelectedItem.category || ''} • ${activeSelectedItem.brand || ''} • Size: ${activeSelectedItem.size || activeSelectedItem.code || ''}`}
                     </p>
                   </div>
@@ -915,12 +901,12 @@ export const GlobalF2BrowseModal: React.FC = () => {
               </div>
 
               {/* Picture Thumbnail / Color Swatch / Address Badge */}
-              <div className="w-36 h-20 bg-white dark:bg-[#131b2e] border border-[#c4c5d5] dark:border-[#444653] rounded-xl flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
+              <div className="w-36 h-20 bg-white dark:bg-[#1b1b1b] border border-[#c6c6c6] dark:border-[#474747] rounded-xl flex items-center justify-center overflow-hidden shrink-0 shadow-2xs">
                 {activeTab === "product" || activeTab === "article" ? (
                   activeSelectedItem?.imageUrl ? (
                     <img src={activeSelectedItem.imageUrl} alt="Item" className="w-full h-full object-cover" />
                   ) : (
-                    <div className="flex flex-col items-center justify-center text-[#565e74] gap-1">
+                    <div className="flex flex-col items-center justify-center text-[#5e5e5e] gap-1">
                       <ImageIcon size={22} className="opacity-40" />
                       <span className="text-[10px] font-bold font-mono">PICTURE</span>
                     </div>
@@ -932,8 +918,8 @@ export const GlobalF2BrowseModal: React.FC = () => {
                     </span>
                   </div>
                 ) : (
-                  <div className="p-2 text-center text-[#565e74] flex flex-col items-center justify-center gap-0.5">
-                    <MapPin size={16} className="text-[#00288e] dark:text-[#a8b8ff]" />
+                  <div className="p-2 text-center text-[#5e5e5e] flex flex-col items-center justify-center gap-0.5">
+                    <MapPin size={16} className="text-[#272727] dark:text-[#bababa]" />
                     <span className="text-[10px] font-bold">{activeSelectedItem?.state || activeSelectedItem?.city || "Registered"}</span>
                   </div>
                 )}
@@ -942,14 +928,14 @@ export const GlobalF2BrowseModal: React.FC = () => {
             </section>
 
             {/* Main Search Result Grid */}
-            <div className="flex-1 overflow-auto bg-white dark:bg-[#131b2e]">
+            <div className="flex-1 overflow-auto bg-white dark:bg-[#1b1b1b]">
               <table className="w-full text-left border-collapse text-xs whitespace-nowrap min-w-[750px]">
-                <thead className="bg-[#edeae1] dark:bg-[#252836] sticky top-0 z-10 border-b border-[#c4c5d5] dark:border-[#444653] text-[11px] font-bold text-[#444653] dark:text-[#bec6e0]">
+                <thead className="bg-[#edeae1] dark:bg-[#282828] sticky top-0 z-10 border-b border-[#c6c6c6] dark:border-[#474747] text-[11px] font-bold text-[#474747] dark:text-[#c6c6c6]">
                   <tr className="h-8">
                     {currentColumns.filter(c => c.visible).map(col => (
                       <th
                         key={col.key}
-                        className={`px-3 border-r border-[#c4c5d5] dark:border-[#444653] ${
+                        className={`px-3 border-r border-[#c6c6c6] dark:border-[#474747] ${
                           col.align === "right" ? "text-right" : col.align === "center" ? "text-center" : "text-left"
                         } ${col.width || ""}`}
                       >
@@ -958,12 +944,12 @@ export const GlobalF2BrowseModal: React.FC = () => {
                     ))}
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133] font-mono text-[11px]">
+                <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030] font-mono text-[11px]">
                   {paginatedRecords.length === 0 ? (
                     <tr>
                       <td 
                         colSpan={currentColumns.filter(c => c.visible).length}
-                        className="py-12 text-center text-xs text-[#565e74] dark:text-[#bec6e0]"
+                        className="py-12 text-center text-xs text-[#5e5e5e] dark:text-[#c6c6c6]"
                       >
                         No records match the active search and filter criteria.
                       </td>
@@ -979,8 +965,8 @@ export const GlobalF2BrowseModal: React.FC = () => {
                           onDoubleClick={() => handleCommitSelection(row)}
                           className={`h-7 cursor-pointer transition ${
                             isSelected
-                              ? "bg-[#ffffcc] dark:bg-[#3a3a1a] text-black dark:text-yellow-200 font-semibold border-l-4 border-[#00288e]"
-                              : "hover:bg-[#f8f9fa] dark:hover:bg-[#1d222e]"
+                              ? "bg-[#ffffcc] dark:bg-[#3a3a1a] text-black dark:text-yellow-200 font-semibold border-l-4 border-[#272727]"
+                              : "hover:bg-[#f9f9f9] dark:hover:bg-[#222222]"
                           }`}
                         >
                           {currentColumns.filter(c => c.visible).map(col => {
@@ -988,7 +974,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                             return (
                               <td
                                 key={col.key}
-                                className={`px-3 border-r border-[#c4c5d5] dark:border-[#444653] ${
+                                className={`px-3 border-r border-[#c6c6c6] dark:border-[#474747] ${
                                   col.align === "right" ? "text-right" : col.align === "center" ? "text-center" : "text-left"
                                 } ${col.key === "name" || col.key === "description" ? "font-sans font-medium" : ""}`}
                               >
@@ -1016,17 +1002,17 @@ export const GlobalF2BrowseModal: React.FC = () => {
             </div>
 
             {/* Bottom Search Strip & Pagination Controls */}
-            <div className="bg-[#edeae1] dark:bg-[#1d222e] p-2 border-t border-[#c4c5d5] dark:border-[#444653] flex flex-wrap items-center justify-between gap-2 shrink-0">
+            <div className="bg-[#edeae1] dark:bg-[#222222] p-2 border-t border-[#c6c6c6] dark:border-[#474747] flex flex-wrap items-center justify-between gap-2 shrink-0">
               
               {/* Fast Search Column Dropdown & Input */}
               <div className="flex items-center gap-1.5 flex-1 max-w-lg">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
                   Search:
                 </span>
                 <select
                   value={bottomSearchCol}
                   onChange={e => setBottomSearchCol(e.target.value)}
-                  className="h-7 px-1.5 text-xs font-semibold border border-[#c4c5d5] dark:border-[#444653] rounded bg-white dark:bg-[#131b2e] outline-none"
+                  className="h-7 px-1.5 text-xs font-semibold border border-[#c6c6c6] dark:border-[#474747] rounded bg-white dark:bg-[#1b1b1b] outline-none"
                 >
                   <option value="all">[Any Column]</option>
                   {currentColumns.filter(c => c.visible).map(c => (
@@ -1042,13 +1028,13 @@ export const GlobalF2BrowseModal: React.FC = () => {
                     setPage(1);
                   }}
                   placeholder="Locate value in column..."
-                  className="flex-1 h-7 px-2 text-xs border border-[#c4c5d5] dark:border-[#444653] rounded bg-white dark:bg-[#131b2e] outline-none focus:border-[#00288e]"
+                  className="flex-1 h-7 px-2 text-xs border border-[#c6c6c6] dark:border-[#474747] rounded bg-white dark:bg-[#1b1b1b] outline-none focus:border-[#272727]"
                 />
               </div>
 
               {/* Pagination Controls (Previous / Next) */}
               <div className="flex items-center gap-1.5 text-xs">
-                <span className="text-[11px] text-[#565e74] dark:text-[#bec6e0] font-mono">
+                <span className="text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6] font-mono">
                   Page {page} of {totalPages} ({filteredRecords.length} records)
                 </span>
 
@@ -1056,7 +1042,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                   type="button"
                   disabled={page <= 1}
                   onClick={() => setPage(prev => Math.max(1, prev - 1))}
-                  className="h-7 px-2.5 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] rounded hover:bg-[#f3f4f5] disabled:opacity-30 font-bold flex items-center gap-1 cursor-pointer"
+                  className="h-7 px-2.5 bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] rounded hover:bg-[#f4f4f4] disabled:opacity-30 font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <ChevronLeft size={13} />
                   <span>Prev</span>
@@ -1066,7 +1052,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
                   type="button"
                   disabled={page >= totalPages}
                   onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
-                  className="h-7 px-2.5 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] rounded hover:bg-[#f3f4f5] disabled:opacity-30 font-bold flex items-center gap-1 cursor-pointer"
+                  className="h-7 px-2.5 bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] rounded hover:bg-[#f4f4f4] disabled:opacity-30 font-bold flex items-center gap-1 cursor-pointer"
                 >
                   <span>Next</span>
                   <ChevronRight size={13} />
@@ -1082,9 +1068,9 @@ export const GlobalF2BrowseModal: React.FC = () => {
         {/* ========================================================================= */}
         {/* 3. FOOTER ACTIONS BAR: Ok / Cancel                                        */}
         {/* ========================================================================= */}
-        <footer className="px-4 py-2.5 bg-[#f8f9fa] dark:bg-[#131b2e] border-t border-[#c4c5d5] dark:border-[#444653] flex items-center justify-between shrink-0">
+        <footer className="px-4 py-2.5 bg-[#f9f9f9] dark:bg-[#1b1b1b] border-t border-[#c6c6c6] dark:border-[#474747] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2">
-            <kbd className="px-2 py-0.5 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] rounded text-[11px] font-mono font-bold text-[#00288e] dark:text-[#a8b8ff] shadow-2xs">
+            <kbd className="px-2 py-0.5 bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] rounded text-[11px] font-mono font-bold text-[#272727] dark:text-[#bababa] shadow-2xs">
               [↑/↓: Navigate] [Enter: Ok] [Esc: Cancel]
             </kbd>
           </div>
@@ -1093,7 +1079,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
             <button
               type="button"
               onClick={closeF2Modal}
-              className="px-4 py-1.5 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] hover:bg-[#f3f4f5] text-xs font-bold rounded-xl transition cursor-pointer"
+              className="px-4 py-1.5 bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] hover:bg-[#f4f4f4] text-xs font-bold rounded-xl transition cursor-pointer"
             >
               Cancel [Esc]
             </button>
@@ -1102,7 +1088,7 @@ export const GlobalF2BrowseModal: React.FC = () => {
               type="button"
               disabled={!activeSelectedItem}
               onClick={() => handleCommitSelection()}
-              className="px-5 py-1.5 bg-[#00288e] hover:bg-[#1e40af] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-md disabled:opacity-40 cursor-pointer active:scale-95"
+              className="px-5 py-1.5 bg-[#272727] hover:bg-[#414141] text-white text-xs font-bold rounded-xl transition flex items-center gap-1.5 shadow-md disabled:opacity-40 cursor-pointer active:scale-95"
             >
               <CornerDownLeft size={13} />
               <span>Ok [Enter]</span>

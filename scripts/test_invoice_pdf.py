@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from backend.app.services.invoice_pdf_service import InvoicePdfService
 
 async def test():
-    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001")
+    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001")
     session_factory = sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
     async with session_factory() as session:
         html = await InvoicePdfService.generate_invoice_html(

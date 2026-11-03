@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.94.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Advanced GST e-Invoice IRN Generation & QR Code Printing Studio (v1.0.0-GA)
@@ -42,7 +41,7 @@ Documents the implementation of the GST e-Invoice Engine — GSTN API v1.03 sche
 4. **IRN cancellation guard**: `cancelIRN()` throws on non-REGISTERED status, preventing double-cancellation and cancellation of draft/printed invoices.
 
 ## 6. Design Rationale
-GST e-Invoicing became mandatory for turnover > ₹5 Cr from Aug 2023. SMRITI's compliance gateway must generate IRNs, print QR codes on invoices, and maintain a full cancellation audit trail for GSTN reconciliation.
+GST e-Invoicing became mandatory for turnover > ₹5 Cr from Aug 2023. TILEFLOW's compliance gateway must generate IRNs, print QR codes on invoices, and maintain a full cancellation audit trail for GSTN reconciliation.
 
 ## 7. Implementation Summary
 - `EInvoiceEngine.computeLineItem()`: Computes taxable value, CGST/SGST or IGST, cess, and line total.

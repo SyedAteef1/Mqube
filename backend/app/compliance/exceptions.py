@@ -1,19 +1,5 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 class ComplianceException(Exception):  # noqa: N818
-    """Base exception for all SMRITI compliance operations."""
+    """Base exception for all TILEFLOW compliance operations."""
     pass
 
 class ConnectorLoadException(ComplianceException):

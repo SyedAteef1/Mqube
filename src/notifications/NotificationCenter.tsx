@@ -1,32 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useNotifications, SystemNotification } from "./notification_store.tsx";
-import { SmritiScrollArea } from "../components/SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../components/TileFlowScrollArea.tsx";
 import { Bell, Check, Info, ShieldAlert, Activity, AlertTriangle } from "lucide-react";
 
 export const NotificationCenter: React.FC<{
@@ -104,7 +79,7 @@ export const NotificationCenter: React.FC<{
               </button>
             </div>
 
-            <SmritiScrollArea className="flex-1 bg-theme-surface-1 max-h-[400px]">
+            <TileFlowScrollArea className="flex-1 bg-theme-surface-1 max-h-[400px]">
               {filtered.length === 0 ? (
                 <div className="p-8 text-center text-theme-muted flex flex-col items-center">
                   <Bell size={32} className="opacity-20 mb-3" />
@@ -151,7 +126,7 @@ export const NotificationCenter: React.FC<{
                   ))}
                 </div>
               )}
-            </SmritiScrollArea>
+            </TileFlowScrollArea>
           </motion.div>
         </>
       )}

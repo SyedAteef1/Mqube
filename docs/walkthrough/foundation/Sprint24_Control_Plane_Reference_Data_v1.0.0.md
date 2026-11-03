@@ -2,11 +2,11 @@
 title: "Sprint 24: P1.1 Control Plane Reference Data & Global Localization Engine"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
@@ -20,7 +20,7 @@ This sprint fulfills **Blueprint Section 4: P1 Control Plane Completion (P1.1 Gl
 - **Multi-Lingual Localization & Translation Dictionary**: Multi-lingual dictionary resolution for English, Hindi (`hi`), and Marathi (`mr`) with automatic English fallback for untranslated keys.
 - **Locale-Aware Formatters**: Number formatting supporting Indian numbering system (Lakh/Crore: `₹ 12,34,567.89`) and International system (Million/Billion: `$ 1,234,567.89`).
 - **REST APIs**: FastAPI endpoints mounted under `/api/v1/control/reference/`.
-- **Database Seeding**: Master data synchronization across `smritisys`, `smriti001`, and `smriti002`.
+- **Database Seeding**: Master data synchronization across `tileflowsys`, `tileflow001`, and `tileflow002`.
 - **Automated Verification**: Integration test suite `backend/tests/t_localization_control_plane.py` (10/10 tests green).
 
 ## 3. Files Created
@@ -38,7 +38,7 @@ This sprint fulfills **Blueprint Section 4: P1 Control Plane Completion (P1.1 Gl
 - [`CHANGELOG.md`](file:///F:/SMRITRretailNX/CHANGELOG.md) — Registered `v3.40.0`.
 
 ## 5. Architecture Decisions
-- **Control-Plane Master Isolation**: All global reference data resides in the `smritisys` control plane with multi-tenant read availability.
+- **Control-Plane Master Isolation**: All global reference data resides in the `tileflowsys` control plane with multi-tenant read availability.
 - **Bidirectional UOM Conversion**: Supports both direct and reciprocal factor calculations with validation guards against incompatible measurement categories.
 - **Locale-Aware Number System Partitioning**: Formats currency amounts according to statutory standards (e.g. `en-IN` applies 2-digit grouping for Lakhs/Crores; `en-US` applies 3-digit grouping for Thousands/Millions).
 - **Graceful Translation Fallback**: Any missing or unapproved translation string defaults to the English baseline (`default_text`) without returning HTTP errors or empty strings.

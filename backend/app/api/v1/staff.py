@@ -1,30 +1,8 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah -- Founder & Chairperson
-* Jawahar Ramkripal Mallah   -- Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.30.0
-* Created    : 2026-08-24
-* Modified   : 2026-08-24
-* Copyright  : (c) AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-
-Sprint 10 -- Staff Management parity.
-Shoper9 MnuNo 612 (SR442900/SR443900).
-Personnel Catalogue backed by commission_participants table.
-Incentive Definition backed by commission_rules + commission_programs.
-"""
-
 from datetime import datetime, timezone
 from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from pydantic import BaseModel
+from sqlalchemy import String, cast
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 
@@ -94,7 +72,7 @@ async def list_personnel(
     if active_only:
         stmt = stmt.where(CommissionParticipant.is_active == True)
     if role:
-        stmt = stmt.where(CommissionParticipant.participant_role.ilike(f"%{role}%"))
+        stmt = stmt.where(cast(CommissionParticipant.roles, String).ilike(f"%{role}%"))
     stmt = stmt.order_by(CommissionParticipant.person_name)
     participants = (await db.execute(stmt)).scalars().all()
 
@@ -103,7 +81,7 @@ async def list_personnel(
             id=p.id,
             person_name=p.person_name,
             user_id=getattr(p, "user_id", None),
-            participant_role=getattr(p, "participant_role", "SALESPERSON") or "SALESPERSON",
+            participant_role=", ".join(p.roles or []) or "SALESPERSON",
             is_active=getattr(p, "is_active", True),
             created_at=str(p.created_at)[:10] if p.created_at else "",
         )
@@ -190,7 +168,7 @@ async def create_incentive(
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail={
-                "code":    "SMRITI-PERM-001",
+                "code":    "TILEFLOW-PERM-001",
                 "message": "You do not have permission to define incentive rules.",
                 "action":  "Contact your system administrator to request access.",
             },
@@ -207,7 +185,7 @@ async def create_incentive(
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail={
-                "code":    "SMRITI-VAL-001",
+                "code":    "TILEFLOW-VAL-001",
                 "message": f"Commission program '{payload.program_id}' was not found.",
                 "action":  "Check the program ID or create a new program first.",
             },

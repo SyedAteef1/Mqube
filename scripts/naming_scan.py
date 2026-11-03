@@ -1,5 +1,5 @@
 """
-SMRITI Filename Governance Inventory Scanner
+TILEFLOW Filename Governance Inventory Scanner
 Scans src/, backend/, scripts/, docs/ and reports all filenames
 with their character counts (including extension).
 Outputs a CSV + summary for the rename map.

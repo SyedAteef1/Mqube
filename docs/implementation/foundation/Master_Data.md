@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-07-14
   Modified     : 2026-07-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Master Data Consolidation Implementation Plan
+# TILEFLOW Master Data Consolidation Implementation Plan
 
-This plan consolidates SMRITI's master and organizational data storage onto the FastAPI + PostgreSQL backend. The legacy Express-side master endpoints will be retired, and the obsolete, generic `master_entities` table (System C) will be decommissioned.
+This plan consolidates TILEFLOW's master and organizational data storage onto the FastAPI + PostgreSQL backend. The legacy Express-side master endpoints will be retired, and the obsolete, generic `master_entities` table (System C) will be decommissioned.
 
 ## User Review Required
 
@@ -27,7 +26,7 @@ This plan consolidates SMRITI's master and organizational data storage onto the 
 ## Open Questions
 
 > [!NOTE]
-> **Soft-Delete on `master_values`:** This plan implements soft-delete (`is_deleted` BOOLEAN, `deleted_at` TIMESTAMPTZ, `deleted_by` VARCHAR) on `master_values` to align with the rest of the SMRITI domain models. This directive assumes the architect approves this enhancement.
+> **Soft-Delete on `master_values`:** This plan implements soft-delete (`is_deleted` BOOLEAN, `deleted_at` TIMESTAMPTZ, `deleted_by` VARCHAR) on `master_values` to align with the rest of the TILEFLOW domain models. This directive assumes the architect approves this enhancement.
 
 ---
 
@@ -106,4 +105,4 @@ This plan consolidates SMRITI's master and organizational data storage onto the 
 * Run curl requests to check response contracts of:
   * `GET /api/v1/masters/companies`
   * `GET /api/v1/masters/lookup-types`
-* Open the browser and visually verify that organizational nodes (Company, Branch, Store, Warehouse) and lookups (Department, Designation, Bank, Currency, Expense Category) can be created, updated, searched, and soft-deleted correctly in SMRITI UI.
+* Open the browser and visually verify that organizational nodes (Company, Branch, Store, Warehouse) and lookups (Department, Designation, Bank, Currency, Expense Category) can be created, updated, searched, and soft-deleted correctly in TILEFLOW UI.

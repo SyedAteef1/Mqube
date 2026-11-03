@@ -11,7 +11,7 @@ SECTION 1: EXECUTIVE SUMMARY
 
 PROBLEM STATEMENT:
   Sales return contracts fail with "relation 'payment_transactions' does not exist"
-  when processing refunds in smritisys (control DB).
+  when processing refunds in tileflowsys (control DB).
 
 ROOT CAUSE CLASSIFICATION:
   HYBRID SCHEMA MANAGEMENT FAILURE (Model defined + Autogenerate excluded + 
@@ -93,10 +93,10 @@ SECTION 2: DIAGNOSTIC FINDINGS (16-POINT CHECKLIST)
 
 ✓ CHECKPOINT 6: Canonical Database Ownership
   Analysis:
-    - smritisys (Control Plane): Alembic v1379_control_plane_security_fix
+    - tileflowsys (Control Plane): Alembic v1379_control_plane_security_fix
       Tables managed: permissions, audit logs, system registry
       Role: Authoritative schema via Alembic migrations
-    - smriti001 (Tenant DB): Alembic v1375_backfill_sales_return_cust
+    - tileflow001 (Tenant DB): Alembic v1375_backfill_sales_return_cust
       Tables managed: company data, sales, inventory
       Role: Test/example tenant
   PaymentTransaction Ownership: 
@@ -108,12 +108,12 @@ SECTION 2: DIAGNOSTIC FINDINGS (16-POINT CHECKLIST)
 ✓ CHECKPOINT 7: Live Database State Query
   Test Execution: Direct PostgreSQL inspection (non-destructive)
   Results:
-    DATABASE smritisys (Control DB):
+    DATABASE tileflowsys (Control DB):
       - Alembic HEAD: v1379_control_plane_security_fix
       - payment_transactions table: MISSING ✗
       - Root Cause: Only Alembic migrations applied; metadata.create_all NOT used
     
-    DATABASE smriti001 (Tenant DB):
+    DATABASE tileflow001 (Tenant DB):
       - Alembic HEAD: v1375_backfill_sales_return_cust
       - payment_transactions table: EXISTS ✓ (24 columns, 3 indexes)
       - Root Cause: metadata.create_all was executed during test setup
@@ -150,7 +150,7 @@ SECTION 2: DIAGNOSTIC FINDINGS (16-POINT CHECKLIST)
 ✓ CHECKPOINT 9: Model vs Migration vs Database Comparison
   COMPARISON MATRIX:
   
-  ASPECT              | MODEL            | MIGRATION        | DB (smritisys) | DB (smriti001)
+  ASPECT              | MODEL            | MIGRATION        | DB (tileflowsys) | DB (tileflow001)
   ────────────────────┼──────────────────┼──────────────────┼────────────────┼────────────────
   Defined             | YES ✓            | NO ✗             | NO ✗           | YES ✓
   Registered          | YES ✓            | N/A              | N/A            | N/A
@@ -160,8 +160,8 @@ SECTION 2: DIAGNOSTIC FINDINGS (16-POINT CHECKLIST)
   Foreign Keys        | 1 (via FK column)| N/A              | N/A            | UNIQUE constraints
   
   DRIFT ANALYSIS:
-    - Model ↔ DB (smriti001): IN SYNC ✓ (created via metadata.create_all)
-    - Model ↔ DB (smritisys): OUT OF SYNC ✗ (model defined but table missing)
+    - Model ↔ DB (tileflow001): IN SYNC ✓ (created via metadata.create_all)
+    - Model ↔ DB (tileflowsys): OUT OF SYNC ✗ (model defined but table missing)
     - Model ↔ Migration: OUT OF SYNC ✗ (no migration exists)
   
   SCHEMA DRIFT SEVERITY: CRITICAL
@@ -189,12 +189,12 @@ SECTION 2: DIAGNOSTIC FINDINGS (16-POINT CHECKLIST)
   Verdict: Migration graph is clean; payment migration simply omitted
 
 ✓ CHECKPOINT 11: Alembic Version Table
-  Database: smritisys
+  Database: tileflowsys
   Query: SELECT version_num FROM alembic_version ORDER BY DESC LIMIT 1
   Result: v1379_control_plane_security_fix
   Status: HEAD matches schema state ✓
   
-  Database: smriti001
+  Database: tileflow001
   Query: SELECT version_num FROM alembic_version ORDER BY DESC LIMIT 1
   Result: v1375_backfill_sales_return_cust
   Status: HEAD matches schema state ✓
@@ -206,13 +206,13 @@ SECTION 2: DIAGNOSTIC FINDINGS (16-POINT CHECKLIST)
   EVIDENCE-BASED ROOT CAUSE IDENTIFICATION:
   
   Problem Tree:
-    └─ payment_transactions doesn't exist in smritisys
+    └─ payment_transactions doesn't exist in tileflowsys
        ├─ No Alembic migration creates it
        │  ├─ Model defined in payment_ledger.py (NOT migration)
        │  ├─ Git shows payments code committed WITHOUT migration
        │  └─ alembic/env.py excludes from autogenerate
        │
-       └─ Table exists in smriti001 (test DB)
+       └─ Table exists in tileflow001 (test DB)
           └─ backend/app/tests/conftest.py line 60 runs Base.metadata.create_all
              (Test fixture creates all tables from SQLAlchemy metadata)
   
@@ -231,8 +231,8 @@ SECTION 2: DIAGNOSTIC FINDINGS (16-POINT CHECKLIST)
     - Prod: Only Alembic migrations applied → payment_transactions missing ✗
   
   Why Tests Don't Catch This:
-    - Test DB (smriti001) has payment_transactions created by metadata.create_all
-    - Sales return tests run against smriti001, not smritisys (control DB)
+    - Test DB (tileflow001) has payment_transactions created by metadata.create_all
+    - Sales return tests run against tileflow001, not tileflowsys (control DB)
     - Asymmetry: tests don't validate control DB schema state
   
   Verdict: HYBRID SCHEMA MANAGEMENT with MISSING MIGRATION for payment_transactions
@@ -253,8 +253,8 @@ SCOPE:
   ? Other payment features: Need investigation
 
 DATABASE ASYMMETRY:
-  ✓ smriti001 (test): Has payment_transactions via metadata.create_all
-  ✗ smritisys (control): Missing payment_transactions
+  ✓ tileflow001 (test): Has payment_transactions via metadata.create_all
+  ✗ tileflowsys (control): Missing payment_transactions
   ⚠ Risk: Control DB is production-like; divergence will cause issues
 
 ================================================================================
@@ -267,7 +267,7 @@ APPROVED SOLUTION:
     2. Adds all required indexes (idempotency_key unique, composite indexes)
     3. Uses idempotent DDL (CREATE TABLE IF NOT EXISTS) for safety
     4. Follows v1379 as down_revision
-    5. Targets BOTH smritisys and tenant databases (via standard Alembic flow)
+    5. Targets BOTH tileflowsys and tenant databases (via standard Alembic flow)
     6. Includes PaymentAllocation table (related model in payment_ledger.py)
 
 MIGRATION DESIGN:
@@ -278,7 +278,7 @@ MIGRATION DESIGN:
   - Validates: Column definitions match PaymentTransaction model exactly
 
 DEPLOYMENT SEQUENCE:
-  1. Apply v1380 to smritisys (adds payment_transactions table)
+  1. Apply v1380 to tileflowsys (adds payment_transactions table)
   2. Re-run sales return contract tests → should see 30/30 PASS
   3. Validate payment ledger queries work on both databases
   4. Complete G09 acceptance checklist
@@ -286,7 +286,7 @@ DEPLOYMENT SEQUENCE:
 RISK MITIGATION:
   - Idempotent migration ensures safe re-runs
   - No data loss (new table, no schema changes to existing data)
-  - Aligns test behavior (smriti001) with production (smritisys)
+  - Aligns test behavior (tileflow001) with production (tileflowsys)
   - Closes hybrid management gap going forward
 
 ================================================================================
@@ -305,7 +305,7 @@ RECOMMENDATIONS TO PREVENT RECURRENCE:
   2. Add to CI/CD: "Validate all Base.metadata.tables have matching Alembic revisions"
   3. Add to alembic/env.py: Document WHY each table is excluded/included from autogenerate
   4. Remove reliance on metadata.create_all for production schema (use Alembic only)
-  5. Test against both smritisys AND smriti001 to catch asymmetries
+  5. Test against both tileflowsys AND tileflow001 to catch asymmetries
 
 GOVERNANCE RULE GOING FORWARD:
   ✓ APPROVED: All new models require explicit Alembic migration BEFORE committing code
@@ -329,7 +329,7 @@ PREREQUISITE FOR v1380 CREATION:
 
 NEXT STEPS (PENDING USER APPROVAL):
   1. Create v1380_payment_transactions_migration.py
-  2. Apply to smritisys database
+  2. Apply to tileflowsys database
   3. Run full sales return contract suite (expect 30/30 PASS)
   4. Complete G09 acceptance checklist
   5. Update alembic/env.py documentation

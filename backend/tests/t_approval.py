@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 import pytest
@@ -40,8 +26,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -55,7 +41,7 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
 @pytest.mark.asyncio
 async def test_approval_policy_creation_and_listing():
     """Verify creation and query of multi-tier approval policies."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -97,7 +83,7 @@ async def test_approval_policy_creation_and_listing():
 @pytest.mark.asyncio
 async def test_transaction_approval_enforcement_evaluation():
     """Verify transaction gating: high amounts require approval for low-privilege roles."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     doc_type = f"SALES_INVOICE_{unique_suffix.upper()}"
 
@@ -157,7 +143,7 @@ async def test_transaction_approval_enforcement_evaluation():
 @pytest.mark.asyncio
 async def test_submit_approval_request_lifecycle():
     """Verify submitting approval requests with status PENDING and correct role assignment."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     doc_type = f"CREDIT_MEMO_{unique_suffix.upper()}"
 
@@ -194,7 +180,7 @@ async def test_submit_approval_request_lifecycle():
 @pytest.mark.asyncio
 async def test_process_approval_action_authorized_and_unauthorized():
     """Verify RBAC authorization: authorized approvers can approve, unauthorized callers fail-closed."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -242,7 +228,7 @@ async def test_process_approval_action_authorized_and_unauthorized():
 @pytest.mark.asyncio
 async def test_escalation_workflow():
     """Verify request escalation to higher authority level."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:

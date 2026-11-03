@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-26
   Modified     : 2026-08-26
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Phase 1 Historical PO Reconciliation Engineering Plan — Tattly Threads
 
 ## 1. Objective
-Ingest all 60 Reliance Retail Purchase Orders (PO PDFs) into SMRITI Retail OS as canonical historical Sales Orders, populate deduplicated Item Master products, archive immutable legal terms snapshots, and reconcile invoice allocations across existing tax invoices `TT2026-2027/18` through `TT2026-2027/137` for client **Tattly Threads**.
+Ingest all 60 Reliance Retail Purchase Orders (PO PDFs) into TILEFLOW Retail OS as canonical historical Sales Orders, populate deduplicated Item Master products, archive immutable legal terms snapshots, and reconcile invoice allocations across existing tax invoices `TT2026-2027/18` through `TT2026-2027/137` for client **Tattly Threads**.
 
 ---
 
@@ -26,7 +25,7 @@ Tattly Threads holds 60 purchase orders from Reliance Retail Limited totaling 25
 
 ## 3. Scope
 - Ingestion of 60 Reliance PO PDFs (`5182778151.pdf` – `5182778210.pdf`).
-- Creation of 60 Sales Orders in `smriti001`.
+- Creation of 60 Sales Orders in `tileflow001`.
 - Insertion of 18,036 Sales Order Items linking to Item Master products.
 - Deduplication of 450 unique SKU combinations into `products`.
 - Archival of 60 Terms & Conditions snapshots in `terms_snapshots`.
@@ -38,7 +37,7 @@ Tattly Threads holds 60 purchase orders from Reliance Retail Limited totaling 25
 
 ## 4. Current State
 - `sales_invoices` contained 120 historical tax invoices (`TT2026-2027/18` – `137`) with `po_reference` values.
-- `sales_orders` had 0 records in `smriti001`.
+- `sales_orders` had 0 records in `tileflow001`.
 - `products` had 154 items, missing 303 unique SKUs referenced in the POs.
 - `terms_snapshots` had 0 Sales Order records.
 - Invoice allocation records did not exist.
@@ -55,7 +54,7 @@ Tattly Threads holds 60 purchase orders from Reliance Retail Limited totaling 25
 ## 6. Architecture Impact
 - Extended `sales_orders` and `sales_order_items` tables with canonical PO metadata.
 - Created `sales_order_invoice_allocations` table for order-to-invoice tracking.
-- Maintained strict tenant isolation in `smriti001`.
+- Maintained strict tenant isolation in `tileflow001`.
 
 ---
 
@@ -72,7 +71,7 @@ Tattly Threads holds 60 purchase orders from Reliance Retail Limited totaling 25
 - `backend/tests/test_tattly_po_reconciliation.py`
 - `docs/walkthrough/sales/Tattly_Threads_Historical_PO_Reconciliation_Phase1_v1.0.md`
 - `docs/implementation/sales/Tattly_Threads_Historical_PO_Reconciliation_Plan_v1.0.md`
-- `backups/smriti001_pre_phase1_po_recon.sql`
+- `backups/tileflow001_pre_phase1_po_recon.sql`
 
 ---
 
@@ -86,7 +85,7 @@ Tattly Threads holds 60 purchase orders from Reliance Retail Limited totaling 25
 
 ## 10. Dependencies
 - Python 3.13 (`pymupdf`, `psycopg2`, `pytest`, `SQLAlchemy`, `FastAPI`).
-- PostgreSQL 15 running in Docker container `smriti-db` on port 5432.
+- PostgreSQL 15 running in Docker container `tileflow-db` on port 5432.
 
 ---
 
@@ -97,7 +96,7 @@ Tattly Threads holds 60 purchase orders from Reliance Retail Limited totaling 25
 ---
 
 ## 12. Rollback Strategy
-- Database snapshot `backups/smriti001_pre_phase1_po_recon.sql` allows full point-in-time restore in seconds via `docker exec -i smriti-db psql -U postgres smriti001 < backup.sql`.
+- Database snapshot `backups/tileflow001_pre_phase1_po_recon.sql` allows full point-in-time restore in seconds via `docker exec -i tileflow-db psql -U postgres tileflow001 < backup.sql`.
 
 ---
 
@@ -127,7 +126,7 @@ Tattly Threads holds 60 purchase orders from Reliance Retail Limited totaling 25
 ---
 
 ## 16. Deployment Plan
-- Run reconciliation engine directly on tenant database `smriti001`.
+- Run reconciliation engine directly on tenant database `tileflow001`.
 
 ---
 

@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.8.0
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Public
 -->
 
@@ -104,7 +103,7 @@ Revert the version bump, revert Git commits, and run `alembic downgrade -1`.
 - **Tenant Leakage Test**: Attempting to read a product of Company B from Company A context must return 404/403.
 
 ## 15. Documentation Impact
-Update the Dev Tracker API registry and the SMRITI Wiki endpoints reference guides.
+Update the Dev Tracker API registry and the TILEFLOW Wiki endpoints reference guides.
 
 ## 16. Deployment Plan
 Scaffold Alembic migrations, verify locally, commit and test on the testing environment.

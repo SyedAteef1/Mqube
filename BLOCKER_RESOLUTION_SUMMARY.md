@@ -1,4 +1,4 @@
-# SMRITI Control Plane Regression Resolution - Session Complete
+# TILEFLOW Control Plane Regression Resolution - Session Complete
 Date: 2026-08-30
 Status: ✅ ALL BLOCKERS RESOLVED & VERIFIED
 
@@ -9,7 +9,7 @@ Status: ✅ ALL BLOCKERS RESOLVED & VERIFIED
 Three critical blockers preventing control-plane acceptance have been **identified, fixed, and verified**:
 
 1. **✅ Company-Code Contract Validation** — Fixed `code_allocator.py` to enforce canonical 3-character standard (was incorrectly enforcing 4-character)
-2. **✅ Database Schema Synchronization** — Applied v1382 migrations to `smriti001` and manually added missing columns; both databases now at parity
+2. **✅ Database Schema Synchronization** — Applied v1382 migrations to `tileflow001` and manually added missing columns; both databases now at parity
 3. **✅ Documentation Consolidation** — Reduced architecture documentation from 55 duplicate/versioned files to 33 distinct canonical files (40% reduction)
 
 ---
@@ -40,19 +40,19 @@ Length Check:       len(code) != 4 → len(code) != 3
 
 ### Task 3: Database Migration Application ✅
 **Before State:**
-- smritisys: v1382_menu_registry ✓
-- smriti001: v1375_backfill_sales_return_cust (7 revisions behind)
+- tileflowsys: v1382_menu_registry ✓
+- tileflow001: v1375_backfill_sales_return_cust (7 revisions behind)
 
 **Challenge:** Direct `alembic upgrade head` failed with DuplicateColumnError on `sales_returns.idempotency_key` (partial prior application of v1376-v1381 changes)
 
 **Solution:** 
-1. Stamped smriti001 to v1382_menu_registry (migration steps already partially applied)
+1. Stamped tileflow001 to v1382_menu_registry (migration steps already partially applied)
 2. Verified schema: companies.company_code and logo_url columns existed but alembic_version was stale
 3. Manually added missing columns via SQL to achieve parity
 
 **After State:**
-- smritisys: v1382_menu_registry ✓
-- smriti001: v1382_menu_registry ✓ (manually reconciled)
+- tileflowsys: v1382_menu_registry ✓
+- tileflow001: v1382_menu_registry ✓ (manually reconciled)
 - Both: companies.company_code column EXISTS and INDEXED
 
 ### Task 4: Documentation Consolidation ✅
@@ -73,7 +73,7 @@ Length Check:       len(code) != 4 → len(code) != 3
 
 **Rationale for Remaining 33 Files:**
 The remaining 33 files represent distinct, non-overlapping architectural topics:
-- Core: CONTROL_PLANE, COMPANY, MULTI_COMPANY, DATABASE_ROUTING, SMRITISYS
+- Core: CONTROL_PLANE, COMPANY, MULTI_COMPANY, DATABASE_ROUTING, TILEFLOWSYS
 - Infrastructure: PLATFORM, PLATFORM_ADAPTER, PSV_ARCHITECTURE
 - Domains: PRODUCT_IDENTITY, ITEM_MASTER, CUSTOMER_360, FULFILLMENT, PROMOTION, etc.
 - Operations: CONFIGURATION, COST, DEVELOPMENT, GLOSSARY, CHANGELOG
@@ -128,7 +128,7 @@ All company-code validation checks consistently enforce 3-character standard:
 - All existing tests continue to pass
 
 ### Database State
-- Both control plane (smritisys) and pilot tenant (smriti001) synchronized at v1382_menu_registry
+- Both control plane (tileflowsys) and pilot tenant (tileflow001) synchronized at v1382_menu_registry
 - Schema parity verified via information_schema queries
 - 248 tables classified and audited per CONTROL_PLANE v2.0 audit
 
@@ -196,12 +196,12 @@ grep -rn "len(code) != " backend/app/services/*.py backend/app/api/v1/*.py
 ```bash
 # In Python REPL with PYTHONPATH=repo_root:
 from backend.app.db import db_config
-smritisys = db_config.get_db("smritisys")
-smriti001 = db_config.get_db("smriti001")
-assert "company_code" in smritisys.inspect().columns("company")
-assert "company_code" in smriti001.inspect().columns("company")
-assert smritisys.get_migration_version() == "v1382_menu_registry"
-assert smriti001.get_migration_version() == "v1382_menu_registry"
+tileflowsys = db_config.get_db("tileflowsys")
+tileflow001 = db_config.get_db("tileflow001")
+assert "company_code" in tileflowsys.inspect().columns("company")
+assert "company_code" in tileflow001.inspect().columns("company")
+assert tileflowsys.get_migration_version() == "v1382_menu_registry"
+assert tileflow001.get_migration_version() == "v1382_menu_registry"
 print("✓ Schema parity verified")
 ```
 
@@ -232,7 +232,7 @@ ls docs/architecture/ | grep -E "(CONTROL_PLANE_2|COMPANY_001|PRODUCT_IDENTITY_2
 | T+0.5h | Searched all 55 architecture docs for company-code evidence | ✓ |
 | T+1h | Fixed code_allocator.py (5 replacements) | ✓ |
 | T+2h | Diagnosed database migration blocker (partial v1376-v1381 application) | ✓ |
-| T+3h | Stamped smriti001 to v1382; manually added missing columns | ✓ |
+| T+3h | Stamped tileflow001 to v1382; manually added missing columns | ✓ |
 | T+4h | Consolidated architecture docs (55 → 33 files) | ✓ |
 | T+5h | Re-ran all regression tests; verified 100% pass rate | ✓ |
 | T+5.5h | Generated this summary document | ✓ |
@@ -244,8 +244,8 @@ ls docs/architecture/ | grep -E "(CONTROL_PLANE_2|COMPANY_001|PRODUCT_IDENTITY_2
 ## Deliverables Checklist
 
 - [x] Company-code contract fixed and verified (code_allocator.py)
-- [x] Database schema synchronized (smritisys ↔ smriti001 v1382 parity)
-- [x] Migrations applied and stamped (smriti001 now at v1382_menu_registry)
+- [x] Database schema synchronized (tileflowsys ↔ tileflow001 v1382 parity)
+- [x] Migrations applied and stamped (tileflow001 now at v1382_menu_registry)
 - [x] Architecture documentation consolidated (55 → 33 files)
 - [x] All regression tests passing (6 + 32 + 9 + 2 = 49/49 ✓)
 - [x] Code consistency verified (all validations use len(code) != 3)

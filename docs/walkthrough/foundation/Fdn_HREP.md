@@ -1,19 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah — Founder & Chairperson
-  * Jawahar Ramkripal Mallah  — Founder, CEO & Chief Software Architect
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
+  * Syed Ateef  — Founder, CEO & Chief Software Architect
 
   * Version    : 3.14.0
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
 # Foundation — HREP Compliance — Walkthrough v3.14.0
@@ -25,7 +22,7 @@
 
 ## 1. Purpose
 
-Implement the SMRITI Human-Readable Error Policy (HREP) to prevent raw platform, database, or network-generated exception messages from leaking to end users, formatting all error responses into business-friendly language with actionable suggested steps and traceable reference IDs.
+Implement the TILEFLOW Human-Readable Error Policy (HREP) to prevent raw platform, database, or network-generated exception messages from leaking to end users, formatting all error responses into business-friendly language with actionable suggested steps and traceable reference IDs.
 
 ---
 
@@ -37,7 +34,7 @@ Implement the SMRITI Human-Readable Error Policy (HREP) to prevent raw platform,
 | Interception of `HTTPException` (FastAPI standard exceptions) | Dynamic custom suggestions dictionary |
 | Interception of database `SQLAlchemyError` exceptions | - |
 | Dynamic removal of technical words (e.g. SQL, API, exception) | - |
-| SMRITI standard JSON structure with `detail` backwards-compatibility | - |
+| TILEFLOW standard JSON structure with `detail` backwards-compatibility | - |
 
 ---
 
@@ -45,7 +42,7 @@ Implement the SMRITI Human-Readable Error Policy (HREP) to prevent raw platform,
 
 | File | Purpose |
 |---|---|
-| `backend/app/core/errors.py` | SMRITI error response schemas, dictionary mapping, reference generator |
+| `backend/app/core/errors.py` | TILEFLOW error response schemas, dictionary mapping, reference generator |
 | `backend/app/core/error_handlers.py` | Custom exception handlers registered on FastAPI app |
 
 ---
@@ -71,7 +68,7 @@ To guarantee that no technical words (like JSON, traceback, API, database, repos
 ## 6. Design Rationale
 
 - Kept handlers separated from `main.py` to preserve core configuration cleanliness.
-- Leveraged md5 hashes of errors combined with today's date for unique support ticket Reference IDs: `SMRITI-ERR-YYYYMMDD-XXXXXX`.
+- Leveraged md5 hashes of errors combined with today's date for unique support ticket Reference IDs: `TILEFLOW-ERR-YYYYMMDD-XXXXXX`.
 
 ---
 
@@ -86,8 +83,8 @@ To guarantee that no technical words (like JSON, traceback, API, database, repos
     "title": "Validation Failed",
     "explanation": "Detailed business-friendly explanation.",
     "suggested_action": "Please check the highlighted fields and correct the inputs.",
-    "reference_id": "SMRITI-ERR-20260711-A5B2C3",
-    "error_code": "SMRITI-VAL-001"
+    "reference_id": "TILEFLOW-ERR-20260711-A5B2C3",
+    "error_code": "TILEFLOW-VAL-001"
   }
 }
 ```
@@ -113,7 +110,7 @@ All existing endpoints, validation, permission, and duplicate constraints tests 
 
 | Check | Status |
 |---|---|
-| SMRITI HREP schemas registered | Done |
+| TILEFLOW HREP schemas registered | Done |
 | Technical terms dynamically filtered | Done |
 | All 89 test cases pass | Done |
 

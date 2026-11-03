@@ -1,14 +1,4 @@
-#!/bin/bash
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
-# Version      : 3.16.0
-# Created      : 2026-07-13
-# Modified     : 2026-07-13
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
-# Classification: Internal
+
 
 # Color definitions
 GREEN='\033[0;32m'
@@ -17,7 +7,7 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 echo -e "${GREEN}=====================================================================${NC}"
-echo -e "${GREEN} SMRITI Retail OS - Linux / macOS One-Command Installer${NC}"
+echo -e "${GREEN} TILEFLOW Retail OS - Linux / macOS One-Command Installer${NC}"
 echo -e "${GREEN}=====================================================================${NC}"
 
 # 1. Check Prerequisites
@@ -53,7 +43,7 @@ PORT=3000
 BACKEND_API_PORT=8000
 POSTGRES_USER=postgres
 POSTGRES_PASSWORD=postgres
-POSTGRES_DB=smritisys
+POSTGRES_DB=tileflowsys
 DATABASE_PROVIDER=postgres
 EOT
         echo -e "  ✓ Created default .env file."
@@ -99,9 +89,9 @@ fi
 chmod +x startup.sh 2>/dev/null
 
 echo -e "${GREEN}=====================================================================${NC}"
-echo -e "${GREEN} SMRITI Retail OS installation complete!${NC}"
+echo -e "${GREEN} TILEFLOW Retail OS installation complete!${NC}"
 echo -e "${GREEN}=====================================================================${NC}"
-echo -e "To launch SMRITI Retail OS:"
+echo -e "To launch TILEFLOW Retail OS:"
 echo -e "  Run: ./startup.sh (or docker compose up -d)"
 echo -e "  Access Frontend : http://localhost:3000"
 echo -e "  Access Backend  : http://localhost:8000"

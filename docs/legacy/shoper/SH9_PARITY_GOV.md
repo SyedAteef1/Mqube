@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sprint 8c — Governance Masters Parity Gap Registry
-## Shoper9 MnuNo 500/600/609/613/700/720/750 → SMRITI Gap Analysis
+## Shoper9 MnuNo 500/600/609/613/700/720/750 → TILEFLOW Gap Analysis
 
 **Date:** 2026-08-24  
-**Source:** Live `smriti_legacy_menu_map` + code inspection  
+**Source:** Live `tileflow_legacy_menu_map` + code inspection  
 **Total entries analysed:** 50 rows (MnuNo 500–750)  
 **Files Inspected:**  
 - `src/components/MasterMgmtTab.tsx` (67 lines — lookup-types widget only)
@@ -29,7 +28,7 @@
 
 ## MnuNo 500 — Housekeeping (14 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 500/501 | OPEN Day | SR322600 | MAPPED | `open_shift_contract` in POS | ✅ VERIFIED |
 | 500/502 | CLOSE Day | SR309900 | MAPPED | `close_shift_contract` + Z-report in POS | ✅ VERIFIED |
@@ -53,7 +52,7 @@
 
 ## MnuNo 600 — Masters Setup (10 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 600/601 | General Lookup | SR429200 | MERGED | `master_lookup.py` + `MasterMgmtTab.tsx` | ✅ VERIFIED |
 | 600/602 | Vendor | SR404800 | MAPPED | `purchase.py` supplier endpoints | ✅ VERIFIED |
@@ -72,7 +71,7 @@
 
 ## MnuNo 603 — Tax Definitions (3 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 603/6031 | Sales Tax | SR708100 | REPLACED | GST replaces legacy tax — `master_lookup.py` HSN | ✅ REPLACED |
 | 603/6032 | Purchase Tax | SR708100 | REPLACED | GST — same as above | ✅ REPLACED |
@@ -84,7 +83,7 @@
 
 ## MnuNo 609 — Factors (2 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 609/6091 | Sales Factors | SR405800 | MAPPED | `master_lookup.py` lookup values (SALES_FACTOR type) | ✅ VERIFIED |
 | 609/6092 | Stock Factors | CZ100700 | MAPPED | `master_lookup.py` lookup values (STOCK_FACTOR type) | ✅ VERIFIED |
@@ -95,7 +94,7 @@
 
 ## MnuNo 613 — Customer Config (1 relevant entry)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 613/6131 | Customer Price Group | SR404700 | MAPPED | `master_lookup.py` PRICE_GROUP type | ✅ VERIFIED |
 
@@ -105,7 +104,7 @@
 
 ## MnuNo 700 — Company Setup (3 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 700/711 | Company Creation | SR432000 | MAPPED | `company_center.py` create company | ✅ VERIFIED |
 | 700/712 | Company Maintenance | SR406500 | MAPPED | `company_center.py` update company | ✅ VERIFIED |
@@ -117,7 +116,7 @@
 
 ## MnuNo 720 — System Parameters (6 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 720/721 | System Parameters | SR426400 | MAPPED | `system_configs` table exists — no CRUD API | ⚠️ GAP |
 | 720/722 | Bill Prefix | SR438600 | MAPPED | `numbering.py` series config | ✅ VERIFIED |
@@ -132,7 +131,7 @@
 
 ## MnuNo 750 — Supervisory Functions (6 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 750/755 | Node Management | SR413400 | MAPPED | `company_center.py` branch/node | ✅ VERIFIED |
 | 750/756 | Data Rebuild | SR320800 | MAPPED | `database_manager.py` — no rebuild endpoint | ⚠️ GAP |

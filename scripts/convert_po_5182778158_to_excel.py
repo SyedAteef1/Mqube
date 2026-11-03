@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.28.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import re
 from decimal import Decimal
@@ -20,11 +6,11 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 
-PDF_PATH = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads\5182778158.pdf"
+PDF_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads\5182778158.pdf"
 
 OUTPUT_PATHS = [
-    r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads\PO_5182778158_Reliance_Retail_Tax_Invoice_Matrix.xlsx",
-    r"F:\Smriti-Clients Data\Tattly Threads\5182778158_PO_Full_Details.xlsx",
+    r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads\PO_5182778158_Reliance_Retail_Tax_Invoice_Matrix.xlsx",
+    r"F:\TileFlow-Clients Data\Tattly Threads\5182778158_PO_Full_Details.xlsx",
     r"F:\SMRITRretailNX\exports\PO_5182778158_Reliance_Retail_Tax_Invoice_Matrix.xlsx",
 ]
 

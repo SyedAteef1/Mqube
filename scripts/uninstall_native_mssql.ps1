@@ -1,7 +1,3 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Designation  : Chief Systems Architect & Creator
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
 # Purpose      : Cleanly remove all Native Windows SQL Server instances, services, and remnants while preserving Docker container
 
 Write-Host "=== 1. Stopping & Disabling Native Windows SQL Server Services ===" -ForegroundColor Cyan
@@ -60,4 +56,4 @@ foreach ($df in $downloadFiles) {
 }
 
 Write-Host "=== 6. Verifying Docker SQL Server Container Status ===" -ForegroundColor Green
-docker ps --filter "name=smriti-mssql"
+docker ps --filter "name=tileflow-mssql"

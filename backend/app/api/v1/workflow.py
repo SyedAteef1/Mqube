@@ -1,25 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-07-15
-Modified     : 2026-07-15
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-
-Core Workflow API — AD-3 resolution.
-Workflow is a cross-module concern and must NOT live in sales.py or purchase.py.
-This router owns all document state-machine transitions.
-
-Supported docTypes and their state machines:
-  PurchaseOrder : DRAFT → CONFIRMED (submit) | CONFIRMED → CANCELLED (cancel)
-  SalesInvoice  : Draft → Confirmed (approve) | any → Cancelled (cancel)
-  SalesQuotation: Draft → Approved (approve) | Draft → Cancelled (cancel)
-"""
-
 from datetime import datetime, timezone
 from typing import List, Optional
 

@@ -1,22 +1,8 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.30.0
- * Created      : 2026-08-23
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 const BACKEND_URL = "http://localhost:8000";
 const QZ_WS_URL = "ws://localhost:8182";
 
 console.log("================================================================================");
-console.log("  SMRITI Retail OS — Direct QZ Tray & Backend CLI Diagnostic Harness");
+console.log("  TILEFLOW Retail OS — Direct QZ Tray & Backend CLI Diagnostic Harness");
 console.log("================================================================================");
 
 async function runDirectTest() {

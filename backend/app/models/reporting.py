@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 from datetime import datetime
 from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey, DateTime, Text, text
 from sqlalchemy.orm import relationship
@@ -18,7 +5,7 @@ from sqlalchemy.dialects.postgresql import JSONB
 from ..db.base import BaseEntity
 
 class ReportDefinition(BaseEntity):
-    """SMRITI Reporting & Analytics Engine - Report Definition Master."""
+    """TILEFLOW Reporting & Analytics Engine - Report Definition Master."""
     __tablename__ = "report_definitions"
 
     code = Column(String(50), nullable=False, unique=True, index=True)

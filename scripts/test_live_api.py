@@ -1,19 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.33.0
-Created      : 2026-08-26
-Modified     : 2026-08-26
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Live Headless API Verification Harness for Sales Orders and Report Studios
-"""
-
 import urllib.request
 import json
 

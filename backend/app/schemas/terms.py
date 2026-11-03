@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from typing import Optional, List, Dict, Any
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -102,7 +89,7 @@ class TermsSnapshotResponse(BaseModel):
 
 
 class TermsResolveRequest(BaseModel):
-    companyCode: Optional[str] = Field("SMRITI_IND", alias="companyCode")
+    companyCode: Optional[str] = Field("TILEFLOW_IND", alias="companyCode")
     branchCode: Optional[str] = Field(None, alias="branchCode")
     documentType: Optional[str] = Field(None, alias="documentType")
     partyId: Optional[str] = Field(None, alias="partyId")

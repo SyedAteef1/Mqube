@@ -1,28 +1,27 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.33.0
   Created      : 2026-08-26
   Modified     : 2026-08-26
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Shoper9 Template Blueprint Integration v3.33.0
 
 ## 1. Purpose
-To extract, normalize, audit, and document legacy Shoper9 template blueprints (`D:\Shoper9\Templates`) into first-class SMRITI Retail OS architectural models without executing raw legacy SQL on live database instances (`smritisys`, `smriti001`, `smriti002`) and without modifying original source files.
+To extract, normalize, audit, and document legacy Shoper9 template blueprints (`D:\Shoper9\Templates`) into first-class TILEFLOW Retail OS architectural models without executing raw legacy SQL on live database instances (`tileflowsys`, `tileflow001`, `tileflow002`) and without modifying original source files.
 
 ## 2. Scope
 - Safe, headless extraction of 21 legacy Shoper9 template files (`Template.inf`, `*.Sy`, `*.Gl`, `*.Lu`, `*.Dbs`, `*.Mns`, `*.TW`).
 - Encoding-safe parser supporting `cp1252`, `latin1`, and `utf-8-sig`.
 - Automated anomaly detection: quarantined temporary files (`*_tmp.txt`), empty files, duplicate SQL statements, and hardcoded Windows paths.
 - Generation of normalized JSON blueprints and markdown documentation in `docs/legacy_blueprints/shoper9/`.
-- Mapping of Retail and Distributor profiles to SMRITI Launchpad tiles, system parameters, and workflow engines.
+- Mapping of Retail and Distributor profiles to TILEFLOW Launchpad tiles, system parameters, and workflow engines.
 - Comprehensive headless automated test coverage across Vitest and Pytest.
 
 ## 3. Files Created
@@ -50,13 +49,13 @@ To extract, normalize, audit, and document legacy Shoper9 template blueprints (`
 3. **Reviewed SQL Deduplication**: Redundant statements (such as duplicate `vavertable` inserts in `Distributor.Mns`) are pruned in the reviewed AST layer.
 
 ## 6. Design Rationale
-Converting legacy proprietary formats into declarative JSON models enables SMRITI to apply tenant-specific policy defaults (Retail vs Distributor profiles) during tenant onboarding while maintaining audit traceability back to source configuration hashes.
+Converting legacy proprietary formats into declarative JSON models enables TILEFLOW to apply tenant-specific policy defaults (Retail vs Distributor profiles) during tenant onboarding while maintaining audit traceability back to source configuration hashes.
 
 ## 7. Implementation Summary
 - Developed `scripts/shoper9_blueprint_parser.py` with multi-encoding support, CSV parsing, and SQL statement tokenization.
 - Generated 7 core JSON blueprint artifacts and 2 Markdown documentation files under `docs/legacy_blueprints/shoper9/`.
 - Isolated 30 hardcoded Windows paths and 26 Retail vs Distributor parameter variances.
-- Mapped 5 Distributor delivery & procurement workflows (`Sales DC`, `Approval Issue DC`, `Transport Receipt`, `DC Conversion`, `PO Consolidation`) to canonical SMRITI modules.
+- Mapped 5 Distributor delivery & procurement workflows (`Sales DC`, `Approval Issue DC`, `Transport Receipt`, `DC Conversion`, `PO Consolidation`) to canonical TILEFLOW modules.
 - Created and executed 10 automated test cases (5 Pytest, 5 Vitest) with 100% pass rate.
 
 ## 8. Tests Executed
@@ -64,7 +63,7 @@ Converting legacy proprietary formats into declarative JSON models enables SMRIT
 - `vitest run src/tests/shoper9BlueprintMapping.test.ts`: 5 passed.
 - Full Vitest suite: 44 test files, 343 tests passed.
 - `tsc --noEmit`: 0 errors.
-- `vite build`: SMRITI production bundle built in 28.41s.
+- `vite build`: TILEFLOW production bundle built in 28.41s.
 - `git diff --check`: 0 whitespace errors.
 
 ## 9. Verification Results

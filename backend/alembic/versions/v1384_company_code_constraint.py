@@ -1,16 +1,3 @@
-"""v1384 -- Add company_code CHECK constraint.
-
-Revision ID: v1384_company_code_constraint
-Revises: v1383_invoice_communicator
-Create Date: 2026-08-30 00:00:00.000000
-
-Project      : SMRITI Retail OS
-Author       : Migration Integrity Protocol
-Description  : Enforces company_code standard: 3 alphanumeric characters [A-Z0-9],
-               range 001-999 (not 000 or SYS which are reserved).
-               Applied after validating no violations exist.
-
-"""
 from alembic import op
 import sqlalchemy as sa
 

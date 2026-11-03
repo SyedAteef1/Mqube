@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Master Framework — Phase E (Dynamic Schema-Driven Master Management) Walkthrough
+# TILEFLOW Master Framework — Phase E (Dynamic Schema-Driven Master Management) Walkthrough
 
 ## 1. Purpose
-The purpose of this walkthrough is to document the final integration phase of the generic SMRITI Master Framework. It transitions the master administration UI from statically configured registries to a dynamic, database-schema-driven model, decoupling client administration screens from hardcoded UI component dependencies.
+The purpose of this walkthrough is to document the final integration phase of the generic TILEFLOW Master Framework. It transitions the master administration UI from statically configured registries to a dynamic, database-schema-driven model, decoupling client administration screens from hardcoded UI component dependencies.
 
 ## 2. Scope
 - Mount-time configuration retrieval from the backend master types catalog.
@@ -39,7 +38,7 @@ The purpose of this walkthrough is to document the final integration phase of th
 
 ## 6. Design Rationale
 - Decoupling UI presentation logic from specific entity models allows administrators to introduce new master data categories dynamically directly in the backend without client deployments.
-- Reusing standard SMRITI design system components keeps user operations cohesive across all data registers.
+- Reusing standard TILEFLOW design system components keeps user operations cohesive across all data registers.
 
 ## 7. Implementation Summary
 1. Cleaned up `masters_registry.ts` to keep only the Tier-2 masters (`company`, `branch`, `store`, `warehouse`).

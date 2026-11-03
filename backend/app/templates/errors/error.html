@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : MQube Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 {% extends "errors/base.html" %}
 
-{% block title %}SMRITI Retail OS - {{ status_code }} {{ title }}{% endblock %}
+{% block title %}MQube - {{ status_code }} {{ title }}{% endblock %}
 
 {% block content %}
 <div class="w-full max-w-2xl bg-slate-900/60 backdrop-blur-md rounded-2xl p-8 border border-slate-800/80 shadow-2xl relative overflow-hidden">
@@ -31,7 +30,7 @@
             {{ title }}
         </h1>
 
-        <!-- SMRITI Business Explanation -->
+        <!-- MQube Business Explanation -->
         <p class="text-slate-400 text-sm max-w-lg leading-relaxed mb-6">
             {{ explanation }}
         </p>
@@ -42,10 +41,10 @@
             <span class="text-slate-300 leading-relaxed">{{ suggested_action }}</span>
         </div>
 
-        <!-- SMRITI Standard Identifiers -->
+        <!-- MQube Standard Identifiers -->
         <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left text-xs font-mono">
             <div class="bg-slate-950/40 border border-slate-800/40 rounded-lg p-3">
-                <span class="block text-slate-500 mb-0.5">SMRITI Error Code</span>
+                <span class="block text-slate-500 mb-0.5">MQube Error Code</span>
                 <span class="text-blue-400 font-semibold">{{ error_code }}</span>
             </div>
             <div class="bg-slate-950/40 border border-slate-800/40 rounded-lg p-3">

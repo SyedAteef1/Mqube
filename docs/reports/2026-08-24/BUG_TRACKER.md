@@ -5,7 +5,7 @@
 | Module | Risk Rating | Critical Issues / Recommendations |
 | :--- | :---: | :--- |
 | Executive Hub | Low | No active recommendations |
-| SMRITI Gyan Kendra | Medium | Write automated unit tests. |
+| TILEFLOW Gyan Kendra | Medium | Write automated unit tests. |
 | Billing Desk | Low | No active recommendations |
 | Sales Studio | Low | No active recommendations |
 | Create Tax Invoice (B2B) | High | Write automated unit tests. |
@@ -36,6 +36,6 @@
 | Terms & Conditions | Medium | Write automated unit tests. |
 | Data Exchange Hub | Low | No active recommendations |
 | Company Setup Wizard | High | No active recommendations |
-| About SMRITI | Low | No active recommendations |
+| About TILEFLOW | Low | No active recommendations |
 | Dev Intelligence Center | Low | No active recommendations |
 | Audit Logs | Low | No active recommendations |

@@ -7,7 +7,7 @@ Authority Order
 
 1. `IMPLEMENTATION_GATE.md`
 2. `GOVERNANCE_FREEZE.md`
-3. `ADR-002-SMRITI-MET.md`
+3. `ADR-002-TILEFLOW-MET.md`
 4. `METADATA.md`
 5. `AI_IMPLEMENTATION.md`
 
@@ -20,12 +20,11 @@ Status: FROZEN
 
 No governance document changes are permitted during normal feature development. Governance changes require a dedicated governance review and, where applicable, a new or superseding ADR.
 
-This document defines the operating standard for AI implementation agents working on SMRITI Retail OS.
+This document defines the operating standard for AI implementation agents working on TILEFLOW Retail OS.
 
-## Authority (highest to lowest)
 1. `IMPLEMENTATION_GATE.md`
 2. `GOVERNANCE_FREEZE.md`
-3. `ADR-002-SMRITI-MET.md`
+3. `ADR-002-TILEFLOW-MET.md`
 4. `METADATA.md`
 
 ## Mission
@@ -93,7 +92,7 @@ Implementation requests should follow a repeatable module workflow.
 Use this checklist before beginning implementation:
 
 - [ ] `IMPLEMENTATION_GATE.md` reviewed
-- [ ] `ADR-002-SMRITI-MET.md` reviewed
+- [ ] `ADR-002-TILEFLOW-MET.md` reviewed
 - [ ] Module dependencies satisfied
 - [ ] Scope limited to one module
 - [ ] No architectural changes planned

@@ -1,33 +1,10 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-audit_item_master.py
-======================================
-Read-only discovery audit: inspects all item-master-related tables across
-all registered SMRITI databases (smriti001, smriti002, smritisys), reporting
-column definitions, row counts, and sample rows. Output is written to
-scripts/item_master_db_audit.txt.
-
-Usage:
-    python scripts/audit_item_master.py
-"""
-
 import psycopg2
 import sys
 
 DATABASES = {
-    "smriti001": "postgresql://postgres:postgres@localhost:5432/smriti001",
-    "smriti002": "postgresql://postgres:postgres@localhost:5432/smriti002",
-    "smritisys": "postgresql://postgres:postgres@localhost:5432/smritisys",
+    "tileflow001": "postgresql://postgres:postgres@localhost:5432/tileflow001",
+    "tileflow002": "postgresql://postgres:postgres@localhost:5432/tileflow002",
+    "tileflowsys": "postgresql://postgres:postgres@localhost:5432/tileflowsys",
 }
 
 ITEM_RELATED_TABLES = [
@@ -149,8 +126,8 @@ def audit_database(db_name, db_url, out):
 
     out.write(f"\nItem-related tables found in {db_name}: {found_tables}\n")
 
-    # Detailed audit: sales_invoice_items in smriti001
-    if db_name == "smriti001" and "sales_invoice_items" in all_tables:
+    # Detailed audit: sales_invoice_items in tileflow001
+    if db_name == "tileflow001" and "sales_invoice_items" in all_tables:
         out.write(f"\n{'=' * 40}\n")
         out.write("SALES INVOICE ITEMS - Sample Rows\n")
         sample_cols, sample_rows = get_sample_rows(cur, "sales_invoice_items", 5)
@@ -160,7 +137,7 @@ def audit_database(db_name, db_url, out):
             vals = {sample_cols[i]: str(r[i])[:60] for i in range(len(sample_cols))}
             out.write(f"  Row: {vals}\n")
 
-    if db_name == "smriti001" and "products" in all_tables:
+    if db_name == "tileflow001" and "products" in all_tables:
         out.write(f"\n{'=' * 40}\n")
         out.write("PRODUCTS - Sample Rows (first 3)\n")
         sample_cols, sample_rows = get_sample_rows(cur, "products", 3)
@@ -170,7 +147,7 @@ def audit_database(db_name, db_url, out):
             vals = {sample_cols[i]: str(r[i])[:60] for i in range(len(sample_cols))}
             out.write(f"  Row: {vals}\n")
 
-    if db_name == "smriti001" and "stock_movements" in all_tables:
+    if db_name == "tileflow001" and "stock_movements" in all_tables:
         out.write(f"\n{'=' * 40}\n")
         out.write("STOCK MOVEMENTS - Sample Rows\n")
         sample_cols, sample_rows = get_sample_rows(cur, "stock_movements", 3)

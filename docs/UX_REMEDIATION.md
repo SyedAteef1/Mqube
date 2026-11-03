@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Remediation Log
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Remediation Log
 -->
 
-# SMRITI RETAIL OS — UX & CONNECTIVITY REMEDIATION LOG
+# TILEFLOW RETAIL OS — UX & CONNECTIVITY REMEDIATION LOG
 
 ## 1. UI / UX Change Freeze Policy
 **Status**: **ACTIVE** — No visual redesigns, component rewrites, or database schema modifications permitted unless required to resolve an active, verified runtime defect.

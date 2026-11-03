@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import uuid
 from decimal import Decimal
 from typing import Dict, Any, Optional
@@ -23,7 +10,7 @@ from .outbox_service import OutboxService
 class EcomInventoryReservationService:
     """
     Authoritative E-Commerce Inventory Reservation Service.
-    Enforces strongly consistent inventory reservation directly inside Smritibus_<CompanyCode>
+    Enforces strongly consistent inventory reservation directly inside TileFlowbus_<CompanyCode>
     to eliminate overselling risk before online order confirmation.
     """
 
@@ -37,11 +24,11 @@ class EcomInventoryReservationService:
         correlation_id: str
     ) -> Dict[str, Any]:
         """
-        Transactionally reserves stock in Smritibus_<CompanyCode>.
+        Transactionally reserves stock in TileFlowbus_<CompanyCode>.
         Atomic Flow:
           1. Locks product row for update.
           2. Checks available stock (quantity_on_hand - reserved_stock).
-          3. Increments reserved_stock in Smritibus_<CC>.
+          3. Increments reserved_stock in TileFlowbus_<CC>.
           4. Emits Transactional Outbox Event for E-commerce state sync.
         """
         stmt = select(Product).where(Product.sku == sku).with_for_update()
@@ -64,7 +51,7 @@ class EcomInventoryReservationService:
                 "reserved_qty": Decimal("0.0000")
             }
 
-        # Authoritative reservation update in Smritibus_<CompanyCode>
+        # Authoritative reservation update in TileFlowbus_<CompanyCode>
         current_reserved = Decimal(str(getattr(product, "reserved_stock", 0) or 0))
         product.reserved_stock = current_reserved + quantity
 

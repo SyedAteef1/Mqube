@@ -1,37 +1,32 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.0.0
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS — Developer & Architecture Guide
+# TILEFLOW Retail OS — Developer & Architecture Guide
 
-Welcome to the SMRITI developer setup and reference guide. This document details the Clean Architecture rules, swappable database interfaces, and background synchronization engines powering SMRITI Retail OS.
+Welcome to the TILEFLOW developer setup and reference guide. This document details the Clean Architecture rules, swappable database interfaces, and background synchronization engines powering TILEFLOW Retail OS.
 
 ---
 
 ## Clean Architecture (Ports & Adapters)
 
-To achieve a 20-30 year software lifecycle, SMRITI Retail OS isolates core retail workflows (pricing, taxes, shift management, stock ledgers) from specific databases (PostgreSQL, SQLite, IndexedDB) and transport protocols (Express REST, WebSockets).
+To achieve a 20-30 year software lifecycle, TILEFLOW Retail OS isolates core retail workflows (pricing, taxes, shift management, stock ledgers) from specific databases (PostgreSQL, SQLite, IndexedDB) and transport protocols (Express REST, WebSockets).
 
 ```text
                React Frontend / UI
@@ -101,7 +96,7 @@ src/
 
 ## Synchronization Engine
 
-SMRITI Retail OS is designed to function completely offline without internet connectivity.
+TILEFLOW Retail OS is designed to function completely offline without internet connectivity.
 
 ### 1. Local-First Writes
 Mutations are written locally to the local database repository immediately. At the same time, the event is saved to the persistent `sync_queue` table.

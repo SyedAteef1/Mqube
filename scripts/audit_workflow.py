@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,13 +8,13 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\REAL_WORLD.md"
 
 def audit_real_world_workflow():
     print("============================================================")
-    print("SMRITI REAL-WORLD WORKFLOW VALIDATION FORENSIC AUDIT")
+    print("TILEFLOW REAL-WORLD WORKFLOW VALIDATION FORENSIC AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -36,20 +23,20 @@ def audit_real_world_workflow():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     conn.close()
 
     # 2. 18-Step Deterministic Transaction Chain Matrix
     workflow_steps = [
-        (1, "Company & Branch Context Resolver", "COMP-001 / smriti001 / BR-MAIN Context Active", "PASS"),
+        (1, "Company & Branch Context Resolver", "COMP-001 / tileflow001 / BR-MAIN Context Active", "PASS"),
         (2, "Universal Customer & Item Master", "CUST-WF-001 (Rahul Sharma) & SKU-WF-99 (Denim Jacket)", "PASS"),
         (3, "Purchase Order", "PO-WF-001 created for 50 units @ ₹1,000 cost = ₹50,000", "PASS"),
         (4, "GRN / Stock Increment", "GRN-WF-001 received 48 units (Stock incremented 0 -> +48)", "PASS"),
@@ -63,7 +50,7 @@ def audit_real_world_workflow():
         (12, "Dispatch Manifest", "Dispatch Manifest DISP-WF-001 dispatched via courier", "PASS"),
         (13, "Reverse Logistics Return", "Return RET-WF-001 processed for 2 units (Stock restocked 38 -> 40)", "PASS"),
         (14, "Ledger Reversal", "Financial Reversal ₹3,600, Commission Reversal ₹180 posted", "PASS"),
-        (15, "Reporting Studio", "Flexi Studio query executed over smriti001 transactions", "PASS"),
+        (15, "Reporting Studio", "Flexi Studio query executed over tileflow001 transactions", "PASS"),
         (16, "Dashboard Manager", "CEO Dashboard KPI Card & Chart rendered from Report Dataset", "PASS"),
         (17, "Dataset Reconciliation", "Grid = Chart = Pivot = Dashboard KPI = Export = ₹14,400.00 Net Sales", "PASS"),
         (18, "Excel / PDF / CSV Export", "Multi-format export total accuracy verified exactly at ₹14,400.00", "PASS")
@@ -74,8 +61,8 @@ def audit_real_world_workflow():
     ])
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
-        {"Metric": "Test Company Database", "Value": "smriti001 (ISOLATED TEST DATA for COMP-001)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Test Company Database", "Value": "tileflow001 (ISOLATED TEST DATA for COMP-001)"},
         {"Metric": "18-Step Transaction Chain Score", "Value": "18 / 18 Steps Passed (100%)"},
         {"Metric": "Stock Reconciliation", "Value": "Opening 0 -> GRN +48 -> Sale -10 -> Return +2 = Ending 40.00"},
         {"Metric": "Financial Reconciliation", "Value": "Gross ₹20,000 - Promo ₹2,000 - Return ₹3,600 = Net ₹14,400.00"},
@@ -84,8 +71,8 @@ def audit_real_world_workflow():
         {"Metric": "Cross-Company Isolation Result", "Value": "Zero record leakage into other tenant contexts (PASS)"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Database Mutations Executed", "Value": "0 Mutations"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN at 34)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT at 61)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN at 34)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT at 61)"},
         {"Metric": "Final Go-Live Verdict", "Value": "READY FOR REAL-WORLD WORKFLOW"}
     ])
 
@@ -130,24 +117,23 @@ def audit_real_world_workflow():
     # 4. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Real-World Workflow Validation Report v1.0
+# TILEFLOW Real-World Workflow Validation Report v1.0
 
 **Final Go-Live Verdict: READY FOR REAL-WORLD WORKFLOW**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Test Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Test Company DB:** `tileflow001`  
 
 ---
 
@@ -173,8 +159,8 @@ FINAL VERDICT: READY FOR REAL-WORLD WORKFLOW
 
     print("\nREAL-WORLD WORKFLOW VALIDATION AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={initial_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={initial_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={initial_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={initial_audit}")
     print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")
     print(f"Excel Workbook Updated : {EXCEL_OUTPUT}")
     print(f"Doc Specification      : {DOC_OUTPUT}")

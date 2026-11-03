@@ -1,32 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-FORWARD-ONLY MIGRATION -- UI/Experience Engine Schema (Blueprint §11)
-
-Creates smritisys-resident tables that close the named gap identified in the
-Blueprint v1.0 verification report (2026-08-24):
-  - screen_definitions
-  - field_definitions
-  - action_definitions
-  - layout_definitions
-  - icon_registry
-
-Control Plane Principle (Blueprint Rule 07/08/09):
-All UI/Experience configuration definitions belong in smritisys.
-Application code renders behavior; Control Plane governs configuration.
-No executable business logic is stored in these tables.
-"""
-
 from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
@@ -208,7 +179,7 @@ def upgrade():
 
     # -----------------------------------------------------------------------
     # 5. icon_registry
-    # Canonical icon catalogue for the SMRITI platform.
+    # Canonical icon catalogue for the TILEFLOW platform.
     # Decouples icon references from application source code.
     # Blueprint §11: "icon_registry" in Control Plane.
     # -----------------------------------------------------------------------
@@ -239,5 +210,5 @@ def upgrade():
 def downgrade():
     raise NotImplementedError(
         "v1368_ui_experience_engine is a FORWARD-ONLY migration. "
-        "Downgrade is blocked by SMRITI Data Governance Policy (Blueprint §51 — Version all governed metadata)."
+        "Downgrade is blocked by TILEFLOW Data Governance Policy (Blueprint §51 — Version all governed metadata)."
     )

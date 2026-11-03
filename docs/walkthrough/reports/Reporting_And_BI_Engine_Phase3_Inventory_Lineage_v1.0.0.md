@@ -2,18 +2,18 @@
 title: "Reporting & BI Engine: Phase 3 (Inventory 3-Tier State & Universal Audit Lineage)"
 version: "1.0.0"
 date: "2026-08-28"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
 # Walkthrough: Reporting & BI Engine — Phase 3 (Inventory 3-Tier State & Universal Audit Lineage)
 
 ## 1. Purpose
-Implement Phase 3 (Steps 05 and 06 of the 12-stage roadmap) for the SMRITI Retail OS Reporting & BI Engine v1.0.0-GA:
+Implement Phase 3 (Steps 05 and 06 of the 12-stage roadmap) for the TILEFLOW Retail OS Reporting & BI Engine v1.0.0-GA:
 1. **3-Tier Inventory State & Snapshot Engine** (Enforcing Invariant 6: Bounded valuation calculation without full ledger replay).
 2. **Universal Drill-Down Pipeline & Forensic Audit Lineage** (Enforcing Invariant 7: Immutable document trace for every aggregate number).
 

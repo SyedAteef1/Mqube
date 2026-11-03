@@ -31,18 +31,18 @@ IMPORT_PATH_FIXES = [
 WRONG_SOURCE_FIXES = [
     {
         "file": "src/components/customer/CustFormTab.tsx",
-        "old": 'import { SmritiCustomerPriceGroupModal } from "./CustomerLedger.tsx";',
-        "new": 'import { SmritiCustomerPriceGroupModal } from "./CustPriceGroupDlg.tsx";',
+        "old": 'import { TileFlowCustomerPriceGroupModal } from "./CustomerLedger.tsx";',
+        "new": 'import { TileFlowCustomerPriceGroupModal } from "./CustPriceGroupDlg.tsx";',
     },
     {
         "file": "src/components/customer/CustMasterWs.tsx",
-        "old": 'import { SmritiCustomerFormTab } from "./CustomerLedger.tsx";',
-        "new": 'import { SmritiCustomerFormTab } from "./CustFormTab.tsx";',
+        "old": 'import { TileFlowCustomerFormTab } from "./CustomerLedger.tsx";',
+        "new": 'import { TileFlowCustomerFormTab } from "./CustFormTab.tsx";',
     },
     {
         "file": "src/components/customer/CustMasterWs.tsx",
-        "old": 'import { SmritiCustomerRetailDetailsTab } from "./CustomerLedger.tsx";',
-        "new": 'import { SmritiCustomerRetailDetailsTab } from "./CustRetailDetTab.tsx";',
+        "old": 'import { TileFlowCustomerRetailDetailsTab } from "./CustomerLedger.tsx";',
+        "new": 'import { TileFlowCustomerRetailDetailsTab } from "./CustRetailDetTab.tsx";',
     },
 ]
 
@@ -73,7 +73,7 @@ JSX_NAME_FIXES = {
         ("SupplierDashTab", "SupplierDashboardTab"),
         ("MasterMgmtTab", "MasterManagementTab"),
         ("TaxInvoicePrintPag", "TaxInvoicePrintPage"),
-        ("ErrorBoundary", "SmritiErrorBoundary"),
+        ("ErrorBoundary", "TileFlowErrorBoundary"),
         ("CompanySelectScree", "CompanySelectionScreen"),
         ("DrillDownCrumbs", "DrillDownBreadcrumbs"),
         ("GlobalF2BrowseDlg", "GlobalF2BrowseModal"),
@@ -106,39 +106,39 @@ JSX_NAME_FIXES = {
     ],
     # CustMasterWs ------------------------------------------------------------
     "src/components/customer/CustMasterWs.tsx": [
-        ("CustomerFormTab", "SmritiCustomerFormTab"),
-        ("CustomerRetail", "SmritiCustomerRetailDetailsTab"),
-        ("CustAddlDetails", "SmritiCustomerAdditionalDetailsTab"),
-        ("CustMailingDlg", "SmritiCustomerMailingModal"),
-        ("AdvCustSearchDlg", "SmritiAdvancedCustomerSearchModal"),
+        ("CustomerFormTab", "TileFlowCustomerFormTab"),
+        ("CustomerRetail", "TileFlowCustomerRetailDetailsTab"),
+        ("CustAddlDetails", "TileFlowCustomerAdditionalDetailsTab"),
+        ("CustMailingDlg", "TileFlowCustomerMailingModal"),
+        ("AdvCustSearchDlg", "TileFlowAdvancedCustomerSearchModal"),
     ],
     # CustFormTab -------------------------------------------------------------
     "src/components/customer/CustFormTab.tsx": [
-        ("CustomerPriceDlg", "SmritiCustomerPriceGroupModal"),
+        ("CustomerPriceDlg", "TileFlowCustomerPriceGroupModal"),
     ],
     # ProPosWs ----------------------------------------------------------------
     "src/components/billing/propos/ProPosWs.tsx": [
-        ("ProPosBilling", "SmritiProPosBillinginal"),
-        ("ProPosEodReport", "SmritiProPosEodReportw"),
-        ("DailyReportsDash", "SmritiDailyReportsDashDashboard"),
-        ("PromotionEngine", "SmritiPromotionEngineine"),
-        ("CommissionBuild", "SmritiCommissionBuildilder"),
+        ("ProPosBilling", "TileFlowProPosBillinginal"),
+        ("ProPosEodReport", "TileFlowProPosEodReportw"),
+        ("DailyReportsDash", "TileFlowDailyReportsDashDashboard"),
+        ("PromotionEngine", "TileFlowPromotionEngineine"),
+        ("CommissionBuild", "TileFlowCommissionBuildilder"),
     ],
     # ProPosBillingTerm -------------------------------------------------------
     "src/components/billing/propos/ProPosBillingTerm.tsx": [
-        ("LoyaltyLookupDlg", "SmritiLoyaltyLookupDlgpModal"),
-        ("PosSalesReturn", "SmritiProPosSalesReturnModal"),
-        ("TaxInvoiceRcpt", "SmritiProPosTaxInvoiceReceipt"),
-        ("ProPosPdtImportDlg", "SmritiPdtImportDlg"),
-        ("CustBrowseDlg", "SmritiCustomerBrowseModal"),
-        ("ProPosHotkeysDlg", "SmritiProPosHotkeysDlg"),
-        ("ProPosReprintDlg", "SmritiProPosReprintDlg"),
-        ("CashMovementsDlg", "SmritiProPosCashMovementsModal"),
-        ("ShiftCloseDlg", "SmritiProPosShiftCloseModal"),
-        ("ItemTypeaheadDrop", "SmritiItemTypeaheadDropdown"),
-        ("ProPosSettlementDl", "SmritiPosSettlement"),
-        ("ProPosRecallDlg", "SmritiProPosRecallDlg"),
-        ("ProPosCancellation", "SmritiProPosCancelDlg"),
+        ("LoyaltyLookupDlg", "TileFlowLoyaltyLookupDlgpModal"),
+        ("PosSalesReturn", "TileFlowProPosSalesReturnModal"),
+        ("TaxInvoiceRcpt", "TileFlowProPosTaxInvoiceReceipt"),
+        ("ProPosPdtImportDlg", "TileFlowPdtImportDlg"),
+        ("CustBrowseDlg", "TileFlowCustomerBrowseModal"),
+        ("ProPosHotkeysDlg", "TileFlowProPosHotkeysDlg"),
+        ("ProPosReprintDlg", "TileFlowProPosReprintDlg"),
+        ("CashMovementsDlg", "TileFlowProPosCashMovementsModal"),
+        ("ShiftCloseDlg", "TileFlowProPosShiftCloseModal"),
+        ("ItemTypeaheadDrop", "TileFlowItemTypeaheadDropdown"),
+        ("ProPosSettlementDl", "TileFlowPosSettlement"),
+        ("ProPosRecallDlg", "TileFlowProPosRecallDlg"),
+        ("ProPosCancellation", "TileFlowProPosCancelDlg"),
     ],
 }
 

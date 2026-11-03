@@ -3,7 +3,7 @@ import socket
 import sys
 import psycopg2
 
-TARGET_DB = "smritisys"
+TARGET_DB = "tileflowsys"
 HOST = "localhost"
 PORT = 5432
 USER = "postgres"

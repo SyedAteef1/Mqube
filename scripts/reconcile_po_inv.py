@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import sys
 import io
@@ -22,7 +9,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def reconcile():
     # 1. Load PO lines from Tattly_Threads_Consolidated_PO_Extraction.xlsx
-    po_fp = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly_Threads_Consolidated_PO_Extraction.xlsx"
+    po_fp = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly_Threads_Consolidated_PO_Extraction.xlsx"
     wb = openpyxl.load_workbook(po_fp, read_only=True, data_only=True)
     ws = wb['PO_Line_Items_All']
 
@@ -45,7 +32,7 @@ def reconcile():
     print(f"Loaded {len(po_items_map)} PO line items from PO extraction workbook.")
 
     # 2. Load Invoice line items from Postgres
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
 
     invoices = [

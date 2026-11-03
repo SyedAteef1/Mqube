@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Intent Audit Map
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Intent Audit Map
 -->
 
-# SMRITI RETAIL OS — USER INTENT MAPPING
+# TILEFLOW RETAIL OS — USER INTENT MAPPING
 
 | Module | User Intent | Target Screen | User Action | System Execution | Expected Result |
 |---|---|---|---|---|---|

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -26,7 +12,7 @@ from app.services.db_resolver import (
 )
 from app.db.session import resolve_company_database_name, get_company_async_engine
 
-CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/smritisys"
+CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 
 @pytest.fixture(autouse=True)
@@ -48,8 +34,8 @@ def seed_routing_test_baseline():
         """)
         cur.execute("""
             INSERT INTO company_database_registries (company_id, database_id, database_name, status)
-            VALUES ('COMP-001', 'db-routing-1', 'smriti001', 'READY')
-            ON CONFLICT (company_id) DO UPDATE SET database_name = 'smriti001', status = 'READY';
+            VALUES ('COMP-001', 'db-routing-1', 'tileflow001', 'READY')
+            ON CONFLICT (company_id) DO UPDATE SET database_name = 'tileflow001', status = 'READY';
         """)
         cur.execute("""
             INSERT INTO user_company_assignments (id, uuid, user_id, company_id, is_default, is_active, is_deleted)
@@ -63,8 +49,8 @@ def seed_routing_test_baseline():
         """)
         cur.execute("""
             INSERT INTO company_database_registries (company_id, database_id, database_name, status)
-            VALUES ('COMP-002', 'db-routing-2', 'smriti002', 'READY')
-            ON CONFLICT (company_id) DO UPDATE SET database_name = 'smriti002', status = 'READY';
+            VALUES ('COMP-002', 'db-routing-2', 'tileflow002', 'READY')
+            ON CONFLICT (company_id) DO UPDATE SET database_name = 'tileflow002', status = 'READY';
         """)
     finally:
         conn.close()
@@ -74,7 +60,7 @@ def test_authorized_user_reaches_assigned_database():
     """Verify that an authorized user successfully reaches their assigned database without credential exposure."""
     res = CompanyDatabaseResolver.resolve_company_database("usr-admin", "COMP-001")
     assert res["company_id"] == "COMP-001"
-    assert res["database_name"] == "smriti001"
+    assert res["database_name"] == "tileflow001"
     assert res["database_status"] == "READY"
     assert "connection_url" not in res
     assert "password" not in res
@@ -118,7 +104,7 @@ def test_normal_assigned_user_cross_company_isolation():
         # 1. Allowed on assigned company COMP-001
         res_assigned = CompanyDatabaseResolver.resolve_company_database("usr-staff-isolation-test", "COMP-001")
         assert res_assigned["company_id"] == "COMP-001"
-        assert res_assigned["database_name"] == "smriti001"
+        assert res_assigned["database_name"] == "tileflow001"
 
         # 2. Denied on unassigned company COMP-002 with 403
         with pytest.raises(HTTPException) as exc_info:
@@ -169,7 +155,7 @@ def test_suspended_company_database_access_denied_403():
         """)
         cur.execute("""
             INSERT INTO company_database_registries (company_id, database_id, database_name, status)
-            VALUES ('COMP-SUSP-TEST', 'db-susp-test', 'smritiSUS', 'SUSPENDED')
+            VALUES ('COMP-SUSP-TEST', 'db-susp-test', 'tileflowSUS', 'SUSPENDED')
             ON CONFLICT (company_id) DO UPDATE SET status = 'SUSPENDED';
         """)
 
@@ -188,13 +174,13 @@ def test_suspended_company_database_access_denied_403():
 def test_resolver_rejects_arbitrary_database_names():
     """Verify that resolver regex refuses arbitrary/invalid database strings."""
     assert not validate_company_database_name("arbitrary_db")
-    assert not validate_company_database_name("smriti_invalid_name")
-    assert not validate_company_database_name("smriti000")  # 000 reserved
-    assert not validate_company_database_name("smritiSYS")  # SYS reserved for control plane
-    assert not validate_company_database_name("smriti1234")  # 4 chars invalid
-    assert validate_company_database_name("smriti001")
-    assert validate_company_database_name("smriti002")
-    assert validate_company_database_name("smriti003")
+    assert not validate_company_database_name("tileflow_invalid_name")
+    assert not validate_company_database_name("tileflow000")  # 000 reserved
+    assert not validate_company_database_name("tileflowSYS")  # SYS reserved for control plane
+    assert not validate_company_database_name("tileflow1234")  # 4 chars invalid
+    assert validate_company_database_name("tileflow001")
+    assert validate_company_database_name("tileflow002")
+    assert validate_company_database_name("tileflow003")
 
 
 def test_engine_cache_rejects_unregistered_arbitrary_database_names():
@@ -204,14 +190,14 @@ def test_engine_cache_rejects_unregistered_arbitrary_database_names():
     assert "invalid or unauthorized" in str(exc.value).lower()
 
     with pytest.raises(ValueError) as exc2:
-        get_company_async_engine("smriti000")
+        get_company_async_engine("tileflow000")
     assert "invalid or unauthorized" in str(exc2.value).lower()
 
 
 def test_engine_cache_rejects_unregistered_valid_syntax_database():
-    """Verify that syntactically valid database 'smritiABC' is rejected by engine creation when unregistered in smritisys."""
+    """Verify that syntactically valid database 'tileflowABC' is rejected by engine creation when unregistered in tileflowsys."""
     with pytest.raises(ValueError) as exc:
-        get_company_async_engine("smritiABC")
+        get_company_async_engine("tileflowABC")
     assert "not registered or not in ready status" in str(exc.value).lower()
 
 

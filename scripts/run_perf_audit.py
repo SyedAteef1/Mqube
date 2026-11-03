@@ -1,16 +1,3 @@
-"""
-SMRITI Retail OS — Gate 11 Performance & Console Disposition Audit Script
--------------------------------------------------------------------------
-Captures:
-  - Initial Page Load & DOMContentLoaded timing
-  - Dynamic chunk load latencies across all 7 heavy workspaces
-  - Detailed console log disposition & network failed request analysis
-
-Author: Jawahar Ramkripal Mallah
-Version: 3.17.0
-Copyright: © SMRITIBooks.com. All Rights Reserved.
-"""
-
 import asyncio
 import json
 import os
@@ -23,7 +10,7 @@ SUMMARY_PATH = os.path.join(os.getcwd(), "scratch", "performance_console_summary
 
 async def run_performance_audit():
     print("=" * 80)
-    print("SMRITI RETAIL OS — GATE 11 PERFORMANCE & CONSOLE DISPOSITION AUDIT")
+    print("TILEFLOW RETAIL OS — GATE 11 PERFORMANCE & CONSOLE DISPOSITION AUDIT")
     print("=" * 80)
 
     console_logs = []
@@ -50,7 +37,7 @@ async def run_performance_audit():
             "failure": str(req.failure)
         }))
 
-        print("Navigating to SMRITI Retail OS...")
+        print("Navigating to TILEFLOW Retail OS...")
         t0 = time.time()
         await page.goto(BASE_URL)
         await page.wait_for_load_state("domcontentloaded")
@@ -104,7 +91,7 @@ async def run_performance_audit():
         elif "daily-sales" in txt or "500" in txt:
             cls = "TEST-INDUCED"
             impact = "Low — Background process reload transient response."
-        elif "smriti-api:8000" in txt or "ERR_NAME_NOT_RESOLVED" in txt:
+        elif "tileflow-api:8000" in txt or "ERR_NAME_NOT_RESOLVED" in txt:
             cls = "BENIGN"
             impact = "Low — Sanitized by apiFetchV1 regex helper."
         else:

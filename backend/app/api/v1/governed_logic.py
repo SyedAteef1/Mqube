@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.43.0
-Created      : 2026-08-23
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from decimal import Decimal
 from typing import Dict, Any, List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status, Query
@@ -66,7 +52,7 @@ async def list_formula_definitions(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """List active formula definitions registered in smritisys."""
+    """List active formula definitions registered in tileflowsys."""
     stmt = select(FormulaDefinition).where(
         FormulaDefinition.is_active == True,
         FormulaDefinition.is_deleted == False,
@@ -101,7 +87,7 @@ async def list_business_rules(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """List active declarative business rules in smritisys."""
+    """List active declarative business rules in tileflowsys."""
     stmt = select(BusinessRuleDefinition).where(
         BusinessRuleDefinition.is_active == True,
         BusinessRuleDefinition.is_deleted == False,
@@ -136,7 +122,7 @@ async def list_policy_definitions(
     db: AsyncSession = Depends(get_db),
     current_user: User = Depends(get_current_user),
 ):
-    """List active statutory and compliance policies in smritisys."""
+    """List active statutory and compliance policies in tileflowsys."""
     stmt = select(PolicyDefinition).where(
         PolicyDefinition.is_active == True,
         PolicyDefinition.is_deleted == False,

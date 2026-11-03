@@ -1,27 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 5.0.0
   * Created    : 2026-08-25
   * Modified   : 2026-08-25
-  * Copyright  : © SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
-  * Classification: Internal
+  * Copyright  :  tileflow.in. Open Source - Permissive Use
+  * License    : MIT Open Source License
+  * Classification: Open Source
 -->
 
 # Walkthrough: Tattly Threads Batch 2 Tax Invoice Generation (129–137)
@@ -34,19 +30,19 @@ This document records the end-to-end execution, generation, and verification of 
 - Total quantity: 456 pairs across 10 shipping cartons (`213`, `214`, `215`, `216`, `217`, `218`, `219`, `220`, `221`, `222`).
 - Total batch taxable value: ₹5,10,854.28 with ₹25,542.72 GST, resulting in ₹5,36,397.00 gross invoice value.
 - Store mapping reconciliation against `All Stores Po.xlsx` and `RIL FINAL LIST.xlsx`.
-- Transactional persistence into PostgreSQL database `smriti001` (`sales_invoices`, `sales_invoice_items`, `invoice_document_artifacts`).
+- Transactional persistence into PostgreSQL database `tileflow001` (`sales_invoices`, `sales_invoice_items`, `invoice_document_artifacts`).
 - High-fidelity Playwright headless browser rendering of 9 canonical A4 Tax Invoice PDF artifacts with embedded Code128 barcodes, VERIFY INVOICE QR codes, and brand identity assets.
 - Back-writing `Dispatch Status` column into `Sheet2` of `RIL_Dispatch_09-08-2026-2.xlsx`.
 
 ## 3. Files Created
-- `F:\Smriti-Clients Data\Tattly Threads\24_08_26\Tax_Invoice_Store_PO_Address_Confirmation_Batch2_2026-08-25.xlsx`: Pre-creation verification Excel workbook with 2 sheets.
-- `F:\Smriti-Clients Data\Tattly Threads\24_08_26\Invoices\SIS_*_TaxInvoice_TT2026-2027_*.pdf`: 9 authoritative A4 Tax Invoice PDF documents.
+- `F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Tax_Invoice_Store_PO_Address_Confirmation_Batch2_2026-08-25.xlsx`: Pre-creation verification Excel workbook with 2 sheets.
+- `F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Invoices\SIS_*_TaxInvoice_TT2026-2027_*.pdf`: 9 authoritative A4 Tax Invoice PDF documents.
 - `F:\SMRITRretailNX\exports\tt_batch_129_137\SIS_*_TaxInvoice_TT2026-2027_*.pdf`: System exports mirrored archive.
 - `F:\SMRITRretailNX\TT\SIS_*_TaxInvoice_TT2026-2027_*.pdf`: Central TT storage mirror.
 - `F:\SMRITRretailNX\scripts\gen_batch2_inv.py`: NGP-compliant automated generation and database synchronization script.
 
 ## 4. Files Modified
-- `F:\Smriti-Clients Data\Tattly Threads\24_08_26\RIL_Dispatch_09-08-2026-2.xlsx`: Column 15 `Dispatch Status` updated in `Sheet2` with invoice numbers `TT2026-2027/129` to `TT2026-2027/137`.
+- `F:\TileFlow-Clients Data\Tattly Threads\24_08_26\RIL_Dispatch_09-08-2026-2.xlsx`: Column 15 `Dispatch Status` updated in `Sheet2` with invoice numbers `TT2026-2027/129` to `TT2026-2027/137`.
 - `docs/walkthrough/README.md`: Master index updated with Batch 2 generation metadata.
 - `CHANGELOG.md`: Registered v3.37.0 release notes.
 
@@ -75,16 +71,16 @@ Executing rendering via `InvoicePdfService` guarantees that all QR codes, barcod
 | **TOTAL** | **9 Stores** | **10 Cartons** | — | — | **456** | **₹5,10,854.28** | **₹25,542.72** | **₹5,36,397.00** | **9 PDF Files** |
 
 ## 8. Tests Executed
-- Database row count, foreign key consistency, and item count validation in `smriti001`.
+- Database row count, foreign key consistency, and item count validation in `tileflow001`.
 - On-disk PDF existence and size validation for all 9 documents across all 3 storage targets.
 - Confirmation workbook sheet structure and formula verification.
-- `scripts/smriti_naming_guard.py` NGP verification: 0 violations.
+- `scripts/tileflow_naming_guard.py` NGP verification: 0 violations.
 
 ## 9. Verification Results
 - Database insertion: 9/9 invoices committed with status `COMPLETED`.
 - PDF generation: 9/9 PDFs rendered (sizes between 293 KB and 304 KB).
 - Total canonical tax invoices active in system: 120 (`TT2026-2027/18` to `TT2026-2027/137`).
-- Confirmation workbook created at `F:\Smriti-Clients Data\Tattly Threads\24_08_26\Tax_Invoice_Store_PO_Address_Confirmation_Batch2_2026-08-25.xlsx`.
+- Confirmation workbook created at `F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Tax_Invoice_Store_PO_Address_Confirmation_Batch2_2026-08-25.xlsx`.
 - Excel dispatch status updated in `RIL_Dispatch_09-08-2026-2.xlsx` (`Sheet2`).
 
 ## 10. Known Limitations

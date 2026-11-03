@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -35,7 +21,7 @@ from app.services.unified_ledger import UnifiedAccountingLedgerService
 @pytest.mark.asyncio
 async def test_fiscal_year_and_period_generation():
     """Verify that create_fiscal_year_with_periods generates 12 monthly fiscal periods."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         unique_suffix = uuid.uuid4().hex[:6]
         fy_code = f"FY-{unique_suffix.upper()}"
@@ -69,8 +55,8 @@ async def test_fiscal_year_and_period_generation():
 
 @pytest.mark.asyncio
 async def test_backdated_voucher_rejected_in_locked_period():
-    """Verify invariant SMRITI-GL-006: Rejects posting journal vouchers in HARD_LOCKED periods."""
-    session_factory = get_company_sessionmaker("smriti001")
+    """Verify invariant TILEFLOW-GL-006: Rejects posting journal vouchers in HARD_LOCKED periods."""
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         unique_suffix = uuid.uuid4().hex[:6]
         comp_id = f"COMP-{unique_suffix}"
@@ -100,7 +86,7 @@ async def test_backdated_voucher_rejected_in_locked_period():
         )
         await session.commit()
 
-        # 2. Attempt to post backdated voucher on 2026-04-15 -> MUST FAIL with SMRITI-GL-006
+        # 2. Attempt to post backdated voucher on 2026-04-15 -> MUST FAIL with TILEFLOW-GL-006
         with pytest.raises(HTTPException) as exc_info:
             await UnifiedAccountingLedgerService.post_journal_voucher(
                 session=session,
@@ -115,7 +101,7 @@ async def test_backdated_voucher_rejected_in_locked_period():
             )
 
         assert exc_info.value.status_code == 400
-        assert "SMRITI-GL-006" in exc_info.value.detail
+        assert "TILEFLOW-GL-006" in exc_info.value.detail
         assert "HARD_LOCKED" in exc_info.value.detail
 
 
@@ -123,7 +109,7 @@ async def test_backdated_voucher_rejected_in_locked_period():
 
 async def test_bank_statement_import_and_line_persistence():
     """Verify ingesting a bank statement with multiple credit and debit lines."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_bank = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1020")
@@ -178,7 +164,7 @@ async def test_bank_statement_import_and_line_persistence():
 @pytest.mark.asyncio
 async def test_bank_statement_auto_reconciliation():
     """Verify automated two-way matching between bank statement lines and GL entries."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_bank = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1020")
@@ -268,7 +254,7 @@ async def test_bank_statement_auto_reconciliation():
 @pytest.mark.asyncio
 async def test_bank_reconciliation_statement_equality():
     """Verify BRS calculation invariant: Reconciled Balance matches Bank Statement."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_bank = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1020")
@@ -290,13 +276,13 @@ async def test_bank_reconciliation_statement_equality():
 
 @pytest.mark.asyncio
 async def test_fiscal_brs_tenant_isolation():
-    """Verify that fiscal periods and bank statements in smriti001 do not leak to smriti002."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    """Verify that fiscal periods and bank statements in tileflow001 do not leak to tileflow002."""
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     unique_code = f"FY-{uuid.uuid4().hex[:4].upper()}"
 
-    # 1. Create Fiscal Year in smriti001
+    # 1. Create Fiscal Year in tileflow001
     async with session_001() as s1:
         fy1 = await UnifiedAccountingLedgerService.create_fiscal_year_with_periods(
             session=s1,
@@ -308,8 +294,8 @@ async def test_fiscal_brs_tenant_isolation():
         await s1.commit()
         fy_id = fy1.id
 
-    # 2. Check smriti002
+    # 2. Check tileflow002
     async with session_002() as s2:
         stmt = select(FiscalYear).where(FiscalYear.id == fy_id)
         leaked = (await s2.execute(stmt)).scalar_one_or_none()
-        assert leaked is None, "FiscalYear from smriti001 must not leak into smriti002!"
+        assert leaked is None, "FiscalYear from tileflow001 must not leak into tileflow002!"

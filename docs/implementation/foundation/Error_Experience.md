@@ -1,24 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Error Experience Framework (SEEF) v1.0 — Implementation Plan
+# TILEFLOW Error Experience Framework (SEEF) v1.0 — Implementation Plan
 
 ## 1. Objective
-Establish a unified error handling system in the FastAPI backend called the **SMRITI Error Experience Framework (SEEF) v1.0**. It replaces default raw JSON error responses with branded HTML pages for browsers and enhanced JSON objects for API clients, preserving backward compatibility.
+Establish a unified error handling system in the FastAPI backend called the **TILEFLOW Error Experience Framework (SEEF) v1.0**. It replaces default raw JSON error responses with branded HTML pages for browsers and enhanced JSON objects for API clients, preserving backward compatibility.
 
 ## 2. Business Motivation
-Raw machine-readable errors confuse users and expose technical system internal states, violating SMRITI HREP rules. Implementing SEEF v1.0 guarantees a premium, branded error recovery flow for store managers and clear troubleshooting parameters for developers.
+Raw machine-readable errors confuse users and expose technical system internal states, violating TILEFLOW HREP rules. Implementing SEEF v1.0 guarantees a premium, branded error recovery flow for store managers and clear troubleshooting parameters for developers.
 
 ## 3. Scope
 * Centralized handling of HTTP codes: 400, 401, 403, 404, 405, 409, 422, 429, 500, 503.
@@ -28,7 +27,7 @@ Raw machine-readable errors confuse users and expose technical system internal s
 * Integration testing covering dispatch paths.
 
 ## 4. Current State
-* Errors return standardized JSON (`SmritiErrorResponse`) containing `detail` and `error` dictionary fields.
+* Errors return standardized JSON (`TileFlowErrorResponse`) containing `detail` and `error` dictionary fields.
 * No root `GET /` handler exists.
 * No HTML-formatted error responses are supported.
 
@@ -51,14 +50,14 @@ Raw machine-readable errors confuse users and expose technical system internal s
         "explanation": "Explanation...",
         "suggested_action": "Action...",
         "reference_id": "RefID",
-        "error_code": "SMRITI-VAL-001"
+        "error_code": "TILEFLOW-VAL-001"
     },
     "success": false,
     "status": 404,
     "title": "Error Title",
     "message": "Explanation...",
     "suggested_action": "Action...",
-    "error_code": "SMRITI-VAL-001",
+    "error_code": "TILEFLOW-VAL-001",
     "reference_id": "RefID",
     "timestamp": "ISO-Timestamp",
     "documentation": "/docs"
@@ -67,7 +66,7 @@ Raw machine-readable errors confuse users and expose technical system internal s
 
 ### B. Exception Dispatch Logic
 ```python
-def dispatch_error(request: Request, status_code: int, response_model: SmritiErrorResponse):
+def dispatch_error(request: Request, status_code: int, response_model: TileFlowErrorResponse):
     accept = request.headers.get("accept", "")
     if "text/html" in accept:
         return templates.TemplateResponse(

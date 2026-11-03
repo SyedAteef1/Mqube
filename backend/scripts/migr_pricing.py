@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import asyncio
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine
@@ -18,7 +5,7 @@ from app.core.config import settings
 
 async def run_pricing_migration():
     base_url = settings.DATABASE_URL
-    for db_name in ["smritisys", "smriti001", "smriti002"]:
+    for db_name in ["tileflowsys", "tileflow001", "tileflow002"]:
         try:
             url = base_url.rsplit("/", 1)[0] + f"/{db_name}"
             eng = create_async_engine(url, echo=False)

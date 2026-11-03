@@ -1,22 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.15.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Customer Policy Enforcement & Credit Rule Unit Tests
- */
-
 import { describe, it, expect } from "vitest";
 import { initialCustomers, initialCustomerGroups, initialCustomerPriceGroups } from "../services/customerStore.ts";
 
-describe("SMRITI — Customer Policy & Credit Rule Enforcement", () => {
+describe("MQube — Customer Policy & Credit Rule Enforcement", () => {
   // Test 1: Canonical Walk-In Customer exists and has zero credit risk
   it("TEST 1: should provide canonical CUST-WALKIN record with zero credit risk", () => {
     const walkin = initialCustomers.find(c => c.id === "CUST-WALKIN");

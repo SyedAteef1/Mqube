@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -139,7 +125,7 @@ class EInvoiceItem(BaseModel):
 
 
 class EInvoiceGenerationRequest(BaseModel):
-    invoice_id: str = Field(..., description="Internal SMRITI sales_invoices ID")
+    invoice_id: str = Field(..., description="Internal TILEFLOW sales_invoices ID")
     invoice_no: str = Field(..., description="Statutory invoice series number")
     invoice_date: str = Field(..., description="Invoice date DD/MM/YYYY")
     supplier_gstin: str
@@ -176,7 +162,7 @@ class EInvoiceResponse(BaseModel):
 
 
 class EWayBillGenerationRequest(BaseModel):
-    invoice_id: str = Field(..., description="Internal SMRITI sales_invoices or transfer ID")
+    invoice_id: str = Field(..., description="Internal TILEFLOW sales_invoices or transfer ID")
     doc_no: str = Field(..., description="Invoice or Delivery Challan number")
     doc_type: str = Field("INV", description="INV (Tax Invoice) or CHL (Delivery Challan)")
     from_gstin: str

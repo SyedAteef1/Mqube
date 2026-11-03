@@ -1,21 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.8.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-25
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Stitch Distributor Invoicing Terminal
- */
-
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import { Product, Customer, POSProfile, Shift } from "../../types.ts";
 import { apiFetchV1 } from "../../lib/apiFetchV1.ts";
+import { useCompanyProfile } from "../../lib/companyProfile.ts";
 import type { SalesLineItem, SalesTransaction } from "../../domain/sales/transaction";
 import { calculateLineTotal, recomputeTransaction } from "../../services/sales/transactionCalculator";
 import { getCustomers, saveCustomers, initialCustomers } from "../../services/customerStore.ts";
@@ -26,7 +12,7 @@ import {
   AutoPopulateProductResult 
 } from "../../services/autoPopulateService.ts";
 import { TypeaheadDrop, TypeaheadOption } from "../common/TypeaheadDrop.tsx";
-import { SmritiItemTypeaheadDropdown } from "../common/ItemTypeaheadDrop.tsx";
+import { TileFlowItemTypeaheadDropdown } from "../common/ItemTypeaheadDrop.tsx";
 import {
   BillingLineItem,
   BillType,
@@ -40,7 +26,7 @@ import {
 import { ProductSearchBrowserModal } from "./ProductSearchBrows.tsx";
 import { ItemBrowseOverlayModal } from "./ItemBrowseOverlayD.tsx";
 import { PdtImportModal } from "./PdtImportModal.tsx";
-import { SmritiInvoiceSettlementModal } from "./InvoiceSettlementD.tsx";
+import { TileFlowInvoiceSettlementModal } from "./InvoiceSettlementD.tsx";
 import { PrintPreviewModal } from "../PrintPreviewModal.tsx";
 import { TransactionAttachmentPanel } from "../common/TransactionAttachmentPanel.tsx";
 import type { TransactionAttachment } from "../../domain/attachment";
@@ -69,7 +55,7 @@ import {
   Paperclip
 } from "lucide-react";
 
-interface SmritiBillingTerminalProps {
+interface TileFlowBillingTerminalProps {
   products?: Product[];
   customers?: Customer[];
   profiles?: POSProfile[];
@@ -80,7 +66,7 @@ interface SmritiBillingTerminalProps {
   isStandaloneTab?: boolean;
 }
 
-export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
+export const BillingTerm: React.FC<TileFlowBillingTerminalProps> = ({
   products = [],
   customers: initialCustomersProp,
   currentUser,
@@ -100,7 +86,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
     docNo: "1",
     billDate: new Date().toLocaleDateString("en-GB"),
     customer: null,
-    salesStaff: currentUser?.name || "EMP001 - John Doe",
+    salesStaff: "",
     remarks: ""
   });
 
@@ -111,6 +97,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
     itemDescription: string;
     rate: string;
     qty: string;
+    sqft: string;
     discCode: string;
     discQty: string;
     discPercent: string;
@@ -121,6 +108,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
     itemDescription: "",
     rate: "",
     qty: "1",
+    sqft: "",
     discCode: "",
     discQty: "",
     discPercent: "",
@@ -192,6 +180,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
   const [showAttachmentPanel, setShowAttachmentPanel] = useState<boolean>(false);
   const [suspendedBills, setSuspendedBills] = useState<{ id: string; header: BillingHeaderState; items: BillingLineItem[]; date: string; netAmount: number }[]>([]);
   const [lastCompletedInvoice, setLastCompletedInvoice] = useState<any>(null);
+  const company = useCompanyProfile();
 
   // Fullscreen State & Terminal Ref
   const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
@@ -248,6 +237,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
       itemDescription: "",
       rate: "",
       qty: "1",
+      sqft: "",
       discCode: "",
       discQty: "",
       discPercent: "",
@@ -284,6 +274,41 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
 
   // Live Products State for item browse, modals, and search
   const [liveProducts, setLiveProducts] = useState<Product[]>(products);
+
+  const [locations, setLocations] = useState<{ id: string; name: string; location_type?: string }[]>([]);
+  const [dispatchFrom, setDispatchFrom] = useState("");
+
+  const [salesPeople, setSalesPeople] = useState<string[]>([]);
+
+  const reserveDocNo = async (prefix: string) => {
+    const res = await apiFetchV1(`/sales/invoices/next-number?prefix=${encodeURIComponent(prefix)}`);
+    return String(res.next_number);
+  };
+
+  useEffect(() => {
+    apiFetchV1("/wms/warehouses").then(setLocations).catch(() => setLocations([]));
+    apiFetchV1("/staff/personnel?role=SALESPERSON")
+      .then((people: any[]) => setSalesPeople((people || []).map(p => p.person_name || p.name).filter(Boolean)))
+      .catch(() => setSalesPeople([]));
+    reserveDocNo(headerState.docPrefix)
+      .then(docNo => setHeaderState(prev => ({ ...prev, docNo })))
+      .catch(() => {});
+  }, []);
+
+  const sqftPerBoxFor = (stockNo: string): number => {
+    const product: any = liveProducts.find(p => p.code === stockNo || p.barcode === stockNo);
+    return Number(product?.sqft_per_box ?? product?.sqftPerBox ?? 0);
+  };
+
+  const handleSqftChange = (value: string) => {
+    const perBox = sqftPerBoxFor(directEntry.stockNo);
+    const sqft = parseFloat(value);
+    setDirectEntry(prev => ({
+      ...prev,
+      sqft: value,
+      qty: perBox > 0 && sqft > 0 ? String(Math.ceil(sqft / perBox)) : prev.qty
+    }));
+  };
 
   const fetchProducts = async () => {
     try {
@@ -571,7 +596,10 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
     const billDiscount = 0;
     const totalAddons = transporterRows.reduce((s, r) => s + (Number(r.amount) || 0), 0) + addonRows.filter(a => a.type === "Addon").reduce((s, a) => s + (Number(a.amount) || 0), 0);
     const totalDeductions = addonRows.filter(a => a.type === "Deduction").reduce((s, a) => s + (Number(a.amount) || 0), 0);
-    const netAmount = Math.max(0, Math.round((recomputed.netAmount + totalAddons - totalDeductions) * 100) / 100);
+    const exactNet = Math.max(0, Math.round((recomputed.netAmount + totalAddons - totalDeductions) * 100) / 100);
+    // Round to the nearest rupee, as the server does when the bill is saved.
+    const netAmount = Math.round(exactNet);
+    const roundOff = Math.round((netAmount - exactNet) * 100) / 100;
 
     return {
       itemCount,
@@ -582,7 +610,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
       totalTax: recomputed.taxTotal,
       totalAddons,
       totalDeductions,
-      roundOff: 0,
+      roundOff,
       netAmount
     };
   }, [items, transporterRows, addonRows, headerState, liveTime]);
@@ -691,7 +719,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
   const handleCommitDirectEntry = () => {
     if (!directEntry.stockNo && !directEntry.barcode && !directEntry.itemDescription) return;
 
-    const matched = products.find(p => 
+    const matched = [...liveProducts, ...products].find(p => 
       p.code === directEntry.stockNo || 
       p.barcode === directEntry.barcode || 
       p.barcode === directEntry.stockNo
@@ -730,11 +758,12 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
       discPercent: Number(computedLine.discPercent ?? 0),
       discAmt: Number(computedLine.discAmt ?? 0),
       total: computedLine.total,
-      salesStaff: directEntry.staff,
+      salesStaff: headerState.salesStaff || directEntry.staff,
       productId: (matched as any)?.id,
       hsnCode: (matched as any)?.hsnCode,
       gstPercentage: Number(computedLine.taxPercent ?? 18),
       taxAmount: Number(computedLine.taxAmount ?? 0),
+      sqftRequested: parseFloat(directEntry.sqft) > 0 ? parseFloat(directEntry.sqft) : undefined,
       brand: (matched as any)?.brand,
       size: (matched as any)?.size
     };
@@ -748,6 +777,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
       itemDescription: "",
       rate: "",
       qty: "1",
+      sqft: "",
       discCode: "",
       discQty: "",
       discPercent: "",
@@ -903,17 +933,22 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
     changeDue: number,
     denominations?: any
   ) => {
-    const invNo = `${headerState.docPrefix}-${headerState.docNo}`;
+    // Re-read just before saving: reusing a number would return the older bill.
+    const freshDocNo = await reserveDocNo(headerState.docPrefix).catch(() => headerState.docNo);
+    const invNo = `${headerState.docPrefix}-${freshDocNo}`;
+    const paidRows = payments.filter(p => p.mode !== "Credit" && p.amount > 0);
+    const amountPaid = paidRows.reduce((sum, p) => sum + p.amount, 0) - changeDue;
     const invoicePayload = {
       invoice_no: invNo,
       date: new Date().toISOString().split("T")[0],
       customer_id: headerState.customer?.id || null,
       customer_name: headerState.customer?.name || "Counter Cash Sale",
       customer_gstin: headerState.customer?.gstNumber || null,
+      warehouse_id: dispatchFrom || undefined,
       status: "Completed",
-      payment_mode: payments[0]?.mode.toUpperCase() || "CASH",
-      paid_amount: totalTendered,
-      balance_amount: changeDue > 0 ? 0 : Math.max(0, summaryTotals.netAmount - totalTendered),
+      payment_mode: payments.length > 1 ? "SPLIT" : payments[0]?.mode.toUpperCase() || "CASH",
+      paid_amount: amountPaid,
+      balance_amount: Math.max(0, summaryTotals.netAmount - amountPaid),
       discount_amount: summaryTotals.itemDiscount + summaryTotals.billDiscount,
       net_amount: summaryTotals.netAmount,
       taxable_value: summaryTotals.salesValue,
@@ -929,6 +964,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
         price: it.rate,
         disc_pct: it.discPercent,
         gst_rate: it.gstPercentage,
+        sqft_requested: it.sqftRequested,
         line_no: idx + 1
       })),
       rule_snapshots: {
@@ -945,11 +981,48 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
         body: JSON.stringify(invoicePayload)
       });
 
+      if (paidRows.length > 0) {
+        const tenderTypes: Record<string, string> = {
+          Cash: "CASH", "Credit Card": "CARD", "Debit Card": "CARD",
+          UPI: "UPI", Cheque: "CHEQUE", "Credit Note": "CREDIT_NOTE"
+        };
+        let changeLeft = changeDue;
+        const tenders = paidRows.map(p => {
+          const giveBack = p.mode === "Cash" ? Math.min(changeLeft, p.amount) : 0;
+          changeLeft -= giveBack;
+          return {
+            tender_type: tenderTypes[p.mode] || "CASH",
+            amount: p.amount - giveBack,
+            gateway_reference: p.refNo || undefined,
+            cheque_no: p.mode === "Cheque" ? p.refNo || undefined : undefined,
+            bank_name: p.bankDetails || undefined
+          };
+        }).filter(t => t.amount > 0);
+        try {
+          await apiFetchV1("/payments/process", {
+            method: "POST",
+            body: JSON.stringify({
+              reference_doc_type: "SALES_INVOICE",
+              reference_doc_id: saved.id,
+              party_id: saved.party_id || undefined,
+              tenders,
+              idempotency_key: `BILL-${saved.id}`,
+              branch_id: saved.branch_id || "MAIN"
+            })
+          });
+        } catch (paymentError: any) {
+          onNotification?.("Payment Not Recorded", paymentError.message || "The bill was saved but its payment details were not.", "error");
+        }
+      }
+
       const completedInvoice = {
         invoiceNumber: saved.invoice_no || invNo,
         date: saved.date || headerState.billDate,
         customerName: headerState.customer?.name || "Counter Cash Sale",
         customerGstin: headerState.customer?.gstNumber || "",
+        isInterstate: saved.is_interstate,
+        grandTotal: saved.grand_total,
+        savedItems: saved.items || [],
         items: items.map(it => ({
           sku: it.stockNo,
           description: it.itemDescription,
@@ -976,7 +1049,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
       setItems([]);
       setHeaderState(prev => ({
         ...prev,
-        docNo: String((parseInt(prev.docNo) || 1) + 1),
+        docNo: String((parseInt(freshDocNo) || 1) + 1),
         customer: null,
         remarks: ""
       }));
@@ -989,18 +1062,24 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
   };
 
   // Add Quick Customer
-  const handleCreateCustomer = () => {
+  const handleCreateCustomer = async () => {
     if (!newCustName.trim()) return;
     const newCust: Customer = {
-      id: "CUST-" + Date.now().toString().slice(-4),
+      id: "CUST-" + Date.now().toString().slice(-8),
       customerGroupId: "CG-Retail",
       name: newCustName.trim(),
       mobile: newCustMobile.trim() || "0000000000",
-      gstNumber: newCustGstin.trim() || undefined,
+      gstNumber: newCustGstin.trim().toUpperCase() || undefined,
       status: "Active",
       outstanding: 0,
       createdDate: new Date().toISOString().split("T")[0]
     };
+    try {
+      await apiFetchV1("/crm/customers", { method: "POST", body: JSON.stringify(newCust) });
+    } catch (err: any) {
+      onNotification?.("Customer Not Saved", err.message || "Could not save this customer.", "error");
+      return;
+    }
     setCustomers(prev => [newCust, ...prev]);
     handleSelectCustomer(newCust);
     setShowAddCustomerModal(false);
@@ -1009,6 +1088,32 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
     setNewCustGstin("");
     onNotification?.("Customer Added", `Customer ${newCust.name} selected.`, "success");
   };
+
+  // The first load returns at most 100 customers; ask the server as the user types so every customer can be found.
+  useEffect(() => {
+    const q = customerSearchInput.trim();
+    if (q.length < 2) return;
+    let active = true;
+    const timer = setTimeout(() => {
+      apiFetchV1(`/crm/customers/search?q=${encodeURIComponent(q)}&limit=50`)
+        .then((res: any) => {
+          const found: Customer[] = Array.isArray(res) ? res : (res?.items || []);
+          if (!active || found.length === 0) return;
+          setCustomers(prev => {
+            const known = new Set(prev.map(c => c.id));
+            const extra = found.filter(c => !known.has(c.id));
+            return extra.length ? [...prev, ...extra] : prev;
+          });
+        })
+        .catch(() => {
+          // Keep showing what is already loaded
+        });
+    }, 250);
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, [customerSearchInput]);
 
   const filteredCustomers = useMemo(() => {
     if (!customerSearchInput.trim()) return customers;
@@ -1022,6 +1127,13 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
     );
   }, [customers, customerSearchInput]);
 
+  // Presentation-only toggles (no effect on what gets saved)
+  const [showMoreColumns, setShowMoreColumns] = useState<boolean>(false);
+  const [showMoreDetails, setShowMoreDetails] = useState<boolean>(false);
+  // Display-only GST split hint: IGST when customer GSTIN state differs from ours
+  const custGstin = headerState.customer?.gstNumber || "";
+  const isIgstDisplay = Boolean(custGstin && company.gstin && custGstin.slice(0, 2) !== company.gstin.slice(0, 2));
+
   return (
     <div 
       ref={terminalContainerRef}
@@ -1029,422 +1141,333 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
         isFullscreen ? "fixed inset-0 z-50 h-screen w-screen" : "h-full"
       }`}
     >
-      
-      {/* Top Application Bar */}
-      <header className="bg-surface dark:bg-primary-container text-primary dark:text-primary-fixed w-full top-0 sticky z-50 border-b border-outline-variant dark:border-outline shadow-xs">
-        <div className="flex justify-between items-center px-margin-page h-16 w-full max-w-container-max-width mx-auto">
-          
-          {/* Logo & Brand Title */}
-          <div className="flex items-center gap-stack-gap">
-            <span className="p-2 bg-primary/10 dark:bg-primary-fixed-dim/20 rounded-lg text-primary dark:text-primary-fixed">
-              <Receipt size={26} className="text-secondary" />
-            </span>
-            <span className="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed tracking-tight">
-              Smriti Distributor
+
+      {/* Title bar: document identity on the left, quiet tools on the right */}
+      <header className="bg-surface-container-lowest border-b border-outline-variant shrink-0">
+        <div className="flex justify-between items-center px-5 h-12 w-full max-w-container-max-width mx-auto gap-4">
+          <div className="flex items-baseline gap-3 min-w-0">
+            <h1 className="text-base font-semibold text-on-surface tracking-tight">Tax Invoice</h1>
+            <span className="text-[13px] text-on-surface-variant truncate">
+              Bill No. <span className="text-on-surface font-medium">{headerState.docPrefix}-{headerState.docNo}</span>
+              <span className="mx-2 text-outline-variant">|</span>
+              {liveDate}
             </span>
           </div>
 
-          {/* Clock, Action Buttons, Separator, System Controls & Avatar */}
-          <div className="flex items-center gap-gutter">
-            
-            {/* Live Date & Time Badges */}
-            <div className="flex items-center gap-stack-gap text-on-surface-variant font-code-md text-code-md">
-              <span className="bg-surface-container-high px-2 py-1 rounded font-bold">{liveDate}</span>
-              <span className="bg-surface-container-high px-2 py-1 rounded font-bold">{liveTime}</span>
-            </div>
-
-            {/* Quick Action Icons */}
-            <div className="flex items-center gap-unit">
-              <button
-                type="button"
-                onClick={handleNewInvoice}
-                className="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim transition-colors rounded active:opacity-80 cursor-pointer"
-                title="New (Ctrl+N)"
-              >
-                <Plus size={18} />
-              </button>
-              <button
-                type="button"
-                onClick={handleVoidInvoice}
-                className="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim transition-colors rounded active:opacity-80 cursor-pointer"
-                title="Void (Ctrl+V)"
-              >
-                <Trash2 size={18} className="text-error" />
-              </button>
-              <button
-                type="button"
-                onClick={handleReturnInvoice}
-                className="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim transition-colors rounded active:opacity-80 cursor-pointer"
-                title="Return / Recall (Ctrl+R)"
-              >
-                <RotateCcw size={18} />
-              </button>
-              <button
-                type="button"
-                onClick={handleReprintInvoice}
-                className="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim transition-colors rounded active:opacity-80 cursor-pointer"
-                title="Reprint / Preview (Ctrl+P)"
-              >
-                <Printer size={18} />
-              </button>
-            </div>
-
-            {/* Vertical Separator */}
-            <div className="h-8 w-px bg-outline-variant"></div>
-
-            {/* System Utility Icons */}
-            <div className="flex gap-1.5">
-              <button
-                type="button"
-                onClick={() => onNotification?.("Notifications", "System is up to date.", "success")}
-                className="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim transition-colors rounded active:opacity-80 cursor-pointer"
-                title="Notifications"
-              >
-                <Bell size={17} />
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowItemBrowseModal(true)}
-                className="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim transition-colors rounded active:opacity-80 cursor-pointer"
-                title="Settings / Item Master (F3)"
-              >
-                <Settings size={17} />
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowAttachmentPanel(!showAttachmentPanel)}
-                className={`p-2 transition-colors rounded active:opacity-80 cursor-pointer ${
-                  showAttachmentPanel 
-                    ? "bg-surface-container-high text-primary" 
-                    : "text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim"
-                }`}
-                title="Attachments (Add contracts, POs, approvals)"
-              >
-                <Paperclip size={17} />
-              </button>
-              <button
-                type="button"
-                onClick={handleToggleFullscreen}
-                className="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim transition-colors rounded active:opacity-80 cursor-pointer"
-                title={isFullscreen ? "Exit Fullscreen" : "Fullscreen Invoicing Terminal"}
-              >
-                {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
-              </button>
-              <button
-                type="button"
-                onClick={() => onNotification?.("Help", "F2: Search Customer | F11: Direct Entry | F8: Settlement | F12: Suspend | Ctrl+P: Preview/Reprint", "success")}
-                className="p-2 text-on-surface-variant hover:bg-surface-container-high dark:hover:bg-primary-fixed-dim transition-colors rounded active:opacity-80 cursor-pointer"
-                title="Help & Shortcuts"
-              >
-                <HelpCircle size={17} />
-              </button>
-            </div>
-
-            {/* User Profile Avatar */}
-            <div className="w-8 h-8 rounded-full border border-outline-variant bg-surface-container-high flex items-center justify-center font-bold text-xs text-primary font-code-md">
-              {currentUser?.name ? currentUser.name.substring(0, 2).toUpperCase() : "SD"}
-            </div>
-
-            {/* Settlement F8 Primary Action */}
+          <div className="flex items-center gap-1">
             <button
               type="button"
-              onClick={() => {
-                if (items.length > 0) setShowSettlementModal(true);
-                else alert("Add items before settlement.");
-              }}
-              className="h-9 px-4 bg-primary hover:bg-primary-container text-on-primary rounded font-title-sm text-xs font-bold transition-colors flex items-center gap-1.5 shadow-xs cursor-pointer ml-1"
-              title="Settlement (F8)"
+              onClick={() => setShowRecallModal(true)}
+              className="h-8 px-3 text-[13px] text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer"
+              title="Recall Held Invoice (Ctrl+R)"
             >
-              <CreditCard size={15} />
-              <span>Settlement (F8)</span>
+              <History size={15} />
+              <span>Recall{suspendedBills.length > 0 ? ` (${suspendedBills.length})` : ""}</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowPdtImportModal(true)}
+              className="h-8 px-3 text-[13px] text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors flex items-center gap-1.5 cursor-pointer"
+              title="Import from PDT / File (Ctrl+I)"
+            >
+              <Download size={15} />
+              <span>Import</span>
             </button>
 
+            <div className="h-5 w-px bg-outline-variant mx-1.5"></div>
+
+            {[
+              { onClick: handleNewInvoice, title: "New (Ctrl+N)", icon: <Plus size={16} /> },
+              { onClick: handleReturnInvoice, title: "Return / Recall (Ctrl+R)", icon: <RotateCcw size={15} /> },
+              { onClick: handleReprintInvoice, title: "Reprint / Preview (Ctrl+P)", icon: <Printer size={15} /> },
+              { onClick: () => setShowItemBrowseModal(true), title: "Item Master (F3)", icon: <Settings size={15} /> },
+              { onClick: () => setShowAttachmentPanel(!showAttachmentPanel), title: "Attachments (Add contracts, POs, approvals)", icon: <Paperclip size={15} />, active: showAttachmentPanel },
+              { onClick: handleToggleFullscreen, title: isFullscreen ? "Exit Fullscreen" : "Fullscreen Invoicing Terminal", icon: isFullscreen ? <Minimize2 size={15} /> : <Maximize2 size={15} /> },
+              { onClick: () => onNotification?.("Help", "F2: Search Customer | F11: Direct Entry | F8: Settlement | F12: Suspend | Ctrl+P: Preview/Reprint", "success"), title: "Help & Shortcuts", icon: <HelpCircle size={15} /> },
+            ].map(b => (
+              <button
+                key={b.title}
+                type="button"
+                onClick={b.onClick}
+                title={b.title}
+                aria-label={b.title}
+                className={`h-8 w-8 flex items-center justify-center transition-colors cursor-pointer ${
+                  b.active ? "bg-surface-container-high text-on-surface" : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high"
+                }`}
+              >
+                {b.icon}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={handleVoidInvoice}
+              title="Void (Ctrl+V)"
+              aria-label="Void (Ctrl+V)"
+              className="h-8 w-8 flex items-center justify-center text-on-surface-variant hover:text-error hover:bg-surface-container-high transition-colors cursor-pointer"
+            >
+              <Trash2 size={15} />
+            </button>
           </div>
         </div>
       </header>
 
       {/* Main Invoicing Canvas */}
-      <main className="flex-1 flex flex-col p-stack-gap gap-stack-gap overflow-y-auto max-w-container-max-width mx-auto w-full">
-        
-        {/* HEADER SECTION */}
-        <section className="bg-surface-container-lowest border border-outline-variant rounded p-stack-gap flex flex-col gap-stack-gap shadow-xs">
-          
-          {/* Row 1: Bill Type, Transaction, Doc Prefix, Doc No, Action Buttons */}
-          <div className="flex flex-wrap items-end gap-gutter">
-            <div className="flex flex-col gap-unit w-48">
-              <label className="font-label-caps text-label-caps text-on-surface-variant font-bold">Bill Type</label>
-              <select
-                value={headerState.billType}
-                onChange={e => setHeaderState({ ...headerState, billType: e.target.value as BillType })}
-                className="border-outline-variant text-body-md focus:border-secondary focus:ring-secondary rounded h-9 bg-surface-container-lowest px-2.5 font-medium border"
-              >
-                <option value="Product">Product</option>
-                <option value="Service">Service</option>
-                <option value="Both">Both</option>
-              </select>
-            </div>
+      <main className="flex-1 min-h-0 flex flex-col px-5 py-3 gap-3 overflow-y-auto max-w-container-max-width mx-auto w-full">
 
-            <div className="flex flex-col gap-unit w-48">
-              <label className="font-label-caps text-label-caps text-on-surface-variant font-bold">Transaction</label>
-              <select
-                value={headerState.transaction}
-                onChange={e => setHeaderState({ ...headerState, transaction: e.target.value as TransactionType })}
-                className="border-outline-variant text-body-md focus:border-secondary focus:ring-secondary rounded h-9 bg-surface-container-lowest px-2.5 font-medium border"
-              >
-                <option value="Credit">Credit</option>
-                <option value="Cash">Cash</option>
-                <option value="Retail">Retail</option>
-              </select>
-            </div>
+        {/* BILL HEADER: customer, GSTIN, dispatch, salesperson, bill type */}
+        <section className="bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 flex items-end gap-3 shrink-0">
 
-            <div className="flex flex-col gap-unit w-32">
-              <label className="font-label-caps text-label-caps text-on-surface-variant font-bold">Doc Prefix</label>
-              <input
-                type="text"
-                value={headerState.docPrefix}
-                readOnly
-                className="bg-surface-container-low border-outline-variant text-body-md font-code-md text-on-surface-variant rounded h-9 cursor-not-allowed px-2.5 border"
-              />
-            </div>
-
-            <div className="flex flex-col gap-unit w-32">
-              <label className="font-label-caps text-label-caps text-on-surface-variant font-bold">Doc No.</label>
-              <input
-                type="text"
-                value={headerState.docNo}
-                readOnly
-                className="bg-surface-container-low border-outline-variant text-body-md font-code-md text-on-surface-variant rounded h-9 cursor-not-allowed px-2.5 border"
-              />
-            </div>
-
-            <div className="flex gap-2 ml-auto">
-              <button
-                type="button"
-                onClick={() => setShowPdtImportModal(true)}
-                className="h-9 px-4 bg-surface-container-high hover:bg-surface-variant text-primary border border-outline-variant rounded font-title-sm text-title-sm transition-colors flex items-center gap-2 cursor-pointer"
-                title="Import from PDT / File (Ctrl+I)"
-              >
-                <Download size={16} className="text-secondary" />
-                <span>Import</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setShowRecallModal(true)}
-                className="h-9 px-4 bg-surface-container-high hover:bg-surface-variant text-primary border border-outline-variant rounded font-title-sm text-title-sm transition-colors flex items-center gap-2 cursor-pointer"
-                title="Recall Held Invoice (Ctrl+R)"
-              >
-                <History size={16} className="text-secondary" />
-                <span>Recall {suspendedBills.length > 0 ? `(${suspendedBills.length})` : ""}</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Row 2: Customer F2 search, Display, Add button, Sales Staff */}
-          <div className="flex flex-wrap items-end gap-gutter">
-            
-            {/* Customer Search & Quick Add */}
-            <div className="flex flex-col gap-unit flex-1 relative">
-              <label className="font-label-caps text-label-caps text-on-surface-variant font-bold">
-                Customer <span className="text-error">*</span>
-              </label>
-              <div className="flex gap-2">
-                <div className="relative flex-1">
-                  <input
-                    ref={customerInputRef}
-                    type="text"
-                    name="customerSearch"
-                    aria-label="Search customer (F2)"
-                    data-f2-browse="customer"
-                    data-context-type="customer"
-                    data-lookup="customer"
-                    value={customerSearchInput}
-                    onChange={e => handleCustomerSearchChange(e.target.value)}
-                    onFocus={() => setShowCustomerDropdown(true)}
-                    onKeyDown={e => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        if (customerSuggestions.length > 0) {
-                          const selected = customerSuggestions[customerSelectedIndex] || customerSuggestions[0];
-                          if (selected?.metadata) applyCustomerAutoPopulate(selected.metadata as any);
-                        } else if (filteredCustomers.length > 0) {
-                          handleSelectCustomer(filteredCustomers[0]);
-                        }
-                      } else if (e.key === "ArrowDown") {
-                        if (customerSuggestions.length > 0) {
-                          e.preventDefault();
-                          setCustomerSelectedIndex(prev => (prev + 1) % customerSuggestions.length);
-                        }
-                      } else if (e.key === "ArrowUp") {
-                        if (customerSuggestions.length > 0) {
-                          e.preventDefault();
-                          setCustomerSelectedIndex(prev => (prev - 1 + customerSuggestions.length) % customerSuggestions.length);
-                        }
-                      } else if (e.key === "Escape") {
-                        setShowCustomerDropdown(false);
-                      }
-                    }}
-                    placeholder="Search customer (F2)"
-                    className="w-full border-outline-variant text-body-md focus:border-secondary focus:ring-secondary rounded h-9 pl-9 pr-2 border bg-surface-container-lowest font-medium"
-                  />
-                  <Search size={16} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-on-surface-variant" />
-                  
-                  {/* Real-Time Backend Customer Typeahead Dropdown */}
-                  <TypeaheadDrop
-                    isOpen={showCustomerDropdown && (customerSuggestions.length > 0 || isCustomerSearching)}
-                    options={customerSuggestions}
-                    selectedIndex={customerSelectedIndex}
-                    isLoading={isCustomerSearching}
-                    onSelect={(opt) => {
-                      if (opt.metadata) {
-                        applyCustomerAutoPopulate(opt.metadata as any);
-                      }
-                    }}
-                    onClose={() => setShowCustomerDropdown(false)}
-                    emptyMessage="No matching customers found in database"
-                  />
-                </div>
-
+          {/* Customer Search & Quick Add */}
+          <div className="flex flex-col gap-1 flex-1 min-w-0 relative">
+            <label className="text-xs font-medium text-on-surface-variant">
+              Customer <span className="text-error">*</span>
+            </label>
+            <div className="flex gap-2">
+              <div className="relative flex-1 min-w-0">
                 <input
+                  ref={customerInputRef}
                   type="text"
-                  name="customerNameDisplay"
-                  aria-label="Customer Name Display"
-                  value={headerState.customer?.name || ""}
-                  readOnly
-                  placeholder="Customer Name Display"
-                  className="flex-1 bg-surface-container-low border-outline-variant text-body-md text-on-surface-variant rounded h-9 px-3 border truncate font-medium"
+                  name="customerSearch"
+                  aria-label="Search customer (F2)"
+                  data-f2-browse="customer"
+                  data-context-type="customer"
+                  data-lookup="customer"
+                  value={customerSearchInput}
+                  onChange={e => handleCustomerSearchChange(e.target.value)}
+                  onFocus={() => setShowCustomerDropdown(true)}
+                  onKeyDown={e => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      if (customerSuggestions.length > 0) {
+                        const selected = customerSuggestions[customerSelectedIndex] || customerSuggestions[0];
+                        if (selected?.metadata) applyCustomerAutoPopulate(selected.metadata as any);
+                      } else if (filteredCustomers.length > 0) {
+                        handleSelectCustomer(filteredCustomers[0]);
+                      }
+                    } else if (e.key === "ArrowDown") {
+                      if (customerSuggestions.length > 0) {
+                        e.preventDefault();
+                        setCustomerSelectedIndex(prev => (prev + 1) % customerSuggestions.length);
+                      }
+                    } else if (e.key === "ArrowUp") {
+                      if (customerSuggestions.length > 0) {
+                        e.preventDefault();
+                        setCustomerSelectedIndex(prev => (prev - 1 + customerSuggestions.length) % customerSuggestions.length);
+                      }
+                    } else if (e.key === "Escape") {
+                      setShowCustomerDropdown(false);
+                    }
+                  }}
+                  placeholder="Search customer (F2)"
+                  className="w-full border border-outline-variant text-sm focus:border-on-surface-variant outline-none h-9 pl-9 pr-3 bg-surface-container-lowest"
                 />
+                <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant" />
 
-                <button
-                  type="button"
-                  onClick={() => setShowAddCustomerModal(true)}
-                  className="h-9 px-4 bg-surface-container-high hover:bg-surface-variant text-primary border border-outline-variant rounded font-title-sm text-title-sm transition-colors cursor-pointer"
-                >
-                  Add
-                </button>
+                {/* Real-Time Backend Customer Typeahead Dropdown */}
+                <TypeaheadDrop
+                  isOpen={showCustomerDropdown && (customerSuggestions.length > 0 || isCustomerSearching)}
+                  options={customerSuggestions}
+                  selectedIndex={customerSelectedIndex}
+                  isLoading={isCustomerSearching}
+                  onSelect={(opt) => {
+                    if (opt.metadata) {
+                      applyCustomerAutoPopulate(opt.metadata as any);
+                    }
+                  }}
+                  onClose={() => setShowCustomerDropdown(false)}
+                  emptyMessage="No matching customers found in database"
+                />
               </div>
-            </div>
 
-            {/* Sales Staff */}
-            <div className="flex flex-col gap-unit w-64">
-              <label className="font-label-caps text-label-caps text-on-surface-variant font-bold">Sales Staff</label>
-              <select
-                value={headerState.salesStaff}
-                onChange={e => setHeaderState({ ...headerState, salesStaff: e.target.value })}
-                className="border-outline-variant text-body-md focus:border-secondary focus:ring-secondary rounded h-9 border bg-surface-container-lowest px-2.5 font-medium"
+              <input
+                type="text"
+                name="customerNameDisplay"
+                aria-label="Customer Name Display"
+                value={headerState.customer?.name || ""}
+                readOnly
+                tabIndex={-1}
+                placeholder="Customer Name Display"
+                className="flex-1 min-w-0 bg-surface-container-low border border-transparent text-sm text-on-surface h-9 px-3 truncate font-medium outline-none"
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowAddCustomerModal(true)}
+                className="h-9 px-4 bg-surface-container-lowest hover:bg-surface-container-high text-on-surface border border-outline-variant text-sm font-medium transition-colors cursor-pointer shrink-0"
               >
-                <option value="">Select Staff...</option>
-                <option value="EMP001 - John Doe">EMP001 - John Doe</option>
-                <option value="EMP002 - Jane Smith">EMP002 - Jane Smith</option>
-                <option value="EMP003 - Rahul Sharma">EMP003 - Rahul Sharma</option>
-              </select>
+                Add
+              </button>
             </div>
-
           </div>
 
+          {/* GSTIN (read-only, from the selected customer) */}
+          <div className="flex flex-col gap-1 w-44 shrink-0">
+            <span className="text-xs font-medium text-on-surface-variant">GSTIN</span>
+            <div
+              className={`h-9 flex items-center text-sm truncate ${headerState.customer?.gstNumber ? "text-on-surface font-medium" : "text-on-surface-variant"}`}
+              title={headerState.customer?.gstNumber || "No GSTIN (B2C)"}
+            >
+              {headerState.customer ? (headerState.customer.gstNumber || "Unregistered (B2C)") : "—"}
+            </div>
+          </div>
+
+          {/* Dispatch location */}
+          <div className="flex flex-col gap-1 w-48 shrink-0">
+            <label className="text-xs font-medium text-on-surface-variant">Dispatch From</label>
+            <select
+              aria-label="Dispatch From"
+              value={dispatchFrom}
+              onChange={e => setDispatchFrom(e.target.value)}
+              className="border border-outline-variant text-sm h-9 px-3 bg-surface-container-lowest outline-none"
+            >
+              <option value="">Default location</option>
+              {locations.map(l => (
+                <option key={l.id} value={l.id}>{l.name}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Salesperson */}
+          <div className="flex flex-col gap-1 w-44 shrink-0">
+            <label className="text-xs font-medium text-on-surface-variant">Salesperson</label>
+            <select
+              value={headerState.salesStaff}
+              onChange={e => setHeaderState({ ...headerState, salesStaff: e.target.value })}
+              className="border border-outline-variant text-sm h-9 px-3 bg-surface-container-lowest outline-none"
+            >
+              <option value="">Select...</option>
+              {salesPeople.map(person => (
+                <option key={person} value={person}>{person}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Bill type & payment terms */}
+          <div className="flex flex-col gap-1 w-[104px] shrink-0">
+            <label className="text-xs font-medium text-on-surface-variant">Bill type</label>
+            <select
+              value={headerState.billType}
+              onChange={e => setHeaderState({ ...headerState, billType: e.target.value as BillType })}
+              className="border border-outline-variant text-sm h-9 px-3 bg-surface-container-lowest outline-none"
+            >
+              <option value="Product">Product</option>
+              <option value="Service">Service</option>
+              <option value="Both">Both</option>
+            </select>
+          </div>
+
+          <div className="flex flex-col gap-1 w-[96px] shrink-0">
+            <label className="text-xs font-medium text-on-surface-variant">Payment</label>
+            <select
+              value={headerState.transaction}
+              onChange={e => setHeaderState({ ...headerState, transaction: e.target.value as TransactionType })}
+              className="border border-outline-variant text-sm h-9 px-3 bg-surface-container-lowest outline-none"
+            >
+              <option value="Credit">Credit</option>
+              <option value="Cash">Cash</option>
+              <option value="Retail">Retail</option>
+            </select>
+          </div>
         </section>
 
-        {/* DETAIL SECTION (MAIN WORKSPACE) */}
-        <section className="flex-1 bg-surface-container-lowest border border-outline-variant rounded flex flex-col overflow-hidden min-h-[300px] shadow-xs">
-          
-          {/* Multi-attribute quick inspector ribbon */}
+        {/* ITEMS: table + single-line entry */}
+        <section className="flex-1 min-h-[180px] bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col overflow-hidden">
+
+          {/* Selected item details ribbon */}
           {selectedItemProductMeta && (
-            <div className="bg-blue-50 dark:bg-blue-950/40 border-b border-blue-200 dark:border-blue-800 px-3 py-1.5 text-xs flex items-center justify-between text-blue-900 dark:text-cyan-200 shrink-0">
-              <div className="flex items-center gap-3 overflow-x-auto">
-                <span><strong>Barcode:</strong> {selectedItemProductMeta.barcode}</span>
-                <span>•</span>
-                <span><strong>Stock/SKU:</strong> {selectedItemProductMeta.stockNo || selectedItemProductMeta.sku}</span>
-                <span>•</span>
-                <span><strong>Stock:</strong> {selectedItemProductMeta.stockQty} {selectedItemProductMeta.uom}</span>
-                <span>•</span>
-                <span><strong>MRP:</strong> ₹{selectedItemProductMeta.mrp.toFixed(2)}</span>
-                <span>•</span>
-                <span><strong>Cost:</strong> ₹{selectedItemProductMeta.costPrice.toFixed(2)}</span>
-                <span>•</span>
-                <span><strong>Size/Color:</strong> {selectedItemProductMeta.size}/{selectedItemProductMeta.color}</span>
-                <span>•</span>
-                <span><strong>Brand:</strong> {selectedItemProductMeta.brand}</span>
-                <span>•</span>
-                <span><strong>HSN:</strong> {selectedItemProductMeta.hsnCode} ({selectedItemProductMeta.gstPercentage}%)</span>
+            <div className="bg-surface-container-low border-b border-outline-variant px-4 py-1.5 text-xs flex items-center justify-between text-on-surface-variant shrink-0">
+              <div className="flex items-center gap-4 overflow-x-auto whitespace-nowrap">
+                <span>Stock: <span className="text-on-surface font-medium">{selectedItemProductMeta.stockQty} {selectedItemProductMeta.uom}</span></span>
+                <span>MRP: <span className="text-on-surface font-medium">₹{selectedItemProductMeta.mrp.toFixed(2)}</span></span>
+                <span>Cost: <span className="text-on-surface font-medium">₹{selectedItemProductMeta.costPrice.toFixed(2)}</span></span>
+                <span>HSN: <span className="text-on-surface font-medium">{selectedItemProductMeta.hsnCode} ({selectedItemProductMeta.gstPercentage}%)</span></span>
+                <span>Size/Colour: <span className="text-on-surface font-medium">{selectedItemProductMeta.size}/{selectedItemProductMeta.color}</span></span>
+                <span>Brand: <span className="text-on-surface font-medium">{selectedItemProductMeta.brand}</span></span>
+                <span>Barcode: <span className="text-on-surface font-medium">{selectedItemProductMeta.barcode}</span></span>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedItemProductMeta(null)}
-                className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xs px-1 cursor-pointer"
+                className="text-on-surface-variant hover:text-on-surface px-1 cursor-pointer"
+                aria-label="Close item details"
               >
-                ✕
+                <X size={14} />
               </button>
             </div>
           )}
 
           {/* Main Line Items Table */}
-          <div className="flex-1 overflow-x-auto overflow-y-auto">
-            <table className="w-full text-left border-collapse min-w-[1100px]">
-              <thead className="sticky top-0 bg-surface-container-high border-b border-outline-variant z-10">
-                <tr className="font-label-caps text-label-caps text-on-surface-variant font-bold">
-                  <th className="px-3 py-2 w-10 text-center border-r border-outline-variant">S.No</th>
-                  <th className="px-3 py-2 w-[100px] border-r border-outline-variant">Stock No</th>
-                  <th className="px-3 py-2 border-r border-outline-variant">Item Description</th>
-                  <th className="px-3 py-2 w-[80px] text-right border-r border-outline-variant">Rate</th>
-                  <th className="px-3 py-2 w-[80px] text-right border-r border-outline-variant">Qty</th>
-                  <th className="px-3 py-2 w-[100px] text-right border-r border-outline-variant">Value</th>
-                  <th className="px-3 py-2 w-[80px] border-r border-outline-variant">Disc Code</th>
-                  <th className="px-3 py-2 w-[80px] text-right border-r border-outline-variant">Disc Qty</th>
-                  <th className="px-3 py-2 w-[80px] text-right border-r border-outline-variant">Disc %</th>
-                  <th className="px-3 py-2 w-[100px] text-right border-r border-outline-variant">Disc Amt</th>
-                  <th className="px-3 py-2 w-[120px] text-right border-r border-outline-variant">Total</th>
-                  <th className="px-3 py-2 w-[120px]">Sales Staff</th>
-                  <th className="px-2 py-2 w-8 text-center"></th>
+          <div className="flex-1 min-h-0 overflow-auto">
+            <table className="w-full text-left border-collapse">
+              <thead className="sticky top-0 bg-surface-container-lowest z-10">
+                <tr className="text-xs font-medium text-on-surface-variant border-b border-outline-variant">
+                  <th className="pl-4 pr-2 py-2 w-10 font-medium">#</th>
+                  <th className="px-2 py-2 w-[150px] font-medium">Item code</th>
+                  <th className="px-2 py-2 font-medium">Item name</th>
+                  <th className="px-2 py-2 w-[80px] text-right font-medium">Qty (box)</th>
+                  <th className="px-2 py-2 w-[80px] text-right font-medium">Sq.Ft</th>
+                  <th className="px-2 py-2 w-[96px] text-right font-medium">Rate</th>
+                  {showMoreColumns && (
+                    <>
+                      <th className="px-2 py-2 w-[96px] text-right font-medium">Value</th>
+                      <th className="px-2 py-2 w-[88px] font-medium">Disc code</th>
+                      <th className="px-2 py-2 w-[80px] text-right font-medium">Disc qty</th>
+                    </>
+                  )}
+                  <th className="px-2 py-2 w-[72px] text-right font-medium">Disc %</th>
+                  {showMoreColumns && <th className="px-2 py-2 w-[88px] text-right font-medium">Disc amt</th>}
+                  <th className="px-2 py-2 w-[64px] text-right font-medium">GST %</th>
+                  <th className="px-2 py-2 w-[112px] text-right font-medium">Amount</th>
+                  {showMoreColumns && <th className="px-2 py-2 w-[110px] font-medium">Salesperson</th>}
+                  <th className="pr-3 py-2 w-[110px] text-right">
+                    <button
+                      type="button"
+                      onClick={() => setShowMoreColumns(v => !v)}
+                      className="text-xs font-medium text-on-surface-variant hover:text-on-surface underline-offset-2 hover:underline cursor-pointer whitespace-nowrap"
+                    >
+                      {showMoreColumns ? "Fewer columns" : "More columns"}
+                    </button>
+                  </th>
                 </tr>
               </thead>
-              <tbody className="font-code-md text-code-md divide-y divide-outline-variant/40">
+              <tbody className="text-sm text-on-surface">
                 {items.map((item, idx) => (
                   <tr
                     key={item.id}
                     onClick={() => setSelectedRowIndex(idx)}
-                    className={`transition-colors ${
-                      selectedRowIndex === idx
-                        ? "bg-secondary-fixed/40 font-semibold"
-                        : "hover:bg-surface-container-low"
+                    className={`border-b border-outline-variant transition-colors ${
+                      selectedRowIndex === idx ? "bg-surface-container" : "hover:bg-surface-container-low"
                     }`}
                   >
-                    <td className="px-3 py-2 text-center border-r border-outline-variant bg-surface-container-low">
-                      {item.sNo}
+                    <td className="pl-4 pr-2 py-2 text-on-surface-variant tabular-nums">{item.sNo}</td>
+                    <td className="px-2 py-2 font-medium whitespace-nowrap">{item.stockNo}</td>
+                    <td className="px-2 py-2 truncate max-w-xs">{item.itemDescription}</td>
+                    <td className="px-2 py-2 text-right tabular-nums font-medium">{item.qty}</td>
+                    <td className="px-2 py-2 text-right tabular-nums text-on-surface-variant">
+                      {item.sqftRequested ? Number(item.sqftRequested).toFixed(2) : "—"}
                     </td>
-                    <td className="px-3 py-2 border-r border-outline-variant font-bold text-primary">
-                      {item.stockNo}
+                    <td className="px-2 py-2 text-right tabular-nums">{Number(item.rate).toFixed(2)}</td>
+                    {showMoreColumns && (
+                      <>
+                        <td className="px-2 py-2 text-right tabular-nums">{Number(item.value).toFixed(2)}</td>
+                        <td className="px-2 py-2 text-on-surface-variant">{item.discCode || "—"}</td>
+                        <td className="px-2 py-2 text-right tabular-nums">{item.discQty || "0"}</td>
+                      </>
+                    )}
+                    <td className="px-2 py-2 text-right tabular-nums text-on-surface-variant">
+                      {item.discPercent ? `${item.discPercent}%` : "—"}
                     </td>
-                    <td className="px-3 py-2 border-r border-outline-variant truncate max-w-xs font-sans font-medium">
-                      {item.itemDescription}
+                    {showMoreColumns && (
+                      <td className="px-2 py-2 text-right tabular-nums">{item.discAmt > 0 ? item.discAmt.toFixed(2) : "—"}</td>
+                    )}
+                    <td className="px-2 py-2 text-right tabular-nums text-on-surface-variant">
+                      {item.gstPercentage != null ? `${item.gstPercentage}%` : "—"}
                     </td>
-                    <td className="px-3 py-2 text-right border-r border-outline-variant">
-                      {Number(item.rate).toFixed(2)}
-                    </td>
-                    <td className="px-3 py-2 text-right border-r border-outline-variant font-bold">
-                      {item.qty}
-                    </td>
-                    <td className="px-3 py-2 text-right border-r border-outline-variant">
-                      {Number(item.value).toFixed(2)}
-                    </td>
-                    <td className="px-3 py-2 border-r border-outline-variant text-on-surface-variant">
-                      {item.discCode || "-"}
-                    </td>
-                    <td className="px-3 py-2 text-right border-r border-outline-variant">
-                      {item.discQty || "0"}
-                    </td>
-                    <td className="px-3 py-2 text-right border-r border-outline-variant">
-                      {item.discPercent ? `${item.discPercent}%` : "-"}
-                    </td>
-                    <td className="px-3 py-2 text-right border-r border-outline-variant">
-                      {item.discAmt > 0 ? item.discAmt.toFixed(2) : "-"}
-                    </td>
-                    <td className="px-3 py-2 text-right border-r border-outline-variant font-bold text-primary">
-                      {Number(item.total).toFixed(2)}
-                    </td>
-                    <td className="px-3 py-2 border-r border-outline-variant truncate max-w-[120px] text-on-surface-variant font-sans">
-                      {item.salesStaff}
-                    </td>
-                    <td className="px-2 py-2 text-center">
+                    <td className="px-2 py-2 text-right tabular-nums font-semibold">{Number(item.total).toFixed(2)}</td>
+                    {showMoreColumns && (
+                      <td className="px-2 py-2 truncate max-w-[110px] text-on-surface-variant">{item.salesStaff}</td>
+                    )}
+                    <td className="pr-3 py-2 text-right">
                       <button
                         type="button"
                         onClick={e => {
@@ -1453,477 +1476,406 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
                         }}
                         className="text-on-surface-variant hover:text-error transition-colors p-1 cursor-pointer"
                         title="Delete Row"
+                        aria-label="Delete Row"
                       >
-                        <Trash2 size={13} />
+                        <Trash2 size={14} />
                       </button>
                     </td>
                   </tr>
                 ))}
 
-                {/* Empty placeholders if rows < 5 */}
-                {Array.from({ length: Math.max(0, 5 - items.length) }).map((_, i) => (
-                  <tr key={"empty-" + i} className="border-b border-outline-variant/30">
-                    <td className="px-3 py-2 text-center border-r border-outline-variant bg-surface-container-low text-on-surface-variant/40">
-                      {items.length + i + 1}
+                {items.length === 0 && (
+                  <tr>
+                    <td colSpan={showMoreColumns ? 15 : 10} className="px-4 py-10 text-center text-sm text-on-surface-variant">
+                      No items yet. Type a stock no. or scan a barcode below and press Enter.
                     </td>
-                    <td colSpan={12} className="px-3 py-2 text-on-surface-variant/20 italic"></td>
                   </tr>
-                ))}
+                )}
               </tbody>
             </table>
           </div>
 
-          {/* Direct Entry Row (F11 / F1) at Bottom of Detail Card */}
-          <div className="bg-surface-container-low border-t border-outline-variant p-2 flex gap-2 items-center shrink-0">
-            <span className="font-label-caps text-label-caps text-on-surface-variant bg-surface-variant px-2 py-1 rounded w-10 text-center font-bold">
-              F11
-            </span>
-
-            {/* Inputs aligned with table columns */}
-            <div className="flex-1 flex gap-2 items-center">
-              {/* Stock / Barcode Search */}
-              <div className="w-[100px] relative">
-                <input
-                  ref={directStockNoRef}
-                  type="text"
-                  value={directEntry.stockNo}
-                  onChange={e => handleItemSearchChange(e.target.value, "stockNo")}
-                  onFocus={() => {
-                    setActiveItemSearchField("stockNo");
-                    if (productSuggestions.length > 0) setShowProductDropdown(true);
+          {/* Single-line item entry (F11) */}
+          <div className="border-t border-outline-variant bg-surface-container-low px-3 py-2 flex gap-2 items-center shrink-0">
+            {/* Stock / Barcode Search */}
+            <div className="w-[150px] relative shrink-0">
+              <input
+                ref={directStockNoRef}
+                type="text"
+                value={directEntry.stockNo}
+                onChange={e => handleItemSearchChange(e.target.value, "stockNo")}
+                onFocus={() => {
+                  setActiveItemSearchField("stockNo");
+                  if (productSuggestions.length > 0) setShowProductDropdown(true);
+                }}
+                onKeyDown={e => handleItemInputKeyDown(e, "stockNo")}
+                placeholder="Stock No"
+                title="Stock no. / barcode (F11)"
+                className="w-full border border-outline-variant h-9 text-sm px-3 bg-surface-container-lowest font-medium focus:border-on-surface-variant outline-none"
+              />
+              {activeItemSearchField === "stockNo" && (
+                <TileFlowItemTypeaheadDropdown
+                  isOpen={showProductDropdown && (productSuggestions.length > 0 || isProductSearching || Boolean(productSearchError))}
+                  items={productSuggestions}
+                  selectedIndex={productSelectedIndex}
+                  isLoading={isProductSearching}
+                  errorMessage={productSearchError}
+                  onSelect={(opt) => {
+                    applyProductAutoPopulate(opt);
+                    directStockNoRef.current?.focus();
                   }}
-                  onKeyDown={e => handleItemInputKeyDown(e, "stockNo")}
-                  placeholder="Stock No"
-                  className="w-full border-outline-variant h-8 font-code-md text-xs rounded px-2 bg-surface-container-lowest font-bold focus:border-secondary outline-none border"
+                  onClose={() => setShowProductDropdown(false)}
+                  searchFieldType="stockNo"
+                  anchorRef={directStockNoRef}
                 />
-                {activeItemSearchField === "stockNo" && (
-                  <SmritiItemTypeaheadDropdown
-                    isOpen={showProductDropdown && (productSuggestions.length > 0 || isProductSearching || Boolean(productSearchError))}
-                    items={productSuggestions}
-                    selectedIndex={productSelectedIndex}
-                    isLoading={isProductSearching}
-                    errorMessage={productSearchError}
-                    onSelect={(opt) => {
-                      applyProductAutoPopulate(opt);
-                      directStockNoRef.current?.focus();
-                    }}
-                    onClose={() => setShowProductDropdown(false)}
-                    searchFieldType="stockNo"
-                    anchorRef={directStockNoRef}
-                  />
-                )}
-              </div>
+              )}
+            </div>
 
-              {/* Item Description Display */}
-              <input
-                type="text"
-                value={directEntry.itemDescription}
-                onChange={e => setDirectEntry({ ...directEntry, itemDescription: e.target.value })}
-                onKeyDown={e => e.key === "Enter" && handleCommitDirectEntry()}
-                placeholder="Item Description"
-                className="flex-1 bg-surface-container border-outline-variant h-8 text-xs rounded px-2 font-medium border focus:border-secondary outline-none truncate"
-              />
+            {/* Item Description */}
+            <input
+              type="text"
+              value={directEntry.itemDescription}
+              onChange={e => setDirectEntry({ ...directEntry, itemDescription: e.target.value })}
+              onKeyDown={e => e.key === "Enter" && handleCommitDirectEntry()}
+              placeholder="Item name"
+              className="flex-1 min-w-0 border border-outline-variant h-9 text-sm px-3 bg-surface-container-lowest focus:border-on-surface-variant outline-none truncate"
+            />
 
-              {/* Rate */}
-              <input
-                type="number"
-                step="0.01"
-                value={directEntry.rate}
-                onChange={e => setDirectEntry({ ...directEntry, rate: e.target.value })}
-                onKeyDown={e => e.key === "Enter" && handleCommitDirectEntry()}
-                placeholder="Rate"
-                className="w-[80px] border-outline-variant h-8 font-code-md text-xs rounded px-2 text-right bg-surface-container-lowest font-bold focus:border-secondary outline-none border"
-              />
+            {/* Qty */}
+            <input
+              type="number"
+              min="1"
+              value={directEntry.qty}
+              onChange={e => setDirectEntry({ ...directEntry, qty: e.target.value })}
+              onKeyDown={e => e.key === "Enter" && handleCommitDirectEntry()}
+              placeholder="Qty"
+              title="Boxes"
+              className="w-[80px] shrink-0 border border-outline-variant h-9 text-sm px-3 text-right bg-surface-container-lowest font-medium focus:border-on-surface-variant outline-none"
+            />
 
-              {/* Qty */}
-              <input
-                type="number"
-                min="1"
-                value={directEntry.qty}
-                onChange={e => setDirectEntry({ ...directEntry, qty: e.target.value })}
-                onKeyDown={e => e.key === "Enter" && handleCommitDirectEntry()}
-                placeholder="Qty"
-                className="w-[80px] border-outline-variant h-8 font-code-md text-xs rounded px-2 text-right bg-surface-container-lowest font-bold focus:border-secondary outline-none border"
-              />
+            {/* Sq.Ft. converts to whole boxes */}
+            <input
+              type="number"
+              min="0"
+              step="any"
+              value={directEntry.sqft}
+              onChange={e => handleSqftChange(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && handleCommitDirectEntry()}
+              placeholder="Sq.Ft"
+              title="Sq.Ft (converts to whole boxes)"
+              className="w-[80px] shrink-0 border border-outline-variant h-9 text-sm px-3 text-right bg-surface-container-lowest focus:border-on-surface-variant outline-none"
+            />
 
-              {/* Value */}
-              <input
-                type="text"
-                value={directGrossValue > 0 ? directGrossValue.toFixed(2) : ""}
-                readOnly
-                placeholder="Value"
-                className="w-[100px] bg-surface-variant border-outline-variant h-8 font-code-md text-xs rounded px-2 text-right font-bold text-on-surface border"
-              />
+            {/* Rate */}
+            <input
+              type="number"
+              step="0.01"
+              value={directEntry.rate}
+              onChange={e => setDirectEntry({ ...directEntry, rate: e.target.value })}
+              onKeyDown={e => e.key === "Enter" && handleCommitDirectEntry()}
+              placeholder="Rate"
+              className="w-[96px] shrink-0 border border-outline-variant h-9 text-sm px-3 text-right bg-surface-container-lowest focus:border-on-surface-variant outline-none"
+            />
 
-              {/* Disc Code */}
-              <input
-                type="text"
-                value={directEntry.discCode}
-                onChange={e => setDirectEntry({ ...directEntry, discCode: e.target.value })}
-                placeholder="Disc Code"
-                className="w-[80px] border-outline-variant h-8 font-code-md text-xs rounded px-2 bg-surface-container-lowest focus:border-secondary outline-none border"
-              />
+            {showMoreColumns && (
+              <>
+                <input
+                  type="text"
+                  value={directEntry.discCode}
+                  onChange={e => setDirectEntry({ ...directEntry, discCode: e.target.value })}
+                  placeholder="Disc Code"
+                  className="w-[88px] shrink-0 border border-outline-variant h-9 text-sm px-3 bg-surface-container-lowest focus:border-on-surface-variant outline-none"
+                />
+                <input
+                  type="number"
+                  value={directEntry.discQty}
+                  onChange={e => setDirectEntry({ ...directEntry, discQty: e.target.value })}
+                  placeholder="Disc Qty"
+                  className="w-[80px] shrink-0 border border-outline-variant h-9 text-sm px-3 text-right bg-surface-container-lowest focus:border-on-surface-variant outline-none"
+                />
+              </>
+            )}
 
-              {/* Disc Qty */}
-              <input
-                type="number"
-                value={directEntry.discQty}
-                onChange={e => setDirectEntry({ ...directEntry, discQty: e.target.value })}
-                placeholder="Disc Qty"
-                className="w-[80px] border-outline-variant h-8 font-code-md text-xs rounded px-2 text-right bg-surface-container-lowest focus:border-secondary outline-none border"
-              />
+            {/* Disc % */}
+            <input
+              type="number"
+              value={directEntry.discPercent}
+              onChange={e => setDirectEntry({ ...directEntry, discPercent: e.target.value })}
+              placeholder="Disc %"
+              className="w-[72px] shrink-0 border border-outline-variant h-9 text-sm px-3 text-right bg-surface-container-lowest focus:border-on-surface-variant outline-none"
+            />
 
-              {/* Disc % */}
-              <input
-                type="number"
-                value={directEntry.discPercent}
-                onChange={e => setDirectEntry({ ...directEntry, discPercent: e.target.value })}
-                placeholder="Disc %"
-                className="w-[80px] border-outline-variant h-8 font-code-md text-xs rounded px-2 text-right bg-surface-container-lowest focus:border-secondary outline-none border"
-              />
-
-              {/* Disc Amt */}
-              <input
-                type="text"
-                value={directDiscAmt > 0 ? directDiscAmt.toFixed(2) : ""}
-                readOnly
-                placeholder="Disc Amt"
-                className="w-[100px] bg-surface-container-highest border-outline-variant h-8 font-code-md text-xs rounded px-2 text-right font-bold text-on-surface border"
-              />
-
-              {/* Total */}
-              <input
-                type="text"
-                value={directLineTotal > 0 ? directLineTotal.toFixed(2) : ""}
-                readOnly
-                placeholder="Total"
-                className="w-[120px] bg-surface-container-lowest border-outline-variant h-8 font-code-md text-xs rounded px-2 text-right font-bold text-primary border"
-              />
-
-              {/* Staff Select */}
+            {showMoreColumns && (
               <select
                 value={directEntry.staff}
                 onChange={e => setDirectEntry({ ...directEntry, staff: e.target.value })}
-                className="w-[120px] border-outline-variant h-8 text-xs rounded px-1.5 bg-surface-container-lowest border font-medium"
+                aria-label="Line salesperson"
+                className="w-[110px] shrink-0 border border-outline-variant h-9 text-sm px-2 bg-surface-container-lowest outline-none"
               >
                 <option value="Staff A">Staff A</option>
                 <option value="Staff B">Staff B</option>
                 <option value="Staff C">Staff C</option>
               </select>
+            )}
 
-              {/* Add Button */}
-              <button
-                type="button"
-                onClick={handleCommitDirectEntry}
-                className="h-8 w-8 bg-primary hover:bg-primary-container text-on-primary rounded flex items-center justify-center shadow-2xs shrink-0 cursor-pointer"
-                title="Add Item (Enter)"
-              >
-                <Plus size={16} />
-              </button>
+            {/* Line amount (read-only) */}
+            <div
+              className="w-[112px] shrink-0 h-9 flex items-center justify-end px-1 text-sm tabular-nums font-semibold text-on-surface"
+              title={directDiscAmt > 0 ? `Value ${directGrossValue.toFixed(2)} − Disc ${directDiscAmt.toFixed(2)}` : "Line amount"}
+            >
+              {directLineTotal > 0 ? `₹${directLineTotal.toFixed(2)}` : <span className="text-on-surface-variant font-normal">₹0.00</span>}
             </div>
-          </div>
 
+            {/* Add Button */}
+            <button
+              type="button"
+              onClick={handleCommitDirectEntry}
+              className="h-9 px-4 bg-primary hover:bg-primary-container text-on-primary text-sm font-medium flex items-center gap-1.5 shrink-0 cursor-pointer"
+              title="Add Item (Enter)"
+            >
+              <Plus size={15} />
+              <span>Add item</span>
+            </button>
+          </div>
         </section>
 
-        {/* FOOTER SECTION */}
-        <section className="flex flex-col gap-stack-gap shrink-0">
-          <div className="flex flex-col lg:flex-row gap-gutter">
-            
-            {/* Left Tabbed Details (Transporter / Payment / AddOns) */}
-            <div className="flex-1 bg-surface-container-lowest border border-outline-variant rounded flex flex-col shadow-xs overflow-hidden">
-              <div className="flex border-b border-outline-variant bg-surface-container-low font-label-caps text-label-caps">
-                <button
-                  type="button"
-                  onClick={() => setActiveFooterTab("transporter")}
-                  className={`px-4 py-2 border-r border-outline-variant font-bold transition-colors cursor-pointer ${
-                    activeFooterTab === "transporter"
-                      ? "bg-surface-container-lowest text-primary border-t-2 border-t-primary"
-                      : "text-on-surface-variant hover:bg-surface-container-high"
-                  }`}
-                >
-                  Transporter Details
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveFooterTab("payment")}
-                  className={`px-4 py-2 border-r border-outline-variant font-bold transition-colors cursor-pointer ${
-                    activeFooterTab === "payment"
-                      ? "bg-surface-container-lowest text-primary border-t-2 border-t-primary"
-                      : "text-on-surface-variant hover:bg-surface-container-high"
-                  }`}
-                >
-                  Payment Details
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setActiveFooterTab("addons")}
-                  className={`px-4 py-2 border-r border-outline-variant font-bold transition-colors cursor-pointer ${
-                    activeFooterTab === "addons"
-                      ? "bg-surface-container-lowest text-primary border-t-2 border-t-primary"
-                      : "text-on-surface-variant hover:bg-surface-container-high"
-                  }`}
-                >
-                  AddOns And Deductions
-                </button>
-              </div>
+        {/* FOOTER: remarks + more details (left), totals + settlement (right) */}
+        <section className="flex gap-3 shrink-0 items-start">
 
-              {/* Tab 1: Transporter Details */}
-              {activeFooterTab === "transporter" && (
-                <div className="p-2 overflow-x-auto flex-1 max-h-36">
-                  <table className="w-full text-left border border-outline-variant text-xs">
-                    <thead className="bg-surface-container-high border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant font-bold">
-                      <tr>
-                        <th className="px-2 py-1 w-10 border-r border-outline-variant text-center">S.No</th>
-                        <th className="px-2 py-1 w-28 border-r border-outline-variant">Type</th>
-                        <th className="px-2 py-1 w-20 border-r border-outline-variant">Code</th>
-                        <th className="px-2 py-1 border-r border-outline-variant">Description</th>
-                        <th className="px-2 py-1 w-24 border-r border-outline-variant">(Fixed/Variable)</th>
-                        <th className="px-2 py-1 w-20 border-r border-outline-variant text-right">Rate/Amt</th>
-                        <th className="px-2 py-1 w-20 border-r border-outline-variant text-right">Rate</th>
-                        <th className="px-2 py-1 w-24 text-right">Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody className="font-code-md text-xs text-on-surface-variant">
-                      {transporterRows.map((t, idx) => (
-                        <tr key={idx} className="border-b border-outline-variant">
-                          <td className="px-2 py-1 border-r border-outline-variant text-center bg-surface-container-low">{t.sNo}</td>
-                          <td className="px-2 py-1 border-r border-outline-variant">
-                            <input
-                              type="text"
-                              value={t.type}
-                              onChange={e => {
-                                const val = e.target.value;
-                                setTransporterRows(prev => prev.map((r, i) => i === idx ? { ...r, type: val } : r));
-                              }}
-                              className="w-full bg-transparent border-none p-0 text-xs font-sans outline-none"
-                            />
-                          </td>
-                          <td className="px-2 py-1 border-r border-outline-variant">{t.code}</td>
-                          <td className="px-2 py-1 border-r border-outline-variant">{t.description}</td>
-                          <td className="px-2 py-1 border-r border-outline-variant">{t.rateType}</td>
-                          <td className="px-2 py-1 border-r border-outline-variant text-right">{t.rateAmt}</td>
-                          <td className="px-2 py-1 border-r border-outline-variant text-right">{t.rate}</td>
-                          <td className="px-2 py-1 text-right font-bold text-primary">
-                            <input
-                              type="number"
-                              value={t.amount || ""}
-                              placeholder="0.00"
-                              onChange={e => {
-                                const val = parseFloat(e.target.value) || 0;
-                                setTransporterRows(prev => prev.map((r, i) => i === idx ? { ...r, amount: val } : r));
-                              }}
-                              className="w-full bg-surface border border-outline-variant rounded px-1.5 py-0.5 text-right font-code-md text-xs font-bold outline-none"
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-
-              {/* Tab 2: Payment Details */}
-              {activeFooterTab === "payment" && (
-                <div className="p-3 flex-1 flex flex-col justify-center items-center gap-2 max-h-36 bg-surface-container-low">
-                  <p className="text-xs text-on-surface-variant font-medium">Payment Mode: <strong>{headerState.transaction}</strong></p>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (items.length > 0) setShowSettlementModal(true);
-                      else alert("Add items before opening settlement.");
-                    }}
-                    className="bg-primary hover:bg-primary-container text-on-primary px-4 py-1.5 rounded text-xs font-bold transition shadow-2xs cursor-pointer"
-                  >
-                    Open Multi-Tender Settlement Studio (F8)
-                  </button>
-                </div>
-              )}
-
-              {/* Tab 3: Addons & Deductions */}
-              {activeFooterTab === "addons" && (
-                <div className="p-2 overflow-x-auto flex-1 max-h-36">
-                  <table className="w-full text-left border border-outline-variant text-xs">
-                    <thead className="bg-surface-container-high border-b border-outline-variant font-label-caps text-label-caps text-on-surface-variant font-bold">
-                      <tr>
-                        <th className="px-2 py-1 w-10 border-r border-outline-variant text-center">S.No</th>
-                        <th className="px-2 py-1 w-24 border-r border-outline-variant">Type</th>
-                        <th className="px-2 py-1 w-20 border-r border-outline-variant">Code</th>
-                        <th className="px-2 py-1 border-r border-outline-variant">Description</th>
-                        <th className="px-2 py-1 w-24 text-right">Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody className="font-code-md text-xs">
-                      {addonRows.map((a, idx) => (
-                        <tr key={idx} className="border-b border-outline-variant">
-                          <td className="px-2 py-1 border-r border-outline-variant text-center bg-surface-container-low">{a.sNo}</td>
-                          <td className="px-2 py-1 border-r border-outline-variant">
-                            <select
-                              value={a.type}
-                              onChange={e => {
-                                const val = e.target.value as "Addon" | "Deduction";
-                                setAddonRows(prev => prev.map((r, i) => i === idx ? { ...r, type: val } : r));
-                              }}
-                              className="bg-transparent border-none text-xs p-0 outline-none"
-                            >
-                              <option value="Addon">Addon (+)</option>
-                              <option value="Deduction">Deduction (-)</option>
-                            </select>
-                          </td>
-                          <td className="px-2 py-1 border-r border-outline-variant">{a.code}</td>
-                          <td className="px-2 py-1 border-r border-outline-variant">{a.description}</td>
-                          <td className="px-2 py-1 text-right font-bold text-primary">
-                            <input
-                              type="number"
-                              value={a.amount || ""}
-                              placeholder="0.00"
-                              onChange={e => {
-                                const val = parseFloat(e.target.value) || 0;
-                                setAddonRows(prev => prev.map((r, i) => i === idx ? { ...r, amount: val } : r));
-                              }}
-                              className="w-full bg-surface border border-outline-variant rounded px-1.5 py-0.5 text-right font-code-md text-xs font-bold outline-none"
-                            />
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              )}
-
-              {/* Document Remarks Input */}
-              <div className="p-2 border-t border-outline-variant bg-surface-container-low shrink-0">
-                <label className="font-label-caps text-label-caps text-on-surface-variant uppercase font-bold mb-1 block">
-                  Document Remarks
-                </label>
-                <input
-                  type="text"
-                  value={headerState.remarks}
-                  onChange={e => setHeaderState({ ...headerState, remarks: e.target.value })}
-                  placeholder="e.g. Dispatched via Express logistics, Fragile handling requested"
-                  className="w-full border border-outline-variant rounded h-7 text-xs px-2 bg-surface focus:border-secondary outline-none font-medium"
-                />
-              </div>
+          <div className="flex-1 min-w-0 flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={headerState.remarks}
+                onChange={e => setHeaderState({ ...headerState, remarks: e.target.value })}
+                placeholder="Remarks (optional)"
+                aria-label="Remarks"
+                className="flex-1 min-w-0 border border-outline-variant h-9 text-sm px-3 bg-surface-container-lowest focus:border-on-surface-variant outline-none"
+              />
+              <button
+                type="button"
+                onClick={() => setShowMoreDetails(v => !v)}
+                aria-expanded={showMoreDetails}
+                className="h-9 px-4 text-sm text-on-surface-variant hover:text-on-surface border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high flex items-center gap-1.5 shrink-0 cursor-pointer"
+              >
+                <Truck size={15} />
+                <span>More details</span>
+                <span className="text-xs text-on-surface-variant">(transport, other charges)</span>
+                <span className="text-xs">{showMoreDetails ? "▴" : "▾"}</span>
+              </button>
             </div>
 
-            {/* Right Totals Grid */}
-            <div className="w-full lg:w-80 bg-surface-container-lowest border border-outline-variant rounded flex flex-col p-2 shadow-xs">
-              <table className="w-full text-left font-body-sm text-xs">
-                <thead className="font-label-caps text-label-caps text-on-surface-variant border-b border-outline-variant uppercase font-bold">
-                  <tr>
-                    <th className="pb-1.5 w-28">Description</th>
-                    <th className="pb-1.5 text-right">Net Values</th>
-                  </tr>
-                </thead>
-                <tbody className="font-code-md text-xs divide-y divide-outline-variant/30">
-                  <tr>
-                    <td className="py-1.5 text-on-surface-variant font-medium">Sales</td>
-                    <td className="py-1.5">
-                      <input
-                        type="text"
-                        value={summaryTotals.salesValue.toFixed(2)}
-                        readOnly
-                        className="w-full h-6 text-right bg-surface-variant border border-outline-variant rounded px-1.5 font-bold text-on-surface"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-1.5 text-on-surface-variant font-medium">Discounts</td>
-                    <td className="py-1.5">
-                      <input
-                        type="text"
-                        value={summaryTotals.itemDiscount.toFixed(2)}
-                        readOnly
-                        className="w-full h-6 text-right bg-surface-variant border border-outline-variant rounded px-1.5 font-bold text-on-surface"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-1.5 text-on-surface-variant font-medium">Sales Tax</td>
-                    <td className="py-1.5">
-                      <input
-                        type="text"
-                        value={summaryTotals.totalTax.toFixed(2)}
-                        readOnly
-                        className="w-full h-6 text-right bg-surface-variant border border-outline-variant rounded px-1.5 font-bold text-on-surface"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-1.5 text-on-surface-variant font-medium">Add-ons</td>
-                    <td className="py-1.5">
-                      <input
-                        type="text"
-                        value={summaryTotals.totalAddons.toFixed(2)}
-                        readOnly
-                        className="w-full h-6 text-right bg-surface-variant border border-outline-variant rounded px-1.5 font-bold text-on-surface"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="py-1.5 text-on-surface-variant font-medium">Deductions</td>
-                    <td className="py-1.5">
-                      <input
-                        type="text"
-                        value={summaryTotals.totalDeductions.toFixed(2)}
-                        readOnly
-                        className="w-full h-6 text-right bg-surface-variant border border-outline-variant rounded px-1.5 font-bold text-on-surface"
-                      />
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+            {showMoreDetails && (
+              <div className="bg-surface-container-lowest border border-outline-variant rounded-lg flex flex-col overflow-hidden">
+                <div className="flex gap-1 px-2 pt-2 border-b border-outline-variant">
+                  {([
+                    ["transporter", "Transport"],
+                    ["addons", "Other charges & deductions"],
+                    ["payment", "Payment"],
+                  ] as const).map(([key, label]) => (
+                    <button
+                      key={key}
+                      type="button"
+                      onClick={() => setActiveFooterTab(key)}
+                      className={`rounded-none px-3 py-1.5 text-[13px] border-b-2 -mb-px transition-colors cursor-pointer ${
+                        activeFooterTab === key
+                          ? "border-on-surface text-on-surface font-medium"
+                          : "border-transparent text-on-surface-variant hover:text-on-surface"
+                      }`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
 
+                {/* Transport */}
+                {activeFooterTab === "transporter" && (
+                  <div className="p-2 overflow-x-auto max-h-36">
+                    <table className="w-full text-left text-[13px]">
+                      <thead className="text-xs text-on-surface-variant">
+                        <tr className="border-b border-outline-variant">
+                          <th className="px-2 py-1 font-medium">Mode</th>
+                          <th className="px-2 py-1 font-medium">Code</th>
+                          <th className="px-2 py-1 font-medium">Transporter</th>
+                          <th className="px-2 py-1 font-medium">Fixed / variable</th>
+                          <th className="px-2 py-1 font-medium text-right">Rate</th>
+                          <th className="px-2 py-1 font-medium text-right w-28">Freight (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {transporterRows.map((t, idx) => (
+                          <tr key={idx} className="border-b border-outline-variant">
+                            <td className="px-2 py-1">
+                              <input
+                                type="text"
+                                value={t.type}
+                                onChange={e => {
+                                  const val = e.target.value;
+                                  setTransporterRows(prev => prev.map((r, i) => i === idx ? { ...r, type: val } : r));
+                                }}
+                                className="w-full bg-transparent border-none p-0 text-[13px] outline-none"
+                              />
+                            </td>
+                            <td className="px-2 py-1 text-on-surface-variant">{t.code}</td>
+                            <td className="px-2 py-1">{t.description}</td>
+                            <td className="px-2 py-1 text-on-surface-variant">{t.rateType}</td>
+                            <td className="px-2 py-1 text-right tabular-nums">{t.rate}</td>
+                            <td className="px-2 py-1 text-right">
+                              <input
+                                type="number"
+                                value={t.amount || ""}
+                                placeholder="0.00"
+                                onChange={e => {
+                                  const val = parseFloat(e.target.value) || 0;
+                                  setTransporterRows(prev => prev.map((r, i) => i === idx ? { ...r, amount: val } : r));
+                                }}
+                                className="w-full border border-outline-variant rounded px-2 py-0.5 text-right text-[13px] outline-none bg-surface-container-lowest"
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* Other charges & deductions */}
+                {activeFooterTab === "addons" && (
+                  <div className="p-2 overflow-x-auto max-h-36">
+                    <table className="w-full text-left text-[13px]">
+                      <thead className="text-xs text-on-surface-variant">
+                        <tr className="border-b border-outline-variant">
+                          <th className="px-2 py-1 font-medium w-40">Type</th>
+                          <th className="px-2 py-1 font-medium w-24">Code</th>
+                          <th className="px-2 py-1 font-medium">Description</th>
+                          <th className="px-2 py-1 font-medium text-right w-28">Amount (₹)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {addonRows.map((a, idx) => (
+                          <tr key={idx} className="border-b border-outline-variant">
+                            <td className="px-2 py-1">
+                              <select
+                                value={a.type}
+                                onChange={e => {
+                                  const val = e.target.value as "Addon" | "Deduction";
+                                  setAddonRows(prev => prev.map((r, i) => i === idx ? { ...r, type: val } : r));
+                                }}
+                                className="bg-transparent border-none text-[13px] p-0 outline-none"
+                              >
+                                <option value="Addon">Other charge (+)</option>
+                                <option value="Deduction">Deduction (−)</option>
+                              </select>
+                            </td>
+                            <td className="px-2 py-1 text-on-surface-variant">{a.code}</td>
+                            <td className="px-2 py-1">{a.description}</td>
+                            <td className="px-2 py-1 text-right">
+                              <input
+                                type="number"
+                                value={a.amount || ""}
+                                placeholder="0.00"
+                                onChange={e => {
+                                  const val = parseFloat(e.target.value) || 0;
+                                  setAddonRows(prev => prev.map((r, i) => i === idx ? { ...r, amount: val } : r));
+                                }}
+                                className="w-full border border-outline-variant rounded px-2 py-0.5 text-right text-[13px] outline-none bg-surface-container-lowest"
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* Payment */}
+                {activeFooterTab === "payment" && (
+                  <div className="p-3 flex items-center justify-between gap-3 text-[13px] text-on-surface-variant">
+                    <span>Payment terms: <span className="text-on-surface font-medium">{headerState.transaction}</span>. Split tenders (cash, UPI, card, cheque, credit) are taken at settlement.</span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (items.length > 0) setShowSettlementModal(true);
+                        else alert("Add items before opening settlement.");
+                      }}
+                      className="h-8 px-4 border border-outline-variant text-on-surface hover:bg-surface-container-high text-[13px] font-medium shrink-0 cursor-pointer"
+                    >
+                      Open settlement
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            <p className="text-xs text-on-surface-variant pt-1">
+              Shortcuts: F2 customer · F11 item entry · F6 discount · F7/F8 settle · F12 hold · Ctrl+4 other charges
+            </p>
           </div>
 
-          {/* Bottom High-Visibility Status Bar */}
-          <div className="bg-primary-container text-on-primary border border-outline-variant rounded flex font-label-caps text-[10px] sm:text-label-caps overflow-hidden shadow-sm shrink-0">
-            <div className="flex-1 flex flex-col justify-center items-center p-2 border-r border-outline-variant/30">
-              <span className="opacity-70 uppercase tracking-wider">No. of Items</span>
-              <span className="font-code-md font-bold text-base text-white">{summaryTotals.itemCount}</span>
+          {/* Totals + primary action */}
+          <div className="w-[340px] shrink-0 bg-surface-container-lowest border border-outline-variant rounded-lg px-4 py-3 flex flex-col gap-1 text-[13px]">
+            <div className="flex justify-between text-on-surface-variant">
+              <span>Sub-total <span className="text-xs">({summaryTotals.itemCount} {summaryTotals.itemCount === 1 ? "item" : "items"}, {Number(summaryTotals.totalQty.toFixed(2))} qty)</span></span>
+              <span className="tabular-nums text-on-surface">₹{summaryTotals.salesValue.toFixed(2)}</span>
             </div>
-
-            <div className="flex-1 flex flex-col justify-center items-center p-2 border-r border-outline-variant/30">
-              <span className="opacity-70 uppercase tracking-wider">Total Qty.</span>
-              <span className="font-code-md font-bold text-base text-white">{summaryTotals.totalQty.toFixed(2)}</span>
+            {(summaryTotals.itemDiscount + summaryTotals.billDiscount) > 0 && (
+              <div className="flex justify-between text-on-surface-variant">
+                <span>Discount</span>
+                <span className="tabular-nums text-on-surface">−₹{(summaryTotals.itemDiscount + summaryTotals.billDiscount).toFixed(2)}</span>
+              </div>
+            )}
+            {isIgstDisplay ? (
+              <div className="flex justify-between text-on-surface-variant">
+                <span>IGST</span>
+                <span className="tabular-nums text-on-surface">₹{summaryTotals.totalTax.toFixed(2)}</span>
+              </div>
+            ) : (
+              <>
+                <div className="flex justify-between text-on-surface-variant">
+                  <span>CGST</span>
+                  <span className="tabular-nums text-on-surface">₹{(summaryTotals.totalTax / 2).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-on-surface-variant">
+                  <span>SGST</span>
+                  <span className="tabular-nums text-on-surface">₹{(summaryTotals.totalTax / 2).toFixed(2)}</span>
+                </div>
+              </>
+            )}
+            {summaryTotals.totalAddons > 0 && (
+              <div className="flex justify-between text-on-surface-variant">
+                <span>Other charges</span>
+                <span className="tabular-nums text-on-surface">₹{summaryTotals.totalAddons.toFixed(2)}</span>
+              </div>
+            )}
+            {summaryTotals.totalDeductions > 0 && (
+              <div className="flex justify-between text-on-surface-variant">
+                <span>Deductions</span>
+                <span className="tabular-nums text-on-surface">−₹{summaryTotals.totalDeductions.toFixed(2)}</span>
+              </div>
+            )}
+            {summaryTotals.roundOff !== 0 && (
+              <div className="flex justify-between text-on-surface-variant">
+                <span>Round-off</span>
+                <span className="tabular-nums text-on-surface">{summaryTotals.roundOff > 0 ? "+" : "-"}₹{Math.abs(summaryTotals.roundOff).toFixed(2)}</span>
+              </div>
+            )}
+            <div className="flex justify-between items-baseline border-t border-outline-variant mt-1 pt-2">
+              <span className="text-sm font-medium text-on-surface">Grand total</span>
+              <span className="text-2xl font-semibold tabular-nums text-on-surface">₹{summaryTotals.netAmount.toFixed(2)}</span>
             </div>
-
-            <div className="flex-1 flex flex-col justify-center items-center p-2 border-r border-outline-variant/30">
-              <span className="opacity-70 uppercase tracking-wider">Sales Value</span>
-              <span className="font-code-md font-bold text-base text-white">₹{summaryTotals.salesValue.toFixed(2)}</span>
-            </div>
-
-            <div className="flex-1 flex flex-col justify-center items-center p-2 border-r border-outline-variant/30">
-              <span className="opacity-70 uppercase tracking-wider">Item Lvl. Discount</span>
-              <span className="font-code-md font-bold text-base text-white">₹{summaryTotals.itemDiscount.toFixed(2)}</span>
-            </div>
-
-            <div className="flex-1 flex flex-col justify-center items-center p-2 border-r border-outline-variant/30">
-              <span className="opacity-70 uppercase tracking-wider">Bill Discount</span>
-              <span className="font-code-md font-bold text-base text-white">₹{summaryTotals.billDiscount.toFixed(2)}</span>
-            </div>
-
-            <div className="flex-1 flex flex-col justify-center items-center p-2 border-r border-outline-variant/30">
-              <span className="opacity-70 uppercase tracking-wider">Total Tax</span>
-              <span className="font-code-md font-bold text-base text-white">₹{summaryTotals.totalTax.toFixed(2)}</span>
-            </div>
-
-            <div className="flex-1 flex flex-col justify-center items-center p-2 border-r border-outline-variant/30">
-              <span className="opacity-70 uppercase tracking-wider">Total Addons</span>
-              <span className="font-code-md font-bold text-base text-white">₹{summaryTotals.totalAddons.toFixed(2)}</span>
-            </div>
-
-            <div className="flex-1 flex flex-col justify-center items-center p-2 border-r border-outline-variant/30">
-              <span className="opacity-70 uppercase tracking-wider">Total Deductions</span>
-              <span className="font-code-md font-bold text-base text-white">₹{summaryTotals.totalDeductions.toFixed(2)}</span>
-            </div>
-
-            <div className="flex-[1.5] bg-[#315384] text-white flex flex-col justify-center items-end p-2 px-4">
-              <span className="opacity-80 font-bold uppercase tracking-wider">Net Amount</span>
-              <span className="font-code-md font-bold text-2xl text-white">₹{summaryTotals.netAmount.toFixed(2)}</span>
-            </div>
+            <button
+              type="button"
+              onClick={() => {
+                if (items.length > 0) setShowSettlementModal(true);
+                else alert("Add items before settlement.");
+              }}
+              className="mt-2 h-10 w-full bg-primary hover:bg-primary-container text-on-primary text-sm font-semibold transition-colors flex items-center justify-center gap-2 cursor-pointer"
+              title="Settlement (F8)"
+            >
+              <CreditCard size={16} />
+              <span>Settlement (F8)</span>
+            </button>
           </div>
-
         </section>
 
       </main>
@@ -1944,18 +1896,10 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
         </div>
       )}
 
-      {/* Persistent Bottom Shortcut Footer */}
-      <footer className="bg-surface-container-highest border-t border-outline-variant mt-auto w-full flex justify-between items-center px-margin-page py-2 shrink-0 z-30 font-label-caps text-label-caps">
-        <span className="text-on-surface-variant font-medium">
-          Ready... <strong className="text-primary">F2:</strong> Search | <strong className="text-primary">F11:</strong> Direct Entry | <strong className="text-primary">F6:</strong> Discounts | <strong className="text-primary">F7/F8:</strong> Settlement | <strong className="text-primary">F12:</strong> Suspend | <strong className="text-primary">Ctrl+4:</strong> AddOns
-        </span>
-        <span className="text-primary font-bold">© 2026 smritisys.com</span>
-      </footer>
-
       {/* MODALS */}
 
       {/* 1. Settlement Modal */}
-      <SmritiInvoiceSettlementModal
+      <TileFlowInvoiceSettlementModal
         isOpen={showSettlementModal}
         billNo={`${headerState.docPrefix}-${headerState.docNo}`}
         billDate={headerState.billDate}
@@ -2063,7 +2007,7 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
             <div className="bg-surface-container-lowest px-5 py-3 border-b border-outline-variant flex justify-between items-center">
               <h3 className="font-title-sm text-sm font-bold text-primary flex items-center gap-2">
                 <UserPlus size={16} className="text-secondary" />
-                <span>Quick Add Customer</span>
+                <span>Add customer</span>
               </h3>
               <button
                 type="button"
@@ -2076,35 +2020,35 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
 
             <div className="p-4 flex flex-col gap-3">
               <div>
-                <label className="block font-label-caps text-[11px] text-on-surface-variant mb-1 font-bold uppercase">Customer Name *</label>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">Customer name *</label>
                 <input
                   type="text"
                   value={newCustName}
                   onChange={e => setNewCustName(e.target.value)}
                   placeholder="e.g. Modern Enterprises Pvt Ltd"
-                  className="w-full border border-outline-variant rounded h-8 px-2.5 text-xs bg-surface focus:border-secondary outline-none font-medium"
+                  className="w-full border border-outline-variant h-9 px-3 text-sm bg-surface focus:border-on-surface-variant outline-none"
                 />
               </div>
 
               <div>
-                <label className="block font-label-caps text-[11px] text-on-surface-variant mb-1 font-bold uppercase">Mobile Number</label>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">Mobile number</label>
                 <input
                   type="text"
                   value={newCustMobile}
                   onChange={e => setNewCustMobile(e.target.value)}
                   placeholder="e.g. 9876543210"
-                  className="w-full border border-outline-variant rounded h-8 px-2.5 text-xs font-code-md bg-surface focus:border-secondary outline-none"
+                  className="w-full border border-outline-variant h-9 px-3 text-sm bg-surface focus:border-on-surface-variant outline-none"
                 />
               </div>
 
               <div>
-                <label className="block font-label-caps text-[11px] text-on-surface-variant mb-1 font-bold uppercase">GSTIN / Tax ID</label>
+                <label className="block text-xs font-medium text-on-surface-variant mb-1">GSTIN</label>
                 <input
                   type="text"
                   value={newCustGstin}
                   onChange={e => setNewCustGstin(e.target.value)}
                   placeholder="e.g. 27AAAAA0000A1Z5"
-                  className="w-full border border-outline-variant rounded h-8 px-2.5 text-xs font-code-md bg-surface focus:border-secondary outline-none font-bold"
+                  className="w-full border border-outline-variant h-9 px-3 text-sm bg-surface focus:border-on-surface-variant outline-none"
                 />
               </div>
             </div>
@@ -2134,15 +2078,24 @@ export const BillingTerm: React.FC<SmritiBillingTerminalProps> = ({
       {showPrintModal && lastCompletedInvoice && (
         <PrintPreviewModal
           isOpen={showPrintModal}
+          activeTabId="tax-invoice"
           data={{
-            companyName: "SMRITI Retail OS",
-            companyAddress: "Central Warehouse, Distribution Center",
+            companyName: company.name,
+            companyGst: company.gstin,
+            companyAddress: company.address,
+            companyPhone: company.phone,
+            accountsEmail: company.email,
+            bankDetails: company.bank,
+            invoiceNo: lastCompletedInvoice.invoiceNumber,
             invoiceNumber: lastCompletedInvoice.invoiceNumber,
             date: lastCompletedInvoice.date,
             customerName: lastCompletedInvoice.customerName,
             customerPhone: "",
+            customerGst: lastCompletedInvoice.customerGstin,
             customerGstin: lastCompletedInvoice.customerGstin,
-            items: lastCompletedInvoice.items,
+            isInterstate: lastCompletedInvoice.isInterstate,
+            grandTotal: lastCompletedInvoice.grandTotal,
+            items: lastCompletedInvoice.savedItems.map((it: any) => ({ ...it, qty: Number(it.quantity), rate: Number(it.price) })),
             subtotal: lastCompletedInvoice.subtotal,
             discount: lastCompletedInvoice.discount,
             tax: lastCompletedInvoice.tax,

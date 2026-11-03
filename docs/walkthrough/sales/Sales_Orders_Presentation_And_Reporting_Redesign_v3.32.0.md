@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.32.0
   Created      : 2026-08-26
   Modified     : 2026-08-26
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Sales Orders Presentation & Reporting Redesign v3.32.0
 
 ## 1. Purpose
-To deliver a clean, business-first presentation across the Sales Orders ledger, Order Detail side pane, and BI Reporting Studios in SMRITI Retail OS, eliminating technical clutter while preserving 100% of the underlying PostgreSQL transactional records and PO reconciliation data.
+To deliver a clean, business-first presentation across the Sales Orders ledger, Order Detail side pane, and BI Reporting Studios in TILEFLOW Retail OS, eliminating technical clutter while preserving 100% of the underlying PostgreSQL transactional records and PO reconciliation data.
 
 ## 2. Scope
 - Sales Orders list table presentation overhaul.
@@ -53,7 +52,7 @@ Eliminating raw database UUIDs and developer terms from primary operational tabl
 - Refactored `SalesStudioTab.tsx` Sales Orders table with 10 structured columns.
 - Re-architected Order Detail side pane with Customer & PO information cards, financial breakdown, scrollable item rows, invoice allocation records, and expandable audit details.
 - Updated KPI summary cards: `TOTAL BOOKED REVENUE` → `TOTAL SALES ORDER VALUE`, `0 converted from Quotations` → `Converted Orders`, `Confirmed Bookings` → `Sales Orders`.
-- Registered 7 dedicated Sales Order reports in `SMRITI_STUDIOS["sales_studio"]`.
+- Registered 7 dedicated Sales Order reports in `TILEFLOW_STUDIOS["sales_studio"]`.
 - Added friendly dynamic empty report banner: `No invoices found for 26 Aug 2026`.
 
 ## 8. Tests Executed
@@ -63,7 +62,7 @@ Eliminating raw database UUIDs and developer terms from primary operational tabl
 - `vite build`: Production build completed successfully in 28.99s.
 
 ## 9. Verification Results
-- Status: **Done** — fully verified against local PostgreSQL database (`smriti001`) and frontend build artifacts.
+- Status: **Done** — fully verified against local PostgreSQL database (`tileflow001`) and frontend build artifacts.
 
 ## 10. Known Limitations
 - Historical PO invoice allocation matching is currently read-only for Phase 1. Interactive manual invoice re-allocation will be enabled in Phase 2.

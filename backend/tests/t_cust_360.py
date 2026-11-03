@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -49,10 +36,10 @@ def test_referral_reward_earn_and_reversal():
 def test_unambiguous_database_ownership():
     """
     Verify Unambiguous Database Ownership Rule:
-    smritisys: Capability entitlements, platform defaults, policy/configuration.
-    smriti001: ALL operational definitions and transactional ledgers.
+    tileflowsys: Capability entitlements, platform defaults, policy/configuration.
+    tileflow001: ALL operational definitions and transactional ledgers.
     """
-    op_tables_in_smriti001 = [
+    op_tables_in_tileflow001 = [
         CommissionProgram.__tablename__,
         CommissionRule.__tablename__,
         CommissionParticipant.__tablename__,
@@ -74,7 +61,7 @@ def test_unambiguous_database_ownership():
         "loyalty_members", "loyalty_points_ledgers",
         "referral_programs", "referral_relationships", "referral_rewards"
     ]
-    assert op_tables_in_smriti001 == expected
+    assert op_tables_in_tileflow001 == expected
 
 def test_customer_360_ecosystem_aggregation():
     """Verify Customer 360 ecosystem integrates CRM, Loyalty, Promotions, Referrals & Commissions."""

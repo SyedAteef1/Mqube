@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -42,8 +28,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": role,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -57,7 +43,7 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
 @pytest.mark.asyncio
 async def test_cge_unified_policy_creation_and_anti_abuse_evaluation():
     """Verify CGE unified anti-abuse rules, velocity caps, and self-referral prevention."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     pol_code = f"POL_CGE_{suffix.upper()}"
 
@@ -127,7 +113,7 @@ async def test_cge_unified_policy_creation_and_anti_abuse_evaluation():
 @pytest.mark.asyncio
 async def test_cge_refund_reversal_cascade():
     """Verify cascading clawback of loyalty points and salesperson commissions on refund."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     inv_no = f"INV-REV-{suffix.upper()}"
     member_id = f"mem_rev_{suffix}"

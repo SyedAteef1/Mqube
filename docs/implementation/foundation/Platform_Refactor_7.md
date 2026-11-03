@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Vertical Slice 2 — Universal Party Master & Universal Item Master Canonicalization
 
 ## 1. Objective
-Establish canonical, extensible, and normalized Universal Party Master and Universal Item Master foundations in the tenant data plane (`smritiXXX`) without breaking existing POS, Sales, Billing, Procurement, or WMS transactional endpoints.
+Establish canonical, extensible, and normalized Universal Party Master and Universal Item Master foundations in the tenant data plane (`tileflowXXX`) without breaking existing POS, Sales, Billing, Procurement, or WMS transactional endpoints.
 
 ---
 
 ## 2. Business Motivation
-SMRITI operates as a single configurable business operating platform. In multi-channel retail and distribution, a party can act in multiple business capacities simultaneously (e.g. a customer who is also a distributor, or an employee who acts as a salesman), and items require unified barcode, variant, pricing, and batch attributes across POS, B2B sales, warehousing, and procurement. Unifying these masters prevents data duplication and reconciliation bottlenecks.
+TILEFLOW operates as a single configurable business operating platform. In multi-channel retail and distribution, a party can act in multiple business capacities simultaneously (e.g. a customer who is also a distributor, or an employee who acts as a salesman), and items require unified barcode, variant, pricing, and batch attributes across POS, B2B sales, warehousing, and procurement. Unifying these masters prevents data duplication and reconciliation bottlenecks.
 
 ---
 
@@ -28,11 +27,11 @@ SMRITI operates as a single configurable business operating platform. In multi-c
 
 ### In-Scope
 1. **Universal Party Identity (`parties`)**:
-   - Normalized core party identity in `smritiXXX` (name, GSTIN, PAN, contacts, status).
+   - Normalized core party identity in `tileflowXXX` (name, GSTIN, PAN, contacts, status).
    - Role extensions (`party_roles`, `customer_profiles`, `supplier_profiles`).
    - Non-destructive compatibility views/adapters for legacy `customers` and `suppliers`.
 2. **Universal Item Identity (`items` / `products`)**:
-   - Normalized item master in `smritiXXX` (SKU, title, UOM, HSN, tax rate, tracking flags).
+   - Normalized item master in `tileflowXXX` (SKU, title, UOM, HSN, tax rate, tracking flags).
    - Variant & barcode structure (`item_variants`, `item_barcodes`).
    - Direct integration with authoritative batch stock ledger (`product_batch_stocks`).
 3. **Automated Verification Suite**:
@@ -47,7 +46,7 @@ SMRITI operates as a single configurable business operating platform. In multi-c
 ---
 
 ## 4. Current State
-- `customers` and `suppliers` exist as distinct tables in `smritiXXX`, resulting in duplicate contact, tax, and address entries for dual-capacity entities.
+- `customers` and `suppliers` exist as distinct tables in `tileflowXXX`, resulting in duplicate contact, tax, and address entries for dual-capacity entities.
 - `products` and `product_batch_stocks` exist with WMS enhancements, but variant hierarchies and barcode indexes are partially fragmented between POS auto-search and warehouse scanning.
 
 ---
@@ -63,7 +62,7 @@ SMRITI operates as a single configurable business operating platform. In multi-c
 ---
 
 ## 6. Architecture Impact
-- **Data Plane Isolation**: All party and item masters reside strictly in tenant databases (`smritiXXX`). No business masters are written to `smritisys`.
+- **Data Plane Isolation**: All party and item masters reside strictly in tenant databases (`tileflowXXX`). No business masters are written to `tileflowsys`.
 - **Authoritative Ledgers Preserved**: `stock_movements` and financial ledger entries remain the sole authoritative transactional truth.
 
 ---
@@ -143,7 +142,7 @@ CREATE TABLE IF NOT EXISTS supplier_profiles (
 
 ## 10. Dependencies
 - Milestone 1 hardened database routing boundary (`CompanyDatabaseResolver`).
-- PostgreSQL multi-tenant databases (`smriti001`, `smriti002`).
+- PostgreSQL multi-tenant databases (`tileflow001`, `tileflow002`).
 
 ---
 
@@ -182,7 +181,7 @@ All new tables (`parties`, `party_roles`, `customer_profiles`, `supplier_profile
 ---
 
 ## 16. Deployment Plan
-1. Apply additive DDL across tenant databases (`smriti001`, `smriti002`).
+1. Apply additive DDL across tenant databases (`tileflow001`, `tileflow002`).
 2. Deploy backend service models and compatibility adapters.
 3. Execute automated test validation.
 

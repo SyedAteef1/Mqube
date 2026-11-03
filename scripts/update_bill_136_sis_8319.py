@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 5.1.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import hashlib
@@ -30,7 +16,7 @@ if hasattr(sys.stdout, "reconfigure"):
 sys.path.insert(0, r"F:\SMRITRretailNX\backend")
 from app.services.invoice_pdf_service import InvoicePdfService, number_to_indian_words
 
-DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 # Target SIS 8319 / S4NN info
 SIS_CODE = "S4NN/8319"
@@ -53,10 +39,10 @@ CUSTOMER_GSTIN = "29AABCR1718E1ZL"
 POS_STATE = "KARNATAKA"
 PO_REFERENCE = "5182778158"
 
-OUTPUT_CLIENT_DIR = r"F:\Smriti-Clients Data\Tattly Threads\24_08_26\Invoices"
+OUTPUT_CLIENT_DIR = r"F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Invoices"
 OUTPUT_EXPORTS_DIR = r"F:\SMRITRretailNX\exports\tt_batch_129_137"
 OUTPUT_TT_DIR = r"F:\SMRITRretailNX\TT"
-DISPATCH_PATH = r"F:\Smriti-Clients Data\Tattly Threads\24_08_26\RIL_Dispatch_09-08-2026-2.xlsx"
+DISPATCH_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\24_08_26\RIL_Dispatch_09-08-2026-2.xlsx"
 
 
 class InvoiceItemMock:
@@ -121,7 +107,7 @@ async def update_bill_136():
     cur.execute("SELECT * FROM sales_invoices WHERE invoice_no = 'TT2026-2027/136' OR id = 'inv-tt-2026-2027-136';")
     inv_row = cur.fetchone()
     if not inv_row:
-        print("ERROR: Invoice 136 not found in smriti001!")
+        print("ERROR: Invoice 136 not found in tileflow001!")
         return
 
     inv_id = inv_row['id']
@@ -265,7 +251,7 @@ async def update_bill_136():
 
     conn.commit()
     conn.close()
-    print("✓ Updated smriti001 database record successfully.")
+    print("✓ Updated tileflow001 database record successfully.")
 
     # 5. Update RIL_Dispatch_09-08-2026-2.xlsx Sheet2
     if os.path.exists(DISPATCH_PATH):

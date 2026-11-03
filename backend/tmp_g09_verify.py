@@ -5,7 +5,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine
 
 async def main():
-    db = 'smritisys_g09'
+    db = 'tileflowsys_g09'
     try:
         conn = await __import__('asyncpg').connect('postgresql://postgres:postgres@localhost:5432/postgres')
         await conn.execute(f'DROP DATABASE IF EXISTS {db}')

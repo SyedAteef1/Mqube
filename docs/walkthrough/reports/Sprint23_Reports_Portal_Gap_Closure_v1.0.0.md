@@ -2,24 +2,24 @@
 title: "Sprint 23: Reports Portal Gap Closure (Shoper9 Sales & Audit Report Parity)"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
 # Walkthrough: Sprint 23 — Reports Portal Gap Closure (Shoper9 Sales & Audit Parity)
 
 ## 1. Purpose
-This sprint eliminates the functional and structural gaps between legacy Shoper9 POS/Back-Office Sales & Audit reporting suites (`MnuNo 410` and `MnuNo 470`) and SMRITI Retail OS. It completes end-to-end parity across FastAPI backend services, REST endpoints, Pydantic response models, database query engines, and the React 18 Report Designer interactive UI.
+This sprint eliminates the functional and structural gaps between legacy Shoper9 POS/Back-Office Sales & Audit reporting suites (`MnuNo 410` and `MnuNo 470`) and TILEFLOW Retail OS. It completes end-to-end parity across FastAPI backend services, REST endpoints, Pydantic response models, database query engines, and the React 18 Report Designer interactive UI.
 
 ## 2. Scope
 - **Backend Response Schemas**: Pydantic models for all missing Shoper9 sales/audit reports in `backend/app/schemas/reports.py`.
 - **Backend Service Implementation**: Async query routines joining `SalesInvoice`, `SalesInvoiceItem`, `SalesReturn`, `SalesReturnItem`, and `Product` with tenant isolation and date constraints in `backend/app/services/reports.py`.
 - **REST Endpoints**: FastAPI endpoints mounted under `/api/v1/reports/` with security validation and OpenAPI documentation.
-- **Database Migrations**: Alembic convergence across `smriti001`, `smriti002`, and `smritisys` executing `v1371` through `v1375_backfill_sales_return_cust`.
+- **Database Migrations**: Alembic convergence across `tileflow001`, `tileflow002`, and `tileflowsys` executing `v1371` through `v1375_backfill_sales_return_cust`.
 - **Frontend Report Designer (`src/components/ReportDesignerTab.tsx`)**: High-contrast, responsive React data tables with KPI summary banners, real-time fetching, and multi-format (`XLSX`, `CSV`, `TXT`, `PDF`) exports.
 - **Automated Verification**: End-to-end integration test suite `backend/tests/t_reports_parity.py` testing all 9 reports.
 
@@ -43,7 +43,7 @@ This sprint eliminates the functional and structural gaps between legacy Shoper9
 - **Universal Export Engine**: Integrated `genericReportData.lines` directly into `GlobalExportService` allowing seamless one-click export into Excel (`XLSX`), `CSV`, or `TXT` format.
 
 ## 6. Design Rationale
-In legacy Shoper9, sales reports were fragmented across independent compiled executables (`SR202000.EXE`, `SR202100.EXE`, `SR202200.EXE`, `SR202300.EXE`, `SR202400.EXE`, `SR210200.EXE`, `SR214100.EXE`, `SR236300.EXE`, `SR238400.EXE`). SMRITI consolidates these disparate utilities into a unified, responsive BI Report Studio while preserving exact calculation formulas (tax rates, discounts, returns, attribute matrices).
+In legacy Shoper9, sales reports were fragmented across independent compiled executables (`SR202000.EXE`, `SR202100.EXE`, `SR202200.EXE`, `SR202300.EXE`, `SR202400.EXE`, `SR210200.EXE`, `SR214100.EXE`, `SR236300.EXE`, `SR238400.EXE`). TILEFLOW consolidates these disparate utilities into a unified, responsive BI Report Studio while preserving exact calculation formulas (tax rates, discounts, returns, attribute matrices).
 
 ## 7. Implementation Summary
 - **RPT-TAX-001 (SR202300)**: Tax Register with breakdown of Taxable, CGST, SGST, IGST, and Total Tax.

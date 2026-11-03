@@ -1,13 +1,3 @@
-"""v1386 -- Distribution, Warehousing, and Item Tracking tables.
-
-Revision ID: v1386_distribution_warehousing
-Revises: v1385_crm_and_approvals
-Create Date: 2026-08-30 00:00:01.000000
-
-Project      : SMRITI Retail OS
-Author       : Migration Integrity Protocol
-Description  : Add Distribution routes, settlements, claims, Loading sheets, Item batch/serial tracking, and eWay bills for v3.25.0 canonical schema.
-"""
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql

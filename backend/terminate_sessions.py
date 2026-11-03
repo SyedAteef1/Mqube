@@ -90,7 +90,7 @@ def main():
     print('FORCE TERMINATE DATABASE SESSIONS')
     print('=' * 70)
     
-    for dbname in ['smritisys', 'smriti001']:
+    for dbname in ['tileflowsys', 'tileflow001']:
         print(f'\nTarget: {dbname}')
         print('-' * 70)
         success = terminate_all_connections(dbname, max_attempts=5)

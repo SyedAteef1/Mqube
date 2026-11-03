@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.1
- * Created      : 2026-07-10
- * Modified     : 2026-07-14
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import ReactMarkdown from "react-markdown";
@@ -50,11 +37,11 @@ const FOLDER_NAMES: Record<string, string> = {
 };
 
 const SUGGESTED_QUESTIONS = [
-  "What is the SMRITI core formula for Weeks of Cover (WOC)?",
-  "Explain SMRITI OS Backup Encryption & Custodian Security.",
+  "What is the MQube core formula for Weeks of Cover (WOC)?",
+  "Explain MQube OS Backup Encryption & Custodian Security.",
   "What are the integration specifications for Customer Growth Engine (CGE)?",
-  "How are Barcodes validated in SMRITI OS?",
-  "Detail the Tattly Threads pilot execution plan."
+  "How are Barcodes validated in MQube OS?",
+  "Detail the MQube Tiles & Sanitaryware pilot execution plan."
 ];
 
 export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
@@ -74,7 +61,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
     {
       id: "welcome",
       role: "assistant",
-      text: "Greetings. I am the SMRITI Gyan Kendra Copilot. I have indexed the entire master documentation and knowledge base. Ask me any technical, operational, or architectural question about SMRITI Retail OS.",
+      text: "Greetings. I am the MQube Gyan Kendra Copilot. I have indexed the entire master documentation and knowledge base. Ask me any technical, operational, or architectural question about MQube.",
       timestamp: new Date()
     }
   ]);
@@ -107,7 +94,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
       }
     } catch (err) {
       console.error(err);
-      onNotification("Connection Error", "Could not reach SMRITI documentation server.", "error");
+      onNotification("Connection Error", "Could not reach MQube documentation server.", "error");
     } finally {
       setLoading(false);
     }
@@ -179,7 +166,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
       setChatMessages(prev => [...prev, assistantMsg]);
     } catch (err) {
       console.error(err);
-      onNotification("Network Error", "Unable to reach SMRITI Copilot.", "error");
+      onNotification("Network Error", "Unable to reach MQube Copilot.", "error");
     } finally {
       setChatLoading(false);
     }
@@ -196,7 +183,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
   }, {} as Record<string, WikiDoc[]>);
 
   return (
-    <div className="flex-1 flex flex-col lg:flex-row h-[calc(100vh-80px)] overflow-hidden bg-[#121c3e]" id="smriti-wiki-desk">
+    <div className="flex-1 flex flex-col lg:flex-row h-[calc(100vh-80px)] overflow-hidden bg-[#1c1c1c]" id="tileflow-wiki-desk">
       
       {/* LEFT COLUMN: Sidebar Navigation & Search */}
       <div className="w-full lg:w-80 bg-theme-surface-1 border-b lg:border-b-0 lg:border-r border-theme-divider flex flex-col h-1/3 lg:h-full">
@@ -213,20 +200,20 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
                 setSearchQuery(e.target.value);
                 if (!e.target.value) clearSearch();
               }}
-              className="w-full bg-theme-surface-4 text-theme-body text-xs px-3.5 py-2.5 rounded-lg border border-theme-divider focus:outline-none focus:border-[#2563EB] placeholder-[#4b5563]"
+              className="w-full bg-theme-surface-4 text-theme-body text-xs px-3.5 py-2.5 rounded-lg border border-theme-divider focus:outline-none focus:border-[#606060] placeholder-[#545454]"
             />
             {searchQuery && (
               <button
                 type="button"
                 onClick={clearSearch}
-                className="absolute right-9 top-1/2 -translate-y-1/2 text-[#4b5563] hover:text-theme-body"
+                className="absolute right-9 top-1/2 -translate-y-1/2 text-[#545454] hover:text-theme-body"
               >
                 <span className="material-symbols-outlined text-sm">close</span>
               </button>
             )}
             <button
               type="submit"
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#2563EB] hover:bg-blue-600 text-white rounded p-1 flex items-center justify-center transition-all"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-[#606060] hover:bg-blue-600 text-white rounded p-1 flex items-center justify-center transition-all"
             >
               <span className="material-symbols-outlined text-xs">search</span>
             </button>
@@ -238,8 +225,8 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
           
           {loading ? (
             <div className="flex flex-col items-center justify-center py-12 space-y-2 text-theme-muted">
-              <div className="w-6 h-6 border-2 border-[#2563EB] border-t-transparent rounded-full animate-spin"></div>
-              <span className="text-xs font-mono">Indexing SMRITI Docs...</span>
+              <div className="w-6 h-6 border-2 border-[#606060] border-t-transparent rounded-full animate-spin"></div>
+              <span className="text-xs font-mono">Indexing MQube Docs...</span>
             </div>
           ) : isSearching ? (
             <div className="space-y-3">
@@ -249,7 +236,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
               </div>
 
               {searchResults.length === 0 ? (
-                <p className="text-xs text-theme-muted italic py-4">No matching SMRITI guidelines found. Try another query or ask the AI Copilot on the right panel.</p>
+                <p className="text-xs text-theme-muted italic py-4">No matching MQube guidelines found. Try another query or ask the AI Copilot on the right panel.</p>
               ) : (
                 searchResults.map(res => (
                   <button
@@ -257,7 +244,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
                     onClick={() => handleSelectDoc(res)}
                     className={`w-full text-left p-3 rounded-lg border transition-all flex flex-col space-y-1 ${
                       activeDoc?.path === res.path
-                        ? "bg-[#1e2e5c] border-[#2563EB]"
+                        ? "bg-[#2e2e2e] border-[#606060]"
                         : "bg-theme-surface-4 border-theme-divider hover:border-gray-500"
                     }`}
                   >
@@ -286,7 +273,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
                       onClick={() => handleSelectDoc(doc)}
                       className={`w-full text-left px-3 py-2 rounded text-xs transition-all flex items-center justify-between ${
                         activeDoc?.path === doc.path
-                          ? "bg-[#2563EB] text-theme-body font-medium shadow"
+                          ? "bg-[#606060] text-theme-body font-medium shadow"
                           : "text-theme-muted hover:bg-theme-surface-3 hover:text-theme-primary"
                       }`}
                     >
@@ -311,7 +298,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
       </div>
 
       {/* MIDDLE COLUMN: Document Reader */}
-      <div className="flex-1 bg-[#121c3e] flex flex-col h-1/3 lg:h-full border-b lg:border-b-0 lg:border-r border-theme-divider overflow-hidden">
+      <div className="flex-1 bg-[#1c1c1c] flex flex-col h-1/3 lg:h-full border-b lg:border-b-0 lg:border-r border-theme-divider overflow-hidden">
         
         {/* Document Header */}
         <div className="px-6 py-4 bg-theme-surface-1 border-b border-theme-divider flex items-center justify-between">
@@ -320,7 +307,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
               <>
                 <div className="flex items-center space-x-2">
                   <span className="text-[10px] text-blue-400 font-mono uppercase tracking-widest">{activeDoc.folder}</span>
-                  <span className="text-[10px] text-[#4b5563] font-mono">•</span>
+                  <span className="text-[10px] text-[#545454] font-mono">•</span>
                   <span className="text-[10px] text-theme-muted font-mono">{activeDoc.name}</span>
                 </div>
                 <h2 className="font-display font-bold text-base text-theme-body tracking-tight mt-0.5">{activeDoc.title}</h2>
@@ -346,10 +333,10 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
           {loadingContent ? (
             <div className="h-full flex flex-col items-center justify-center space-y-3">
               <div className="w-8 h-8 border-3 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-              <p className="text-xs text-theme-muted font-mono">De-serializing SMRITI manifest segment...</p>
+              <p className="text-xs text-theme-muted font-mono">De-serializing MQube manifest segment...</p>
             </div>
           ) : activeContent ? (
-            <article className="prose prose-invert max-w-none text-[#cbd5e1] text-xs leading-relaxed space-y-4">
+            <article className="prose prose-invert max-w-none text-[#d4d4d4] text-xs leading-relaxed space-y-4">
               <div className="markdown-body">
                 <ReactMarkdown>{activeContent}</ReactMarkdown>
               </div>
@@ -357,7 +344,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-theme-muted py-20 space-y-4">
               <span className="material-symbols-outlined text-4xl opacity-40">find_in_page</span>
-              <p className="text-xs max-w-sm text-center">Select an official SMRITI master document or rule guidebook from the left panel index to explore the single source of truth.</p>
+              <p className="text-xs max-w-sm text-center">Select an official MQube master document or rule guidebook from the left panel index to explore the single source of truth.</p>
             </div>
           )}
         </div>
@@ -373,7 +360,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
               <span className="material-symbols-outlined text-sm">smart_toy</span>
             </div>
             <div>
-              <h3 className="font-display font-bold text-xs text-theme-body">SMRITI Gyan Kendra Copilot</h3>
+              <h3 className="font-display font-bold text-xs text-theme-body">MQube Gyan Kendra Copilot</h3>
               <p className="text-[10px] text-emerald-400 font-mono">Grounded LLM Explorer • Online</p>
             </div>
           </div>
@@ -384,7 +371,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
                 {
                   id: "welcome",
                   role: "assistant",
-                  text: "Greetings. I am the SMRITI Gyan Kendra Copilot. I have indexed the entire master documentation and knowledge base. Ask me any technical, operational, or architectural question about SMRITI Retail OS.",
+                  text: "Greetings. I am the MQube Gyan Kendra Copilot. I have indexed the entire master documentation and knowledge base. Ask me any technical, operational, or architectural question about MQube.",
                   timestamp: new Date()
                 }
               ]);
@@ -404,7 +391,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
               className={`flex flex-col space-y-1 ${msg.role === "user" ? "items-end" : "items-start"}`}
             >
               <div className="flex items-center space-x-1 text-[9px] text-theme-muted font-mono">
-                <span>{msg.role === "user" ? "OPERATOR" : "SMRITI EXPERT AI"}</span>
+                <span>{msg.role === "user" ? "OPERATOR" : "MQube EXPERT AI"}</span>
                 <span>•</span>
                 <span>{msg.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
               </div>
@@ -412,7 +399,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
               <div
                 className={`max-w-[85%] rounded-xl px-4 py-3 text-xs leading-relaxed border ${
                   msg.role === "user"
-                    ? "bg-[#2563EB] border-blue-500 text-theme-body"
+                    ? "bg-[#606060] border-blue-500 text-theme-body"
                     : "bg-theme-surface-4 border-theme-divider text-theme-primary"
                 }`}
               >
@@ -429,7 +416,7 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
 
           {chatLoading && (
             <div className="flex flex-col space-y-1 items-start">
-              <span className="text-[9px] text-theme-muted font-mono">SMRITI EXPERT AI • CONSULTING LOCAL INDEX</span>
+              <span className="text-[9px] text-theme-muted font-mono">MQube EXPERT AI • CONSULTING LOCAL INDEX</span>
               <div className="bg-theme-surface-4 border border-theme-divider rounded-xl px-4 py-3 text-xs text-theme-muted flex items-center space-x-2">
                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce"></span>
                 <span className="w-1.5 h-1.5 bg-blue-500 rounded-full animate-bounce [animation-delay:0.2s]"></span>
@@ -468,16 +455,16 @@ export const WikiTab: React.FC<WikiTabProps> = ({ onNotification }) => {
           >
             <input
               type="text"
-              placeholder="Ask anything about SMRITI..."
+              placeholder="Ask anything about MQube..."
               value={chatInput}
               onChange={(e) => setChatInput(e.target.value)}
               disabled={chatLoading}
-              className="flex-1 bg-theme-surface-1 text-theme-body text-xs px-3.5 py-3 rounded-lg border border-theme-divider focus:outline-none focus:border-[#2563EB] disabled:opacity-50 placeholder-[#4b5563]"
+              className="flex-1 bg-theme-surface-1 text-theme-body text-xs px-3.5 py-3 rounded-lg border border-theme-divider focus:outline-none focus:border-[#606060] disabled:opacity-50 placeholder-[#545454]"
             />
             <button
               type="submit"
               disabled={!chatInput.trim() || chatLoading}
-              className="bg-[#2563EB] hover:bg-blue-600 disabled:bg-[#1e2e5c] disabled:text-[#4b5563] text-white rounded-lg p-3 flex items-center justify-center transition-all shadow-lg"
+              className="bg-[#606060] hover:bg-blue-600 disabled:bg-[#2e2e2e] disabled:text-[#545454] text-white rounded-lg p-3 flex items-center justify-center transition-all shadow-lg"
             >
               <span className="material-symbols-outlined text-sm">send</span>
             </button>

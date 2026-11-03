@@ -80,9 +80,9 @@ jobs:
       postgres:
         image: postgres:15-alpine
         env:
-          POSTGRES_USER: smriti
-          POSTGRES_PASSWORD: smriti_test_pass
-          POSTGRES_DB: smriti_test
+          POSTGRES_USER: tileflow
+          POSTGRES_PASSWORD: tileflow_test_pass
+          POSTGRES_DB: tileflow_test
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -115,7 +115,7 @@ jobs:
       - name: Run pytest
         run: cd backend && pytest tests/ -v --cov=app --cov-report=xml
         env:
-          DATABASE_URL: postgresql://smriti:smriti_test_pass@localhost:5432/smriti_test
+          DATABASE_URL: postgresql://tileflow:tileflow_test_pass@localhost:5432/tileflow_test
           JWT_SECRET: test_secret_key_for_ci_tests
           ENVIRONMENT: test
       
@@ -223,7 +223,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     environment:
       name: staging
-      url: https://staging.smritibooks.com
+      url: https://staging.tileflow.in
     
     steps:
       - uses: actions/checkout@v4
@@ -231,7 +231,7 @@ jobs:
       - name: Deploy to staging cluster
         env:
           DEPLOY_KEY: ${{ secrets.STAGING_DEPLOY_KEY }}
-          DEPLOY_HOST: staging.smritibooks.com
+          DEPLOY_HOST: staging.tileflow.in
           DEPLOY_USER: deploy
         run: |
           mkdir -p ~/.ssh
@@ -240,13 +240,13 @@ jobs:
           ssh-keyscan -H $DEPLOY_HOST >> ~/.ssh/known_hosts
           
           ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST \
-            "cd /opt/smriti && docker-compose pull && docker-compose up -d"
+            "cd /opt/tileflow && docker-compose pull && docker-compose up -d"
       
       - name: Run smoke tests
         run: |
           sleep 10  # Wait for services to be ready
-          curl -f https://staging.smritibooks.com/api/v1/health/status || exit 1
-          curl -f https://staging.smritibooks.com/api/v1/health/db || exit 1
+          curl -f https://staging.tileflow.in/api/v1/health/status || exit 1
+          curl -f https://staging.tileflow.in/api/v1/health/db || exit 1
 
   deploy-production:
     runs-on: ubuntu-latest
@@ -255,7 +255,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     environment:
       name: production
-      url: https://app.smritibooks.com
+      url: https://app.tileflow.in
     
     steps:
       - uses: actions/checkout@v4
@@ -268,7 +268,7 @@ jobs:
       - name: Deploy to production cluster
         env:
           DEPLOY_KEY: ${{ secrets.PROD_DEPLOY_KEY }}
-          DEPLOY_HOST: app.smritibooks.com
+          DEPLOY_HOST: app.tileflow.in
           DEPLOY_USER: deploy
         run: |
           mkdir -p ~/.ssh
@@ -278,7 +278,7 @@ jobs:
           
           # Blue-green deployment: deploy to non-active cluster first
           ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST \
-            "cd /opt/smriti && ./deploy-blue-green.sh"
+            "cd /opt/tileflow && ./deploy-blue-green.sh"
       
       - name: Health check & rollback if needed
         run: |
@@ -286,7 +286,7 @@ jobs:
           RETRY=0
           
           while [ $RETRY -lt $MAX_RETRIES ]; do
-            if curl -f https://app.smritibooks.com/api/v1/health/status; then
+            if curl -f https://app.tileflow.in/api/v1/health/status; then
               echo "Production health check passed"
               exit 0
             fi
@@ -296,7 +296,7 @@ jobs:
           
           echo "Health check failed, initiating rollback"
           ssh -i ~/.ssh/deploy_key $DEPLOY_USER@$DEPLOY_HOST \
-            "cd /opt/smriti && ./deploy-rollback.sh"
+            "cd /opt/tileflow && ./deploy-rollback.sh"
           exit 1
       
       - name: Notify Slack

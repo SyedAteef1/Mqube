@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Sprint 42 — Section 8 Distribution Core & eCommerce Expansion
@@ -30,7 +29,7 @@ This walkthrough documents the end-to-end design, implementation, and certificat
   - Strict HMAC SHA-256 webhook signature validation across all external channels.
   - Idempotent order deduplication (`{channel_code}_{external_order_id}`).
   - Atomic stock reservation via `SELECT FOR UPDATE` row locks preventing overselling.
-  - Asynchronous order convergence transforming imported payloads into authoritative SMRITI `SalesInvoice` records with trigger-managed stock movements.
+  - Asynchronous order convergence transforming imported payloads into authoritative TILEFLOW `SalesInvoice` records with trigger-managed stock movements.
   - Dead Letter Queue (DLQ) retry cycle with exponential backoff (`max_retries = 3`).
   - Channel revenue reconciliation ledger computing GMV discrepancies and commission variances.
 
@@ -52,7 +51,7 @@ This walkthrough documents the end-to-end design, implementation, and certificat
 - [`docs/architecture/BLUEPRINT_PENDING.md`](file:///F:/SMRITRretailNX/docs/architecture/BLUEPRINT_PENDING.md) — Certified Section 8 as `Done / Verified` per Rule 11.
 
 ## 5. Architecture Decisions
-- **ADR-ECOM-001: Adapters Without Duplicate Authority**: External channels (Shopify, Amazon, Flipkart) act purely as intake channels. Authoritative inventory and financial ledger records reside strictly in SMRITI PostgreSQL (`products`, `sales_invoices`, `stock_movements`).
+- **ADR-ECOM-001: Adapters Without Duplicate Authority**: External channels (Shopify, Amazon, Flipkart) act purely as intake channels. Authoritative inventory and financial ledger records reside strictly in TILEFLOW PostgreSQL (`products`, `sales_invoices`, `stock_movements`).
 - **ADR-DIST-001: Dual-Mode Order Segregation**: Primary distribution orders (HQ to Distributor) and Secondary distribution orders (Distributor to Retailer) share the canonical `DistributionOrder` schema with distinct billing and credit validations.
 - **ADR-RES-001: Two-Phase Inventory Reservation**: Inbound eCommerce orders immediately reserve stock via `Product.reserved_stock` using `with_for_update()`. Upon convergence to `SalesInvoice`, the reservation is released and converted to outward stock movement.
 
@@ -61,7 +60,7 @@ This walkthrough documents the end-to-end design, implementation, and certificat
 - **Postgres Trigger Cohesion**: Utilizing the established `trg_inventory_state_reconciliation` trigger on `stock_movements` guarantees that ledger inserts and physical stock balances stay synchronized automatically.
 
 ## 7. Implementation Summary
-- **Distribution DDL & Engine**: Multi-tenant schema migration across `smriti001` and `smriti002` adding routes, stops, loading sheets, claims, and settlements.
+- **Distribution DDL & Engine**: Multi-tenant schema migration across `tileflow001` and `tileflow002` adding routes, stops, loading sheets, claims, and settlements.
 - **eCommerce Adapters & Routers**: Implemented 6 marketplace adapters with HMAC SHA-256 signature verification, inbound payload normalization, and REST endpoints for webhook ingress, order convergence, DLQ management, and channel financial reconciliation.
 
 ## 8. Tests Executed
@@ -115,5 +114,5 @@ tests/t_ecom_webhooks.py::test_production_security_configuration_fails_closed PA
 - `ADR-RES-001`: Atomic Two-Phase Inventory Reservation
 
 ## 13. Related RFCs
-- `RFC-SMRITI-2026-DIST-01`: Enterprise Distribution Management System
-- `RFC-SMRITI-2026-ECOM-01`: Multi-Marketplace Omnichannel Convergence
+- `RFC-TILEFLOW-2026-DIST-01`: Enterprise Distribution Management System
+- `RFC-TILEFLOW-2026-ECOM-01`: Multi-Marketplace Omnichannel Convergence

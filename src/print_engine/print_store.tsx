@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.2
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { createContext, useContext, useState, ReactNode, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { StandardInvoiceA4 } from "./templates/StandardInvoiceA4.tsx";
@@ -128,7 +103,7 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [devices, setDevices] = useState<PrinterDevice[]>([
     {
       id: "a4-laser",
-      name: "SMRITI Pro-Laser 400 (Duplex)",
+      name: "MQube Pro-Laser 400 (Duplex)",
       type: "laser",
       connection: "usb",
       status: "online",
@@ -137,7 +112,7 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     },
     {
       id: "thermal-pos",
-      name: "SMRITI Thermal POS-80X",
+      name: "MQube Thermal POS-80X",
       type: "thermal",
       connection: "network",
       status: "online",
@@ -147,7 +122,6 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     },
     {
       id: "label-jet",
-      name: "AITDL LabelJet-X1 (High Density)",
       type: "label",
       connection: "bluetooth",
       status: "online",
@@ -172,7 +146,7 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   const [printHistory, setPrintHistory] = useState<PrintHistoryItem[]>(() => {
     try {
-      const saved = localStorage.getItem("smriti_print_history");
+      const saved = localStorage.getItem("tileflow_print_history");
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.warn("Failed to read print history from localStorage:", e);
@@ -187,9 +161,9 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         templateName: "Standard Tax Invoice",
         format: "A4",
         documentName: "INV-2023-0889",
-        printerName: "SMRITI Pro-Laser 400 (Duplex)",
+        printerName: "MQube Pro-Laser 400 (Duplex)",
         status: "success",
-        details: "Dispatched A4 layout spool file successfully to SMRITI Pro-Laser 400 (Duplex)."
+        details: "Dispatched A4 layout spool file successfully to MQube Pro-Laser 400 (Duplex)."
       },
       {
         id: "print-2",
@@ -209,9 +183,9 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         templateName: "Retail Receipt 80mm",
         format: "Thermal80mm",
         documentName: "REC-449102",
-        printerName: "SMRITI Thermal POS-80X",
+        printerName: "MQube Thermal POS-80X",
         status: "success",
-        details: "Dispatched Thermal80mm layout spool file successfully to SMRITI Thermal POS-80X."
+        details: "Dispatched Thermal80mm layout spool file successfully to MQube Thermal POS-80X."
       },
       {
         id: "print-4",
@@ -220,9 +194,7 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         templateName: "Product Barcode Label (50x25mm)",
         format: "Label",
         documentName: "BAR-99011",
-        printerName: "AITDL LabelJet-X1 (High Density)",
         status: "warning",
-        details: "Dispatched Label layout spool file to AITDL LabelJet-X1 (High Density). Warning: Low ink level reported (65%)."
       }
     ];
   });
@@ -300,7 +272,7 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   const clearPrintHistory = useCallback(() => {
     setPrintHistory([]);
-    localStorage.removeItem("smriti_print_history");
+    localStorage.removeItem("tileflow_print_history");
   }, []);
 
   const print = useCallback((request: PrintRequest) => {
@@ -328,7 +300,7 @@ export const PrintProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
     setPrintHistory(prev => {
       const updated = [newHistoryItem, ...prev];
-      localStorage.setItem("smriti_print_history", JSON.stringify(updated));
+      localStorage.setItem("tileflow_print_history", JSON.stringify(updated));
       return updated;
     });
 
@@ -401,7 +373,7 @@ const PrintPortal: React.FC<{ request: PrintRequest; templates: PrintTemplate[] 
 
   // We append to document.body so it is a direct child and easier to manage with @media print
   return createPortal(
-    <div className="print-only-container">
+    <div className="print-only-container print-engine-job">
       <Component data={request.data} />
     </div>,
     document.body

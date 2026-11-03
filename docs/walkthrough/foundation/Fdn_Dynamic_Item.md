@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
-# SMRITI Walkthrough: Dynamic Item Master & Configurable Product Attributes (v3.16.0)
+# TILEFLOW Walkthrough: Dynamic Item Master & Configurable Product Attributes (v3.16.0)
 
 ## 1. Purpose
-This walkthrough documents the full design, structural refactoring, and integration of the Dynamic Item Master and Configurable Product Attributes module inside SMRITI Retail OS. It facilitates industry-agnostic catalog configurations without code modification.
+This walkthrough documents the full design, structural refactoring, and integration of the Dynamic Item Master and Configurable Product Attributes module inside TILEFLOW Retail OS. It facilitates industry-agnostic catalog configurations without code modification.
 
 ## 2. Scope
 - Excel-style manual catalog entry grid supporting spreadsheet copy-paste, arrow keyboard navigation, and automatic row creation.

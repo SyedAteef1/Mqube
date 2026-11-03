@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.73.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { apiFetchV1 } from "../lib/apiFetchV1";
 
 export interface OfflineSaleRecord {
@@ -36,7 +22,7 @@ export interface SyncQueueStats {
 }
 
 export class ProPosOfflineSyncEngine {
-  private static DB_NAME = "smriti_propos_edge_v1";
+  private static DB_NAME = "tileflow_propos_edge_v1";
   private static STORE_SALES = "offline_sales_queue";
   private static STORE_PRODUCTS = "offline_products_cache";
   private static STORE_CUSTOMERS = "offline_customers_cache";

@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI UI/UX Contrast & Excel Grid Audit Walkthrough v3.17.0
+# TILEFLOW UI/UX Contrast & Excel Grid Audit Walkthrough v3.17.0
 
 ## 1. Purpose
-This walkthrough documents the deep UI/UX audit, typography contrast fixes, table header overlap corrections, and launcher hero banner text cleanup across SMRITI Retail OS. It ensures complete compliance with the SMRITI Design Governance Policy (DGP), Human-Readable Error Policy (HREP), and reference company production readiness standards.
+This walkthrough documents the deep UI/UX audit, typography contrast fixes, table header overlap corrections, and launcher hero banner text cleanup across TILEFLOW Retail OS. It ensures complete compliance with the TILEFLOW Design Governance Policy (DGP), Human-Readable Error Policy (HREP), and reference company production readiness standards.
 
 ## 2. Scope
 * **Item Master Excel Grid (`ExcelGridEntrySec.tsx`)**:
@@ -24,9 +23,9 @@ This walkthrough documents the deep UI/UX audit, typography contrast fixes, tabl
   * Implemented pixel-perfect input text styling, inline row duplicate, `(+)` interactive add row, `[Verify All]`, `[Save Draft]`, and `[Load Draft]` buttons.
   * Fixed `apiFetchV1` response object handling in `handleSaveGrid` so items commit cleanly to PostgreSQL.
 * **Launchpad Hero Banner (`FioriLaunchpad.tsx`)**:
-  * Removed technical jargon badge `"SMRITI Cognitive System • Visual Baseline"`.
-  * Updated title from `"SMRITI Fiori-Inspired Launchpad"` to `"SMRITI Retail OS Launchpad"`.
-  * Replaced technical subtitle with clean business phrasing: `"Unified application launcher and operational workspace for SMRITI Retail OS."`
+  * Removed technical jargon badge `"TILEFLOW Cognitive System • Visual Baseline"`.
+  * Updated title from `"TILEFLOW Fiori-Inspired Launchpad"` to `"TILEFLOW Retail OS Launchpad"`.
+  * Replaced technical subtitle with clean business phrasing: `"Unified application launcher and operational workspace for TILEFLOW Retail OS."`
 * **System-Wide Typography Audit**:
   * Verified 0 occurrences of `text-white` on light containers across all workspace tabs, forms, and dialogs.
 
@@ -63,9 +62,9 @@ This walkthrough documents the deep UI/UX audit, typography contrast fixes, tabl
 ## 9. Verification Results
 ```text
 COMP-001 READINESS AUDIT RESULTS:
-  Control Plane        : smritisys (Menus=34, Audit=61)
-  Reference DB         : smriti001 (99 Initialized Tables)
-  Registry Status      : smriti001 -> READY
+  Control Plane        : tileflowsys (Menus=34, Audit=61)
+  Reference DB         : tileflow001 (99 Initialized Tables)
+  Registry Status      : tileflow001 -> READY
   Historical CP Rows   : SalesInvoices=123, StockMovements=7
   Frontend Leaks       : 0 Leaks in dist/
   Readiness Score      : 98 / 100
@@ -83,4 +82,4 @@ Expand spreadsheet bulk import template presets for regional GST slabs and multi
 * ADR-004: Platform Abstraction Layer & Universal Fetch Gateway.
 
 ## 13. Related RFCs
-* RFC-014: SMRITI Error Experience Framework (SEEF) & UI Design Standards.
+* RFC-014: TILEFLOW Error Experience Framework (SEEF) & UI Design Standards.

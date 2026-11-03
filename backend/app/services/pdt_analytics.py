@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime, timezone, timedelta
 from typing import Optional, List, Dict, Any
@@ -27,7 +13,7 @@ def _quantize_decimal(val: float | Decimal) -> Decimal:
 
 class PdtAnalyticsService:
     """
-    SMRITI Predictive Distribution Twin (PDT) Core Engine.
+    TILEFLOW Predictive Distribution Twin (PDT) Core Engine.
     Deterministic, postgres-backed inventory velocity, replenishment simulation,
     and days-of-cover projections derived authoritatively from StockMovement ledgers.
     """

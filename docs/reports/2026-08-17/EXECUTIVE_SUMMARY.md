@@ -1,10 +1,10 @@
-# Executive Summary: SMRITI Development Intelligence Center
+# Executive Summary: TILEFLOW Development Intelligence Center
  
 *Scan Timestamp: Mon 08/17/2026*
 *Release Target: v3.16.0*
 
 ## High-Level Engineering Indices
-- **SMRITI Development Health Index (DHI):** 83% (Grade B)
+- **TILEFLOW Development Health Index (DHI):** 83% (Grade B)
 - **Quality Score:** 39%
 - **Security Score:** 100%
 - **Release Readiness Score:** 86%

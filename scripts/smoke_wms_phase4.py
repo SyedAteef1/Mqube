@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import uuid
@@ -195,25 +181,25 @@ async def run_company_smoke_test(client: httpx.AsyncClient, company_id: str, bra
 
 async def run_smoke_test():
     print("=================================================================")
-    print("  SMRITI WMS Phase 4: Multi-Company Live HTTP Smoke Test Suite   ")
+    print("  TILEFLOW WMS Phase 4: Multi-Company Live HTTP Smoke Test Suite   ")
     print("=================================================================")
 
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url="http://test") as client:
-        # 1. Test COMP-001 (smriti001)
+        # 1. Test COMP-001 (tileflow001)
         await run_company_smoke_test(
             client=client,
             company_id="COMP-001",
             branch_id="BR-001",
-            db_name="smriti001",
+            db_name="tileflow001",
             warehouse_id="wh-central-001"
         )
 
-        # 2. Test COMP-002 (smriti002)
+        # 2. Test COMP-002 (tileflow002)
         await run_company_smoke_test(
             client=client,
             company_id="COMP-002",
             branch_id="BR-002",
-            db_name="smriti002",
+            db_name="tileflow002",
             warehouse_id="wh-central-001"
         )
 

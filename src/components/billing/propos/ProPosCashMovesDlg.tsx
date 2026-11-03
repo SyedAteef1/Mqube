@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-23
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from "react";
 import { ShiftCashMovementRecord, ShiftCashDropPayload, ShiftTillExpensePayload } from "./types.ts";
 import { apiFetchV1 } from "../../../lib/apiFetchV1.ts";
@@ -33,7 +19,7 @@ import {
   Wrench
 } from "lucide-react";
 
-interface SmritiProPosCashMovementsModalProps {
+interface TileFlowProPosCashMovementsModalProps {
   shiftId: string;
   onSuccess: (movement: ShiftCashMovementRecord) => void;
   onClose: () => void;
@@ -50,7 +36,7 @@ const EXPENSE_CATEGORIES = [
   { id: "MISCELLANEOUS", label: "Miscellaneous Petty Expense", icon: Receipt },
 ];
 
-export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsModalProps> = ({
+export const TileFlowProPosCashMovementsModal: React.FC<TileFlowProPosCashMovementsModalProps> = ({
   shiftId,
   onSuccess,
   onClose,
@@ -200,18 +186,18 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-150">
-      <div className="bg-white dark:bg-[#1e232a] border border-[#c4c5d5] dark:border-[#444653] w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col font-sans">
+      <div className="bg-white dark:bg-[#222222] border border-[#c6c6c6] dark:border-[#474747] w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col font-sans">
         {/* Modal Header */}
-        <div className="flex justify-between items-center px-6 py-4 border-b border-[#e2e8f0] dark:border-[#334155] bg-[#f8faff] dark:bg-[#131b2e]">
+        <div className="flex justify-between items-center px-6 py-4 border-b border-[#e7e7e7] dark:border-[#3f3f3f] bg-[#fafafa] dark:bg-[#1b1b1b]">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-2xl bg-[#00288e] text-white shadow-xs">
+            <div className="p-2.5 rounded-2xl bg-[#272727] text-white shadow-xs">
               <Vault size={20} />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#00288e] dark:text-[#a8b8ff]">
+              <h3 className="text-base font-bold text-[#272727] dark:text-[#bababa]">
                 Cash Drawer Movement
               </h3>
-              <p className="text-[11px] text-[#64748b] dark:text-[#94a3b8]">
+              <p className="text-[11px] text-[#727272] dark:text-[#a1a1a1]">
                 Shift: <span className="font-mono font-semibold">{shiftId}</span> • Automated Dual-Entry GL Integration
               </p>
             </div>
@@ -219,14 +205,14 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
           <button
             type="button"
             onClick={onClose}
-            className="p-2 text-[#64748b] hover:text-[#0f172a] dark:text-[#94a3b8] dark:hover:text-white rounded-xl hover:bg-[#e2e8f0] dark:hover:bg-[#334155] transition"
+            className="p-2 text-[#727272] hover:text-[#171717] dark:text-[#a1a1a1] dark:hover:text-white rounded-xl hover:bg-[#e7e7e7] dark:hover:bg-[#3f3f3f] transition"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Mode Selector Tabs */}
-        <div className="grid grid-cols-3 p-2 bg-[#f1f5f9] dark:bg-[#0f172a] gap-1.5 border-b border-[#e2e8f0] dark:border-[#334155]">
+        <div className="grid grid-cols-3 p-2 bg-[#f4f4f4] dark:bg-[#171717] gap-1.5 border-b border-[#e7e7e7] dark:border-[#3f3f3f]">
           <button
             type="button"
             onClick={() => {
@@ -235,8 +221,8 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
             }}
             className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
               mode === "CASH_IN"
-                ? "bg-[#00288e] text-white shadow-xs"
-                : "text-[#64748b] dark:text-[#94a3b8] hover:bg-white dark:hover:bg-[#1e293b]"
+                ? "bg-[#272727] text-white shadow-xs"
+                : "text-[#727272] dark:text-[#a1a1a1] hover:bg-white dark:hover:bg-[#282828]"
             }`}
           >
             <ArrowUpCircle size={14} />
@@ -251,8 +237,8 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
             }}
             className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
               mode === "CASH_DROP"
-                ? "bg-[#00288e] text-white shadow-xs"
-                : "text-[#64748b] dark:text-[#94a3b8] hover:bg-white dark:hover:bg-[#1e293b]"
+                ? "bg-[#272727] text-white shadow-xs"
+                : "text-[#727272] dark:text-[#a1a1a1] hover:bg-white dark:hover:bg-[#282828]"
             }`}
           >
             <ArrowDownCircle size={14} />
@@ -267,8 +253,8 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
             }}
             className={`py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${
               mode === "TILL_EXPENSE"
-                ? "bg-[#00288e] text-white shadow-xs"
-                : "text-[#64748b] dark:text-[#94a3b8] hover:bg-white dark:hover:bg-[#1e293b]"
+                ? "bg-[#272727] text-white shadow-xs"
+                : "text-[#727272] dark:text-[#a1a1a1] hover:bg-white dark:hover:bg-[#282828]"
             }`}
           >
             <Receipt size={14} />
@@ -292,11 +278,11 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           {/* Amount Field with Quick Presets */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#475569] dark:text-[#cbd5e1] mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#535353] dark:text-[#d4d4d4] mb-1.5">
               Cash Amount to {mode === "CASH_DROP" ? "Transfer to Safe" : "Disburse"} (₹) *
             </label>
             <div className="relative">
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-base font-bold text-[#64748b] font-mono">
+              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-base font-bold text-[#727272] font-mono">
                 ₹
               </span>
               <input
@@ -307,7 +293,7 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
                 value={amountInput}
                 onChange={(e) => setAmountInput(e.target.value)}
                 placeholder="0.00"
-                className="w-full pl-8 pr-4 py-2.5 text-lg font-mono font-bold rounded-xl border border-[#cbd5e1] dark:border-[#475569] bg-[#f8fafc] dark:bg-[#0f172a] text-[#0f172a] dark:text-[#f8fafc] focus:border-[#00288e] focus:ring-2 focus:ring-[#00288e]/20 outline-none transition"
+                className="w-full pl-8 pr-4 py-2.5 text-lg font-mono font-bold rounded-xl border border-[#d4d4d4] dark:border-[#535353] bg-[#fafafa] dark:bg-[#171717] text-[#171717] dark:text-[#fafafa] focus:border-[#272727] focus:ring-2 focus:ring-[#272727]/20 outline-none transition"
               />
             </div>
 
@@ -318,7 +304,7 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
                   key={preset}
                   type="button"
                   onClick={() => setAmountInput(preset.toString())}
-                  className="px-2.5 py-1 text-[11px] font-mono font-bold bg-[#f1f5f9] dark:bg-[#334155] hover:bg-[#e2e8f0] dark:hover:bg-[#475569] text-[#334155] dark:text-[#e2e8f0] rounded-lg transition"
+                  className="px-2.5 py-1 text-[11px] font-mono font-bold bg-[#f4f4f4] dark:bg-[#3f3f3f] hover:bg-[#e7e7e7] dark:hover:bg-[#535353] text-[#3f3f3f] dark:text-[#e7e7e7] rounded-lg transition"
                 >
                   +₹{preset}
                 </button>
@@ -329,15 +315,15 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
           {/* Mode-Specific Fields */}
           {mode === "CASH_DROP" ? (
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#475569] dark:text-[#cbd5e1] mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#535353] dark:text-[#d4d4d4] mb-1.5">
                 Target Safe / Vault Location
               </label>
-              <div className="flex items-center gap-2 p-2.5 rounded-xl border border-[#cbd5e1] dark:border-[#475569] bg-[#f8fafc] dark:bg-[#0f172a]">
-                <Building2 size={16} className="text-[#00288e] dark:text-[#a8b8ff]" />
+              <div className="flex items-center gap-2 p-2.5 rounded-xl border border-[#d4d4d4] dark:border-[#535353] bg-[#fafafa] dark:bg-[#171717]">
+                <Building2 size={16} className="text-[#272727] dark:text-[#bababa]" />
                 <select
                   value={safeId}
                   onChange={(e) => setSafeId(e.target.value)}
-                  className="w-full bg-transparent text-xs font-semibold text-[#1e293b] dark:text-[#f8fafc] outline-none"
+                  className="w-full bg-transparent text-xs font-semibold text-[#282828] dark:text-[#fafafa] outline-none"
                 >
                   <option value="SAFE-MAIN-01">Main Store Fireproof Safe (Vault 01)</option>
                   <option value="SAFE-BACKOFFICE-02">Back Office Cash Drop Box (Box 02)</option>
@@ -347,7 +333,7 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
             </div>
           ) : (
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#475569] dark:text-[#cbd5e1] mb-1.5">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#535353] dark:text-[#d4d4d4] mb-1.5">
                 Petty Expense Category
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -361,8 +347,8 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
                       onClick={() => setSelectedCategory(cat.id)}
                       className={`flex items-center gap-2 p-2 rounded-xl border text-left transition ${
                         isSelected
-                          ? "bg-[#f0f4ff] dark:bg-[#1e293b] border-[#00288e] text-[#00288e] dark:text-[#a8b8ff] font-bold"
-                          : "border-[#e2e8f0] dark:border-[#334155] text-[#475569] dark:text-[#94a3b8] hover:bg-[#f8fafc]"
+                          ? "bg-[#f4f4f4] dark:bg-[#282828] border-[#272727] text-[#272727] dark:text-[#bababa] font-bold"
+                          : "border-[#e7e7e7] dark:border-[#3f3f3f] text-[#535353] dark:text-[#a1a1a1] hover:bg-[#fafafa]"
                       }`}
                     >
                       <Icon size={14} className="shrink-0" />
@@ -376,7 +362,7 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
 
           {/* Reason / Notes */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#475569] dark:text-[#cbd5e1] mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#535353] dark:text-[#d4d4d4] mb-1.5">
               Reason / Narrative Description *
             </label>
             <input
@@ -388,13 +374,13 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
                   ? "e.g., Midday drawer limit threshold exceeded, safe transfer"
                   : "e.g., Courier charges for urgent master parcel, customer delivery"
               }
-              className="w-full px-3 py-2 text-xs rounded-xl border border-[#cbd5e1] dark:border-[#475569] bg-[#f8fafc] dark:bg-[#0f172a] text-[#0f172a] dark:text-[#f8fafc] focus:border-[#00288e] focus:ring-2 focus:ring-[#00288e]/20 outline-none transition"
+              className="w-full px-3 py-2 text-xs rounded-xl border border-[#d4d4d4] dark:border-[#535353] bg-[#fafafa] dark:bg-[#171717] text-[#171717] dark:text-[#fafafa] focus:border-[#272727] focus:ring-2 focus:ring-[#272727]/20 outline-none transition"
             />
           </div>
 
           {/* Reference / Voucher Slip # */}
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#475569] dark:text-[#cbd5e1] mb-1.5">
+            <label className="block text-xs font-bold uppercase tracking-wider text-[#535353] dark:text-[#d4d4d4] mb-1.5">
               Supporting Bill / Slip Reference (Optional)
             </label>
             <input
@@ -402,15 +388,15 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
               value={reference}
               onChange={(e) => setReference(e.target.value)}
               placeholder="e.g., SLIP-9842, BLUEDART-AWB-28941"
-              className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-[#cbd5e1] dark:border-[#475569] bg-[#f8fafc] dark:bg-[#0f172a] text-[#0f172a] dark:text-[#f8fafc] focus:border-[#00288e] focus:ring-2 focus:ring-[#00288e]/20 outline-none transition"
+              className="w-full px-3 py-2 text-xs font-mono rounded-xl border border-[#d4d4d4] dark:border-[#535353] bg-[#fafafa] dark:bg-[#171717] text-[#171717] dark:text-[#fafafa] focus:border-[#272727] focus:ring-2 focus:ring-[#272727]/20 outline-none transition"
             />
           </div>
 
           {/* Accounting Impact Explainer */}
-          <div className="p-3 bg-[#f8fafc] dark:bg-[#0f172a] rounded-xl border border-[#e2e8f0] dark:border-[#334155] text-[11px] text-[#64748b] dark:text-[#94a3b8] flex items-start gap-2">
-            <ShieldCheck size={16} className="text-[#00288e] dark:text-[#a8b8ff] shrink-0 mt-0.5" />
+          <div className="p-3 bg-[#fafafa] dark:bg-[#171717] rounded-xl border border-[#e7e7e7] dark:border-[#3f3f3f] text-[11px] text-[#727272] dark:text-[#a1a1a1] flex items-start gap-2">
+            <ShieldCheck size={16} className="text-[#272727] dark:text-[#bababa] shrink-0 mt-0.5" />
             <div>
-              <span className="font-semibold text-[#1e293b] dark:text-[#f8fafc]">Double-Entry Accounting Impact:</span>{" "}
+              <span className="font-semibold text-[#282828] dark:text-[#fafafa]">Double-Entry Accounting Impact:</span>{" "}
               {mode === "CASH_DROP"
                 ? "Posts Journal Voucher debiting Safe Cash (1020) and crediting Drawer Cash (1010)."
                 : "Posts Journal Voucher debiting Store Petty Expenses (5000) and crediting Drawer Cash (1010)."}
@@ -418,18 +404,18 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
           </div>
 
           {/* Modal Actions */}
-          <div className="flex justify-end items-center gap-3 pt-3 border-t border-[#e2e8f0] dark:border-[#334155]">
+          <div className="flex justify-end items-center gap-3 pt-3 border-t border-[#e7e7e7] dark:border-[#3f3f3f]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 text-xs font-bold text-[#64748b] dark:text-[#94a3b8] hover:bg-[#f1f5f9] dark:hover:bg-[#334155] rounded-xl transition"
+              className="px-4 py-2 text-xs font-bold text-[#727272] dark:text-[#a1a1a1] hover:bg-[#f4f4f4] dark:hover:bg-[#3f3f3f] rounded-xl transition"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={isSubmitting || amount <= 0 || !reason.trim()}
-              className="px-6 py-2.5 bg-[#00288e] hover:bg-[#1e40af] text-white text-xs font-bold rounded-xl shadow-md transition disabled:opacity-40 flex items-center gap-2"
+              className="px-6 py-2.5 bg-[#272727] hover:bg-[#414141] text-white text-xs font-bold rounded-xl shadow-md transition disabled:opacity-40 flex items-center gap-2"
             >
               {isSubmitting ? (
                 <span>Posting GL Voucher...</span>
@@ -449,4 +435,4 @@ export const SmritiProPosCashMovementsModal: React.FC<SmritiProPosCashMovementsM
   );
 };
 
-export default SmritiProPosCashMovementsModal;
+export default TileFlowProPosCashMovementsModal;

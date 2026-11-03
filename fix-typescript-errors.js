@@ -1,20 +1,5 @@
 #!/usr/bin/env node
 
-/**
- * SMRITI Retail OS - TypeScript Error Fixer
- * 
- * Automatically fixes common TypeScript errors:
- * - Implicit 'any' types in callbacks
- * - Type mismatches in fetch API calls
- * - Missing type annotations
- * 
- * Usage:
- *   node fix-typescript-errors.js --help
- *   node fix-typescript-errors.js --check
- *   node fix-typescript-errors.js --fix --dry-run
- *   node fix-typescript-errors.js --fix
- */
-
 import fs from 'fs';
 import path from 'path';
 import { execSync } from 'child_process';
@@ -352,7 +337,7 @@ class TypeScriptFixer {
    * Run the fixer
    */
   async run() {
-    console.log('SMRITI Retail OS - TypeScript Error Fixer');
+    console.log('TILEFLOW Retail OS - TypeScript Error Fixer');
     console.log('═'.repeat(60));
 
     // Parse TypeScript errors

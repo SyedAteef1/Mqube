@@ -16,7 +16,7 @@ print("\n1. DATABASE VALIDATION:")
 print("-" * 80)
 
 try:
-    conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+    conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
     cur = conn.cursor()
 
     # Check all products have barcodes

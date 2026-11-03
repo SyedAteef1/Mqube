@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.25.0
   Created      : 2026-08-18
   Modified     : 2026-08-18
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Login → Company Database Selector → Dashboard Flow Walkthrough v3.25.0
+# TILEFLOW Login → Company Database Selector → Dashboard Flow Walkthrough v3.25.0
 
 ## 1. Purpose
-Documents the implementation and verification of the post-login Company Database Selector and unified context switching flow in SMRITI Retail OS.
+Documents the implementation and verification of the post-login Company Database Selector and unified context switching flow in TILEFLOW Retail OS.
 
 ## 2. Scope
 - Filtering `GET /api/v1/auth/tenants` to return only authorized companies with `status = READY` in `company_database_registries`.

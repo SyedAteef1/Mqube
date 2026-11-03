@@ -1,21 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, beforeEach } from "vitest";
 import { HeaderMappingEngine, defaultHeaderMappingEngine } from "../lib/headerMapping/HeaderMappingEngine";
 import { normalizeHeader } from "../lib/headerMapping/HeaderNormalizer";
-import { addCustomAlias, getSmritiItemMasterFields, clearCustomAliases } from "../lib/headerMapping/HeaderAliasRegistry";
+import { addCustomAlias, getTileFlowItemMasterFields, clearCustomAliases } from "../lib/headerMapping/HeaderAliasRegistry";
 
 describe("HeaderNormalizer Utility", () => {
   it("should normalize whitespace, casing, underscores, hyphens, and punctuation", () => {
@@ -158,7 +144,7 @@ describe("HeaderMappingEngine Core Pipeline", () => {
     addCustomAlias("code", "Vendor Catalog SKU Number");
     addCustomAlias("price", "Unit Sale Rate Excl Tax");
 
-    const fields = getSmritiItemMasterFields();
+    const fields = getTileFlowItemMasterFields();
     const customEngine = new HeaderMappingEngine(fields);
 
     const headers = ["Vendor Catalog SKU Number", "Item Description", "Unit Sale Rate Excl Tax"];

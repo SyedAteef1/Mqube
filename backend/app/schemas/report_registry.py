@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — Report Registry & Execution Schemas (v1.0.0-GA).
-Defines the Pydantic data contracts for the Central Report Registry, 
-5-Vector Version Envelopes, and Decoupled Legacy Alias Resolution.
-"""
-
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Dict, Any, List, Optional

@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Walkthrough Document
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Walkthrough Document
 -->
 
-# Walkthrough: SMRITI User Training Readiness & Authenticated E2E Certification (v1.0.0)
+# Walkthrough: TILEFLOW User Training Readiness & Authenticated E2E Certification (v1.0.0)
 
 ## 1. Purpose
-Establish the authoritative, authenticated application-level verification baseline for the 3-Day SMRITI Retail OS User Training Program and validate end-to-end multi-step transaction pipelines against the multi-company PostgreSQL architecture.
+Establish the authoritative, authenticated application-level verification baseline for the 3-Day TILEFLOW Retail OS User Training Program and validate end-to-end multi-step transaction pipelines against the multi-company PostgreSQL architecture.
 
 ## 2. Scope
 - Master Data Management (Item Master, Supplier Master, Customer Group, Customer Master) via authenticated FastAPI HTTP APIs.
@@ -39,8 +38,8 @@ Establish the authoritative, authenticated application-level verification baseli
 - `DEVELOPMENT_STATUS.md`
 
 ## 5. Architecture Decisions
-- Strict adherence to the 11 Immutable Golden Rules: `smritisys` is strictly the Control Plane (0 operational table mutations during transactions).
-- Operational state mutations reside strictly inside `smriti<CompanyCode>` databases.
+- Strict adherence to the 11 Immutable Golden Rules: `tileflowsys` is strictly the Control Plane (0 operational table mutations during transactions).
+- Operational state mutations reside strictly inside `tileflow<CompanyCode>` databases.
 - Real-time stock decrement and restoration are governed by the authoritative stock movement ledger trigger `trg_inventory_state_reconciliation`.
 - 100% of business operations execute via FastAPI application endpoints with valid Bearer JWT tokens and tenant isolation headers (`X-Company-ID`, `X-Company-Code`).
 
@@ -56,8 +55,8 @@ A comprehensive authenticated test suite was executed against FastAPI applicatio
 5. Sales Return processing for 2 units (`POST /api/v1/sales/returns`) with PostgreSQL stock balance restoring to 45.0 units and `stock_movements` record created with `movement_type='IN'`.
 6. Tax Invoice HTML preview (`GET /api/v1/sales/invoices/{id}/html`) and PDF document stream (`GET /api/v1/sales/invoices/{id}/pdf`) verified with HTTP 200 OK.
 7. Atomic eCommerce stock reservation (`POST /api/v1/ecom/orders/reserve`) verifying reserved stock = 3.0 units.
-8. eCommerce webhook ingress (`POST /api/v1/ecom/webhooks/ingress`) routed to `smriti001` and `smriti002`.
-9. Clean database teardown returning `smritisys`, `smriti001`, and `smriti002` to exact zero-delta states.
+8. eCommerce webhook ingress (`POST /api/v1/ecom/webhooks/ingress`) routed to `tileflow001` and `tileflow002`.
+9. Clean database teardown returning `tileflowsys`, `tileflow001`, and `tileflow002` to exact zero-delta states.
 
 ## 8. Tests Executed
 - `backend/test_authenticated.py`: 100% PASS (Exit Code 0).

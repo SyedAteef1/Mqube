@@ -1,21 +1,21 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal -- Audit Artifact
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source -- Audit Artifact
 -->
 
-# SMRITI Retail OS -- Document Inventory
+# TILEFLOW Retail OS -- Document Inventory
 ## Phase 1: Document Inventory
 
 **Audit Date:** 2026-08-17
 **Total Documents Found:** 382 (in docs/) + root-level .md files
-**Binary Documents (not parsed):** SMRITI_Control_Plane_Architecture_Review.xlsx, SMRITI_Menu_Management_Database_Review.xlsx, SMRITI_UI_UX_Control_Plane_Audit.xlsx, SINGLE_VERIFIED_TT2026-2027_18_RECONCILED.pdf, Tattly_Threads_10_Tax_Invoices_Bundle.pdf
+**Binary Documents (not parsed):** TILEFLOW_Control_Plane_Architecture_Review.xlsx, TILEFLOW_Menu_Management_Database_Review.xlsx, TILEFLOW_UI_UX_Control_Plane_Audit.xlsx, SINGLE_VERIFIED_TT2026-2027_18_RECONCILED.pdf, Tattly_Threads_10_Tax_Invoices_Bundle.pdf
 
 ---
 
@@ -40,7 +40,7 @@
 | Document | Classification | Topic | Status |
 |---|---|---|---|
 | MULTI_COMPANY.md | CANONICAL | Multi-company DB naming/topology | CURRENT |
-| SMRITISYS.md | CANONICAL | smritisys identity audit | CURRENT |
+| TILEFLOWSYS.md | CANONICAL | tileflowsys identity audit | CURRENT |
 | COMPANY_DATABASE.md | CANONICAL | Provisioning engine spec | CURRENT |
 | COMPANY_DATABASE_2.md | CANONICAL | Lifecycle state machine | CURRENT |
 | DATABASE_ROUTING.md | CANONICAL | Routing security invariants | CURRENT |
@@ -68,7 +68,7 @@
 
 | Document | Classification | Topic | Status |
 |---|---|---|---|
-| SMRITI_ERP_AUDIT.md | HISTORICAL | ERP audit | UNKNOWN |
+| TILEFLOW_ERP_AUDIT.md | HISTORICAL | ERP audit | UNKNOWN |
 | INTERNAL_ROLE.md | REFERENCE | Role dashboard audit | CURRENT |
 | CONSIGNMENT_AUDIT.md | REFERENCE | Consignment module audit | CURRENT |
 
@@ -113,15 +113,14 @@ Key walkthroughs relevant to this audit:
 
 | File | Type | Relevance |
 |---|---|---|
-| SMRITI_Control_Plane_Architecture_Review.xlsx | Excel | HIGH -- Control plane table classification |
-| SMRITI_Menu_Management_Database_Review.xlsx | Excel | MEDIUM -- Menu governance |
-| SMRITI_UI_UX_Control_Plane_Audit.xlsx | Excel | MEDIUM -- UI/UX audit |
+| TILEFLOW_Control_Plane_Architecture_Review.xlsx | Excel | HIGH -- Control plane table classification |
+| TILEFLOW_Menu_Management_Database_Review.xlsx | Excel | MEDIUM -- Menu governance |
+| TILEFLOW_UI_UX_Control_Plane_Audit.xlsx | Excel | MEDIUM -- UI/UX audit |
 | SINGLE_VERIFIED_TT2026-2027_18_RECONCILED.pdf | PDF | LOW -- Tax invoice sample |
 | Tattly_Threads_10_Tax_Invoices_Bundle.pdf | PDF | LOW -- Tax invoice sample |
 
 ---
 
-## 8. Document Classification Summary
 
 | Classification | Count |
 |---|---|

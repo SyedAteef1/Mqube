@@ -1,5 +1,4 @@
 # PHASE 1 TRIAGE REPORT
-## Missing Table Classification & Migration Plan
 
 **Date:** 2026-08-30  
 **Scope:** 45 unique missing tables  

@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, hashlib, json
 from datetime import datetime, timezone
 import psycopg2
@@ -19,8 +6,8 @@ import openpyxl
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 
 CREATE_TABLE_SQL = """
 CREATE TABLE IF NOT EXISTS company_database_registries (
@@ -43,29 +30,29 @@ CREATE TABLE IF NOT EXISTS company_database_registries (
 
 def apply_controlled_migration():
     print("============================================================")
-    print("SMRITI CONTROL PLANE — APPLY CONTROLLED DDL MIGRATION")
+    print("TILEFLOW CONTROL PLANE — APPLY CONTROLLED DDL MIGRATION")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    # 1. Connect & Verify Target DB is smritisys
+    # 1. Connect & Verify Target DB is tileflowsys
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
     cur.execute("SELECT current_database();")
     current_db = cur.fetchone()[0]
-    if current_db != "smritisys":
-        print(f"ERROR: Target DB is '{current_db}', expected 'smritisys'. ABORTING.")
+    if current_db != "tileflowsys":
+        print(f"ERROR: Target DB is '{current_db}', expected 'tileflowsys'. ABORTING.")
         sys.exit(1)
 
     # 2. Before Migration Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT MAX(id) FROM smriti_audit_log;")
+    cur.execute("SELECT MAX(id) FROM tileflow_audit_log;")
     max_id = cur.fetchone()[0]
     try:
         next_num = int(str(max_id).split("-")[-1]) + 1
@@ -73,14 +60,14 @@ def apply_controlled_migration():
         next_num = initial_audit + 1
     audit_id = f"AUDIT-{next_num:05d}"
 
-    cur.execute("SELECT sha256_hash FROM smriti_audit_log WHERE sha256_hash IS NOT NULL LIMIT 1;")
+    cur.execute("SELECT sha256_hash FROM tileflow_audit_log WHERE sha256_hash IS NOT NULL LIMIT 1;")
     last_hash_row = cur.fetchone()
     last_hash = last_hash_row[0] if last_hash_row and last_hash_row[0] else "0" * 64
 
     print(f"PRE-MIGRATION VERIFICATION:")
     print(f"  Target DB        : {current_db}")
-    print(f"  smriti_menus     : {initial_menus} rows")
-    print(f"  smriti_audit_log : {initial_audit} rows (Audit ID: {audit_id})")
+    print(f"  tileflow_menus     : {initial_menus} rows")
+    print(f"  tileflow_audit_log : {initial_audit} rows (Audit ID: {audit_id})")
 
     # 3. Transactional DDL Application & Audit Insert
     try:
@@ -90,7 +77,7 @@ def apply_controlled_migration():
         audit_payload = json.dumps({
             "action": "CREATE_TABLE",
             "table": "company_database_registries",
-            "approved_by": "Jawahar Ramkripal Mallah",
+            "approved_by": "Syed Ateef",
             "scope": "STRICT_CONTROL_PLANE_REGISTRY_ONLY",
             "timestamp": ts
         }, sort_keys=True)
@@ -98,7 +85,7 @@ def apply_controlled_migration():
         new_hash = hashlib.sha256(f"{last_hash}{audit_payload}".encode("utf-8")).hexdigest()
 
         cur.execute("""
-            INSERT INTO smriti_audit_log (
+            INSERT INTO tileflow_audit_log (
                 id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                 old_value, new_value, change_type, change_reason, change_source,
                 changed_by, changed_by_name, ip_address, session_id, trace_id,
@@ -136,10 +123,10 @@ def apply_controlled_migration():
     cur.execute("SELECT COUNT(*) FROM company_database_registries;")
     reg_rows = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -147,26 +134,26 @@ def apply_controlled_migration():
     print("\nPOST-MIGRATION VERIFICATION:")
     print(f"  Table company_database_registries Created : {table_created}")
     print(f"  Registry Row Count                         : {reg_rows} (Zero pre-seeded rows)")
-    print(f"  smriti_menus Count                         : {final_menus} (UNCHANGED)")
-    print(f"  smriti_audit_log Count                     : {final_audit} (Audit Entry Registered)")
+    print(f"  tileflow_menus Count                         : {final_menus} (UNCHANGED)")
+    print(f"  tileflow_audit_log Count                     : {final_audit} (Audit Entry Registered)")
 
     # Assert Invariants
     assert table_created is True, "Table company_database_registries missing!"
     assert reg_rows == 0, f"Expected 0 pre-seeded rows, found {reg_rows}"
-    assert final_menus == 34, f"smriti_menus count changed! Expected 34, got {final_menus}"
+    assert final_menus == 34, f"tileflow_menus count changed! Expected 34, got {final_menus}"
     assert final_audit == initial_audit + 1, f"Audit log count mismatch! Expected {initial_audit + 1}, got {final_audit}"
 
     # 5. Update Excel Review Workbook
     wb = openpyxl.load_workbook(EXCEL_OUTPUT)
     
     apply_summary = pd.DataFrame([
-        {"Metric": "Migration Approved Scope", "Value": "CREATE ONLY company_database_registries in smritisys"},
+        {"Metric": "Migration Approved Scope", "Value": "CREATE ONLY company_database_registries in tileflowsys"},
         {"Metric": "SQL Executed", "Value": "CREATE TABLE IF NOT EXISTS company_database_registries (...)"},
-        {"Metric": "Target Database", "Value": "smritisys"},
+        {"Metric": "Target Database", "Value": "tileflowsys"},
         {"Metric": "Company DBs Created", "Value": "0 (ZERO Company Business DBs created)"},
         {"Metric": "Business Tables Moved", "Value": "0 (ZERO business tables moved)"},
-        {"Metric": "smriti_menus Row Count", "Value": "34 (FROZEN / VERIFIED)"},
-        {"Metric": "smriti_audit_log Row Count", "Value": f"{final_audit} (Audit Entry Registered)"},
+        {"Metric": "tileflow_menus Row Count", "Value": "34 (FROZEN / VERIFIED)"},
+        {"Metric": "tileflow_audit_log Row Count", "Value": f"{final_audit} (Audit Entry Registered)"},
         {"Metric": "Audit Log SHA-256 Hash Chain", "Value": "INTACT & VERIFIED"},
         {"Metric": "Final Status", "Value": "APPLY_COMPLETED_SUCCESSFULLY"}
     ])

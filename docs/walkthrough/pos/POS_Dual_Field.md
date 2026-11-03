@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.11.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Dual-Field Item Auto-Search, Auto-Population & 14+ Attribute Inspection
 
 ## 1. Purpose
-Provide seamless, zero-friction item identification and auto-population across the SMRITI billing suites (`ProPOS Billing Terminal` and `Distributor Invoicing Terminal`) from either the **Stock No./Code/SKU field** or the **Barcode No. field**, presenting comprehensive item metadata cards and live HUD inspection.
+Provide seamless, zero-friction item identification and auto-population across the TILEFLOW billing suites (`ProPOS Billing Terminal` and `Distributor Invoicing Terminal`) from either the **Stock No./Code/SKU field** or the **Barcode No. field**, presenting comprehensive item metadata cards and live HUD inspection.
 
 ## 2. Scope
 - Dual interactive search input fields in the Direct Entry grid: **Barcode / Scan** and **Stock No / SKU**.

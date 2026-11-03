@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.21.0
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-16
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState } from "react";
 import { motion } from "motion/react";
 import { Shield, User, Lock, ArrowRight, AlertTriangle } from "lucide-react";
@@ -64,15 +39,15 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
       const data = await res.json();
       if (res.ok && data.access_token) {
         // Clear any stale auth context before establishing a fresh session.
-        localStorage.removeItem("smriti_session_token");
-        localStorage.removeItem("smriti_jwt_token");
-        localStorage.removeItem("smriti_refresh_token");
-        localStorage.removeItem("smriti_company_id");
-        localStorage.removeItem("smriti_company_code");
-        localStorage.removeItem("smriti_branch_id");
-        localStorage.setItem("smriti_jwt_token", data.access_token);
+        localStorage.removeItem("tileflow_session_token");
+        localStorage.removeItem("tileflow_jwt_token");
+        localStorage.removeItem("tileflow_refresh_token");
+        localStorage.removeItem("tileflow_company_id");
+        localStorage.removeItem("tileflow_company_code");
+        localStorage.removeItem("tileflow_branch_id");
+        localStorage.setItem("tileflow_jwt_token", data.access_token);
         if (data.refresh_token) {
-          localStorage.setItem("smriti_refresh_token", data.refresh_token);
+          localStorage.setItem("tileflow_refresh_token", data.refresh_token);
         }
         const user = data.user ?? {};
         const compId = normalizeCompanyId(data.company_id ?? user.company_id ?? "COMP-001");
@@ -124,11 +99,11 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           {/* Header */}
           <div className="flex items-center space-x-3 mb-6">
             <div className="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-xl font-display text-white border border-blue-500 shadow-md">
-              S
+              M
             </div>
             <div>
               <h2 className="font-display font-bold text-lg text-theme-body leading-none">
-                SMRITI Retail OS
+                MQube
               </h2>
               <p className="text-xs text-theme-muted mt-1">
                 Enterprise Experience & Operations Login
@@ -203,7 +178,8 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             </button>
           </form>
 
-          {/* Quick-Fill Credentials Helper */}
+          {/* Quick-Fill Credentials Helper: local development only, never in a production build */}
+          {import.meta.env.DEV && (
           <div className="mt-5 pt-4 border-t border-theme-divider">
             <p className="text-[10px] font-mono text-theme-muted uppercase tracking-wider mb-2 text-center">
               Quick Select Demo Persona
@@ -232,6 +208,7 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
               </button>
             </div>
           </div>
+          )}
         </div>
 
         <div className="bg-theme-surface-2 px-6 py-3 border-t border-theme-divider flex items-center justify-between text-[10px] text-theme-muted font-mono">

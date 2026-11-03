@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sprint 8b — Business Ledger Parity Gap Registry
-## Shoper9 MnuNo 200/250/270/280/460 → SMRITI Gap Analysis
+## Shoper9 MnuNo 200/250/270/280/460 → TILEFLOW Gap Analysis
 
 **Date:** 2026-08-24  
-**Source:** Live `smriti_legacy_menu_map` (29 MAPPED+MERGED entries) + code inspection  
+**Source:** Live `tileflow_legacy_menu_map` (29 MAPPED+MERGED entries) + code inspection  
 **Files Inspected:**  
 - `src/components/BusinessLedgerTab.tsx` (413 lines)  
 - `backend/app/api/v1/pos.py` (365 lines, 17 endpoints)  
@@ -25,7 +24,7 @@
 
 ---
 
-## Critical Finding: SMRITI Workspace Mismatch
+## Critical Finding: TILEFLOW Workspace Mismatch
 
 **Shoper9 "Business Ledger" workspace** covers:  
 - Cash Payouts/Receipts (MnuNo 200)  
@@ -34,12 +33,12 @@
 - Credit Sale Management (MnuNo 280)  
 - 12 Cash Reports (MnuNo 460)  
 
-**SMRITI `BusinessLedgerTab.tsx`** is entirely a **CRM Receivables screen**:  
+**TILEFLOW `BusinessLedgerTab.tsx`** is entirely a **CRM Receivables screen**:  
 - Customer outstanding amounts, credit limits, credit policies  
 - 6-month balance history chart (deterministic mock data)  
 - No cash, no till, no card submission/realisation  
 
-**Result:** The SMRITI workspace label "Business Ledger" is architecturally mismatched to Shoper9 "Business Ledger". The SMRITI component serves Shoper9 MnuNo 0/200 (credit/receivables) partially — but the sub-functions (payouts, till, card, cash reports) are **absent or in POS**.
+**Result:** The TILEFLOW workspace label "Business Ledger" is architecturally mismatched to Shoper9 "Business Ledger". The TILEFLOW component serves Shoper9 MnuNo 0/200 (credit/receivables) partially — but the sub-functions (payouts, till, card, cash reports) are **absent or in POS**.
 
 ---
 
@@ -64,12 +63,12 @@
 
 ### MnuNo 200 — Cash (parent + 4 sub-groups)
 
-| MnuNo/Opt | Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 0/200 | Cash (root) | — | MERGED | BusinessLedgerTab receivables | 🔗 OVERLAP (partial) |
 | 200/201 | Cash Payouts | SR100200 | MAPPED | `record_shift_till_expense` in POS | ✅ VERIFIED |
 | 200/202 | Cash Receipts | SR100200 | MAPPED | `record_shift_cash_in` in POS | ✅ VERIFIED |
-| 200/250 | Credit Card Mgmt | — | MERGED | ⚠️ No card management section in SMRITI | ⚠️ GAP |
+| 200/250 | Credit Card Mgmt | — | MERGED | ⚠️ No card management section in TILEFLOW | ⚠️ GAP |
 | 200/260 | Franchisee A/C | — | MERGED | ⚠️ Multi-company — no Franchisee A/C | 🔄 DEFERRED |
 | 200/270 | Till Management | — | MAPPED | POS shift functions (verified above) | ✅ VERIFIED |
 | 200/280 | Credit Sale Mgmt | — | MAPPED | BusinessLedgerTab credit view (partial) | ⚠️ GAP (write ops missing) |
@@ -80,7 +79,7 @@
 
 ### MnuNo 250 — Credit Card Submission/Realisation
 
-| MnuNo/Opt | Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 250/251 | Submission | SR100300 | MAPPED | ⚠️ No card submission endpoint in any API | ⚠️ GAP |
 | 250/252 | Realisation | SR100400 | MAPPED | ⚠️ No card realisation endpoint in any API | ⚠️ GAP |
@@ -91,13 +90,13 @@
 
 ### MnuNo 270 — Till Management (6 entries)
 
-| MnuNo/Opt | Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 270/271 | Till Status | SR138900 | MAPPED | `get_active_shift` → shift state | ✅ VERIFIED |
 | 270/272 | Set Opening Balance | SR138900 | MAPPED | `open_shift_contract` → opening_cash | ✅ VERIFIED |
 | 270/273 | Cash Lift | SR138900 | MAPPED | `record_shift_cash_drop` | ✅ VERIFIED |
 | 270/274 | Reconciliation | SR138900 | MAPPED | `close_shift_contract` + Z-report | ✅ VERIFIED |
-| 270/275 | Open Cash Drawer | SR138900 | MAPPED | ⚠️ Hardware command — no SMRITI API | ⚠️ GAP |
+| 270/275 | Open Cash Drawer | SR138900 | MAPPED | ⚠️ Hardware command — no TILEFLOW API | ⚠️ GAP |
 | 270/276 | Till Reprint | SR138900 | MAPPED | ⚠️ No till/shift report reprint endpoint | ⚠️ GAP |
 
 **MnuNo 270 Score: 4 VERIFIED / 2 GAP / 0 DEFERRED**
@@ -106,7 +105,7 @@
 
 ### MnuNo 280 — Credit Sale Management (3 entries)
 
-| MnuNo/Opt | Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 280/281 | Collect Payment | SR142500 | MAPPED | ⚠️ No credit-sale payment collection endpoint | ⚠️ GAP |
 | 280/282 | Set Opening Balance | SR142500 | MAPPED | ✅ Covered by `open_shift_contract` | ✅ VERIFIED |
@@ -118,7 +117,7 @@
 
 ### MnuNo 460 — Cash Reports (12 entries) — THE CRITICAL GAP
 
-| MnuNo/Opt | Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 460/461 | Cash Transaction | SR203100 | MAPPED | ⚠️ No cash transaction report | ⚠️ GAP |
 | 460/462 | Submission/Realisation List | SR203300 | MAPPED | ⚠️ No card submission/realisation report | ⚠️ GAP |
@@ -169,7 +168,7 @@ No `finance.py` exists in `backend/app/api/v1/`. The 12 Cash Reports (MnuNo 460)
 
 ## P2 Gaps — Cash Operations (add to existing APIs)
 
-| Gap | SMRITI Target | Action |
+| Gap | TILEFLOW Target | Action |
 |---|---|---|
 | Credit Card Submission | `finance.py` | `POST /api/v1/finance/card-submission` |
 | Credit Card Realisation | `finance.py` | `POST /api/v1/finance/card-realisation` |
@@ -180,7 +179,7 @@ No `finance.py` exists in `backend/app/api/v1/`. The 12 Cash Reports (MnuNo 460)
 
 | Gap | Reason |
 |---|---|
-| Open Cash Drawer (270/275) | Hardware peripheral command — SMRITI sends ESC/POS code to POS terminal firmware. Out of scope for backend API. Mark as HARDWARE. |
+| Open Cash Drawer (270/275) | Hardware peripheral command — TILEFLOW sends ESC/POS code to POS terminal firmware. Out of scope for backend API. Mark as HARDWARE. |
 | Till Reprint (270/276) | Implemented as frontend print action against `get_shift_z_report`. Mark as FRONTEND. |
 
 ---

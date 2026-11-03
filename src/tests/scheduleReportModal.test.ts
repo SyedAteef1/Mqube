@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.77.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   ScheduleReportModal,
@@ -19,7 +5,7 @@ import {
 } from "../components/reports/ScheduleReportModal";
 import * as apiFetchModule from "../lib/apiFetchV1";
 
-describe("SMRITI Report Automation & Multi-Channel Distribution Hub Contract & Flow", () => {
+describe("MQube Report Automation & Multi-Channel Distribution Hub Contract & Flow", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
@@ -37,7 +23,7 @@ describe("SMRITI Report Automation & Multi-Channel Distribution Hub Contract & F
       export_format: "XLSX",
       channels: ["EMAIL", "STATUTORY_VAULT"],
       recipients: {
-        emails: ["director@smritibooks.com", "cfo@smritibooks.com"],
+        emails: ["director@tileflow.in", "cfo@tileflow.in"],
         vault_folder: "/Statutory/Compliance/2026-Q3",
       },
       is_active: true,
@@ -60,7 +46,7 @@ describe("SMRITI Report Automation & Multi-Channel Distribution Hub Contract & F
       export_format: "PDF",
       channels: ["EMAIL", "WHATSAPP"],
       recipients: {
-        emails: ["ceo@smritibooks.com"],
+        emails: ["ceo@tileflow.in"],
         phone_numbers: ["+919876543210"],
       },
       is_active: true,
@@ -73,7 +59,7 @@ describe("SMRITI Report Automation & Multi-Channel Distribution Hub Contract & F
       export_format: "PDF",
       channels: ["EMAIL", "WHATSAPP"],
       recipients: {
-        emails: ["ceo@smritibooks.com"],
+        emails: ["ceo@tileflow.in"],
         phone_numbers: ["+919876543210"],
       },
       is_active: true,

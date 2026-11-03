@@ -1,31 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Sprint 1 -- Legacy Menu to SMRITI Workspace Mapping Matrix
-Reads: docs/legacy/shoper/SH9_MENU_CATALOG.csv
-Produces:
-  docs/legacy/shoper/SH9_MENU_MAP.md  -- full mapping narrative
-  SH9_MAP_MATRIX.csv                  -- machine-readable mapping
-
-Migration statuses:
-  MAPPED      -- has a direct 1:1 SMRITI equivalent action/workspace
-  MERGED      -- consolidated into a larger SMRITI workspace (multi-function)
-  REPLACED    -- functionally replaced by SMRITI's own improved design
-  DEPRECATED  -- Shoper-specific (Tally sync, S9Q patch mgmt) -- no SMRITI equiv needed
-  NOT_APPLIC  -- internal Shoper infrastructure (Help, Shoper root nodes)
-  PENDING     -- requires further analysis before classification
-"""
-
 import csv
 from pathlib import Path
 from datetime import datetime
@@ -36,9 +8,9 @@ CAT_CSV = INI_DIR / "SH9_MENU_CATALOG.csv"
 MAP_CSV = INI_DIR / "SH9_MAP_MATRIX.csv"
 MAP_MD  = INI_DIR / "SH9_MENU_MAP.md"
 
-# ─── SMRITI Workspace Registry (from CANONICAL_34_MENU_MATRIX) ───────────────
+# ─── TILEFLOW Workspace Registry (from CANONICAL_34_MENU_MATRIX) ───────────────
 #  menu_id -> {workspace, action, permission}
-SMRITI_WS = {
+TILEFLOW_WS = {
     "dashboard":       {"menu_id": "menu-dashboard",       "ws": "Dashboard",            "module": "SYSTEM"},
     "pos_workspace":   {"menu_id": "menu-pos",             "ws": "POS Hub",              "module": "SALES"},
     "sales_billing":   {"menu_id": "menu-sales",           "ws": "Sales Workspace",      "module": "SALES"},
@@ -67,18 +39,18 @@ SMRITI_WS = {
 
 # ─── The Mapping Table (evidence-based, entry by entry) ──────────────────────
 # (MnuNo, MenuOpt) -> mapping decision
-# Format: (smriti_ws_key, smriti_action, document_type, migration_status, notes)
+# Format: (tileflow_ws_key, tileflow_action, document_type, migration_status, notes)
 
 MAPPING = {
     # ── ROOT (MnuNo=0) ─────────────────────────────────────────────────────────
-    (0,100): ("pos_workspace",    "NAVIGATE",  "",          "MERGED",     "SMRITI root nav: POS Hub"),
-    (0,200): ("business_ledger",  "NAVIGATE",  "",          "MERGED",     "SMRITI root nav: Business Ledger"),
-    (0,300): ("inventory_ws",     "NAVIGATE",  "",          "MERGED",     "SMRITI root nav: Inventory Hub"),
-    (0,400): ("reports_portal",   "NAVIGATE",  "",          "MERGED",     "SMRITI root nav: Reports Portal"),
-    (0,500): ("governance_mast",  "NAVIGATE",  "",          "MERGED",     "SMRITI root nav: Governance Masters"),
-    (0,600): ("item_master",      "NAVIGATE",  "",          "MERGED",     "SMRITI root nav: Item Master (Catalogue)"),
-    (0,700): ("company_setup",    "NAVIGATE",  "",          "MERGED",     "SMRITI root nav: Company Setup"),
-    (0,800): ("dashboard",        "NAVIGATE",  "",          "NOT_APPLIC", "Help menu -- no SMRITI equivalent needed"),
+    (0,100): ("pos_workspace",    "NAVIGATE",  "",          "MERGED",     "TILEFLOW root nav: POS Hub"),
+    (0,200): ("business_ledger",  "NAVIGATE",  "",          "MERGED",     "TILEFLOW root nav: Business Ledger"),
+    (0,300): ("inventory_ws",     "NAVIGATE",  "",          "MERGED",     "TILEFLOW root nav: Inventory Hub"),
+    (0,400): ("reports_portal",   "NAVIGATE",  "",          "MERGED",     "TILEFLOW root nav: Reports Portal"),
+    (0,500): ("governance_mast",  "NAVIGATE",  "",          "MERGED",     "TILEFLOW root nav: Governance Masters"),
+    (0,600): ("item_master",      "NAVIGATE",  "",          "MERGED",     "TILEFLOW root nav: Item Master (Catalogue)"),
+    (0,700): ("company_setup",    "NAVIGATE",  "",          "MERGED",     "TILEFLOW root nav: Company Setup"),
+    (0,800): ("dashboard",        "NAVIGATE",  "",          "NOT_APPLIC", "Help menu -- no TILEFLOW equivalent needed"),
 
     # ── SALES (MnuNo=100) ──────────────────────────────────────────────────────
     # SR130000.EXE handles Billing/Return/Cancellation via pgmopt/MultiInstance
@@ -100,7 +72,7 @@ MAPPING = {
     (200,202): ("business_ledger","NEW_TRANSACTION",   "CASH_RECEIPT",       "MAPPED",     "Business Ledger: Cash Receipt document."),
     (200,250): ("business_ledger","NAVIGATE",          "",                   "MERGED",     "Credit Card group -- merged into Business Ledger sub-section."),
     (200,260): ("business_ledger","NAVIGATE",          "",                   "MERGED",     "Franchisee A/C group -- merged into Business Ledger."),
-    (200,270): ("business_ledger","NAVIGATE",          "",                   "MAPPED",     "Till Management group -- SMRITI Business Ledger: Till section."),
+    (200,270): ("business_ledger","NAVIGATE",          "",                   "MAPPED",     "Till Management group -- TILEFLOW Business Ledger: Till section."),
     (200,280): ("business_ledger","NAVIGATE",          "",                   "MAPPED",     "Credit Sale Management group -- Business Ledger: Credit section."),
 
     # Credit Card sub-group (250)
@@ -108,10 +80,10 @@ MAPPING = {
     (250,252): ("business_ledger","NEW_TRANSACTION",   "CC_REALISATION",     "MAPPED",     "Business Ledger: Credit Card Realisation."),
 
     # Franchisee A/C sub-group (260)
-    (260,261): ("business_ledger","NEW_TRANSACTION",   "FRANCHISEE_PAYMENT", "PENDING",    "Franchisee HO payments -- assess if SMRITI multi-company covers this."),
-    (260,262): ("company_setup",  "VIEW",              "",                   "MERGED",     "Franchisee Details Form -> Company Setup in SMRITI."),
+    (260,261): ("business_ledger","NEW_TRANSACTION",   "FRANCHISEE_PAYMENT", "PENDING",    "Franchisee HO payments -- assess if TILEFLOW multi-company covers this."),
+    (260,262): ("company_setup",  "VIEW",              "",                   "MERGED",     "Franchisee Details Form -> Company Setup in TILEFLOW."),
     (260,263): ("business_ledger","VIEW",              "FRANCHISEE_OUTSTANDING","PENDING", "Franchisee outstanding report -- assess vs Business Ledger reports."),
-    (260,265): ("business_ledger","NEW_TRANSACTION",   "PAYIN_SLIP",         "PENDING",    "Pay-in Slip -- bank deposit document. Not yet in SMRITI ledger."),
+    (260,265): ("business_ledger","NEW_TRANSACTION",   "PAYIN_SLIP",         "PENDING",    "Pay-in Slip -- bank deposit document. Not yet in TILEFLOW ledger."),
 
     # Till Management sub-group (270)
     (270,271): ("business_ledger","VIEW",              "TILL_STATUS",        "MAPPED",     "Till Status report in Business Ledger."),
@@ -129,7 +101,7 @@ MAPPING = {
     (280,284): ("business_ledger","VIEW",              "CREDIT_SALE",        "MAPPED",     "Credit Sale: Transaction list view."),
 
     # ── STOCK (MnuNo=300) ──────────────────────────────────────────────────────
-    (300,311): ("data_exchange",  "IMPORT",            "PT_FILE_DC",         "REPLACED",   "PT File DC import -> SMRITI Data Exchange module. Legacy S9Q mechanism retired."),
+    (300,311): ("data_exchange",  "IMPORT",            "PT_FILE_DC",         "REPLACED",   "PT File DC import -> TILEFLOW Data Exchange module. Legacy S9Q mechanism retired."),
     (300,312): ("stock_ledger",   "NEW_TRANSACTION",   "PHYSICAL_VERIFY",    "MAPPED",     "Stock Ledger: Physical Verification (TrnType=9700)."),
     (300,313): ("purchase_studio","NEW_TRANSACTION",   "GOODS_INWARDS",      "MAPPED",     "Purchase Workspace: Goods Inwards / GRN."),
     (300,314): ("purchase_studio","NEW_TRANSACTION",   "GOODS_INWARDS_SIZE", "MERGED",     "Size-wise GRN -- merged into Purchase Workspace with size matrix capability."),
@@ -188,17 +160,17 @@ MAPPING = {
     (500,505): ("governance_mast","COMPACT",           "DATABASE",           "MAPPED",     "Governance: Compact Database."),
     (500,506): ("governance_mast","TUNE",              "DATABASE",           "MAPPED",     "Governance: Database Tuning."),
     (500,507): ("governance_mast","PURGE",             "DATA",               "MAPPED",     "Governance: Purge Data (restricted action)."),
-    (500,508): ("governance_mast","DELETE",            "TEMP_TABLES",        "REPLACED",   "Delete Temp Tables -- SMRITI uses PostgreSQL, no temp table cleanup needed."),
-    (500,509): ("governance_mast","DELETE",            "BACKUP_FILE",        "DEPRECATED", "Delete Backup File -- OS-level operation, not in SMRITI scope."),
+    (500,508): ("governance_mast","DELETE",            "TEMP_TABLES",        "REPLACED",   "Delete Temp Tables -- TILEFLOW uses PostgreSQL, no temp table cleanup needed."),
+    (500,509): ("governance_mast","DELETE",            "BACKUP_FILE",        "DEPRECATED", "Delete Backup File -- OS-level operation, not in TILEFLOW scope."),
     (500,540): ("data_exchange",  "NAVIGATE",          "SYNC",               "MAPPED",     "POS-HO Synchronisation group -> Data Exchange sync module."),
     (500,550): ("data_exchange",  "NAVIGATE",          "IMPORT",             "MAPPED",     "Data Import group -> Data Exchange."),
-    (500,560): ("governance_mast","NAVIGATE",          "BACKEND_DATA",       "REPLACED",   "Back-end Data -> SMRITI Admin / System Config (Postgres-native)."),
+    (500,560): ("governance_mast","NAVIGATE",          "BACKEND_DATA",       "REPLACED",   "Back-end Data -> TILEFLOW Admin / System Config (Postgres-native)."),
     (500,570): ("governance_mast","MANAGE",            "ALERTS",             "MAPPED",     "Alerts Management -> Governance Masters alerts config."),
     (500,580): ("governance_mast","CONFIGURE",         "COMMUNICATION",      "MAPPED",     "Communication Configuration -> Governance Masters comm settings."),
     (500,590): ("reports_portal", "VIEW",              "ACTIVITY_LOG",       "MAPPED",     "Activity Log -> Reports Portal / Audit Logs."),
 
     # POS-HO Sync sub-group (540)
-    (540,541): ("data_exchange",  "SEND",              "FLAT_FILES",         "REPLACED",   "Send Flat Files to HO -> SMRITI cloud sync via API, not flat files."),
+    (540,541): ("data_exchange",  "SEND",              "FLAT_FILES",         "REPLACED",   "Send Flat Files to HO -> TILEFLOW cloud sync via API, not flat files."),
     (540,542): ("data_exchange",  "SYNC",              "MANUAL",             "MAPPED",     "Synchronise Manually -> Data Exchange manual trigger."),
     (540,543): ("data_exchange",  "CONFIGURE",         "SYNC",               "MAPPED",     "Configure Synchronisation -> Data Exchange settings."),
     (540,544): ("data_exchange",  "VIEW",              "SYNC_STATUS",        "MAPPED",     "Sync Status Report -> Data Exchange status dashboard."),
@@ -208,7 +180,7 @@ MAPPING = {
     (550,552): ("data_exchange",  "IMPORT",            "PRICE_REVISION",     "MAPPED",     "Import Price Revision -> Data Exchange: Pricing import."),
     (550,553): ("data_exchange",  "IMPORT",            "CUSTOMER_INFO",      "MAPPED",     "Import Customer Information -> Data Exchange: Customer import."),
     (550,554): ("data_exchange",  "IMPORT",            "SALES_PROMOTIONS",   "MAPPED",     "Import Active Sales Promotions -> Data Exchange: Promotions import."),
-    (550,555): ("data_exchange",  "IMPORT",            "SECONDARY_ITEMS",    "PENDING",    "Import Items from Secondary to Primary Db -> assess SMRITI multi-db need."),
+    (550,555): ("data_exchange",  "IMPORT",            "SECONDARY_ITEMS",    "PENDING",    "Import Items from Secondary to Primary Db -> assess TILEFLOW multi-db need."),
     (550,556): ("data_exchange",  "IMPORT",            "SALES_PROMOTIONS",   "MERGED",     "Sales Promotions import variant -- merged with 554."),
 
     # ── CATALOGUE (MnuNo=600) ──────────────────────────────────────────────────
@@ -246,7 +218,7 @@ MAPPING = {
     # ── SETUP (MnuNo=700) ──────────────────────────────────────────────────────
     (700,711): ("company_setup",  "NEW_RECORD",        "COMPANY",            "MAPPED",     "Company Creation -> Company Setup workspace."),
     (700,712): ("company_setup",  "EDIT",              "COMPANY",            "MAPPED",     "Company Maintenance -> Company Setup workspace."),
-    (700,713): ("company_setup",  "NEW_RECORD",        "SECONDARY_DB",       "REPLACED",   "Create Secondary Database -- SMRITI is cloud-native Postgres, not needed."),
+    (700,713): ("company_setup",  "NEW_RECORD",        "SECONDARY_DB",       "REPLACED",   "Create Secondary Database -- TILEFLOW is cloud-native Postgres, not needed."),
     (700,720): ("governance_mast","NAVIGATE",          "GENERAL_SETUP",      "MAPPED",     "General setup group -> Governance Masters."),
     (700,750): ("staff_mgmt",     "NAVIGATE",          "SUPERVISORY",        "MAPPED",     "Supervisory Functions group -> Staff Management / Admin."),
 
@@ -255,15 +227,15 @@ MAPPING = {
     (720,722): ("numbering_eng",  "CONFIGURE",         "BILL_PREFIX",        "MAPPED",     "Bill Prefix -> Numbering Engine: Document series config."),
     (720,723): ("governance_mast","CONFIGURE",         "STOCK_NUMBERING",    "MAPPED",     "Stock Number Methodology -> Governance: Item numbering policy."),
     (720,724): ("print_studio",   "CONFIGURE",         "PRINT_TEMPLATES",    "MAPPED",     "Printing Templates -> Print Studio."),
-    (720,725): ("data_exchange",  "CONFIGURE",         "FLAT_FILE",          "REPLACED",   "Flat File Values -> SMRITI uses API exchange, not flat files."),
+    (720,725): ("data_exchange",  "CONFIGURE",         "FLAT_FILE",          "REPLACED",   "Flat File Values -> TILEFLOW uses API exchange, not flat files."),
     (720,727): ("numbering_eng",  "CONFIGURE",         "CASH_PO_PREFIX",     "MAPPED",     "Cash / PO Prefix -> Numbering Engine."),
-    (720,728): ("accounting_sync","CONFIGURE",         "TALLY_MAPPING",      "DEPRECATED", "Tally Interface Mapping -- Tally sync deprecated in SMRITI. GST-native."),
-    (720,729): ("accounting_sync","CONFIGURE",         "TALLY_HSN",          "DEPRECATED", "Tally HSN Mapping -- deprecated. SMRITI has native HSN/SAC management."),
+    (720,728): ("accounting_sync","CONFIGURE",         "TALLY_MAPPING",      "DEPRECATED", "Tally Interface Mapping -- Tally sync deprecated in TILEFLOW. GST-native."),
+    (720,729): ("accounting_sync","CONFIGURE",         "TALLY_HSN",          "DEPRECATED", "Tally HSN Mapping -- deprecated. TILEFLOW has native HSN/SAC management."),
     (720,740): ("accounting_sync","NAVIGATE",          "TALLY_UTILS",        "DEPRECATED", "Tally Interface Utilities group -- deprecated entirely."),
     (720,804): ("print_studio",   "CONFIGURE",         "PRINT_ENGINE",       "MAPPED",     "Print Engine Configuration -> Print Studio advanced config."),
 
     # Tally Interface Utilities (740) -- ALL DEPRECATED
-    (740,741): ("accounting_sync","CONFIGURE",         "TALLY_CO_INFO",      "DEPRECATED", "Tally: Change Company Info. Not applicable in SMRITI."),
+    (740,741): ("accounting_sync","CONFIGURE",         "TALLY_CO_INFO",      "DEPRECATED", "Tally: Change Company Info. Not applicable in TILEFLOW."),
     (740,742): ("accounting_sync","DELETE",            "TALLY_MAPPING",      "DEPRECATED", "Tally: Delete Mapping. Not applicable."),
     (740,743): ("accounting_sync","MANAGE",            "TALLY_CHANGES",      "DEPRECATED", "Tally: Changes Master. Not applicable."),
     (740,744): ("accounting_sync","MANAGE",            "MISSING_VOUCHERS",   "DEPRECATED", "Tally: Missing Vouchers. Not applicable."),
@@ -273,8 +245,8 @@ MAPPING = {
     # Supervisory Functions (750)
     (750,751): ("staff_mgmt",     "MANAGE",            "USER_AUTHORISATION", "MAPPED",     "User Authorisation -> Staff Management: Role/Permission assignment."),
     (750,752): ("staff_mgmt",     "CHANGE_PASSWORD",   "",                   "MAPPED",     "Change Password -> Staff Management: User credential management."),
-    (750,753): ("staff_mgmt",     "CONFIGURE",         "MENU_WEIGHTS",       "REPLACED",   "Menu/User Weights -> SMRITI uses Role/Policy model, not weights."),
-    (750,754): ("staff_mgmt",     "CONFIGURE",         "NODE_RESTRICTION",   "REPLACED",   "Menu/Node Restriction -> SMRITI permission matrix replaces node restrictions."),
+    (750,753): ("staff_mgmt",     "CONFIGURE",         "MENU_WEIGHTS",       "REPLACED",   "Menu/User Weights -> TILEFLOW uses Role/Policy model, not weights."),
+    (750,754): ("staff_mgmt",     "CONFIGURE",         "NODE_RESTRICTION",   "REPLACED",   "Menu/Node Restriction -> TILEFLOW permission matrix replaces node restrictions."),
     (750,755): ("company_setup",  "MANAGE",            "NODE_MANAGEMENT",    "MAPPED",     "Node Management -> Company Setup: Branch/Terminal management."),
     (750,756): ("governance_mast","EXECUTE",           "DATA_REBUILD",       "MAPPED",     "Data Rebuild -> Governance: Admin data integrity operation."),
     (750,757): ("governance_mast","EXECUTE",           "COST_VARIANCE",      "MAPPED",     "Cost Price Variance Fixing -> Governance: Admin cost correction."),
@@ -287,9 +259,9 @@ MAPPING = {
     (750,772): ("governance_mast","EXECUTE",           "TAX_RECOMPUTE",      "MAPPED",     "Tax Re-computation -> Governance: Admin tax recalc."),
 
     # ── HELP (MnuNo=800) ───────────────────────────────────────────────────────
-    (800,801): ("dashboard",      "HELP",              "",                   "NOT_APPLIC", "Shoper Help -> SMRITI has inline Wiki/Help. External EXE not replicated."),
-    (800,802): ("dashboard",      "HELP",              "",                   "NOT_APPLIC", "Support Centre -> SMRITI support via smritibooks.com. Not an action."),
-    (800,803): ("dashboard",      "ABOUT",             "",                   "NOT_APPLIC", "About Shoper -> SMRITI has About screen. No migration needed."),
+    (800,801): ("dashboard",      "HELP",              "",                   "NOT_APPLIC", "Shoper Help -> TILEFLOW has inline Wiki/Help. External EXE not replicated."),
+    (800,802): ("dashboard",      "HELP",              "",                   "NOT_APPLIC", "Support Centre -> TILEFLOW support via tileflow.in. Not an action."),
+    (800,803): ("dashboard",      "ABOUT",             "",                   "NOT_APPLIC", "About Shoper -> TILEFLOW has About screen. No migration needed."),
     (800,804): ("dashboard",      "HELP",              "",                   "NOT_APPLIC", "Live Chat -> External. Not migrated."),
 
     # ── SALES REPORTS (MnuNo=410-420) ─────────────────────────────────────────
@@ -364,13 +336,13 @@ MAPPING = {
     (470,476): ("reports_portal", "VIEW",  "WALKIN_DETAILS",      "MAPPED", "MIS: Walk-in Details."),
     (470,477): ("reports_portal", "VIEW",  "SUPERCLASS_SALES",    "MAPPED", "MIS: Superclass-wise Sales/Stock."),
     (470,478): ("reports_portal", "VIEW",  "STOCK_ACROSS_CHAIN",  "PENDING","MIS: Stock across Chain -- needs multi-company assessment."),
-    (470,479): ("reports_portal", "VIEW",  "TXN_DETAILS_IMG",     "MERGED", "MIS: Transaction Details with Image -> SMRITI bill reprint."),
+    (470,479): ("reports_portal", "VIEW",  "TXN_DETAILS_IMG",     "MERGED", "MIS: Transaction Details with Image -> TILEFLOW bill reprint."),
     (470,480): ("reports_portal", "VIEW",  "GROSS_MARGIN",        "MAPPED", "MIS: Gross Margin report."),
     (470,481): ("reports_portal", "VIEW",  "BILL_REPRINT",        "MAPPED", "MIS: Bill Re-Print."),
     (470,482): ("reports_portal", "VIEW",  "SALES_PROMOTIONS_RPT","MAPPED", "MIS: Sales Promotions report."),
     (470,483): ("reports_portal", "VIEW",  "SALESPERSON_DISC",    "MAPPED", "MIS: Salesperson-wise Discount."),
     (470,490): ("reports_portal", "NAVIGATE","CUSTOMER_OFFTAKE",  "MAPPED", "MIS: Customer Offtake sub-group."),
-    (470,491): ("reports_portal", "VIEW",  "EXCISE_REPORT",       "DEPRECATED","MIS: Excise Report -- pre-GST. SMRITI uses GST-native reporting."),
+    (470,491): ("reports_portal", "VIEW",  "EXCISE_REPORT",       "DEPRECATED","MIS: Excise Report -- pre-GST. TILEFLOW uses GST-native reporting."),
     (470,492): ("reports_portal", "VIEW",  "INCENTIVE_ANALYSIS",  "MAPPED", "MIS: Incentive Analysis report."),
 
     # Customer Offtake sub-group (490)
@@ -379,13 +351,13 @@ MAPPING = {
     (490,493): ("reports_portal", "VIEW",  "OFFTAKE_PRODUCTWISE", "MAPPED", "Customer Offtake: Product-wise."),
 
     # ── HOUSEKEEPING sub-entries ───────────────────────────────────────────────
-    (500,510): ("governance_mast","DELETE", "BACKUP_FILE",         "DEPRECATED","Delete Backup File (SR329900) -- OS-level. Not in SMRITI scope."),
+    (500,510): ("governance_mast","DELETE", "BACKUP_FILE",         "DEPRECATED","Delete Backup File (SR329900) -- OS-level. Not in TILEFLOW scope."),
     (500,520): ("data_exchange",  "NAVIGATE","SYNC",               "MAPPED", "POS-HO Sync group -> Data Exchange."),
     (500,530): ("data_exchange",  "NAVIGATE","IMPORT",             "MAPPED", "Data Import group -> Data Exchange."),
     (500,581): ("audit_logs",     "VIEW",    "ACTIVITY_LOG",       "MAPPED", "Activity Log -> Audit Logs workspace."),
 
     # POS-HO Sync sub-entries (520)
-    (520,521): ("data_exchange",  "SEND",    "FLAT_FILES",         "REPLACED","Send Flat Files to HO -> SMRITI cloud sync via API, not flat files."),
+    (520,521): ("data_exchange",  "SEND",    "FLAT_FILES",         "REPLACED","Send Flat Files to HO -> TILEFLOW cloud sync via API, not flat files."),
     (520,522): ("data_exchange",  "SYNC",    "MANUAL",             "MAPPED",  "Synchronise Manually -> Data Exchange manual trigger."),
     (520,523): ("data_exchange",  "CONFIGURE","SYNC",              "MAPPED",  "Configure Synchronisation -> Data Exchange settings."),
     (520,524): ("data_exchange",  "VIEW",    "SYNC_STATUS",        "MAPPED",  "Sync Status Report -> Data Exchange status."),
@@ -405,17 +377,17 @@ MAPPING = {
     (550,558): ("data_exchange",  "EXPORT",  "REPLICATION",        "PENDING", "Replication Export (AST) -- needs multi-db assessment."),
 
     # Back-end Data sub-group (560)
-    (560,561): ("company_setup",  "CONFIGURE","BACKEND_CONFIG",    "REPLACED","Back-end Configure -> SMRITI Admin uses Postgres-native config."),
-    (560,562): ("data_exchange",  "IMPORT",  "BACKEND_DATA",       "REPLACED","Back-end Import -> SMRITI Admin uses Postgres-native import."),
+    (560,561): ("company_setup",  "CONFIGURE","BACKEND_CONFIG",    "REPLACED","Back-end Configure -> TILEFLOW Admin uses Postgres-native config."),
+    (560,562): ("data_exchange",  "IMPORT",  "BACKEND_DATA",       "REPLACED","Back-end Import -> TILEFLOW Admin uses Postgres-native import."),
 
     # ── CATALOGUE oddly-keyed sub-entries ─────────────────────────────────────
     (600,602): ("supplier_mgmt",  "NEW_RECORD","VENDOR",           "MAPPED",  "Vendor master (SR442300 after update) -> Supplier Management."),
     (600,650): ("item_master",    "NAVIGATE",  "LISTINGS",         "MERGED",  "Catalogue Listings group -> Item Master reports."),
 
     # Tax sub-entries with 4-digit MenuOpt (603.xx format in data as 6031/6032/6033)
-    (603,6031):("governance_mast","CONFIGURE","SALES_TAX",         "REPLACED","Sales Tax config -- GST replaced this. SMRITI: GST rate master."),
+    (603,6031):("governance_mast","CONFIGURE","SALES_TAX",         "REPLACED","Sales Tax config -- GST replaced this. TILEFLOW: GST rate master."),
     (603,6032):("governance_mast","CONFIGURE","PURCHASE_TAX",      "REPLACED","Purchase Tax config -- GST replaced this."),
-    (603,6033):("governance_mast","CONFIGURE","EXCISE_DUTY",       "DEPRECATED","Excise Duty config -- pre-GST. Not applicable in SMRITI."),
+    (603,6033):("governance_mast","CONFIGURE","EXCISE_DUTY",       "DEPRECATED","Excise Duty config -- pre-GST. Not applicable in TILEFLOW."),
 
     # Sales/Stock Factors (609.xx)
     (609,6091):("governance_mast","CONFIGURE","SALES_FACTORS",     "MAPPED",  "Sales Factors -> Governance Masters config."),
@@ -453,7 +425,7 @@ MAPPING = {
     (900,910): ("reports_portal", "NAVIGATE",          "SALES_ANALYSIS",     "MAPPED",     "Analysis Reports: Sales sub-group."),
     (900,920): ("reports_portal", "NAVIGATE",          "STOCK_ANALYSIS",     "MAPPED",     "Analysis Reports: Stock sub-group."),
     (900,930): ("reports_portal", "NAVIGATE",          "CUSTOMER_OFFTAKE",   "MAPPED",     "Analysis Reports: Customer Offtake sub-group."),
-    (900,940): ("report_designer","NAVIGATE",          "",                   "MAPPED",     "Report Designer sub-group -> SMRITI Report Designer workspace."),
+    (900,940): ("report_designer","NAVIGATE",          "",                   "MAPPED",     "Report Designer sub-group -> TILEFLOW Report Designer workspace."),
 
     # Sales Analysis (910)
     (910,911): ("report_designer","VIEW",              "SALES_BILLWISE",     "MAPPED",     "SR435600.EXE pgmopt=2: Bill-wise Sales -> Report Designer."),
@@ -490,8 +462,8 @@ with open(CAT_CSV, encoding="utf-8") as f:
 
 MAP_COLS = ["MnuNo","MenuOpt","MnuName","MnuCap","ExeName","pgmopt",
             "AllowWhenTrnClosed","MultiInstance",
-            "SmritiWorkspace","SmritiMenuId","SmritiModule",
-            "SmritiAction","DocumentType","MigrationStatus","Notes"]
+            "TileFlowWorkspace","TileFlowMenuId","TileFlowModule",
+            "TileFlowAction","DocumentType","MigrationStatus","Notes"]
 
 matrix_rows = []
 status_counts = defaultdict(int)
@@ -501,7 +473,7 @@ for row in catalog:
     key = (int(row["MnuNo"]), int(row["MenuOpt"]))
     if key in MAPPING:
         ws_key, action, doc_type, status, notes = MAPPING[key]
-        ws_info = SMRITI_WS.get(ws_key, {})
+        ws_info = TILEFLOW_WS.get(ws_key, {})
         matrix_rows.append({
             "MnuNo":           row["MnuNo"],
             "MenuOpt":         row["MenuOpt"],
@@ -511,10 +483,10 @@ for row in catalog:
             "pgmopt":          row["pgmopt"],
             "AllowWhenTrnClosed": row["AllowWhenTrnClosed"],
             "MultiInstance":   row["MultiInstance"],
-            "SmritiWorkspace": ws_info.get("ws",""),
-            "SmritiMenuId":    ws_info.get("menu_id",""),
-            "SmritiModule":    ws_info.get("module",""),
-            "SmritiAction":    action,
+            "TileFlowWorkspace": ws_info.get("ws",""),
+            "TileFlowMenuId":    ws_info.get("menu_id",""),
+            "TileFlowModule":    ws_info.get("module",""),
+            "TileFlowAction":    action,
             "DocumentType":    doc_type,
             "MigrationStatus": status,
             "Notes":           notes,
@@ -531,10 +503,10 @@ for row in catalog:
             "pgmopt":          row["pgmopt"],
             "AllowWhenTrnClosed": row["AllowWhenTrnClosed"],
             "MultiInstance":   row["MultiInstance"],
-            "SmritiWorkspace": "",
-            "SmritiMenuId":    "",
-            "SmritiModule":    "",
-            "SmritiAction":    "",
+            "TileFlowWorkspace": "",
+            "TileFlowMenuId":    "",
+            "TileFlowModule":    "",
+            "TileFlowAction":    "",
             "DocumentType":    "",
             "MigrationStatus": "PENDING",
             "Notes":           "Not yet classified",
@@ -555,9 +527,9 @@ covered = total - len(unmapped)
 pct = (covered / total * 100) if total else 0
 
 with open(MAP_MD,"w",encoding="utf-8") as f:
-    f.write(f"""# SH9 Legacy Menu -> SMRITI Workspace Mapping
+    f.write(f"""# SH9 Legacy Menu -> TILEFLOW Workspace Mapping
 
-**Author:** Jawahar Ramkripal Mallah
+**Author:** Syed Ateef
 **Date:** {datetime.now().strftime('%Y-%m-%d')}
 **Sprint:** 1 — ID Registry & Mapping Matrix
 **Status:** Sprint 1 COMPLETE
@@ -577,10 +549,10 @@ with open(MAP_MD,"w",encoding="utf-8") as f:
 |---|---|---|
 """)
     STATUS_DEF = {
-        "MAPPED":      "Direct 1:1 equivalent exists in SMRITI",
-        "MERGED":      "Consolidated into a broader SMRITI workspace",
-        "REPLACED":    "SMRITI has a superior/different implementation",
-        "DEPRECATED":  "Legacy-only (Tally, flat files) -- no SMRITI equivalent needed",
+        "MAPPED":      "Direct 1:1 equivalent exists in TILEFLOW",
+        "MERGED":      "Consolidated into a broader TILEFLOW workspace",
+        "REPLACED":    "TILEFLOW has a superior/different implementation",
+        "DEPRECATED":  "Legacy-only (Tally, flat files) -- no TILEFLOW equivalent needed",
         "NOT_APPLIC":  "Internal Shoper infrastructure, not a business action",
         "PENDING":     "Requires further analysis",
     }
@@ -590,31 +562,31 @@ with open(MAP_MD,"w",encoding="utf-8") as f:
     f.write("""
 ## CANONICAL_34_MENU_MATRIX Reconciliation
 
-The SMRITI codebase contains a hardcoded 34-item matrix.
+The TILEFLOW codebase contains a hardcoded 34-item matrix.
 This sprint confirms the following coverage against 265 real Shoper entries:
 
-| SMRITI Menu ID | Workspace | Shoper MnuNos Covered |
+| TILEFLOW Menu ID | Workspace | Shoper MnuNos Covered |
 |---|---|---|
 """)
-    # Group by SmritiMenuId
+    # Group by TileFlowMenuId
     by_menu = defaultdict(list)
     for r in matrix_rows:
-        if r["SmritiMenuId"]:
-            by_menu[r["SmritiMenuId"]].append(r["MnuNo"])
+        if r["TileFlowMenuId"]:
+            by_menu[r["TileFlowMenuId"]].append(r["MnuNo"])
     for mid, mnos in sorted(by_menu.items()):
         unique_mnos = sorted(set(mnos), key=lambda x: int(x))
-        ws = next((r["SmritiWorkspace"] for r in matrix_rows if r["SmritiMenuId"]==mid), "")
+        ws = next((r["TileFlowWorkspace"] for r in matrix_rows if r["TileFlowMenuId"]==mid), "")
         f.write(f"| `{mid}` | {ws} | {', '.join(unique_mnos)} |\n")
 
     f.write("""
-## GAP: SMRITI Menu Items With No Shoper Equivalent
+## GAP: TILEFLOW Menu Items With No Shoper Equivalent
 
-The following SMRITI menu items are NEW capabilities (not present in Shoper):
+The following TILEFLOW menu items are NEW capabilities (not present in Shoper):
 
-| SMRITI Menu ID | Purpose |
+| TILEFLOW Menu ID | Purpose |
 |---|---|
 | `menu-wiki` | Integrated documentation/knowledge base |
-| `menu-about-smriti` | SMRITI platform info |
+| `menu-about-tileflow` | TILEFLOW platform info |
 | `menu-dev-tracker` | Engineering task tracker |
 | `menu-psv` | Product-Service-Variant visibility rules |
 | `menu-ufe` | Universal Field Explorer |
@@ -623,7 +595,7 @@ The following SMRITI menu items are NEW capabilities (not present in Shoper):
 | `menu-loyalty` | Loyalty/Rewards workspace |
 | `menu-approval-matrix` | Multi-level approval workflows |
 
-These are genuine SMRITI innovations with no Shoper predecessor.
+These are genuine TILEFLOW innovations with no Shoper predecessor.
 They do NOT need legacy compatibility entries.
 
 ## Unclassified Entries (PENDING)
@@ -639,15 +611,15 @@ They do NOT need legacy compatibility entries.
     f.write(f"""
 ## MultiInstance Flag Summary
 
-Shoper entries with `MultiInstance=1` require SMRITI to support
+Shoper entries with `MultiInstance=1` require TILEFLOW to support
 concurrent multi-session or multi-tab operation for those document types:
 
-| MnuNo | MenuOpt | MnuCap | SMRITI Action |
+| MnuNo | MenuOpt | MnuCap | TILEFLOW Action |
 |---|---|---|---|
 """)
     for r in sorted(matrix_rows, key=lambda x:(int(x["MnuNo"]),int(x["MenuOpt"]))):
         if r.get("MultiInstance") == "1":
-            f.write(f"| {r['MnuNo']} | {r['MenuOpt']} | {r['MnuCap']} | {r['SmritiAction']} |\n")
+            f.write(f"| {r['MnuNo']} | {r['MenuOpt']} | {r['MnuCap']} | {r['TileFlowAction']} |\n")
 
 print(f"Wrote: {MAP_MD}")
 print(f"\n{'='*60}")

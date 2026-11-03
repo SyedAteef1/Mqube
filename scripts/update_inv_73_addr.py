@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import sys
 import io
@@ -45,7 +32,7 @@ SITE_NAME = "Reliance Retail Limited (Distribution Center)"
 CUSTOMER_GSTIN = "29AABCR1718E1ZL"
 
 def update_database():
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     
     cur.execute("""
@@ -64,7 +51,7 @@ def update_database():
     conn.commit()
     conn.close()
     
-    print("Updated Database Record in smriti001.sales_invoices:")
+    print("Updated Database Record in tileflow001.sales_invoices:")
     print("ID              :", row[0])
     print("Invoice No      :", row[1])
     print("Customer Name   :", row[2])
@@ -75,7 +62,7 @@ def update_database():
     return row
 
 async def generate_and_update_pdfs():
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     cur.execute("SELECT * FROM sales_invoices WHERE invoice_no = 'TT2026-2027/73';")
     inv_row = cur.fetchone()

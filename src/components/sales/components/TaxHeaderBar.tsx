@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 4.10.0
- * Created      : 2026-08-24
- * Modified     : 2026-08-24
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   Receipt, 
@@ -78,7 +64,7 @@ export const TaxHeaderBar: React.FC<TaxHeaderBarolbarProps> = ({
         <div className="flex items-center gap-stack-gap">
           <Receipt className="w-8 h-8 text-primary dark:text-primary-fixed" />
           <span className="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed">
-            Smriti Distributor
+            MQube Distributor
           </span>
         </div>
 
@@ -145,7 +131,7 @@ export const TaxHeaderBar: React.FC<TaxHeaderBarolbarProps> = ({
             <ExportButton
               columns={exportColumns}
               data={exportData}
-              moduleTitle="Smriti Distributor Tax Invoice"
+              moduleTitle="MQube Distributor Tax Invoice"
             />
 
 

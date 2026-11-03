@@ -1,25 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — Canonical Governance & Registry API Router.
-Exposes:
-- GET /api/v1/reporting/catalog (All 22 reports across 5 studios)
-- GET /api/v1/reporting/catalog/{report_id}
-- GET /api/v1/reporting/alias-lookup (Decoupled Shoper 9 jump code resolver)
-- GET /api/v1/reporting/metrics (Governed Metric Dictionary definitions)
-- POST /api/v1/reporting/validate-envelope (Forensic Execution Envelope)
-"""
-
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, Depends, Query, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -73,7 +51,7 @@ async def get_report_contract(report_id: str):
     "/alias-lookup",
     response_model=LegacyAliasResolutionResponse,
     summary="Resolve legacy Shoper 9 jump-code",
-    description="Resolves legacy codes (e.g., '411', '412', 'SR202000', 'SR236300') to canonical SMRITI report IDs."
+    description="Resolves legacy codes (e.g., '411', '412', 'SR202000', 'SR236300') to canonical TILEFLOW report IDs."
 )
 async def resolve_legacy_alias(
     q: str = Query(..., description="Legacy Shoper 9 MnuNo or EXE code")

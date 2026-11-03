@@ -5,7 +5,7 @@
 | Module | Backend Started | Backend Complete | Business Logic | Validation |
 | :--- | :---: | :---: | :---: | :---: |
 | Executive Hub | ✅ | ✅ | ✅ | ✅ |
-| SMRITI Gyan Kendra | ✅ | ✅ | ✅ | ✅ |
+| TILEFLOW Gyan Kendra | ✅ | ✅ | ✅ | ✅ |
 | Billing Desk | ✅ | ✅ | ✅ | ✅ |
 | Sales Studio | ✅ | ✅ | ✅ | ✅ |
 | Create Tax Invoice (B2B) | ✅ | ✅ | ✅ | ✅ |
@@ -34,6 +34,6 @@
 | Terms & Conditions | ✅ | ✅ | ✅ | ✅ |
 | Data Exchange Hub | ✅ | ✅ | ✅ | ✅ |
 | Company Setup Wizard | ✅ | ✅ | ✅ | ✅ |
-| About SMRITI | ✅ | ✅ | ✅ | ✅ |
+| About TILEFLOW | ✅ | ✅ | ✅ | ✅ |
 | Dev Intelligence Center | ✅ | ✅ | ✅ | ✅ |
 | Audit Logs | ✅ | ✅ | ✅ | ✅ |

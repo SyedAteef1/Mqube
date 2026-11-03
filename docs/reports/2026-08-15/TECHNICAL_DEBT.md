@@ -8,7 +8,7 @@
 - **Total HACK Comments:** 8
 
 ### Large Components (> 500 lines)
-- ⚠️ `src/components/AboutSmritiTab.tsx (1069 lines)`
+- ⚠️ `src/components/AboutTileFlowTab.tsx (1069 lines)`
 - ⚠️ `src/components/AdvancedBillingEng.tsx (1656 lines)`
 - ⚠️ `src/components/AttrManagerSec.tsx (707 lines)`
 - ⚠️ `src/components/BarcodeStudioTab.tsx (1088 lines)`

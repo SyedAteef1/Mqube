@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sprint 8d — Inventory & Purchase Parity Gap Registry
-## Shoper9 MnuNo 300/350/380/430/450/600 (INVENTORY+PURCHASE) → SMRITI Gap Analysis
+## Shoper9 MnuNo 300/350/380/430/450/600 (INVENTORY+PURCHASE) → TILEFLOW Gap Analysis
 
 **Date:** 2026-08-24  
-**Source:** Live `smriti_legacy_menu_map` + code inspection  
+**Source:** Live `tileflow_legacy_menu_map` + code inspection  
 **Total entries analysed:** 60 rows (INVENTORY + PURCHASE modules)
 
 **Files Inspected:**
@@ -40,7 +39,7 @@ which returns raw `StockMovement` rows with no aggregation.
 
 ## MnuNo 300/350 — Physical Stock & GRN (8 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 300/312 | Physical Verification | SR101000 | MAPPED | Physical stock management — no API | ⚠️ GAP |
 | 300/313 | Goods Inwards (GRN) | SR127000 | MAPPED | `create_purchase_receipt` in purchase.py | ✅ VERIFIED |
@@ -58,7 +57,7 @@ which returns raw `StockMovement` rows with no aggregation.
 
 ## MnuNo 380 — Purchase Order (9 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 380/381 | PO Generation | SE100900 | MAPPED | `create_purchase_order_contract` | ✅ VERIFIED |
 | 380/383 | PO Import | SE100400 | MAPPED | `create_purchase_order_contract` (import flag) | ✅ VERIFIED |
@@ -76,7 +75,7 @@ which returns raw `StockMovement` rows with no aggregation.
 
 ## MnuNo 430 — Stock Ledger Reports (16 entries) — THE CRITICAL GAP
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 430/431 | Balance | SR202500 | MAPPED | `stock_valuation` in service — no endpoint | ⚠️ GAP |
 | 430/432 | Movement | SR203000 | MAPPED | `/inventory/ledger` (raw list — partial) | ⚠️ GAP (no aggregation) |
@@ -100,7 +99,7 @@ which returns raw `StockMovement` rows with no aggregation.
 
 ## MnuNo 450 — Goods Register (3 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 450/451 | Transaction-wise Goods Register | SR202800 | MAPPED | No goods register endpoint | ⚠️ GAP |
 | 450/452 | Item-wise Goods Register | SR212600 | MAPPED | No item-wise goods register | ⚠️ GAP |

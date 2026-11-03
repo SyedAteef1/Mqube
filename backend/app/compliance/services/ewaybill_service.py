@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Government Integration Platform (SGIP) — E-Way Bill Service Orchestrator.
-Coordinates statutory ₹50,000 threshold evaluation, NIC EWB Part A & Part B generation,
-distance calculation, vehicle updates, and audit logging.
-"""
-
 import json
 import time
 import uuid

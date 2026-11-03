@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.72.8
   Created      : 2026-10-30
   Modified     : 2026-10-30
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Item Master Taxonomy Lookup Validation and Category Decoupling v6.72.8
@@ -49,7 +48,7 @@ This implementation enforces that Item Master create and update requests strictl
 
 ## 5. Architecture Decisions
 1. **Server-Side Gate as System-of-Record:** Validation is anchored in the backend API layer (`inventory.py` and `item_taxonomy.py`) so that bulk imports, direct REST API calls, and UI forms are all subject to identical controlled-field validation.
-2. **Recommendation Over Silent Correction:** Unmatched taxonomy values raise HTTP 422 with actionable guidance (`SMRITI-VAL-002`) directing operators to onboard new dimensions via Master Registry rather than silently accepting free text or auto-generating unapproved entries.
+2. **Recommendation Over Silent Correction:** Unmatched taxonomy values raise HTTP 422 with actionable guidance (`TILEFLOW-VAL-002`) directing operators to onboard new dimensions via Master Registry rather than silently accepting free text or auto-generating unapproved entries.
 3. **Casing Disambiguation:** Preserves exact casing matches for Brand names when multiple casing variants exist in lookup values, preventing unintentional normalization of stylized brand trademarks.
 4. **Independent Dimension Mapping:** Header mapping treats `Category`, `Product Type`, `Sub-Category`, and `Merchandise Category` as completely independent fields, removing legacy fallbacks where `Merchandise Category` or `Department` substituted for `Category`.
 

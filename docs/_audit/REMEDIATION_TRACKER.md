@@ -1,16 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal -- Audit Artifact
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source -- Audit Artifact
 -->
 
-# SMRITI Retail OS -- Remediation Tracker
+# TILEFLOW Retail OS -- Remediation Tracker
 ## Post-Audit: Findings to Real Evidence
 
 > **HISTORICAL AUDIT ARTIFACT — NOT CURRENT ARCHITECTURE**  
@@ -35,7 +35,7 @@
 | Required Remediation | Fix 3 JSONB server_default to text("'{}'::jsonb") |
 | Evidence Required | alembic upgrade head exit 0 + tables confirmed in DB |
 | Remediation Applied | 2026-08-17 07:48 -- 3-line fix in j6k7l8m9n0o migration. Commit 16898442 |
-| DB Verification | smritisys queried directly: barcode_providers, identity_rules, product_identities ALL EXIST |
+| DB Verification | tileflowsys queried directly: barcode_providers, identity_rules, product_identities ALL EXIST |
 | Alembic Current | v1335_seed_roles (head) -- DB was already at head via a subsequent successful run |
 | Status | DONE |
 
@@ -71,16 +71,16 @@
 | Field | Value |
 |---|---|
 | Severity | MEDIUM |
-| Original State | DATABASE_URL uses smritisys (lowercase), CONTROL_DATABASE_URL uses SmritiSys |
+| Original State | DATABASE_URL uses tileflowsys (lowercase), CONTROL_DATABASE_URL uses TileFlowSys |
 | Status | Unverified (doc-only fix; not yet updated) |
 
-### MEDIUM-3: SmritiPSV database provisioning gap
+### MEDIUM-3: TileFlowPSV database provisioning gap
 
 | Field | Value |
 |---|---|
 | Severity | MEDIUM |
-| Finding | psv_stock_events and psv_stock_balances tables ARE in smritisys (confirmed via table listing). PSV tables are in smritisys not a separate SmritiPSV DB currently. |
-| Reality vs. Doc | Architecture docs describe SmritiPSV as a SEPARATE DB but actual tables are in smritisys. This is a documentation divergence. |
+| Finding | psv_stock_events and psv_stock_balances tables ARE in tileflowsys (confirmed via table listing). PSV tables are in tileflowsys not a separate TileFlowPSV DB currently. |
+| Reality vs. Doc | Architecture docs describe TileFlowPSV as a SEPARATE DB but actual tables are in tileflowsys. This is a documentation divergence. |
 | Status | Partially Verified -- gap documented; doc update scheduled |
 
 ### MEDIUM-4: Version spread undocumented
@@ -121,7 +121,7 @@
 |---|---|
 | Severity | LOW -- upgraded to MEDIUM given 12 test failures |
 | Finding | 12 tests fail due to missing seed data: comp-default, menu-dashboard/inventory/sales/reports, specific product IDs |
-| Root Cause | Tests use hardcoded identifiers not present in smritisys |
+| Root Cause | Tests use hardcoded identifiers not present in tileflowsys |
 | These are NOT architecture failures. They are integration test seed data gaps. |
 | Status | Partially Verified |
 
@@ -129,16 +129,16 @@
 
 ## NEW Finding (Discovered During Remediation)
 
-### NEW-1: PSV Tables Are in smritisys NOT in SmritiPSV
+### NEW-1: PSV Tables Are in tileflowsys NOT in TileFlowPSV
 
 | Field | Value |
 |---|---|
 | Severity | HIGH |
-| Finding | psv_stock_events, psv_stock_balances, psv_parties, psv_sku_tracking are in smritisys (284 total tables confirmed). |
-| Architecture Doc Says | PSV runs in SmritiPSV (separate DB). |
-| Reality | PSV tables ARE in smritisys. SmritiPSV may not exist as a separate DB. |
-| Impact | PSVProjectionService.project_psv_stock_event() accepts a psv_session parameter -- if tests pass a smritisys session it works, but the architecture boundary is violated if SmritiPSV is never actually separated. |
-| Status | Partially Verified -- requires SmritiPSV existence check |
+| Finding | psv_stock_events, psv_stock_balances, psv_parties, psv_sku_tracking are in tileflowsys (284 total tables confirmed). |
+| Architecture Doc Says | PSV runs in TileFlowPSV (separate DB). |
+| Reality | PSV tables ARE in tileflowsys. TileFlowPSV may not exist as a separate DB. |
+| Impact | PSVProjectionService.project_psv_stock_event() accepts a psv_session parameter -- if tests pass a tileflowsys session it works, but the architecture boundary is violated if TileFlowPSV is never actually separated. |
+| Status | Partially Verified -- requires TileFlowPSV existence check |
 
 ---
 
@@ -160,7 +160,7 @@ Exit code: 1
 Duration: 14.60s
 
 Passing highlights (ARCHITECTURE RELEVANT):
-- test_smritisys_control_plane_connection: PASS
+- test_tileflowsys_control_plane_connection: PASS
 - test_company_db_resolver_authorized_user: PASS
 - test_company_db_resolver_unauthorized_user: PASS (403 confirmed)
 - test_company_isolation_company_a_vs_b: PASS (403 confirmed)

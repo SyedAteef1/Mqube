@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 6.7.0
  * Created      : 2026-08-21
  * Modified     : 2026-08-22
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo, useEffect } from "react";
@@ -20,7 +19,7 @@ import { X, Search, UserPlus, Check } from "lucide-react";
 
 import { parseAndValidateGSTIN } from "../../../utils/gstEngine.ts";
 
-interface SmritiCustomerBrowseModalProps {
+interface TileFlowCustomerBrowseModalProps {
   onSelectCustomer: (cust: ProPosCustomer) => void;
   onClose: () => void;
 }
@@ -47,7 +46,7 @@ const mapToProPosCustomers = (custs: any[]): ProPosCustomer[] => {
   });
 };
 
-export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps> = ({
+export const TileFlowCustomerBrowseModal: React.FC<TileFlowCustomerBrowseModalProps> = ({
   onSelectCustomer,
   onClose
 }) => {
@@ -80,6 +79,32 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
       isMounted = false;
     };
   }, []);
+
+  // The first load returns at most 100 customers; ask the server as the user types so every customer can be found.
+  useEffect(() => {
+    const q = searchQuery.trim();
+    if (q.length < 2) return;
+    let isMounted = true;
+    const timer = setTimeout(() => {
+      apiFetchV1(`/customers/search?q=${encodeURIComponent(q)}&limit=50`)
+        .then((res: any) => {
+          if (!isMounted || !Array.isArray(res) || res.length === 0) return;
+          const found = mapToProPosCustomers(res);
+          setCustomerList(prev => {
+            const known = new Set(prev.map(c => c.id));
+            const extra = found.filter(c => !known.has(c.id));
+            return extra.length ? [...prev, ...extra] : prev;
+          });
+        })
+        .catch(() => {
+          // Keep showing what is already loaded
+        });
+    }, 250);
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+    };
+  }, [searchQuery]);
 
   const [selectedCustId, setSelectedCustId] = useState<string>(() => {
     return customerList[0]?.id || "";
@@ -177,37 +202,37 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#c4c5d5] dark:border-[#444653] max-h-[88vh]">
+      <div className="bg-white dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] w-full max-w-3xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#c6c6c6] dark:border-[#474747] max-h-[88vh]">
         
         {/* Header */}
-        <div className="px-6 py-3.5 border-b border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e] flex justify-between items-center shrink-0">
+        <div className="px-6 py-3.5 border-b border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex justify-between items-center shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 bg-[#00288e] text-white rounded-lg">
+            <div className="p-1.5 bg-[#272727] text-white rounded-lg">
               <Search size={18} />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-base font-bold text-[#191c1d] dark:text-white">Customer Search &amp; Browse Window [F2]</h3>
-                <span className="text-[10px] px-2 py-0.5 bg-[#dde1ff] text-[#00288e] rounded font-bold">
+                <h3 className="text-base font-bold text-[#1b1b1b] dark:text-white">Customer Search &amp; Browse Window [F2]</h3>
+                <span className="text-[10px] px-2 py-0.5 bg-[#e2e2e2] text-[#272727] rounded font-bold">
                   Browse Mode
                 </span>
               </div>
-              <p className="text-xs text-[#565e74] dark:text-[#bec6e0]">Search customer catalogue or insert new shopper profile on the fly.</p>
+              <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">Search customer catalogue or insert new shopper profile on the fly.</p>
             </div>
           </div>
           <button 
             type="button"
             onClick={onClose}
-            className="text-[#565e74] hover:bg-[#f3f4f5] p-1.5 rounded-lg transition"
+            className="text-[#5e5e5e] hover:bg-[#f4f4f4] p-1.5 rounded-lg transition"
           >
             <X size={18} />
           </button>
         </div>
 
         {/* Search & Action Toolbar */}
-        <div className="p-4 border-b border-[#eceef0] dark:border-[#2d3133] bg-[#f8f9fa] dark:bg-[#131b2e] flex gap-3 items-center shrink-0">
+        <div className="p-4 border-b border-[#eeeeee] dark:border-[#303030] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex gap-3 items-center shrink-0">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#757684]" size={15} />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-[#777777]" size={15} />
             <input
               type="text"
               autoFocus
@@ -216,14 +241,14 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search by Customer Code, Name, or Mobile No..."
-              className="w-full pl-9 pr-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-xl bg-white dark:bg-[#191c1e] text-xs outline-none focus:border-[#00288e]"
+              className="w-full pl-9 pr-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-xl bg-white dark:bg-[#1c1c1c] text-xs outline-none focus:border-[#272727]"
             />
           </div>
 
           <button
             type="button"
             onClick={() => setShowAddForm(!showAddForm)}
-            className="px-4 py-2 bg-[#dde1ff] dark:bg-[#1e40af] text-[#00288e] dark:text-white rounded-xl text-xs font-bold hover:brightness-105 transition flex items-center gap-1.5 shadow-2xs shrink-0"
+            className="px-4 py-2 bg-[#e2e2e2] dark:bg-[#414141] text-[#272727] dark:text-white rounded-xl text-xs font-bold hover:brightness-105 transition flex items-center gap-1.5 shadow-2xs shrink-0"
           >
             <UserPlus size={14} />
             <span>{showAddForm ? "Hide Quick Form" : "+ New Customer"}</span>
@@ -232,41 +257,41 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
 
         {/* Quick Add Form on the Fly */}
         {showAddForm && (
-          <div className="p-4 bg-[#dde1ff]/30 dark:bg-[#1e40af]/10 border-b border-[#00288e]/20 grid grid-cols-1 md:grid-cols-4 gap-3 shrink-0">
+          <div className="p-4 bg-[#e2e2e2]/30 dark:bg-[#414141]/10 border-b border-[#272727]/20 grid grid-cols-1 md:grid-cols-4 gap-3 shrink-0">
             <div>
-              <label className="block text-[10px] font-bold uppercase text-[#565e74] mb-1">Customer Code</label>
+              <label className="block text-[10px] font-bold uppercase text-[#5e5e5e] mb-1">Customer Code</label>
               <input
                 type="text"
                 value={newCustCode}
                 onChange={e => setNewCustCode(e.target.value)}
-                className="w-full px-2.5 py-1.5 border border-[#c4c5d5] rounded-lg text-xs font-mono font-bold bg-white dark:bg-[#191c1e]"
+                className="w-full px-2.5 py-1.5 border border-[#c6c6c6] rounded-lg text-xs font-mono font-bold bg-white dark:bg-[#1c1c1c]"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase text-[#565e74] mb-1">Customer Name</label>
+              <label className="block text-[10px] font-bold uppercase text-[#5e5e5e] mb-1">Customer Name</label>
               <input
                 type="text"
                 value={newCustName}
                 onChange={e => setNewCustName(e.target.value)}
                 placeholder="Full Name..."
-                className="w-full px-2.5 py-1.5 border border-[#c4c5d5] rounded-lg text-xs bg-white dark:bg-[#191c1e]"
+                className="w-full px-2.5 py-1.5 border border-[#c6c6c6] rounded-lg text-xs bg-white dark:bg-[#1c1c1c]"
               />
             </div>
             <div>
-              <label className="block text-[10px] font-bold uppercase text-[#565e74] mb-1">Mobile Number</label>
+              <label className="block text-[10px] font-bold uppercase text-[#5e5e5e] mb-1">Mobile Number</label>
               <input
                 type="text"
                 value={newCustPhone}
                 onChange={e => setNewCustPhone(e.target.value)}
                 placeholder="10-digit mobile..."
-                className="w-full px-2.5 py-1.5 border border-[#c4c5d5] rounded-lg text-xs font-mono bg-white dark:bg-[#191c1e]"
+                className="w-full px-2.5 py-1.5 border border-[#c6c6c6] rounded-lg text-xs font-mono bg-white dark:bg-[#1c1c1c]"
               />
             </div>
             <div className="flex items-end">
               <button
                 type="button"
                 onClick={handleAddNewCustomer}
-                className="w-full py-1.5 bg-[#00288e] text-white text-xs font-bold rounded-lg hover:bg-[#1e40af] transition"
+                className="w-full py-1.5 bg-[#272727] text-white text-xs font-bold rounded-lg hover:bg-[#414141] transition"
               >
                 Save &amp; Select
               </button>
@@ -277,7 +302,7 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
         {/* Customer List Grid */}
         <div className="flex-1 overflow-y-auto p-4">
           <table className="w-full text-left border-collapse text-xs">
-            <thead className="bg-[#f8f9fa] dark:bg-[#131b2e] sticky top-0 text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] border-b border-[#c4c5d5] dark:border-[#444653]">
+            <thead className="bg-[#f9f9f9] dark:bg-[#1b1b1b] sticky top-0 text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] border-b border-[#c6c6c6] dark:border-[#474747]">
               <tr>
                 <th className="px-3 py-2 w-20">Code</th>
                 <th className="px-3 py-2">Customer Name</th>
@@ -288,7 +313,7 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
                 <th className="px-3 py-2 text-center">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+            <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
               {filteredCustomers.map(c => {
                 const isSelected = c.id === activeSelected?.id;
                 return (
@@ -302,19 +327,19 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
                     className={`cursor-pointer transition ${
                       isSelected
                         ? "bg-[#ffffcc] dark:bg-[#3a3a1a] text-black dark:text-yellow-200 font-bold"
-                        : "hover:bg-[#f8f9fa] dark:hover:bg-[#2d3133]"
+                        : "hover:bg-[#f9f9f9] dark:hover:bg-[#303030]"
                     }`}
                   >
-                    <td className="px-3 py-2.5 font-mono text-[#00288e] dark:text-[#a8b8ff]">{c.code}</td>
+                    <td className="px-3 py-2.5 font-mono text-[#272727] dark:text-[#bababa]">{c.code}</td>
                     <td className="px-3 py-2.5">{c.name}</td>
                     <td className="px-3 py-2.5 font-mono">{c.phone}</td>
                     <td className="px-3 py-2.5 text-center">
-                      <span className="px-2 py-0.5 bg-[#dde1ff] dark:bg-[#1e40af] text-[#00288e] dark:text-white rounded text-[10px] font-bold">
+                      <span className="px-2 py-0.5 bg-[#e2e2e2] dark:bg-[#414141] text-[#272727] dark:text-white rounded text-[10px] font-bold">
                         {c.loyaltyTier || "Silver"}
                       </span>
                     </td>
                     <td className="px-3 py-2.5 text-right font-mono">{c.loyaltyPoints?.toLocaleString()}</td>
-                    <td className="px-3 py-2.5 text-right font-mono">â‚¹{c.creditLimit?.toLocaleString()}</td>
+                    <td className="px-3 py-2.5 text-right font-mono">₹{c.creditLimit?.toLocaleString()}</td>
                     <td className="px-3 py-2.5 text-center">
                       <button
                         type="button"
@@ -323,7 +348,7 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
                           onSelectCustomer(c);
                           onClose();
                         }}
-                        className="px-2.5 py-1 bg-[#00288e] text-white rounded text-[10px] font-bold hover:bg-[#1e40af] transition"
+                        className="px-2.5 py-1 bg-[#272727] text-white rounded text-[10px] font-bold hover:bg-[#414141] transition"
                       >
                         Select
                       </button>
@@ -336,15 +361,15 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e] flex justify-between items-center shrink-0">
-          <span className="text-xs text-[#565e74] dark:text-[#bec6e0]">
+        <div className="px-6 py-4 border-t border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex justify-between items-center shrink-0">
+          <span className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">
             Press <strong>[Enter]</strong> or <strong>double click</strong> to select customer.
           </span>
           <div className="flex gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-[#c4c5d5] dark:border-[#444653] bg-white dark:bg-[#2d3133] rounded-xl text-xs font-bold hover:bg-[#eceef0] transition"
+              className="px-4 py-2 border border-[#c6c6c6] dark:border-[#474747] bg-white dark:bg-[#303030] rounded-xl text-xs font-bold hover:bg-[#eeeeee] transition"
             >
               Cancel
             </button>
@@ -356,7 +381,7 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
                   onClose();
                 }
               }}
-              className="px-6 py-2 bg-[#00288e] text-white rounded-xl text-xs font-bold hover:bg-[#1e40af] transition flex items-center gap-1.5 shadow-sm"
+              className="px-6 py-2 bg-[#272727] text-white rounded-xl text-xs font-bold hover:bg-[#414141] transition flex items-center gap-1.5 shadow-sm"
             >
               <Check size={14} />
               <span>Select Customer [Enter]</span>
@@ -369,5 +394,5 @@ export const SmritiCustomerBrowseModal: React.FC<SmritiCustomerBrowseModalProps>
   );
 };
 
-export default SmritiCustomerBrowseModal;
+export default TileFlowCustomerBrowseModal;
 

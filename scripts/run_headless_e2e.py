@@ -1,12 +1,8 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
 # Version      : 3.17.0
 # Created      : 2026-08-16
 # Modified     : 2026-08-16
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
+# Copyright    :  tileflow.in. Open Source - Permissive Use
+# License      : MIT Open Source License
 
 import asyncio
 import os
@@ -19,7 +15,7 @@ from playwright.async_api import async_playwright
 
 BASE_URL = "http://localhost:3000"
 API_URL = "http://localhost:8000"
-DB_DSN = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_DSN = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 SCREENSHOT_DIR = os.path.join(os.getcwd(), "scratch", "e2e_screenshots")
 os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 
@@ -47,7 +43,7 @@ def get_admin_jwt_token():
 
 async def run_certification():
     print("=" * 80)
-    print("SMRITI RETAIL OS — HEADLESS PLAYWRIGHT CHROMIUM E2E CERTIFICATION")
+    print("TILEFLOW RETAIL OS — HEADLESS PLAYWRIGHT CHROMIUM E2E CERTIFICATION")
     print("=" * 80)
     print(f"Base App URL : {BASE_URL}")
     print(f"FastAPI URL  : {API_URL}")
@@ -64,7 +60,7 @@ async def run_certification():
         count = cur.fetchone()[0]
         cur.close()
         conn.close()
-        print(f"[DB Verification] Connected to PostgreSQL smritisys! Public tables count: {count}")
+        print(f"[DB Verification] Connected to PostgreSQL tileflowsys! Public tables count: {count}")
         db_status = "Done"
     except Exception as e:
         print(f"[DB Verification Error] {e}")
@@ -92,11 +88,11 @@ async def run_certification():
         # Inject JWT into localStorage before app load
         if jwt_token:
             await page.goto(BASE_URL, wait_until="commit")
-            await page.evaluate(f"localStorage.setItem('smriti_jwt_token', '{jwt_token}')")
+            await page.evaluate(f"localStorage.setItem('tileflow_jwt_token', '{jwt_token}')")
 
         # Load main application
         await page.goto(BASE_URL, wait_until="networkidle")
-        await page.screenshot(path=os.path.join(SCREENSHOT_DIR, "00_smriti_authenticated_desktop.png"))
+        await page.screenshot(path=os.path.join(SCREENSHOT_DIR, "00_tileflow_authenticated_desktop.png"))
 
         # ----------------------------------------------------------------------
         # Journey J-01: POS Billing Journey
@@ -318,7 +314,7 @@ async def run_certification():
         json.dump({
             "audit_date": "2026-08-16",
             "browser": "Headless Chromium (Playwright)",
-            "database": "PostgreSQL smritisys",
+            "database": "PostgreSQL tileflowsys",
             "fastapi": "Running (Port 8000)",
             "vite": "Running (Port 3000)",
             "jwt_authenticated": True if jwt_token else False,

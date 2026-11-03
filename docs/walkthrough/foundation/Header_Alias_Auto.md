@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Item Master Universal Header Alias & Auto-Mapping Engine Walkthrough v3.17.0
+# TILEFLOW Item Master Universal Header Alias & Auto-Mapping Engine Walkthrough v3.17.0
 
 ## 1. Purpose
-This walkthrough documents the design and implementation of the **SMRITI Item Master Universal Header Alias & Auto-Mapping Engine**. It enables seamless paste/import of Excel, CSV, TSV, and Google Sheets data with non-standard column headers without forcing end users to manually rename source Excel headers before importing.
+This walkthrough documents the design and implementation of the **TILEFLOW Item Master Universal Header Alias & Auto-Mapping Engine**. It enables seamless paste/import of Excel, CSV, TSV, and Google Sheets data with non-standard column headers without forcing end users to manually rename source Excel headers before importing.
 
 ## 2. Scope
 * **Decoupled Engine Core**:
@@ -46,7 +45,7 @@ This walkthrough documents the design and implementation of the **SMRITI Item Ma
 * **Zero Silent Guessing**: Ambiguous headers (e.g., `"Price"`, `"Rate"`) are flagged for explicit user confirmation rather than silently choosing a candidate field.
 
 ## 6. Design Rationale
-* **User-Centric Flexibility**: Retail users receive vendor Excel catalogs in hundreds of different header formats (`EAN`, `Style No`, `Make`, `Product Category`, `Sale Rate`). SMRITI adapts to the user's headers rather than requiring Excel pre-processing.
+* **User-Centric Flexibility**: Retail users receive vendor Excel catalogs in hundreds of different header formats (`EAN`, `Style No`, `Make`, `Product Category`, `Sale Rate`). TILEFLOW adapts to the user's headers rather than requiring Excel pre-processing.
 
 ## 7. Implementation Summary
 * Integrated `HeaderMappingEngine` into `ExcelGridEntrySec.tsx` `handlePaste`.

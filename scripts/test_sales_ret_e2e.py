@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, time
 import psycopg2
 from decimal import Decimal
@@ -23,7 +10,7 @@ def test_sales_return_e2e():
     Scenario:
     Issue Credit Note (CN-2026-E2E-444) against Invoice (inv-disp-1888) -> Verify History Protection & DB Record.
     """
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
 
     ret_id = "RET-E2E-444"
@@ -47,7 +34,7 @@ def test_sales_return_e2e():
             date, reason, tax_total, grand_total, status, is_active, is_deleted, created_at, modified_at
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, CURRENT_DATE, 'Customer Return - Defect', 50.00, 1050.00, 'APPROVED', true, false, NOW(), NOW());
-    """, (ret_id, "uuid-ret-e2e-444", "smritibus_default", comp_id, ret_no, inv_id, cn_no))
+    """, (ret_id, "uuid-ret-e2e-444", "tileflowbus_default", comp_id, ret_no, inv_id, cn_no))
     conn.commit()
 
     # 2. Verify Database State & History Protection

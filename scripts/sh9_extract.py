@@ -1,26 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 2.0.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Sprint 0 v2 - Legacy Extractor (Fixes all cons identified in review)
-Fixes:
-  1. DELETE statement processing -- removes stale rows from catalog
-  2. vaTrnType/genlookup extraction -- real TrnType codes from data
-  3. vaUser + sysSec extraction -- security baseline
-  4. sysParam key flags extraction -- behavior flags
-  5. Source deduplication logging -- ZIP vs disk conflict tracking
-  6. Produces SH9_MENU_DELETES.csv (audit of all removed rows)
-"""
-
 import re
 import csv
 import zipfile
@@ -41,7 +18,6 @@ log(f"[{datetime.now().isoformat()}] Sprint 0 v2 -- Full Extraction")
 
 # ─── Collect all SQL text (track source to detect disk/ZIP conflicts) ─────────
 blocks = []   # (source_name, priority, text)
-#   priority 1 = ZIP (more complete/authoritative)
 #   priority 2 = disk (may be newer patch applied on top)
 
 s9q_files = sorted(INI_DIR.glob("*.S9Q"))

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-15
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import List
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -21,7 +7,7 @@ from sqlalchemy.orm import selectinload
 from app.api.deps import get_db, get_current_user
 from app.models.auth import User, UserRole
 from app.models.ui_control_plane import (
-    SmritiTheme, SmritiThemeVariant, SmritiWorkspaceProfile,
+    TileFlowTheme, TileFlowThemeVariant, TileFlowWorkspaceProfile,
     ScreenDefinition, FieldDefinition, ActionDefinition, IconRegistry,
 )
 from app.schemas.ui_control_plane import ThemeResponse, WorkspaceProfileResponse
@@ -34,11 +20,11 @@ async def get_active_themes(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    """Fetch all active system themes and visual variants from smriti_themes."""
+    """Fetch all active system themes and visual variants from tileflow_themes."""
     stmt = (
-        select(SmritiTheme)
-        .options(selectinload(SmritiTheme.variants))
-        .where(SmritiTheme.is_active == True)
+        select(TileFlowTheme)
+        .options(selectinload(TileFlowTheme.variants))
+        .where(TileFlowTheme.is_active == True)
     )
     result = await db.execute(stmt)
     return result.scalars().all()
@@ -49,10 +35,10 @@ async def get_workspace_profiles(
     current_user: User = Depends(get_current_user),
     db: AsyncSession = Depends(get_db),
 ):
-    """Fetch available AWE workspace profiles from smriti_workspace_profiles."""
-    stmt = select(SmritiWorkspaceProfile).where(
-        SmritiWorkspaceProfile.is_active == True,
-        SmritiWorkspaceProfile.is_deleted == False
+    """Fetch available AWE workspace profiles from tileflow_workspace_profiles."""
+    stmt = select(TileFlowWorkspaceProfile).where(
+        TileFlowWorkspaceProfile.is_active == True,
+        TileFlowWorkspaceProfile.is_deleted == False
     )
     result = await db.execute(stmt)
     return result.scalars().all()
@@ -78,14 +64,14 @@ async def get_my_workspace_profile(
 
     target_code = role_to_code.get(role_str, "PROF_SYSADMIN")
 
-    stmt = select(SmritiWorkspaceProfile).where(
-        SmritiWorkspaceProfile.code == target_code,
-        SmritiWorkspaceProfile.is_active == True
+    stmt = select(TileFlowWorkspaceProfile).where(
+        TileFlowWorkspaceProfile.code == target_code,
+        TileFlowWorkspaceProfile.is_active == True
     )
     profile = (await db.execute(stmt)).scalar_one_or_none()
 
     if not profile:
-        def_stmt = select(SmritiWorkspaceProfile).where(SmritiWorkspaceProfile.is_default == True)
+        def_stmt = select(TileFlowWorkspaceProfile).where(TileFlowWorkspaceProfile.is_default == True)
         profile = (await db.execute(def_stmt)).scalar_one_or_none()
 
     if not profile:
@@ -105,7 +91,7 @@ async def get_screen_definitions(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Returns screen layout definitions from smritisys.screen_definitions.
+    Returns screen layout definitions from tileflowsys.screen_definitions.
     Optional filters: module_code, capability_code.
     Control Plane defines WHAT; application renders HOW.
     """
@@ -144,7 +130,7 @@ async def get_field_definitions(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Returns field metadata definitions from smritisys.field_definitions.
+    Returns field metadata definitions from tileflowsys.field_definitions.
     Optional filter: field_type.
     """
     stmt = select(FieldDefinition).where(
@@ -180,7 +166,7 @@ async def get_action_definitions(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Returns action (button/link) definitions from smritisys.action_definitions.
+    Returns action (button/link) definitions from tileflowsys.action_definitions.
     Optional filter: screen_code.
     """
     stmt = select(ActionDefinition).where(
@@ -220,7 +206,7 @@ async def get_icon_registry(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Returns platform icon catalogue from smritisys.icon_registry.
+    Returns platform icon catalogue from tileflowsys.icon_registry.
     Optional filters: module_scope, icon_category.
     Decouples icon key references from application source code.
     """

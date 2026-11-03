@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI WMS Phase 2: Inward GRN Batch Capture, B2B Sales FEFO Allocation, and Retailer Credit Limits (v6.16.0)
+# TILEFLOW WMS Phase 2: Inward GRN Batch Capture, B2B Sales FEFO Allocation, and Retailer Credit Limits (v6.16.0)
 
 ## 1. Purpose
-This walkthrough documents the full production implementation of SMRITI Distributor & Warehouse Management System (WMS) Phase 2. Phase 2 bridges multi-godown batch inventory with procurement goods receipts (Inward GRN), outward B2B sales invoicing (automated First-Expired, First-Out FEFO allocation and stock deduction), customer group credit limit policies (`SMRITI-CREDIT-001`), and sales invoice cancellation inventory reversals.
+This walkthrough documents the full production implementation of TILEFLOW Distributor & Warehouse Management System (WMS) Phase 2. Phase 2 bridges multi-godown batch inventory with procurement goods receipts (Inward GRN), outward B2B sales invoicing (automated First-Expired, First-Out FEFO allocation and stock deduction), customer group credit limit policies (`TILEFLOW-CREDIT-001`), and sales invoice cancellation inventory reversals.
 
 ## 2. Scope
 - **Inward GRN Batch Ingestion**: Extending `PurchaseReceipt` and `PurchaseReceiptItem` models, schemas, and `PurchaseService` to capture receiving godown (`warehouse_id`), batch numbers (`batch_no`), manufacturing/expiry dates (`mfg_date`, `expiry_date`), MRP (`mrp`), and damaged units (`quantity_damaged`), invoking `InventoryWmsService.atomic_mutate_batch_stock` with `movement_type='INWARD_GRN'`.
@@ -39,15 +38,15 @@ This walkthrough documents the full production implementation of SMRITI Distribu
 5. `backend/app/services/purchase.py`: Wired `create_purchase_receipt` to inward batch stock via `InventoryWmsService.atomic_mutate_batch_stock` and added company-scoped `_get_product` / `_get_supplier` resolution.
 6. `backend/app/services/sales.py`: Wired `create_sales_invoice` to auto-allocate batches via FEFO and deduct batch inventory; updated `cancel_sales_invoice` to restore batch stock.
 7. `backend/app/api/v1/purchase.py`: Added canonical contract aliases (`/receipts`, `/receipts/`) for purchase receipts.
-8. `docker-compose.yml`: Added `./backend/app:/app/app` volume mount into `smriti-api` for live development synchronization.
+8. `docker-compose.yml`: Added `./backend/app:/app/app` volume mount into `tileflow-api` for live development synchronization.
 9. `scripts/smoke_test_wms_api.py`: Extended to execute 10 live authenticated HTTP smoke tests including GRN and Sales FEFO.
 10. `docs/walkthrough/README.md`: Appended master walkthrough index table with Phase 2 entry.
 
 ## 5. Architecture Decisions
-- **Company Data Plane Isolation**: Operational batch inventories and transaction documents reside solely inside company databases (`smriti001`, `smriti002`, `smriti_test_fresh`), maintaining strict multitenant isolation.
+- **Company Data Plane Isolation**: Operational batch inventories and transaction documents reside solely inside company databases (`tileflow001`, `tileflow002`, `tileflow_test_fresh`), maintaining strict multitenant isolation.
 - **Atomic Serialization with `with_for_update()`**: Batch selection and deductions lock rows explicitly to prevent concurrent double-allocation race conditions during high-volume distributor order processing.
 - **Graceful Backward Compatibility**: If explicit `batch_no` is omitted on a sales invoice item, FEFO dynamically allocates the oldest available stock segments and updates the item with the primary allocated batch number.
-- **Fail-Closed Credit Control**: When a retailer's group has `auto_block_sales=True`, any invoice exceeding `credit_limit` is rejected immediately with human-readable error `SMRITI-CREDIT-001`.
+- **Fail-Closed Credit Control**: When a retailer's group has `auto_block_sales=True`, any invoice exceeding `credit_limit` is rejected immediately with human-readable error `TILEFLOW-CREDIT-001`.
 
 ## 6. Design Rationale
 In Indian distribution and wholesale operations, goods inward and sales outward must track physical lots with distinct expiry dates and MRPs. Automating FEFO at the backend eliminates manual batch selection errors and ensures compliance with drug/food expiry standards while preventing revenue loss from bad debts via automated credit limit gates.

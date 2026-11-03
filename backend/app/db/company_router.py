@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from typing import Optional, Any
 from fastapi import HTTPException, status, Header, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -61,7 +48,7 @@ async def resolve_authorized_company_db_url(
     x_company_code: str = Header(..., alias="X-Company-Code")
 ) -> str:
     """
-    Resolves authoritative company connection URL from SmritiSys Control Registry
+    Resolves authoritative company connection URL from TileFlowSys Control Registry
     after verifying user authorization.
     """
     if not x_company_code:
@@ -73,7 +60,7 @@ async def resolve_authorized_company_db_url(
     # 1. Authorize user for requested company code
     authorized_code = await verify_user_company_access(current_user, x_company_code)
 
-    # 2. Look up database mapping in SmritiSys Control Database Registry
+    # 2. Look up database mapping in TileFlowSys Control Database Registry
     db_meta = await ControlDatabaseRegistryService.get_company_database(
         control_session,
         authorized_code
@@ -82,7 +69,7 @@ async def resolve_authorized_company_db_url(
     if not db_meta:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail=f"No active business database registered in SmritiSys for company code '{authorized_code}'."
+            detail=f"No active business database registered in TileFlowSys for company code '{authorized_code}'."
         )
 
     # 3. Build & return connection URL from control registry metadata

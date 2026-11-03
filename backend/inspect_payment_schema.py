@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 # Get the schema for payment_transactions
@@ -11,7 +11,7 @@ cur.execute("""
     ORDER BY ordinal_position
 """)
 
-print("Payment Transactions Schema in smriti001:")
+print("Payment Transactions Schema in tileflow001:")
 print("=" * 80)
 for col_name, data_type, is_nullable, col_default in cur.fetchall():
     nullable = "NULL" if is_nullable == 'YES' else "NOT NULL"

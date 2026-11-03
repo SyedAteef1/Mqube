@@ -1,26 +1,12 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 from sqlalchemy import Column, String, Boolean, Text, DateTime
 from ..db.base import BaseEntity, Base
 
-class SmritiPermission(BaseEntity):
+class TileFlowPermission(BaseEntity):
     """
-    Maps to existing 'smriti_permissions' table in smritisys.
+    Maps to existing 'tileflow_permissions' table in tileflowsys.
     Stores granular action-level permissions (e.g. resource='sales_billing', action='VOID', scope='User:002').
     """
-    __tablename__ = "smriti_permissions"
+    __tablename__ = "tileflow_permissions"
 
     code         = Column(String(100), nullable=False)
     resource     = Column(String(100), nullable=False)
@@ -31,12 +17,12 @@ class SmritiPermission(BaseEntity):
     tenant_id    = Column(String(50), nullable=True)
 
 
-class SmritiAuditLog(Base):
+class TileFlowAuditLog(Base):
     """
-    Maps to existing 'smriti_audit_log' table in smritisys.
+    Maps to existing 'tileflow_audit_log' table in tileflowsys.
     Immutable tamper-evident audit journal for all configuration, menu, and security changes.
     """
-    __tablename__ = "smriti_audit_log"
+    __tablename__ = "tileflow_audit_log"
 
     id                = Column(String(50), primary_key=True)
     tenant_id         = Column(String(50), nullable=True)

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.28.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import re
 from decimal import Decimal
@@ -21,12 +7,12 @@ from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 from openpyxl.utils import get_column_letter
 import time
 
-FOLDER_PATH = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads"
+FOLDER_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads"
 
-OUTPUT_WORKBOOK_PATH = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads\MASTER_CONSOLIDATED_ALL_60_INVOICES_TATTLY_THREADS.xlsx"
-BACKUP_WORKBOOK_PATH = r"F:\Smriti-Clients Data\Tattly Threads\MASTER_CONSOLIDATED_ALL_60_INVOICES_TATTLY_THREADS.xlsx"
+OUTPUT_WORKBOOK_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads\MASTER_CONSOLIDATED_ALL_60_INVOICES_TATTLY_THREADS.xlsx"
+BACKUP_WORKBOOK_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\MASTER_CONSOLIDATED_ALL_60_INVOICES_TATTLY_THREADS.xlsx"
 EXPORTS_WORKBOOK_PATH = r"F:\SMRITRretailNX\exports\MASTER_CONSOLIDATED_ALL_60_INVOICES_TATTLY_THREADS.xlsx"
-MASTER_CSV_PATH = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads\MASTER_ALL_18036_ITEMS_REGISTER.csv"
+MASTER_CSV_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads\MASTER_ALL_18036_ITEMS_REGISTER.csv"
 
 def parse_all_pos(folder_path):
     pdf_files = sorted([f for f in os.listdir(folder_path) if f.lower().endswith(".pdf")])

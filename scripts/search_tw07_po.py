@@ -1,22 +1,9 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import pandas as pd
 
 search_terms = ['TW07', 'Commercial Street', '5182778', 'TUK5', 'TYAC']
 
-base_dir = r"F:\Smriti-Clients Data\Tattly Threads"
+base_dir = r"F:\TileFlow-Clients Data\Tattly Threads"
 print(f"Scanning {base_dir}...")
 for root, dirs, files in os.walk(base_dir):
     for f in files:

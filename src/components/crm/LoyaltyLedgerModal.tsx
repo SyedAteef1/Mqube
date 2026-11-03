@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.96.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -83,7 +82,7 @@ export const LoyaltyLedgerModal: React.FC<LoyaltyLedgerModalProps> = ({ isOpen, 
       onNotification?.("Redemption Rejected", result.rejectionReason ?? "Cannot process redemption.", "error");
     } else {
       setLedger((prev) => [...prev, result.burnEntry!]);
-      onNotification?.("Redeemed!", `${result.pointsToRedeem} pts â†’ â‚¹${result.monetaryValue} credited on ${redeemInvoice}`, "success");
+      onNotification?.("Redeemed!", `${result.pointsToRedeem} pts â†’ ₹${result.monetaryValue} credited on ${redeemInvoice}`, "success");
     }
   };
 
@@ -193,7 +192,7 @@ export const LoyaltyLedgerModal: React.FC<LoyaltyLedgerModalProps> = ({ isOpen, 
                     className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-yellow-500/60" />
                 </div>
                 <div>
-                  <label className="text-[10px] text-slate-400 uppercase tracking-wide">Invoice Value (â‚¹)</label>
+                  <label className="text-[10px] text-slate-400 uppercase tracking-wide">Invoice Value (₹)</label>
                   <input value={redeemValue} data-field-key="selling_price" onChange={(e) => setRedeemValue(e.target.value)} type="number"
                     className="mt-1 w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:outline-none focus:border-yellow-500/60" />
                 </div>
@@ -207,7 +206,7 @@ export const LoyaltyLedgerModal: React.FC<LoyaltyLedgerModalProps> = ({ isOpen, 
               <div className="grid grid-cols-3 gap-3 mt-2">
                 {[
                   { label: "Max Redeemable (20% cap)", value: `${Math.floor((parseFloat(redeemValue || "0") * LOYALTY_CONFIG.maxRedemptionPct) / LOYALTY_CONFIG.rupeePerPoint)} pts` },
-                  { label: "Monetary Value", value: `â‚¹${Math.round(Math.min(parseInt(redeemPts || "0"), balance.availableBalance) * LOYALTY_CONFIG.rupeePerPoint * 100) / 100}` },
+                  { label: "Monetary Value", value: `₹${Math.round(Math.min(parseInt(redeemPts || "0"), balance.availableBalance) * LOYALTY_CONFIG.rupeePerPoint * 100) / 100}` },
                   { label: "Balance After Redemption", value: `${Math.max(0, balance.availableBalance - parseInt(redeemPts || "0"))} pts` },
                 ].map((m) => (
                   <div key={m.label} className="bg-slate-900/60 rounded-xl p-3 text-center border border-slate-800/40">
@@ -224,8 +223,8 @@ export const LoyaltyLedgerModal: React.FC<LoyaltyLedgerModalProps> = ({ isOpen, 
             <div className="bg-slate-800/30 border border-slate-700/60 rounded-xl p-4 space-y-2">
               <p className="text-xs font-bold text-slate-400 uppercase tracking-wide">Redemption Policy</p>
               {[
-                { label: "Earn Rate", value: `${LOYALTY_CONFIG.pointsPerRupee} pt per â‚¹1 spent` },
-                { label: "Redeem Rate", value: `â‚¹${LOYALTY_CONFIG.rupeePerPoint} per point` },
+                { label: "Earn Rate", value: `${LOYALTY_CONFIG.pointsPerRupee} pt per ₹1 spent` },
+                { label: "Redeem Rate", value: `₹${LOYALTY_CONFIG.rupeePerPoint} per point` },
                 { label: "Max per Invoice", value: `${LOYALTY_CONFIG.maxRedemptionPct * 100}% of invoice value` },
                 { label: "Minimum Balance Retained", value: `${LOYALTY_CONFIG.minBalanceAfterBurn} pts` },
                 { label: "Points Expiry", value: `${LOYALTY_CONFIG.pointsExpiryDays} days from earn date` },

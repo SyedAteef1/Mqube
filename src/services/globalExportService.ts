@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-08-24
- * Modified     : 2026-08-24
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import pako from "pako";
 import { apiFetchV1 } from "../lib/apiFetchV1.ts";
 import {
@@ -25,9 +11,6 @@ import {
   ExportScope,
 } from "../components/export/types.ts";
 
-/**
- * Universal sensitive field blacklist that must never be exported.
- */
 export const SENSITIVE_EXPORT_FIELDS = new Set([
   "password",
   "hashed_password",
@@ -159,7 +142,7 @@ export function formatCellValue(value: any, col: ExportColumnDefinition, row?: a
 
 /**
  * Generates a clean, timestamped, and sanitized filename.
- * Example: SMRITI_Item_Master_All_2026-08-24.xlsx
+ * Example: TILEFLOW_Item_Master_All_2026-08-24.xlsx
  */
 export function generateSafeExportFilename(
   moduleName: string,
@@ -177,7 +160,7 @@ export function generateSafeExportFilename(
   const dateStr = now.toISOString().split("T")[0];
   const timeStr = now.toTimeString().split(" ")[0].replace(/:/g, "-");
 
-  return `SMRITI_${cleanModule}_${scopeLabel}_${dateStr}_${timeStr}.${format}`;
+  return `TILEFLOW_${cleanModule}_${scopeLabel}_${dateStr}_${timeStr}.${format}`;
 }
 
 /**
@@ -193,7 +176,7 @@ export function serializeToCSV(
 
   // 1. Optional Metadata Header
   if (metadata) {
-    lines.push(`# SMRITI Retail OS - Export Center`);
+    lines.push(`# MQube - Export Center`);
     lines.push(`# Module: ${metadata.moduleTitle || "Master Data"}`);
     if (metadata.companyName) lines.push(`# Company: ${metadata.companyName}`);
     if (metadata.branchName) lines.push(`# Branch: ${metadata.branchName}`);
@@ -262,7 +245,7 @@ export function serializeToTSV(
 
   // 1. Optional Metadata Header
   if (metadata) {
-    lines.push(`SMRITI Retail OS — ${metadata.moduleTitle || "Export Report"}`);
+    lines.push(`MQube — ${metadata.moduleTitle || "Export Report"}`);
     if (metadata.companyName) lines.push(`Company\t${metadata.companyName}`);
     if (metadata.branchName) lines.push(`Branch\t${metadata.branchName}`);
     if (metadata.exportTimestamp) lines.push(`Timestamp\t${metadata.exportTimestamp}`);
@@ -309,7 +292,7 @@ export function serializeToSpreadsheetML(
   columns: ExportColumnDefinition[],
   data: any[],
   metadata?: ExportMetadata,
-  sheetName: string = "SMRITI Export"
+  sheetName: string = "MQube Export"
 ): string {
   const visibleCols = columns.filter((c) => c.isVisible !== false);
   const cleanSheetName = sheetName.replace(/[:\\/?*\[\]]/g, "_").substring(0, 31);
@@ -322,10 +305,10 @@ export function serializeToSpreadsheetML(
  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
  xmlns:html="http://www.w3.org/TR/REC-html40">
  <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
-  <Title>${escapeXML(metadata?.moduleTitle || "SMRITI Export")}</Title>
-  <Author>${escapeXML(metadata?.exportedBy || "SMRITI Retail OS")}</Author>
+  <Title>${escapeXML(metadata?.moduleTitle || "MQube Export")}</Title>
+  <Author>${escapeXML(metadata?.exportedBy || "MQube")}</Author>
   <Created>${new Date().toISOString()}</Created>
-  <Company>${escapeXML(metadata?.companyName || "SMRITI")}</Company>
+  <Company>${escapeXML(metadata?.companyName || "MQube")}</Company>
  </DocumentProperties>
  <Styles>
   <Style ss:ID="Default" ss:Name="Normal">
@@ -421,7 +404,7 @@ export function serializeToSpreadsheetML(
   // Title & Metadata rows
   if (metadata) {
     xml += `   <Row ss:Height="25">\n`;
-    xml += `    <Cell ss:StyleID="TitleStyle"><Data ss:Type="String">SMRITI Retail OS - ${escapeXML(metadata.moduleTitle)}</Data></Cell>\n`;
+    xml += `    <Cell ss:StyleID="TitleStyle"><Data ss:Type="String">MQube - ${escapeXML(metadata.moduleTitle)}</Data></Cell>\n`;
     xml += `   </Row>\n`;
 
     const metaItems: string[] = [];
@@ -680,7 +663,7 @@ export function serializeToOpenXMLXLSX(
   columns: ExportColumnDefinition[],
   data: any[],
   metadata?: ExportMetadata,
-  sheetName: string = "SMRITI Export"
+  sheetName: string = "MQube Export"
 ): Uint8Array {
   const encoder = new TextEncoder();
   const visibleCols = columns.filter((c) => c.isVisible !== false);
@@ -791,7 +774,7 @@ export function serializeToOpenXMLXLSX(
   if (metadata) {
     // Title Row
     const titleCell = `A${currentRow}`;
-    rowsXml.push(`<row r="${currentRow}" ht="26" customHeight="1"><c r="${titleCell}" s="5" t="inlineStr"><is><t>SMRITI Retail OS - ${escapeXML(metadata.moduleTitle)}</t></is></c></row>`);
+    rowsXml.push(`<row r="${currentRow}" ht="26" customHeight="1"><c r="${titleCell}" s="5" t="inlineStr"><is><t>MQube - ${escapeXML(metadata.moduleTitle)}</t></is></c></row>`);
     currentRow++;
 
     // Meta items
@@ -929,7 +912,7 @@ export function serializeToAlignedTextTable(
 
   // 1. Metadata Header Banner
   lines.push("=".repeat(88));
-  lines.push(` SMRITI RETAIL OS — EXPORT REPORT: ${metadata?.moduleTitle || "Master Data"}`);
+  lines.push(` MQube — EXPORT REPORT: ${metadata?.moduleTitle || "Master Data"}`);
   lines.push("=".repeat(88));
   if (metadata) {
     if (metadata.companyName) lines.push(` Company  : ${metadata.companyName}`);
@@ -995,7 +978,7 @@ export function serializeToAlignedTextTable(
   }
 
   lines.push("");
-  lines.push(`Generated by SMRITI Retail OS Platform Engine on ${new Date().toLocaleString()}`);
+  lines.push(`Generated by MQube Platform Engine on ${new Date().toLocaleString()}`);
   return lines.join("\n");
 }
 
@@ -1034,7 +1017,7 @@ export function serializeToJSON(
 
   return JSON.stringify(
     {
-      metadata: metadata || { moduleTitle: "SMRITI Export" },
+      metadata: metadata || { moduleTitle: "MQube Export" },
       totalRecords: mappedData.length,
       columns: visibleCols.map((c) => ({ key: c.key, label: c.label, datatype: c.datatype })),
       data: mappedData,
@@ -1057,7 +1040,7 @@ export function serializeToHTML(
 <html>
 <head>
   <meta charset="utf-8">
-  <title>${escapeXML(metadata?.moduleTitle || "SMRITI Export Report")}</title>
+  <title>${escapeXML(metadata?.moduleTitle || "MQube Export Report")}</title>
   <style>
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 24px; color: #1e293b; background: #ffffff; }
     h1 { color: #003d9b; font-size: 20px; margin-bottom: 4px; }
@@ -1071,7 +1054,7 @@ export function serializeToHTML(
   </style>
 </head>
 <body>
-  <h1>SMRITI Retail OS — ${escapeXML(metadata?.moduleTitle || "Export Report")}</h1>
+  <h1>MQube — ${escapeXML(metadata?.moduleTitle || "Export Report")}</h1>
   <div class="meta">
     Generated: ${new Date().toLocaleString()} | Total Records: ${data.length}
     ${metadata?.companyName ? ` | Company: ${escapeXML(metadata.companyName)}` : ""}

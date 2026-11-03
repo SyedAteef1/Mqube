@@ -1,25 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-probe_legacy_api.py
-========================================
-Development probe: verifies that the 4 legacy Express-era API route URLs
-still respond on the running backend server. Used during the Strangler-Fig
-migration to confirm routes have been correctly ported to FastAPI (/api/v1).
-
-Usage:
-    python scripts/dev/probe_legacy_api.py
-"""
-
 import urllib.request
 import urllib.error
 

@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # SGAS Appendix: AI Agent Output Verification Framework (AOVF v1.0)
 
-This is a companion reference to the SMRITI Governance Audit Standard (SGAS).
+This is a companion reference to the TILEFLOW Governance Audit Standard (SGAS).
 Where SGAS governs document lifecycle and evidence levels, this framework
 is specifically about **verifying claims made by AI coding agents** —
 plans, completion reports, and self-assessments. Every pattern below was
@@ -40,7 +39,6 @@ ai/" when `backend/app/ai/` already had 8 scaffolded sub-modules.*
 **Check:** grep/view the actual file tree before accepting any "we need to
 build X" claim.
 
-### A2. Unverifiable citation used as authority
 A plan cites a governance document ("Master AI Development Directive
 v4.0") to justify a design choice. The document doesn't exist anywhere in
 the repo. Repetition across multiple agent reviews made it *feel* more
@@ -108,7 +106,7 @@ Mismatch is itself a finding, independent of whether the content is good.
 
 ### A11. Hardcoded secret/default that defeats the point of security work
 `JWT_SECRET_KEY` had a hardcoded fallback value committed in source. A new
-user with no explicit password got a shared default (`"smriti123"`). CORS
+user with no explicit password got a shared default (`"tileflow123"`). CORS
 was `allow_origins=["*"]` combined with `allow_credentials=True` — a
 combination that lets any origin make credentialed requests.
 **Check:** grep for hardcoded default secrets, shared fallback passwords,
@@ -199,7 +197,7 @@ always re-derived by the reviewer using this table.
 
 ---
 
-## E. Recurring Technical Anti-Patterns (SMRITI-specific, keep growing this list)
+## E. Recurring Technical Anti-Patterns (TILEFLOW-specific, keep growing this list)
 
 - Hardcoded secret defaults (`JWT_SECRET_KEY`, shared fallback passwords).
 - `allow_origins=["*"]` + `allow_credentials=True` in FastAPI CORS config.

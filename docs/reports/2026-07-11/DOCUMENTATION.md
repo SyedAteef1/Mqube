@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.0
   Created      : 2026-07-11
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Reference Documentation Status
@@ -18,7 +17,7 @@
 | Module | Doc Completed | Walkthrough Files |
 | :--- | :---: | :--- |
 | Executive Hub | ❌ Missing | None |
-| SMRITI Wiki | ❌ Missing | None |
+| TILEFLOW Wiki | ❌ Missing | None |
 | Billing Desk | ✅ Yes | Registered Walkthrough v3.4.0 |
 | Sales Studio | ✅ Yes | Registered Walkthrough v3.4.0 |
 | CRM & Loyalty | ✅ Yes | Registered Walkthrough v3.4.0 |
@@ -44,6 +43,6 @@
 | Terms & Conditions | ❌ Missing | None |
 | Data Exchange Hub | ❌ Missing | None |
 | Company Setup Wizard | ❌ Missing | None |
-| About SMRITI | ✅ Yes | Registered Walkthrough v3.4.0 |
+| About TILEFLOW | ✅ Yes | Registered Walkthrough v3.4.0 |
 | Dev Intelligence Center | ❌ Missing | None |
 | Audit Logs | ❌ Missing | None |

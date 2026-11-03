@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.1
- * Created      : 2026-07-10
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { apiFetchV1 } from "../lib/apiFetch.ts";
 
@@ -111,7 +98,7 @@ export const LayoutEngineProvider: React.FC<ProviderProps> = ({
     },
     {
       id: "wiki",
-      label: "SMRITI Gyan Kendra",
+      label: "MQube Gyan Kendra",
       icon: "menu_book",
       category: "Operations",
     },
@@ -207,6 +194,12 @@ export const LayoutEngineProvider: React.FC<ProviderProps> = ({
       category: "Inventory & Sourcing",
     },
     {
+      id: "business-profile",
+      label: "Business Profile",
+      icon: "storefront",
+      category: "Inventory & Sourcing",
+    },
+    {
       id: "stock-transfers",
       label: "Inter-Godown Transfers",
       icon: "move_up",
@@ -297,8 +290,8 @@ export const LayoutEngineProvider: React.FC<ProviderProps> = ({
       category: "Data & Config",
     },
     {
-      id: "about-smriti",
-      label: "About SMRITI",
+      id: "about-tileflow",
+      label: "About MQube",
       icon: "info",
       category: "System",
     },
@@ -327,17 +320,17 @@ export const LayoutEngineProvider: React.FC<ProviderProps> = ({
       reloadResolvedMenus();
     };
 
-    window.addEventListener("smriti_menu_permissions_updated", handlePermissionsUpdated);
-    window.addEventListener("smriti_security_config_updated", handlePermissionsUpdated);
+    window.addEventListener("tileflow_menu_permissions_updated", handlePermissionsUpdated);
+    window.addEventListener("tileflow_security_config_updated", handlePermissionsUpdated);
 
     return () => {
-      window.removeEventListener("smriti_menu_permissions_updated", handlePermissionsUpdated);
-      window.removeEventListener("smriti_security_config_updated", handlePermissionsUpdated);
+      window.removeEventListener("tileflow_menu_permissions_updated", handlePermissionsUpdated);
+      window.removeEventListener("tileflow_security_config_updated", handlePermissionsUpdated);
     };
   }, []);
 
   const reloadResolvedMenus = async () => {
-    const token = localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token");
+    const token = localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token");
     if (token) {
       try {
         const res = await apiFetchV1("/menus/resolved");
@@ -358,7 +351,7 @@ export const LayoutEngineProvider: React.FC<ProviderProps> = ({
   };
 
   const restorePreferences = async () => {
-    const local = localStorage.getItem("smriti_layout_preferences");
+    const local = localStorage.getItem("tileflow_layout_preferences");
     const loadedPrefs = local ? JSON.parse(local) : DEFAULT_PREFERENCES;
 
     setPreferences(loadedPrefs);
@@ -375,7 +368,7 @@ export const LayoutEngineProvider: React.FC<ProviderProps> = ({
     setPreferences(updated);
 
     // Save to local storage
-    localStorage.setItem("smriti_layout_preferences", JSON.stringify(updated));
+    localStorage.setItem("tileflow_layout_preferences", JSON.stringify(updated));
 
     // Map to backend structure (both camelCase and snake_case for maximum compatibility)
     const payload = {

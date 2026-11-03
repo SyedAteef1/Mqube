@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.1
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Foundation — Database & Container Fixes — Walkthrough v3.14.1
@@ -66,7 +65,7 @@ Checking table existence directly in PostgreSQL (`pg_tables`) prevents startup c
 
 ## 8. Tests Executed
 ```bash
-docker exec -e PYTHONPATH=/app smriti-python-core pytest
+docker exec -e PYTHONPATH=/app tileflow-python-core pytest
 ```
 
 ---

@@ -1,8 +1,8 @@
-# SMRITI Retail OS — backend architecture contracts
+# TILEFLOW Retail OS — backend architecture contracts
 # Run from backend/: `pip install import-linter --break-system-packages && lint-imports`
 #
 # These contracts encode relationships already verified in
-# SMRITI_Cross_Module_Validation_Audit_v1.0.md Section 1.2 (built from
+# TILEFLOW_Cross_Module_Validation_Audit_v1.0.md Section 1.2 (built from
 # `grep -n "ForeignKey(" backend/app/models/*.py`, not assumption).
 # Running this doesn't discover new architecture — it prevents the
 # architecture that's already been verified from silently drifting.

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.24.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta, date
@@ -23,12 +9,12 @@ from ..db.session import get_company_sessionmaker
 from .analytics_svc import AnalyticalIntelligenceService
 from .outbox_worker import OutboxQueueWorker
 
-logger = logging.getLogger("smriti.analytics_daemon")
+logger = logging.getLogger("tileflow.analytics_daemon")
 
 
 class AnalyticsDaemonService:
     """
-    Automated Background Daemon for SMRITI Analytics & Outbox Execution (Section 11).
+    Automated Background Daemon for TILEFLOW Analytics & Outbox Execution (Section 11).
     Executes non-blocking nightly sales fact rollups, advisory lock concurrency protection,
     and background outbox queue event dispatch across all tenant databases.
     """
@@ -127,8 +113,8 @@ class AnalyticsDaemonService:
         """
         if not tenants:
             tenants = [
-                {"db_name": "smriti001", "company_id": "COMP-001"},
-                {"db_name": "smriti002", "company_id": "COMP-002"}
+                {"db_name": "tileflow001", "company_id": "COMP-001"},
+                {"db_name": "tileflow002", "company_id": "COMP-002"}
             ]
 
         results = []

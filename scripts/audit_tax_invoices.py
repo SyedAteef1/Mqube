@@ -1,13 +1,13 @@
 """
-SMRITI Phase 2 Discovery: Tax Invoice & GST Data Audit
+TILEFLOW Phase 2 Discovery: Tax Invoice & GST Data Audit
 """
 import psycopg2
 import json
 
 DATABASES = {
-    "smriti001": "postgresql://postgres:postgres@localhost:5432/smriti001",
-    "smriti002": "postgresql://postgres:postgres@localhost:5432/smriti002",
-    "smritisys": "postgresql://postgres:postgres@localhost:5432/smritisys",
+    "tileflow001": "postgresql://postgres:postgres@localhost:5432/tileflow001",
+    "tileflow002": "postgresql://postgres:postgres@localhost:5432/tileflow002",
+    "tileflowsys": "postgresql://postgres:postgres@localhost:5432/tileflowsys",
 }
 
 TAX_INVOICE_TABLES = [

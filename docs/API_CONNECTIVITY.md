@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal API Audit
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source API Audit
 -->
 
-# SMRITI RETAIL OS — API & BACKEND ROUTE CONNECTIVITY AUDIT
+# TILEFLOW RETAIL OS — API & BACKEND ROUTE CONNECTIVITY AUDIT
 
 ## 1. API Architecture Summary
-SMRITI Retail OS employs a dual API communication strategy:
+TILEFLOW Retail OS employs a dual API communication strategy:
 1. `src/lib/apiFetch.ts`: Routing gateway targeting Express (`/api/*`) for transient UI caching & migration proxy.
 2. `src/lib/apiFetchV1.ts`: Direct transactional gateway targeting FastAPI + PostgreSQL (`/api/v1/*`) as the system of record.
 
@@ -40,5 +39,5 @@ SMRITI Retail OS employs a dual API communication strategy:
 ---
 
 ## 3. Error Handling & Response Mapping
-- **Error Translation**: Handled via SMRITI Human-Readable Error Policy (HREP). Raw tracebacks are suppressed in UI; business-friendly alerts are returned with reference IDs.
+- **Error Translation**: Handled via TILEFLOW Human-Readable Error Policy (HREP). Raw tracebacks are suppressed in UI; business-friendly alerts are returned with reference IDs.
 - **Authentication Resilience**: Auto-refreshes session tokens or redirects to `LoginScreen` upon 401 Unauthorized responses.

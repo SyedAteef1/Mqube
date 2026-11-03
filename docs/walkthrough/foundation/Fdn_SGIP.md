@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Government Integration Platform (SGIP) — Milestone 1 Compliance Foundation Walkthrough
+# TILEFLOW Government Integration Platform (SGIP) — Milestone 1 Compliance Foundation Walkthrough
 
 ## 1. Purpose
-This walkthrough documents the technical implementation of Milestone 1 (Compliance Foundation) for the SMRITI Government Integration Platform (SGIP). It defines the database schema, security mechanism (AES-256-GCM Credential Vault), repository pattern access, dynamic connector registry interface, validation policies, API router, and test suite verification.
+This walkthrough documents the technical implementation of Milestone 1 (Compliance Foundation) for the TILEFLOW Government Integration Platform (SGIP). It defines the database schema, security mechanism (AES-256-GCM Credential Vault), repository pattern access, dynamic connector registry interface, validation policies, API router, and test suite verification.
 
 ## 2. Scope
 The scope of this implementation is restricted strictly to the local compliance foundation layer inside the FastAPI backend. It explicitly excludes external gateway integration, real HTTP client calls, workers, circuit breakers, and connector implementations.
@@ -62,7 +61,7 @@ The following external files were modified to wire the compliance framework:
 - [.env.example](file:///d:/IMP/GitHub/SMRITRretailNX/.env.example) — Documented `SGIP_VAULT_MASTER_KEY` requirements.
 
 ## 5. Architecture Decisions
-- **FastAPI as System of Record:** In accordance with SMRITI rules, all transaction models and business rules are encapsulated in the FastAPI Python backend under a single bounded context directory `backend/app/compliance/`.
+- **FastAPI as System of Record:** In accordance with TILEFLOW rules, all transaction models and business rules are encapsulated in the FastAPI Python backend under a single bounded context directory `backend/app/compliance/`.
 - **Vault Key Validation Gating:** Sourced from `SGIP_VAULT_MASTER_KEY`. Bootstrapping fails instantly if the key is missing or matches the JWT secret.
 - **Production Endpoint Protection:** Manually triggered debug endpoints (`POST /compliance/debug/outbox`) must raise HTTP 404 (Not Found) if `ENVIRONMENT == "production"` to hide capabilities.
 
@@ -99,7 +98,7 @@ All checks passed!
 - Milestone 3: Implement cron queues and backend worker retry loops.
 
 ## 12. Related ADRs
-- SMRITI Bounded Context Architecture ADR.
+- TILEFLOW Bounded Context Architecture ADR.
 
 ## 13. Related RFCs
 - SGIP RFC v1.0.

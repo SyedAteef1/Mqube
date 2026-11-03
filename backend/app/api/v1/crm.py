@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.9.0
-Created      : 2026-07-11
-Modified     : 2026-07-11
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from typing import Any, Dict, List, Optional
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
@@ -266,12 +253,12 @@ async def grant_loyalty_bonus(
     role = (getattr(current_user, "role", "") or "").upper()
     if role not in ("ADMIN", "SYSADMIN", "SUPERADMIN", "MANAGER"):
         raise HTTPException(status_code=403, detail={
-            "code": "SMRITI-PERM-001",
+            "code": "TILEFLOW-PERM-001",
             "message": "Only managers or administrators can grant loyalty bonus points.",
         })
     if body.points <= 0:
         raise HTTPException(status_code=422, detail={
-            "code": "SMRITI-VAL-001",
+            "code": "TILEFLOW-VAL-001",
             "message": "Points must be greater than zero.",
         })
 
@@ -290,7 +277,7 @@ async def grant_loyalty_bonus(
     await db.commit()
     if not ok:
         raise HTTPException(status_code=404, detail={
-            "code": "SMRITI-DATA-001",
+            "code": "TILEFLOW-DATA-001",
             "message": f"Loyalty member '{member_id}' not found or inactive.",
         })
     return {"member_id": member_id, "bonus_points": body.points, "status": "granted"}
@@ -317,12 +304,12 @@ async def expire_loyalty_points(
     role = (getattr(current_user, "role", "") or "").upper()
     if role not in ("ADMIN", "SYSADMIN", "SUPERADMIN", "MANAGER"):
         raise HTTPException(status_code=403, detail={
-            "code": "SMRITI-PERM-001",
+            "code": "TILEFLOW-PERM-001",
             "message": "Only managers or administrators can expire loyalty points.",
         })
     if body.points <= 0:
         raise HTTPException(status_code=422, detail={
-            "code": "SMRITI-VAL-001",
+            "code": "TILEFLOW-VAL-001",
             "message": "Points must be greater than zero.",
         })
 
@@ -341,7 +328,7 @@ async def expire_loyalty_points(
     await db.commit()
     if not ok:
         raise HTTPException(status_code=404, detail={
-            "code": "SMRITI-DATA-001",
+            "code": "TILEFLOW-DATA-001",
             "message": f"Loyalty member '{member_id}' not found or inactive.",
         })
     return {"member_id": member_id, "expired_points": body.points, "status": "expired"}

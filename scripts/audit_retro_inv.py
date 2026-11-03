@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-20
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import asyncio
@@ -30,17 +16,17 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from backend.app.models.sales import SalesInvoice, SalesInvoiceItem
 
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001")
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001")
 if DATABASE_URL.startswith("postgresql://"):
     DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
-# Ensure we target operational company DB smriti001
-if "smritisys" in DATABASE_URL:
-    DATABASE_URL = DATABASE_URL.replace("smritisys", "smriti001")
+# Ensure we target operational company DB tileflow001
+if "tileflowsys" in DATABASE_URL:
+    DATABASE_URL = DATABASE_URL.replace("tileflowsys", "tileflow001")
 
 
 async def run_audit():
     print("================================================================================")
-    print("SMRITI RETAIL OS: Comprehensive Retroactive Invoice Audit")
+    print("TILEFLOW RETAIL OS: Comprehensive Retroactive Invoice Audit")
     print(f"Target Database: {DATABASE_URL}")
     print("================================================================================")
 

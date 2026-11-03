@@ -1,31 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 1.2.0
- * Created      : 2026-08-25
- * Modified     : 2026-08-25
- * Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- *
- * Sprint 20 -- Barcode scan-to-count (PHY-008) + updated to call PHY-007.
- * Sprint 18 -- Physical Stock Count UI v1.1 with inline count entry.
- * Covers Shoper9: SR323400.EXE MnuNo 350/351 (Physical Inventory Audit).
- *
- * API endpoints consumed (PHY-001..008):
- *   GET   /api/v1/physical-stock/sessions              -- list sessions
- *   POST  /api/v1/physical-stock/sessions              -- create session
- *   GET   /api/v1/physical-stock/sessions/:id          -- session detail + count lines
- *   GET   /api/v1/physical-stock/variance              -- variance report
- *   PATCH /api/v1/physical-stock/sessions/:id/approve  -- approve (MANAGER)
- *   PATCH /api/v1/physical-stock/sessions/:id/lines/:lid -- update counted_qty (PHY-006, Sprint 18)
- *   PATCH /api/v1/physical-stock/sessions/:id/complete -- complete session (PHY-007, Sprint 19)
- *   SCAN  barcode -> auto-PATCH via PHY-006             -- scan-to-count (PHY-008, Sprint 20)
-
- */
-
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { apiFetchV1 } from "../lib/apiFetchV1";
 import {

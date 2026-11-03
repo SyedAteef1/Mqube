@@ -1,19 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-07-10
- * Modified     : 2026-08-25
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Target UI    : Tag & Barcode Label Printing Studio (SMRITI 9 Professional Terminal)
- */
-
 import React, { useState } from "react";
 import { TagLabelPrintingTab } from "./barcode/TagLabelPrintingTa.tsx";
 import { VisualLabelDesigner } from "./barcode/VisualLabelDesign.tsx";
@@ -82,7 +66,7 @@ export const BarcodeStudioTab: React.FC<BarcodeStudioTabProps> = ({
         </div>
 
         <div className="text-[10px] font-mono text-theme-muted">
-          SMRITI Barcode & Thermal Label Studio v6.9
+          MQube Barcode & Thermal Label Studio v6.9
         </div>
       </div>
 

@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { X, ShieldCheck, Terminal, Star, Pin, Keyboard, HelpCircle, Eye } from "lucide-react";
@@ -40,7 +15,7 @@ export const ContextDialog: React.FC<ContextDialogProps> = ({ isOpen, onClose, i
   useEffect(() => {
     if (isOpen) {
       try {
-        const logs = JSON.parse(localStorage.getItem("smriti_acas_audit_logs") || "[]");
+        const logs = JSON.parse(localStorage.getItem("tileflow_acas_audit_logs") || "[]");
         setAuditLogs(logs.reverse()); // Show newest first
       } catch (e) {
         setAuditLogs([]);
@@ -50,7 +25,7 @@ export const ContextDialog: React.FC<ContextDialogProps> = ({ isOpen, onClose, i
 
   const clearAuditLogs = () => {
     try {
-      localStorage.removeItem("smriti_acas_audit_logs");
+      localStorage.removeItem("tileflow_acas_audit_logs");
       setAuditLogs([]);
     } catch (_) {}
   };
@@ -279,7 +254,7 @@ export const ContextDialog: React.FC<ContextDialogProps> = ({ isOpen, onClose, i
 
         {/* Footer */}
         <div className="px-6 py-3.5 border-t border-theme-divider flex justify-end bg-slate-50 dark:bg-slate-900/20 text-xs text-slate-400">
-          Governance service powered by SMRITI Retail OS Core V2
+          Governance service powered by MQube Core V2
         </div>
       </motion.div>
     </div>

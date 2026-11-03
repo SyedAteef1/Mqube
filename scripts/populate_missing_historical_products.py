@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.36.0
-Created      : 2026-08-27
-Modified     : 2026-08-27
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import uuid
@@ -79,7 +65,7 @@ def parse_sku_details(code: str, name: str):
 
 
 def populate_missing_historical_products(
-    database: str = "smriti001",
+    database: str = "tileflow001",
     dry_run: bool = True
 ):
     conn = psycopg2.connect(f"postgresql://postgres:postgres@localhost:5432/{database}")

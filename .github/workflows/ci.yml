@@ -1,21 +1,17 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
 # Version      : 3.16.0
 # Created      : 2026-07-12
 # Modified     : 2026-08-24
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
+# Copyright    :  tileflow.in. Open Source - Permissive Use
+# License      : MIT Open Source License
 #
 
-name: SMRITI CI
+name: TILEFLOW CI
 
 on:
   push:
-    branches: [ main, smritiNX, developer ]
+    branches: [ main, tileflowNX, developer ]
   pull_request:
-    branches: [ main, smritiNX, developer ]
+    branches: [ main, tileflowNX, developer ]
 
 jobs:
   build-and-test:
@@ -25,7 +21,7 @@ jobs:
       postgres:
         image: postgres:15
         env:
-          POSTGRES_DB: smritisys
+          POSTGRES_DB: tileflowsys
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         ports:
@@ -42,8 +38,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Run SMRITI Naming Guard (NGP-v1.0)
-        run: python scripts/smriti_naming_guard.py --root .
+      - name: Run TILEFLOW Naming Guard (NGP-v1.0)
+        run: python scripts/tileflow_naming_guard.py --root .
 
       - name: Run Gitleaks Secret Scanner
         uses: gitleaks/gitleaks-action@v2
@@ -81,28 +77,28 @@ jobs:
           if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
           if [ -f backend/dev.txt ]; then pip install -r backend/dev.txt; fi
 
-      - name: Create Company Business Database (smriti001)
-        run: PGPASSWORD=postgres psql -h localhost -U postgres -c "CREATE DATABASE smriti001;"
+      - name: Create Company Business Database (tileflow001)
+        run: PGPASSWORD=postgres psql -h localhost -U postgres -c "CREATE DATABASE tileflow001;"
 
       - name: Run Alembic Control Plane Migrations
         working-directory: backend
         env:
-          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys
+          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys
         run: alembic upgrade head
 
       - name: Run Alembic Company Business Database Migrations
         working-directory: backend
         env:
-          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001
+          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001
         run: alembic upgrade head
 
       - name: Run Read-Only Schema Drift Audit
-        run: python scripts/audit_sqlalchemy_schema_drift.py smriti001 smritisys
+        run: python scripts/audit_sqlalchemy_schema_drift.py tileflow001 tileflowsys
 
       - name: Run Python Backend Tests
         working-directory: backend
         env:
-          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys
+          DATABASE_URL: postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys
           JWT_SECRET_KEY: ci_test_secret_do_not_use_in_prod
           SGIP_VAULT_MASTER_KEY: ci_vault_master_key_do_not_use_in_prod
         run: pytest -v

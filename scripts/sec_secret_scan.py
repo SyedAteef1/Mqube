@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.8.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 import re
 import subprocess
@@ -38,7 +24,7 @@ IGNORED_PATHS = [
 
 def run_scan():
     print("================================================================================")
-    print("  SMRITI Pre-Commit Automated Secret & Private Key Scanner")
+    print("  TILEFLOW Pre-Commit Automated Secret & Private Key Scanner")
     print("================================================================================")
 
     # Get list of tracked/staged files

@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-07-11
- * Modified     : 2026-07-14
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import { ParsedCodebase } from "./parser.ts";
 import { ModuleStatus, CodeHealth, GitInfo, RiskAnalysis, ReleaseScores, ScanResult, ScanHistoryEntry } from "../models/interfaces.ts";
 import { execSync } from "child_process";
@@ -26,7 +13,7 @@ export function discoverModules(parsed: ParsedCodebase): { id: string; label: st
     { id: "sales", label: "Sales Studio", category: "Sales & POS" },
     { id: "pos", label: "Billing Desk", category: "Sales & POS" },
     { id: "crm", label: "CRM & Loyalty", category: "Sales & POS" },
-    { id: "about-smriti", label: "About SMRITI", category: "System" }
+    { id: "about-tileflow", label: "About MQube", category: "System" }
   ];
 
   const layoutStoreContent = parsed.fileContentsMap.get("src/layout_engine/layout_store.tsx");
@@ -130,8 +117,8 @@ export function getModuleResourcesMapping(moduleId: string, moduleLabel: string 
       testKeywords: ["stock", "inventory", "grn"],
       docKeywords: ["stock", "inventory"]
     },
-    "about-smriti": {
-      frontendKeyword: "AboutSmritiTab.tsx",
+    "about-tileflow": {
+      frontendKeyword: "AboutTileFlowTab.tsx",
       routeKeywords: ["metadata", "changelog"],
       tableKeywords: [],
       testKeywords: ["about", "changelog"],
@@ -419,7 +406,7 @@ export function computeMetrics(parsed: ParsedCodebase): ScanResult {
     branch: "main",
     lastCommitHash: "e4c2149",
     lastCommitMessage: "style: Phase 3C - rollout standardized project headers",
-    lastCommitAuthor: "Jawahar Ramkripal Mallah",
+    lastCommitAuthor: "Syed Ateef",
     lastCommitDate: "2026-07-11",
     pendingChangesCount: 0,
     commitCount: 144,

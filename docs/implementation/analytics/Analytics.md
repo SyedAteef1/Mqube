@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.23.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Analytics & Intelligence Plane + Compliance Integration Hub (Sections 11 & 12)
 
 ## 1. Objective
-Establish an isolated downstream Analytics & Intelligence Plane and an authoritative Compliance Integration Hub for SMRITI Retail OS. This ensures heavy analytical aggregations do not lock core transactional OLTP ledgers, provides native TallyPrime XML export for B2B/B2C invoices and journal vouchers, and creates cryptographic SHA-256 tamper-evident compliance audit logs.
+Establish an isolated downstream Analytics & Intelligence Plane and an authoritative Compliance Integration Hub for TILEFLOW Retail OS. This ensures heavy analytical aggregations do not lock core transactional OLTP ledgers, provides native TallyPrime XML export for B2B/B2C invoices and journal vouchers, and creates cryptographic SHA-256 tamper-evident compliance audit logs.
 
 ## 2. Business Motivation
 - **High-Speed Analytics Without OLTP Contention**: Real-time sales dashboards, product profitability metrics, and category margins require aggregations that should not lock operational invoicing tables.
@@ -45,7 +44,7 @@ Establish an isolated downstream Analytics & Intelligence Plane and an authorita
 
 ## 6. Architecture Impact
 - Multi-Tenant Isolation: All analytical facts and audit records reside in tenant databases, routed dynamically via `get_company_db`.
-- Database Separation: `smritisys` maintains reference architecture; tenant databases authoritatively store operational analytics facts.
+- Database Separation: `tileflowsys` maintains reference architecture; tenant databases authoritatively store operational analytics facts.
 
 ## 7. Proposed Design
 - Table schemas with strict foreign keys, indexes, and forward-only Alembic migration `v1367_analytics_and_integration`.

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.43.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 import psycopg2
 from psycopg2.extras import execute_values
@@ -19,7 +5,7 @@ from psycopg2.extras import execute_values
 
 def seed_governed_logic_data():
     """
-    Authoritative seeder for Governed Logic engines (Formulas, Business Rules, Policies, Workflows) into [smritisys].
+    Authoritative seeder for Governed Logic engines (Formulas, Business Rules, Policies, Workflows) into [tileflowsys].
     """
     formulas = [
         (
@@ -226,9 +212,9 @@ def seed_governed_logic_data():
         ),
     ]
 
-    print("\n--- Seeding Governed Logic Master Data into [smritisys] ---")
+    print("\n--- Seeding Governed Logic Master Data into [tileflowsys] ---")
     try:
-        conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+        conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
         cur = conn.cursor()
 
         # 1. Formulas
@@ -308,9 +294,9 @@ def seed_governed_logic_data():
 
         conn.commit()
         conn.close()
-        print("Successfully seeded Governed Logic Master Data into [smritisys].")
+        print("Successfully seeded Governed Logic Master Data into [tileflowsys].")
     except Exception as e:
-        print(f"Error seeding [smritisys]: {e}")
+        print(f"Error seeding [tileflowsys]: {e}")
 
 
 if __name__ == "__main__":

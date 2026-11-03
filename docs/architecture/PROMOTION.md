@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Promotion Conflict & Pricing Resolution Specification v1.0
+# TILEFLOW Promotion Conflict & Pricing Resolution Specification v1.0
 
 **Status: PROMOTION_CONFLICT_RESOLUTION_VERIFIED**  
 **Audit Timestamp:** 2026-08-15 07:37:17 UTC  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
@@ -48,11 +47,10 @@ Write Immutable Evaluation Audit Snapshot (evaluated_campaigns_snapshot)
 Feed into Profitability Net Contribution Engine
 ```
 
-- **Single Business DB Principle**: Promotion conflict evaluation, stacking rules, priority ranks, and audit snapshots operate inside `smriti001`. **Zero extra databases created**.
+- **Single Business DB Principle**: Promotion conflict evaluation, stacking rules, priority ranks, and audit snapshots operate inside `tileflow001`. **Zero extra databases created**.
 
 ---
 
-## 2. Final Classification
 
 ```text
 FINAL STATUS: PROMOTION_CONFLICT_RESOLUTION_VERIFIED

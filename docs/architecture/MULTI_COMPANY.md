@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: CANONICAL ARCHITECTURE SPECIFICATION -- DO NOT OVERWRITE
 -->
 
-# SMRITI RETAIL OS — MULTI-COMPANY DATABASE ARCHITECTURE
+# TILEFLOW RETAIL OS — MULTI-COMPANY DATABASE ARCHITECTURE
 
 **Status:** **CANONICAL CURRENT ARCHITECTURE — FROZEN & VERIFIED**  
 **Version:** 3.21.0  
@@ -22,14 +21,14 @@
 
 ## 1. Executive Architectural Declaration
 
-SMRITI Retail OS implements a strict **Database-per-Company Physical Isolation Architecture** driven by a centralized Control Plane.
+TILEFLOW Retail OS implements a strict **Database-per-Company Physical Isolation Architecture** driven by a centralized Control Plane.
 
 ```text
-                               SMRITI RETAIL OS
+                               TILEFLOW RETAIL OS
                                       │
                                       ▼
                            ┌─────────────────────┐
-                           │      smritisys      │
+                           │      tileflowsys      │
                            │     CONTROL PLANE   │
                            ├─────────────────────┤
                            │ Identity & Auth     │
@@ -47,7 +46,7 @@ SMRITI Retail OS implements a strict **Database-per-Company Physical Isolation A
                                       │
                      ┌────────────────┴────────────────┐
                      ▼                                 ▼
-                smriti001                         smriti002
+                tileflow001                         tileflow002
              (Company 001 DB)                  (Company 002 DB)
           OPERATIONAL SOURCE OF TRUTH       OPERATIONAL SOURCE OF TRUTH
           + Company 001 Local PSV           + Company 002 Local PSV
@@ -60,16 +59,16 @@ SMRITI Retail OS implements a strict **Database-per-Company Physical Isolation A
 ```
 
 ### Core Tenets:
-1. **`smritisys` = CONTROL PLANE:** Contains authentication, global company registries, routing tables, schema governance, centralized masters (by policy), and system audit logging. `smritisys` is NEVER an operational transactional store.
-2. **`smriti<company_code>` = OPERATIONAL SOURCE OF TRUTH + COMPANY-LOCAL PSV:** Dedicated physical PostgreSQL database per registered company (e.g. `smriti001`, `smriti002`). Each contains operational ledgers, sales, purchases, inventory balances, local company masters, and **company-local Party Stock Visibility (PSV) shadow projections**.
-3. **`CompanyDatabaseResolver` = AUTHORITATIVE ROUTER:** The single gateway for resolving database connections based on `company_database_registries` in `smritisys`. Business modules and PSV projection services MUST NEVER choose databases independently.
+1. **`tileflowsys` = CONTROL PLANE:** Contains authentication, global company registries, routing tables, schema governance, centralized masters (by policy), and system audit logging. `tileflowsys` is NEVER an operational transactional store.
+2. **`tileflow<company_code>` = OPERATIONAL SOURCE OF TRUTH + COMPANY-LOCAL PSV:** Dedicated physical PostgreSQL database per registered company (e.g. `tileflow001`, `tileflow002`). Each contains operational ledgers, sales, purchases, inventory balances, local company masters, and **company-local Party Stock Visibility (PSV) shadow projections**.
+3. **`CompanyDatabaseResolver` = AUTHORITATIVE ROUTER:** The single gateway for resolving database connections based on `company_database_registries` in `tileflowsys`. Business modules and PSV projection services MUST NEVER choose databases independently.
 4. **Physical Isolation Over Logical Filtering:** Multi-tenancy is enforced at the physical connection string level. Filtering by `tenant_id` or `company_id` inside a single shared database is strictly prohibited for operational ledgers and PSV projections.
 5. **Party Stock Visibility (PSV) = COMPANY-LOCAL SHADOW INVENTORY:** PSV is a company-local intelligence and shadow visibility projection engine residing directly inside each company's database. PSV data never crosses company boundaries, is never stored in a shared database, and is NEVER the core authoritative inventory ledger.
 6. **Consolidation = DOWNSTREAM REPORTING ONLY:** Cross-company reporting and analytics are read-only downstream projections and never write back to company operational ledgers.
-7. **eCommerce & Omnichannel = CORE CAPABILITY (CHANNEL, NOT DUPLICATE ERP):** eCommerce is a core commerce channel of SMRITI Retail OS. It uses the same company-authoritative Sales (`sales_orders`, `sales_invoices`), Inventory (`products`, `stock_movements`), Customer (`customers`), Payment, Tax and Fulfilment capabilities rather than creating duplicate transactional authorities. All operational transactions generated by online channels belong strictly to that company's operational database (`smriti<Code>`).
+7. **eCommerce & Omnichannel = CORE CAPABILITY (CHANNEL, NOT DUPLICATE ERP):** eCommerce is a core commerce channel of TILEFLOW Retail OS. It uses the same company-authoritative Sales (`sales_orders`, `sales_invoices`), Inventory (`products`, `stock_movements`), Customer (`customers`), Payment, Tax and Fulfilment capabilities rather than creating duplicate transactional authorities. All operational transactions generated by online channels belong strictly to that company's operational database (`tileflow<Code>`).
 
 ```text
-                 SMRITI RETAIL OS
+                 TILEFLOW RETAIL OS
                         │
        ┌────────────────┼────────────────┐
        │                │                │
@@ -95,16 +94,16 @@ SMRITI Retail OS implements a strict **Database-per-Company Physical Isolation A
 
 PostgreSQL Cluster: `localhost:5432` (PostgreSQL 15.18 on Alpine Linux)
 
-### 2.1 `smritisys` (Control Plane — 283 Base Tables + 1 View)
-- **Control Plane Core (13 Tables):** `alembic_version`, `branches`, `companies`, `company_database_registries`, `control_companies`, `control_company_databases`, `control_psv_configs`, `control_users`, `roles`, `smriti_audit_log`, `smriti_menus` (34 immutable entries), `user_company_assignments`, `users`.
-- **Central Masters (4 Tables):** `smriti_banks` (20 standard bank IFSC entries), `barcode_providers`, `identity_rules`, `product_identities`.
+### 2.1 `tileflowsys` (Control Plane — 283 Base Tables + 1 View)
+- **Control Plane Core (13 Tables):** `alembic_version`, `branches`, `companies`, `company_database_registries`, `control_companies`, `control_company_databases`, `control_psv_configs`, `control_users`, `roles`, `tileflow_audit_log`, `tileflow_menus` (34 immutable entries), `user_company_assignments`, `users`.
+- **Central Masters (4 Tables):** `tileflow_banks` (20 standard bank IFSC entries), `barcode_providers`, `identity_rules`, `product_identities`.
 - **Reporting & Analytics Metadata (4 Tables):** `report_definitions`, `report_saved_views`, `report_schedules`, `dashboard_widgets`.
 - **PSV Shadow Definitions (4 Tables):** `psv_parties`, `psv_sku_tracking`, `psv_stock_balances`, `psv_stock_events`.
-- **Company Operational Tables Preserved in smritisys (79 Tables):** Cloned/migrated to Company DBs (`smriti001`, `smriti002`) and preserved in `smritisys`.
-- **Preserved Legacy / Scaffolding Tables (179 Tables):** Preserved in `smritisys` in `RETIRED_IN_SMRITISYS` / `READ_ONLY` mode. Zero operational business traffic interacts with these tables.
+- **Company Operational Tables Preserved in tileflowsys (79 Tables):** Cloned/migrated to Company DBs (`tileflow001`, `tileflow002`) and preserved in `tileflowsys`.
+- **Preserved Legacy / Scaffolding Tables (179 Tables):** Preserved in `tileflowsys` in `RETIRED_IN_TILEFLOWSYS` / `READ_ONLY` mode. Zero operational business traffic interacts with these tables.
 - **SQL Views (1 View):** `v_scdm_stock_projection` (Total relations: 284).
 
-### 2.2 Company Operational Databases (`smriti001`, `smriti002` — 99 Base Tables Each)
+### 2.2 Company Operational Databases (`tileflow001`, `tileflow002` — 99 Base Tables Each)
 Each Company Database contains:
 - Core Transactional Ledgers (`sales_invoices`, `purchase_orders`, `stock_movements`, `suppliers`, `customers`, etc.)
 - **Company-Local Party Stock Visibility (PSV) Shadow Tables:** `psv_parties`, `psv_sku_tracking`, `psv_stock_events`, `psv_stock_balances`.
@@ -124,11 +123,10 @@ Each Company Database contains:
    - **Local Reporting & Dashboards:** `dashboards`, `dashboard_widgets`, `report_definitions`, `report_saved_views`, `report_schedules`.
    - **Local PSV Mirror:** `psv_parties`, `psv_sku_tracking`, `psv_stock_balances`, `psv_stock_events`.
 3. **Local Context & Identity Cache (26 Tables):**
-   - `users`, `roles`, `branches`, `companies`, `control_companies`, `control_company_databases`, `control_psv_configs`, `control_users`, `user_branch_assignments`, `user_company_assignments`, `user_store_assignments`, `refresh_token_blacklist`, `smriti_themes`, `smriti_theme_variants`, `smriti_workspace_profiles`.
+   - `users`, `roles`, `branches`, `companies`, `control_companies`, `control_company_databases`, `control_psv_configs`, `control_users`, `user_branch_assignments`, `user_company_assignments`, `user_store_assignments`, `refresh_token_blacklist`, `tileflow_themes`, `tileflow_theme_variants`, `tileflow_workspace_profiles`.
 
 ---
 
-## 3. Authoritative Routing & Security Enforcement
 
 ### Authoritative Path:
 ```text
@@ -138,11 +136,11 @@ Bearer Token Authentication (`deps.get_current_user`)
     ↓
 Company Assignment Validation (`user_company_assignments`)
     ↓
-Company Database Registry Lookup (`company_database_registries` in smritisys)
+Company Database Registry Lookup (`company_database_registries` in tileflowsys)
     ↓
 CompanyDatabaseResolver (`resolve_company_database`)
     ↓
-AsyncSession bound to target Company DB (`smriti<Code>`)
+AsyncSession bound to target Company DB (`tileflow<Code>`)
 ```
 
 ### Security Proof:
@@ -156,12 +154,12 @@ AsyncSession bound to target Company DB (`smriti<Code>`)
 
 | Master Data Entity | Ownership Model | Authority Storage | Operational Instance |
 |---|---|---|---|
-| **Banks & IFSC Codes** | `CENTRAL` | `smritisys` (`smriti_banks`) | Referenced globally |
-| **Product Catalogs (PIE)** | `HYBRID` | `smritisys` (`product_identities`) | `smriti<Code>` (`products`, `stock`) |
-| **Customer Master** | `COMPANY` | `smriti<Code>` (`customers`) | Local credit limits & ledger |
-| **Supplier Master** | `COMPANY` | `smriti<Code>` (`suppliers`) | Local payables & POs |
-| **Pricing Groups** | `HYBRID` | `smritisys` (Default templates) | `smriti<Code>` (Local pricing rules) |
-| **Document Series** | `HYBRID` | `smritisys` (Master templates) | `smriti<Code>` (`document_series`) |
+| **Banks & IFSC Codes** | `CENTRAL` | `tileflowsys` (`tileflow_banks`) | Referenced globally |
+| **Product Catalogs (PIE)** | `HYBRID` | `tileflowsys` (`product_identities`) | `tileflow<Code>` (`products`, `stock`) |
+| **Customer Master** | `COMPANY` | `tileflow<Code>` (`customers`) | Local credit limits & ledger |
+| **Supplier Master** | `COMPANY` | `tileflow<Code>` (`suppliers`) | Local payables & POs |
+| **Pricing Groups** | `HYBRID` | `tileflowsys` (Default templates) | `tileflow<Code>` (Local pricing rules) |
+| **Document Series** | `HYBRID` | `tileflowsys` (Master templates) | `tileflow<Code>` (`document_series`) |
 
 ---
 
@@ -169,7 +167,7 @@ AsyncSession bound to target Company DB (`smriti<Code>`)
 
 ### 5.1 Barcode & Product Identity Engine (PIE)
 - **Status:** **SOFTWARE VERIFIED — HARDWARE PENDING**
-- **Central Identity:** `barcode_providers`, `identity_rules`, and `product_identities` verified in `smritisys`.
+- **Central Identity:** `barcode_providers`, `identity_rules`, and `product_identities` verified in `tileflowsys`.
 - **Operational Barcode:** Layout serialization, label dataset generation, and PostgreSQL unique collision constraints verified.
 - **Physical Printer:** `NOT RUNTIME VERIFIED` (No physical Zebra/TSC thermal printer connected to automated runner).
 
@@ -177,7 +175,7 @@ AsyncSession bound to target Company DB (`smriti<Code>`)
 - **Status:** **VERIFIED (COMPANY-LOCAL PSV)**
 - **Engine Logic:** `PSVProjectionService` verified with idempotent emission (`SKIPPED_ALREADY_PROJECTED`), non-mutating inventory projection, and physical multi-company database isolation.
 - **Core Inventory Boundary:** PSV events do not alter `products.stock` or `stock_movements`.
-- **Physical Placement:** Company-local shadow tables (`psv_parties`, `psv_sku_tracking`, `psv_stock_events`, `psv_stock_balances`) reside directly inside each Company Database (`smriti001`, `smriti002`). Shared `SmritiPSV` database is SUPERSEDED and DOES NOT EXIST.
+- **Physical Placement:** Company-local shadow tables (`psv_parties`, `psv_sku_tracking`, `psv_stock_events`, `psv_stock_balances`) reside directly inside each Company Database (`tileflow001`, `tileflow002`). Shared `TileFlowPSV` database is SUPERSEDED and DOES NOT EXIST.
 
 ---
 

@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : ? SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal -- Audit & Governance Artifact
+  Copyright    : ? tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source -- Audit & Governance Artifact
 -->
 
-# SMRITI RETAIL OS ? DATA MIGRATION EXCEPTIONS REPORT
+# TILEFLOW RETAIL OS ? DATA MIGRATION EXCEPTIONS REPORT
 
 **Date:** 2026-08-17  
 **Scope:** Multi-Company Data Split & Anomaly Identification
@@ -57,9 +56,9 @@
 ## 2. Summary & Disposition
 
 1. **Unassigned / NULL Company Records:**
-   - `document_series` (12 rows): Retained in `smritisys` as master series templates; company-specific series reside in `smriti001` / `smriti002`.
-   - `numbering_audit_logs` (12 rows): Retained in `smritisys` as historical initialization log.
+   - `document_series` (12 rows): Retained in `tileflowsys` as master series templates; company-specific series reside in `tileflow001` / `tileflow002`.
+   - `numbering_audit_logs` (12 rows): Retained in `tileflowsys` as historical initialization log.
 2. **Template Company Records (`comp-default`):**
-   - `pricing_groups` (5 rows): Retained in `smritisys` as standard pricing tiers (Standard, Wholesale, Retail, VIP, Staff).
+   - `pricing_groups` (5 rows): Retained in `tileflowsys` as standard pricing tiers (Standard, Wholesale, Retail, VIP, Staff).
 3. **Orphan Records:**
    - 0 orphan transactional rows detected across `sales_invoices`, `purchase_orders`, `stock_movements`.

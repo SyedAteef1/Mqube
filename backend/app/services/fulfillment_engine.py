@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -46,7 +32,7 @@ from ..schemas.fulfillment import (
 
 class FulfillmentEngine:
     """
-    Authoritative SMRITI Fulfillment Engine (Section 7).
+    Authoritative TILEFLOW Fulfillment Engine (Section 7).
     Governs order pick & pack slips, dispatch manifesting with courier tracking,
     live milestone delivery progression, automated driver commission settlements,
     reverse logistics return manifests, and unified fulfillment timeline auditing.

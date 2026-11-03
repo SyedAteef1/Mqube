@@ -1,13 +1,3 @@
-"""
-PHASE 1 TRIAGE: Schema-Only Migration Analysis
-For each of 70 missing tables:
-- Model existence
-- Production row count  
-- ORM model location
-- Code reference check
-- Classification
-"""
-
 import os
 from sqlalchemy import text, create_engine, inspect
 from sqlalchemy.pool import NullPool
@@ -56,7 +46,7 @@ print("=" * 80)
 print()
 
 # Connect to production DB
-prod_url = 'postgresql://postgres:postgres@localhost:5432/smritisys'
+prod_url = 'postgresql://postgres:postgres@localhost:5432/tileflowsys'
 prod_engine = create_engine(prod_url, poolclass=NullPool)
 
 # Scan app/models for ORM definitions
@@ -134,7 +124,6 @@ print("=" * 80)
 print("SUMMARY")
 print("=" * 80)
 
-# Count by classification
 by_classification = {}
 for result in triage_results:
     cls = result['classification']

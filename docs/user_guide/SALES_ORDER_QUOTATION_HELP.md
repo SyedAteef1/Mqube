@@ -1,4 +1,4 @@
-# SMRITI Retail OS - Sales, Quotation and Order Help
+# TILEFLOW Retail OS - Sales, Quotation and Order Help
 
 **Audience:** Store operators, sales staff, managers, cashiers, and report users
 **Purpose:** Explain what each sales document means, when to use it, and how to read the screens and reports.

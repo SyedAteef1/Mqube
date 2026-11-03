@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 from fastapi import HTTPException, status
 from typing import Optional, Any
 import os, psycopg2, re
@@ -19,22 +6,22 @@ DB_HOST = os.getenv("POSTGRES_HOST") or os.getenv("DATABASE_HOST") or "localhost
 DB_PORT = os.getenv("POSTGRES_PORT") or 5432
 DB_USER = os.getenv("POSTGRES_USER") or "postgres"
 DB_PASSWORD = os.getenv("POSTGRES_PASSWORD") or "postgres"
-CONTROL_PLANE_DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/smritisys"
+CONTROL_PLANE_DB_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/tileflowsys"
 
 def generate_company_database_name(company_code: str) -> str:
     """
-    Official Server-Side SMRITI Company Business Database Name Generator.
+    Official Server-Side TILEFLOW Company Business Database Name Generator.
     Alphanumeric 3-Character Standard Rules:
-      1. Prefix MUST be exactly 'smriti'.
+      1. Prefix MUST be exactly 'tileflow'.
       2. No separator (underscore, hyphen, space).
     3. Company code MUST be exactly 3 alphanumeric characters [A-Z0-9].
     4. Lowercase input is automatically normalized to uppercase (e.g. 'abc' -> 'ABC').
     5. '000' is permanently reserved (forbidden).
-    6. 'SYS' is permanently reserved for SMRITI Control Plane (forbidden).
+    6. 'SYS' is permanently reserved for TILEFLOW Control Plane (forbidden).
     Examples:
-    '001' -> 'smriti001'
-    'ABC' -> 'smritiABC'
-    'MUM' -> 'smritiMUM'
+    '001' -> 'tileflow001'
+    'ABC' -> 'tileflowABC'
+    'MUM' -> 'tileflowMUM'
     """
     if not company_code:
         raise ValueError("Company code is required.")
@@ -48,25 +35,25 @@ def generate_company_database_name(company_code: str) -> str:
         raise ValueError("Company code '000' is permanently reserved and cannot be assigned.")
 
     if code == "SYS":
-        raise ValueError("Company code 'SYS' is permanently reserved for SMRITI Control Plane.")
+        raise ValueError("Company code 'SYS' is permanently reserved for TILEFLOW Control Plane.")
 
-    return f"smriti{code}"
+    return f"tileflow{code}"
 
 def validate_company_database_name(database_name: str) -> bool:
     """
-    Validates if a database name adheres to the official naming standard: smriti<3-character-alphanumeric-code>.
+    Validates if a database name adheres to the official naming standard: tileflow<3-character-alphanumeric-code>.
     """
     if not database_name:
         return False
-    if database_name == "smritisys":
+    if database_name == "tileflowsys":
         return True  # Control Plane DB
-    pattern = r"^smriti(?!(?:000|SYS)$)[A-Z0-9]{3}$"
+    pattern = r"^tileflow(?!(?:000|SYS)$)[A-Z0-9]{3}$"
     return bool(re.match(pattern, database_name))
 
 class CompanyDatabaseResolver:
     """
-    Authoritative SMRITI Multi-Company Database Resolver.
-    Resolves: User -> Tenant Context -> Company -> Company DB Registry -> Target Company DB (smriti<A-Z0-9>).
+    Authoritative TILEFLOW Multi-Company Database Resolver.
+    Resolves: User -> Tenant Context -> Company -> Company DB Registry -> Target Company DB (tileflow<A-Z0-9>).
     """
 
     @staticmethod
@@ -84,11 +71,11 @@ class CompanyDatabaseResolver:
 
         clean_company_id = str(company_id).strip()
 
-        # 1. Connect READ-ONLY to Control Plane DB smritisys
+        # 1. Connect READ-ONLY to Control Plane DB tileflowsys
         db_user = os.getenv("POSTGRES_USER") or "postgres"
         db_pass = os.getenv("POSTGRES_PASSWORD") or "postgres"
         db_port = int(os.getenv("POSTGRES_PORT") or 5432)
-        ctrl_url = f"postgresql://{db_user}:{db_pass}@{DB_HOST}:{db_port}/smritisys"
+        ctrl_url = f"postgresql://{db_user}:{db_pass}@{DB_HOST}:{db_port}/tileflowsys"
 
         try:
             conn = psycopg2.connect(ctrl_url)
@@ -96,7 +83,7 @@ class CompanyDatabaseResolver:
         except Exception:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="SMRITI Control Plane database unavailable."
+                detail="TILEFLOW Control Plane database unavailable."
             )
 
         try:
@@ -187,7 +174,7 @@ class CompanyDatabaseResolver:
             if not validate_company_database_name(target_db):
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
-                    detail=f"Invalid database name '{target_db}' resolved. Violates official smriti<3-character-alphanumeric> standard."
+                    detail=f"Invalid database name '{target_db}' resolved. Violates official tileflow<3-character-alphanumeric> standard."
                 )
 
             if db_status != "READY":
@@ -197,7 +184,7 @@ class CompanyDatabaseResolver:
                 )
 
             # Validate company_code if explicitly provided
-            derived_code = target_db[6:].upper() if target_db.startswith("smriti") else target_db.upper()
+            derived_code = target_db[len("tileflow"):].upper() if target_db.startswith("tileflow") else target_db.upper()
             if company_code and str(company_code).strip().upper() != derived_code:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,

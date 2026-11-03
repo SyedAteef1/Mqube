@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Certification Governance
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Certification Governance
 -->
 
-# SMRITI RETAIL OS — GLOBAL UX & RUNTIME CERTIFICATION REPORT
+# TILEFLOW RETAIL OS — GLOBAL UX & RUNTIME CERTIFICATION REPORT
 
 ```text
 Audit Date                  : 2026-08-16
-Repository                  : SMRITIRetailNX
+Repository                  : TILEFLOWRetailNX
 Version                     : 3.17.0
 Product / UX Freeze Policy  : ACTIVE (UI/UX, Architecture, Routes, DB Schema, Business Logic FROZEN)
 Overall Certification Status: CONDITIONALLY CERTIFIED — LEVEL C BUSINESS E2E VERIFIED; ACCESSIBILITY / RESPONSIVE / PERFORMANCE FINALIZATION PENDING
@@ -61,7 +60,7 @@ Overall Certification Status: CONDITIONALLY CERTIFIED — LEVEL C BUSINESS E2E V
 |---|---|---|---|
 | `backend/app/schemas/crm.py` | Added `code: Optional[str]` to `CustomerBase` | **`B. Objectively verified runtime blocker fix`** | Database `customers` table contains `code` column. Pydantic schema omitted `code`, causing Pydantic to strip `code` from request payloads during customer creation. |
 | `backend/app/services/reports.py` | Aligned `daily_sales` return dict keys with `DailySalesSummary` | **`B. Objectively verified runtime blocker fix`** | Fixed unhandled HTTP 500 Internal Server Error when calling `GET /api/v1/reports/daily-sales`. |
-| `src/lib/apiFetchV1.ts` | Added `smriti-api:8000` sanitization regex | **`B. Objectively verified runtime blocker fix`** | Legacy docker compose environment variables generated `http://smriti-api:8000`. In browser context outside container DNS, this caused `ERR_NAME_NOT_RESOLVED`. `apiFetchV1` strips Docker hostnames to target relative origin. |
+| `src/lib/apiFetchV1.ts` | Added `tileflow-api:8000` sanitization regex | **`B. Objectively verified runtime blocker fix`** | Legacy docker compose environment variables generated `http://tileflow-api:8000`. In browser context outside container DNS, this caused `ERR_NAME_NOT_RESOLVED`. `apiFetchV1` strips Docker hostnames to target relative origin. |
 | `vite.config.ts` | Manual chunking rules for heavy tabs | **`A. Test-only infrastructure / Build optimization`** | Prevents giant single-file bundle size and reduces entry bundle size to 1.77 MB. |
 
 ---
@@ -72,7 +71,7 @@ Overall Certification Status: CONDITIONALLY CERTIFIED — LEVEL C BUSINESS E2E V
 |---|---|---|---|---|---|
 | `401 Unauthorized` | `/api/v1/auth/me` | Unauthenticated token lookup before UI login | None (renders login screen) | **`EXPECTED`** | JWT token injected upon DOM login submit |
 | `500 Internal Server Error` | `/api/v1/reports/daily-sales` | Background uvicorn process restart | Low / None | **`TEST-INDUCED`** | Resolved upon backend process startup |
-| `ERR_NAME_NOT_RESOLVED` | `smriti-api:8000` | Legacy Docker container hostname | None | **`BENIGN`** | Sanitized dynamically by `apiFetchV1` regex |
+| `ERR_NAME_NOT_RESOLVED` | `tileflow-api:8000` | Legacy Docker container hostname | None | **`BENIGN`** | Sanitized dynamically by `apiFetchV1` regex |
 | `422 Unprocessable Entity` | `/api/v1/customers` | Transient datalist query check | None | **`BENIGN`** | Non-blocking filter input handling |
 
 ---
@@ -97,7 +96,7 @@ ELSE
 - Playwright Chromium Engine: **`Done`**
 - App Reachability (`http://localhost:3000`): **`Done`**
 - FastAPI Reachability (`http://localhost:8000`): **`Done`**
-- PostgreSQL DB (`postgresql://postgres:postgres@localhost:5432/smritisys`): **`Done`**
+- PostgreSQL DB (`postgresql://postgres:postgres@localhost:5432/tileflowsys`): **`Done`**
 - JWT Bearer Authentication & localStorage Persistence: **`Done`**
 - 7 Heavy Workspace Dynamic Chunks: **`Done`** (Passed 7/7)
 

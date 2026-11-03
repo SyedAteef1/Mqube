@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.13.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Public Data Exposure Hardening, Contextual HUD Auth Guard & Bottom Workspace Taskbar Removal
@@ -78,7 +77,7 @@ Git revert if needed.
 - Updated Walkthrough and Implementation Plan indices.
 
 ## 16. Deployment Plan
-Build Docker image `smriti-web` and deploy.
+Build Docker image `tileflow-web` and deploy.
 
 ## 17. Status
 Completed

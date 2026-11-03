@@ -15,7 +15,7 @@
 
 ## Purpose
 
-Defines key terms and abbreviations used across the Product Identity Engine and SMRITI architecture documentation.
+Defines key terms and abbreviations used across the Product Identity Engine and TILEFLOW architecture documentation.
 
 ## Terms
 

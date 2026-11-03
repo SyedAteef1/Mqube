@@ -1,10 +1,3 @@
-"""
-FINAL RECOMMENDATION REPORT: v1390 & v1391 MIGRATION EXECUTION
-Date: 2026-08-30
-Author: Schema Reconciliation Protocol
-Subject: Ready for Controlled Production Execution
-"""
-
 # EXECUTIVE SUMMARY
 Status: ✅ READY TO PROCEED WITH PRODUCTION EXECUTION
 
@@ -16,8 +9,8 @@ The approved migration files v1390_control_plane_missing_tables.py and v1391_mis
 ✅ v1390_control_plane_missing_tables.py
   - Syntax: VALID (python -m py_compile passed)
   - Lines: 124
-  - Tables: 3 (company_database_registries, smriti_permissions, smriti_audit_log)
-  - Indexes: 2 on smriti_permissions
+  - Tables: 3 (company_database_registries, tileflow_permissions, tileflow_audit_log)
+  - Indexes: 2 on tileflow_permissions
   - Strategy: Conditional creation (table_exists check)
   - Dependencies: v1389_park
 
@@ -36,13 +29,13 @@ The approved migration files v1390_control_plane_missing_tables.py and v1391_mis
     * Status Tracking: READY/status field
     * Revisions: schema_version, migration_status
   
-  - smriti_permissions: Matches v1379 canonical definition
+  - tileflow_permissions: Matches v1379 canonical definition
     * Index Strategy: scope+resource+action, company_id+branch_id
     * Audit Columns: created_by, updated_by, deleted_at, version
     * Foreign Keys: companies.id, branches.id
     * Module Tracking: code, resource, action, scope, module
 
-  - smriti_audit_log: Matches v1379 canonical definition
+  - tileflow_audit_log: Matches v1379 canonical definition
     * Change Tracking: old_value, new_value, change_type
     * Actor Attribution: changed_by, changed_by_name
     * Hash Integrity: sha256_hash field
@@ -55,8 +48,8 @@ The approved migration files v1390_control_plane_missing_tables.py and v1391_mis
 
 ## 3. Evidence from Production Analysis
 From the live production matrix (80 rows, 40 tables × 2 databases):
-- smritisys: 29 CRITICAL_DRIFT + 11 MISSING
-- smriti001: 34 CRITICAL_DRIFT + 6 MISSING
+- tileflowsys: 29 CRITICAL_DRIFT + 11 MISSING
+- tileflow001: 34 CRITICAL_DRIFT + 6 MISSING
 - Root Cause: Missing v1390/v1391 tables account for majority of issues
 - Validation: DDL compared against canonical sources (v1379, v1388)
 
@@ -73,13 +66,13 @@ From the live production matrix (80 rows, 40 tables × 2 databases):
 
 ## 5. Regression Risk Assessment
 ✅ LOW RISK - Expected Outcomes:
-  - 8 previously-failing tests should pass (smriti_permissions/company_database_registries queries)
+  - 8 previously-failing tests should pass (tileflow_permissions/company_database_registries queries)
   - No data migration required (tables are empty after creation)
   - Permission seeding is handled by seed_cap_master.py and ctrl_seeder.py
   - Platform capability bindings populated by application logic
 
 ⚠️ MEDIUM RISK - Application-Level Validation:
-  - runtime security checks depend on smriti_permissions rows (but table will be empty)
+  - runtime security checks depend on tileflow_permissions rows (but table will be empty)
   - platform capability system requires seeding after migration
   - initial state: tables exist, but contain no data until seeded
 
@@ -87,13 +80,13 @@ From the live production matrix (80 rows, 40 tables × 2 databases):
 
 ### Phase 1: Pre-Execution (NOW)
 ✅ [COMPLETED]
-  1. Create full backup of smritisys and smriti001
+  1. Create full backup of tileflowsys and tileflow001
   2. Verify backup integrity
   3. Document baseline schema version (v1389)
 
 ### Phase 2: Production Execution (AFTER APPROVAL)
 1. SSH/RDP into production database server
-2. Connect to smritisys:
+2. Connect to tileflowsys:
    ```bash
    cd /path/to/backend
    source venv/bin/activate
@@ -102,7 +95,7 @@ From the live production matrix (80 rows, 40 tables × 2 databases):
 3. Verify upgrade:
    ```sql
    SELECT to_regclass('public.company_database_registries');
-   SELECT to_regclass('public.smriti_permissions');
+   SELECT to_regclass('public.tileflow_permissions');
    SELECT to_regclass('public.platform_capabilities');
    ```
 
@@ -152,7 +145,7 @@ This recommendation assumes:
 
 ## NEXT IMMEDIATE ACTION
 Execute: alembic upgrade head
-Against: smritisys (then smriti001 via application multi-db routing)
+Against: tileflowsys (then tileflow001 via application multi-db routing)
 
 ---
 

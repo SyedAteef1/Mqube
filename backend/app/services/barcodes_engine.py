@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import random
 from datetime import datetime, timezone
@@ -36,7 +22,7 @@ from ..schemas.barcodes import (
 
 class BarcodesEngine:
     """
-    Authoritative SMRITI Barcode & Labels Engine (Section 7).
+    Authoritative TILEFLOW Barcode & Labels Engine (Section 7).
     Governs barcode symbologies (EAN13, UPC_A, CODE128, QR_CODE), modulo-10 check digit verification,
     thermal printer layout compilation (ZPL-II, TSPL, ESC/POS), and batch label print history auditing.
     """
@@ -104,7 +90,7 @@ class BarcodesEngine:
             )
 
         elif symbology in ("CODE128", "CODE39", "ITF14", "QR_CODE"):
-            val = req.seed_digits or f"SMRITI-{uuid.uuid4().hex[:8].upper()}"
+            val = req.seed_digits or f"TILEFLOW-{uuid.uuid4().hex[:8].upper()}"
             return BarcodeGenerateResponse(
                 barcode_value=val,
                 symbology=symbology,
@@ -196,7 +182,7 @@ class BarcodesEngine:
 ^PW{dots_w}
 ^LL{dots_h}
 ^LH0,0
-^FO20,15^A0N,22,22^FD{req.brand or 'SMRITI'}^FS
+^FO20,15^A0N,22,22^FD{req.brand or 'TILEFLOW'}^FS
 ^FO20,40^A0N,20,20^FD{req.item_name[:24]}^FS
 ^FO20,65^BY2,3,45^BCN,45,Y,N,N^FD{req.barcode}^FS
 ^FO20,135^A0N,18,18^FDMRP: Rs. {req.mrp:.2f}^FS
@@ -209,7 +195,7 @@ class BarcodesEngine:
 GAP 2 mm, 0 mm
 DIRECTION 1
 CLS
-TEXT 20,15,"2",0,1,1,"{req.brand or 'SMRITI'}"
+TEXT 20,15,"2",0,1,1,"{req.brand or 'TILEFLOW'}"
 TEXT 20,40,"2",0,1,1,"{req.item_name[:24]}"
 BARCODE 20,65,"128",45,1,0,2,2,"{req.barcode}"
 TEXT 20,135,"2",0,1,1,"MRP: Rs. {req.mrp:.2f}"
@@ -219,7 +205,7 @@ PRINT 1
 
         elif lang == "ESC_POS":
             # POS ESC/POS receipt barcode stream
-            compiled = f"\x1b@\x1ba\x01{req.brand or 'SMRITI'}\n{req.item_name[:20]}\n\x1dk\x04{req.barcode}\x00\nRs. {req.selling_price:.2f}\n\x1dV\x00"
+            compiled = f"\x1b@\x1ba\x01{req.brand or 'TILEFLOW'}\n{req.item_name[:20]}\n\x1dk\x04{req.barcode}\x00\nRs. {req.selling_price:.2f}\n\x1dV\x00"
 
         else:
             raise ValueError(f"Unsupported printer language '{req.printer_language}'")

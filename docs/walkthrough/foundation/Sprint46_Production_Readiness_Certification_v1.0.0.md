@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.62.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Sprint 46 — Production Readiness & Final Frozen Blueprint Certification
@@ -17,14 +16,14 @@
 **Topic:** Production Readiness Certification, Clean-Slate Ephemeral Tenant Provisioning, Forward Migration Lock, Tenant Security Routing, and Master Master-Regression Execution.  
 **Version:** `v1.0.0`  
 **Date:** 2026-08-25  
-**Author:** Jawahar Ramkripal Mallah  
+**Author:** Syed Ateef  
 **Classification:** Internal  
 
 ---
 
 ## 1. Purpose
 
-Sprint 46 delivers Section 13 (Production Readiness and Certification) and completes the final delivery milestone of the **SMRITI Enterprise Business Operating Platform Architecture Frozen Blueprint v1.0**. This milestone validates that a completely new tenant can be provisioned from a clean-slate state using the real Alembic migration chain, enforces strict tenant security and header routing, verifies 29 production readiness criteria across all architectural layers, executes the master regression test battery across all 13 Blueprint Sections, and produces an authoritative Table Ownership Matrix and Runtime Write Audit.
+Sprint 46 delivers Section 13 (Production Readiness and Certification) and completes the final delivery milestone of the **TILEFLOW Enterprise Business Operating Platform Architecture Frozen Blueprint v1.0**. This milestone validates that a completely new tenant can be provisioned from a clean-slate state using the real Alembic migration chain, enforces strict tenant security and header routing, verifies 29 production readiness criteria across all architectural layers, executes the master regression test battery across all 13 Blueprint Sections, and produces an authoritative Table Ownership Matrix and Runtime Write Audit.
 
 ---
 
@@ -35,8 +34,8 @@ Sprint 46 delivers Section 13 (Production Readiness and Certification) and compl
 - **Tenant Security & Isolation**: Verification of dynamic connection routing, LRU session pool management, `X-Company-ID` / `X-Database-ID` header validation, and fail-closed 403 access denials.
 - **Production Certification Suite**: 29-check automated verification suite covering schema integrity, outbox atomicity, crash recovery, DLQ retries, replay idempotency, eCom reservation concurrency, PSV toggles, blue/green workflow, reconciliation parity, and statutory GST gateways.
 - **Master Platform Regression**: Complete multi-batch regression testing across Control Plane, Reference/Localization Registries, Capabilities, Workspace UI, Governed Logic, Transaction Reproducibility, Master Data, Shared Engines, Distribution, eCommerce, PSV/CGE/PDT, Offline-First Sync, Outbox, Analytics, Compliance, and Production Certification.
-- **Table Ownership Matrix**: Full runtime write audit separating Control Plane (`smritisys`) and Tenant Data Plane (`smritiXXX`).
-- **Static Analysis & Governance**: 0 TypeScript errors (`npx tsc --noEmit`), 0 naming violations (`scripts/smriti_naming_guard.py`), and 100% Rule 11 compliance.
+- **Table Ownership Matrix**: Full runtime write audit separating Control Plane (`tileflowsys`) and Tenant Data Plane (`tileflowXXX`).
+- **Static Analysis & Governance**: 0 TypeScript errors (`npx tsc --noEmit`), 0 naming violations (`scripts/tileflow_naming_guard.py`), and 100% Rule 11 compliance.
 
 ---
 
@@ -63,9 +62,9 @@ Sprint 46 delivers Section 13 (Production Readiness and Certification) and compl
 
 ## 5. Architecture Decisions
 
-- **Ephemeral Harness Isolation**: Ephemeral test databases are dynamically created (`smritiXXX_test`) and destroyed via raw PostgreSQL administrative connections, ensuring real-world validation of Alembic migration head `v1375_backfill_sales_return_cust` without polluting existing tenant environments.
+- **Ephemeral Harness Isolation**: Ephemeral test databases are dynamically created (`tileflowXXX_test`) and destroyed via raw PostgreSQL administrative connections, ensuring real-world validation of Alembic migration head `v1375_backfill_sales_return_cust` without polluting existing tenant environments.
 - **Fail-Closed Header & Tenant Security**: The multi-tenant routing middleware strictly requires valid authentication tokens and matching tenant header scopes; any cross-company database query attempt is intercepted and blocked with HTTP 403 Forbidden.
-- **Two-Plane Separation of Concerns**: Complete separation between Control Plane (`smritisys` metadata, reference registries, capability bundles, UI layouts) and Tenant Data Planes (`smriti001`, `smriti002`, `smritiXXX` transactional ledgers, inventory, master records, and partitioned daily analytical facts).
+- **Two-Plane Separation of Concerns**: Complete separation between Control Plane (`tileflowsys` metadata, reference registries, capability bundles, UI layouts) and Tenant Data Planes (`tileflow001`, `tileflow002`, `tileflowXXX` transactional ledgers, inventory, master records, and partitioned daily analytical facts).
 
 ---
 
@@ -113,7 +112,7 @@ Sprint 46 delivers Section 13 (Production Readiness and Certification) and compl
 
 7. **Static Code Analysis**:
    - `npx tsc --noEmit`: `0 errors (Clean build)`.
-   - `python scripts/smriti_naming_guard.py`: `0 naming violations` across `src/`, `backend/`, `scripts/`.
+   - `python scripts/tileflow_naming_guard.py`: `0 naming violations` across `src/`, `backend/`, `scripts/`.
 
 ---
 
@@ -158,4 +157,4 @@ Evidence Level: A
 
 ## 13. Related RFCs
 
-- `RFC-SMRITI-2026-08-PROD-CERT` — Production Readiness Certification and Blueprint Completion.
+- `RFC-TILEFLOW-2026-08-PROD-CERT` — Production Readiness Certification and Blueprint Completion.

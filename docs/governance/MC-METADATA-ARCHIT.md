@@ -10,7 +10,7 @@ Derive canonical metadata architecture decisions from the Phase 1 evidence ledge
 
 ## Inputs
 - `docs/governance/METADATA.md`
-- `docs/architecture/decisions/ADR-002-SMRITI-MET.md`
+- `docs/architecture/decisions/ADR-002-TILEFLOW-MET.md`
 
 ## Process
 1. Verify the ledger exists and is internally consistent.
@@ -20,7 +20,7 @@ Derive canonical metadata architecture decisions from the Phase 1 evidence ledge
 5. Evaluate WorkflowEngine evidence and make a canonical/non-canonical disposition.
 
 ## Expected deliverables
-- A stable architecture decision document under `docs/architecture/decisions/ADR-002-SMRITI-MET.md`.
+- A stable architecture decision document under `docs/architecture/decisions/ADR-002-TILEFLOW-MET.md`.
 - A clear linkage from Phase 1 evidence to Phase 2 decisions.
 
 ## Notes

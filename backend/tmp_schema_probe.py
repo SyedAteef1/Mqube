@@ -4,7 +4,7 @@ HOST='localhost'
 PORT=5432
 USER='postgres'
 PASSWORD='postgres'
-DB='smritisys'
+DB='tileflowsys'
 
 conn = psycopg2.connect(dbname=DB, user=USER, password=PASSWORD, host=HOST, port=PORT)
 cur = conn.cursor()

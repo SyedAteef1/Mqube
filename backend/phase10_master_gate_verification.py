@@ -6,7 +6,7 @@ Final comprehensive verification before MIGRATION INTEGRITY sign-off
 Gates:
 - G01: Fresh database canonical baseline established ✅
 - G02: All ORM models have corresponding alembic migrations ✅
-- G03: Alembic parity: smritisys == smriti001 == v1384 ✅
+- G03: Alembic parity: tileflowsys == tileflow001 == v1384 ✅
 - G04: Canonical tables present in all databases ✅
 - G05: Company code validation CHECK constraint applied ✅
 - G06: Frontend tests pass (547/547) and build succeeds ✅
@@ -22,7 +22,7 @@ from datetime import datetime
 
 async def verify_database_state():
     """Verify current database state."""
-    databases = ['smritisys', 'smriti001', 'smriti_diag_fresh']
+    databases = ['tileflowsys', 'tileflow001', 'tileflow_diag_fresh']
     results = {}
     
     for db_name in databases:
@@ -67,7 +67,7 @@ def print_gate_report():
     
     # Gate checklist
     gates = [
-        ("G01", "Fresh database canonical baseline (smriti_diag_fresh, 183 tables, v1384)", "✅ VERIFIED"),
+        ("G01", "Fresh database canonical baseline (tileflow_diag_fresh, 183 tables, v1384)", "✅ VERIFIED"),
         ("G02", "All ORM models have alembic migrations (6 recovery tables v1383)", "✅ VERIFIED"),
         ("G03", "Alembic parity across databases (all at v1384_company_code_constraint)", "✅ VERIFIED"),
         ("G04", "Canonical tables present (critical business tables in place)", "✅ VERIFIED"),
@@ -90,9 +90,9 @@ def print_gate_report():
     print()
     
     print("DATABASE STATE:")
-    print("  - smritisys: v1384_company_code_constraint, 214 tables")
-    print("  - smriti001: v1384_company_code_constraint, 211 tables")
-    print("  - smriti_diag_fresh: v1384_company_code_constraint, 183 tables (canonical)")
+    print("  - tileflowsys: v1384_company_code_constraint, 214 tables")
+    print("  - tileflow001: v1384_company_code_constraint, 211 tables")
+    print("  - tileflow_diag_fresh: v1384_company_code_constraint, 183 tables (canonical)")
     print()
     
     print("MIGRATION RECOVERY:")
@@ -117,7 +117,7 @@ def print_gate_report():
     
     print("SCHEMA DRIFT RESOLUTION:")
     print("  - Issue: Recovery tables existed but not recorded in alembic_version")
-    print("  - Solution: Stamped v1384 for smritisys and smriti001")
+    print("  - Solution: Stamped v1384 for tileflowsys and tileflow001")
     print("  - Result: Full parity restored")
     print()
     

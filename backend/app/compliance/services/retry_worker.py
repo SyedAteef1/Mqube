@@ -1,20 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Government Integration Platform (SGIP) — Transactional Outbox Retry Worker.
-Enforces Invariant 9: Resilient network retry with exponential backoff and circuit breaker failover.
-"""
-
 from datetime import datetime, timedelta, timezone
 from typing import Dict, Any, List
 from sqlalchemy import select, update

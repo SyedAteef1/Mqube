@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-19
- * Modified     : 2026-08-19
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
 // Mock localStorage for node test environment
@@ -36,12 +22,12 @@ import {
   addCustomAlias, 
   getCustomAliases, 
   removeCustomAlias,
-  SMRITI_ITEM_MASTER_FIELDS 
+  TILEFLOW_ITEM_MASTER_FIELDS 
 } from "../lib/headerMapping/HeaderAliasRegistry";
 import { HeaderMappingEngine } from "../lib/headerMapping/HeaderMappingEngine";
 
 describe("Multi-Target Column Mapping & Tiered Warning Engine", () => {
-  const engine = new HeaderMappingEngine(SMRITI_ITEM_MASTER_FIELDS);
+  const engine = new HeaderMappingEngine(TILEFLOW_ITEM_MASTER_FIELDS);
 
   beforeEach(() => {
     mockLocalStorage.clear();

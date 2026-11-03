@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Menu Governance Migration & Deployment Plan v3.0 (Hardened Baseline)
+# TILEFLOW Menu Governance Migration & Deployment Plan v3.0 (Hardened Baseline)
 
 ## 1. Objective
-Establish a hardened, zero-data-loss, fail-closed database migration and deployment pipeline to apply the approved **SMRITI Menu Governance — Target Navigation Model v1.0** to PostgreSQL table `smriti_menus` in `smritisys` while preserving audit integrity in `smriti_audit_log`.
+Establish a hardened, zero-data-loss, fail-closed database migration and deployment pipeline to apply the approved **TILEFLOW Menu Governance — Target Navigation Model v1.0** to PostgreSQL table `tileflow_menus` in `tileflowsys` while preserving audit integrity in `tileflow_audit_log`.
 
 ## 2. Business Motivation
 Reorganize the 34 Control Plane menu records into 8 clean navigation groups, establish parent-child workspace hierarchies, and enforce workspace access permissions without mutating primary key menu IDs or breaking backend API authorization boundaries.
@@ -24,14 +23,14 @@ Reorganize the 34 Control Plane menu records into 8 clean navigation groups, est
 - **Immutable Menu ID Protection**: Migration requires exact set of 34 expected IDs from `TARGET_MODEL_V1`. Any missing, unexpected, or duplicate ID halts execution immediately.
 - **Live Database Drift Protection**: Live DB rows are compared against expected baseline before generating UPDATE statements. Any unacknowledged drift halts execution.
 - **Human-Readable Dry Run**: `--dry-run` outputs both a detailed per-menu Human-Readable Decision Diff and a summary SQL Diff.
-- **Timestamped Immutable Backup**: Pre-migration backup captures complete `smriti_menus` table state, schema metadata, constraints, row count, AND latest `sha256_hash` and `prev_hash` from `smriti_audit_log`.
+- **Timestamped Immutable Backup**: Pre-migration backup captures complete `tileflow_menus` table state, schema metadata, constraints, row count, AND latest `sha256_hash` and `prev_hash` from `tileflow_audit_log`.
 - **Single Transactional Apply**: All operations execute inside a single PostgreSQL transaction (`BEGIN ... COMMIT`) with automatic `ROLLBACK` on any error.
-- **Audit Hash Integrity**: Structural edits log change entries to `smriti_audit_log` with `sha256_hash` and `prev_hash` chain preservation.
+- **Audit Hash Integrity**: Structural edits log change entries to `tileflow_audit_log` with `sha256_hash` and `prev_hash` chain preservation.
 - **Hardened Audited Rollback**: `scripts/rollback_menu.py` performs transactional rollback by restoring pre-migration values AND writing audit entries with `change_type = 'ROLLBACK'`.
 - **Protected Defaults Preserved**: `menu-dashboard`, `menu-inventory`, `menu-sales`, `menu-reports` identities remain immutable.
 
 ## 4. Current State
-- `smriti_menus` contains 34 active records (0 inactive, 34 root-level, 0 children).
+- `tileflow_menus` contains 34 active records (0 inactive, 34 root-level, 0 children).
 - All 34 records currently have `tenant_id=NULL`, `company_id=NULL`, `branch_id=NULL` (Global scope).
 - 4 default system rows preserved (`menu-dashboard`, `menu-inventory`, `menu-sales`, `menu-reports`).
 
@@ -41,16 +40,16 @@ Reorganize the 34 Control Plane menu records into 8 clean navigation groups, est
 - Workspace access permissions explicitly bound (`POS.WORKSPACE.ACCESS`, `INVENTORY.WORKSPACE.ACCESS`, etc.).
 
 ## 6. Architecture Impact
-- Reuses existing Control Plane tables `smriti_menus` and `smriti_audit_log` (Zero duplicate tables).
+- Reuses existing Control Plane tables `tileflow_menus` and `tileflow_audit_log` (Zero duplicate tables).
 - Decouples menu visibility from backend API authorization guards.
 - Preserves all 34 primary key menu IDs (`menu-dashboard`, `menu-pos`, `menu-sales`, etc.).
 
 ## 7. Proposed Design
 Controlled dry-run and execution pipeline via `scripts/migr_menu_gov.py`:
-1. **Pre-migration Backup**: Exports database state snapshot to `scratch/backups/smriti_menus_backup_YYYYMMDD_HHMMSS.json`.
+1. **Pre-migration Backup**: Exports database state snapshot to `scratch/backups/tileflow_menus_backup_YYYYMMDD_HHMMSS.json`.
 2. **Dry-Run Diff**: Generates exact SQL update statements and prints proposed human decision diff.
 3. **Transactional Apply**: Executes updates inside a single PostgreSQL transaction (`BEGIN ... COMMIT`).
-4. **Audit Generation**: Writes audit log entries to `smriti_audit_log` with SHA-256 hashes.
+4. **Audit Generation**: Writes audit log entries to `tileflow_audit_log` with SHA-256 hashes.
 5. **Post-migration Verification**: Asserts 34 total records remain active, 4 protected rows preserved, and parent-child parent_id links valid.
 
 ## 8. Files Created
@@ -63,8 +62,8 @@ Controlled dry-run and execution pipeline via `scripts/migr_menu_gov.py`:
 - `docs/walkthrough/README.md`
 
 ## 10. Dependencies
-- PostgreSQL `smritisys`
-- `smriti_menus` and `smriti_audit_log` tables
+- PostgreSQL `tileflowsys`
+- `tileflow_menus` and `tileflow_audit_log` tables
 - `psycopg2` Python client
 
 ## 11. Risks & Fail-Closed Safeguards
@@ -72,7 +71,7 @@ Controlled dry-run and execution pipeline via `scripts/migr_menu_gov.py`:
 - *Mitigation*: Fail-closed validation halts execution before any mutation if drift or missing IDs are detected.
 
 ## 12. Rollback Strategy
-Hardened transactional rollback script `scripts/rollback_menu.py` restores pre-migration snapshot values and logs explicit `change_type = 'ROLLBACK'` audit records to `smriti_audit_log`.
+Hardened transactional rollback script `scripts/rollback_menu.py` restores pre-migration snapshot values and logs explicit `change_type = 'ROLLBACK'` audit records to `tileflow_audit_log`.
 
 ## 13. Verification Plan
 - `python scripts/verify_menu_migr.py` (Exact 34 IDs, protected defaults, 0 orphans).

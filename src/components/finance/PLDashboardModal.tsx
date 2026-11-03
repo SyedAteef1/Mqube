@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.102.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -52,7 +51,7 @@ const METRIC_COLORS = {
   neutral:  "text-slate-300",
 };
 
-function fmt(n: number) { return `â‚¹${Math.abs(n).toLocaleString("en-IN")}`; }
+function fmt(n: number) { return `₹${Math.abs(n).toLocaleString("en-IN")}`; }
 
 export const PLDashboardModal: React.FC<PLDashboardModalProps> = ({ isOpen, onClose }) => {
   const [selectedBranch, setSelectedBranch] = useState(BRANCHES[0]);
@@ -167,7 +166,7 @@ export const PLDashboardModal: React.FC<PLDashboardModalProps> = ({ isOpen, onCl
             {/* P&L waterfall */}
             <div className="bg-slate-950/40 border border-slate-800 rounded-xl overflow-hidden text-xs">
               <div className="px-4 py-2 border-b border-slate-800 bg-slate-950/60">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Profit & Loss Statement â€” {report.periodLabel} Â· {report.branchCode}</p>
+                <p className="text-[10px] font-bold uppercase tracking-wider text-slate-500">Profit & Loss Statement — {report.periodLabel} Â· {report.branchCode}</p>
               </div>
               <div className="divide-y divide-slate-800/40">
                 {report.plLines.map((line, i) => {
@@ -256,7 +255,7 @@ export const PLDashboardModal: React.FC<PLDashboardModalProps> = ({ isOpen, onCl
 
         {activeTab === "COMPARE" && (
           <div className="flex-1 overflow-y-auto p-5 space-y-3">
-            <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Branch Ranking â€” {selectedPeriod} (sorted by net profit)</p>
+            <p className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Branch Ranking — {selectedPeriod} (sorted by net profit)</p>
             {compareReports.map((r, i) => (
               <div key={r.branchCode} className="bg-slate-800/30 border border-slate-700/60 rounded-xl p-4">
                 <div className="flex items-center justify-between mb-3">

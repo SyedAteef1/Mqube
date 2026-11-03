@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.95.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 export type ShiftStatus = "SCHEDULED" | "CLOCKED_IN" | "ON_BREAK" | "CLOCKED_OUT" | "ABSENT" | "HALF_DAY";
 export type CommissionTier = "BRONZE" | "SILVER" | "GOLD" | "PLATINUM";
 
@@ -77,7 +63,6 @@ export interface CommissionBreakdown {
   commissionAmt: number;
 }
 
-/** Tier commission rates */
 export const COMMISSION_TIERS: Record<CommissionTier, {
   rate: number;               // base rate %
   threshold: number;          // sales value above which incentive kicks in (INR)

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal
@@ -38,7 +24,7 @@ from ..schemas.approval import (
 
 class ApprovalEngine:
     """
-    Authoritative SMRITI Approval Matrix Engine (Section 7).
+    Authoritative TILEFLOW Approval Matrix Engine (Section 7).
     Governs multi-tier threshold policies, transaction enforcement gates,
     role-based authorization checks, escalation workflows, and immutable decision audit trails.
     """

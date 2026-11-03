@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.42.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 from typing import List, Optional, Dict, Any, Set
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -24,15 +10,15 @@ from ..models.capability_template import (
     TenantCapabilityBinding,
 )
 from ..models.ui_control_plane import (
-    SmritiTheme,
-    SmritiThemeVariant,
-    SmritiWorkspaceProfile,
+    TileFlowTheme,
+    TileFlowThemeVariant,
+    TileFlowWorkspaceProfile,
     ScreenDefinition,
     FieldDefinition,
     ActionDefinition,
     IconRegistry,
 )
-from ..models.menu import SmritiMenu
+from ..models.menu import TileFlowMenu
 from ..models.auth import User
 
 
@@ -103,9 +89,9 @@ class WorkspaceUIRegistryService:
             "SYSADMIN": "PROF_SYSADMIN",
         }
         prof_code = role_to_code.get(role_str, "PROF_SYSADMIN")
-        stmt_prof = select(SmritiWorkspaceProfile).where(
-            SmritiWorkspaceProfile.code == prof_code,
-            SmritiWorkspaceProfile.is_active == True,
+        stmt_prof = select(TileFlowWorkspaceProfile).where(
+            TileFlowWorkspaceProfile.code == prof_code,
+            TileFlowWorkspaceProfile.is_active == True,
         )
         prof = (await db.execute(stmt_prof)).scalars().first()
 
@@ -119,7 +105,7 @@ class WorkspaceUIRegistryService:
         return {
             "template_code": tpl.code if tpl else target_template_code,
             "persona": prof_code,
-            "theme_code": prof.theme if prof else "theme-smriti-default",
+            "theme_code": prof.theme if prof else "theme-tileflow-default",
             "active_capabilities": sorted(list(active_caps)),
             "widgets": default_widgets,
             "shortcuts": shortcuts,
@@ -135,7 +121,7 @@ class WorkspaceUIRegistryService:
     ) -> List[Dict[str, Any]]:
         """
         Resolves the hierarchical navigation tree for the current user:
-        1. Queries smriti_menus table.
+        1. Queries tileflow_menus table.
         2. Filters out items where user role lacks VIEW permission.
         3. Filters out items whose required_capability is NOT enabled for the tenant.
         4. Prunes empty parent folders.
@@ -155,17 +141,17 @@ class WorkspaceUIRegistryService:
         active_caps.update({"INVENTORY", "SALES", "CRM", "ACCOUNTING", "REPORTING", "SEARCH", "DOCUMENT", "AUDIT"})
 
         # Fetch all active menus
-        stmt_menus = select(SmritiMenu).where(
-            SmritiMenu.is_active == True,
-            SmritiMenu.is_deleted == False,
-        ).order_by(SmritiMenu.sequence.asc())
+        stmt_menus = select(TileFlowMenu).where(
+            TileFlowMenu.is_active == True,
+            TileFlowMenu.is_deleted == False,
+        ).order_by(TileFlowMenu.sequence.asc())
         menus = (await db.execute(stmt_menus)).scalars().all()
 
         # Build mapping and tree
         admin_roles = {"SYSADMIN", "SUPERADMIN"}
         manager_roles = {"SYSADMIN", "SUPERADMIN", "STORE_MANAGER", "MANAGER"}
 
-        def is_accessible(menu: SmritiMenu) -> bool:
+        def is_accessible(menu: TileFlowMenu) -> bool:
             # 1. Capability gating: if required_capability is set and not active in tenant
             if menu.module and menu.module.upper() in ["WMS", "DISTRIBUTION", "ECOM", "PDT", "CGE", "APPROVAL"]:
                 if menu.module.upper() not in active_caps:
@@ -229,22 +215,22 @@ class WorkspaceUIRegistryService:
         cls, db: AsyncSession, theme_id: Optional[str] = None, variant_name: str = "dark"
     ) -> Dict[str, Any]:
         """
-        Resolves design tokens (colors, typography, radii, shadows) from smriti_themes.
+        Resolves design tokens (colors, typography, radii, shadows) from tileflow_themes.
         """
         stmt = (
-            select(SmritiTheme)
-            .options(selectinload(SmritiTheme.variants))
-            .where(SmritiTheme.is_active == True)
+            select(TileFlowTheme)
+            .options(selectinload(TileFlowTheme.variants))
+            .where(TileFlowTheme.is_active == True)
         )
         if theme_id:
-            stmt = stmt.where(SmritiTheme.id == theme_id)
+            stmt = stmt.where(TileFlowTheme.id == theme_id)
         theme = (await db.execute(stmt)).scalars().first()
 
         if not theme:
             # Fallback theme definition
             return {
-                "theme_id": "theme-smriti-default",
-                "theme_name": "SMRITI Enterprise Horizon",
+                "theme_id": "theme-tileflow-default",
+                "theme_name": "TILEFLOW Enterprise Horizon",
                 "variant": variant_name,
                 "font_heading": "Space Grotesk, sans-serif",
                 "font_body": "Inter, sans-serif",

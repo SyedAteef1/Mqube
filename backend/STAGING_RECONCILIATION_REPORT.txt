@@ -1,5 +1,5 @@
 ================================================================================
-SMRITI BROWNFIELD RECONCILIATION — STAGING VALIDATION REPORT
+TILEFLOW BROWNFIELD RECONCILIATION — STAGING VALIDATION REPORT
 Generated: 2026-08-30T12:58:04.440308
 ================================================================================
 
@@ -26,11 +26,11 @@ PHASE_1_VERIFY
 ----------------------------------------
 {
   "clones": {
-    "smritisys_stage": {
+    "tileflowsys_stage": {
       "exists": true,
       "size_mb": "34.5"
     },
-    "smriti001_stage": {
+    "tileflow001_stage": {
       "exists": true,
       "size_mb": "54.7"
     }
@@ -42,14 +42,14 @@ PHASE_2_INSPECT
 ----------------------------------------
 {
   "databases": {
-    "smritisys_stage": {
+    "tileflowsys_stage": {
       "table_count": 213,
       "alembic_version": "v1384_company_code_constraint",
       "canonical_present": 29,
       "canonical_missing": 11,
       "canonical_parity": "DRIFT"
     },
-    "smriti001_stage": {
+    "tileflow001_stage": {
       "table_count": 210,
       "alembic_version": "v1384_company_code_constraint",
       "canonical_present": 34,
@@ -132,7 +132,7 @@ ______________________ test_wms_service_
 7. backend/app/tests/test_permission_schema.py stdout:
 F                                                                        [100%]
 ================================== FAILURES ===================================
-___________ test_smriti_permissions_sche
+___________ test_tileflow_permissions_sche
 8. backend/app/tests/test_bootstrap_company_registration.py stdout:
 F                                                                        [100%]
 ================================== FAILURES ===================================

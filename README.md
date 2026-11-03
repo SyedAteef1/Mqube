@@ -1,49 +1,26 @@
-<!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
 
-  Founders
 
-  * Pushpa Devi Jawahar Mallah
-    * Founder & Chairperson
-    * Phone: +91 9324117007
-    * Email: founder@aitdl.com
+# TILEFLOW Retail OS (React + FastAPI Full Stack)
 
-  * Jawahar Ramkripal Mallah
-    * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
-
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-  * Version    : 3.16.0
-  * Created    : 2026-07-10
-  * Modified   : 2026-08-19
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
--->
-
-# SMRITI Retail OS (React + FastAPI Full Stack)
-
-This repository contains the React frontend and FastAPI backend for **SMRITI Retail OS**, built as an enterprise-grade multi-company retail operating system.
+This repository contains the React frontend and FastAPI backend for **TILEFLOW Retail OS**, built as an enterprise-grade multi-company retail operating system.
 
 ---
 
 ## 1. Canonical Multi-Company Architecture
 
-SMRITI Retail OS enforces strict physical multi-database tenant isolation:
+TILEFLOW Retail OS enforces strict physical multi-database tenant isolation:
 
 ```text
-                    SMRITI RETAIL OS
+                    TILEFLOW RETAIL OS
                            │
-                      smritisys
+                      tileflowsys
                     CONTROL PLANE
                            │
                  CompanyDatabaseResolver
                            │
           ┌────────────────┼────────────────┐
           ▼                ▼                ▼
-      smriti001        smriti002        smriti00N
+      tileflow001        tileflow002        tileflow00N
       Company 001      Company 002      Company N
           │                │                │
           ├─ Sales         ├─ Sales        ├─ Sales
@@ -56,12 +33,12 @@ SMRITI Retail OS enforces strict physical multi-database tenant isolation:
           └─ PSV           └─ PSV          └─ PSV
 ```
 
-- **`smritisys` (Control Plane):** Identity, auth, RBAC roles/permissions, company/branch registries, database routing metadata (`company_database_registries`), immutable menus (34 items), central static masters, and system audit logs. Zero operational transactional writes.
-- **`smriti<Code>` (Company Operational DB):** Dedicated physical database per registered company (e.g. `smriti001`, `smriti002`). Hosts all operational transactions (sales invoices, purchase orders, inventory stock, customer ledgers).
+- **`tileflowsys` (Control Plane):** Identity, auth, RBAC roles/permissions, company/branch registries, database routing metadata (`company_database_registries`), immutable menus (34 items), central static masters, and system audit logs. Zero operational transactional writes.
+- **`tileflow<Code>` (Company Operational DB):** Dedicated physical database per registered company (e.g. `tileflow001`, `tileflow002`). Hosts all operational transactions (sales invoices, purchase orders, inventory stock, customer ledgers).
 - **`CompanyDatabaseResolver`:** Authoritative gateway for dynamically resolving and binding database sessions.
-- **`Party Stock Visibility (PSV)`:** 100% Company-local shadow inventory and intelligence layer inside each Company DB (`smriti<Code>`). Projections do not mutate core stock balances.
+- **`Party Stock Visibility (PSV)`:** 100% Company-local shadow inventory and intelligence layer inside each Company DB (`tileflow<Code>`). Projections do not mutate core stock balances.
 
-The frozen blueprint is tracked separately from implementation progress. See [SMRITI Platform Implementation Status](docs/architecture/SMRITI_PLATFORM_IMPLEMENTATION_STATUS.md) for the current verified, partial, and pending areas.
+The frozen blueprint is tracked separately from implementation progress. See [TILEFLOW Platform Implementation Status](docs/architecture/TILEFLOW_PLATFORM_IMPLEMENTATION_STATUS.md) for the current verified, partial, and pending areas.
 - **`eCommerce & Omnichannel`:** Core capability channel feeding the company operational DB via unified commerce flows.
 
 ---
@@ -110,8 +87,8 @@ npm run dev
 - CI / tests: may use `.env.example` when explicitly running the test environment.
 
 ## Architecture Note
-This configuration behavior is an implementation detail. It does not modify the metadata architecture defined in `ADR-002-SMRITI-METADATA-ARCHITECTURE` and therefore does not require a superseding ADR.
+This configuration behavior is an implementation detail. It does not modify the metadata architecture defined in `ADR-002-TILEFLOW-METADATA-ARCHITECTURE` and therefore does not require a superseding ADR.
 Future changes affecting metadata ownership, runtime metadata, or architecture must follow the governance process documented in `docs/governance/GOVERNANCE_FREEZE_CHECKLIST.md`.
 
 ## Note
-This repository now contains a full-stack React frontend and FastAPI backend for SMRITI Retail OS v5.0.
+This repository now contains a full-stack React frontend and FastAPI backend for TILEFLOW Retail OS v5.0.

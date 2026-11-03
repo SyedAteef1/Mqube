@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.29.0
-Created      : 2026-08-20
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import re
 import time
 from typing import Any, Dict, List, Optional
@@ -157,9 +143,9 @@ async def list_databases(current_user: User = Depends(get_current_user)):
             except Exception:
                 table_cnt = 0
 
-            is_cp = (db_name == "smritisys")
-            is_tenant = db_name.startswith("smriti0") or db_name.startswith("smriti_")
-            is_active = (db_name == "smriti001" or db_name == "smritisys")
+            is_cp = (db_name == "tileflowsys")
+            is_tenant = db_name.startswith("tileflow0") or db_name.startswith("tileflow_")
+            is_active = (db_name == "tileflow001" or db_name == "tileflowsys")
 
             results.append(DatabaseSummary(
                 name=db_name,
@@ -178,7 +164,7 @@ async def list_databases(current_user: User = Depends(get_current_user)):
 
 @router.get("/tables", response_model=List[TableSummary], summary="List Tables in Specified Database")
 async def list_tables(
-    database: str = Query("smriti001", description="Target database name"),
+    database: str = Query("tileflow001", description="Target database name"),
     current_user: User = Depends(get_current_user)
 ):
     """Lists all user tables in the selected database with live row counts and disk usage."""
@@ -233,7 +219,7 @@ async def list_tables(
 @router.get("/tables/{table_name}/schema", response_model=TableSchemaResponse, summary="Get Table Schema and Structure")
 async def get_table_schema(
     table_name: str,
-    database: str = Query("smriti001", description="Target database name"),
+    database: str = Query("tileflow001", description="Target database name"),
     current_user: User = Depends(get_current_user)
 ):
     """Inspects detailed column schema, data types, primary keys, foreign key relations, and indexes."""
@@ -351,7 +337,7 @@ async def get_table_schema(
 @router.get("/tables/{table_name}/data", response_model=TableDataResponse, summary="Browse Paginated Table Records")
 async def get_table_data(
     table_name: str,
-    database: str = Query("smriti001", description="Target database name"),
+    database: str = Query("tileflow001", description="Target database name"),
     page: int = Query(1, ge=1, description="Page number"),
     limit: int = Query(50, ge=1, le=200, description="Page size"),
     search: Optional[str] = Query(None, description="Search keyword across text columns"),
@@ -443,7 +429,7 @@ async def get_table_data(
 
 @router.get("/migrations", response_model=MigrationInfo, summary="Get Database Alembic Migration Status")
 async def get_migrations(
-    database: str = Query("smriti001", description="Target database name"),
+    database: str = Query("tileflow001", description="Target database name"),
     current_user: User = Depends(get_current_user)
 ):
     """Inspects the current Alembic revision in the target database."""
@@ -491,7 +477,7 @@ async def execute_query(
     verify_sysadmin_role(current_user)
 
     raw_query = req.query.strip()
-    database = req.database or "smriti001"
+    database = req.database or "tileflow001"
 
     # Validation: Must start with SELECT or WITH
     normalized = raw_query.upper().strip()

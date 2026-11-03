@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.16.0
- * * Created    : 2026-07-10
- * * Modified   : 2026-08-19
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { apiFetchV1 } from "../../lib/apiFetch.ts";
 import { motion, AnimatePresence } from "motion/react";
@@ -121,7 +96,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
       pinCode: "273209",
       contactPerson: "Pushpa",
       mobile: "9324117007",
-      email: "gida@smritibooks.com"
+      email: "gida@tileflow.in"
     }
   ]);
 
@@ -176,8 +151,8 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
 
   // Step 9: Staff & Security Users
   const [staffList, setStaffList] = useState<StaffUser[]>([
-    { id: "u-1", name: "SMRITI Owner", username: "admin", role: "Owner", email: "support@smritibooks.com" },
-    { id: "u-2", name: "Kishore Kumar", username: "kishore_cashier", role: "Cashier", email: "kishore@smritibooks.com" }
+    { id: "u-1", name: "MQube Owner", username: "admin", role: "Owner", email: "ateef@tileflow.in" },
+    { id: "u-2", name: "Kishore Kumar", username: "kishore_cashier", role: "Cashier", email: "kishore@tileflow.in" }
   ]);
   const [newStaffName, setNewStaffName] = useState("");
   const [newStaffRole, setNewStaffRole] = useState<StaffUser["role"]>("Cashier");
@@ -282,7 +257,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
       name: newStaffName,
       username,
       role: newStaffRole,
-      email: newStaffEmail || `${username}@smritibooks.com`
+      email: newStaffEmail || `${username}@tileflow.in`
     };
     setStaffList([...staffList, newStaff]);
     setNewStaffName("");
@@ -439,12 +414,10 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
     <div className="h-full w-full flex flex-col bg-theme-base select-text overflow-y-auto pb-10">
       {/* Permanent Coding Header Rule Metadata */}
       <div className="hidden">
-        Project    : SMRITI Retail OS
-        Author     : Jawahar Ramkripal Mallah
-        Email      : support@smritibooks.com
-        Websites   : smritibooks.com | erpnbook.com | aitdl.com
+        Project    : MQube Retail OS
+        Author     : Syed Ateef
+        Email      : ateef@tileflow.in
         Version    : 2.1.2
-        Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
       </div>
 
       <AnimatePresence mode="wait">
@@ -458,7 +431,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
               <Check size={32} className="animate-pulse" />
             </div>
             <h2 className="font-display font-bold text-2xl text-theme-body mb-2">
-              SMRITI Retail OS Activated!
+              MQube Activated!
             </h2>
             <p className="text-sm text-theme-muted max-w-md leading-relaxed mb-6">
               Your organization **{businessName}** has been successfully provisioned on the Event Sourcing Engine. Creating stock ledgers, base tax profiles, document serial mappings, and counter terminals...
@@ -509,7 +482,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                       <Building2 size={24} />
                     </div>
                     <div>
-                      <h3 className="font-display font-bold text-lg text-theme-body">Welcome to SMRITI Retail OS</h3>
+                      <h3 className="font-display font-bold text-lg text-theme-body">Welcome to MQube</h3>
                       <p className="text-xs text-theme-muted">Complete the initial configuration to synchronize your retail environment.</p>
                     </div>
                   </div>
@@ -533,8 +506,6 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                     <button
                       onClick={() => {
                         setWelcomeMode("demo");
-                        setBusinessName("AITDL NETWORKS");
-                        setTradeName("AITDL NETWORKS");
                         setGstin("09AAACS1234A1Z1");
                       }}
                       className={`p-5 rounded-2xl border text-left flex flex-col justify-between transition-all ${
@@ -561,7 +532,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                       <FileText className="mb-4 text-teal-400" size={24} />
                       <div>
                         <h4 className="font-bold text-xs uppercase tracking-wide">Restore Backup</h4>
-                        <p className="text-[10px] opacity-75 mt-1 leading-relaxed">Load from a previously exported SMRITI Retail OS backup JSON matrix or ZIP package.</p>
+                        <p className="text-[10px] opacity-75 mt-1 leading-relaxed">Load from a previously exported MQube backup JSON matrix or ZIP package.</p>
                       </div>
                     </button>
                   </div>
@@ -569,7 +540,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                   <div className="p-4 bg-theme-surface-2 border border-theme-divider rounded-xl flex items-start space-x-3 text-xs mt-6">
                     <Lightbulb className="text-amber-400 mt-0.5 shrink-0" size={14} />
                     <p className="text-theme-muted leading-relaxed">
-                      **Standard Indian Practices**: SMRITI pre-configures standard SGST, CGST, and IGST tax templates by default. This setup wizard matches requirements for modern, compliant retail POS billing.
+                      **Standard Indian Practices**: MQube pre-configures standard SGST, CGST, and IGST tax templates by default. This setup wizard matches requirements for modern, compliant retail POS billing.
                     </p>
                   </div>
                 </motion.div>
@@ -586,7 +557,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                         type="text" 
                         value={businessName} 
                         onChange={e => setBusinessName(e.target.value)}
-                        placeholder="e.g. SMRITI Apparels Pvt Ltd"
+                        placeholder="e.g. MQube Apparels Pvt Ltd"
                         className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-3 py-2 text-xs text-theme-body focus:border-blue-500 outline-none"
                       />
                     </div>
@@ -596,7 +567,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                         type="text" 
                         value={tradeName} 
                         onChange={e => setTradeName(e.target.value)}
-                        placeholder="e.g. SMRITI Store"
+                        placeholder="e.g. MQube Store"
                         className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-3 py-2 text-xs text-theme-body focus:border-blue-500 outline-none"
                       />
                     </div>
@@ -805,7 +776,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
                   <div>
                     <h3 className="font-display font-bold text-base text-theme-body">Active System Operations</h3>
-                    <p className="text-[11px] text-theme-muted mt-0.5">Toggle SMRITI modules based on your retail business model.</p>
+                    <p className="text-[11px] text-theme-muted mt-0.5">Toggle MQube modules based on your retail business model.</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 max-h-60 overflow-y-auto pr-1">
@@ -1016,7 +987,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                   </div>
 
                   <p className="text-[11px] text-theme-muted leading-relaxed">
-                    SMRITI dynamically configures store-centric prefix sequences for gapless audit safety. Below is a preview of the series generated automatically:
+                    MQube dynamically configures store-centric prefix sequences for gapless audit safety. Below is a preview of the series generated automatically:
                   </p>
 
                   <div className="border border-theme-divider rounded-xl divide-y divide-theme-divider bg-theme-surface-2 overflow-hidden">
@@ -1086,7 +1057,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
                   <div className="p-4 bg-theme-surface-2 border border-theme-divider rounded-xl text-xs space-y-2">
                     <span className="font-bold text-theme-body block">Generated Checkout Environment</span>
                     <p className="text-theme-muted leading-relaxed text-[11px]">
-                      SMRITI will automatically register an active terminal workspace **Counter A** mapped directly to store **{stores[0]?.name || "Main Outlet"}** with active inventory deduction linked to the **Default Warehouse**.
+                      MQube will automatically register an active terminal workspace **Counter A** mapped directly to store **{stores[0]?.name || "Main Outlet"}** with active inventory deduction linked to the **Default Warehouse**.
                     </p>
                   </div>
                 </motion.div>
@@ -1199,7 +1170,7 @@ export const SetupWizardTab: React.FC<SetupWizardProps> = ({ onComplete }) => {
 
               {currentStep === 11 && (
                 <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4 max-h-72 overflow-y-auto pr-1">
-                  <h3 className="font-display font-bold text-base text-theme-body">Review & Activate SMRITI</h3>
+                  <h3 className="font-display font-bold text-base text-theme-body">Review & Activate MQube</h3>
                   
                   <div className="space-y-3.5 text-xs">
                     <div className="p-3.5 bg-theme-surface-2 border border-theme-divider rounded-xl grid grid-cols-2 gap-2">

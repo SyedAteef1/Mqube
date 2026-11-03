@@ -1,15 +1,14 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-07-16
   Modified     : 2026-07-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sales & Purchase — Strangler-Fig Cleanup v3.21.0
@@ -69,7 +68,6 @@ PurchaseStudioTab had 18 if/else blocks spanning template literals with backtick
 Regex is unreliable for nested template literals. A Python line-by-line state-machine
 correctly detected } else { terminators and skipped entire else branches.
 
-### B. Bug fix classification for InventoryForecastWidget/ApprovalMatrixTab/DrillDownSidePanel
 These three components had raw etch("/api/sales/...") calls with NO feature flag
 guard. Since src/routes/sales.ts and src/routes/purchase.ts were never mounted
 in server.ts, these calls were silently returning 404 and the components were

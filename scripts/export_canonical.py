@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-20
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import json
@@ -181,8 +167,8 @@ def export_invoices_csv(invoices: List[SalesInvoice], out_file: Path):
 
 
 async def main():
-    parser = argparse.ArgumentParser(description="SMRITI Canonical Tax Invoice Multi-Format Exporter")
-    parser.add_argument("--db", default="smriti001", help="Target company database name (default: smriti001)")
+    parser = argparse.ArgumentParser(description="TILEFLOW Canonical Tax Invoice Multi-Format Exporter")
+    parser.add_argument("--db", default="tileflow001", help="Target company database name (default: tileflow001)")
     parser.add_argument("--invoice", help="Specific invoice number to export (e.g. TT2026-2027/18)")
     parser.add_argument("--last", type=int, help="Export last N invoices")
     parser.add_argument("--format", default="pdf", choices=["pdf", "html", "json", "csv", "all"], help="Export format")
@@ -192,7 +178,7 @@ async def main():
     out_path = Path(args.out_dir)
 
     print("================================================================================")
-    print(f"SMRITI CANONICAL INVOICE EXPORTER (DB: {args.db}, Format: {args.format})")
+    print(f"TILEFLOW CANONICAL INVOICE EXPORTER (DB: {args.db}, Format: {args.format})")
     print("================================================================================")
 
     invoices = await fetch_invoices(args.db, invoice_no=args.invoice, last_n=args.last)

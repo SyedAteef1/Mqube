@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.17.0
-Created      : 2026-07-11
-Modified     : 2026-07-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import asyncio
 import os
 import sys
@@ -61,12 +48,12 @@ from app.models.product_identity import BarcodeProvider, IdentityRule, ProductId
 from app.models.role import Role
 from app.models.master_lookup import MasterType, MasterValue
 from app.models.user_assignment import UserCompanyAssignment, UserBranchAssignment, UserStoreAssignment
-# v1368: UI/Experience Engine (smritisys Control Plane)
+# v1368: UI/Experience Engine (tileflowsys Control Plane)
 from app.models.ui_control_plane import (
-    SmritiTheme, SmritiThemeVariant, SmritiWorkspaceProfile,
+    TileFlowTheme, TileFlowThemeVariant, TileFlowWorkspaceProfile,
     ScreenDefinition, FieldDefinition, ActionDefinition, LayoutDefinition, IconRegistry,
 )
-# v1369: Integration Hub Registry (smritisys Control Plane)
+# v1369: Integration Hub Registry (tileflowsys Control Plane)
 from app.models.integration_hub import (
     ProviderRegistry, ConnectorRegistry, IntegrationRegistry,
     IntegrationCredentialReference, IntegrationPolicy, IntegrationVersion,
@@ -80,7 +67,7 @@ target_metadata = Base.metadata
 
 def include_object(object, name, type_, reflected, compare_to):
     """
-    Filter objects so that Alembic only manages the SMRITI tables,
+    Filter objects so that Alembic only manages the TILEFLOW tables,
     preventing drops on other tables.
     """
     if type_ == "table":

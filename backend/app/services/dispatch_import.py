@@ -1,18 +1,3 @@
-"""
-Tattly Threads Dispatch Import & Tax Invoice Lifecycle Service
-
-Authoritative source workbook:
-TT/RIL_Dispatch_09-08-2026.xlsx
-
-Key Architecture Directives:
-1. Excel workbook is strictly READ-ONLY.
-2. SKU rule: Article + Color + Size (e.g. CH-24-G-BLACK-36). Barcode is optional.
-3. Import ≠ Invoice: Importing dispatch records creates/updates Products and Customer Sites only.
-4. Invoice grouping: Grouped by statutory billing dimensions (Customer GSTIN / Place of Supply / SIS Code).
-5. Invoice sequence safety: FY 2026-2027 sequence starts after sequence 17 (TT2026-2027/18).
-6. Target Company DB: smriti_company_tattly_threads.
-"""
-
 import os
 import uuid
 import datetime
@@ -315,7 +300,7 @@ class TattlyDispatchImportService:
     ) -> Dict[str, Any]:
         """
         Idempotently imports Product SKUs (Article-Color-Size) and CustomerAddress site records
-        into smriti_company_tattly_threads.
+        into tileflow_company_tattly_threads.
         Does NOT create or finalize tax invoices.
         """
         audit_res = TattlyDispatchImportService.inspect_dispatch_workbook(file_path)
@@ -587,7 +572,7 @@ class TattlyDispatchImportService:
         file_path: str = DISPATCH_EXCEL_PATH
     ) -> Dict[str, Any]:
         """
-        Creates a real backend-allocated Tax Invoice in smriti_company_tattly_threads.
+        Creates a real backend-allocated Tax Invoice in tileflow_company_tattly_threads.
         Consumes next sequence TT2026-2027/18 (or higher).
         """
         comp_stmt = select(Company).where(Company.company_code == "tattly_threads")

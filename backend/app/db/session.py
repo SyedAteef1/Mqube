@@ -1,29 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.25.0
-* Created    : 2026-07-11
-* Modified   : 2026-08-20
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-* Classification: Internal
-"""
-
 import os
 import re
 import psycopg2
@@ -42,7 +16,7 @@ def _is_testing() -> bool:
     return "pytest" in sys.modules or os.getenv("TESTING") == "1"
 
 # ---------------------------------------------------------------------------
-# Control Plane Engine & Session Factory (smritisys)
+# Control Plane Engine & Session Factory (tileflowsys)
 # ---------------------------------------------------------------------------
 _ctrl_engine_kwargs = {"echo": False, "pool_pre_ping": True}
 if _is_testing():
@@ -66,16 +40,16 @@ async_session = async_sessionmaker(
 # ---------------------------------------------------------------------------
 _company_engines: Dict[str, AsyncEngine] = {}
 _company_sessionmakers: Dict[str, async_sessionmaker] = {}
-_verified_company_databases = {"smritisys"}
+_verified_company_databases = {"tileflowsys"}
 
 # Seed default control plane engine into pool
-_company_engines["smritisys"] = engine
-_company_sessionmakers["smritisys"] = async_session
+_company_engines["tileflowsys"] = engine
+_company_sessionmakers["tileflowsys"] = async_session
 
 
 def _verify_database_is_registered(db_clean: str) -> bool:
     """
-    Authoritative registry check in smritisys.
+    Authoritative registry check in tileflowsys.
     Ensures an engine is created ONLY for registered databases in READY status.
     """
     if db_clean in _verified_company_databases:
@@ -86,7 +60,7 @@ def _verify_database_is_registered(db_clean: str) -> bool:
     password = os.getenv("POSTGRES_PASSWORD") or parsed_url.password or "postgres"
     db_host = os.getenv("POSTGRES_HOST") or parsed_url.hostname or "localhost"
     db_port = int(os.getenv("POSTGRES_PORT") or parsed_url.port or 5432)
-    ctrl_url = f"postgresql://{user}:{password}@{db_host}:{db_port}/smritisys"
+    ctrl_url = f"postgresql://{user}:{password}@{db_host}:{db_port}/tileflowsys"
 
     try:
         conn = psycopg2.connect(ctrl_url)
@@ -109,7 +83,7 @@ def get_company_async_engine(database_name: str, host: str = "localhost", port: 
     """
     Retrieves or creates a cached AsyncEngine for a specific company database.
     Prevents connection pool proliferation and resource exhaustion.
-    Rejects arbitrary or unregistered database names by validating against smritisys registry.
+    Rejects arbitrary or unregistered database names by validating against tileflowsys registry.
     """
     db_clean = str(database_name).strip().lower()
     if not db_clean:
@@ -118,8 +92,8 @@ def get_company_async_engine(database_name: str, host: str = "localhost", port: 
     if db_clean in _company_engines:
         return _company_engines[db_clean]
 
-    if db_clean != "smritisys":
-        pattern = r"^smriti(?!000)(?!sys)[a-z0-9]{3}$"
+    if db_clean != "tileflowsys":
+        pattern = r"^tileflow(?!000)(?!sys)[a-z0-9]{3}$"
         if not re.match(pattern, db_clean):
             raise ValueError(f"Invalid or unauthorized company database name: '{database_name}'")
         if not _verify_database_is_registered(db_clean):
@@ -167,7 +141,7 @@ def get_company_sessionmaker(database_name: str) -> async_sessionmaker:
 async def resolve_company_database_name(company_id_or_code: Optional[str]) -> str:
     """
     Resolves the target company database name from company_id, company_code, or defaults.
-    Queries company_database_registries in smritisys for authoritative routing.
+    Queries company_database_registries in tileflowsys for authoritative routing.
     Fails closed if the company context is missing, unverified, unregistered, or not in READY status.
     """
     if not company_id_or_code or not str(company_id_or_code).strip():
@@ -178,7 +152,7 @@ async def resolve_company_database_name(company_id_or_code: Optional[str]) -> st
 
     candidate = str(company_id_or_code).strip()
 
-    # Query authoritative registry in smritisys
+    # Query authoritative registry in tileflowsys
     async with async_session() as ctrl_session:
         stmt = text("""
             SELECT database_name, status
@@ -199,7 +173,7 @@ async def resolve_company_database_name(company_id_or_code: Optional[str]) -> st
                     detail=f"Company Database for '{candidate}' is in status '{db_status}'. Access denied."
                 )
             clean_db = str(db_name).strip().lower()
-            pattern = r"^smriti(?!(?:000|sys)$)[a-z0-9]{3}$|^smriti(?!0000$)(?!sys0$)[a-z0-9]{4}$"
+            pattern = r"^tileflow(?!(?:000|sys)$)[a-z0-9]{3}$|^tileflow(?!0000$)(?!sys0$)[a-z0-9]{4}$"
             if not re.match(pattern, clean_db):
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
@@ -214,11 +188,11 @@ async def resolve_company_database_name(company_id_or_code: Optional[str]) -> st
 
 
 # ---------------------------------------------------------------------------
-# FastAPI Dependency: get_db (Control Plane Session — smritisys)
+# FastAPI Dependency: get_db (Control Plane Session — tileflowsys)
 # ---------------------------------------------------------------------------
 async def get_db() -> AsyncGenerator[AsyncSession, None]:
     """
-    Provides an AsyncSession to the SMRITI Control Plane database (smritisys).
+    Provides an AsyncSession to the TILEFLOW Control Plane database (tileflowsys).
     """
     async with async_session() as session:
         try:
@@ -244,7 +218,7 @@ async def get_session_by_db_name(database_name: str) -> AsyncGenerator[AsyncSess
 
 async def verify_db_connectivity() -> bool:
     """
-    Verifies connectivity to the primary SMRITI Control Plane database.
+    Verifies connectivity to the primary TILEFLOW Control Plane database.
     """
     try:
         async with async_session() as session:

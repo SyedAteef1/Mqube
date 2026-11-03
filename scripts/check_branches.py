@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 tables = ['sales_invoices', 'products', 'customers', 'customer_groups', 'pos_shifts', 'pos_profiles']

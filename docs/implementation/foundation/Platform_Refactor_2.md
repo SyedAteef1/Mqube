@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Vertical Slice 6 — Capability, Template, and Workspace Resolution
 
 ## 1. Objective
-Establish the governed Business Capability Catalog and Industry Workspace Template resolution engine in the control plane (`smritisys`), with dynamic capability binding and user workspace layout personalization across tenant environments (`smritiXXX`).
+Establish the governed Business Capability Catalog and Industry Workspace Template resolution engine in the control plane (`tileflowsys`), with dynamic capability binding and user workspace layout personalization across tenant environments (`tileflowXXX`).
 
 ---
 
 ## 2. Business Motivation
-SMRITI Retail OS powers diverse verticals—Supermarkets, Fashion & Apparel, Distribution, Pharmacies, and Restaurants. Hardcoding feature sets leads to bloated interfaces and operational friction. Governed capability catalogs and workspace templates enable instant vertical adaptation (e.g. enabling FEFO batching for Pharma/FMCG, Matrix Grid for Apparel, and Table Ordering for F&B) while preserving a single canonical codebase.
+TILEFLOW Retail OS powers diverse verticals—Supermarkets, Fashion & Apparel, Distribution, Pharmacies, and Restaurants. Hardcoding feature sets leads to bloated interfaces and operational friction. Governed capability catalogs and workspace templates enable instant vertical adaptation (e.g. enabling FEFO batching for Pharma/FMCG, Matrix Grid for Apparel, and Table Ordering for F&B) while preserving a single canonical codebase.
 
 ---
 
@@ -53,16 +52,16 @@ SMRITI Retail OS powers diverse verticals—Supermarkets, Fashion & Apparel, Dis
 ## 5. Gap Analysis
 | Dimension | Current State | Target Architecture (Slice 6) |
 | :--- | :--- | :--- |
-| **Capability Governance** | Hardcoded frontend flags | Authoritative `platform_capabilities` in control plane (`smritisys`) |
+| **Capability Governance** | Hardcoded frontend flags | Authoritative `platform_capabilities` in control plane (`tileflowsys`) |
 | **Industry Templates** | Static JSON configs | Governed `workspace_templates` mapping features, menus, and widgets |
 | **Tenant Subscriptions** | Implicit all-enabled | Explicit `tenant_capability_bindings` with activation dates and status |
-| **Control Plane Boundary** | Fragmented | Strict control plane (`smritisys`) catalog + tenant plane (`smritiXXX`) binding |
+| **Control Plane Boundary** | Fragmented | Strict control plane (`tileflowsys`) catalog + tenant plane (`tileflowXXX`) binding |
 
 ---
 
 ## 6. Architecture Impact
 - **Zero Interface Bloat**: A supermarket terminal only loads FMCG/POS widgets; an apparel warehouse loads matrix grids and delivery challans.
-- **Control-Plane Invariant Preserved**: Capability definitions and master templates live in `smritisys`; effective operational assignments live in `smritiXXX`.
+- **Control-Plane Invariant Preserved**: Capability definitions and master templates live in `tileflowsys`; effective operational assignments live in `tileflowXXX`.
 
 ---
 
@@ -92,7 +91,7 @@ SMRITI Retail OS powers diverse verticals—Supermarkets, Fashion & Apparel, Dis
 ---
 
 ## 10. Dependencies
-- Control Plane (`smritisys`) & Tenant Data Planes (`smriti001`, `smriti002`).
+- Control Plane (`tileflowsys`) & Tenant Data Planes (`tileflow001`, `tileflow002`).
 - Milestone 1: Routing Boundary and Security Roles.
 
 ---
@@ -112,7 +111,7 @@ Additive DDL tables. If rollback is required, services fall back to default reta
 
 ## 13. Verification Plan
 1. Seed canonical platform capabilities and industry workspace templates.
-2. Bind specific capabilities (e.g. `BATCH_EXPIRY_FEFO`) to `smriti001`.
+2. Bind specific capabilities (e.g. `BATCH_EXPIRY_FEFO`) to `tileflow001`.
 3. Verify capability queries return only enabled features for the tenant.
 4. Verify user workspace personalization resolves correctly.
 
@@ -132,7 +131,7 @@ Additive DDL tables. If rollback is required, services fall back to default reta
 ---
 
 ## 16. Deployment Plan
-1. Apply DDL to `smritisys` and tenant databases.
+1. Apply DDL to `tileflowsys` and tenant databases.
 2. Deploy backend service models.
 3. Validate automated test execution.
 

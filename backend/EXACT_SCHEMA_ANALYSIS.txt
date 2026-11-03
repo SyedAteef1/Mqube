@@ -1,6 +1,6 @@
 ================================================================================
 EXACT SCHEMA DIFFERENCE ANALYSIS
-Database: smriti001_stage
+Database: tileflow001_stage
 Generated: 2026-08-30T13:10:59.569231
 ================================================================================
 
@@ -14,7 +14,7 @@ Missing CRITICAL tables: 2
 CRITICAL MISSING TABLES (Blocking Regression Tests)
 --------------------------------------------------------------------------------
 
-Table: smriti_permissions
+Table: tileflow_permissions
 Purpose: All permission checks and auth tests
 
 Table: company_database_registries

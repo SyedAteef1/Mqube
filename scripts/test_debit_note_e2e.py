@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, time
 import psycopg2
 from decimal import Decimal
@@ -23,7 +10,7 @@ def test_debit_note_e2e():
     Scenario:
     Issue Debit Note for 2 Units Shortage (Rs 210.00 total) -> Verify History Protection & DB Persistence.
     """
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
 
     sup_code = "SUP-DN-E2E-555"
@@ -41,7 +28,7 @@ def test_debit_note_e2e():
     cur.execute("""
         INSERT INTO suppliers (id, uuid, tenant_id, code, name, gst_number, city, state, is_active)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, true);
-    """, (sup_code, "uuid-sup-dn-e2e", "smritibus_default", sup_code, "E2E Debit Note Supplier Ltd", "27AAACD5555F1Z5", "Mumbai", "Maharashtra"))
+    """, (sup_code, "uuid-sup-dn-e2e", "tileflowbus_default", sup_code, "E2E Debit Note Supplier Ltd", "27AAACD5555F1Z5", "Mumbai", "Maharashtra"))
 
     cur.execute("""
         INSERT INTO purchase_receipts (
@@ -49,7 +36,7 @@ def test_debit_note_e2e():
             status, subtotal, tax_total, grand_total, is_active
         )
         VALUES (%s, %s, %s, %s, %s, %s, 'RECEIVED', 4800.00, 240.00, 5040.00, true);
-    """, (grn_test_id, "uuid-grn-dn-e2e", "smritibus_default", grn_test_id, grn_test_id, sup_code))
+    """, (grn_test_id, "uuid-grn-dn-e2e", "tileflowbus_default", grn_test_id, grn_test_id, sup_code))
     conn.commit()
 
     # 2. Issue Debit Note for 2 Units Shortage (Rs 200.00 base + 5% tax = Rs 210.00)
@@ -60,7 +47,7 @@ def test_debit_note_e2e():
             created_at, modified_at, version
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, 200.00, 10.00, 210.00, 'ISSUED', 'GRN Shortage 2 Units', true, false, NOW(), NOW(), 1);
-    """, (dn_id, "uuid-dn-e2e-555", "smritibus_default", "smritibus_default", dn_no, sup_code, grn_test_id))
+    """, (dn_id, "uuid-dn-e2e-555", "tileflowbus_default", "tileflowbus_default", dn_no, sup_code, grn_test_id))
     conn.commit()
 
     # 3. Verify Debit Note Persistence & History Protection

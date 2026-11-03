@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 PHASE 7: Alembic Parity Verification
-Requirement: Both smritisys and smriti001 must have same current alembic HEAD
+Requirement: Both tileflowsys and tileflow001 must have same current alembic HEAD
 Expected: Both at v1384_company_code_constraint
 """
 
@@ -37,27 +37,27 @@ async def main():
     print("Checking alembic HEAD version in both databases:")
     print()
     
-    smritisys_version = await check_alembic_version('smritisys')
-    smriti001_version = await check_alembic_version('smriti001')
+    tileflowsys_version = await check_alembic_version('tileflowsys')
+    tileflow001_version = await check_alembic_version('tileflow001')
     
-    print(f"  smritisys: {smritisys_version}")
-    print(f"  smriti001: {smriti001_version}")
+    print(f"  tileflowsys: {tileflowsys_version}")
+    print(f"  tileflow001: {tileflow001_version}")
     print()
     
     # Verify
     expected = "v1384_company_code_constraint"
     
-    smritisys_match = smritisys_version == expected
-    smriti001_match = smriti001_version == expected
-    parity_match = smritisys_version == smriti001_version
+    tileflowsys_match = tileflowsys_version == expected
+    tileflow001_match = tileflow001_version == expected
+    parity_match = tileflowsys_version == tileflow001_version
     
     print("GATE VERIFICATION:")
-    print(f"  ✅ smritisys at {expected}: {smritisys_match}")
-    print(f"  ✅ smriti001 at {expected}: {smriti001_match}")
+    print(f"  ✅ tileflowsys at {expected}: {tileflowsys_match}")
+    print(f"  ✅ tileflow001 at {expected}: {tileflow001_match}")
     print(f"  ✅ Both at same HEAD (parity): {parity_match}")
     print()
     
-    if smritisys_match and smriti001_match and parity_match:
+    if tileflowsys_match and tileflow001_match and parity_match:
         print("✅ PHASE 7 PASSED: Both databases at v1384 (PARITY VERIFIED)")
         return 0
     else:

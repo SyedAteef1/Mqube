@@ -10,4 +10,4 @@
 | Sales Studio | ✅ | ✅ | ✅ | 100% |
 | Billing Desk | ✅ | ✅ | ✅ | 100% |
 | CRM & Loyalty | ❌ | ❌ | ❌ | 0% |
-| About SMRITI | ✅ | ✅ | ✅ | 100% |
+| About TILEFLOW | ✅ | ✅ | ✅ | 100% |

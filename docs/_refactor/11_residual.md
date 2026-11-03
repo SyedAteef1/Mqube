@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 4.2.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # 11. Item Master Post-Gap Residual Follow-Ups
 
 **Status:** RESIDUALS_CLOSED  
 **Execution Timestamp:** 2026-08-20 01:29:27 UTC  
-**Target Databases:** `smritisys` (System of Record) and `smriti001` (Operational)
+**Target Databases:** `tileflowsys` (System of Record) and `tileflow001` (Operational)
 
 ---
 
@@ -25,7 +24,7 @@
 | Residual Task | Action Taken | Result / Metric | Status |
 | :--- | :--- | :--- | :---: |
 | **1. Gate Doc Truth** | Updated `ITEM_MASTER.md` | Status: `COMPLETE_VERIFIED`, Gate: `ITEM_MASTER_REFACTOR_APPLIED` | `CLOSED` |
-| **2. Backfill `variant_id`** | Applied Alembic `v1337_backfill_variant_id.py` + sequence | `smritisys`: 0 nulls / `smriti001`: 0 nulls | `CLOSED` |
+| **2. Backfill `variant_id`** | Applied Alembic `v1337_backfill_variant_id.py` + sequence | `tileflowsys`: 0 nulls / `tileflow001`: 0 nulls | `CLOSED` |
 | **3. Identity Coverage** | Ran SQL identity coverage metric | **100.00%** coverage (588/588 active products) | `CLOSED` |
 | **4. `report_flat` Honesty** | Documented products-only catalog projection | No fake sales facts; documented future extension | `CLOSED` |
 | **5. Provision Path** | Verified Alembic linear revision chain | Single linear head: `v1337_backfill_variant_id` | `CLOSED` |
@@ -46,12 +45,12 @@ FROM products;
 ```
 
 **Results:**
-- **`smritisys`**:
+- **`tileflowsys`**:
   - Total: `599`
   - With variant_id: `599`
   - NULL variant_id: `0`
   - Range: `[2, 4215]`
-- **`smriti001`**:
+- **`tileflow001`**:
   - Total: `588`
   - With variant_id: `588` (backfilled from 0)
   - NULL variant_id: `0`
@@ -84,8 +83,8 @@ FROM products;
 ```
 
 **Results:**
-- **`smritisys`**: `588` active / `588` covered $\rightarrow$ **`100.00%`**
-- **`smriti001`**: `588` active / `588` covered $\rightarrow$ **`100.00%`**
+- **`tileflowsys`**: `588` active / `588` covered $\rightarrow$ **`100.00%`**
+- **`tileflow001`**: `588` active / `588` covered $\rightarrow$ **`100.00%`**
 
 ---
 

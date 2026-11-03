@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.9.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Customer Price Group Master & Database Flow Integrity (v6.9.0)
@@ -78,10 +77,10 @@ This walkthrough documents the complete implementation of the **Customer Price G
 ## 9. Verification Results
 * PostgreSQL customer tables verified with 4 Customer Groups and 7 Canonical Customers.
 * Zero broken links, zero console errors, zero orphan invoice foreign key references.
-* Docker multi-container stack (`smriti-api`, `smriti-db`, `smriti-web`) running healthy.
+* Docker multi-container stack (`tileflow-api`, `tileflow-db`, `tileflow-web`) running healthy.
 
 ## 10. Known Limitations
-* Offline customer creation queues in `smriti_pending_customers` local storage; requires reconnect event or background poll to sync to PostgreSQL.
+* Offline customer creation queues in `tileflow_pending_customers` local storage; requires reconnect event or background poll to sync to PostgreSQL.
 
 ## 11. Future Work
 * Integrate WebSocket broadcast for real-time customer balance and credit utilization updates across POS terminals.

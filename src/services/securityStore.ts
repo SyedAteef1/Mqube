@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Security Management Store & State Engine
- */
-
 import { apiFetchV1 } from "../lib/apiFetchV1";
 import {
   MenuItemPermission,
@@ -27,7 +12,7 @@ const MENU_PERMISSION_RESOURCES: Record<string, string> = {
   "menu-dashboard": "dashboard",
   "menu-user-profile": "user_profile",
   "menu-wiki": "wiki_docs",
-  "menu-about-smriti": "about_smriti",
+  "menu-about-tileflow": "about_tileflow",
   "menu-dev-tracker": "dev_tracker",
   "menu-pos": "pos_workspace",
   "menu-sales": "sales_billing",
@@ -85,7 +70,7 @@ export const initialSecurityUsers: SecurityUserEntry[] = [
     name: "Shyam",
     groupId: "002",
     companyCode: "COMP-001",
-    companyName: "Smriti Retail Mumbai",
+    companyName: "MQube Retail Mumbai",
     isLocked: false,
   },
   {
@@ -93,7 +78,7 @@ export const initialSecurityUsers: SecurityUserEntry[] = [
     name: "Priya",
     groupId: "003",
     companyCode: "COMP-001",
-    companyName: "Smriti Retail Mumbai",
+    companyName: "MQube Retail Mumbai",
     isLocked: false,
   },
 ];
@@ -363,17 +348,17 @@ export const getCanonicalMenuTree = (): MenuItemPermission[] => [
     menuName: "Help",
     isAccessible: true,
     children: [
-      { menuId: "help_manual", menuName: "SMRITI Online User Manual", isAccessible: true },
+      { menuId: "help_manual", menuName: "MQube Online User Manual", isAccessible: true },
       { menuId: "help_shortcuts", menuName: "POS Keyboard Shortcuts Guide", isAccessible: true },
       { menuId: "help_diagnostics", menuName: "Network & Hardware Diagnostics", isAccessible: true },
-      { menuId: "help_about", menuName: "About SMRITI Retail OS", isAccessible: true },
+      { menuId: "help_about", menuName: "About MQube", isAccessible: true },
     ],
   },
 ];
 
-const STORAGE_KEY_PASS_CONFIG = "smriti_security_password_config";
-const STORAGE_KEY_HK_CONFIG = "smriti_security_housekeeping_config";
-const STORAGE_KEY_PERMISSIONS = "smriti_security_menu_permissions";
+const STORAGE_KEY_PASS_CONFIG = "tileflow_security_password_config";
+const STORAGE_KEY_HK_CONFIG = "tileflow_security_housekeeping_config";
+const STORAGE_KEY_PERMISSIONS = "tileflow_security_menu_permissions";
 
 function getStorage(): Storage | null {
   if (typeof globalThis !== "undefined" && (globalThis as any).localStorage) {
@@ -411,7 +396,7 @@ export function savePasswordSecurityConfig(config: PasswordSecurityConfig) {
   const storage = getStorage();
   if (storage) {
     storage.setItem(STORAGE_KEY_PASS_CONFIG, JSON.stringify(config));
-    triggerEvent("smriti_security_config_updated");
+    triggerEvent("tileflow_security_config_updated");
   }
 }
 
@@ -433,7 +418,7 @@ export function saveHousekeepingSecurityConfig(config: HousekeepingSecurityConfi
   const storage = getStorage();
   if (storage) {
     storage.setItem(STORAGE_KEY_HK_CONFIG, JSON.stringify(config));
-    triggerEvent("smriti_security_config_updated");
+    triggerEvent("tileflow_security_config_updated");
   }
 }
 
@@ -521,7 +506,7 @@ export function savePermissionsForSubject(
       `${STORAGE_KEY_PERMISSIONS}_${subjectType}_${subjectId}`,
       JSON.stringify(permissions)
     );
-    triggerEvent("smriti_menu_permissions_updated");
+    triggerEvent("tileflow_menu_permissions_updated");
   }
 }
 

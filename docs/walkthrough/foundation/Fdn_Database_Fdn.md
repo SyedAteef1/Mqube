@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.7.0
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Public
 -->
 
 # Foundation: Database Foundation & Domain Layer Walkthrough — v3.7.0
 
 ## 1. Purpose
-This walkthrough documents the design and implementation of SMRITI Retail OS version `3.7.0`, establishing a standardized database foundation and domain services layer without breaking existing schemas or Express APIs.
+This walkthrough documents the design and implementation of TILEFLOW Retail OS version `3.7.0`, establishing a standardized database foundation and domain services layer without breaking existing schemas or Express APIs.
 
 ## 2. Scope
 - Mapped SQLAlchemy `BaseEntity` with audit logs, workspace tenant tags, soft deletion, and model versioning.

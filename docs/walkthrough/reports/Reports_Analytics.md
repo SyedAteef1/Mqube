@@ -1,16 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.28.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Enterprise UI Refactor Walkthrough
 -->
 
@@ -40,7 +38,7 @@ Reports & Analytics views require high legibility for business financial decisio
 
 ## 7. Implementation Summary
 1. **Header Controller**:
-   - Refactored header bar with `SMRITI BI & Reporting Center` title, `Studios v2.2` blue badge, and clean RBAC role swapper selector.
+   - Refactored header bar with `TILEFLOW BI & Reporting Center` title, `Studios v2.2` blue badge, and clean RBAC role swapper selector.
 2. **Sidebar Explorer Studios**:
    - Refactored studio selector list with active selection pill (`bg-theme-selection`, `border-theme-primary`, `text-theme-primary`) and count badges.
 3. **KPI Metrics & Visualization Panel**:

@@ -1,4 +1,4 @@
-# Backup & Disaster Recovery Guide — SMRITI Retail OS
+# Backup & Disaster Recovery Guide — TILEFLOW Retail OS
 
 **Date**: 2026-08-31  
 **Version**: 3.30.0  
@@ -63,21 +63,21 @@ echo "Archived WAL: $2 at $(date)" >> /var/log/pg_archive.log
 
 ### Full Backup Script
 
-**Daily full backup** (`/opt/smriti/scripts/backup-db-full.sh`):
+**Daily full backup** (`/opt/tileflow/scripts/backup-db-full.sh`):
 
 ```bash
 #!/bin/bash
-# Run daily at 2:00 AM UTC via cron: 0 2 * * * /opt/smriti/scripts/backup-db-full.sh
+# Run daily at 2:00 AM UTC via cron: 0 2 * * * /opt/tileflow/scripts/backup-db-full.sh
 
 set -e
 
 # Configuration
 BACKUP_DIR="/backups/postgres/full"
-DB_NAME="smriti001"
-DB_USER="smriti"
+DB_NAME="tileflow001"
+DB_USER="tileflow"
 RETENTION_DAYS=30
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-BACKUP_FILE="$BACKUP_DIR/smriti_full_$TIMESTAMP.dump"
+BACKUP_FILE="$BACKUP_DIR/tileflow_full_$TIMESTAMP.dump"
 
 mkdir -p "$BACKUP_DIR"
 
@@ -90,7 +90,7 @@ pg_dump \
   --format=custom \
   --verbose \
   --file="$BACKUP_FILE" \
-  2>&1 | tee -a /var/log/smriti-backup.log
+  2>&1 | tee -a /var/log/tileflow-backup.log
 
 if [ ${PIPESTATUS[0]} -eq 0 ]; then
     echo "[$(date)] ✅ Backup successful: $BACKUP_FILE"
@@ -108,13 +108,13 @@ if [ ${PIPESTATUS[0]} -eq 0 ]; then
     sha256sum "$BACKUP_FILE" > "${BACKUP_FILE}.sha256"
     
     # Upload to S3
-    aws s3 cp "$BACKUP_FILE" "s3://smriti-backups/postgres/$(date +%Y/%m/%d)/" --storage-class GLACIER
+    aws s3 cp "$BACKUP_FILE" "s3://tileflow-backups/postgres/$(date +%Y/%m/%d)/" --storage-class GLACIER
     
     # Cleanup old backups (keep 30 days)
-    find "$BACKUP_DIR" -name "smriti_full_*.dump.gz" -mtime +$RETENTION_DAYS -delete
+    find "$BACKUP_DIR" -name "tileflow_full_*.dump.gz" -mtime +$RETENTION_DAYS -delete
     
     # Alert success
-    echo "Database backup: SUCCESS at $(date)" >> /var/log/smriti-maintenance.log
+    echo "Database backup: SUCCESS at $(date)" >> /var/log/tileflow-maintenance.log
     
 else
     echo "[$(date)] ❌ Backup FAILED"
@@ -130,7 +130,7 @@ fi
 **Add to crontab**:
 ```bash
 # Daily full backup at 2 AM UTC
-0 2 * * * /opt/smriti/scripts/backup-db-full.sh >> /var/log/cron.log 2>&1
+0 2 * * * /opt/tileflow/scripts/backup-db-full.sh >> /var/log/cron.log 2>&1
 ```
 
 ### Incremental Backups
@@ -138,7 +138,7 @@ fi
 **Every 6 hours via transaction log backup**:
 ```bash
 #!/bin/bash
-# /opt/smriti/scripts/backup-db-incremental.sh
+# /opt/tileflow/scripts/backup-db-incremental.sh
 # Run every 6 hours: 0 */6 * * * ...
 
 # Already handled by WAL archiving (see archive_command above)
@@ -162,7 +162,7 @@ fi
 
 ### Configuration Backup
 
-**Daily config backup** (`/opt/smriti/scripts/backup-config.sh`):
+**Daily config backup** (`/opt/tileflow/scripts/backup-config.sh`):
 
 ```bash
 #!/bin/bash
@@ -170,7 +170,7 @@ fi
 
 set -e
 
-CONFIG_DIR="/opt/smriti/config"
+CONFIG_DIR="/opt/tileflow/config"
 BACKUP_DIR="/backups/config"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
@@ -179,15 +179,15 @@ mkdir -p "$BACKUP_DIR"
 # Backup .env files (secrets handled separately)
 tar --exclude='.env*' --exclude='*.local' \
     -czf "$BACKUP_DIR/config_$TIMESTAMP.tar.gz" \
-    -C /opt/smriti \
+    -C /opt/tileflow \
     config/ \
     alembic/
 
-echo "Config backup: $BACKUP_DIR/config_$TIMESTAMP.tar.gz" >> /var/log/smriti-backup.log
+echo "Config backup: $BACKUP_DIR/config_$TIMESTAMP.tar.gz" >> /var/log/tileflow-backup.log
 
 # Upload to S3
 aws s3 cp "$BACKUP_DIR/config_$TIMESTAMP.tar.gz" \
-    s3://smriti-backups/config/$(date +%Y/%m/%d)/
+    s3://tileflow-backups/config/$(date +%Y/%m/%d)/
 
 # Keep 90 days locally
 find "$BACKUP_DIR" -name "config_*.tar.gz" -mtime +90 -delete
@@ -195,13 +195,13 @@ find "$BACKUP_DIR" -name "config_*.tar.gz" -mtime +90 -delete
 
 ### File Uploads Backup
 
-**Daily file backup** (`/opt/smriti/scripts/backup-files.sh`):
+**Daily file backup** (`/opt/tileflow/scripts/backup-files.sh`):
 
 ```bash
 #!/bin/bash
 # Run daily at 3:00 AM UTC
 
-UPLOAD_DIR="/var/lib/smriti/uploads"
+UPLOAD_DIR="/var/lib/tileflow/uploads"
 BACKUP_DIR="/backups/files"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 
@@ -219,10 +219,10 @@ if [ $(date +%A) == "Sunday" ]; then
         -C "$UPLOAD_DIR" . 2>/dev/null || true
 fi
 
-echo "Files backup: complete" >> /var/log/smriti-backup.log
+echo "Files backup: complete" >> /var/log/tileflow-backup.log
 
 # Upload to S3
-aws s3 sync "$BACKUP_DIR" "s3://smriti-backups/files/" --delete --storage-class GLACIER
+aws s3 sync "$BACKUP_DIR" "s3://tileflow-backups/files/" --delete --storage-class GLACIER
 ```
 
 ---
@@ -231,7 +231,7 @@ aws s3 sync "$BACKUP_DIR" "s3://smriti-backups/files/" --delete --storage-class 
 
 ### Weekly Backup Integrity Check
 
-**Test script** (`/opt/smriti/scripts/verify-backups.sh`):
+**Test script** (`/opt/tileflow/scripts/verify-backups.sh`):
 
 ```bash
 #!/bin/bash
@@ -243,7 +243,7 @@ echo "Date: $(date)"
 # 1. Check database backup integrity
 echo ""
 echo "1. Database Backup Integrity:"
-LATEST_DUMP=$(ls -1 /backups/postgres/full/smriti_full_*.dump.gz | tail -1)
+LATEST_DUMP=$(ls -1 /backups/postgres/full/tileflow_full_*.dump.gz | tail -1)
 
 if [ -z "$LATEST_DUMP" ]; then
     echo "❌ No recent database backup found"
@@ -260,13 +260,13 @@ fi
 # 2. Check backup file sizes (sanity check)
 echo ""
 echo "2. Backup File Sizes:"
-ls -lh /backups/postgres/full/smriti_full_*.dump.gz | tail -3
+ls -lh /backups/postgres/full/tileflow_full_*.dump.gz | tail -3
 
 # 3. Check SHA256 checksums
 echo ""
 echo "3. Checksum Verification:"
 cd /backups/postgres/full
-for file in smriti_full_*.dump.gz; do
+for file in tileflow_full_*.dump.gz; do
     if [ -f "${file}.sha256" ]; then
         sha256sum -c "${file}.sha256" && echo "✅ $file" || echo "❌ $file"
     fi
@@ -275,12 +275,12 @@ done
 # 4. Check S3 backup sync status
 echo ""
 echo "4. Cloud Backup Status:"
-aws s3 ls s3://smriti-backups/ --summarize | head -20
+aws s3 ls s3://tileflow-backups/ --summarize | head -20
 
 # 5. Check backup age
 echo ""
 echo "5. Backup Age Check:"
-LATEST_TIME=$(ls -1 /backups/postgres/full/smriti_full_*.dump.gz | tail -1 | xargs ls -1t | head -1 | xargs stat -f%m 2>/dev/null || stat -c%Y)
+LATEST_TIME=$(ls -1 /backups/postgres/full/tileflow_full_*.dump.gz | tail -1 | xargs ls -1t | head -1 | xargs stat -f%m 2>/dev/null || stat -c%Y)
 NOW=$(date +%s)
 AGE_HOURS=$(( ($NOW - $LATEST_TIME) / 3600 ))
 
@@ -291,13 +291,13 @@ else
 fi
 
 echo ""
-echo "Verification complete: $(date)" >> /var/log/smriti-backup-verify.log
+echo "Verification complete: $(date)" >> /var/log/tileflow-backup-verify.log
 ```
 
 **Add to crontab**:
 ```bash
 # Weekly verification on Saturday at 4 AM UTC
-0 4 * * 6 /opt/smriti/scripts/verify-backups.sh | tee -a /var/log/backup-verification.log
+0 4 * * 6 /opt/tileflow/scripts/verify-backups.sh | tee -a /var/log/backup-verification.log
 ```
 
 ---
@@ -318,27 +318,27 @@ ls -lh /backups/postgres/full/ | tail -5
 docker-compose stop backend
 
 # 3. Create backup of corrupted database (for forensics)
-pg_dump -U smriti -d smriti001 --format=custom > /backups/corrupted_smriti001_$(date +%s).dump
+pg_dump -U tileflow -d tileflow001 --format=custom > /backups/corrupted_tileflow001_$(date +%s).dump
 
 # 4. Drop corrupted database
-psql -U postgres -c "DROP DATABASE IF EXISTS smriti001;"
+psql -U postgres -c "DROP DATABASE IF EXISTS tileflow001;"
 
 # 5. Create fresh database
-psql -U postgres -c "CREATE DATABASE smriti001 OWNER smriti;"
+psql -U postgres -c "CREATE DATABASE tileflow001 OWNER tileflow;"
 
 # 6. Restore from backup
 pg_restore \
-  -U smriti \
-  -d smriti001 \
+  -U tileflow \
+  -d tileflow001 \
   --clean \
-  /backups/postgres/full/smriti_full_YYYYMMDD_HHMMSS.dump.gz
+  /backups/postgres/full/tileflow_full_YYYYMMDD_HHMMSS.dump.gz
 
 # 7. Apply transaction logs to recover to latest point
 # (if using PITR - Point In Time Recovery)
 # Requires configuration of recovery.conf
 
 # 8. Run migrations to ensure schema is current
-cd /opt/smriti/backend
+cd /opt/tileflow/backend
 alembic upgrade head
 
 # 9. Restart application
@@ -366,17 +366,17 @@ docker-compose logs -f backend
 df -h
 
 # 2. Identify large files/directories
-du -sh /var/lib/smriti/* | sort -rh | head -10
+du -sh /var/lib/tileflow/* | sort -rh | head -10
 du -sh /backups/* | sort -rh | head -10
 
 # 3. Clean up old backups (if not on critical path)
 find /backups -name "*.dump.gz" -mtime +30 -delete  # Keep 30 days
 
 # 4. Clean up old logs
-find /var/log/smriti -name "*.log" -mtime +90 -delete  # Keep 90 days
+find /var/log/tileflow -name "*.log" -mtime +90 -delete  # Keep 90 days
 
 # 5. Compress inactive logs
-find /var/log/smriti -name "*.log" -mtime +30 ! -name "*.gz" -exec gzip {} \;
+find /var/log/tileflow -name "*.log" -mtime +30 ! -name "*.gz" -exec gzip {} \;
 
 # 6. Verify disk space is recovered
 df -h
@@ -397,7 +397,7 @@ docker-compose restart backend
 
 ```bash
 # 1. Verify backup availability
-aws s3 ls s3://smriti-backups/postgres/
+aws s3 ls s3://tileflow-backups/postgres/
 
 # 2. Launch new VM/server from template
 # (e.g., via AWS AMI, Google GCE snapshot, etc.)
@@ -406,7 +406,7 @@ aws s3 ls s3://smriti-backups/postgres/
 # (automated via init script or deployment workflow)
 
 # 4. Run post-restore validation
-cd /opt/smriti/backend
+cd /opt/tileflow/backend
 alembic current  # Check migrations
 pytest tests/test_smoke.py  # Smoke tests
 
@@ -440,19 +440,19 @@ docker-compose logs -f
 ls -lh /backups/postgres/full/ | grep "before_deletion_date"
 
 # 4. Restore to temporary database for inspection
-createdb smriti001_restore_point
+createdb tileflow001_restore_point
 
 pg_restore \
-  -U smriti \
-  -d smriti001_restore_point \
-  /backups/postgres/full/smriti_full_BEFORE_DELETION.dump.gz
+  -U tileflow \
+  -d tileflow001_restore_point \
+  /backups/postgres/full/tileflow_full_BEFORE_DELETION.dump.gz
 
 # 5. Verify data is present
-psql -U smriti -d smriti001_restore_point \
+psql -U tileflow -d tileflow001_restore_point \
   -c "SELECT COUNT(*) FROM sales_invoices;"
 
 # 6. Extract missing data
-psql -U smriti -d smriti001_restore_point -c \
+psql -U tileflow -d tileflow001_restore_point -c \
   "SELECT * FROM sales_invoices WHERE deleted_at IS NOT NULL ORDER BY deleted_at DESC LIMIT 100;" \
   > /tmp/deleted_invoices.csv
 
@@ -466,7 +466,7 @@ psql -U smriti -d smriti001_restore_point -c \
 #   3. Verify record counts match
 
 # 8. Cleanup
-dropdb smriti001_restore_point
+dropdb tileflow001_restore_point
 ```
 
 **Estimated Recovery Time**: 30-90 minutes (depends on data loss scope)
@@ -481,13 +481,13 @@ dropdb smriti001_restore_point
 
 ```bash
 #!/bin/bash
-# /opt/smriti/scripts/monthly-dr-drill.sh
+# /opt/tileflow/scripts/monthly-dr-drill.sh
 
 echo "====== MONTHLY DR DRILL ======"
 echo "Start time: $(date)"
 
 # 1. Restore latest backup to staging
-STAGING_DB="smriti001_dr_test"
+STAGING_DB="tileflow001_dr_test"
 LATEST_BACKUP=$(ls -1 /backups/postgres/full/*.dump.gz | tail -1)
 
 echo "Using backup: $LATEST_BACKUP"
@@ -496,15 +496,15 @@ echo "Using backup: $LATEST_BACKUP"
 psql -U postgres -c "DROP DATABASE IF EXISTS $STAGING_DB;" || true
 
 # Create and restore
-createdb $STAGING_DB -O smriti
-pg_restore -U smriti -d $STAGING_DB "$LATEST_BACKUP"
+createdb $STAGING_DB -O tileflow
+pg_restore -U tileflow -d $STAGING_DB "$LATEST_BACKUP"
 
 # 2. Run validation queries
 echo "Running validation..."
 
-INVOICE_COUNT=$(psql -U smriti -d $STAGING_DB -t -c "SELECT COUNT(*) FROM sales_invoices;")
-PRODUCT_COUNT=$(psql -U smriti -d $STAGING_DB -t -c "SELECT COUNT(*) FROM products;")
-USER_COUNT=$(psql -U smriti -d $STAGING_DB -t -c "SELECT COUNT(*) FROM users;")
+INVOICE_COUNT=$(psql -U tileflow -d $STAGING_DB -t -c "SELECT COUNT(*) FROM sales_invoices;")
+PRODUCT_COUNT=$(psql -U tileflow -d $STAGING_DB -t -c "SELECT COUNT(*) FROM products;")
+USER_COUNT=$(psql -U tileflow -d $STAGING_DB -t -c "SELECT COUNT(*) FROM users;")
 
 echo "  Invoices: $INVOICE_COUNT"
 echo "  Products: $PRODUCT_COUNT"
@@ -517,7 +517,7 @@ fi
 
 # 3. Run application schema checks
 echo "Checking application compatibility..."
-SCHEMA_VERSION=$(psql -U smriti -d $STAGING_DB -t -c "SELECT version FROM alembic_version;")
+SCHEMA_VERSION=$(psql -U tileflow -d $STAGING_DB -t -c "SELECT version FROM alembic_version;")
 echo "  Schema version: $SCHEMA_VERSION"
 
 # 4. Cleanup
@@ -538,13 +538,13 @@ echo "Result: PASS" >> /var/log/dr-drill-results.log
 /backups/postgres/full/  # Keep 30 days locally
 
 # Secondary: Cloud storage (for disaster recovery)
-aws s3 cp /backups/postgres/full/smriti_full_*.dump.gz \
-    s3://smriti-backups-primary/postgres/ \
+aws s3 cp /backups/postgres/full/tileflow_full_*.dump.gz \
+    s3://tileflow-backups-primary/postgres/ \
     --storage-class STANDARD_IA  # Infrequent Access (cheaper)
 
 # Tertiary: Cross-region backup (for major disaster)
-aws s3 cp s3://smriti-backups-primary/postgres/ \
-    s3://smriti-backups-replica-us-east-1/postgres/ \
+aws s3 cp s3://tileflow-backups-primary/postgres/ \
+    s3://tileflow-backups-replica-us-east-1/postgres/ \
     --region us-east-1 \
     --recursive \
     --storage-class GLACIER  # Long-term archive
@@ -592,13 +592,13 @@ echo "  Local: $BACKUP_SIZE"
 echo ""
 
 # S3 sync status
-S3_SIZE=$(aws s3 ls s3://smriti-backups --summarize --recursive | grep "Total Size" | awk '{print $3}')
+S3_SIZE=$(aws s3 ls s3://tileflow-backups --summarize --recursive | grep "Total Size" | awk '{print $3}')
 echo "  Cloud: $S3_SIZE"
 echo ""
 
 # Backup success rate (last 30 days)
-SUCCESS=$(grep "Backup successful" /var/log/smriti-backup.log | wc -l)
-FAILED=$(grep "Backup FAILED" /var/log/smriti-backup.log | wc -l)
+SUCCESS=$(grep "Backup successful" /var/log/tileflow-backup.log | wc -l)
+FAILED=$(grep "Backup FAILED" /var/log/tileflow-backup.log | wc -l)
 echo "Backup Success Rate (30 days):"
 echo "  Successful: $SUCCESS"
 echo "  Failed: $FAILED"

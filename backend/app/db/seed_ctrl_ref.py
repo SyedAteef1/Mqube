@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.40.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 import uuid
 from decimal import Decimal
@@ -22,9 +8,9 @@ from psycopg2.extras import execute_values
 
 def seed_control_reference_data():
     """
-    Synchronous authoritative seeder for smritisys and tenant databases.
+    Synchronous authoritative seeder for tileflowsys and tenant databases.
     """
-    for db_name in ["smritisys", "smriti001", "smriti002"]:
+    for db_name in ["tileflowsys", "tileflow001", "tileflow002"]:
         print(f"\n--- Seeding Reference Master Data into [{db_name}] ---")
         try:
             conn = psycopg2.connect(f"postgresql://postgres:postgres@localhost:5432/{db_name}")

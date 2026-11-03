@@ -1,22 +1,9 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, glob
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-OLD_NAME = "smritisys"
-NEW_NAME = "smritisys"
+OLD_NAME = "tileflowsys"
+NEW_NAME = "tileflowsys"
 
 def update_references():
     print("============================================================")

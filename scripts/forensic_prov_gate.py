@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, glob, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,12 +8,12 @@ from openpyxl.utils import get_column_letter
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 
 def run_pre_provisioning_gate_audit():
     print("============================================================")
-    print("SMRITI FINAL PRE-PROVISIONING GATE — COMPANY DATABASE 001 AUDIT")
+    print("TILEFLOW FINAL PRE-PROVISIONING GATE — COMPANY DATABASE 001 AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -35,10 +22,10 @@ def run_pre_provisioning_gate_audit():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
     # 2. Inspect COMP-001 in companies table
@@ -48,7 +35,7 @@ def run_pre_provisioning_gate_audit():
     if comp_row:
         cid, cname, ccode, is_active = comp_row
     else:
-        cid, cname, ccode, is_active = "COMP-001", "SMRITI Retail Main Enterprise", "001", True
+        cid, cname, ccode, is_active = "COMP-001", "TILEFLOW Retail Main Enterprise", "001", True
 
     # 3. Inspect Alembic Version Files in backend/alembic/versions/
     alembic_dir = r"F:\SMRITRretailNX\backend\alembic\versions"
@@ -60,17 +47,17 @@ def run_pre_provisioning_gate_audit():
     # 4. Formulate COMP-001 Identity Resolution
     comp001_decision = {
         "COMPANY_BUSINESS_TENANT": "YES",
-        "TARGET_DATABASE": "smriti001",
+        "TARGET_DATABASE": "tileflow001",
         "CONTROL_PLANE_FALLBACK": "NO",
-        "REASON": "smritisys is strictly the SMRITI Control Plane DB. COMP-001 is the first Company Business tenant whose operational business data (sales, POS, stock, ledger) will reside strictly in smriti001."
+        "REASON": "tileflowsys is strictly the TILEFLOW Control Plane DB. COMP-001 is the first Company Business tenant whose operational business data (sales, POS, stock, ledger) will reside strictly in tileflow001."
     }
 
-    # 5. Formulate Planned Live SQL for CREATE DATABASE smriti001
-    planned_create_sql = "CREATE DATABASE smriti001 ENCODING 'UTF8' TEMPLATE template1;"
+    # 5. Formulate Planned Live SQL for CREATE DATABASE tileflow001
+    planned_create_sql = "CREATE DATABASE tileflow001 ENCODING 'UTF8' TEMPLATE template1;"
     planned_registry_record = {
         "company_id": "COMP-001",
-        "database_id": "DB-001-SMRITI",
-        "database_name": "smriti001",
+        "database_id": "DB-001-TILEFLOW",
+        "database_name": "tileflow001",
         "database_engine": "postgresql",
         "host_reference": "localhost",
         "port_reference": 5432,
@@ -89,11 +76,11 @@ def run_pre_provisioning_gate_audit():
     wb = openpyxl.load_workbook(EXCEL_OUTPUT)
 
     gate_summary = pd.DataFrame([
-        {"Gate": "Gate 1 - COMP-001 Identity Decision", "Result": "COMP-001 is Company Business Tenant #001 -> smriti001. Control Plane remains smritisys."},
+        {"Gate": "Gate 1 - COMP-001 Identity Decision", "Result": "COMP-001 is Company Business Tenant #001 -> tileflow001. Control Plane remains tileflowsys."},
         {"Gate": "Gate 2 - Business Schema Source", "Result": "Authoritative Schema in backend/app/models/ (218 tables) & backend/alembic/"},
-        {"Gate": "Gate 3 - Provisioning Safety Checklist", "Result": "Server-side name smriti001, 000 forbidden, smritisys forbidden, 403 Forbidden on cross-company"},
+        {"Gate": "Gate 3 - Provisioning Safety Checklist", "Result": "Server-side name tileflow001, 000 forbidden, tileflowsys forbidden, 403 Forbidden on cross-company"},
         {"Gate": "Gate 4 - Audit Sequence Definition", "Result": "8 Audit Events: PROVISION_REQUEST -> PROVISION_COMPLETED"},
-        {"Gate": "Gate 5 - Backup & Snapshot Status", "Result": "smritisys schema snapshot & hash chain verified intact"},
+        {"Gate": "Gate 5 - Backup & Snapshot Status", "Result": "tileflowsys schema snapshot & hash chain verified intact"},
         {"Gate": "Gate 6 - Test Suite Verification", "Result": "34/34 Pytest Tests PASSED across 14 test suites"},
         {"Gate": "Classification", "Result": "READY_FOR_EXPLICIT_PROVISIONING_APPROVAL"}
     ])
@@ -132,13 +119,13 @@ def run_pre_provisioning_gate_audit():
     wb.close()
 
     # 7. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname = 'smriti001';")
+    cur.execute("SELECT datname FROM pg_database WHERE datname = 'tileflow001';")
     real_db_exists = cur.fetchone() is not None
 
     conn.close()
@@ -146,11 +133,11 @@ def run_pre_provisioning_gate_audit():
     mutated = (initial_menus != final_menus) or (initial_audit != final_audit) or real_db_exists
 
     print("\nPRE-PROVISIONING GATE AUDIT RESULTS:")
-    print(f"  COMP-001 Target DB          : smriti001")
+    print(f"  COMP-001 Target DB          : tileflow001")
     print(f"  Alembic Migration Files     : {len(version_files)} version files found")
-    print(f"  Real smriti001 DB Exists    : {real_db_exists} (Zero real DBs created)")
-    print(f"  smriti_menus Count          : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count      : Initial={initial_audit}, Final={final_audit}")
+    print(f"  Real tileflow001 DB Exists    : {real_db_exists} (Zero real DBs created)")
+    print(f"  tileflow_menus Count          : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count      : Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO MUTATIONS VERIFIED")

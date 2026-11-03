@@ -1,16 +1,4 @@
 /**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
-/**
  * FlexContextGrid
  * ====================
  * A single, reusable, keyboard-navigable data grid that renders dynamically
@@ -66,7 +54,7 @@ function renderCellValue(
 
   if (column.style === "price") {
     const num = typeof val === "number" ? val : parseFloat(String(val).replace(/[^0-9.-]/g, ""));
-    if (isNaN(num)) return <span className="text-[#737685]">—</span>;
+    if (isNaN(num)) return <span className="text-[#767676]">—</span>;
     return <span className="font-mono font-bold">₹{num.toFixed(2)}</span>;
   }
 
@@ -79,7 +67,7 @@ function renderCellValue(
   }
 
   if (column.style === "muted") {
-    return <span className="text-[#737685]">{val}</span>;
+    return <span className="text-[#767676]">{val}</span>;
   }
 
   if (column.style === "badge-green") {
@@ -115,10 +103,10 @@ function renderCellValue(
 
 function SkeletonRow({ columns }: { columns: FlexibleGridColumn[] }) {
   return (
-    <tr className="border-b border-[#e2e2e8]/60">
+    <tr className="border-b border-[#e2e2e2]/60">
       {columns.map((col) => (
-        <td key={col.id} className="px-2 py-1.5 border-r border-[#c4c6d4]/40 last:border-r-0">
-          <div className="h-3 bg-[#e8e7ed] rounded animate-pulse" />
+        <td key={col.id} className="px-2 py-1.5 border-r border-[#c7c7c7]/40 last:border-r-0">
+          <div className="h-3 bg-[#e8e8e8] rounded animate-pulse" />
         </td>
       ))}
     </tr>
@@ -182,13 +170,13 @@ export const FlexibleContextGrid: React.FC<FlexibleContextGridProps> = ({
     >
       <table className="w-full text-left border-collapse whitespace-nowrap text-xs">
         {/* ── Table Header ─────────────────────────────────────────────────── */}
-        <thead className="sticky top-0 z-10 bg-[#e8e7ed] border-b border-[#c4c6d4] text-[10px] font-bold text-[#434652] uppercase tracking-wider select-none">
+        <thead className="sticky top-0 z-10 bg-[#e8e8e8] border-b border-[#c7c7c7] text-[10px] font-bold text-[#464646] uppercase tracking-wider select-none">
           <tr>
-            <th className="w-8 px-2 py-2 text-center border-r border-[#c4c6d4] shrink-0">#</th>
+            <th className="w-8 px-2 py-2 text-center border-r border-[#c7c7c7] shrink-0">#</th>
             {columns.map((col) => (
               <th
                 key={col.id}
-                className={`px-2 py-2 border-r border-[#c4c6d4] last:border-r-0 ${col.width || ""} ${
+                className={`px-2 py-2 border-r border-[#c7c7c7] last:border-r-0 ${col.width || ""} ${
                   col.align === "right"
                     ? "text-right"
                     : col.align === "center"
@@ -205,7 +193,7 @@ export const FlexibleContextGrid: React.FC<FlexibleContextGridProps> = ({
         {/* ── Table Body ───────────────────────────────────────────────────── */}
         <tbody
           ref={tableBodyRef}
-          className="divide-y divide-[#e2e2e8] font-medium text-[#1a1b20]"
+          className="divide-y divide-[#e2e2e2] font-medium text-[#1b1b1b]"
         >
           {/* Loading skeletons */}
           {isLoading && results.length === 0 && (
@@ -221,9 +209,9 @@ export const FlexibleContextGrid: React.FC<FlexibleContextGridProps> = ({
             <tr>
               <td
                 colSpan={columns.length + 1}
-                className="px-4 py-10 text-center text-[#737685]"
+                className="px-4 py-10 text-center text-[#767676]"
               >
-                <span className="material-symbols-outlined text-3xl text-[#c4c6d4] block mb-2">
+                <span className="material-symbols-outlined text-3xl text-[#c7c7c7] block mb-2">
                   search_off
                 </span>
                 <p className="text-xs font-medium">{emptyMessage}</p>
@@ -242,12 +230,12 @@ export const FlexibleContextGrid: React.FC<FlexibleContextGridProps> = ({
                 onMouseEnter={() => onSelectIndex(idx)}
                 className={`cursor-pointer transition-colors ${
                   isSelected
-                    ? "bg-[#cdddff] text-[#00296d] border-l-4 border-l-[#00296d]"
-                    : "hover:bg-[#f4f3f9]"
+                    ? "bg-[#dcdcdc] text-[#252525] border-l-4 border-l-[#252525]"
+                    : "hover:bg-[#f4f4f4]"
                 }`}
               >
                 {/* Row number */}
-                <td className="px-2 py-1.5 text-center border-r border-[#c4c6d4]/60 text-[#737685] font-mono shrink-0">
+                <td className="px-2 py-1.5 text-center border-r border-[#c7c7c7]/60 text-[#767676] font-mono shrink-0">
                   {idx + 1}
                 </td>
 
@@ -257,7 +245,7 @@ export const FlexibleContextGrid: React.FC<FlexibleContextGridProps> = ({
                   return (
                     <td
                       key={col.id}
-                      className={`px-2 py-1.5 border-r border-[#c4c6d4]/60 last:border-r-0 truncate max-w-xs ${
+                      className={`px-2 py-1.5 border-r border-[#c7c7c7]/60 last:border-r-0 truncate max-w-xs ${
                         col.align === "right"
                           ? "text-right"
                           : col.align === "center"
@@ -300,8 +288,8 @@ export const FlexibleGridFooter: React.FC<FlexibleGridFooterProps> = ({
   confirmLabel = "Select",
 }) => {
   return (
-    <div className="bg-[#e8e7ed] border-t border-[#c4c6d4] px-4 py-2 flex justify-between items-center shrink-0 text-xs">
-      <div className="flex items-center gap-3 text-[#434652] font-semibold">
+    <div className="bg-[#e8e8e8] border-t border-[#c7c7c7] px-4 py-2 flex justify-between items-center shrink-0 text-xs">
+      <div className="flex items-center gap-3 text-[#464646] font-semibold">
         <span>
           {isLoading ? (
             <span className="flex items-center gap-1">
@@ -312,13 +300,13 @@ export const FlexibleGridFooter: React.FC<FlexibleGridFooterProps> = ({
             <span>{totalResults} record{totalResults !== 1 ? "s" : ""} found</span>
           )}
         </span>
-        <span className="text-[#737685] text-[11px]">
-          <kbd className="bg-white border border-[#c4c6d4] px-1 rounded font-mono text-[10px]">↑</kbd>{" "}
-          <kbd className="bg-white border border-[#c4c6d4] px-1 rounded font-mono text-[10px]">↓</kbd>{" "}
+        <span className="text-[#767676] text-[11px]">
+          <kbd className="bg-white border border-[#c7c7c7] px-1 rounded font-mono text-[10px]">↑</kbd>{" "}
+          <kbd className="bg-white border border-[#c7c7c7] px-1 rounded font-mono text-[10px]">↓</kbd>{" "}
           Navigate &nbsp;
-          <kbd className="bg-white border border-[#c4c6d4] px-1 rounded font-mono text-[10px]">Enter</kbd>{" "}
+          <kbd className="bg-white border border-[#c7c7c7] px-1 rounded font-mono text-[10px]">Enter</kbd>{" "}
           Select &nbsp;
-          <kbd className="bg-white border border-[#c4c6d4] px-1 rounded font-mono text-[10px]">Esc</kbd>{" "}
+          <kbd className="bg-white border border-[#c7c7c7] px-1 rounded font-mono text-[10px]">Esc</kbd>{" "}
           Close
         </span>
       </div>
@@ -328,7 +316,7 @@ export const FlexibleGridFooter: React.FC<FlexibleGridFooterProps> = ({
           type="button"
           onClick={onConfirm}
           disabled={selectedIndex < 0}
-          className="bg-[#00296d] hover:bg-[#003d9b] disabled:opacity-40 text-white text-xs font-bold uppercase px-5 py-1.5 rounded transition-colors flex items-center gap-1 shadow-sm"
+          className="bg-[#252525] hover:bg-[#373737] disabled:opacity-40 text-white text-xs font-bold uppercase px-5 py-1.5 rounded transition-colors flex items-center gap-1 shadow-sm"
         >
           <span className="material-symbols-outlined text-[15px]">check</span>
           {confirmLabel}
@@ -336,7 +324,7 @@ export const FlexibleGridFooter: React.FC<FlexibleGridFooterProps> = ({
         <button
           type="button"
           onClick={onCancel}
-          className="bg-[#faf9ff] hover:bg-[#e8e7ed] text-[#434652] text-xs font-bold uppercase px-4 py-1.5 rounded border border-[#c4c6d4] transition-colors"
+          className="bg-[#fafafa] hover:bg-[#e8e8e8] text-[#464646] text-xs font-bold uppercase px-4 py-1.5 rounded border border-[#c7c7c7] transition-colors"
         >
           Cancel
         </button>

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -31,7 +17,7 @@ from app.models.crm import Customer, CustomerGroup
 @pytest.fixture(autouse=True)
 async def cleanup_and_setup_test_sales():
     """Clean up and set up test customer and test sales invoices."""
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             await session.execute(delete(StockMovement).where(StockMovement.remarks.like("%TEST-INV%")))
@@ -62,7 +48,7 @@ async def cleanup_and_setup_test_sales():
                     id="prod_sales_test_01",
                     company_id="COMP-001",
                     code="PROD-SALES-TEST-01",
-                    name="SMRITI Cotton Oxford Shirt",
+                    name="TILEFLOW Cotton Oxford Shirt",
                     category="Apparel",
                     barcode="8901112223334",
                     price=1000.00,
@@ -76,7 +62,7 @@ async def cleanup_and_setup_test_sales():
 
             await session.commit()
     yield
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             await session.execute(delete(StockMovement).where(StockMovement.remarks.like("%TEST-INV%")))
@@ -87,7 +73,7 @@ async def cleanup_and_setup_test_sales():
 @pytest.mark.asyncio
 async def test_b2b_sales_invoice_posting_and_stock_debit():
     """Verify B2B sales invoice creates immutable tax snapshots and posts outward stock movements."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         prod_stmt = select(Product).where(Product.code == "PROD-SALES-TEST-01")
         prod = (await session.execute(prod_stmt)).scalar_one()
@@ -144,7 +130,7 @@ async def test_b2b_sales_invoice_posting_and_stock_debit():
 @pytest.mark.asyncio
 async def test_interstate_sales_invoice_igst_calculation():
     """Verify inter-state invoice correctly calculates and snapshots IGST."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         prod_stmt = select(Product).where(Product.code == "PROD-SALES-TEST-01")
         prod = (await session.execute(prod_stmt)).scalar_one_or_none()
@@ -184,7 +170,7 @@ async def test_interstate_sales_invoice_igst_calculation():
 @pytest.mark.asyncio
 async def test_invoice_cancellation_and_stock_reversal():
     """Verify cancelling an invoice creates RETURN_INWARD movements and restores stock."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         prod_stmt = select(Product).where(Product.code == "PROD-SALES-TEST-01")
         prod = (await session.execute(prod_stmt)).scalar_one_or_none()
@@ -230,9 +216,9 @@ async def test_invoice_cancellation_and_stock_reversal():
 
 @pytest.mark.asyncio
 async def test_sales_invoice_tenant_isolation():
-    """Verify invoice posted in smriti001 is completely absent in smriti002."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    """Verify invoice posted in tileflow001 is completely absent in tileflow002."""
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     async with session_001() as s1:
         stmt1 = select(SalesInvoice).where(SalesInvoice.invoice_no == "TEST-INV-IGST-02")
@@ -254,4 +240,4 @@ async def test_sales_invoice_tenant_isolation():
     async with session_002() as s2:
         stmt2 = select(SalesInvoice).where(SalesInvoice.invoice_no == "TEST-INV-ISO-04")
         inv2 = (await s2.execute(stmt2)).scalar_one_or_none()
-        assert inv2 is None, "Invoice from smriti001 must not leak into smriti002!"
+        assert inv2 is None, "Invoice from tileflow001 must not leak into tileflow002!"

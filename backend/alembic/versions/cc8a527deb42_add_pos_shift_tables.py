@@ -1,20 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.14.4
-Created      : 2026-07-11
-Modified     : 2026-07-11
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-
-add_pos_shift_tables
-
-Revision ID: cc8a527deb42
-Revises: 59cbc26b919c
-Create Date: 2026-07-11 20:09:07.734491
-"""
 from typing import Sequence, Union
 
 from alembic import op

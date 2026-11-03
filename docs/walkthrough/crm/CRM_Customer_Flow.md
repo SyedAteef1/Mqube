@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.15.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Customer Flow, Policy Enforcement & Database Referential Integrity Hardening (v6.15.0)
@@ -19,8 +18,8 @@ Document the comprehensive hardening of the Customer Flow across the frontend PO
 
 ## 2. Scope
 - **Backend Policy Validation**:
-  - `CrmService.check_credit_limit`: Evaluates `credit_hold` and returns `SMRITI-CREDIT-002: Customer account is on credit hold. Invoicing blocked.`
-  - Evaluates `credit_limit` vs `(outstanding + invoice_amount)` and returns `SMRITI-CREDIT-001: Customer credit limit exceeded.` when `auto_block_sales` is active.
+  - `CrmService.check_credit_limit`: Evaluates `credit_hold` and returns `TILEFLOW-CREDIT-002: Customer account is on credit hold. Invoicing blocked.`
+  - Evaluates `credit_limit` vs `(outstanding + invoice_amount)` and returns `TILEFLOW-CREDIT-001: Customer credit limit exceeded.` when `auto_block_sales` is active.
 - **Canonical Walk-In Customer Resolution**:
   - Added `CUST-WALKIN` ("Walk-In / Cash Customer", mobile `9999999999`, group `CG-Retail`, 0 credit limit) across PostgreSQL seed (`seed_customers.py`) and frontend store (`customerStore.ts`).
   - Automatically resolves blank customer IDs on counter sales to `CUST-WALKIN` to maintain 100% foreign key integrity.

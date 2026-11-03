@@ -1,34 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.104.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Customer Complaint & After-Sales CRM Engine
- *
- * Manages end-to-end customer complaint lifecycle:
- *   Lifecycle       : OPEN → ASSIGNED → IN_PROGRESS → PENDING_CUSTOMER
- *                     → RESOLVED → CLOSED / REOPENED / ESCALATED
- *
- *   SLA Tracking    : First Response SLA (4h), Resolution SLA (48h)
- *                     Breach detection and escalation flag
- *
- *   CSAT Scoring    : 1–5 star rating captured on CLOSED status
- *                     Agent-level and branch-level CSAT aggregation
- *
- *   Priority Matrix : LOW / MEDIUM / HIGH / CRITICAL
- *                     CRITICAL complaints auto-escalate after 2h breach
- */
-
 export type ComplaintStatus =
   | "OPEN" | "ASSIGNED" | "IN_PROGRESS" | "PENDING_CUSTOMER"
   | "RESOLVED" | "CLOSED" | "REOPENED" | "ESCALATED" | "CANCELLED";

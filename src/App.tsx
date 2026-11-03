@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-07-10
- * Modified     : 2026-08-17
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
 import React, { useState, useEffect, useRef, Suspense, lazy } from "react";
 import { apiFetch, apiFetchV1 } from "./lib/apiFetch.ts";
 import { motion, AnimatePresence } from "motion/react";
@@ -54,12 +42,12 @@ import { ActiveFieldProvider } from "./context/ActiveFieldContext.tsx";
 import { ContextualInspectorHUD } from "./components/drilldown/CtxInspectorHUD.tsx";
 import { ContextProvider } from "./context-actions/ContextProvider.tsx";
 import { ContextRenderer } from "./context-actions/ContextRenderer.tsx";
-import { registerAllDefaultActions } from "./context-actions/providers/SMRITIModuleActions.ts";
+import { registerAllDefaultActions } from "./context-actions/providers/TILEFLOWModuleActions.ts";
 import { PrintProvider } from "./print_engine/print_store.tsx";
-import { AboutSmritiTab } from "./components/AboutSmritiTab.tsx";
+import { AboutTileFlowWidget as AboutTileFlowTab } from "./components/AboutTileFlowWidget.tsx";
 import { TaxInvoicePrintPage } from "./components/TaxInvoicePrintPag.tsx";
 import { DevTrackerTab } from "./modules/dev_tracker/ui/DevTrackerTab.tsx";
-import { useLayoutModuleRegistration } from "./components/SmritiBaseModule.tsx";
+import { useLayoutModuleRegistration } from "./components/TileFlowBaseModule.tsx";
 import { WorkspaceProvider, useWorkspace } from "./contexts/WorkspaceContext.tsx";
 import { FloatingWindowHost } from "./components/FloatingWindowHost.tsx";
 import { ShortcutProvider } from "./contexts/ShortcutContext.tsx";
@@ -67,7 +55,7 @@ import { ShortcutPalette } from "./components/ShortcutPalette.tsx";
 import { PasswordReset } from "./components/PasswordReset.tsx";
 import { LoginScreen } from "./components/LoginScreen.tsx";
 import { CompanySelectionScreen } from "./components/CompanySelectScree.tsx";
-import { SmritiErrorBoundary } from "./components/ErrorBoundary.tsx";
+import { TileFlowErrorBoundary } from "./components/ErrorBoundary.tsx";
 import { clearAuthSession, normalizeBranchId, normalizeCompanyId, persistTenantContext } from "./lib/apiFetchV1.ts";
 import { AppShell } from "./components/shell/AppShell.tsx";
 import { FioriLaunchpad } from "./components/launchpad/FioriLaunchpad.tsx";
@@ -77,6 +65,7 @@ import { VendorReturnModal } from "./components/procurement/VendorReturnModal.ts
 import { X } from "lucide-react";
 
 // Lazy-loaded components (heavy feature modules)
+const BusinessProfileTab = lazy(() => import("./components/BusinessProfileTab.tsx").then(m => ({ default: m.BusinessProfileTab })));
 const SalesStudioTab = lazy(() => import("./components/SalesStudioTab.tsx").then(m => ({ default: m.SalesStudioTab })));
 const ReportDesignerTab = lazy(() => import("./components/ReportDesignerTab.tsx").then(m => ({ default: m.ReportDesignerTab })));
 const PurchaseStudioTab = lazy(() => import("./components/PurchaseStudioTab.tsx").then(m => ({ default: m.PurchaseStudioTab })));
@@ -109,7 +98,7 @@ const MenuManagerStudioTab = lazy(() => import("./components/MenuManagerStudioTa
 // Tab loading fallback component
 const TabLoadingFallback = () => (
   <div className="w-full h-full flex flex-col items-center justify-center bg-theme-base text-theme-primary">
-    <div className="animate-spin rounded-full h-12 w-12 border-4 border-theme-divider border-t-[#2563EB]" />
+    <div className="animate-spin rounded-full h-12 w-12 border-4 border-theme-divider border-t-[#606060]" />
     <p className="mt-4 text-sm font-mono text-theme-muted">Loading module...</p>
   </div>
 );
@@ -120,9 +109,9 @@ const StandaloneWindowView: React.FC<{ registeredWorkspaces: Array<{ id: string;
 
   if (standaloneSalesOrder) {
     return (
-      <div className="fixed inset-0 z-[10000] flex flex-col overflow-hidden bg-[#eceff3] text-slate-800 font-sans select-none border border-slate-300 shadow-2xl">
+      <div className="fixed inset-0 z-[10000] flex flex-col overflow-hidden bg-[#efefef] text-slate-800 font-sans select-none border border-slate-300 shadow-2xl">
         {/* Optimized Header - 2 lines, compact spacing */}
-        <div className="px-1.5 bg-[#dfe5ee] border-b border-slate-300 flex flex-col shrink-0 shadow-inner">
+        <div className="px-1.5 bg-[#e4e4e4] border-b border-slate-300 flex flex-col shrink-0 shadow-inner">
           {/* Line 1: Action buttons + Title + Window controls */}
           <div className="h-[24px] flex items-center justify-between gap-1 overflow-hidden">
             <div className="flex items-center gap-0.5 shrink-0 min-w-0">
@@ -271,13 +260,13 @@ const AppContent: React.FC = () => {
   
   const [currentUser, setCurrentUser] = useState<{ role: string; name: string; passwordResetRequired?: boolean; companyId?: string; branchId?: string } | null>(null);
   const [companyContextResolved, setCompanyContextResolved] = useState<boolean>(() => {
-    return Boolean(localStorage.getItem("smriti_company_id") && localStorage.getItem("smriti_jwt_token"));
+    return Boolean(localStorage.getItem("tileflow_company_id") && localStorage.getItem("tileflow_jwt_token"));
   });
   const [checkingAuth, setCheckingAuth] = useState(true);
   const standaloneVendorReturn = typeof window !== "undefined" && new URLSearchParams(window.location.search).get("standalone_vendor_return") === "1";
 
   const checkAuth = async () => {
-    const token = localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token");
+    const token = localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token");
     if (!token) {
       setCurrentUser(null);
       setCompanyContextResolved(false);
@@ -288,17 +277,17 @@ const AppContent: React.FC = () => {
       // Migrated: GET /api/auth/me (Express session) → GET /api/v1/auth/me (FastAPI JWT)
       const data = await apiFetchV1("/auth/me");
       if (data) {
-        const normalizedCompanyId = normalizeCompanyId(data.company_id ?? localStorage.getItem("smriti_company_id"));
-        const normalizedBranchId = normalizeBranchId(data.branch_id ?? localStorage.getItem("smriti_branch_id"));
+        const normalizedCompanyId = normalizeCompanyId(data.company_id ?? localStorage.getItem("tileflow_company_id"));
+        const normalizedBranchId = normalizeBranchId(data.branch_id ?? localStorage.getItem("tileflow_branch_id"));
 
         if (data.company_id) {
           persistTenantContext({
             companyId: data.company_id,
-            companyCode: data.company_code ?? localStorage.getItem("smriti_company_code"),
-            branchId: data.branch_id ?? localStorage.getItem("smriti_branch_id"),
-            branchCode: data.branch_code ?? localStorage.getItem("smriti_branch_code"),
-            companyName: data.company_name ?? localStorage.getItem("smriti_company_name"),
-            branchName: data.branch_name ?? localStorage.getItem("smriti_branch_name"),
+            companyCode: data.company_code ?? localStorage.getItem("tileflow_company_code"),
+            branchId: data.branch_id ?? localStorage.getItem("tileflow_branch_id"),
+            branchCode: data.branch_code ?? localStorage.getItem("tileflow_branch_code"),
+            companyName: data.company_name ?? localStorage.getItem("tileflow_company_name"),
+            branchName: data.branch_name ?? localStorage.getItem("tileflow_branch_name"),
           });
         }
 
@@ -309,7 +298,7 @@ const AppContent: React.FC = () => {
           branchId: normalizedBranchId,
           passwordResetRequired: data.password_reset_required ?? false,
         });
-        setCompanyContextResolved(Boolean(normalizedCompanyId && normalizedBranchId && localStorage.getItem("smriti_company_id") && localStorage.getItem("smriti_branch_id")));
+        setCompanyContextResolved(Boolean(normalizedCompanyId && normalizedBranchId && localStorage.getItem("tileflow_company_id") && localStorage.getItem("tileflow_branch_id")));
       } else {
         setCurrentUser(null);
         setCompanyContextResolved(false);
@@ -434,11 +423,11 @@ const AppContent: React.FC = () => {
       }
     };
 
-    window.addEventListener("smriti_open_print_preview", handleOpenPrintPreview);
+    window.addEventListener("tileflow_open_print_preview", handleOpenPrintPreview);
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      window.removeEventListener("smriti_open_print_preview", handleOpenPrintPreview);
+      window.removeEventListener("tileflow_open_print_preview", handleOpenPrintPreview);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, []);
@@ -521,6 +510,11 @@ const AppContent: React.FC = () => {
             gstPercentage: p.gst_percentage ? parseFloat(p.gst_percentage) : 18,
             styleCode: p.style_code,
             costPrice: p.cost_price ? parseFloat(p.cost_price) : 0,
+            buying_price: p.buying_price,
+            sqft_per_box: p.sqft_per_box,
+            pieces_per_box: p.pieces_per_box,
+            batch_shade_no: p.batch_shade_no,
+            caliber_code: p.caliber_code,
             sku: p.sku,
             hsnCode: p.hsn_code,
             attributes: p.attributes || {},
@@ -561,9 +555,9 @@ const AppContent: React.FC = () => {
       const icon = tabConfig ? tabConfig.icon : "description";
       popOutTab(activeTab, title, icon);
     };
-    window.addEventListener("smriti_popout_current_tab", handlePopoutEvent);
+    window.addEventListener("tileflow_popout_current_tab", handlePopoutEvent);
     return () => {
-      window.removeEventListener("smriti_popout_current_tab", handlePopoutEvent);
+      window.removeEventListener("tileflow_popout_current_tab", handlePopoutEvent);
     };
   }, [activeTab, registeredWorkspaces, popOutTab]);
 
@@ -577,7 +571,7 @@ const AppContent: React.FC = () => {
       dev_tracker: "dev-tracker",
       system: "masters",
       settings: "profiles",
-      about: "about-smriti",
+      about: "about-tileflow",
       grn: "purchase",
       "menu-manager": "menu-manager",
       menu_manager: "menu-manager",
@@ -630,12 +624,12 @@ const AppContent: React.FC = () => {
       const detail = (event as CustomEvent<{ moduleId?: string; searchQuery?: string }>).detail;
       const moduleId = detail?.moduleId;
       if (moduleId === "stock-ledger" && detail?.searchQuery) {
-        sessionStorage.setItem("smriti_stock_ledger_search", detail.searchQuery);
+        sessionStorage.setItem("tileflow_stock_ledger_search", detail.searchQuery);
       }
       if (moduleId) setActiveTab(mapModuleId(moduleId));
     };
-    window.addEventListener("smriti_navigate_module", handleMenuSearchNavigation);
-    return () => window.removeEventListener("smriti_navigate_module", handleMenuSearchNavigation);
+    window.addEventListener("tileflow_navigate_module", handleMenuSearchNavigation);
+    return () => window.removeEventListener("tileflow_navigate_module", handleMenuSearchNavigation);
   }, []);
 
   const renderTab = (tabId: string) => {
@@ -781,8 +775,8 @@ const AppContent: React.FC = () => {
         return <PrintStudioTab />;
       case "print-history":
         return <PrintHistoryTab />;
-      case "about-smriti":
-        return <AboutSmritiTab />;
+      case "about-tileflow":
+        return <AboutTileFlowTab />;
       case "tax-invoice":
       case "distributor-tax-invoice":
       case "tax-invoice-workspace":
@@ -827,6 +821,8 @@ const AppContent: React.FC = () => {
         return <StorePolicyStudio />;
 
 
+      case "business-profile":
+        return <BusinessProfileTab currentUser={currentUser} onNotification={addNotification} />;
       case "wms":
       case "wms-dashboard":
       case "stock-transfers":
@@ -837,7 +833,7 @@ const AppContent: React.FC = () => {
           <SetupWizardTab 
             onComplete={() => {
               markSetupCompleted();
-              addNotification("Setup Complete", "Welcome to SMRITI Retail OS dashboard!", "success");
+              addNotification("Setup Complete", "Welcome to MQube dashboard!", "success");
               setActiveTab("dashboard");
             }} 
           />
@@ -871,13 +867,13 @@ const AppContent: React.FC = () => {
     }
   };
 
-  // Wrap tab render in SmritiErrorBoundary to isolate module crashes, and Suspense for lazy-loaded modules
+  // Wrap tab render in TileFlowErrorBoundary to isolate module crashes, and Suspense for lazy-loaded modules
   const renderTabSafe = (tabId: string) => (
-    <SmritiErrorBoundary key={tabId} tabId={tabId} onNotification={addNotification}>
+    <TileFlowErrorBoundary key={tabId} tabId={tabId} onNotification={addNotification}>
       <Suspense fallback={<TabLoadingFallback />}>
         {renderTab(tabId)}
       </Suspense>
-    </SmritiErrorBoundary>
+    </TileFlowErrorBoundary>
   );
 
   if (standaloneVendorReturn) {
@@ -900,7 +896,7 @@ const AppContent: React.FC = () => {
   if (checkingAuth) {
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-theme-base text-theme-primary">
-        <div className="w-10 h-10 rounded-xl bg-[#2563EB] flex items-center justify-center font-bold text-lg text-white border border-theme-divider shadow-lg animate-pulse">
+        <div className="w-10 h-10 rounded-xl bg-[#606060] flex items-center justify-center font-bold text-lg text-white border border-theme-divider shadow-lg animate-pulse">
           S
         </div>
         <p className="mt-4 text-[10px] font-mono text-theme-muted tracking-widest uppercase">
@@ -941,7 +937,7 @@ const AppContent: React.FC = () => {
   if (currentUser && isSetupCompleted === null) {
     return (
       <div className="min-h-screen w-full flex flex-col items-center justify-center bg-theme-base text-theme-primary">
-        <div className="w-10 h-10 rounded-xl bg-[#2563EB] flex items-center justify-center font-bold text-lg text-white border border-theme-divider shadow-lg animate-pulse">
+        <div className="w-10 h-10 rounded-xl bg-[#606060] flex items-center justify-center font-bold text-lg text-white border border-theme-divider shadow-lg animate-pulse">
           S
         </div>
         <p className="mt-4 text-[10px] font-mono text-theme-muted tracking-widest uppercase">
@@ -1046,7 +1042,7 @@ const AppContent: React.FC = () => {
         onClose={() => setSelectedFormula(null)}
       />
 
-      {/* SMRITI Global Interactive Print Preview Engine Modal — conditional mount only when active */}
+      {/* MQube Global Interactive Print Preview Engine Modal — conditional mount only when active */}
       {isPrintPreviewOpen && (
         <PrintPreviewModal
           isOpen={isPrintPreviewOpen}

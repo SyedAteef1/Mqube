@@ -1,21 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi } from "vitest";
 import { ProPosCartItem, ProPosCustomer, ProPosTenderSplit } from "../components/billing/propos/types.ts";
 
-describe("SMRITI 9 POS — Hotkeys, Direct Entry & Billing Engine Unit Tests", () => {
+describe("MQube 9 POS — Hotkeys, Direct Entry & Billing Engine Unit Tests", () => {
   
   // 1. Direct Entry Disc Qty & Disc Amt Bidirectional Calculation
   it("TEST 1: should calculate Disc.Amt correctly when Disc Qty is specified", () => {
@@ -56,7 +42,7 @@ describe("SMRITI 9 POS — Hotkeys, Direct Entry & Billing Engine Unit Tests", (
         name: "Test Shirt",
         size: "32",
         color: "Beige",
-        brand: "SMRITI",
+        brand: "MQube",
         salesStaff: "SM1",
         qty: 1,
         mrp: 999,
@@ -153,7 +139,7 @@ describe("SMRITI 9 POS — Hotkeys, Direct Entry & Billing Engine Unit Tests", (
         name: "Test Shirt",
         size: "32",
         color: "Beige",
-        brand: "SMRITI",
+        brand: "MQube",
         salesStaff: "SM1",
         qty: 2,
         mrp: 999,

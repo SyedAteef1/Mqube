@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.15.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Plan: Reports Module Migration & Governance Update (v3.15.0)
@@ -52,9 +51,9 @@ graph TD
 ### Authentication Bridge (Option A)
 To prevent authentication incompatibility between Express (random token sessions) and FastAPI (signed JWTs via `JWT_SECRET_KEY`) without prematurely migrating all authentication endpoints:
 - We implement **Option A** (client-side bridge): On successful Express login inside `LoginScreen.tsx`, the client immediately queries FastAPI's `/api/v1/auth/login` using the same credentials, retrieving a valid JWT.
-- The JWT is saved in `localStorage` as `smriti_jwt_token`.
-- `apiFetchV1.ts` retrieves `smriti_jwt_token` (with a fallback to `smriti_session_token` for testing) and passes it in the `Authorization: Bearer <token>` header.
-- Upon logout (`App.tsx`), both `smriti_session_token` and `smriti_jwt_token` are cleared.
+- The JWT is saved in `localStorage` as `tileflow_jwt_token`.
+- `apiFetchV1.ts` retrieves `tileflow_jwt_token` (with a fallback to `tileflow_session_token` for testing) and passes it in the `Authorization: Bearer <token>` header.
+- Upon logout (`App.tsx`), both `tileflow_session_token` and `tileflow_jwt_token` are cleared.
 - To bridge the password hashing difference, FastAPI's `verify_password` has been upgraded to support both bcrypt and legacy PBKDF2 hash verification.
 
 ## User Review Required
@@ -69,21 +68,21 @@ No open questions.
 ### Governance Configuration
 
 #### [MODIFY] [.agents/AGENTS.md](file:///d:/IMP/GitHub/SMRITRretailNX/.agents/AGENTS.md)
-- Add "SMRITI Backend System-of-Record Policy" section declaring the FastAPI+Postgres system of record, strangler-fig migration paths, and the Express route freeze.
+- Add "TILEFLOW Backend System-of-Record Policy" section declaring the FastAPI+Postgres system of record, strangler-fig migration paths, and the Express route freeze.
 - Rewrite the Platform Abstraction Layer (PAL) section to match the current FastAPI/Postgres architecture.
 - Bump the version header to `3.15.0` and update modified date to `2026-07-12` (UADHP).
 
 ### Frontend Components
 
 #### [MODIFY] [LoginScreen.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/LoginScreen.tsx)
-- Add Option A authentication bridge to acquire FastAPI access token on login and store it under `smriti_jwt_token`.
+- Add Option A authentication bridge to acquire FastAPI access token on login and store it under `tileflow_jwt_token`.
 - Align quick manager login credentials to use seeded password `Password@123`.
 
 #### [MODIFY] [App.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/App.tsx)
-- Remove `smriti_jwt_token` on logout.
+- Remove `tileflow_jwt_token` on logout.
 
 #### [MODIFY] [apiFetchV1.ts](file:///d:/IMP/GitHub/SMRITRretailNX/src/lib/apiFetchV1.ts)
-- Use `smriti_jwt_token` in authentication headers.
+- Use `tileflow_jwt_token` in authentication headers.
 
 #### [MODIFY] [QuickReportsWidget.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/QuickReportsWidget.tsx)
 - Integrate `apiFetchV1` to fetch daily sales figures and stock valuation metrics on component mount/update.

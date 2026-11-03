@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 4.2.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { 
   Table, 
@@ -39,7 +25,7 @@ import { generateSkuCode } from "../../services/skuGenerationEngine.ts";
 import { AttributeDefinition, Product } from "../../types.ts";
 import { ItemMasterFieldDefinition } from "./types.ts";
 
-interface SmritiItemMasterStudioProps {
+interface TileFlowItemMasterStudioProps {
   onRefreshProducts?: () => Promise<void>;
   onNotification?: (title: string, message: string, type?: "success" | "error") => void;
   currentUser?: { role: string; name: string } | null;
@@ -54,7 +40,7 @@ interface ParsedRowData {
   isSkipped?: boolean;
 }
 
-export const ItemMasterStudio: React.FC<SmritiItemMasterStudioProps> = ({
+export const ItemMasterStudio: React.FC<TileFlowItemMasterStudioProps> = ({
   onRefreshProducts,
   onNotification,
   currentUser,
@@ -75,8 +61,8 @@ export const ItemMasterStudio: React.FC<SmritiItemMasterStudioProps> = ({
   // Listen to global visibility changes
   useEffect(() => {
     const handleVisChange = () => setVisibilityVersion(v => v + 1);
-    window.addEventListener("smriti_field_visibility_updated", handleVisChange);
-    return () => window.removeEventListener("smriti_field_visibility_updated", handleVisChange);
+    window.addEventListener("tileflow_field_visibility_updated", handleVisChange);
+    return () => window.removeEventListener("tileflow_field_visibility_updated", handleVisChange);
   }, []);
 
   // ── 1. Load Canonical Backend Attribute Definitions ───────────────────────
@@ -322,14 +308,14 @@ export const ItemMasterStudio: React.FC<SmritiItemMasterStudioProps> = ({
         // Standard relational product payload
         const productPayload = {
           code: rawRowObj.code || rawRowObj.stockNo || generateSkuCode({
-            brand: rawRowObj.brand || "SMRITI",
+            brand: rawRowObj.brand || "MQube",
             styleCode: rawRowObj.style || rawRowObj.style_code || "STYLE",
             colour: rawRowObj.colour || rawRowObj.shade || "STD",
             size: rawRowObj.size || "M"
           }, { mode: "AUTO", prefix: "SKU", sequenceStart: 1001 }, row.rowIndex),
           name: rawRowObj.name || rawRowObj.product || `Item ${rawRowObj.code || row.rowIndex}`,
           barcode: rawRowObj.barcode || rawRowObj.code || `BAR-${Date.now()}-${row.rowIndex}`,
-          brand: rawRowObj.brand || "SMRITI",
+          brand: rawRowObj.brand || "MQube",
           category: rawRowObj.category,
           product_type: rawRowObj.productType || undefined,
           cost_price: parseFloat(String(rawRowObj.costPrice || rawRowObj.cost_price || "0").replace(/,/g, "")) || 0,
@@ -394,21 +380,21 @@ export const ItemMasterStudio: React.FC<SmritiItemMasterStudioProps> = ({
   };
 
   return (
-    <div className="bg-[#f7f9fb] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] h-full flex flex-col antialiased select-none overflow-hidden font-sans">
+    <div className="bg-[#f9f9f9] dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] h-full flex flex-col antialiased select-none overflow-hidden font-sans">
       
       {/* Top Studio Control Header */}
-      <header className="bg-white dark:bg-[#131b2e] border-b border-[#c6c6cd] dark:border-[#45464d] px-6 py-3 flex items-center justify-between shrink-0 shadow-xs">
+      <header className="bg-white dark:bg-[#1b1b1b] border-b border-[#c7c7c7] dark:border-[#464646] px-6 py-3 flex items-center justify-between shrink-0 shadow-xs">
         <div>
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#515f74] dark:text-[#bec6e0]">table_view</span>
-            <h2 className="text-base font-bold text-[#191c1e] dark:text-white">
+            <span className="material-symbols-outlined text-[#5e5e5e] dark:text-[#c6c6c6]">table_view</span>
+            <h2 className="text-base font-bold text-[#1c1c1c] dark:text-white">
               Item Master — Bulk Excel Paste &amp; Mapping Engine
             </h2>
-            <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-[#e0e3e5] dark:bg-[#2d3133] text-[#515f74] dark:text-[#bec6e0] rounded">
+            <span className="px-2 py-0.5 text-[10px] font-mono font-bold bg-[#e3e3e3] dark:bg-[#303030] text-[#5e5e5e] dark:text-[#c6c6c6] rounded">
               Unified Catalog: {unifiedItemFields.length} Attributes Active
             </span>
           </div>
-          <p className="text-xs text-[#515f74] dark:text-[#a0a5b5] mt-0.5">
+          <p className="text-xs text-[#5e5e5e] dark:text-[#a5a5a5] mt-0.5">
             Real-time spreadsheet parser, canonical schema alignment, and PostgreSQL persistence.
           </p>
         </div>
@@ -418,7 +404,7 @@ export const ItemMasterStudio: React.FC<SmritiItemMasterStudioProps> = ({
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 border border-[#76777d] text-[#191c1e] dark:text-[#eff1f3] bg-white dark:bg-[#2d3133] hover:bg-[#eceef0] rounded text-xs font-semibold transition"
+            className="px-4 py-2 border border-[#76777d] text-[#1c1c1c] dark:text-[#f1f1f1] bg-white dark:bg-[#303030] hover:bg-[#eeeeee] rounded text-xs font-semibold transition"
           >
             Cancel
           </button>
@@ -426,7 +412,7 @@ export const ItemMasterStudio: React.FC<SmritiItemMasterStudioProps> = ({
             type="button"
             onClick={handleResolveAndImport}
             disabled={isProcessing || matrix.length === 0}
-            className="px-5 py-2 bg-[#000000] dark:bg-[#dae2fd] text-white dark:text-[#131b2e] hover:bg-[#2d3133] dark:hover:bg-white rounded text-xs font-bold transition flex items-center gap-2 shadow-xs disabled:opacity-40"
+            className="px-5 py-2 bg-[#000000] dark:bg-[#e2e2e2] text-white dark:text-[#1b1b1b] hover:bg-[#303030] dark:hover:bg-white rounded text-xs font-bold transition flex items-center gap-2 shadow-xs disabled:opacity-40"
           >
             {isProcessing ? (
               <>
@@ -447,13 +433,13 @@ export const ItemMasterStudio: React.FC<SmritiItemMasterStudioProps> = ({
       <div className="flex-1 grid grid-cols-12 gap-4 p-4 min-h-0 overflow-hidden">
         
         {/* Left Panel: Raw Paste Area */}
-        <div className="col-span-12 xl:col-span-4 flex flex-col bg-white dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg overflow-hidden shadow-xs">
-          <div className="bg-[#f2f4f6] dark:bg-[#131b2e] px-4 py-2.5 border-b border-[#c6c6cd] dark:border-[#45464d] flex items-center justify-between shrink-0">
-            <h3 className="text-xs font-bold text-[#191c1e] dark:text-white flex items-center gap-1.5 uppercase tracking-wider">
-              <span className="material-symbols-outlined text-[#515f74] text-base">content_paste</span>
+        <div className="col-span-12 xl:col-span-4 flex flex-col bg-white dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded-lg overflow-hidden shadow-xs">
+          <div className="bg-[#f4f4f4] dark:bg-[#1b1b1b] px-4 py-2.5 border-b border-[#c7c7c7] dark:border-[#464646] flex items-center justify-between shrink-0">
+            <h3 className="text-xs font-bold text-[#1c1c1c] dark:text-white flex items-center gap-1.5 uppercase tracking-wider">
+              <span className="material-symbols-outlined text-[#5e5e5e] text-base">content_paste</span>
               Raw Data Input
             </h3>
-            <span className="px-2 py-0.5 bg-[#e0e3e5] dark:bg-[#45464d] text-[#191c1e] dark:text-[#eff1f3] text-[10px] font-mono font-bold rounded">
+            <span className="px-2 py-0.5 bg-[#e3e3e3] dark:bg-[#464646] text-[#1c1c1c] dark:text-[#f1f1f1] text-[10px] font-mono font-bold rounded">
               Ctrl+V
             </span>
           </div>
@@ -466,13 +452,13 @@ export const ItemMasterStudio: React.FC<SmritiItemMasterStudioProps> = ({
 
 Expected Columns:
 StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
-              className="w-full h-full resize-none border-none p-3 font-mono text-xs text-[#191c1e] dark:text-[#eff1f3] bg-transparent outline-none leading-relaxed placeholder-[#76777d]"
+              className="w-full h-full resize-none border-none p-3 font-mono text-xs text-[#1c1c1c] dark:text-[#f1f1f1] bg-transparent outline-none leading-relaxed placeholder-[#76777d]"
             />
 
             {!rawText && (
               <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center opacity-40">
                 <span className="material-symbols-outlined text-4xl mb-1 text-[#76777d]">grid_on</span>
-                <p className="text-xs font-semibold text-[#191c1e] dark:text-white text-center max-w-[200px]">
+                <p className="text-xs font-semibold text-[#1c1c1c] dark:text-white text-center max-w-[200px]">
                   Copy rows in Excel (Ctrl+C) and paste them here (Ctrl+V).
                 </p>
               </div>
@@ -480,15 +466,15 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
           </div>
 
           {/* Left Footer Bar */}
-          <div className="bg-[#eceef0] dark:bg-[#131b2e] px-4 py-2 border-t border-[#c6c6cd] dark:border-[#45464d] flex justify-between items-center shrink-0 text-xs">
-            <span className="font-mono text-[#515f74] dark:text-[#bec6e0] font-bold">
+          <div className="bg-[#eeeeee] dark:bg-[#1b1b1b] px-4 py-2 border-t border-[#c7c7c7] dark:border-[#464646] flex justify-between items-center shrink-0 text-xs">
+            <span className="font-mono text-[#5e5e5e] dark:text-[#c6c6c6] font-bold">
               {headerDetection.dataRows.length} data rows detected
             </span>
             <button
               type="button"
               onClick={() => { setRawText(""); setSkippedRowIndices(new Set()); }}
               disabled={!rawText}
-              className="text-[#000000] dark:text-[#dae2fd] font-semibold hover:underline disabled:opacity-30"
+              className="text-[#000000] dark:text-[#e2e2e2] font-semibold hover:underline disabled:opacity-30"
             >
               Clear
             </button>
@@ -496,12 +482,12 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
         </div>
 
         {/* Right Panel: Live Mapping & Preview Table */}
-        <div className="col-span-12 xl:col-span-8 flex flex-col bg-white dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg overflow-hidden shadow-xs min-h-0">
+        <div className="col-span-12 xl:col-span-8 flex flex-col bg-white dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded-lg overflow-hidden shadow-xs min-h-0">
           
           {/* Right Header Bar */}
-          <div className="bg-[#f2f4f6] dark:bg-[#131b2e] px-4 py-2 border-b border-[#c6c6cd] dark:border-[#45464d] flex items-center justify-between shrink-0">
-            <h3 className="text-xs font-bold text-[#191c1e] dark:text-white flex items-center gap-1.5 uppercase tracking-wider">
-              <span className="material-symbols-outlined text-[#515f74] text-base">table_chart</span>
+          <div className="bg-[#f4f4f4] dark:bg-[#1b1b1b] px-4 py-2 border-b border-[#c7c7c7] dark:border-[#464646] flex items-center justify-between shrink-0">
+            <h3 className="text-xs font-bold text-[#1c1c1c] dark:text-white flex items-center gap-1.5 uppercase tracking-wider">
+              <span className="material-symbols-outlined text-[#5e5e5e] text-base">table_chart</span>
               Live Mapping Preview
             </h3>
 
@@ -512,19 +498,19 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
                   {errorCount} Mapping Error{errorCount > 1 ? "s" : ""}
                 </div>
               ) : (
-                <div className="flex items-center gap-1 text-[#0c9488] text-[11px] font-bold">
+                <div className="flex items-center gap-1 text-[#767676] text-[11px] font-bold">
                   <CheckCircle size={12} />
                   All Rows Valid
                 </div>
               )}
 
-              <div className="h-4 w-px bg-[#c6c6cd] dark:bg-[#45464d]"></div>
+              <div className="h-4 w-px bg-[#c7c7c7] dark:bg-[#464646]"></div>
 
               <button
                 type="button"
                 onClick={() => setShowOnlyErrors(prev => !prev)}
                 className={`text-xs px-2 py-1 rounded flex items-center gap-1 transition ${
-                  showOnlyErrors ? "bg-[#ba1a1a] text-white font-bold" : "text-[#515f74] hover:text-[#191c1e] dark:text-[#bec6e0]"
+                  showOnlyErrors ? "bg-[#ba1a1a] text-white font-bold" : "text-[#5e5e5e] hover:text-[#1c1c1c] dark:text-[#c6c6c6]"
                 }`}
                 title="Toggle errors filter"
               >
@@ -535,18 +521,18 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
           </div>
 
           {/* Table Container with Sticky Column Header Selectors */}
-          <div className="flex-1 overflow-auto bg-white dark:bg-[#191c1e]">
+          <div className="flex-1 overflow-auto bg-white dark:bg-[#1c1c1c]">
             {headerDetection.dataRows.length === 0 ? (
               <div className="h-full flex flex-col items-center justify-center text-slate-400 p-8 text-center">
-                <Table size={36} className="mb-2 opacity-30 text-[#515f74]" />
+                <Table size={36} className="mb-2 opacity-30 text-[#5e5e5e]" />
                 <p className="text-xs font-semibold">No data loaded yet.</p>
                 <p className="text-[11px] text-[#76777d] mt-0.5">Paste tab-delimited Excel cells on the left to preview column mapping.</p>
               </div>
             ) : (
               <table className="w-full text-left border-collapse min-w-[800px]">
-                <thead className="sticky top-0 bg-white dark:bg-[#131b2e] z-10 shadow-xs">
-                  <tr className="border-b border-[#c6c6cd] dark:border-[#45464d]">
-                    <th className="w-10 px-3 py-2 border-r border-[#c6c6cd] dark:border-[#45464d] bg-[#f2f4f6] dark:bg-[#131b2e] text-center text-[10px] font-mono font-bold text-[#515f74]">
+                <thead className="sticky top-0 bg-white dark:bg-[#1b1b1b] z-10 shadow-xs">
+                  <tr className="border-b border-[#c7c7c7] dark:border-[#464646]">
+                    <th className="w-10 px-3 py-2 border-r border-[#c7c7c7] dark:border-[#464646] bg-[#f4f4f4] dark:bg-[#1b1b1b] text-center text-[10px] font-mono font-bold text-[#5e5e5e]">
                       #
                     </th>
                     {detectedColumns.map((col) => {
@@ -558,7 +544,7 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
                       return (
                         <th
                           key={col.sourceIndex}
-                          className="px-3 py-2 border-r border-[#c6c6cd] dark:border-[#45464d] min-w-[140px]"
+                          className="px-3 py-2 border-r border-[#c7c7c7] dark:border-[#464646] min-w-[140px]"
                         >
                           <div className="flex flex-col gap-1">
                             <span className="text-[10px] text-[#76777d] font-mono uppercase truncate">
@@ -572,8 +558,8 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
                               className={`w-full text-xs font-semibold px-2 py-1 rounded border outline-none cursor-pointer transition ${
                                 effectiveKey
                                   ? isAutoMapped
-                                    ? "bg-[#d5e3fd] text-[#0d1c2f] border-[#515f74]"
-                                    : "bg-[#e0e3e5] text-[#191c1e] border-[#76777d]"
+                                    ? "bg-[#e2e2e2] text-[#1a1a1a] border-[#5e5e5e]"
+                                    : "bg-[#e3e3e3] text-[#1c1c1c] border-[#76777d]"
                                   : "bg-[#ffdad6] text-[#93000a] border-[#ba1a1a]"
                               }`}
                             >
@@ -591,7 +577,7 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133] text-xs">
+                <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030] text-xs">
                   {filteredRows.map((row) => {
                     const isConflict = row.hasError && !row.isSkipped;
                     const isSkipped = row.isSkipped;
@@ -601,13 +587,13 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
                         key={row.rowIndex}
                         className={`transition ${
                           isSkipped
-                            ? "opacity-30 bg-[#eceef0]"
+                            ? "opacity-30 bg-[#eeeeee]"
                             : isConflict
                             ? "bg-[#ffdad6]/25 hover:bg-[#ffdad6]/40"
-                            : "hover:bg-[#f7f9fb] dark:hover:bg-[#2d3133]"
+                            : "hover:bg-[#f9f9f9] dark:hover:bg-[#303030]"
                         }`}
                       >
-                        <td className="px-3 py-2 border-r border-[#c6c6cd] dark:border-[#45464d] text-center font-mono font-bold text-[#515f74] bg-[#f2f4f6] dark:bg-[#131b2e]/60">
+                        <td className="px-3 py-2 border-r border-[#c7c7c7] dark:border-[#464646] text-center font-mono font-bold text-[#5e5e5e] bg-[#f4f4f4] dark:bg-[#1b1b1b]/60">
                           {row.rowIndex}
                         </td>
                         {detectedColumns.map((col) => {
@@ -618,8 +604,8 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
                           return (
                             <td
                               key={col.sourceIndex}
-                              className={`px-3 py-2 border-r border-[#c6c6cd] dark:border-[#45464d] ${
-                                isKeyField ? "font-mono font-bold text-[#000000] dark:text-[#dae2fd]" : ""
+                              className={`px-3 py-2 border-r border-[#c7c7c7] dark:border-[#464646] ${
+                                isKeyField ? "font-mono font-bold text-[#000000] dark:text-[#e2e2e2]" : ""
                               }`}
                             >
                               {val ? (
@@ -653,7 +639,7 @@ StockNo	Product	Brand	Style	Shade	Size	MRP	Price	Tax"
                   <button
                     type="button"
                     onClick={handleSkipActiveConflict}
-                    className="px-3 py-1 bg-white dark:bg-[#2d3133] text-[#191c1e] dark:text-white border border-[#c6c6cd] rounded font-semibold text-[11px] hover:bg-[#eceef0] transition"
+                    className="px-3 py-1 bg-white dark:bg-[#303030] text-[#1c1c1c] dark:text-white border border-[#c7c7c7] rounded font-semibold text-[11px] hover:bg-[#eeeeee] transition"
                   >
                     Skip Row {activeConflictRow + 1}
                   </button>

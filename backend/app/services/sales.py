@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.18.1 (Phase 2 — Sales UPDATE/DELETE/CANCEL)
-Created      : 2026-07-11
-Modified     : 2026-07-15 (Phase 2)
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from typing import List, Optional, Dict, Any
 from decimal import Decimal
@@ -28,7 +14,7 @@ from ..models.sales import (
     SalesOrder, SalesOrderItem, SalesOrderInvoiceAllocation,
     SalesReturn, SalesReturnItem,
 )
-from ..models.inventory import Product, StockMovement
+from ..models.inventory import Product, ProductBatchStock, StockMovement
 from ..models.tenant import Company
 from ..core.gst_engine import (
     calculate_line_item_tax,
@@ -37,6 +23,7 @@ from ..core.gst_engine import (
     determine_gstr1_table,
     GST_STATE_CODES,
 )
+from ..core.tile_calc import boxes_for_sqft
 from ..schemas.sales import (
     SalesInvoiceCreate,
     SalesInvoiceUpdate,
@@ -74,6 +61,21 @@ class SalesService:
     # Sales Invoice
     # â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
+    async def next_invoice_number(self, prefix: str) -> int:
+        """Returns one above the highest number used as `{prefix}-{number}`."""
+        rows = await self.db.execute(
+            select(SalesInvoice.invoice_no).where(
+                SalesInvoice.company_id == self.tenant_ctx.company_id,
+                SalesInvoice.invoice_no.like(f"{prefix}-%"),
+            )
+        )
+        numbers = [
+            int(no[len(prefix) + 1:])
+            for no in rows.scalars().all()
+            if no[len(prefix) + 1:].isdigit()
+        ]
+        return max(numbers, default=0) + 1
+
     async def create_sales_invoice(self, invoice_in: SalesInvoiceCreate, idempotency_key: Optional[str] = None) -> SalesInvoice:
         # Auto-generate ID and invoice_no if missing; use idempotency_key as primary invoice_id if supplied
         invoice_id = idempotency_key or invoice_in.id or f"inv-{int(datetime.now(timezone.utc).timestamp())}-{uuid.uuid4().hex[:6]}"
@@ -106,7 +108,9 @@ class SalesService:
 
         # Resolve customer details & Place of Supply (POS)
         resolved_customer_id = invoice_in.customer_id or "CUST-WALKIN"
-        customer_gstin = invoice_in.customer_gstin
+        customer_gstin = (invoice_in.customer_gstin or "").strip().upper() or None
+        if customer_gstin and not validate_gstin(customer_gstin)[0]:
+            raise HTTPException(status_code=422, detail=f"Invalid customer GSTIN: {customer_gstin}")
         customer_name = invoice_in.customer_name
         pos_state_name = invoice_in.pos_state
         pos_state_code = None
@@ -140,8 +144,9 @@ class SalesService:
             pos_state_name = pos_state_name or GST_STATE_CODES.get(company_state_code, "Home State")
 
         # Determine inter-state jurisdiction
+        # A valid GSTIN fixes the place of supply; the caller's flag only applies to unregistered buyers.
         is_interstate = (company_state_code != pos_state_code)
-        if invoice_in.is_interstate is not None:
+        if not is_registered_b2b and invoice_in.is_interstate is not None:
             is_interstate = invoice_in.is_interstate
 
         from .inventory_wms import InventoryWmsService
@@ -172,8 +177,24 @@ class SalesService:
                 raise HTTPException(status_code=404, detail=f"Product not found: {item.product_id or item.code}")
 
             quantity = Decimal(str(item.quantity))
+            sqft_requested = None
+            sqft_per_box = None
+            sqft_billed = None
+            if item.sqft_requested is not None:
+                if not product.sqft_per_box:
+                    raise HTTPException(
+                        status_code=422,
+                        detail=f"Set Sq.Ft. per box on '{product.name}' before billing by Sq.Ft.",
+                    )
+                sqft_requested = Decimal(str(item.sqft_requested))
+                sqft_per_box = Decimal(str(product.sqft_per_box))
+                box_calc = boxes_for_sqft(sqft_requested, sqft_per_box)
+                quantity = box_calc["boxes"]
+                sqft_billed = box_calc["sqft_billed"]
+
             unit_price = Decimal(str(item.price))
-            gst_rate = Decimal(str(item.gst_rate or "18.00"))
+            rate_source = item.gst_rate if item.gst_rate is not None else product.gst_percentage
+            gst_rate = Decimal(str(rate_source if rate_source is not None else "18.00"))
 
             # Determine batch allocation
             assigned_batch = item.batch_no or "BATCH-OPENING"
@@ -200,6 +221,23 @@ class SalesService:
                                 "batch_no": a["batch_no"],
                                 "quantity": Decimal(str(a["allocated_quantity"]))
                             })
+                    except HTTPException:
+                        # Batch-tracked stock that falls short must stop the sale;
+                        # only products with no batch records use the opening batch.
+                        has_batches = await self.db.execute(
+                            select(ProductBatchStock.id).where(
+                                ProductBatchStock.product_id == product.id,
+                                ProductBatchStock.is_deleted == False,
+                            ).limit(1)
+                        )
+                        if has_batches.first() is not None:
+                            raise
+                        assigned_batch = "BATCH-OPENING"
+                        batch_deductions.append({
+                            "product": product,
+                            "batch_no": assigned_batch,
+                            "quantity": quantity
+                        })
                     except Exception:
                         assigned_batch = "BATCH-OPENING"
                         batch_deductions.append({
@@ -249,8 +287,17 @@ class SalesService:
                 mrp=item.mrp or product.mrp or unit_price,
                 disc_pct=disc_pct,
                 line_no=item.line_no or idx,
+                sqft_requested=sqft_requested,
+                sqft_per_box=sqft_per_box,
+                sqft_billed=sqft_billed,
             )
             invoice_items.append(db_item)
+
+        # Round the bill to the nearest rupee (standard Indian invoicing, CGST Act s.170).
+        # Taxable value and GST stay exact; the difference is the round-off, which the
+        # GL posts to the Roundoff account and the printed invoice shows as its own line.
+        from decimal import ROUND_HALF_UP
+        calculated_grand_total = calculated_grand_total.quantize(Decimal("1"), rounding=ROUND_HALF_UP).quantize(Decimal("0.01"))
 
         # 2. Check customer credit limit & policy for completed sales
         if resolved_customer_id and resolved_customer_id != "CUST-WALKIN" and is_settled_status:
@@ -707,8 +754,14 @@ class SalesService:
 
         # State / Supply logic
         company_state_code = "27"
+        comp_res = await self.db.execute(
+            select(Company).filter(Company.id == self.tenant_ctx.company_id, Company.is_deleted == False)
+        )
+        company_obj = comp_res.scalars().first()
+        if company_obj and company_obj.gst_number:
+            company_state_code = extract_state_code_from_gstin(company_obj.gst_number) or company_state_code
         customer_gstin = so.customer_gstin or ""
-        pos_code = "27"
+        pos_code = company_state_code
         if customer_gstin and len(customer_gstin) >= 2 and customer_gstin[:2].isdigit():
             pos_code = customer_gstin[:2]
         is_interstate = (pos_code != company_state_code)
@@ -1548,7 +1601,7 @@ class SalesService:
     ) -> SalesOrder:
         res = await self.db.execute(
             select(SalesOrder)
-            .options(selectinload(SalesOrder.items))
+            .options(selectinload(SalesOrder.items), selectinload(SalesOrder.allocations))
             .where(
                 SalesOrder.id         == so_id,
                 SalesOrder.company_id == self.tenant_ctx.company_id,
@@ -1596,7 +1649,7 @@ class SalesService:
 
         result = await self.db.execute(
             select(SalesOrder)
-            .options(selectinload(SalesOrder.items))
+            .options(selectinload(SalesOrder.items), selectinload(SalesOrder.allocations))
             .where(SalesOrder.id == so.id)
         )
         return result.scalars().first()

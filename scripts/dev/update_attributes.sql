@@ -1,12 +1,11 @@
--- Project      : SMRITI Retail OS
--- Author       : Jawahar Ramkripal Mallah
--- Email        : support@smritibooks.com
--- Websites     : smritibooks.com | erpnbook.com | aitdl.com
+-- Project      : TILEFLOW Retail OS
+-- Author       : Syed Ateef
+-- Email        : ateef@tileflow.in
 -- Version      : 3.16.0
 -- Created      : 2026-07-13
 -- Modified     : 2026-07-13
--- Copyright    : © SMRITIBooks.com. All Rights Reserved.
--- License      : Proprietary Commercial Software
+-- Copyright    :  tileflow.in. Open Source - Permissive Use
+-- License      : MIT Open Source License
 
 UPDATE attribute_definitions
 SET valid_values = '["Black", "White", "Brown", "Red", "Blue", "CHIKKU"]'::jsonb

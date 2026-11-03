@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.8.0
- * Created      : 2026-08-20
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   isQzTrayEnabled,
@@ -93,7 +79,7 @@ describe("QZ Tray Client Utility & Dispatch Suite", () => {
 
     const payload = {
       job_id: "job-test-123",
-      payload: "\x02L\nD11\n121100000200050SMRITI TEST\nQ0001\nE\n",
+      payload: "\x02L\nD11\n121100000200050TILEFLOW TEST\nQ0001\nE\n",
       language: "dpl",
       suggested_printer: "IMPACT by Honeywell IH-2 (300 dpi) - DPL"
     };

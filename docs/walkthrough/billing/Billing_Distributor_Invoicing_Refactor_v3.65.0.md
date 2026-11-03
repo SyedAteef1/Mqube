@@ -1,33 +1,29 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.65.0
   * Created    : 2026-08-25
   * Modified   : 2026-08-25
-  * Copyright  : © SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
-  * Classification: Internal
+  * Copyright  :  tileflow.in. Open Source - Permissive Use
+  * License    : MIT Open Source License
+  * Classification: Open Source
 -->
 
 # Walkthrough: Distributor Invoicing Screen Layout Refactor (v3.65.0)
 
 ## 1. Purpose
-Refactor the SMRITI Distributor Invoicing terminal (`BillingTerm.tsx`), Settlement Studio modal (`InvoiceSettlementD.tsx`), and associated modules to match the exact visual structure, layout, typography, and action flow of `F:\SMRITI\Tax Invoice\code.html` while preserving 100% of existing controls, shortcuts, modals, calculations, and business functions.
+Refactor the TILEFLOW Distributor Invoicing terminal (`BillingTerm.tsx`), Settlement Studio modal (`InvoiceSettlementD.tsx`), and associated modules to match the exact visual structure, layout, typography, and action flow of `F:\TILEFLOW\Tax Invoice\code.html` while preserving 100% of existing controls, shortcuts, modals, calculations, and business functions.
 
 ## 2. Scope
 - `BillingTerm.tsx`: Top header navigation bar with live clock, quick actions (`New`, `Void`, `Return`, `Reprint`), Header Section Card with 2-row layout (`Bill Type`, `Transaction`, `Doc Prefix`, `Doc No.`, `Import`, `Recall`, `Customer` search with F2, `Sales Staff`), Detail Section table with monospace tabular numbers and bottom direct entry row (F11/F1), Footer Section with 3-tab details (`Transporter Details`, `Payment Details`, `AddOns And Deductions`), right totals card (`Sales`, `Discounts`, `Sales Tax`, `Add-ons`, `Deductions`), bottom high-visibility metric bar with Net Amount highlight (`#315384`), and persistent shortcut footer.

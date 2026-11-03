@@ -1,21 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: Authoritative Double-Entry General Ledger Engine (Slice 8)
 
 ## 1. Purpose
-Establish the canonical **Authoritative Double-Entry General Ledger Engine** for SMRITI Retail OS, providing strict balance invariants ($\sum \text{Debits} = \sum \text{Credits}$), hierarchical Chart of Accounts (COA), automated document accounting integration (Sales Invoices, Purchases, Payment Settlements), Trial Balance & Financial Statement aggregations, and canonical Outbox event streaming (`GL_VOUCHER_POSTED`).
+Establish the canonical **Authoritative Double-Entry General Ledger Engine** for TILEFLOW Retail OS, providing strict balance invariants ($\sum \text{Debits} = \sum \text{Credits}$), hierarchical Chart of Accounts (COA), automated document accounting integration (Sales Invoices, Purchases, Payment Settlements), Trial Balance & Financial Statement aggregations, and canonical Outbox event streaming (`GL_VOUCHER_POSTED`).
 
 ---
 
@@ -23,8 +21,8 @@ Establish the canonical **Authoritative Double-Entry General Ledger Engine** for
 - Hierarchical Chart of Accounts schema (`accounts`) supporting 5 root accounting heads (Assets, Liabilities, Equity, Revenue, Expense) and standard Indian retail ledgers (CGST, SGST, IGST, Debtors, Creditors, Cash, Bank, Inventory, COGS, Roundoff, Inventory Loss).
 - Immutable Journal Voucher headers (`journal_vouchers`) and general ledger entries (`general_ledger_entries`).
 - Periodic account balance snapshotting table (`account_balance_snapshots`).
-- Domain service `UnifiedAccountingLedgerService` with automated voucher balancing, validation errors (`SMRITI-GL-001`), Trial Balance reporting, Net Profit calculations, Payment settlements, and WMS physical stock audit reconciliations.
-- Alembic database migration `v1343_accounting_gl` applied across tenant databases (`smriti001`, `smriti002`).
+- Domain service `UnifiedAccountingLedgerService` with automated voucher balancing, validation errors (`TILEFLOW-GL-001`), Trial Balance reporting, Net Profit calculations, Payment settlements, and WMS physical stock audit reconciliations.
+- Alembic database migration `v1343_accounting_gl` applied across tenant databases (`tileflow001`, `tileflow002`).
 - 13 comprehensive automated unit and integration tests.
 
 ---
@@ -46,7 +44,7 @@ Establish the canonical **Authoritative Double-Entry General Ledger Engine** for
 ---
 
 ## 5. Architecture Decisions
-- **Strict Invariant Enforcement**: No journal voucher can be committed unless total debits equal total credits within a tolerance of ₹0.001. Unbalanced entries are rejected synchronously with HTTP 400 (`SMRITI-GL-001`).
+- **Strict Invariant Enforcement**: No journal voucher can be committed unless total debits equal total credits within a tolerance of ₹0.001. Unbalanced entries are rejected synchronously with HTTP 400 (`TILEFLOW-GL-001`).
 - **Idempotent COA Seeding**: Company tenant databases automatically initialize a standard Indian Retail Chart of Accounts on first transaction without manual administrative overhead.
 - **Tenant Isolation**: All GL entries and vouchers are scoped to `company_id` and stored exclusively in the tenant PostgreSQL database.
 - **Operational Integration**: Automated GL voucher generation across Sales Invoices, Purchase Receipts (GRN), Multi-Tender Payment Settlements (Cash/Bank vs Receivables/Payables), and WMS Stock Audit Reconciliations (Loss vs Inventory / Inventory vs Income).
@@ -84,7 +82,7 @@ python -m pytest tests/t_unified_ledger.py -v
 - 13/13 tests passed in `t_unified_ledger.py` in 7.42s.
 - Verified idempotent chart of accounts seeding.
 - Verified manual journal voucher posting and balance invariant.
-- Verified rejection of unbalanced vouchers (`SMRITI-GL-001`).
+- Verified rejection of unbalanced vouchers (`TILEFLOW-GL-001`).
 - Verified multi-line sales invoice automated double-entry GL posting with GST and roundoff.
 - Verified purchase receipt automated GL posting.
 - Verified cash payment receipt GL posting (Cash in Hand Dr, Debtors Cr).
@@ -94,7 +92,7 @@ python -m pytest tests/t_unified_ledger.py -v
 - Verified account period balance snapshot generation and closing balance invariant.
 - Verified trial balance debit/credit balance equality.
 - Verified real-time profit & loss statement calculation.
-- Verified multi-tenant database isolation between `smriti001` and `smriti002`.
+- Verified multi-tenant database isolation between `tileflow001` and `tileflow002`.
 
 
 ---

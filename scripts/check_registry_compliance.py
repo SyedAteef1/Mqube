@@ -12,7 +12,7 @@ print("GLOBAL REGISTRY AUDIT - BARCODE FIELD CHECK")
 print("=" * 80)
 
 # 1. Check database constraints
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 print("\n1. DATABASE CONSTRAINTS CHECK:")
@@ -72,7 +72,7 @@ else:
 print("\n3. ESLINT REGISTRY PLUGIN CHECK:")
 print("-" * 80)
 
-eslint_file = "eslint-plugin-smriti-registry.js"
+eslint_file = "eslint-plugin-tileflow-registry.js"
 if os.path.exists(eslint_file):
     with open(eslint_file, 'r', encoding='utf-8') as f:
         eslint_content = f.read()
@@ -114,7 +114,7 @@ except:
 print("\n5. BARCODE COVERAGE VERIFICATION:")
 print("-" * 80)
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 cur.execute('''

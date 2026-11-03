@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-07-13
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { apiFetchV1 } from "../lib/apiFetchV1";
 import { 
@@ -19,7 +6,7 @@ import {
 } from "lucide-react";
 import { AttributeGroup, AttributeDefinition } from "../types.js";
 import { defaultHeaderMappingEngine, HeaderMappingEngine } from "../lib/headerMapping/HeaderMappingEngine";
-import { getSmritiItemMasterFields } from "../lib/headerMapping/HeaderAliasRegistry";
+import { getTileFlowItemMasterFields } from "../lib/headerMapping/HeaderAliasRegistry";
 import { HeaderMappingEngineResult, ColumnMappingResult } from "../lib/headerMapping/types";
 import { HeaderMapPrevewModal } from "./HeaderMappingPrevi.tsx";
 import { HeaderAliasDlgModal } from "./HeaderAliasManager.tsx";
@@ -68,7 +55,7 @@ interface FieldConfig {
   editable: boolean;
 }
 
-const FIELD_CONFIG_STORAGE_KEY = "smriti_excel_import_field_configs";
+const FIELD_CONFIG_STORAGE_KEY = "tileflow_excel_import_field_configs";
 
 const defaultFieldConfigs: FieldConfig[] = [
   { key: "code", label: "SKU CODE", required: true, aliases: ["Product Style Code", "Style Code", "SKU Code", "SKU", "Code", "Product Code"], editable: false },
@@ -213,7 +200,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
         code: "SKU-0001",
         name: "Cotton T-Shirt",
         barcode: "8901234567890",
-        brand: "SMRITI",
+        brand: "MQube",
         category: "Apparel",
         subCategory: "Men",
         size: "M",
@@ -241,7 +228,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
         code: "SKU-0002",
         name: "Denim Jeans",
         barcode: "8901234567891",
-        brand: "SMRITI",
+        brand: "MQube",
         category: "Apparel",
         subCategory: "Men",
         size: "32",
@@ -269,7 +256,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
         code: "SKU-0003",
         name: "Women Top",
         barcode: "8901234567892",
-        brand: "SMRITI",
+        brand: "MQube",
         category: "Apparel",
         subCategory: "Women",
         size: "L",
@@ -297,7 +284,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
         code: "SKU-0004",
         name: "Running Shoes",
         barcode: "8901234567893",
-        brand: "SMRITI",
+        brand: "MQube",
         category: "Footwear",
         subCategory: "Men",
         size: "8",
@@ -424,12 +411,12 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
   };
 
   const handleSaveDraft = () => {
-    localStorage.setItem("smriti_excel_grid_draft", JSON.stringify(rows));
+    localStorage.setItem("tileflow_excel_grid_draft", JSON.stringify(rows));
     onNotification("Draft Saved", `Saved ${rows.length} grid rows to browser local storage.`, "success");
   };
 
   const handleLoadDraft = () => {
-    const saved = localStorage.getItem("smriti_excel_grid_draft");
+    const saved = localStorage.getItem("tileflow_excel_grid_draft");
     if (!saved) {
       onNotification("No Draft", "No saved grid draft found.", "error");
       return;
@@ -623,7 +610,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
       ...definitions.map(a => ({ key: a.name, label: a.label })),
       ...customAttrs.map(c => ({ key: c.key, label: c.label }))
     ];
-    const allAvailableFields = getSmritiItemMasterFields(dynamicAttrsList);
+    const allAvailableFields = getTileFlowItemMasterFields(dynamicAttrsList);
     const customEngine = new HeaderMappingEngine(allAvailableFields);
 
     // Smart Header Row Detection (Spec #14)
@@ -696,7 +683,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
             gst_percentage: parseFloat(row.gstPercentage) || 18.00,
             sku: uniqueSku,
             style_code: row.styleCode.trim() || row.code.trim(),
-            brand: row.brand.trim() || "SMRITI",
+            brand: row.brand.trim() || "MQube",
             hsn_code: row.hsnCode.trim() || "61091000",
             primary_image_url: row.imageLink.trim() || undefined,
             attributes: serializeProductAttributes(row, definitions),
@@ -747,7 +734,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
     const coreLabels = fieldConfigs.map((config) => config.label);
     const attrLabels = activeAttrs.map((a) => a.label);
     const allHeaders = [...coreLabels, ...attrLabels].join("\t");
-    const sampleValues = ["SKU-0001", "Cotton T-Shirt", "8901234567890", "SMRITI", "Apparel", "Men", "M", "Blue", "Navy", "61091000", "18", "599.00", "Pcs"];
+    const sampleValues = ["SKU-0001", "Cotton T-Shirt", "8901234567890", "MQube", "Apparel", "Men", "M", "Blue", "Navy", "61091000", "18", "599.00", "Pcs"];
     const sampleRow = [...sampleValues, ...activeAttrs.map(() => "")].join("\t");
     navigator.clipboard.writeText(`${allHeaders}\n${sampleRow}`).then(() => {
       onNotification("Template & Sample Copied", "Copied headers and a sample row to clipboard.", "success");
@@ -1273,7 +1260,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
               className="px-5 py-2 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white font-bold text-xs rounded-lg transition-all shadow-md flex items-center space-x-1.5 cursor-pointer"
             >
               <CheckCircle2 size={14} />
-              <span>{loading ? "Writing SKU Catalog..." : "Commit Grid to SMRITI DB"}</span>
+              <span>{loading ? "Writing SKU Catalog..." : "Commit Grid to MQube DB"}</span>
             </button>
           </div>
         </div>
@@ -1283,7 +1270,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
       <HeaderMapPrevewModal
         isOpen={isMappingModalOpen}
         mappingResult={pendingMappingEngineResult}
-        availableFields={getSmritiItemMasterFields([
+        availableFields={getTileFlowItemMasterFields([
           ...activeAttrs.map(a => ({ key: a.name, label: a.label })),
           ...customAttrs.map(c => ({ key: c.key, label: c.label }))
         ])}
@@ -1361,7 +1348,7 @@ export const ExcelGridEntrySection: React.FC<ExcelGridEntrySectionProps> = ({
       <HeaderAliasDlgModal
         isOpen={showAliasManagerModal}
         onClose={() => setShowAliasManagerModal(false)}
-        availableFields={getSmritiItemMasterFields([
+        availableFields={getTileFlowItemMasterFields([
           ...activeAttrs.map(a => ({ key: a.name, label: a.label })),
           ...customAttrs.map(c => ({ key: c.key, label: c.label }))
         ])}

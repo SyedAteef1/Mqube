@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.122.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -36,7 +35,7 @@ const SEVERITY_STYLE: Record<BreachSeverity, string> = {
   NORMAL:   "text-sky-400 bg-sky-500/10 border-sky-500/20",
 };
 
-const fmt  = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt  = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 const ITEMS: StockItem[] = [
   { sku: "MED-PARA-500",  productName: "Paracetamol 500mg",  branchCode: "BR-MUM-01", supplierId: "SUP-001", supplierName: "PharmaCo",    currentStock: 0,   reorderPoint: 50,  reorderQty: 200, supplierMOQ: 100, unitCost: 12,  leadTimeDays: 3 },
@@ -136,7 +135,7 @@ export const AutoPOModal: React.FC<AutoPOModalProps> = ({ isOpen, onClose, onNot
           <div className="flex-1 overflow-y-auto p-5 space-y-5">
             {activeTab === "BREACHES" && (
               <div className="space-y-3">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Reorder Point Breaches â€” {breaches.length} item(s)</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Reorder Point Breaches — {breaches.length} item(s)</p>
                 {breaches.map((b) => (
                   <div key={b.sku} className={`flex items-center justify-between px-4 py-3 rounded-xl border ${b.severity === "CRITICAL" ? "bg-rose-950/15 border-rose-500/25" : b.severity === "LOW" ? "bg-amber-950/10 border-amber-500/20" : "bg-sky-950/10 border-sky-500/20"}`}>
                     <div>

@@ -1,19 +1,16 @@
 ﻿"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
+Project      : TILEFLOW Retail OS
+Repository   : TILEFLOWRetailNX
 
 Founders
 
 * Pushpa Devi Jawahar Mallah -- Founder & Chairperson
-* Jawahar Ramkripal Mallah   -- Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
+* Syed Ateef   -- Founder, CEO & Chief Software Architect
 
 * Version    : 3.30.0
 * Created    : 2026-08-24
 * Modified   : 2026-08-24
-* Copyright  : (c) AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
+* License    : MIT Open Source License
 
 Sprint 10 -- CRM Reports parity.
 Shoper9 MnuNo 100/613/650 (SR120100/SR430900/SR442300).

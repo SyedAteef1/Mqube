@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Monolith Split — CRM, Loyalty, and Customer Master Modules
@@ -101,7 +100,7 @@ Revert frontend directory changes via Git and restore the deprecated `CrmLoyalty
 Run `npm run test` to confirm authorization and validation logic remains intact.
 
 ## 15. Documentation Impact
-Update SMRITI Developer Guide, Wiki indexes, and Architecture Constitution.
+Update TILEFLOW Developer Guide, Wiki indexes, and Architecture Constitution.
 
 ## 16. Deployment Plan
 Progressively deprecate the legacy CRM panel, roll out the split components, and commit schema adjustments.

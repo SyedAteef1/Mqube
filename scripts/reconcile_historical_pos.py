@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.28.0
-Created      : 2026-08-26
-Modified     : 2026-08-26
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import re
 import sys
@@ -24,9 +10,9 @@ import pymupdf
 from decimal import Decimal
 
 # Configuration
-PDF_DIR = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads"
-COMPANY_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
-BACKUP_PATH = r"F:\SMRITRretailNX\backups\smriti001_pre_phase1_po_recon.sql"
+PDF_DIR = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads"
+COMPANY_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+BACKUP_PATH = r"F:\SMRITRretailNX\backups\tileflow001_pre_phase1_po_recon.sql"
 COMPANY_ID = "COMP-001"
 BRANCH_ID = "MAIN"
 
@@ -318,7 +304,7 @@ def ensure_schema_migrations(conn):
 def execute_commit():
     """Executes the final transactional reconciliation and commit to database."""
     print("=" * 80)
-    print("SMRITI RETAIL OS: EXECUTING PHASE 1 HISTORICAL PO RECONCILIATION COMMIT")
+    print("TILEFLOW RETAIL OS: EXECUTING PHASE 1 HISTORICAL PO RECONCILIATION COMMIT")
     print("=" * 80)
 
     # 1. Parse POs

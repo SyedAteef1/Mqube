@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.77.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { apiFetchV1 } from "../../lib/apiFetchV1";
 
@@ -59,7 +45,7 @@ export const ScheduleReportModal: React.FC<ScheduleReportModalProps> = ({
   const [exportFormat, setExportFormat] = useState<"XLSX" | "PDF" | "CSV" | "JSON">("XLSX");
   const [channels, setChannels] = useState<("EMAIL" | "WHATSAPP" | "STATUTORY_VAULT")[]>(["EMAIL"]);
   const [emailInput, setEmailInput] = useState<string>("");
-  const [emails, setEmails] = useState<string[]>(["director@smritibooks.com"]);
+  const [emails, setEmails] = useState<string[]>(["director@tileflow.in"]);
   const [phoneInput, setPhoneInput] = useState<string>("");
   const [phones, setPhones] = useState<string[]>([]);
   const [vaultFolder, setVaultFolder] = useState<string>("/Statutory/Compliance/2026-Q3");
@@ -90,7 +76,7 @@ export const ScheduleReportModal: React.FC<ScheduleReportModalProps> = ({
           export_format: "XLSX",
           channels: ["EMAIL", "STATUTORY_VAULT"],
           recipients: {
-            emails: ["director@smritibooks.com", "cfo@smritibooks.com"],
+            emails: ["director@tileflow.in", "cfo@tileflow.in"],
             vault_folder: "/Statutory/Compliance/2026-Q3",
           },
           is_active: true,

@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-14
- * Modified     : 2026-08-14
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from 'react';
 import { 
   BookOpen, 
@@ -127,7 +114,7 @@ export const TrainingAcademyTab: React.FC = () => {
             </div>
             <div>
               <h1 className="text-xl font-bold text-white flex items-center gap-2">
-                SMRITI Training Academy
+                MQube Training Academy
                 <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                   Sandbox Active
                 </span>
@@ -165,7 +152,7 @@ export const TrainingAcademyTab: React.FC = () => {
         <div className="flex items-center gap-2.5">
           <ShieldCheck className="w-5 h-5 text-emerald-400 flex-shrink-0" />
           <span>
-            <strong>Golden Isolation Guarantee:</strong> All training transactions execute inside an isolated sandbox session. 0 production rows are created or modified in <code className="bg-emerald-900/60 px-1.5 py-0.5 rounded text-emerald-200 font-mono">Smritibus_&lt;CompanyCode&gt;</code>.
+            <strong>Golden Isolation Guarantee:</strong> All training transactions execute inside an isolated sandbox session. 0 production rows are created or modified in <code className="bg-emerald-900/60 px-1.5 py-0.5 rounded text-emerald-200 font-mono">TileFlowbus_&lt;CompanyCode&gt;</code>.
           </span>
         </div>
       </div>
@@ -300,7 +287,7 @@ export const TrainingAcademyTab: React.FC = () => {
           <div className="bg-gradient-to-br from-slate-800 to-indigo-950/40 border border-slate-700 rounded-xl p-5 space-y-3">
             <h4 className="text-sm font-bold text-white flex items-center gap-2">
               <Award className="w-4 h-4 text-amber-400" />
-              SMRITI Certification
+              MQube Certification
             </h4>
             <p className="text-xs text-slate-300">
               Pass Day 1–7 competency evaluations to receive server-signed PDF certification.

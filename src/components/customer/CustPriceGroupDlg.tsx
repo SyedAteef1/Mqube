@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 5.6.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Target UI    : Customer Price Group Master Window
- */
-
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { 
   X, 
@@ -40,7 +25,7 @@ import {
   deleteCustomerPriceGroup 
 } from "../../services/customerStore.ts";
 
-export interface SmritiCustomerPriceGroupModalProps {
+export interface TileFlowCustomerPriceGroupModalProps {
   isOpen: boolean;
   onClose: () => void;
   selectedGroupCode?: string;
@@ -85,7 +70,7 @@ const DEST_TAX_TYPE_OPTIONS = [
   { value: "Exempt", label: "Exempt / Non-GST" }
 ];
 
-export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupModalProps> = ({
+export const TileFlowCustomerPriceGroupModal: React.FC<TileFlowCustomerPriceGroupModalProps> = ({
   isOpen,
   onClose,
   selectedGroupCode,
@@ -109,8 +94,8 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
       const current = getCustomerPriceGroups();
       setGroups(current);
     };
-    window.addEventListener("smriti_customer_price_groups_updated", refresh);
-    return () => window.removeEventListener("smriti_customer_price_groups_updated", refresh);
+    window.addEventListener("tileflow_customer_price_groups_updated", refresh);
+    return () => window.removeEventListener("tileflow_customer_price_groups_updated", refresh);
   }, []);
 
   // Sync formData when selection changes
@@ -268,15 +253,15 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-150">
       <div 
-        className="w-full max-w-2xl bg-[#eef4f9] dark:bg-[#1b222d] rounded-lg shadow-2xl border-2 border-[#005a9e] dark:border-[#3884d8] flex flex-col overflow-hidden text-[#1e293b] dark:text-[#e2e8f0] font-sans"
+        className="w-full max-w-2xl bg-[#f3f3f3] dark:bg-[#212121] rounded-lg shadow-2xl border-2 border-[#4c4c4c] dark:border-[#7a7a7a] flex flex-col overflow-hidden text-[#282828] dark:text-[#e7e7e7] font-sans"
         role="dialog"
         aria-labelledby="customer-price-group-title"
       >
-        {/* Titlebar (Classic Windows Desktop Dialog Appearance with SMRITI Enterprise Theme) */}
-        <div className="bg-linear-to-r from-[#005a9e] via-[#004578] to-[#002f52] dark:from-[#1e3a5f] dark:to-[#0f2038] text-white px-3 py-1.5 flex items-center justify-between select-none shadow-xs">
+        {/* Titlebar (Classic Windows Desktop Dialog Appearance with MQube Enterprise Theme) */}
+        <div className="bg-linear-to-r from-[#4c4c4c] via-[#3a3a3a] to-[#282828] dark:from-[#373737] dark:to-[#1e1e1e] text-white px-3 py-1.5 flex items-center justify-between select-none shadow-xs">
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-black tracking-wider px-1 py-0.5 bg-white/20 rounded-xs text-yellow-300 font-mono">
-              SMRITI
+              MQube
             </span>
             <h2 id="customer-price-group-title" className="text-xs font-bold tracking-wide flex items-center gap-1.5">
               <Layers size={14} className="text-cyan-300" />
@@ -312,7 +297,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
           {/* Row 1: Code & Description */}
           <div className="grid grid-cols-12 gap-3 items-center">
             <div className="col-span-12 sm:col-span-4 flex items-center gap-2">
-              <label htmlFor="cpg-code" className="text-xs font-bold text-[#1e293b] dark:text-[#cbd5e1] w-14 shrink-0">
+              <label htmlFor="cpg-code" className="text-xs font-bold text-[#282828] dark:text-[#d4d4d4] w-14 shrink-0">
                 <u>C</u>ode
               </label>
               <input
@@ -323,12 +308,12 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                 onChange={e => handleFieldChange("code", e.target.value.toUpperCase())}
                 placeholder="e.g. CPP"
                 disabled={mode === "view"}
-                className="flex-1 px-2.5 py-1 text-xs font-mono font-bold uppercase bg-white dark:bg-[#0f172a] border border-[#94a3b8] dark:border-[#475569] rounded-xs shadow-inner outline-none focus:border-[#005a9e] focus:ring-1 focus:ring-[#005a9e]"
+                className="flex-1 px-2.5 py-1 text-xs font-mono font-bold uppercase bg-white dark:bg-[#171717] border border-[#a1a1a1] dark:border-[#535353] rounded-xs shadow-inner outline-none focus:border-[#4c4c4c] focus:ring-1 focus:ring-[#4c4c4c]"
               />
             </div>
 
             <div className="col-span-12 sm:col-span-8 flex items-center gap-2">
-              <label htmlFor="cpg-desc" className="text-xs font-bold text-[#1e293b] dark:text-[#cbd5e1] w-24 shrink-0">
+              <label htmlFor="cpg-desc" className="text-xs font-bold text-[#282828] dark:text-[#d4d4d4] w-24 shrink-0">
                 <u>D</u>escription
               </label>
               <input
@@ -338,7 +323,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                 onChange={e => handleFieldChange("description", e.target.value)}
                 placeholder="e.g. Platinum Privilege"
                 disabled={mode === "view"}
-                className="flex-1 px-2.5 py-1 text-xs font-semibold bg-white dark:bg-[#0f172a] border border-[#94a3b8] dark:border-[#475569] rounded-xs shadow-inner outline-none focus:border-[#005a9e] focus:ring-1 focus:ring-[#005a9e]"
+                className="flex-1 px-2.5 py-1 text-xs font-semibold bg-white dark:bg-[#171717] border border-[#a1a1a1] dark:border-[#535353] rounded-xs shadow-inner outline-none focus:border-[#4c4c4c] focus:ring-1 focus:ring-[#4c4c4c]"
               />
             </div>
           </div>
@@ -346,7 +331,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
           {/* Row 2: Payment Terms & Credit Days */}
           <div className="grid grid-cols-12 gap-3 items-center">
             <div className="col-span-12 sm:col-span-6 flex items-center gap-2">
-              <label htmlFor="cpg-payment-terms" className="text-xs font-bold text-[#1e293b] dark:text-[#cbd5e1] w-28 shrink-0">
+              <label htmlFor="cpg-payment-terms" className="text-xs font-bold text-[#282828] dark:text-[#d4d4d4] w-28 shrink-0">
                 <u>P</u>ayment Terms
               </label>
               <select
@@ -354,7 +339,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                 value={formData.paymentTerms}
                 onChange={e => handleFieldChange("paymentTerms", e.target.value)}
                 disabled={mode === "view"}
-                className="flex-1 px-2 py-1 text-xs font-semibold bg-white dark:bg-[#0f172a] border border-[#94a3b8] dark:border-[#475569] rounded-xs shadow-inner outline-none focus:border-[#005a9e]"
+                className="flex-1 px-2 py-1 text-xs font-semibold bg-white dark:bg-[#171717] border border-[#a1a1a1] dark:border-[#535353] rounded-xs shadow-inner outline-none focus:border-[#4c4c4c]"
               >
                 {PAYMENT_TERMS_OPTIONS.map(opt => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -363,7 +348,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
             </div>
 
             <div className="col-span-12 sm:col-span-6 flex items-center gap-2">
-              <label htmlFor="cpg-credit-days" className="text-xs font-bold text-[#1e293b] dark:text-[#cbd5e1] w-24 shrink-0">
+              <label htmlFor="cpg-credit-days" className="text-xs font-bold text-[#282828] dark:text-[#d4d4d4] w-24 shrink-0">
                 Credit Da<u>y</u>s
               </label>
               <input
@@ -374,7 +359,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                 value={formData.creditDays}
                 onChange={e => handleNumericChange("creditDays", e.target.value)}
                 disabled={mode === "view"}
-                className="flex-1 px-2.5 py-1 text-xs font-mono font-bold text-right bg-white dark:bg-[#0f172a] border border-[#94a3b8] dark:border-[#475569] rounded-xs shadow-inner outline-none focus:border-[#005a9e]"
+                className="flex-1 px-2.5 py-1 text-xs font-mono font-bold text-right bg-white dark:bg-[#171717] border border-[#a1a1a1] dark:border-[#535353] rounded-xs shadow-inner outline-none focus:border-[#4c4c4c]"
               />
             </div>
           </div>
@@ -382,7 +367,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
           {/* Row 3: Dest. Tax Type & Credit Limit */}
           <div className="grid grid-cols-12 gap-3 items-center">
             <div className="col-span-12 sm:col-span-6 flex items-center gap-2">
-              <label htmlFor="cpg-dest-tax" className="text-xs font-bold text-[#1e293b] dark:text-[#cbd5e1] w-28 shrink-0">
+              <label htmlFor="cpg-dest-tax" className="text-xs font-bold text-[#282828] dark:text-[#d4d4d4] w-28 shrink-0">
                 Des<u>t</u>. Tax Type
               </label>
               <select
@@ -390,7 +375,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                 value={formData.destTaxType}
                 onChange={e => handleFieldChange("destTaxType", e.target.value)}
                 disabled={mode === "view"}
-                className="flex-1 px-2 py-1 text-xs font-semibold bg-white dark:bg-[#0f172a] border border-[#94a3b8] dark:border-[#475569] rounded-xs shadow-inner outline-none focus:border-[#005a9e]"
+                className="flex-1 px-2 py-1 text-xs font-semibold bg-white dark:bg-[#171717] border border-[#a1a1a1] dark:border-[#535353] rounded-xs shadow-inner outline-none focus:border-[#4c4c4c]"
               >
                 {DEST_TAX_TYPE_OPTIONS.map(opt => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -399,7 +384,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
             </div>
 
             <div className="col-span-12 sm:col-span-6 flex items-center gap-2">
-              <label htmlFor="cpg-credit-limit" className="text-xs font-bold text-[#1e293b] dark:text-[#cbd5e1] w-24 shrink-0">
+              <label htmlFor="cpg-credit-limit" className="text-xs font-bold text-[#282828] dark:text-[#d4d4d4] w-24 shrink-0">
                 Credit <u>L</u>imit
               </label>
               <input
@@ -410,28 +395,28 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                 value={formData.creditLimit}
                 onChange={e => handleNumericChange("creditLimit", e.target.value)}
                 disabled={mode === "view"}
-                className="flex-1 px-2.5 py-1 text-xs font-mono font-bold text-right bg-white dark:bg-[#0f172a] border border-[#94a3b8] dark:border-[#475569] rounded-xs shadow-inner outline-none focus:border-[#005a9e]"
+                className="flex-1 px-2.5 py-1 text-xs font-mono font-bold text-right bg-white dark:bg-[#171717] border border-[#a1a1a1] dark:border-[#535353] rounded-xs shadow-inner outline-none focus:border-[#4c4c4c]"
               />
             </div>
           </div>
 
           {/* Row 4: Item Classification-wise Price Factor Applicable Checkbox */}
           <div className="pt-1">
-            <label className="inline-flex items-center gap-2 text-xs font-bold text-[#00355f] dark:text-[#93c5fd] cursor-pointer select-none">
+            <label className="inline-flex items-center gap-2 text-xs font-bold text-[#2d2d2d] dark:text-[#bebebe] cursor-pointer select-none">
               <input
                 type="checkbox"
                 checked={formData.itemClassificationPriceFactorApplicable}
                 onChange={e => handleFieldChange("itemClassificationPriceFactorApplicable", e.target.checked)}
                 disabled={mode === "view"}
-                className="w-4 h-4 rounded border-gray-400 text-[#005a9e] focus:ring-[#005a9e]"
+                className="w-4 h-4 rounded border-gray-400 text-[#4c4c4c] focus:ring-[#4c4c4c]"
               />
               <span>Item Classification-wise Price Factor Applicable</span>
             </label>
           </div>
 
           {/* Group Box: Transactions Allowed & Save/Cancel Action Cluster */}
-          <div className="border border-[#94a3b8] dark:border-[#475569] rounded-xs p-3 relative mt-3 bg-white/50 dark:bg-black/20">
-            <span className="absolute -top-2.5 left-3 bg-[#eef4f9] dark:bg-[#1b222d] px-1.5 text-[11px] font-bold text-[#005a9e] dark:text-[#60a5fa] uppercase tracking-wider">
+          <div className="border border-[#a1a1a1] dark:border-[#535353] rounded-xs p-3 relative mt-3 bg-white/50 dark:bg-black/20">
+            <span className="absolute -top-2.5 left-3 bg-[#f3f3f3] dark:bg-[#212121] px-1.5 text-[11px] font-bold text-[#4c4c4c] dark:text-[#9c9c9c] uppercase tracking-wider">
               Transactions Allowed
             </span>
 
@@ -444,7 +429,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                     checked={formData.allowCreditInvoice}
                     onChange={e => handleFieldChange("allowCreditInvoice", e.target.checked)}
                     disabled={mode === "view"}
-                    className="w-4 h-4 rounded border-gray-400 text-[#005a9e]"
+                    className="w-4 h-4 rounded border-gray-400 text-[#4c4c4c]"
                   />
                   <span>C<u>r</u>edit Invoice</span>
                 </label>
@@ -455,7 +440,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                     checked={formData.allowCashInvoice}
                     onChange={e => handleFieldChange("allowCashInvoice", e.target.checked)}
                     disabled={mode === "view"}
-                    className="w-4 h-4 rounded border-gray-400 text-[#005a9e]"
+                    className="w-4 h-4 rounded border-gray-400 text-[#4c4c4c]"
                   />
                   <span>Ca<u>s</u>h Invoice</span>
                 </label>
@@ -466,7 +451,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                     checked={formData.taxExclusiveInvoice}
                     onChange={e => handleFieldChange("taxExclusiveInvoice", e.target.checked)}
                     disabled={mode === "view"}
-                    className="w-4 h-4 rounded border-gray-400 text-[#005a9e]"
+                    className="w-4 h-4 rounded border-gray-400 text-[#4c4c4c]"
                   />
                   <span><u>T</u>ax Exclusive Invoice</span>
                 </label>
@@ -477,7 +462,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                     checked={formData.allowMiscIssue}
                     onChange={e => handleFieldChange("allowMiscIssue", e.target.checked)}
                     disabled={mode === "view"}
-                    className="w-4 h-4 rounded border-gray-400 text-[#005a9e]"
+                    className="w-4 h-4 rounded border-gray-400 text-[#4c4c4c]"
                   />
                   <span><u>M</u>isc. Issue (Goods Issue)</span>
                 </label>
@@ -488,7 +473,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                 <button
                   type="button"
                   onClick={handleSave}
-                  className="px-4 py-1.5 bg-[#f1f5f9] dark:bg-[#334155] hover:bg-[#e2e8f0] dark:hover:bg-[#475569] text-[#00355f] dark:text-[#93c5fd] border border-[#64748b] dark:border-[#94a3b8] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5 focus:ring-2 focus:ring-[#005a9e]"
+                  className="px-4 py-1.5 bg-[#f4f4f4] dark:bg-[#3f3f3f] hover:bg-[#e7e7e7] dark:hover:bg-[#535353] text-[#2d2d2d] dark:text-[#bebebe] border border-[#727272] dark:border-[#a1a1a1] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5 focus:ring-2 focus:ring-[#4c4c4c]"
                 >
                   <Check size={13} className="text-emerald-600 dark:text-emerald-400" />
                   <span><u>O</u>k</span>
@@ -496,7 +481,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="px-3.5 py-1.5 bg-[#f1f5f9] dark:bg-[#334155] hover:bg-[#e2e8f0] dark:hover:bg-[#475569] text-[#475569] dark:text-[#cbd5e1] border border-[#64748b] dark:border-[#94a3b8] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
+                  className="px-3.5 py-1.5 bg-[#f4f4f4] dark:bg-[#3f3f3f] hover:bg-[#e7e7e7] dark:hover:bg-[#535353] text-[#535353] dark:text-[#d4d4d4] border border-[#727272] dark:border-[#a1a1a1] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
                 >
                   <RotateCcw size={13} />
                   <span><u>C</u>ancel</span>
@@ -506,16 +491,16 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
           </div>
 
           {/* Quick Catalogue Drawer / Table for rapid switching */}
-          <div className="border border-[#cbd5e1] dark:border-[#334155] rounded-xs overflow-hidden bg-white dark:bg-[#0f172a]">
+          <div className="border border-[#d4d4d4] dark:border-[#3f3f3f] rounded-xs overflow-hidden bg-white dark:bg-[#171717]">
             <div 
               onClick={() => setShowCatalog(!showCatalog)}
-              className="bg-[#e2e8f0] dark:bg-[#1e293b] px-3 py-1.5 flex justify-between items-center cursor-pointer select-none text-xs font-bold text-[#00355f] dark:text-[#93c5fd]"
+              className="bg-[#e7e7e7] dark:bg-[#282828] px-3 py-1.5 flex justify-between items-center cursor-pointer select-none text-xs font-bold text-[#2d2d2d] dark:text-[#bebebe]"
             >
               <span className="flex items-center gap-1.5">
                 <FileSpreadsheet size={13} />
                 Existing Customer Price Groups Catalogue ({groups.length})
               </span>
-              <span className="text-[10px] text-[#64748b] dark:text-[#94a3b8]">
+              <span className="text-[10px] text-[#727272] dark:text-[#a1a1a1]">
                 {showCatalog ? "▲ Hide" : "▼ Show"}
               </span>
             </div>
@@ -542,7 +527,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
                           onClick={() => setSelectedCode(g.code)}
                           className={`cursor-pointer transition ${
                             isSelected 
-                              ? "bg-blue-100 dark:bg-blue-950/80 font-bold text-[#00355f] dark:text-cyan-300" 
+                              ? "bg-blue-100 dark:bg-blue-950/80 font-bold text-[#2d2d2d] dark:text-cyan-300" 
                               : "hover:bg-gray-50 dark:hover:bg-gray-800/60"
                           }`}
                         >
@@ -563,12 +548,12 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
         </div>
 
         {/* Bottom Desktop Navigation Toolbar (Add, Edit, Delete, Exit) */}
-        <div className="bg-[#dbe4ee] dark:bg-[#131b27] px-4 py-2 border-t border-[#94a3b8] dark:border-[#475569] flex items-center justify-between gap-2 shrink-0">
+        <div className="bg-[#e3e3e3] dark:bg-[#1a1a1a] px-4 py-2 border-t border-[#a1a1a1] dark:border-[#535353] flex items-center justify-between gap-2 shrink-0">
           <div className="flex items-center gap-2">
             <button
               type="button"
               onClick={handleStartAdd}
-              className="px-4 py-1.5 bg-[#f1f5f9] dark:bg-[#334155] hover:bg-[#e2e8f0] dark:hover:bg-[#475569] text-[#1e293b] dark:text-white border border-[#64748b] dark:border-[#94a3b8] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
+              className="px-4 py-1.5 bg-[#f4f4f4] dark:bg-[#3f3f3f] hover:bg-[#e7e7e7] dark:hover:bg-[#535353] text-[#282828] dark:text-white border border-[#727272] dark:border-[#a1a1a1] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
               title="Add New [Alt+A]"
             >
               <Plus size={13} className="text-blue-600 dark:text-blue-400" />
@@ -578,7 +563,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
             <button
               type="button"
               onClick={() => setMode("edit")}
-              className="px-4 py-1.5 bg-[#f1f5f9] dark:bg-[#334155] hover:bg-[#e2e8f0] dark:hover:bg-[#475569] text-[#1e293b] dark:text-white border border-[#64748b] dark:border-[#94a3b8] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
+              className="px-4 py-1.5 bg-[#f4f4f4] dark:bg-[#3f3f3f] hover:bg-[#e7e7e7] dark:hover:bg-[#535353] text-[#282828] dark:text-white border border-[#727272] dark:border-[#a1a1a1] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
               title="Edit Current [Alt+E]"
             >
               <Edit3 size={13} className="text-amber-600 dark:text-amber-400" />
@@ -588,7 +573,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
             <button
               type="button"
               onClick={handleDelete}
-              className="px-4 py-1.5 bg-[#f1f5f9] dark:bg-[#334155] hover:bg-[#e2e8f0] dark:hover:bg-[#475569] text-red-700 dark:text-red-400 border border-[#64748b] dark:border-[#94a3b8] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
+              className="px-4 py-1.5 bg-[#f4f4f4] dark:bg-[#3f3f3f] hover:bg-[#e7e7e7] dark:hover:bg-[#535353] text-red-700 dark:text-red-400 border border-[#727272] dark:border-[#a1a1a1] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
               title="Delete Current [Alt+D]"
             >
               <Trash2 size={13} />
@@ -600,7 +585,7 @@ export const SmritiCustomerPriceGroupModal: React.FC<SmritiCustomerPriceGroupMod
             <button
               type="button"
               onClick={onClose}
-              className="px-5 py-1.5 bg-[#f1f5f9] dark:bg-[#334155] hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/60 dark:hover:text-red-300 text-[#1e293b] dark:text-white border border-[#64748b] dark:border-[#94a3b8] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
+              className="px-5 py-1.5 bg-[#f4f4f4] dark:bg-[#3f3f3f] hover:bg-red-50 hover:text-red-700 dark:hover:bg-red-950/60 dark:hover:text-red-300 text-[#282828] dark:text-white border border-[#727272] dark:border-[#a1a1a1] rounded-xs font-bold text-xs shadow-xs active:translate-y-0.5 transition flex items-center gap-1.5"
               title="Exit Screen [Alt+X / Esc]"
             >
               <LogOut size={13} />

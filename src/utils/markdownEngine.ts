@@ -1,34 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.106.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Markdown & Clearance Planning Engine
- *
- * Manages SKU-level markdown schedules and clearance campaigns:
- *   Markdown Plan   : DRAFT → ACTIVE → PAUSED → COMPLETED / CANCELLED
- *
- *   Sell-Through    : Target sell-through% by deadline; engine computes
- *                     current sell-through and gap.
- *
- *   Auto-Trigger    : If current sell-through < target threshold at
- *                     MARKDOWN_CONFIG.autoTriggerCheckPct of time elapsed,
- *                     engine recommends the next markdown step.
- *
- *   Steps           : Progressive price reduction steps with activation
- *                     dates and effective discount %.
- */
-
 export type MarkdownStatus = "DRAFT" | "ACTIVE" | "PAUSED" | "COMPLETED" | "CANCELLED";
 export type MarkdownTrigger = "MANUAL" | "AUTO_THRESHOLD" | "SCHEDULED";
 

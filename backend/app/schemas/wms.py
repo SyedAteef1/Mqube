@@ -1,19 +1,5 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
-from pydantic import BaseModel, ConfigDict
-from typing import Optional, List
+from pydantic import BaseModel, Field, ConfigDict
+from typing import Literal, Optional, List
 from datetime import datetime, date
 from decimal import Decimal
 
@@ -24,6 +10,7 @@ class WarehouseBase(BaseModel):
     name: str
     is_transit: bool = False
     is_central_godown: bool = False
+    location_type: Literal["SHOWROOM", "GODOWN"] = "GODOWN"
     address: Optional[str] = None
     city: Optional[str] = None
     state: Optional[str] = None
@@ -34,9 +21,23 @@ class WarehouseBase(BaseModel):
 class WarehouseCreate(WarehouseBase):
     pass
 
+class TileGroupCreate(BaseModel):
+    name: str = Field(..., min_length=1, max_length=100)
+    description: Optional[str] = None
+
+
+class TileGroupSummary(BaseModel):
+    name: str
+    description: Optional[str] = None
+    products: int = 0
+    boxes: Decimal = Decimal("0")
+    sqft: Decimal = Decimal("0")
+
+
 class WarehouseUpdate(BaseModel):
     name: Optional[str] = None
     is_central_godown: Optional[bool] = None
+    location_type: Optional[Literal["SHOWROOM", "GODOWN"]] = None
     address: Optional[str] = None
     city: Optional[str] = None
     state: Optional[str] = None

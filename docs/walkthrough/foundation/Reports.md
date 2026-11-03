@@ -1,15 +1,14 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-07-16
   Modified     : 2026-07-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Reports Module — Strangler-Fig Migration to FastAPI+Postgres v3.21.0
@@ -67,10 +66,10 @@ Express `reports.ts` was unmounted. Now fully served by FastAPI + Postgres.
 
 ### A. ReportSchedule inherits BaseEntity
 Avoids redeclaring id, uuid, company_id, branch_id, is_active, timestamps, soft-delete,
-versioning. Consistent with all other SMRITI business entities.
+versioning. Consistent with all other TILEFLOW business entities.
 
 ### B. Studios catalog as Python dict
-SMRITI_STUDIOS is system metadata (report definitions don't change day-to-day).
+TILEFLOW_STUDIOS is system metadata (report definitions don't change day-to-day).
 No DB table needed until custom studio support is introduced.
 Stored in `backend/app/api/v1/reports.py` and served by GET /api/v1/reports/studios.
 
@@ -117,7 +116,7 @@ class ReportSchedule(BaseEntity):
 
 ### New Endpoints
 `
-GET    /api/v1/reports/studios          # Returns SMRITI_STUDIOS dict
+GET    /api/v1/reports/studios          # Returns TILEFLOW_STUDIOS dict
 GET    /api/v1/reports/schedules        # Tenant-scoped list (MANAGER+)
 POST   /api/v1/reports/schedules        # Create (MANAGER only; Report User blocked)
 DELETE /api/v1/reports/schedules/{id}   # Soft-delete (MANAGER only)

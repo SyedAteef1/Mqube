@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Section 9 (PSV, CGE, PDT) & Section 10 (Offline-First Sync Engine)
 
 ## 1. Purpose
-This document provides the technical walkthrough for the implementation and certification of **Section 9 (Public Stock Verification, Commercial Growth Engine, and Predictive Distribution Twin)** and **Section 10 (Offline-First POS Operation and Sync Queue Engine)** in SMRITI Retail OS v3.22.0.
+This document provides the technical walkthrough for the implementation and certification of **Section 9 (Public Stock Verification, Commercial Growth Engine, and Predictive Distribution Twin)** and **Section 10 (Offline-First POS Operation and Sync Queue Engine)** in TILEFLOW Retail OS v3.22.0.
 
 ## 2. Scope
 - **Commercial Growth Engine (CGE)**: Multi-tier loyalty programs, point accrual and redemption ledgers, automated tier progression based on lifetime spend, and promotional coupon validation with cap/minimum cart constraints.
@@ -76,5 +75,5 @@ python -m pytest tests/t_psv_sync.py tests/t_dist_pricing.py tests/t_univ_conver
 - ADR-042: Deterministic PDT Velocity Analytics
 
 ## 13. Related RFCs
-- RFC-109: SMRITI Commercial Growth Engine Specification
-- RFC-110: SMRITI Offline-First Sync Architecture
+- RFC-109: TILEFLOW Commercial Growth Engine Specification
+- RFC-110: TILEFLOW Offline-First Sync Architecture

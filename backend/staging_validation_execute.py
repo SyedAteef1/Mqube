@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 """
-SMRITI Brownfield Reconciliation — Staging Validation (Clones Already Exist)
+TILEFLOW Brownfield Reconciliation — Staging Validation (Clones Already Exist)
 =============================================================================
 
 This script validates reconciliation against STAGING CLONES that already exist.
-It assumes smritisys_stage and smriti001_stage have been pre-created.
+It assumes tileflowsys_stage and tileflow001_stage have been pre-created.
 
 PHASES:
 1. Verify staging clones exist
@@ -23,8 +23,8 @@ from pathlib import Path
 from datetime import datetime
 
 # Configuration
-CONTROL_PLANE = 'smritisys_stage'
-COMPANY_001_DB = 'smriti001_stage'
+CONTROL_PLANE = 'tileflowsys_stage'
+COMPANY_001_DB = 'tileflow001_stage'
 POSTGRES_CREDS = {
     'user': 'postgres',
     'password': 'postgres',
@@ -308,7 +308,7 @@ class StagingReconciliation:
         report_file = self.backend_dir / 'STAGING_RECONCILIATION_REPORT.txt'
         with open(report_file, 'w', encoding='utf-8') as f:
             f.write('=' * 80 + '\n')
-            f.write('SMRITI BROWNFIELD RECONCILIATION — STAGING VALIDATION REPORT\n')
+            f.write('TILEFLOW BROWNFIELD RECONCILIATION — STAGING VALIDATION REPORT\n')
             f.write(f'Generated: {self.report["timestamp"]}\n')
             f.write('=' * 80 + '\n\n')
 

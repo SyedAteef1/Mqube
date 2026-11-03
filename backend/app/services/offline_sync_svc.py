@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 import uuid
 from decimal import Decimal
@@ -32,7 +18,7 @@ from .univ_item_svc import UniversalItemService
 
 class OfflineSyncService:
     """
-    SMRITI Offline-First Synchronization Engine (Section 10).
+    TILEFLOW Offline-First Synchronization Engine (Section 10).
     Processes durable tenant-local offline terminal queues (`pos_offline_sync_queue`),
     guarantees idempotent deduplication across intermittent network partitions,
     and commits atomic sales ledgers.

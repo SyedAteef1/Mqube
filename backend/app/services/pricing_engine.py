@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal, ROUND_HALF_UP
@@ -41,7 +27,7 @@ from ..schemas.pricing import (
 
 class PricingEngine:
     """
-    Authoritative SMRITI Pricing Engine (Section 7).
+    Authoritative TILEFLOW Pricing Engine (Section 7).
     Determines effective selling prices across retail, wholesale, dealer tiers, volume breaks, and promo modifiers.
     Guarantees historical pricing snapshots and immutable calculation replays.
     """

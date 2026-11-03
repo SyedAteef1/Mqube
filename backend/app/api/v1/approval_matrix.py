@@ -1,18 +1,4 @@
 """
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.29.0
-Created      : 2026-08-19
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
-"""
 Approval Matrix API — /api/v1/approval-matrix
 
 Provides CRUD endpoints for the Multi-Tier Approval Matrix Engine.

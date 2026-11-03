@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.99.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -33,7 +32,7 @@ const AS_OF = new Date("2026-08-28T12:00:00.000Z");
 const SAMPLE_OFFERS: PromotionalOffer[] = [
   { offerId: "PROMO-001", offerName: "Monsoon Sale 20%", discountType: "PERCENTAGE", discountValue: 20, applicableSkus: [], applicableGroups: [], validFrom: "2026-08-01T00:00:00Z", validTo: "2026-08-31T23:59:59Z", status: "ACTIVE", priority: 1, isStackable: true },
   { offerId: "PROMO-002", offerName: "Weekend Flash 10%", discountType: "PERCENTAGE", discountValue: 10, applicableSkus: ["APP-POLO-NAVY-M", "APP-POLO-WHT-M"], applicableGroups: [], validFrom: "2026-08-28T00:00:00Z", validTo: "2026-08-28T23:59:59Z", status: "ACTIVE", priority: 2, isStackable: true },
-  { offerId: "PROMO-003", offerName: "VIP Flat â‚¹500 Off", discountType: "FLAT_AMOUNT", discountValue: 500, applicableSkus: [], applicableGroups: ["VIP"], validFrom: "2026-08-01T00:00:00Z", validTo: "2026-08-31T23:59:59Z", status: "ACTIVE", priority: 3, isStackable: false },
+  { offerId: "PROMO-003", offerName: "VIP Flat ₹500 Off", discountType: "FLAT_AMOUNT", discountValue: 500, applicableSkus: [], applicableGroups: ["VIP"], validFrom: "2026-08-01T00:00:00Z", validTo: "2026-08-31T23:59:59Z", status: "ACTIVE", priority: 3, isStackable: false },
   { offerId: "PROMO-004", offerName: "Clearance 30%", discountType: "PERCENTAGE", discountValue: 30, applicableSkus: ["CLR-JACKET-BLK-L"], applicableGroups: [], validFrom: "2026-08-01T00:00:00Z", validTo: "2026-09-30T23:59:59Z", status: "ACTIVE", priority: 4, isStackable: true },
 ];
 
@@ -44,7 +43,7 @@ const SAMPLE_GROUP_PRICES: CustomerGroupPrice[] = [
 ];
 
 const SAMPLE_COUPON: CouponCode = {
-  code: "SMRITI200", discountType: "FLAT_AMOUNT", discountValue: 200,
+  code: "TILEFLOW200", discountType: "FLAT_AMOUNT", discountValue: 200,
   maxUsages: 500, usedCount: 12,
   validFrom: "2026-08-01T00:00:00Z", validTo: "2026-08-31T23:59:59Z",
   isActive: true,
@@ -60,7 +59,7 @@ const GROUPS = ["", "VIP", "WHOLESALE", "STAFF", "STANDARD"];
 
 export const PricingStudioModal: React.FC<PricingStudioModalProps> = ({ isOpen, onClose }) => {
   const [customerGroup, setCustomerGroup] = useState<string>("VIP");
-  const [couponCode, setCouponCode] = useState<string>("SMRITI200");
+  const [couponCode, setCouponCode] = useState<string>("TILEFLOW200");
   const [applyCoupon, setApplyCoupon] = useState(true);
   const [activeTab, setActiveTab] = useState<"INVOICE" | "OFFERS" | "TRACE">("INVOICE");
 
@@ -142,10 +141,10 @@ export const PricingStudioModal: React.FC<PricingStudioModalProps> = ({ isOpen, 
             {/* Summary strip */}
             <div className="grid grid-cols-4 gap-3">
               {[
-                { label: "Subtotal", value: `â‚¹${invoice.subtotal.toLocaleString("en-IN")}`, color: "text-slate-300" },
-                { label: "Promo Discount", value: `-â‚¹${invoice.totalPromoDiscount.toLocaleString("en-IN")}`, color: "text-lime-400" },
-                { label: "Coupon Discount", value: `-â‚¹${invoice.totalCouponDiscount.toLocaleString("en-IN")}`, color: couponObj ? "text-yellow-400" : "text-slate-600" },
-                { label: "Grand Total", value: `â‚¹${invoice.grandTotal.toLocaleString("en-IN")}`, color: "text-emerald-400" },
+                { label: "Subtotal", value: `₹${invoice.subtotal.toLocaleString("en-IN")}`, color: "text-slate-300" },
+                { label: "Promo Discount", value: `-₹${invoice.totalPromoDiscount.toLocaleString("en-IN")}`, color: "text-lime-400" },
+                { label: "Coupon Discount", value: `-₹${invoice.totalCouponDiscount.toLocaleString("en-IN")}`, color: couponObj ? "text-yellow-400" : "text-slate-600" },
+                { label: "Grand Total", value: `₹${invoice.grandTotal.toLocaleString("en-IN")}`, color: "text-emerald-400" },
               ].map((m) => (
                 <div key={m.label} className="bg-slate-800/40 border border-slate-700/60 rounded-xl p-4 text-center">
                   <div className={`text-xl font-black font-mono ${m.color}`}>{m.value}</div>
@@ -174,11 +173,11 @@ export const PricingStudioModal: React.FC<PricingStudioModalProps> = ({ isOpen, 
                       <tr key={line.sku}>
                         <td className="py-2 px-3 font-sans text-slate-200">{cartLine?.label ?? line.sku}</td>
                         <td className="py-2 px-3 text-right text-slate-400">{line.qty}</td>
-                        <td className="py-2 px-3 text-right text-slate-500">â‚¹{line.baseUnitPrice}</td>
-                        <td className="py-2 px-3 text-right text-slate-300">â‚¹{line.groupUnitPrice}</td>
-                        <td className="py-2 px-3 text-right text-lime-400">{line.promoDiscount > 0 ? `-â‚¹${line.promoDiscount}` : "â€”"}</td>
-                        <td className="py-2 px-3 text-right text-yellow-400">{line.couponDiscount > 0 ? `-â‚¹${line.couponDiscount}` : "â€”"}</td>
-                        <td className="py-2 px-3 text-right font-bold text-slate-100">â‚¹{line.finalLineTotal.toLocaleString("en-IN")}</td>
+                        <td className="py-2 px-3 text-right text-slate-500">₹{line.baseUnitPrice}</td>
+                        <td className="py-2 px-3 text-right text-slate-300">₹{line.groupUnitPrice}</td>
+                        <td className="py-2 px-3 text-right text-lime-400">{line.promoDiscount > 0 ? `-₹${line.promoDiscount}` : "—"}</td>
+                        <td className="py-2 px-3 text-right text-yellow-400">{line.couponDiscount > 0 ? `-₹${line.couponDiscount}` : "—"}</td>
+                        <td className="py-2 px-3 text-right font-bold text-slate-100">₹{line.finalLineTotal.toLocaleString("en-IN")}</td>
                         <td className="py-2 px-3">
                           {line.appliedOffer && (
                             <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-lime-500/10 text-lime-300 border border-lime-500/20 truncate max-w-[100px] block">
@@ -193,7 +192,7 @@ export const PricingStudioModal: React.FC<PricingStudioModalProps> = ({ isOpen, 
               </table>
               <div className="border-t border-slate-800 px-4 py-2 flex items-center justify-between text-xs">
                 <span className="text-slate-400">Effective Discount: <strong className="text-lime-400">{invoice.discountPct}%</strong></span>
-                <span className="font-black text-lg font-mono text-emerald-400">â‚¹{invoice.grandTotal.toLocaleString("en-IN")}</span>
+                <span className="font-black text-lg font-mono text-emerald-400">₹{invoice.grandTotal.toLocaleString("en-IN")}</span>
               </div>
             </div>
           </div>
@@ -212,7 +211,7 @@ export const PricingStudioModal: React.FC<PricingStudioModalProps> = ({ isOpen, 
                       <span className="text-xs font-bold text-slate-200">{o.offerName}</span>
                     </div>
                     <span className="text-sm font-black text-lime-400 font-mono">
-                      {o.discountType === "PERCENTAGE" ? `${o.discountValue}% OFF` : `â‚¹${o.discountValue} OFF`}
+                      {o.discountType === "PERCENTAGE" ? `${o.discountValue}% OFF` : `₹${o.discountValue} OFF`}
                     </span>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-[10px] text-slate-500">
@@ -232,7 +231,7 @@ export const PricingStudioModal: React.FC<PricingStudioModalProps> = ({ isOpen, 
                 <div>
                   <p className="text-sm font-bold text-slate-100 font-mono">{SAMPLE_COUPON.code}</p>
                   <p className="text-[10px] text-slate-400 mt-0.5">
-                    {SAMPLE_COUPON.discountType === "FLAT_AMOUNT" ? `â‚¹${SAMPLE_COUPON.discountValue} flat` : `${SAMPLE_COUPON.discountValue}%`}
+                    {SAMPLE_COUPON.discountType === "FLAT_AMOUNT" ? `₹${SAMPLE_COUPON.discountValue} flat` : `${SAMPLE_COUPON.discountValue}%`}
                     {" Â· "}Used: {SAMPLE_COUPON.usedCount}/{SAMPLE_COUPON.maxUsages}
                   </p>
                 </div>
@@ -265,8 +264,8 @@ export const PricingStudioModal: React.FC<PricingStudioModalProps> = ({ isOpen, 
                     ))}
                   </div>
                   <div className="flex items-center justify-between mt-3 pt-3 border-t border-slate-800/60 text-xs">
-                    <span className="text-slate-500">Total discount: <span className="text-lime-400 font-bold font-mono">â‚¹{line.totalLineDiscount}</span></span>
-                    <span className="font-black text-slate-100 font-mono">â‚¹{line.finalLineTotal.toLocaleString("en-IN")}</span>
+                    <span className="text-slate-500">Total discount: <span className="text-lime-400 font-bold font-mono">₹{line.totalLineDiscount}</span></span>
+                    <span className="font-black text-slate-100 font-mono">₹{line.finalLineTotal.toLocaleString("en-IN")}</span>
                   </div>
                 </div>
               );

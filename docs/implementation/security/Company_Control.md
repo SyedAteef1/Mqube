@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Company Control Center Security Hardening Plan v1.0
+# TILEFLOW Company Control Center Security Hardening Plan v1.0
 
 ## 1. Objective
 Harden authentication and authorization on Company Control Center and Dev Tracker API endpoints to eliminate unauthenticated access and header spoofing vulnerabilities.
@@ -29,7 +28,7 @@ Endpoints defaulted to `x_user_id: str = Header("usr_sysadmin")`, allowing heade
 Absence of mandatory OAuth2 Bearer JWT dependencies on `/control-center/companies`, `/lifecycle/action`, and `/dev-tracker`.
 
 ## 6. Architecture Impact
-None. Preserves `smritisys` control plane and `smriti001` transactional DB structure.
+None. Preserves `tileflowsys` control plane and `tileflow001` transactional DB structure.
 
 ## 7. Proposed Design
 Bind FastAPI `Depends(get_current_user)` and `Depends(require_role(UserRole.SYSADMIN))` to administrative endpoints.

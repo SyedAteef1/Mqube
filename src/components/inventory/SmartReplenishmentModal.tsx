@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.92.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -102,7 +101,7 @@ export const SmartReplenishmentModal: React.FC<SmartReplenishmentModalProps> = (
             { label: "Total SKUs", value: report.totalSKUs, color: "text-slate-300" },
             { label: "Critical (Safety Breach)", value: report.criticalSKUs, color: "text-red-400" },
             { label: "Reorder Due", value: report.reorderDueSKUs, color: "text-amber-400" },
-            { label: "Suggested PO Value", value: `â‚¹${(report.totalSuggestedPOValue).toLocaleString("en-IN")}`, color: "text-teal-400" },
+            { label: "Suggested PO Value", value: `₹${(report.totalSuggestedPOValue).toLocaleString("en-IN")}`, color: "text-teal-400" },
           ].map((m) => (
             <div key={m.label} className="px-5 py-3 text-center">
               <div className={`text-lg font-black font-mono ${m.color}`}>{m.value}</div>
@@ -170,7 +169,7 @@ export const SmartReplenishmentModal: React.FC<SmartReplenishmentModalProps> = (
                       { label: "Reorder Point", value: sugg.reorderPoint, color: "text-slate-300" },
                       { label: "Order Qty", value: sugg.suggestedOrderQty, color: "text-teal-400" },
                       { label: "Days Remaining", value: `${sugg.daysOfStockRemaining}d`, color: sugg.daysOfStockRemaining <= 7 ? "text-red-400" : "text-amber-400" },
-                      { label: "Est. PO Value", value: `â‚¹${sugg.estimatedPOValue.toLocaleString("en-IN")}`, color: "text-violet-400" },
+                      { label: "Est. PO Value", value: `₹${sugg.estimatedPOValue.toLocaleString("en-IN")}`, color: "text-violet-400" },
                     ].map((m) => (
                       <div key={m.label} className="bg-slate-950/40 border border-slate-800/60 rounded-xl p-3 text-center">
                         <div className={`text-base font-black font-mono ${m.color}`}>{m.value}</div>

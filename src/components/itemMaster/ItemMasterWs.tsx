@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 5.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   Package, 
@@ -31,7 +17,7 @@ import { AttrMgmtStudio } from "./AttrMgmtStudio.tsx";
 import { ImgPathStudio } from "./ImgPathStudio.tsx";
 import { VariantTplSec } from "../VariantTemplateSec.tsx";
 
-interface SmritiItemMasterWorkspaceProps {
+interface TileFlowItemMasterWorkspaceProps {
   products?: Product[];
   onRefreshProducts?: () => Promise<void>;
   onNotification?: (title: string, message: string, type?: "success" | "error" | "info" | "warning") => void;
@@ -41,7 +27,7 @@ interface SmritiItemMasterWorkspaceProps {
 
 type WorkspaceNavTab = "item_details" | "view_config" | "imports" | "attributes" | "image_config" | "variants";
 
-export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
+export const ItemMasterWs: React.FC<TileFlowItemMasterWorkspaceProps> = ({
   products = [],
   onRefreshProducts,
   onNotification,
@@ -91,17 +77,17 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
   }, []);
 
   return (
-    <div className="bg-[#f7f9fb] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] h-screen w-full overflow-hidden flex font-sans select-none antialiased">
+    <div className="bg-[#f9f9f9] dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] h-screen w-full overflow-hidden flex font-sans select-none antialiased">
       
       {/* ── Left SideNavBar Matching Itemmaster3 ─────────────────────────── */}
-      <nav className="bg-[#f1f3ff] dark:bg-[#131b2e] text-[#051a3e] dark:text-[#eff1f3] w-64 h-screen border-r border-[#c3c6d6] dark:border-[#434654] flex flex-col py-4 px-3 shrink-0 z-20 shadow-xs">
+      <nav className="bg-[#f3f3f3] dark:bg-[#1b1b1b] text-[#181818] dark:text-[#f1f1f1] w-64 h-screen border-r border-[#c7c7c7] dark:border-[#464646] flex flex-col py-4 px-3 shrink-0 z-20 shadow-xs">
         
         {/* Brand Title */}
         <div className="mb-6 px-3">
-          <h2 className="text-lg font-bold text-[#003d9b] dark:text-[#b2c5ff] tracking-tight flex items-center gap-2">
+          <h2 className="text-lg font-bold text-[#373737] dark:text-[#c5c5c5] tracking-tight flex items-center gap-2">
             Item Master
           </h2>
-          <p className="text-xs text-[#535f73] dark:text-[#bec6e0] font-medium mt-0.5">
+          <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6] font-medium mt-0.5">
             Management System
           </p>
         </div>
@@ -113,8 +99,8 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
             onClick={() => setActiveNav("item_details")}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold transition ${
               activeNav === "item_details"
-                ? "bg-[#d4e0f8] dark:bg-[#0052cc] text-[#051a3e] dark:text-white shadow-xs"
-                : "text-[#535f73] dark:text-[#bec6e0] hover:bg-[#e1e8ff] dark:hover:bg-[#1d3054]"
+                ? "bg-[#dfdfdf] dark:bg-[#494949] text-[#181818] dark:text-white shadow-xs"
+                : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:bg-[#e8e8e8] dark:hover:bg-[#2f2f2f]"
             }`}
           >
             <Package size={17} />
@@ -126,8 +112,8 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
             onClick={() => setActiveNav("view_config")}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-xs font-bold transition ${
               activeNav === "view_config"
-                ? "bg-[#d4e0f8] dark:bg-[#0052cc] text-[#051a3e] dark:text-white shadow-xs"
-                : "text-[#535f73] dark:text-[#bec6e0] hover:bg-[#e1e8ff] dark:hover:bg-[#1d3054]"
+                ? "bg-[#dfdfdf] dark:bg-[#494949] text-[#181818] dark:text-white shadow-xs"
+                : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:bg-[#e8e8e8] dark:hover:bg-[#2f2f2f]"
             }`}
           >
             <Settings2 size={17} />
@@ -135,7 +121,7 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
           </button>
 
           <div className="pt-2 pb-1">
-            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#737685] px-3">
+            <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-[#767676] px-3">
               Tools &amp; Catalogs
             </span>
           </div>
@@ -145,8 +131,8 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
             onClick={() => setActiveNav("imports")}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition ${
               activeNav === "imports"
-                ? "bg-[#d4e0f8] dark:bg-[#0052cc] text-[#051a3e] dark:text-white shadow-xs"
-                : "text-[#535f73] dark:text-[#bec6e0] hover:bg-[#e1e8ff] dark:hover:bg-[#1d3054]"
+                ? "bg-[#dfdfdf] dark:bg-[#494949] text-[#181818] dark:text-white shadow-xs"
+                : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:bg-[#e8e8e8] dark:hover:bg-[#2f2f2f]"
             }`}
           >
             <ClipboardPaste size={15} />
@@ -158,8 +144,8 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
             onClick={() => setActiveNav("attributes")}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition ${
               activeNav === "attributes"
-                ? "bg-[#d4e0f8] dark:bg-[#0052cc] text-[#051a3e] dark:text-white shadow-xs"
-                : "text-[#535f73] dark:text-[#bec6e0] hover:bg-[#e1e8ff] dark:hover:bg-[#1d3054]"
+                ? "bg-[#dfdfdf] dark:bg-[#494949] text-[#181818] dark:text-white shadow-xs"
+                : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:bg-[#e8e8e8] dark:hover:bg-[#2f2f2f]"
             }`}
           >
             <Database size={15} />
@@ -171,8 +157,8 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
             onClick={() => setActiveNav("image_config")}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition ${
               activeNav === "image_config"
-                ? "bg-[#d4e0f8] dark:bg-[#0052cc] text-[#051a3e] dark:text-white shadow-xs"
-                : "text-[#535f73] dark:text-[#bec6e0] hover:bg-[#e1e8ff] dark:hover:bg-[#1d3054]"
+                ? "bg-[#dfdfdf] dark:bg-[#494949] text-[#181818] dark:text-white shadow-xs"
+                : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:bg-[#e8e8e8] dark:hover:bg-[#2f2f2f]"
             }`}
           >
             <FileSpreadsheet size={15} />
@@ -184,8 +170,8 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
             onClick={() => setActiveNav("variants")}
             className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-semibold transition ${
               activeNav === "variants"
-                ? "bg-[#d4e0f8] dark:bg-[#0052cc] text-[#051a3e] dark:text-white shadow-xs"
-                : "text-[#535f73] dark:text-[#bec6e0] hover:bg-[#e1e8ff] dark:hover:bg-[#1d3054]"
+                ? "bg-[#dfdfdf] dark:bg-[#494949] text-[#181818] dark:text-white shadow-xs"
+                : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:bg-[#e8e8e8] dark:hover:bg-[#2f2f2f]"
             }`}
           >
             <Layers size={15} />
@@ -194,16 +180,16 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
         </div>
 
         {/* User Card at bottom */}
-        <div className="mt-auto border-t border-[#c3c6d6] dark:border-[#434654] pt-3 px-2">
+        <div className="mt-auto border-t border-[#c7c7c7] dark:border-[#464646] pt-3 px-2">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-full bg-[#dae2ff] text-[#001848] font-bold text-xs flex items-center justify-center">
+            <div className="w-8 h-8 rounded-full bg-[#e2e2e2] text-[#161616] font-bold text-xs flex items-center justify-center">
               {currentUser?.name ? currentUser.name.slice(0, 2).toUpperCase() : "AD"}
             </div>
             <div className="overflow-hidden">
-              <p className="text-xs font-bold text-[#051a3e] dark:text-white truncate">
+              <p className="text-xs font-bold text-[#181818] dark:text-white truncate">
                 {currentUser?.name || "System Admin"}
               </p>
-              <p className="text-[10px] text-[#535f73] dark:text-[#bec6e0] truncate">
+              <p className="text-[10px] text-[#5e5e5e] dark:text-[#c6c6c6] truncate">
                 {currentUser?.role || "ERP-001"}
               </p>
             </div>
@@ -215,15 +201,15 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
       <div className="flex-1 flex flex-col h-screen overflow-hidden min-w-0">
         
         {/* Top Header Bar */}
-        <header className="bg-white dark:bg-[#131b2e] h-14 border-b border-[#c3c6d6] dark:border-[#434654] flex items-center justify-between px-6 shrink-0 shadow-xs z-10">
+        <header className="bg-white dark:bg-[#1b1b1b] h-14 border-b border-[#c7c7c7] dark:border-[#464646] flex items-center justify-between px-6 shrink-0 shadow-xs z-10">
           <div className="flex items-center gap-2">
-            <span className="text-sm font-bold text-[#051a3e] dark:text-white">
+            <span className="text-sm font-bold text-[#181818] dark:text-white">
               Item Master Entry
             </span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="px-2.5 py-0.5 bg-[#e9edff] dark:bg-[#1d3054] text-[#003d9b] dark:text-[#b2c5ff] font-mono text-[11px] font-bold rounded">
+            <span className="px-2.5 py-0.5 bg-[#ededed] dark:bg-[#2f2f2f] text-[#373737] dark:text-[#c5c5c5] font-mono text-[11px] font-bold rounded">
               {products.length} Items Live
             </span>
 
@@ -231,7 +217,7 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-3 py-1 border border-[#c3c6d6] text-xs font-semibold hover:bg-[#eceef0] rounded transition"
+                className="px-3 py-1 border border-[#c7c7c7] text-xs font-semibold hover:bg-[#eeeeee] rounded transition"
               >
                 Close
               </button>
@@ -240,7 +226,7 @@ export const ItemMasterWs: React.FC<SmritiItemMasterWorkspaceProps> = ({
         </header>
 
         {/* Dynamic Workspace Canvas */}
-        <main className="flex-1 overflow-hidden min-h-0 bg-[#faf9ff] dark:bg-[#191c1e]">
+        <main className="flex-1 overflow-hidden min-h-0 bg-[#fafafa] dark:bg-[#1c1c1c]">
           {activeNav === "item_details" && (
             <ItemDetailsGrid
               products={products}

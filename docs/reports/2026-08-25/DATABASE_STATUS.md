@@ -5,7 +5,7 @@
 | Module | Database Setup | Checked Status |
 | :--- | :---: | :--- |
 | Executive Hub | ✅ | Schema tables fully validated |
-| SMRITI Gyan Kendra | ❌ | Missing or incomplete DB tables mapping |
+| TILEFLOW Gyan Kendra | ❌ | Missing or incomplete DB tables mapping |
 | Billing Desk | ✅ | Schema tables fully validated |
 | Sales Studio | ✅ | Schema tables fully validated |
 | Create Tax Invoice (B2B) | ❌ | Missing or incomplete DB tables mapping |
@@ -36,6 +36,6 @@
 | Terms & Conditions | ❌ | Missing or incomplete DB tables mapping |
 | Data Exchange Hub | ❌ | Missing or incomplete DB tables mapping |
 | Company Setup Wizard | ❌ | Missing or incomplete DB tables mapping |
-| About SMRITI | ✅ | Schema tables fully validated |
+| About TILEFLOW | ✅ | Schema tables fully validated |
 | Dev Intelligence Center | ❌ | Missing or incomplete DB tables mapping |
 | Audit Logs | ❌ | Missing or incomplete DB tables mapping |

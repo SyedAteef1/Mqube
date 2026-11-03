@@ -6,7 +6,7 @@ from app.schemas.auth import BootstrapRequest
 
 async def main():
     async with async_session() as db:
-        req = BootstrapRequest(username='admin', password='Admin@123', email='admin@smriti.local')
+        req = BootstrapRequest(username='admin', password='Admin@123', email='admin@tileflow.local')
         service = AuthService(db)
         try:
             user = await service.bootstrap_admin(req)

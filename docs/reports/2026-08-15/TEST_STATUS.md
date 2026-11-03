@@ -30,6 +30,6 @@
   - `src/tests/terms-engine.test.ts` (Mapped to Terms & Conditions)
   - `src/tests/data-exchange.test.ts` (Mapped to Data Exchange Hub)
   - `src/tests/company-setup.test.ts` (Mapped to Company Setup Wizard)
-  - `src/tests/about-smriti.test.ts` (Mapped to About SMRITI)
+  - `src/tests/about-tileflow.test.ts` (Mapped to About TILEFLOW)
   - `src/tests/dev-tracker.test.ts` (Mapped to Dev Intelligence Center)
   - `src/tests/audit-logs.test.ts` (Mapped to Audit Logs)

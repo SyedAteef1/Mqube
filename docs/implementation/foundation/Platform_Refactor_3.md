@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Vertical Slice 4 — Pricing, GST, Payments, and Document Engine Unification
 
 ## 1. Objective
-Unify Price Book resolution, multi-tier discount hierarchies, statutory GST rate scheduling, multi-tender payment settlement ledgers, and atomic document numbering engines inside the tenant data plane (`smritiXXX`).
+Unify Price Book resolution, multi-tier discount hierarchies, statutory GST rate scheduling, multi-tender payment settlement ledgers, and atomic document numbering engines inside the tenant data plane (`tileflowXXX`).
 
 ---
 
@@ -37,7 +36,7 @@ Enterprise omnichannel retail demands dynamic pricing (wholesale vs retail tier 
    - Row-locked sequence allocation per financial year and document type (e.g. `INV/2026-27/0001`, `PO/2026-27/0001`).
    - Immutable audit logging for every numbering increment.
 4. **Tenant Isolation**:
-   - All price books, payment transactions, and document sequences execute strictly inside `smritiXXX`.
+   - All price books, payment transactions, and document sequences execute strictly inside `tileflowXXX`.
 
 ### Out-of-Scope (Deferred)
 - External bank payment gateway API integration webhook handlers.
@@ -58,7 +57,7 @@ Enterprise omnichannel retail demands dynamic pricing (wholesale vs retail tier 
 | **Pricing Resolution** | Item master base price | 4-tier hierarchical resolution (`PriceBook` + `CustomerPriceTier` + volume breaks) |
 | **Payment Ledger** | Single payment mode string on invoice | Multi-tender `PaymentTransaction` records with unique `idempotency_key` |
 | **Document Numbering** | Basic sequence table | Atomic row-locked sequence allocation with audit trail |
-| **Data Plane Boundary** | Tenant DB | Strictly tenant data plane (`smritiXXX`) |
+| **Data Plane Boundary** | Tenant DB | Strictly tenant data plane (`tileflowXXX`) |
 
 ---
 
@@ -146,7 +145,7 @@ Additive DDL tables. If rollback is required, existing invoice tables continue t
 1. Test tier-based pricing resolution (Retail vs Wholesale Price Book).
 2. Test atomic document sequence generation without sequence gaps.
 3. Test split-tender payment settlement and duplicate idempotency key rejection.
-4. Verify tenant isolation between `smriti001` and `smriti002`.
+4. Verify tenant isolation between `tileflow001` and `tileflow002`.
 
 ---
 
@@ -164,7 +163,7 @@ Additive DDL tables. If rollback is required, existing invoice tables continue t
 ---
 
 ## 16. Deployment Plan
-1. Apply DDL to tenant databases (`smriti001`, `smriti002`).
+1. Apply DDL to tenant databases (`tileflow001`, `tileflow002`).
 2. Deploy backend service models.
 3. Validate automated test execution.
 

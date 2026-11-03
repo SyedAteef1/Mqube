@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 from typing import Dict, Any, List, Set
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -19,7 +5,7 @@ from sqlalchemy.future import select
 
 from ..models.auth import User, UserRole
 from ..models.role import Role
-from ..models.security import SmritiPermission
+from ..models.security import TileFlowPermission
 from ..api.deps import TenantContext
 
 # Canonical 34-Menu Contract Mapping
@@ -30,7 +16,7 @@ CANONICAL_34_MENU_MATRIX: Dict[str, Dict[str, Any]] = {
 
     # 2. System & Knowledge Base
     "menu-wiki": {"resource": "wiki_docs", "view_perm": "WIKI.ACCESS", "parent_id": None},
-    "menu-about-smriti": {"resource": "about_smriti", "view_perm": "ABOUT.ACCESS", "parent_id": None},
+    "menu-about-tileflow": {"resource": "about_tileflow", "view_perm": "ABOUT.ACCESS", "parent_id": None},
     "menu-dev-tracker": {"resource": "dev_tracker", "view_perm": "SYSTEM.DEV", "parent_id": None},
 
     # 3. Sales & POS (Parent: menu-pos)
@@ -78,7 +64,7 @@ CANONICAL_34_MENU_MATRIX: Dict[str, Dict[str, Any]] = {
 # Standard operational modules allowed by default for Cashier / Store User
 CASHIER_DEFAULT_VIEW_ALLOWLIST: Set[str] = {
     "dashboard", "pos_workspace", "sales_billing", "customer_master", "item_master",
-    "user_profile", "wiki_docs", "about_smriti"
+    "user_profile", "wiki_docs", "about_tileflow"
 }
 
 
@@ -94,7 +80,7 @@ async def evaluate_action_permission(
     Evaluates permission for a specific (resource, action) pair under active TenantContext.
     Precedence:
     1. SYSADMIN Superuser (Wildcard '*')
-    2. User Explicit Override (smriti_permissions matching scope="User:{id}")
+    2. User Explicit Override (tileflow_permissions matching scope="User:{id}")
     3. Assigned Role Permissions (roles.permissions_json)
     4. Scoped Role Defaults:
        - MANAGER: Allowed for all standard operations (EXCEPT VOID, PURGE, SUPER_ADMIN without role grant)
@@ -103,21 +89,21 @@ async def evaluate_action_permission(
     if current_user.role == UserRole.SYSADMIN:
         return True
 
-    # 1. User Explicit Override in smriti_permissions (Tenant Scoped)
+    # 1. User Explicit Override in tileflow_permissions (Tenant Scoped)
     user_scope = f"User:{current_user.id}"
-    q_user = select(SmritiPermission).where(
-        SmritiPermission.scope == user_scope,
-        SmritiPermission.resource == resource,
-        SmritiPermission.action == action,
-        SmritiPermission.is_deleted == False,
+    q_user = select(TileFlowPermission).where(
+        TileFlowPermission.scope == user_scope,
+        TileFlowPermission.resource == resource,
+        TileFlowPermission.action == action,
+        TileFlowPermission.is_deleted == False,
     )
     if tenant.company_id:
         q_user = q_user.where(
-            (SmritiPermission.company_id == None) | (SmritiPermission.company_id == tenant.company_id)
+            (TileFlowPermission.company_id == None) | (TileFlowPermission.company_id == tenant.company_id)
         )
     if tenant.branch_id:
         q_user = q_user.where(
-            (SmritiPermission.branch_id == None) | (SmritiPermission.branch_id == tenant.branch_id)
+            (TileFlowPermission.branch_id == None) | (TileFlowPermission.branch_id == tenant.branch_id)
         )
 
     res_user = await db.execute(q_user)

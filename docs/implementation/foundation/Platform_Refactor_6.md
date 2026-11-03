@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Master Implementation Plan: SMRITI Platform Architecture Controlled Refactoring & Migration (v1.0)
+# Master Implementation Plan: TILEFLOW Platform Architecture Controlled Refactoring & Migration (v1.0)
 
 ## 1. Objective
-Establish and execute the single canonical Master Architecture Blueprint v1.0 through controlled, vertical-slice migrations rather than destructive rewrites. Transform SMRITI into a single unified business operating platform governed by a centralized Control Plane (`smritisys`), tenant-isolated Transactional Data Planes (`smritiXXX`), and an Analytics/Intelligence Plane.
+Establish and execute the single canonical Master Architecture Blueprint v1.0 through controlled, vertical-slice migrations rather than destructive rewrites. Transform TILEFLOW into a single unified business operating platform governed by a centralized Control Plane (`tileflowsys`), tenant-isolated Transactional Data Planes (`tileflowXXX`), and an Analytics/Intelligence Plane.
 
 ---
 
 ## 2. Business Motivation
-SMRITI represents one configurable business operating platform — not separate, siloed POS, Distributor, Warehouse, eCommerce, or ERP products. Businesses activate one, several, or all composable capabilities. Controlled migration ensures 100% operational continuity, data preservation, zero downtime, and complete backward compatibility while eliminating duplication and hardening security boundaries.
+TILEFLOW represents one configurable business operating platform — not separate, siloed POS, Distributor, Warehouse, eCommerce, or ERP products. Businesses activate one, several, or all composable capabilities. Controlled migration ensures 100% operational continuity, data preservation, zero downtime, and complete backward compatibility while eliminating duplication and hardening security boundaries.
 
 ---
 
@@ -45,18 +44,18 @@ SMRITI represents one configurable business operating platform — not separate,
 ## 5. Gap Analysis
 | Capability / Concept | Legacy Duplicate / Gap | Canonical Target | Action |
 | :--- | :--- | :--- | :--- |
-| **Company** | `companies` vs `control_companies` | `Company` (`companies` in `smritisys`) | Canonicalize model in `app.models.tenant`, maintain compatibility adapter for `control_companies`. |
+| **Company** | `companies` vs `control_companies` | `Company` (`companies` in `tileflowsys`) | Canonicalize model in `app.models.tenant`, maintain compatibility adapter for `control_companies`. |
 | **Tenant** | Implicit company parameter usage | `TenantContext` + `companies` | Strict cryptographic JWT + assignment verification. |
-| **User** | `users` vs `control_users` | `User` (`users` in `smritisys`) | Canonicalize model in `app.models.auth`, maintain compatibility alias for `control_users`. |
-| **Database Routing** | `company_database_registries` vs `control_company_databases` | `CompanyDatabaseRegistry` (`company_database_registries` in `smritisys`) | Canonicalize model in `app.models.company_database_registry`, maintain compatibility adapter. |
-| **Menus** | Static frontend fallback | `smriti_menus` in `smritisys` | 34 immutable system menu nodes in `smritisys` with dynamic cache. |
-| **Roles / RBAC** | Role columns / scattered JSON | `Role` (`roles` in `smritisys`) + `SmritiPermission` | Unified RBAC model. |
+| **User** | `users` vs `control_users` | `User` (`users` in `tileflowsys`) | Canonicalize model in `app.models.auth`, maintain compatibility alias for `control_users`. |
+| **Database Routing** | `company_database_registries` vs `control_company_databases` | `CompanyDatabaseRegistry` (`company_database_registries` in `tileflowsys`) | Canonicalize model in `app.models.company_database_registry`, maintain compatibility adapter. |
+| **Menus** | Static frontend fallback | `tileflow_menus` in `tileflowsys` | 34 immutable system menu nodes in `tileflowsys` with dynamic cache. |
+| **Roles / RBAC** | Role columns / scattered JSON | `Role` (`roles` in `tileflowsys`) + `TileFlowPermission` | Unified RBAC model. |
 
 ---
 
 ## 6. Architecture Impact
-- **Control Plane (`smritisys`)**: Solely governs global reference definitions, templates, capabilities, workspaces, menus, screens, formulas, rules, policies, workflows, permissions, and licensing.
-- **Transactional Data Plane (`smritiXXX`)**: Holds company-specific masters, transactions, inventory batches, and authoritative ledgers (`stock_movements`, financial ledgers).
+- **Control Plane (`tileflowsys`)**: Solely governs global reference definitions, templates, capabilities, workspaces, menus, screens, formulas, rules, policies, workflows, permissions, and licensing.
+- **Transactional Data Plane (`tileflowXXX`)**: Holds company-specific masters, transactions, inventory batches, and authoritative ledgers (`stock_movements`, financial ledgers).
 - **Resolver**: Universal single path to company databases. Rejects unverified companies, suspended tenants, and non-conforming database names.
 
 ---
@@ -64,10 +63,10 @@ SMRITI represents one configurable business operating platform — not separate,
 ## 7. Proposed Design
 1. **Decision Table Enforcement**: Retain existing tables during migration, backfill to canonical models, update all read/write paths, and provide compatibility views.
 2. **Fail-Closed Resolver**:
-   - Query `companies` in `smritisys` with strict active status check.
+   - Query `companies` in `tileflowsys` with strict active status check.
    - Query `user_company_assignments` (or `SYSADMIN` role).
    - Query `company_database_registries` for status `READY`.
-   - Validate database name against `^smriti(?!000)(?!SYS)[A-Z0-9]{3}$`.
+   - Validate database name against `^tileflow(?!000)(?!SYS)[A-Z0-9]{3}$`.
    - Dynamic URL assembly using environment configuration.
 
 ---
@@ -89,7 +88,7 @@ SMRITI represents one configurable business operating platform — not separate,
 
 ## 10. Dependencies
 - FastAPI Core backend (`backend/app/`).
-- PostgreSQL 16+ multi-database instance (`smritisys`, `smriti001`, `smriti002`, `smriti003`).
+- PostgreSQL 16+ multi-database instance (`tileflowsys`, `tileflow001`, `tileflow002`, `tileflow003`).
 - Async SQLAlchemy + asyncpg connection pools.
 
 ---
@@ -141,12 +140,12 @@ SMRITI represents one configurable business operating platform — not separate,
 ## 17. Status
 **In Progress — Milestone 1 (Routing Boundary Hardening & Model Canonicalization) Partially Verified.**
 
-The routing boundary is substantially hardened, but canonicalization is not yet complete. Registry-backed engine authorization, compatibility-model retirement, lifecycle status normalization, and isolated database verification remain open. See [SMRITI Platform Implementation Status](../../architecture/PLATFORM.md).
+The routing boundary is substantially hardened, but canonicalization is not yet complete. Registry-backed engine authorization, compatibility-model retirement, lifecycle status normalization, and isolated database verification remain open. See [TILEFLOW Platform Implementation Status](../../architecture/PLATFORM.md).
 
 ---
 
 ## 18. Related ADRs
-- `ADR-001`: Multi-Company Database Architecture and Separation of Control Plane (`smritisys`) and Data Planes (`smritiXXX`).
+- `ADR-001`: Multi-Company Database Architecture and Separation of Control Plane (`tileflowsys`) and Data Planes (`tileflowXXX`).
 - `ADR-002`: Authoritative Ledger Sourcing for Stock and Financial Transactions.
 
 ---

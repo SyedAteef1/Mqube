@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.4.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { LabelPrintRow } from "./types.ts";
 
 export interface TransactionDocRecord {
@@ -143,9 +129,6 @@ export const MOCK_MASTER_ITEMS_WITH_DATES: MasterItemWithDateRecord[] = [
   { id: "m-6", stockNo: "000012", barcode: "890100000012", brand: "Beanstalk", product: "Trouser", colour: "Olive", style: "Cargo", size: "36", mrp: 1899, sellingPrice: 1499, currentStock: 6, createdDate: "2026-08-21", isLabelPrinted: false }
 ];
 
-/**
- * Filter items from Transactions matching Doc Prefix and Number range
- */
 export function queryTransactionItems(
   docType: string,
   prefix: string,

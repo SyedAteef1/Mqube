@@ -1,29 +1,24 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.8.0
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS Walkthrough — Tenant Isolation & Domain REST API — v3.8.0
+# TILEFLOW Retail OS Walkthrough — Tenant Isolation & Domain REST API — v3.8.0
 
 ## 1. Purpose
 This walkthrough documents the design and execution of multi-tenant validation and domain REST API routers for products, customers, and sales invoices.
@@ -76,7 +71,7 @@ This walkthrough documents the design and execution of multi-tenant validation a
 ## 6. Design Rationale
 - Plumbed `TenantContext` to repository query wrappers (`BaseRepository._apply_tenant_filter`) to enforce query isolation uniformly across CRUD endpoints.
 - Plumbed `TenantContext` into Service constructors to check unique code/barcode availability and deduct inventory stock within the caller's tenant boundary.
-- `python-core` service name and container name chosen to match `main.py`'s own startup log line and to be deliberately distinct from the existing `app`/`smriti-api` Node service.
+- `python-core` service name and container name chosen to match `main.py`'s own startup log line and to be deliberately distinct from the existing `app`/`tileflow-api` Node service.
 
 ## 7. Implementation Summary
 - **Header Parsing Dependency:** Created `get_tenant_context` resolving headers against database `Company` and `Branch` tables.
@@ -136,7 +131,7 @@ app/tests/t_tenant_isolate.py::test_concurrent_duplicate_barcode_returns_400_not
 - Integrate JWT-based authentication so `get_tenant_context` can also verify caller identity.
 - Backfill NULL `company_id`/`branch_id` on existing seeded rows and add NOT NULL DB constraints.
 - Split `requirements.txt` into `requirements.txt` (production) and `requirements-dev.txt` (test/lint tooling).
-- Implement full HREP error dictionary catalog (`SMRITI-VAL-001`-style structured errors).
+- Implement full HREP error dictionary catalog (`TILEFLOW-VAL-001`-style structured errors).
 
 ## 12. Related ADRs
 - None.

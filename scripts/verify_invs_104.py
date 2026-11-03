@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import sys
 import io
@@ -21,7 +8,7 @@ from pypdf import PdfReader
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 def verify_all():
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
 
     invoices_to_check = [

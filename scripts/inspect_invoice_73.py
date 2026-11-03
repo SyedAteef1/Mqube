@@ -1,21 +1,8 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import psycopg2
 import json
 
 def main():
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     
     cur.execute("""
@@ -31,7 +18,7 @@ def main():
     
     if row:
         row_dict = dict(zip(cols, row))
-        print("=== INVOICE TT2026-2027/73 in smriti001.sales_invoices ===")
+        print("=== INVOICE TT2026-2027/73 in tileflow001.sales_invoices ===")
         for k, v in row_dict.items():
             print(f"{k}: {repr(v)}")
     else:

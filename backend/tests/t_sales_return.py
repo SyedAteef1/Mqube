@@ -1,29 +1,16 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.22.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-17
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import uuid
 import pytest
 import psycopg2
 from decimal import Decimal
 
 # Architecture Rule: sales_returns is an operational table.
-# Operational data belongs in Company DB (smriti001), NOT in smritisys (Control Plane).
-COMPANY_001_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+# Operational data belongs in Company DB (tileflow001), NOT in tileflowsys (Control Plane).
+COMPANY_001_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 def test_sales_return_and_credit_note_workflow():
     """
-    Test Blocker #6 Sales Return / Credit Note Workflow against Company 001 database (smriti001).
-    ARCHITECTURE: sales_returns is operational data -> Company DB (smriti001). NOT smritisys.
+    Test Blocker #6 Sales Return / Credit Note Workflow against Company 001 database (tileflow001).
+    ARCHITECTURE: sales_returns is operational data -> Company DB (tileflow001). NOT tileflowsys.
     Verifies:
     - Creation of a Sales Return record & Credit Note against an existing invoice
     - Transaction history protection: Original invoice record remains immutable
@@ -74,7 +61,7 @@ def test_sales_return_and_credit_note_workflow():
         WHERE id = %s;
     """, (ret_id,))
     row = cur.fetchone()
-    assert row is not None, "Sales Return record must exist in Company DB (smriti001) sales_returns table"
+    assert row is not None, "Sales Return record must exist in Company DB (tileflow001) sales_returns table"
     assert row[0] == ret_no
     assert row[1] == inv_id
     assert row[2] == cn_no

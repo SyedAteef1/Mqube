@@ -1,23 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.61.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Sprint 45 — Section 11 & 12 Analytics & Intelligence Plane + Integration Hub & Compliance Gateways
 
 ## 1. Purpose
-This walkthrough documents the full verification and certification of **Blueprint Section 11 (Analytics and Intelligence Plane)** and **Blueprint Section 12 (Integration Hub, Compliance Gateways & Regulatory Audit Plane)**. It certifies tenant-isolated daily fact materialization, concurrency-safe multi-tenant aggregation daemons, SHA-256 tamper-evident regulatory audit logging, TallyPrime XML export, and governed compliance gateway integration across SMRITI PostgreSQL tenant clusters (`smriti001`, `smriti002`).
+This walkthrough documents the full verification and certification of **Blueprint Section 11 (Analytics and Intelligence Plane)** and **Blueprint Section 12 (Integration Hub, Compliance Gateways & Regulatory Audit Plane)**. It certifies tenant-isolated daily fact materialization, concurrency-safe multi-tenant aggregation daemons, SHA-256 tamper-evident regulatory audit logging, TallyPrime XML export, and governed compliance gateway integration across TILEFLOW PostgreSQL tenant clusters (`tileflow001`, `tileflow002`).
 
 ## 2. Scope
 - **Section 11 (Analytics Plane)**:
@@ -56,7 +54,7 @@ This walkthrough documents the full verification and certification of **Blueprin
   - `AnalyticalIntelligenceService.get_category_profitability_rollups()`: Queries lookback intervals to compute revenue and profit contribution by merchandise category.
 - **Analytics Daemon Service**:
   - `AnalyticsDaemonService.run_tenant_rollup_cycle()`: Acquires advisory lock, processes date ranges, upserts `AnalyticsDailySalesFact`, and releases the lock.
-  - `AnalyticsDaemonService.run_multi_tenant_analytics_daemon_cycle()`: Orchestrates batch rollup across tenant registries (`smriti001`, `smriti002`).
+  - `AnalyticsDaemonService.run_multi_tenant_analytics_daemon_cycle()`: Orchestrates batch rollup across tenant registries (`tileflow001`, `tileflow002`).
 - **Compliance & Immutable Audit Plane**:
   - `ComplianceAuditService.record_audit_event()`: Ingests administrative and regulatory actions, generates SHA-256 hash, and inserts append-only records into `compliance_immutable_audit_logs`.
   - `TallyIntegrationService`: Constructs valid XML payload schemas for Sales Invoices and multi-leg Journal Vouchers.
@@ -64,7 +62,7 @@ This walkthrough documents the full verification and certification of **Blueprin
 ## 8. Tests Executed
 ```bash
 python -m pytest tests/t_analytics_hub.py tests/t_daemon_rollup.py tests/t_eway_dispatch.py tests/t_golive_audit.py app/compliance/tests/test_compliance_fou.py -v
-python scripts/smriti_naming_guard.py
+python scripts/tileflow_naming_guard.py
 ```
 
 ## 9. Verification Results
@@ -74,7 +72,7 @@ python scripts/smriti_naming_guard.py
 - `backend/tests/t_golive_audit.py`: **4/4 PASSED**
 - `backend/app/compliance/tests/test_compliance_fou.py`: **8/8 PASSED**
 - Total Combined Verification Suite: **23/23 PASSED (100% GREEN)** in 17.60s.
-- SMRITI Naming Guard (`scripts/smriti_naming_guard.py`): **0 naming violations**.
+- TILEFLOW Naming Guard (`scripts/tileflow_naming_guard.py`): **0 naming violations**.
 
 ## 10. Known Limitations
 - Physical hardware thermal printing (Zebra / TSC EPL/ZPL ESC/POS raw drivers) requires active physical hardware gateway daemon testing in on-premise store environments.

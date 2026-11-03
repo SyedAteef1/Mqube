@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Seventh Gate — Vite + React Frontend Architecture Specification v1.0
+# TILEFLOW Seventh Gate — Vite + React Frontend Architecture Specification v1.0
 
 **Status: FRONTEND_VITE_REACT = READY**  
 **Audit Timestamp:** 2026-08-15 05:55:36 UTC  
-**Principle Locked:** "React/Vite knows the Company Context (`company_id`). React/Vite NEVER knows the Company Database (`smriti001`)."
+**Principle Locked:** "React/Vite knows the Company Context (`company_id`). React/Vite NEVER knows the Company Database (`tileflow001`)."
 
 ---
 
@@ -27,8 +26,8 @@ Browser / React Frontend
 /api/v1/menus/resolved & Business APIs
         ↓ (Header: x-company-id = COMP-001)
 FastAPI Backend (CompanyDatabaseResolver)
-        ↓ (Resolves COMP-001 -> smriti001 via smritisys.company_database_registries)
-PostgreSQL Database smriti001
+        ↓ (Resolves COMP-001 -> tileflow001 via tileflowsys.company_database_registries)
+PostgreSQL Database tileflow001
 ```
 
 - **Direct PostgreSQL Connections in React**: **NONE (0 Direct DB Calls)**
@@ -38,7 +37,6 @@ PostgreSQL Database smriti001
 
 ---
 
-## 2. Gate Verification Classification
 
 ```text
 BACKEND_MULTI_COMPANY = READY

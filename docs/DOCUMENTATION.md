@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: MASTER DOCUMENTATION INDEX & GOVERNANCE CATALOG
 -->
 
-# SMRITI RETAIL OS — MASTER DOCUMENTATION INDEX
+# TILEFLOW RETAIL OS — MASTER DOCUMENTATION INDEX
 
 **Status:** **ACTIVE CANONICAL REPOSITORY INDEX**  
 **Effective Date:** 2026-08-17
 
-This index serves as the single authoritative navigation registry for all architecture specifications, governance guidelines, implementation plans, and verification audit artifacts across the SMRITI Retail OS repository.
+This index serves as the single authoritative navigation registry for all architecture specifications, governance guidelines, implementation plans, and verification audit artifacts across the TILEFLOW Retail OS repository.
 
 ---
 
@@ -24,7 +23,7 @@ This index serves as the single authoritative navigation registry for all archit
 
 | Document | Classification | Scope & Description |
 |---|---|---|
-| [`docs/architecture/MULTI_COMPANY_2.md`](file:///F:/SMRITRretailNX/docs/architecture/MULTI_COMPANY_2.md) | **CANONICAL** | **Single Source of Truth** for SMRITI multi-company database topology, Control Plane governance, routing resolver, and operational isolation. |
+| [`docs/architecture/MULTI_COMPANY_2.md`](file:///F:/SMRITRretailNX/docs/architecture/MULTI_COMPANY_2.md) | **CANONICAL** | **Single Source of Truth** for TILEFLOW multi-company database topology, Control Plane governance, routing resolver, and operational isolation. |
 
 ---
 
@@ -60,17 +59,17 @@ This index serves as the single authoritative navigation registry for all archit
 | [`docs/_audit/FINAL_TABLE.md`](file:///F:/SMRITRretailNX/docs/_audit/FINAL_TABLE.md) | **TABLE OWNERSHIP MATRIX** | Comprehensive table-by-table ownership, runtime reader/writer, and authority matrix for all 283 base tables. |
 | [`docs/_audit/CANONICAL_SYSTEM.md`](file:///F:/SMRITRretailNX/docs/_audit/CANONICAL_SYSTEM.md) | **FORENSIC RECONCILIATION** | Live forensic database schema & numerical table reconciliation certifying PostgreSQL 15.18, 283 base tables, and exact disjoint partitions. |
 | [`docs/_audit/FINAL.md`](file:///F:/SMRITRretailNX/docs/_audit/FINAL.md) | **FINAL MASTER CERTIFICATION** | Master documentation certification declaration certifying complete reconciliation across all repository documents. |
-| [`docs/_audit/ECOMMERCE.md`](file:///F:/SMRITRretailNX/docs/_audit/ECOMMERCE.md) | **ECOMMERCE FINAL CERTIFICATION** | Final certification of eCommerce as a core capability, company-local ownership, and zero writes to smritisys. |
+| [`docs/_audit/ECOMMERCE.md`](file:///F:/SMRITRretailNX/docs/_audit/ECOMMERCE.md) | **ECOMMERCE FINAL CERTIFICATION** | Final certification of eCommerce as a core capability, company-local ownership, and zero writes to tileflowsys. |
 | [`docs/_audit/GLOBAL.md`](file:///F:/SMRITRretailNX/docs/_audit/GLOBAL.md) | **DOCUMENTATION AUDIT** | Full repository-wide reconciliation report with AI Agent Confusion Test results. |
 | [`docs/_audit/ECOMMERCE_CORE.md`](file:///F:/SMRITRretailNX/docs/_audit/ECOMMERCE_CORE.md) | **ECOMMERCE CORE AUDIT** | Canonical audit and capability matrix establishing eCommerce / Omnichannel as a core channel capability. |
-| [`docs/_audit/PSV_COMPANY_LOCAL.md`](file:///F:/SMRITRretailNX/docs/_audit/PSV_COMPANY_LOCAL.md) | **PSV CANONICAL CERTIFICATION** | Certification of 100% company-local PSV architecture (SmritiPSV dropped, 0 cross-company leakage, 336/336 tests PASS). |
-| [`docs/_audit/LEGACY_175_TABLE.md`](file:///F:/SMRITRretailNX/docs/_audit/LEGACY_175_TABLE.md) | **LEGACY FORENSIC AUDIT** | Exhaustive table-by-table forensic classification of all 172+ legacy/scaffolding tables in smritisys. |
-| [`docs/_audit/SMRITISYS_RUNTIME.md`](file:///F:/SMRITRretailNX/docs/_audit/SMRITISYS_RUNTIME.md) | **FORENSIC RUNTIME AUDIT** | Forensic operational-authority runtime write audit and table classification report (CONTROL_PLANE_RUNTIME_VERIFIED). |
+| [`docs/_audit/PSV_COMPANY_LOCAL.md`](file:///F:/SMRITRretailNX/docs/_audit/PSV_COMPANY_LOCAL.md) | **PSV CANONICAL CERTIFICATION** | Certification of 100% company-local PSV architecture (TileFlowPSV dropped, 0 cross-company leakage, 336/336 tests PASS). |
+| [`docs/_audit/LEGACY_175_TABLE.md`](file:///F:/SMRITRretailNX/docs/_audit/LEGACY_175_TABLE.md) | **LEGACY FORENSIC AUDIT** | Exhaustive table-by-table forensic classification of all 172+ legacy/scaffolding tables in tileflowsys. |
+| [`docs/_audit/TILEFLOWSYS_RUNTIME.md`](file:///F:/SMRITRretailNX/docs/_audit/TILEFLOWSYS_RUNTIME.md) | **FORENSIC RUNTIME AUDIT** | Forensic operational-authority runtime write audit and table classification report (CONTROL_PLANE_RUNTIME_VERIFIED). |
 | [`docs/_audit/POST_FREEZE.md`](file:///F:/SMRITRretailNX/docs/_audit/POST_FREEZE.md) | **POST-FREEZE VERIFICATION** | Phase 2 Barcode runtime pipeline verification report. |
 | [`docs/_audit/ARCHITECTURE.md`](file:///F:/SMRITRretailNX/docs/_audit/ARCHITECTURE.md) | **BASELINE FREEZE** | Master architectural baseline freeze declaration and table accounting reconciliation (76 mapped vs 99 Company DB tables). |
 | [`docs/_audit/FINAL_2.md`](file:///F:/SMRITRretailNX/docs/_audit/FINAL_2.md) | **FINAL CERTIFICATION** | Comprehensive architecture certification declaration with explicit verified vs pending boundaries. |
 | [`docs/_audit/FINAL_DATA.md`](file:///F:/SMRITRretailNX/docs/_audit/FINAL_DATA.md) | **MIGRATION AUDIT** | Zero-data-loss verification, pre-migration backup evidence, checksum reconciliations, and test passes. |
-| [`docs/_audit/TABLE_MIGRATION_MAP.md`](file:///F:/SMRITRretailNX/docs/_audit/TABLE_MIGRATION_MAP.md) | **MIGRATION AUDIT** | Complete classification of all 283 base tables in `smritisys` and target routing rules. |
+| [`docs/_audit/TABLE_MIGRATION_MAP.md`](file:///F:/SMRITRretailNX/docs/_audit/TABLE_MIGRATION_MAP.md) | **MIGRATION AUDIT** | Complete classification of all 283 base tables in `tileflowsys` and target routing rules. |
 | [`docs/_audit/DATA_MIGRATION.md`](file:///F:/SMRITRretailNX/docs/_audit/DATA_MIGRATION.md) | **MIGRATION AUDIT** | Anomaly analysis and resolution for default template series and pricing groups. |
 | [`docs/_audit/FINAL_2_3.md`](file:///F:/SMRITRretailNX/docs/_audit/FINAL_2_3.md) | **AUDIT EVIDENCE** | Pre-migration remediation closure and integration test suite verification report. |
 

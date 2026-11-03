@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Canonical System Structure Forensic Reconciliation Report
 -->
 
-# SMRITI RETAIL OS — CANONICAL SYSTEM STRUCTURE FORENSIC RECONCILIATION REPORT
+# TILEFLOW RETAIL OS — CANONICAL SYSTEM STRUCTURE FORENSIC RECONCILIATION REPORT
 
 **Audit Protocol:** Live Forensic Database Schema & Documentation Reconciliation  
 **Canonical Architecture Reference:** [`docs/architecture/MULTI_COMPANY_2.md`](file:///F:/SMRITRretailNX/docs/architecture/MULTI_COMPANY_2.md)  
@@ -29,28 +28,28 @@ Direct execution against the PostgreSQL cluster (`localhost:5432`) returned the 
 | Metric | Measured Live Runtime Reality | Canonical Reconciliation |
 |---|---|---|
 | **PostgreSQL Version** | `PostgreSQL 15.18 on x86_64-pc-linux-musl (Alpine 15.2.0)` | **PostgreSQL 15.18** (Supersedes any documentation referencing PostgreSQL 17) |
-| **Databases on Cluster** | `['postgres', 'smriti001', 'smriti002', 'smriti_test_fresh', 'smritisys']` | **Verified** (`SmritiPSV` and `SmritiEcom` DO NOT EXIST on cluster) |
-| **`smritisys` Physical Base Tables** | **`283 Base Tables`** | **283 Base Tables + 1 View (`v_scdm_stock_projection`) = 284 Total Relations** |
-| **`smriti001` Physical Base Tables** | **`99 Base Tables`** | **99 Base Tables** (Dedicated Company 001 Operational DB) |
-| **`smriti002` Physical Base Tables** | **`99 Base Tables`** | **99 Base Tables** (Dedicated Company 002 Operational DB) |
+| **Databases on Cluster** | `['postgres', 'tileflow001', 'tileflow002', 'tileflow_test_fresh', 'tileflowsys']` | **Verified** (`TileFlowPSV` and `TileFlowEcom` DO NOT EXIST on cluster) |
+| **`tileflowsys` Physical Base Tables** | **`283 Base Tables`** | **283 Base Tables + 1 View (`v_scdm_stock_projection`) = 284 Total Relations** |
+| **`tileflow001` Physical Base Tables** | **`99 Base Tables`** | **99 Base Tables** (Dedicated Company 001 Operational DB) |
+| **`tileflow002` Physical Base Tables** | **`99 Base Tables`** | **99 Base Tables** (Dedicated Company 002 Operational DB) |
 
 ---
 
-## 2. Mathematically Exact Disjoint Table Partition of `smritisys` (283 Base Tables)
+## 2. Mathematically Exact Disjoint Table Partition of `tileflowsys` (283 Base Tables)
 
-Every base table in `smritisys` is classified into exactly one disjoint category. The mathematical sum matches the physical table count with **zero unexplained remainder**:
+Every base table in `tileflowsys` is classified into exactly one disjoint category. The mathematical sum matches the physical table count with **zero unexplained remainder**:
 
 ```text
 ================================================================================
-SMRITISYS MATHEMATICALLY EXACT DISJOINT PARTITION (TOTAL: 283 BASE TABLES)
+TILEFLOWSYS MATHEMATICALLY EXACT DISJOINT PARTITION (TOTAL: 283 BASE TABLES)
 ================================================================================
 1. CONTROL_PLANE              :  13 tables (Active identity, auth, routing, governance)
 2. CENTRAL_MASTER             :   4 tables (Central static identity masters)
 3. REPORTING_METADATA         :   4 tables (Downstream report & widget definitions)
-4. PSV_SHADOW                 :   4 tables (PSV shadow definitions in smritisys)
-5. COMPANY_OPERATIONAL_ACTIVE :  79 tables (Operational domain tables active in smriti001/002)
+4. PSV_SHADOW                 :   4 tables (PSV shadow definitions in tileflowsys)
+5. COMPANY_OPERATIONAL_ACTIVE :  79 tables (Operational domain tables active in tileflow001/002)
 6. LEGACY_READ_ONLY           :   0 tables
-7. RETIRE_CANDIDATE           : 179 tables (Preserved prototype/scaffolding in RETIRED_IN_SMRITISYS)
+7. RETIRE_CANDIDATE           : 179 tables (Preserved prototype/scaffolding in RETIRED_IN_TILEFLOWSYS)
 8. UNKNOWN                    :   0 tables
 --------------------------------------------------------------------------------
 TOTAL CALCULATED SUM          : 283 BASE TABLES (100% Exact Match: 13+4+4+4+79+0+179+0 = 283)
@@ -59,7 +58,7 @@ TOTAL POSTGRESQL RELATIONS    : 284 RELATIONS
 ================================================================================
 ```
 
-### 2.1 Enumeration of Classified Tables in `smritisys`
+### 2.1 Enumeration of Classified Tables in `tileflowsys`
 
 #### A. Control Plane Core (13 Tables)
 1. `alembic_version`
@@ -71,8 +70,8 @@ TOTAL POSTGRESQL RELATIONS    : 284 RELATIONS
 7. `control_psv_configs`
 8. `control_users`
 9. `roles`
-10. `smriti_audit_log`
-11. `smriti_menus` (34 immutable system menu definitions)
+10. `tileflow_audit_log`
+11. `tileflow_menus` (34 immutable system menu definitions)
 12. `user_company_assignments`
 13. `users`
 
@@ -82,7 +81,7 @@ TOTAL POSTGRESQL RELATIONS    : 284 RELATIONS
 1. `barcode_providers`
 2. `identity_rules`
 3. `product_identities`
-4. `smriti_banks` (20 standard bank IFSC entries)
+4. `tileflow_banks` (20 standard bank IFSC entries)
 
 #### C. Reporting Metadata (4 Tables)
 1. `dashboard_widgets`
@@ -96,19 +95,19 @@ TOTAL POSTGRESQL RELATIONS    : 284 RELATIONS
 3. `psv_stock_balances`
 4. `psv_stock_events`
 
-#### E. Company Operational Tables Preserved in `smritisys` (79 Tables)
-`approval_workflow_logs`, `attribute_definitions`, `attribute_groups`, `barcode_layouts`, `cash_registers`, `category_attribute_group_mappings`, `commission_ledgers`, `commission_participants`, `commission_programs`, `commission_rules`, `compliance_audit_logs`, `compliance_credentials`, `compliance_outboxes`, `coupons`, `customer_groups`, `customers`, `dashboards`, `data_exchange_field_mappings`, `data_exchange_tasks`, `delivery_commission_settlements`, `dispatch_items`, `dispatches`, `document_series`, `government_services`, `integration_outbox_events`, `invoice_profitability_ledgers`, `loyalty_members`, `loyalty_points_ledgers`, `loyalty_rules`, `loyalty_tiers`, `master_types`, `master_values`, `numbering_audit_logs`, `packing_slip_items`, `packing_slips`, `print_histories`, `print_profiles`, `print_templates`, `product_cost_valuations`, `products`, `promotion_campaigns`, `promotion_redemptions`, `promotion_rules`, `purchase_jurisdiction_configs`, `purchase_order_items`, `purchase_orders`, `purchase_receipt_items`, `purchase_receipts`, `purchase_reorder_configs`, `referral_programs`, `referral_relationships`, `referral_rewards`, `refresh_token_blacklist`, `reverse_logistics_returns`, `sales_invoice_items`, `sales_invoices`, `sales_order_items`, `sales_orders`, `sales_quotation_items`, `sales_quotations`, `sales_return_items`, `sales_returns`, `shifts`, `smriti_theme_variants`, `smriti_themes`, `smriti_workspace_profiles`, `stock_movements`, `stores`, `supplier_payments`, `suppliers`, `terms_clauses`, `terms_defaults`, `terms_snapshots`, `transaction_cost_snapshots`, `user_branch_assignments`, `user_store_assignments`, `variant_templates`, `warehouses`, `workflow_events`.
+#### E. Company Operational Tables Preserved in `tileflowsys` (79 Tables)
+`approval_workflow_logs`, `attribute_definitions`, `attribute_groups`, `barcode_layouts`, `cash_registers`, `category_attribute_group_mappings`, `commission_ledgers`, `commission_participants`, `commission_programs`, `commission_rules`, `compliance_audit_logs`, `compliance_credentials`, `compliance_outboxes`, `coupons`, `customer_groups`, `customers`, `dashboards`, `data_exchange_field_mappings`, `data_exchange_tasks`, `delivery_commission_settlements`, `dispatch_items`, `dispatches`, `document_series`, `government_services`, `integration_outbox_events`, `invoice_profitability_ledgers`, `loyalty_members`, `loyalty_points_ledgers`, `loyalty_rules`, `loyalty_tiers`, `master_types`, `master_values`, `numbering_audit_logs`, `packing_slip_items`, `packing_slips`, `print_histories`, `print_profiles`, `print_templates`, `product_cost_valuations`, `products`, `promotion_campaigns`, `promotion_redemptions`, `promotion_rules`, `purchase_jurisdiction_configs`, `purchase_order_items`, `purchase_orders`, `purchase_receipt_items`, `purchase_receipts`, `purchase_reorder_configs`, `referral_programs`, `referral_relationships`, `referral_rewards`, `refresh_token_blacklist`, `reverse_logistics_returns`, `sales_invoice_items`, `sales_invoices`, `sales_order_items`, `sales_orders`, `sales_quotation_items`, `sales_quotations`, `sales_return_items`, `sales_returns`, `shifts`, `tileflow_theme_variants`, `tileflow_themes`, `tileflow_workspace_profiles`, `stock_movements`, `stores`, `supplier_payments`, `suppliers`, `terms_clauses`, `terms_defaults`, `terms_snapshots`, `transaction_cost_snapshots`, `user_branch_assignments`, `user_store_assignments`, `variant_templates`, `warehouses`, `workflow_events`.
 
-#### F. Preserved Legacy / Scaffolding Tables in `smritisys` (179 Tables)
-Preserved in `smritisys` in `RETIRED_IN_SMRITISYS` / `READ_ONLY` mode with zero operational business traffic.
+#### F. Preserved Legacy / Scaffolding Tables in `tileflowsys` (179 Tables)
+Preserved in `tileflowsys` in `RETIRED_IN_TILEFLOWSYS` / `READ_ONLY` mode with zero operational business traffic.
 
 ---
 
-## 3. Disjoint Partition of Company Databases (`smriti001` & `smriti002` — 99 Base Tables)
+## 3. Disjoint Partition of Company Databases (`tileflow001` & `tileflow002` — 99 Base Tables)
 
 ```text
 ================================================================================
-SMRITI001 / SMRITI002 TABLE DISJOINT PARTITION (TOTAL: 99 BASE TABLES)
+TILEFLOW001 / TILEFLOW002 TABLE DISJOINT PARTITION (TOTAL: 99 BASE TABLES)
 ================================================================================
 1. Local Context & Identity Cache  :  9 tables (branches, companies, control_*, roles, users, assignments)
 2. Central Master Cache            :  3 tables (barcode_providers, identity_rules, product_identities)
@@ -128,12 +127,12 @@ TOTAL CALCULATED SUM               : 99 BASE TABLES (100% Exact Match: 9+3+4+4+7
 |---|---|---|---|
 | `stock_ledger_entries` | **`DOES NOT EXIST`** | — | Nonexistent table name in all DBs. Authoritative inventory ledger is **`stock_movements`**. |
 | `payment_entries` | **`DOES NOT EXIST`** | — | Nonexistent table name in all DBs. Authoritative tables are **`supplier_payments`** and **`sales_invoices`**. |
-| `inventory_ledger_entries` | **`EXISTS (Legacy)`** | `smritisys` (0 rows) | Legacy scaffolding table in `smritisys`; **NOT** present in `smriti001`. |
-| `stock_movements` | **`EXISTS (Authoritative)`** | `smriti001`, `smriti002` | **Authoritative Inventory Ledger** in Company DBs. |
-| `supplier_payments` | **`EXISTS (Authoritative)`** | `smriti001`, `smriti002` | **Authoritative Accounts Payable Ledger** in Company DBs. |
-| `sales_payments` | **`EXISTS (Legacy)`** | `smritisys` | Legacy table in `smritisys`; sales payments are recorded directly in `sales_invoices`. |
-| `psv_*` (4 tables) | **`EXISTS (Company-Local)`** | `smriti001`, `smriti002` | **100% Company-Local Shadow Layer** inside Company DBs. |
-| `integration_outbox_events` | **`EXISTS (Authoritative)`** | `smriti001`, `smriti002` | **Transactional Outbox** (`ECOM_QUEUE`) inside Company DBs. |
+| `inventory_ledger_entries` | **`EXISTS (Legacy)`** | `tileflowsys` (0 rows) | Legacy scaffolding table in `tileflowsys`; **NOT** present in `tileflow001`. |
+| `stock_movements` | **`EXISTS (Authoritative)`** | `tileflow001`, `tileflow002` | **Authoritative Inventory Ledger** in Company DBs. |
+| `supplier_payments` | **`EXISTS (Authoritative)`** | `tileflow001`, `tileflow002` | **Authoritative Accounts Payable Ledger** in Company DBs. |
+| `sales_payments` | **`EXISTS (Legacy)`** | `tileflowsys` | Legacy table in `tileflowsys`; sales payments are recorded directly in `sales_invoices`. |
+| `psv_*` (4 tables) | **`EXISTS (Company-Local)`** | `tileflow001`, `tileflow002` | **100% Company-Local Shadow Layer** inside Company DBs. |
+| `integration_outbox_events` | **`EXISTS (Authoritative)`** | `tileflow001`, `tileflow002` | **Transactional Outbox** (`ECOM_QUEUE`) inside Company DBs. |
 
 ---
 
@@ -144,18 +143,18 @@ TOTAL CALCULATED SUM               : 99 BASE TABLES (100% Exact Match: 9+3+4+4+7
    - Pure physical base table count is **283**.
 2. **Why 195 was previously cited:**
    - Previous drafts summed `15 CP + 4 CM + 4 REP + 172 Legacy = 195`.
-   - This omitted the **79 operational domain tables** that were migrated/cloned into `smriti001` and preserved in `smritisys` in `RETIRED_IN_SMRITISYS` mode, plus the 4 PSV tables, 2 legacy tables, and 1 view.
+   - This omitted the **79 operational domain tables** that were migrated/cloned into `tileflow001` and preserved in `tileflowsys` in `RETIRED_IN_TILEFLOWSYS` mode, plus the 4 PSV tables, 2 legacy tables, and 1 view.
    - Reconciled formula: `13 CP + 4 CM + 4 REP + 4 PSV + 79 OP + 179 RETIRE = 283 Base Tables (+ 1 View = 284 relations)`.
 3. **Why 172 vs 175 vs 179 Legacy Tables:**
    - Earlier categorization drafts grouped `172 RETIRE_CANDIDATE` + `5 LEGACY_READ_ONLY` (= 177) or `175` unmigrated tables.
-   - Physical reality: Exactly **179 base tables** in `smritisys` are non-operational, non-control-plane scaffolding tables preserved in `RETIRED_IN_SMRITISYS` mode.
+   - Physical reality: Exactly **179 base tables** in `tileflowsys` are non-operational, non-control-plane scaffolding tables preserved in `RETIRED_IN_TILEFLOWSYS` mode.
 
 ---
 
-## 6. SMRITI AI Agent Golden Rules Reconciliation
+## 6. TILEFLOW AI Agent Golden Rules Reconciliation
 
 The canonical document [`docs/AI_AGENT.md`](file:///F:/SMRITRretailNX/docs/AI_AGENT.md) explicitly defines **11 Golden Rules**:
-- **Rule 1:** `smritisys` is strictly the Control Plane
+- **Rule 1:** `tileflowsys` is strictly the Control Plane
 - **Rule 2:** Company Database is the authoritative Operational Source of Truth
 - **Rule 3:** `tenant_id` column filtering is NOT Physical Isolation
 - **Rule 4:** `CompanyDatabaseResolver` is the sole Authoritative Router
@@ -173,12 +172,12 @@ The canonical document [`docs/AI_AGENT.md`](file:///F:/SMRITRretailNX/docs/AI_AG
 
 | Subsystem | Canonical Architecture | Physical Implementation Reality | Verified Status |
 |---|---|---|---|
-| **Database Cluster** | PostgreSQL Multi-Database | PostgreSQL 15.18 (`smritisys`, `smriti001`, `smriti002`) | **`Done`** |
-| **Control Plane** | `smritisys` | 283 Base Tables (13 Control, 4 Master, 4 Report, 4 PSV, 79 OP, 179 Legacy) | **`Done`** |
-| **Company 001 Operational DB** | `smriti001` | 99 Base Tables (79 Operational, 9 Context, 4 PSV, 4 Report, 3 Master) | **`Done`** |
-| **Company 002 Operational DB** | `smriti002` | 99 Base Tables (Physical clone for Company 002) | **`Done`** |
+| **Database Cluster** | PostgreSQL Multi-Database | PostgreSQL 15.18 (`tileflowsys`, `tileflow001`, `tileflow002`) | **`Done`** |
+| **Control Plane** | `tileflowsys` | 283 Base Tables (13 Control, 4 Master, 4 Report, 4 PSV, 79 OP, 179 Legacy) | **`Done`** |
+| **Company 001 Operational DB** | `tileflow001` | 99 Base Tables (79 Operational, 9 Context, 4 PSV, 4 Report, 3 Master) | **`Done`** |
+| **Company 002 Operational DB** | `tileflow002` | 99 Base Tables (Physical clone for Company 002) | **`Done`** |
 | **Database Resolver** | `CompanyDatabaseResolver` | Dynamic resolution based on `company_database_registries` | **`Done`** |
-| **Party Stock Visibility (PSV)** | Company-Local Shadow Layer | Physical `psv_*` tables inside `smriti001` & `smriti002`; `SmritiPSV` dropped | **`Done`** |
+| **Party Stock Visibility (PSV)** | Company-Local Shadow Layer | Physical `psv_*` tables inside `tileflow001` & `tileflow002`; `TileFlowPSV` dropped | **`Done`** |
 | **eCommerce / Omnichannel** | Core Channel Capability | Atomic reservations (`EcomInventoryReservationService`) active; external connectors pending | **`Partially Verified`** |
 | **Barcode (Software)** | PIE & Template Serializer | Formatters, label datasets, unique constraints active | **`Done`** |
 | **Barcode (Physical Printer)** | Zebra / TSC Thermal Printer | Hardware driver staging required | **`Not Runtime Verified`** |
@@ -190,13 +189,13 @@ The canonical document [`docs/AI_AGENT.md`](file:///F:/SMRITRretailNX/docs/AI_AG
 
 ```text
 ================================================================================
-SMRITI RETAIL OS CANONICAL SYSTEM STRUCTURE
+TILEFLOW RETAIL OS CANONICAL SYSTEM STRUCTURE
 FINAL VERDICT:
 ARCHITECTURE FROZEN & CERTIFIED
 IMPLEMENTATION PARTIALLY VERIFIED
 
 - PostgreSQL 15.18 Cluster Verified.
-- All 283 smritisys Base Tables + 1 View 100% Mathematically Accounted For.
+- All 283 tileflowsys Base Tables + 1 View 100% Mathematically Accounted For.
 - All 99 Company DB Base Tables 100% Mathematically Accounted For.
 - Company-Local PSV + eCommerce Ownership = FROZEN ARCHITECTURE.
 - Exactly 11 Golden Architecture Rules Enforced.

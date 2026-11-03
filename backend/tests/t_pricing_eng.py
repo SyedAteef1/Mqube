@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -30,7 +16,7 @@ from app.models.item_master import Item
 @pytest.fixture(autouse=True)
 async def cleanup_pricing_payment_data():
     """Clean up test data across both databases before and after tests."""
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             await session.execute(delete(PaymentAllocation).where(PaymentAllocation.invoice_id.like("TEST-INV-%")))
@@ -42,7 +28,7 @@ async def cleanup_pricing_payment_data():
             await session.execute(delete(Item).where(Item.item_code.like("ITEM-PRICE-TEST-%")))
             await session.commit()
     yield
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             await session.execute(delete(PaymentAllocation).where(PaymentAllocation.invoice_id.like("TEST-INV-%")))
@@ -58,7 +44,7 @@ async def cleanup_pricing_payment_data():
 @pytest.mark.asyncio
 async def test_pricing_hierarchy_price_book_and_volume_breaks():
     """Verify 4-level pricing resolution and volume breaks."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         # 1. Create base Item
         item = Item(
@@ -155,7 +141,7 @@ async def test_pricing_hierarchy_price_book_and_volume_breaks():
 @pytest.mark.asyncio
 async def test_document_numbering_gapless_sequence_allocation():
     """Verify locked consecutive document sequence allocation and audit logs."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         doc1 = await UnifiedPricingPaymentService.allocate_document_number(
             session=session,
@@ -186,7 +172,7 @@ async def test_document_numbering_gapless_sequence_allocation():
 @pytest.mark.asyncio
 async def test_idempotent_multi_tender_payment_settlement():
     """Verify multi-tender payment recording and strict idempotency key deduping."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         tenders = [
             {"tender_type": "CASH", "amount": 500.00},
@@ -230,8 +216,8 @@ async def test_idempotent_multi_tender_payment_settlement():
 @pytest.mark.asyncio
 async def test_pricing_and_payment_tenant_isolation():
     """Verify price books and payment records do not leak across tenant databases."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     async with session_001() as s1:
         pb = PriceBook(
@@ -250,4 +236,4 @@ async def test_pricing_and_payment_tenant_isolation():
     async with session_002() as s2:
         stmt = select(PriceBook).where(PriceBook.code == "PB-TEST-ISO-01")
         pb2 = (await s2.execute(stmt)).scalar_one_or_none()
-        assert pb2 is None, "PriceBook from smriti001 must not leak into smriti002!"
+        assert pb2 is None, "PriceBook from tileflow001 must not leak into tileflow002!"

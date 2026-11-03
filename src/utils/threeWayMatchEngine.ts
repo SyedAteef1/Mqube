@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.101.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Vendor Purchase Order Approval Workflow & 3-Way Match Engine
- *
- * Manages the full PO lifecycle and three-way matching:
- *   PO Lifecycle  : DRAFT → PENDING_APPROVAL → APPROVED → SENT → PARTIALLY_RECEIVED
- *                   → RECEIVED → INVOICED → THREE_WAY_MATCHED → CLOSED / DISPUTED
- *
- *   3-Way Match   : Compares PO ↔ GRN ↔ Vendor Invoice per line with configurable
- *                   tolerance bands (qty tolerance %, price tolerance %)
- *                   Result → MATCHED / PRICE_VARIANCE / QTY_VARIANCE / BOTH_VARIANCE / UNMATCHED
- */
-
 export type POStatus =
   | "DRAFT" | "PENDING_APPROVAL" | "APPROVED" | "SENT"
   | "PARTIALLY_RECEIVED" | "RECEIVED" | "INVOICED"

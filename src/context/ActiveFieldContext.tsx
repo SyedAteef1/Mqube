@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode, useRef } from "react";
 import { Product, Customer } from "../types.ts";
 import { apiFetchV1 } from "../lib/apiFetchV1.ts";
@@ -69,10 +55,6 @@ export const useActiveField = () => {
   return context;
 };
 
-/**
- * Infers the field category and human-readable label from an HTML element
- * using data attributes, name, id, placeholder, surrounding labels, and aria metadata.
- */
 export function inferFieldCategory(element: HTMLElement | null): { category: ActiveFieldCategory; label: string } {
   if (!element) {
     return { category: "general", label: "Global Search" };
@@ -308,7 +290,7 @@ export const ActiveFieldProvider: React.FC<{ children: ReactNode }> = ({ childre
       const isInput = target.tagName === "INPUT" || target.tagName === "TEXTAREA" || target.isContentEditable;
       if (isInput) {
         lastFocusedInputRef.current = target as HTMLInputElement;
-        const token = typeof window !== "undefined" ? (localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token")) : null;
+        const token = typeof window !== "undefined" ? (localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token")) : null;
         
         if (!token) {
           // Public / Login Screen: Generic secure state with 0 data exposure
@@ -344,7 +326,7 @@ export const ActiveFieldProvider: React.FC<{ children: ReactNode }> = ({ childre
     };
 
     const handleInput = (e: Event) => {
-      const token = typeof window !== "undefined" ? (localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token")) : null;
+      const token = typeof window !== "undefined" ? (localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token")) : null;
       if (!token) return; // Do not track live values on unauthenticated login inputs
 
       const target = e.target as HTMLElement;
@@ -355,7 +337,7 @@ export const ActiveFieldProvider: React.FC<{ children: ReactNode }> = ({ childre
 
     // Global Keydown Listener for F2
     const handleGlobalF2 = (e: KeyboardEvent) => {
-      const token = typeof window !== "undefined" ? (localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token")) : null;
+      const token = typeof window !== "undefined" ? (localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token")) : null;
       if (!token) return;
 
       if (e.key === "F2") {

@@ -1,21 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Module       : Sales Order Module Tab
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * 
- * Description  : Tab component for Sales Order module in the main dashboard
- * 
- * Version      : 3.30.0
- * Created      : 2026-08-31
- * Modified     : 2026-08-31
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { Plus, List, Eye, FileText } from "lucide-react";

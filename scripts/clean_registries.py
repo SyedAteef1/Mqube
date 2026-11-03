@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -23,7 +9,7 @@ from backend.app.db.session import async_session
 
 async def archive_pending_registries():
     print("=================================================================")
-    print("SMRITI Controlled Database Registry Lifecycle & Archive Protocol")
+    print("TILEFLOW Controlled Database Registry Lifecycle & Archive Protocol")
     print("=================================================================")
     async with async_session() as session:
         # 1. Discover pending/ephemeral records
@@ -62,10 +48,10 @@ async def archive_pending_registries():
 
             # B. Verify audit log / foreign key references
             ref_res = await session.execute(text(
-                "SELECT count(*) FROM smriti_audit_log WHERE changed_record_id = :cid OR changed_table = :cid"
+                "SELECT count(*) FROM tileflow_audit_log WHERE changed_record_id = :cid OR changed_table = :cid"
             ), {"cid": cid})
             audit_refs = ref_res.scalar()
-            print(f"  -> smriti_audit_log references: {audit_refs}")
+            print(f"  -> tileflow_audit_log references: {audit_refs}")
 
             # C. Transition lifecycle status to ARCHIVED with note
             if not db_exists and audit_refs == 0:

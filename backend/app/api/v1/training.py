@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version      : 3.16.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import hashlib
 import uuid
 from datetime import datetime
@@ -112,10 +87,10 @@ def issue_certificate(
     
     session = SESSION_DB.get(session_id, {
         "session_id": session_id,
-        "trainee_name": "SMRITI Trainee",
+        "trainee_name": "TILEFLOW Trainee",
     })
     
-    cert_id = f"SMRITI-CERT-{str(uuid.uuid4())[:8].upper()}"
+    cert_id = f"TILEFLOW-CERT-{str(uuid.uuid4())[:8].upper()}"
     issued_at = datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S UTC")
     
     raw_hash_str = f"{cert_id}:{session_id}:{session['trainee_name']}:{score_percentage}:{issued_at}"
@@ -124,7 +99,7 @@ def issue_certificate(
     cert_record = {
         "valid": True,
         "certificate_id": cert_id,
-        "trainee_name": session.get("trainee_name", "SMRITI Trainee"),
+        "trainee_name": session.get("trainee_name", "TILEFLOW Trainee"),
         "certification_level": certification_level,
         "score_percentage": score_percentage,
         "certificate_hash": cert_hash,
@@ -142,11 +117,11 @@ def verify_certificate(certificate_id: str):
     """
     cert = CERTIFICATE_DB.get(certificate_id)
     if not cert:
-        if certificate_id.startswith("SMRITI-CERT-"):
+        if certificate_id.startswith("TILEFLOW-CERT-"):
             return {
                 "valid": True,
                 "certificate_id": certificate_id,
-                "trainee_name": "Certified SMRITI Operator",
+                "trainee_name": "Certified TILEFLOW Operator",
                 "certification_level": "Level 1 — Retail Operator",
                 "issued_at": datetime.utcnow().strftime("%Y-%m-%d"),
                 "status": "VALID"

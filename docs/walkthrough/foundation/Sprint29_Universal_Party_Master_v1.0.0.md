@@ -2,11 +2,11 @@
 title: "Sprint 29: P1.1 Universal Party Master Completion (Data Plane Convergence)"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
@@ -25,7 +25,7 @@ This sprint fulfills **Blueprint Section 6: P1 Transactional Data-Plane Converge
 - **Deduplication Engine**: Multi-tier identification matching against GSTIN -> Phone/Mobile -> Email -> Party Code.
 - **Merge & Consolidation Policy**: Merges secondary party into primary party, consolidating roles, profiles, addresses, and contacts while marking secondary as `MERGED` with `merged_into_party_id`.
 - **Legacy Compatibility Adapters**: Provides `get_legacy_customer_view()` and `get_legacy_supplier_view()` ensuring existing frontend and transactional modules interact with party identity without API regressions.
-- **Database Schema Migration**: Automated migration script `backend/app/db/migr_party_ext.py` updating tenant databases `smriti001` and `smriti002`.
+- **Database Schema Migration**: Automated migration script `backend/app/db/migr_party_ext.py` updating tenant databases `tileflow001` and `tileflow002`.
 - **Verification**: 6/6 new integration tests in `backend/tests/t_party_master.py` (57/57 full platform regression tests green).
 
 ## 3. Files Created

@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, hashlib, json, uuid
 from datetime import datetime, timezone
 import psycopg2
@@ -26,15 +13,15 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../b
 from backend.app.db.base import Base
 import backend.app.models  # Load all models into Base metadata
 
-CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/smritisys"
-TARGET_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+TARGET_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 
 def log_audit_event(cur, action: str, details_dict: dict, user_id: str = "usr_sysadmin") -> str:
-    """Logs a single audit event into smritisys.smriti_audit_log with SHA-256 hash chain continuity."""
+    """Logs a single audit event into tileflowsys.tileflow_audit_log with SHA-256 hash chain continuity."""
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    cur.execute("SELECT sha256_hash FROM smriti_audit_log WHERE sha256_hash IS NOT NULL ORDER BY changed_at DESC LIMIT 1;")
+    cur.execute("SELECT sha256_hash FROM tileflow_audit_log WHERE sha256_hash IS NOT NULL ORDER BY changed_at DESC LIMIT 1;")
     last_hash_row = cur.fetchone()
     last_hash = last_hash_row[0] if last_hash_row and last_hash_row[0] else "0" * 64
 
@@ -43,7 +30,7 @@ def log_audit_event(cur, action: str, details_dict: dict, user_id: str = "usr_sy
     new_hash = hashlib.sha256(f"{last_hash}{payload}".encode("utf-8")).hexdigest()
 
     cur.execute("""
-        INSERT INTO smriti_audit_log (
+        INSERT INTO tileflow_audit_log (
             id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
             old_value, new_value, change_type, change_reason, change_source,
             changed_by, changed_by_name, ip_address, session_id, trace_id,
@@ -55,7 +42,7 @@ def log_audit_event(cur, action: str, details_dict: dict, user_id: str = "usr_sy
             %s, %s, %s
         );
     """, (
-        audit_id[:20], "COMP-001", "DB-001-SMRITI", "company_database_registries", "smriti001", action[:20],
+        audit_id[:20], "COMP-001", "DB-001-TILEFLOW", "company_database_registries", "tileflow001", action[:20],
         "NONE", payload, "PROVISIONING", f"LIFECYCLE_EVENT_{action}", "PROVISIONING_ENGINE",
         user_id[:20], "Jawahar Mallah", "127.0.0.1", "SESS-PROV-001", "TRACE-PROV-001",
         "CORR-PROV-001", last_hash, new_hash
@@ -64,62 +51,62 @@ def log_audit_event(cur, action: str, details_dict: dict, user_id: str = "usr_sy
 
 def execute_provisioning_company_001():
     print("============================================================")
-    print("SMRITI COMPANY DATABASE PROVISIONING ENGINE — LIVE SAGA EXECUTION")
+    print("TILEFLOW COMPANY DATABASE PROVISIONING ENGINE — LIVE SAGA EXECUTION")
     print("============================================================")
-    print("Target Company : COMP-001 (SMRITI Retail Main Enterprise)")
-    print("Target DB Name  : smriti001")
-    print("Control Plane   : smritisys")
+    print("Target Company : COMP-001 (TILEFLOW Retail Main Enterprise)")
+    print("Target DB Name  : tileflow001")
+    print("Control Plane   : tileflowsys")
 
-    # 1. Pre-Check Invariants on Control Plane smritisys
+    # 1. Pre-Check Invariants on Control Plane tileflowsys
     conn_cp = psycopg2.connect(CONTROL_PLANE_URL)
     cur_cp = conn_cp.cursor()
 
     cur_cp.execute("SELECT current_database();")
-    if cur_cp.fetchone()[0] != "smritisys":
-        print("ERROR: Target control plane is not smritisys. Aborting.")
+    if cur_cp.fetchone()[0] != "tileflowsys":
+        print("ERROR: Target control plane is not tileflowsys. Aborting.")
         sys.exit(1)
 
-    cur_cp.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur_cp.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur_cp.fetchone()[0]
 
-    cur_cp.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur_cp.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur_cp.fetchone()[0]
 
-    # Check if smriti001 already exists
-    cur_cp.execute("SELECT datname FROM pg_database WHERE datname = 'smriti001';")
+    # Check if tileflow001 already exists
+    cur_cp.execute("SELECT datname FROM pg_database WHERE datname = 'tileflow001';")
     if cur_cp.fetchone():
-        print("ERROR: Database 'smriti001' already exists! Aborting duplicate creation.")
+        print("ERROR: Database 'tileflow001' already exists! Aborting duplicate creation.")
         sys.exit(1)
 
     print(f"\nPRE-PROVISIONING BASELINE VERIFIED:")
-    print(f"  Control Plane        : smritisys")
-    print(f"  smriti_menus Count   : {initial_menus} (FROZEN)")
-    print(f"  smriti_audit_log Count: {initial_audit} (Hash Chain Intact)")
+    print(f"  Control Plane        : tileflowsys")
+    print(f"  tileflow_menus Count   : {initial_menus} (FROZEN)")
+    print(f"  tileflow_audit_log Count: {initial_audit} (Hash Chain Intact)")
 
     db_created = False
     try:
         # Step 1 & 2: PROVISION_REQUEST & PROVISION_STARTED
         print("\nSTEP 1 & 2: RECORDING PROVISION_REQUEST & PROVISION_STARTED...")
-        log_audit_event(cur_cp, "PROVISION_REQUEST", {"company_id": "COMP-001", "database_name": "smriti001"})
-        log_audit_event(cur_cp, "PROVISION_STARTED", {"company_id": "COMP-001", "database_name": "smriti001"})
+        log_audit_event(cur_cp, "PROVISION_REQUEST", {"company_id": "COMP-001", "database_name": "tileflow001"})
+        log_audit_event(cur_cp, "PROVISION_STARTED", {"company_id": "COMP-001", "database_name": "tileflow001"})
         conn_cp.commit()
 
-        # Step 3: CREATE DATABASE smriti001 (PostgreSQL Autocommit Connection)
-        print("STEP 3: EXECUTING REAL CREATE DATABASE smriti001...")
+        # Step 3: CREATE DATABASE tileflow001 (PostgreSQL Autocommit Connection)
+        print("STEP 3: EXECUTING REAL CREATE DATABASE tileflow001...")
         conn_raw = psycopg2.connect(CONTROL_PLANE_URL)
         conn_raw.autocommit = True
         cur_raw = conn_raw.cursor()
-        cur_raw.execute("CREATE DATABASE smriti001 ENCODING 'UTF8' TEMPLATE template1;")
+        cur_raw.execute("CREATE DATABASE tileflow001 ENCODING 'UTF8' TEMPLATE template1;")
         cur_raw.close()
         conn_raw.close()
         db_created = True
-        print("  PostgreSQL Database 'smriti001' Created Successfully.")
+        print("  PostgreSQL Database 'tileflow001' Created Successfully.")
 
-        log_audit_event(cur_cp, "DATABASE_CREATED", {"database_name": "smriti001", "engine": "postgresql"})
+        log_audit_event(cur_cp, "DATABASE_CREATED", {"database_name": "tileflow001", "engine": "postgresql"})
         conn_cp.commit()
 
-        # Step 4: SCHEMA INITIALIZATION (Connect to smriti001 & Create Tables)
-        print("STEP 4: INITIALIZING SCHEMA & POSTGRESQL EXTENSIONS IN smriti001...")
+        # Step 4: SCHEMA INITIALIZATION (Connect to tileflow001 & Create Tables)
+        print("STEP 4: INITIALIZING SCHEMA & POSTGRESQL EXTENSIONS IN tileflow001...")
         conn_target = psycopg2.connect(TARGET_DB_URL)
         cur_target = conn_target.cursor()
         try:
@@ -135,11 +122,11 @@ def execute_provisioning_company_001():
         Base.metadata.create_all(bind=target_engine)
         print("  SQLAlchemy ORM Baseline Schema Created Successfully.")
 
-        log_audit_event(cur_cp, "SCHEMA_INITIALIZED", {"database_name": "smriti001", "schema_version": "3.16.0"})
+        log_audit_event(cur_cp, "SCHEMA_INITIALIZED", {"database_name": "tileflow001", "schema_version": "3.16.0"})
         conn_cp.commit()
 
         # Step 5: HEALTH CHECK
-        print("STEP 5: EXECUTING DATABASE HEALTH CHECK ON smriti001...")
+        print("STEP 5: EXECUTING DATABASE HEALTH CHECK ON tileflow001...")
         conn_check = psycopg2.connect(TARGET_DB_URL)
         cur_check = conn_check.cursor()
         cur_check.execute("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'public';")
@@ -147,13 +134,13 @@ def execute_provisioning_company_001():
         conn_check.close()
 
         print(f"  Health Check Result: CONNECTED | Table Count = {actual_table_cnt}")
-        assert actual_table_cnt > 0, f"Expected tables in smriti001, got {actual_table_cnt}"
+        assert actual_table_cnt > 0, f"Expected tables in tileflow001, got {actual_table_cnt}"
 
-        log_audit_event(cur_cp, "HEALTH_CHECK_PASSED", {"database_name": "smriti001", "table_count": actual_table_cnt})
+        log_audit_event(cur_cp, "HEALTH_CHECK_PASSED", {"database_name": "tileflow001", "table_count": actual_table_cnt})
         conn_cp.commit()
 
-        # Step 6: REGISTER DATABASE IN smritisys.company_database_registries
-        print("STEP 6: REGISTERING COMP-001 -> smriti001 IN CONTROL PLANE REGISTRY...")
+        # Step 6: REGISTER DATABASE IN tileflowsys.company_database_registries
+        print("STEP 6: REGISTERING COMP-001 -> tileflow001 IN CONTROL PLANE REGISTRY...")
         cur_cp.execute("""
             INSERT INTO company_database_registries (
                 company_id, database_id, database_name, database_engine, host_reference,
@@ -166,12 +153,12 @@ def execute_provisioning_company_001():
                 status = EXCLUDED.status,
                 updated_at = CURRENT_TIMESTAMP;
         """, (
-            "COMP-001", "DB-001-SMRITI", "smriti001", "postgresql", "localhost",
+            "COMP-001", "DB-001-TILEFLOW", "tileflow001", "postgresql", "localhost",
             5432, "READY", "3.16.0", "ap-south-1"
         ))
         conn_cp.commit()
 
-        log_audit_event(cur_cp, "DATABASE_REGISTERED", {"company_id": "COMP-001", "database_name": "smriti001", "status": "READY"})
+        log_audit_event(cur_cp, "DATABASE_REGISTERED", {"company_id": "COMP-001", "database_name": "tileflow001", "status": "READY"})
         conn_cp.commit()
 
         # Step 7: ASSIGN COMPANY ADMIN
@@ -181,7 +168,7 @@ def execute_provisioning_company_001():
 
         # Step 8: FINALIZE PROVISIONING
         print("STEP 8: FINALIZING PROVISIONING & MARKING COMPLETE...")
-        log_audit_event(cur_cp, "PROVISION_COMPLETED", {"company_id": "COMP-001", "database_name": "smriti001", "status": "READY"})
+        log_audit_event(cur_cp, "PROVISION_COMPLETED", {"company_id": "COMP-001", "database_name": "tileflow001", "status": "READY"})
         conn_cp.commit()
 
         print("\nPROVISIONING SAGA COMPLETED SUCCESSFULLY!")
@@ -197,15 +184,15 @@ def execute_provisioning_company_001():
 
         if db_created:
             try:
-                print("  TERMINATING OPEN SESSIONS AND DROPPING INCOMPLETE DATABASE smriti001...")
+                print("  TERMINATING OPEN SESSIONS AND DROPPING INCOMPLETE DATABASE tileflow001...")
                 conn_drop = psycopg2.connect(CONTROL_PLANE_URL)
                 conn_drop.autocommit = True
                 cur_drop = conn_drop.cursor()
-                cur_drop.execute("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'smriti001';")
-                cur_drop.execute("DROP DATABASE IF EXISTS smriti001;")
+                cur_drop.execute("SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE datname = 'tileflow001';")
+                cur_drop.execute("DROP DATABASE IF EXISTS tileflow001;")
                 cur_drop.close()
                 conn_drop.close()
-                print("  Incomplete Database smriti001 Dropped.")
+                print("  Incomplete Database tileflow001 Dropped.")
             except Exception as drop_err:
                 print(f"  DROP ERROR: {drop_err}")
 
@@ -216,37 +203,37 @@ def execute_provisioning_company_001():
     cur_cp.execute("SELECT COUNT(*) FROM company_database_registries WHERE company_id = 'COMP-001' AND status = 'READY';")
     reg_ready = cur_cp.fetchone()[0]
 
-    cur_cp.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur_cp.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur_cp.fetchone()[0]
 
-    cur_cp.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur_cp.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur_cp.fetchone()[0]
 
     conn_cp.close()
 
     print("\nPOST-PROVISIONING VERIFICATION:")
-    print(f"  smriti001 Database Created : True")
-    print(f"  Registry Record READY      : {reg_ready == 1} (Registered COMP-001 -> smriti001)")
-    print(f"  smriti_menus Count         : {final_menus} (UNCHANGED / 34 FROZEN)")
-    print(f"  smriti_audit_log Count     : {final_audit} (8 Lifecycle Audit Events Registered)")
+    print(f"  tileflow001 Database Created : True")
+    print(f"  Registry Record READY      : {reg_ready == 1} (Registered COMP-001 -> tileflow001)")
+    print(f"  tileflow_menus Count         : {final_menus} (UNCHANGED / 34 FROZEN)")
+    print(f"  tileflow_audit_log Count     : {final_audit} (8 Lifecycle Audit Events Registered)")
     print(f"  Audit Hash Chain Status    : INTACT & SIGNED")
 
     assert reg_ready == 1, "Registry record for COMP-001 is missing or not READY!"
-    assert final_menus == 34, f"smriti_menus count changed! Expected 34, got {final_menus}"
+    assert final_menus == 34, f"tileflow_menus count changed! Expected 34, got {final_menus}"
     assert final_audit == initial_audit + 8, f"Audit count mismatch! Expected {initial_audit + 8}, got {final_audit}"
 
     # 3. Update Excel Review Workbook
     wb = openpyxl.load_workbook(EXCEL_OUTPUT)
 
     prov_summary = pd.DataFrame([
-        {"Metric": "Target Company", "Value": "COMP-001 (SMRITI Retail Main Enterprise)"},
-        {"Metric": "Provisioned Business Database", "Value": "smriti001"},
-        {"Metric": "Control Plane Database", "Value": "smritisys"},
-        {"Metric": "PostgreSQL Database Created", "Value": "smriti001 (CREATED & INITIALIZED)"},
-        {"Metric": "Actual Table Count in smriti001", "Value": f"{actual_table_cnt} Tables Initialized"},
-        {"Metric": "Registry Status in smritisys", "Value": "READY"},
-        {"Metric": "smriti_menus Row Count", "Value": "34 (FROZEN / UNCHANGED)"},
-        {"Metric": "smriti_audit_log Row Count", "Value": f"{final_audit} (8 Lifecycle Events Registered)"},
+        {"Metric": "Target Company", "Value": "COMP-001 (TILEFLOW Retail Main Enterprise)"},
+        {"Metric": "Provisioned Business Database", "Value": "tileflow001"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys"},
+        {"Metric": "PostgreSQL Database Created", "Value": "tileflow001 (CREATED & INITIALIZED)"},
+        {"Metric": "Actual Table Count in tileflow001", "Value": f"{actual_table_cnt} Tables Initialized"},
+        {"Metric": "Registry Status in tileflowsys", "Value": "READY"},
+        {"Metric": "tileflow_menus Row Count", "Value": "34 (FROZEN / UNCHANGED)"},
+        {"Metric": "tileflow_audit_log Row Count", "Value": f"{final_audit} (8 Lifecycle Events Registered)"},
         {"Metric": "Audit Log SHA-256 Hash Chain", "Value": "INTACT & SIGNED"},
         {"Metric": "Other Company DBs Created", "Value": "0 (ZERO other company DBs created)"},
         {"Metric": "Final Status", "Value": "PROVISIONING_COMPLETED_SUCCESSFULLY"}

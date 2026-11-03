@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 /**
- * SMRITI Retail OS - TypeScript Error Fixer
+ * TILEFLOW Retail OS - TypeScript Error Fixer
  * 
  * Automatically fixes common TypeScript errors:
  * - Implicit 'any' types in callbacks
@@ -33,7 +33,7 @@ const options = {
 
 if (options.help) {
   console.log(`
-SMRITI Retail OS - TypeScript Error Fixer
+TILEFLOW Retail OS - TypeScript Error Fixer
 
 Usage: node fix-typescript-errors.mjs [options]
 
@@ -338,7 +338,7 @@ class TypeScriptFixer {
    * Run the fixer
    */
   async run() {
-    console.log('SMRITI Retail OS - TypeScript Error Fixer');
+    console.log('TILEFLOW Retail OS - TypeScript Error Fixer');
     console.log('═'.repeat(60));
 
     // Parse TypeScript errors

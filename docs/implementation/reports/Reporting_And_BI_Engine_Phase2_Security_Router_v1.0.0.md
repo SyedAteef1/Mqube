@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.35.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Reporting & BI Engine — Phase 2 (Security Masking & Query Performance Router)
 
 ## 1. Objective
-Implement **Phase 2** (Steps 03 and 04 of the 12-stage roadmap) for the SMRITI Retail OS Reporting & BI Engine v1.0.0-GA:
+Implement **Phase 2** (Steps 03 and 04 of the 12-stage roadmap) for the TILEFLOW Retail OS Reporting & BI Engine v1.0.0-GA:
 1. **Server-Side RBAC & Data Masking Engine** (Enforcing Invariant 4: Zero frontend security trust).
 2. **Query Performance-Tier Router** (Enforcing Invariant 5: Workload isolation preventing heavy analytical/export jobs from degrading interactive POS queries).
 

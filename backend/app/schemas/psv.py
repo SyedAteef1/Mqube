@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import List, Optional, Dict, Any
 from decimal import Decimal
 from datetime import datetime
@@ -45,7 +31,7 @@ class PSVEventProjectionReq(BaseModel):
     causation_id: Optional[str] = None
     event_schema_version: str = "1.0"
     company_code: str
-    source_database: str = "smriti001"
+    source_database: str = "tileflow001"
     source_document_type: str
     source_document_id: str
     source_document_line_id: Optional[str] = None

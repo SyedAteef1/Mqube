@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-14
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import uuid
 import hashlib
@@ -142,7 +129,7 @@ class GSTGatewayService:
         session: AsyncSession,
         invoice_no: str,
         supplier_gstin: str,
-        supplier_name: str = "SMRITI RETAIL STORE",
+        supplier_name: str = "TILEFLOW RETAIL STORE",
         buyer_gstin: Optional[str] = None,
         buyer_name: str = "Counter Customer",
         items: Optional[List[Dict[str, Any]]] = None,

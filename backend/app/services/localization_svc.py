@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.40.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import List, Optional, Dict, Any, Tuple
 from decimal import Decimal
 from datetime import datetime, date
@@ -40,7 +26,7 @@ from ..models.localization import (
 class GlobalReferenceService:
     """
     Control Plane Global Reference Data Registry Service.
-    Operates against smritisys / control-plane connection for master reference lookup.
+    Operates against tileflowsys / control-plane connection for master reference lookup.
     """
 
     def __init__(self, db: AsyncSession):

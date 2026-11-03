@@ -5,7 +5,7 @@
 | Module | Category | Progress | Risk Rating |
 | :--- | :--- | :---: | :---: |
 | Executive Hub | Operations | 84% | Low |
-| SMRITI Gyan Kendra | Workspace | 64% | Low |
+| TILEFLOW Gyan Kendra | Workspace | 64% | Low |
 | Billing Desk | Sales & POS | 88% | Low |
 | Sales Studio | Sales & POS | 88% | Low |
 | Create Tax Invoice (B2B) | Workspace | 36% | High |
@@ -34,6 +34,6 @@
 | Terms & Conditions | Workspace | 68% | Medium |
 | Data Exchange Hub | Workspace | 72% | Low |
 | Company Setup Wizard | Workspace | 44% | High |
-| About SMRITI | System | 84% | Low |
+| About TILEFLOW | System | 84% | Low |
 | Dev Intelligence Center | Workspace | 68% | Low |
 | Audit Logs | Workspace | 60% | Low |

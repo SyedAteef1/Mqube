@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, time
 import psycopg2
 from decimal import Decimal
@@ -23,7 +10,7 @@ def test_eway_bill_e2e():
     Scenario:
     Record E-Way Bill (EWB-2026-E2E-333) -> Transporter V-Trans -> Vehicle MH04AB1234 -> Verify Status DISPATCHED.
     """
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
 
     ewb_id = "EWB-E2E-333"

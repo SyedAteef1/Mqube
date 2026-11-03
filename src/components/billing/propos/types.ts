@@ -1,20 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 export interface ProPosCartItem {
   id: string;
   itemNo: number;
+  sqftRequested?: number;
   sku: string;
   barcode: string;
   name: string;
@@ -64,6 +51,10 @@ export interface ProPosTenderSplit {
   cardAuthCode?: string;
   upi: number;
   upiRef?: string;
+  cheque?: number;
+  chequeNo?: string;
+  chequeBank?: string;
+  credit?: number;
   creditNote: number;
   creditNoteNo?: string;
   giftVoucher: number;

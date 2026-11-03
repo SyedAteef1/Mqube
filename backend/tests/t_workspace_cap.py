@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -31,12 +17,12 @@ from app.models.capability_template import (
 @pytest.fixture(autouse=True)
 async def cleanup_and_seed_workspace_data():
     """Seed control plane and clean up tenant bindings before and after tests."""
-    # 1. Seed smritisys
+    # 1. Seed tileflowsys
     async with async_session() as control_session:
         await UnifiedWorkspaceCapabilityService.seed_control_catalog(control_session)
 
     # 2. Clean tenant DBs
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as tenant_session:
             await tenant_session.execute(delete(UserWorkspaceConfig).where(UserWorkspaceConfig.user_id.like("test_usr_%")))
@@ -46,7 +32,7 @@ async def cleanup_and_seed_workspace_data():
             ])))
             await tenant_session.commit()
     yield
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as tenant_session:
             await tenant_session.execute(delete(UserWorkspaceConfig).where(UserWorkspaceConfig.user_id.like("test_usr_%")))
@@ -59,7 +45,7 @@ async def cleanup_and_seed_workspace_data():
 
 @pytest.mark.asyncio
 async def test_control_plane_capability_and_template_seeding():
-    """Verify smritisys stores canonical platform capabilities and workspace templates."""
+    """Verify tileflowsys stores canonical platform capabilities and workspace templates."""
     async with async_session() as control_session:
         # Check platform capabilities
         cap_stmt = select(PlatformCapability).where(PlatformCapability.code == "BATCH_EXPIRY_FEFO")
@@ -79,7 +65,7 @@ async def test_control_plane_capability_and_template_seeding():
 @pytest.mark.asyncio
 async def test_tenant_capability_binding_and_filtering():
     """Verify tenant database activates specific capabilities."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as tenant_session:
         # 1. Bind BATCH_EXPIRY_FEFO
         await UnifiedWorkspaceCapabilityService.bind_tenant_capability(
@@ -111,7 +97,7 @@ async def test_tenant_capability_binding_and_filtering():
 @pytest.mark.asyncio
 async def test_user_workspace_layout_cross_plane_resolution():
     """Verify user workspace layout combines control-plane template with tenant-plane capabilities."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as tenant_session, async_session() as control_session:
         # 1. Set user workspace config for an apparel warehouse manager
         u_cfg = UserWorkspaceConfig(
@@ -152,9 +138,9 @@ async def test_user_workspace_layout_cross_plane_resolution():
 
 @pytest.mark.asyncio
 async def test_capability_and_workspace_tenant_isolation():
-    """Verify tenant capability bindings do not leak between smriti001 and smriti002."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    """Verify tenant capability bindings do not leak between tileflow001 and tileflow002."""
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     async with session_001() as s1:
         await UnifiedWorkspaceCapabilityService.bind_tenant_capability(
@@ -168,4 +154,4 @@ async def test_capability_and_workspace_tenant_isolation():
 
     async with session_002() as s2:
         caps2 = await UnifiedWorkspaceCapabilityService.get_effective_tenant_capabilities(s2, "COMP-002")
-        assert "SERIAL_IMEI_TRACKING" not in caps2, "Capability binding in smriti001 must not leak into smriti002!"
+        assert "SERIAL_IMEI_TRACKING" not in caps2, "Capability binding in tileflow001 must not leak into tileflow002!"

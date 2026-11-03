@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 5.3.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Item Master Stitch Management System Architecture & Image Resolver
@@ -59,7 +58,7 @@ Previous iterations handled basic item grids but lacked granular column reorderi
 ## 6. Architecture Impact
 Dependencies point inward only:
 ```text
-UI (SmritiItemMasterWorkspace, ItemDetGrid, SmritiImagePathConfigStudio)
+UI (TileFlowItemMasterWorkspace, ItemDetGrid, TileFlowImagePathConfigStudio)
     ↓
 Platform Abstraction Layer (PAL & ImagePathConfigService)
     ↓
@@ -79,7 +78,7 @@ PostgreSQL Database
 
 ## 8. Files Created
 1. `src/components/itemMaster/ItemDetGrid.tsx`
-2. `src/components/itemMaster/SmritiCommonFieldsSetup.tsx`
+2. `src/components/itemMaster/TileFlowCommonFieldsSetup.tsx`
 3. `src/components/itemMaster/ViewConfig.tsx`
 4. `src/components/itemMaster/ReplaceDataDlg.tsx`
 5. `src/components/itemMaster/CodeSelectDlg.tsx`

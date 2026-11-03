@@ -1,24 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.29.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Database Manager (DB Studio) Walkthrough v3.29.0
+# TILEFLOW Database Manager (DB Studio) Walkthrough v3.29.0
 
 ## 1. Purpose
-This walkthrough documents the design, architecture, implementation, and verification of the dedicated, enterprise-grade **Database Manager & Studio** within the SMRITI Retail OS frontend and FastAPI backend.
+This walkthrough documents the design, architecture, implementation, and verification of the dedicated, enterprise-grade **Database Manager & Studio** within the TILEFLOW Retail OS frontend and FastAPI backend.
 
 ## 2. Scope
-- Multi-database telemetry & switching (`smritisys`, `smriti001`, `smriti002`, `smriti_test_fresh`).
+- Multi-database telemetry & switching (`tileflowsys`, `tileflow001`, `tileflow002`, `tileflow_test_fresh`).
 - Real-time table explorer with live row counts, category tags, disk sizes, and column metadata.
 - Paginated table records viewer with column search, sorting, and CSV export.
 - Column structure, primary keys, foreign key constraints (with delete rules), and index inspector.
@@ -49,7 +48,7 @@ This walkthrough documents the design, architecture, implementation, and verific
 - **Category Heuristics:** Tables are automatically classified into functional business categories (Sales & POS, Inventory & Catalog, Procurement, CRM, Security, Masters, Reporting) for rapid navigation.
 
 ## 6. Design Rationale
-Retail administrators frequently need to inspect database state, confirm Alembic migration revisions, view row counts, and verify schema constraints across multiple company databases. Embedding a native, secure DB Studio into SMRITI eliminates reliance on external GUI tools like pgAdmin while maintaining strict RBAC governance.
+Retail administrators frequently need to inspect database state, confirm Alembic migration revisions, view row counts, and verify schema constraints across multiple company databases. Embedding a native, secure DB Studio into TILEFLOW eliminates reliance on external GUI tools like pgAdmin while maintaining strict RBAC governance.
 
 ## 7. Implementation Summary
 - **Backend API:** Built `/api/v1/database-manager/databases`, `/tables`, `/tables/{table}/schema`, `/tables/{table}/data`, `/migrations`, and `/query`.

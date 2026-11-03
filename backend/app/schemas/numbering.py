@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from typing import Optional
 from pydantic import BaseModel, Field, ConfigDict
 
@@ -25,7 +12,7 @@ class DocumentSeriesCreate(BaseModel):
     resetRule: Optional[str] = Field("Financial Year", alias="resetRule")
     currentNumber: Optional[int] = Field(0, alias="currentNumber")
     financialYear: Optional[str] = Field("2026-2027", alias="financialYear")
-    companyCode: Optional[str] = Field("SMRITI_IND", alias="companyCode")
+    companyCode: Optional[str] = Field("TILEFLOW_IND", alias="companyCode")
     mode: Optional[str] = "Auto"
     description: Optional[str] = None
 

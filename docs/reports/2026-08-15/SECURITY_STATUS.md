@@ -5,7 +5,7 @@
 | Module | Authorization | Session Cryptography | Compliance Rating |
 | :--- | :---: | :---: | :--- |
 | Executive Hub | ✓ | Secure Keys | Pass |
-| SMRITI Gyan Kendra | ✓ | Secure Keys | Pass |
+| TILEFLOW Gyan Kendra | ✓ | Secure Keys | Pass |
 | Billing Desk | ✓ | Secure Keys | Pass |
 | Sales Studio | ✓ | Secure Keys | Pass |
 | Customer Master | ✓ | Secure Keys | Pass |
@@ -33,6 +33,6 @@
 | Terms & Conditions | ✓ | Secure Keys | Pass |
 | Data Exchange Hub | ✓ | Secure Keys | Pass |
 | Company Setup Wizard | ✓ | Secure Keys | Pass |
-| About SMRITI | ✓ | Secure Keys | Pass |
+| About TILEFLOW | ✓ | Secure Keys | Pass |
 | Dev Intelligence Center | ✓ | Secure Keys | Pass |
 | Audit Logs | ✓ | Secure Keys | Pass |

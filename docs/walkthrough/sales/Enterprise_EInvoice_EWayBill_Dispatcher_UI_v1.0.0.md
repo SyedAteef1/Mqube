@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.78.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Enterprise E-Invoice & E-Way Bill Statutory Dispatcher UI (v1.0.0-GA)
@@ -40,7 +39,7 @@ Documents the implementation and testing of the SGIP Statutory Dispatch Gateway 
 3. **Statutory Outbox & Error Resilience:** Communicates directly with FastAPI compliance gateways backed by retry workers and transactional outbox.
 
 ## 6. Design Rationale
-Empowers enterprise accountants to fulfill government compliance mandates without leaving the SMRITI Sales Studio workflow.
+Empowers enterprise accountants to fulfill government compliance mandates without leaving the TILEFLOW Sales Studio workflow.
 
 ## 7. Implementation Summary
 - `handleGenerateEInvoice`: Calls `POST /api/v1/compliance/einvoice/generate` with GSTN v1.03 payload.
@@ -66,7 +65,7 @@ npm test
 
 ## 12. Related ADRs
 - `ADR-001`: FastAPI Sole System of Record.
-- `ADR-017`: SMRITI Government Integration Platform (SGIP) — E-Invoice & E-Way Bill Gateway.
+- `ADR-017`: TILEFLOW Government Integration Platform (SGIP) — E-Invoice & E-Way Bill Gateway.
 
 ## 13. Related RFCs
 - `RFC-081`: Enterprise B2B Statutory Compliance Dispatch Standard.

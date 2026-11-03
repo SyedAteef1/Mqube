@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.63.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Enterprise: Legacy Tally Shoper 9 Migration Blueprint & Long-Term Strategy
+# TILEFLOW Enterprise: Legacy Tally Shoper 9 Migration Blueprint & Long-Term Strategy
 
 **Status:** ARCHITECTURAL SPECIFICATION & PRODUCTION MIGRATION HARNESS  
 **Version:** 1.0.0  
@@ -24,21 +23,21 @@
 
 Tally Shoper 9 has served tens of thousands of Indian apparel, footwear, supermarket, and retail chain stores for over two decades. However, legacy desktop limitations (flat-file / local SQL Server setups, unversioned parameters, lack of cloud sync, manual polling, fragile point-to-point data synchronization) require a modern, cloud-native enterprise replacement.
 
-**SMRITI Retail OS** provides a drop-in, 100% compliant replacement with:
-1. **Control Plane Governance (`smritisys`)**: Zero-code AST business rules, GST statutory policies, dynamic themes, and vertical capability templates.
-2. **Multi-Tenant Physical Isolation (`smritiXXX`)**: Pure PostgreSQL ACID transactional ledgers, immutable sales reproducibility snapshots, and double-entry accounting.
-3. **Automated Zero-Loss Migration Pipeline**: Automated extraction from `D:\Shoper9\ini` and `ParamDef` into SMRITI Universal Master Data, Batch Stock, and General Ledger.
+**TILEFLOW Retail OS** provides a drop-in, 100% compliant replacement with:
+1. **Control Plane Governance (`tileflowsys`)**: Zero-code AST business rules, GST statutory policies, dynamic themes, and vertical capability templates.
+2. **Multi-Tenant Physical Isolation (`tileflowXXX`)**: Pure PostgreSQL ACID transactional ledgers, immutable sales reproducibility snapshots, and double-entry accounting.
+3. **Automated Zero-Loss Migration Pipeline**: Automated extraction from `D:\Shoper9\ini` and `ParamDef` into TILEFLOW Universal Master Data, Batch Stock, and General Ledger.
 
 ---
 
 ## 2. Legacy-to-Modern Entity Mapping Matrix
 
-| Legacy Shoper 9 Entity | SMRITI Target Schema / Engine | Migration Mechanism | Verification Guarantee |
+| Legacy Shoper 9 Entity | TILEFLOW Target Schema / Engine | Migration Mechanism | Verification Guarantee |
 |---|---|---|---|
 | **`CustMaster` / `VendorMaster`** | `parties`, `party_roles`, `customer_profiles`, `supplier_profiles` | `Shoper9TenantMigrator.migrate_parties_from_data()` | Zero duplication via unique party `code` index. |
 | **`ItemMaster` / `Class1` / `Class2`** | `items`, `item_variants`, `item_barcodes` | `Shoper9TenantMigrator.migrate_items_from_data()` | Polymorphic JSONB attributes (`size`, `color`, `fit`) + Cartesian matrix variants. |
-| **`SysParam` / `SysParamExtd`** | `smritisys.policy_definitions`, `business_rule_definitions` | `ControlPlaneSeeder.seed_governed_logic()` | AST Dynamic Formula Evaluation with Zero-Division Guards. |
-| **`GenLookUp` / `GenLookupExtd`** | `smritisys.*_ref` & `lookup_master_registries` | Reference Data Seeder | Multi-language localized lookup catalog (English, Hindi, Marathi). |
+| **`SysParam` / `SysParamExtd`** | `tileflowsys.policy_definitions`, `business_rule_definitions` | `ControlPlaneSeeder.seed_governed_logic()` | AST Dynamic Formula Evaluation with Zero-Division Guards. |
+| **`GenLookUp` / `GenLookupExtd`** | `tileflowsys.*_ref` & `lookup_master_registries` | Reference Data Seeder | Multi-language localized lookup catalog (English, Hindi, Marathi). |
 | **Stock Ledger & Batch Balances** | `stock_movements`, `product_batch_stocks` | `Shoper9TenantMigrator.migrate_opening_stock_from_data()` | Invariant: $\sum \text{Stock Movements} == \text{Batch Physical Stock}$. |
 | **Financial Balances (`AccountSummary`)** | `general_ledger_entries`, `account_balance_snapshots` | Double-Entry Opening Journal Voucher | Strict Invariant: $\sum \text{Debit} == \sum \text{Credit}$ with delta = 0.00. |
 
@@ -46,7 +45,7 @@ Tally Shoper 9 has served tens of thousands of Indian apparel, footwear, superma
 
 ## 3. Battle-Tested Retail Governance Policies Seeded
 
-The following policies extracted from `D:\Shoper9\ini` are now natively active in `smritisys`:
+The following policies extracted from `D:\Shoper9\ini` are now natively active in `tileflowsys`:
 
 1. **`POLICY_BILLING_CONTROLS` (Version 1)**:
    - `allow_item_scanning_with_recalling`: Allows continuous barcode scanning while suspended transaction is loaded.
@@ -70,17 +69,17 @@ The following policies extracted from `D:\Shoper9\ini` are now natively active i
 
 ## 4. End-to-End Execution Pipeline
 
-To migrate any legacy Shoper 9 store into SMRITI:
+To migrate any legacy Shoper 9 store into TILEFLOW:
 
 ```bash
 # 1. Extract and update latest configuration catalog from Shoper 9 installation
 python scripts/admin/sh9_cfg_extract.py
 
-# 2. Perform pre-flight dry-run migration against target tenant database (e.g. smriti001)
-$env:PYTHONPATH="F:\SMRITRretailNX\backend"; python scripts/admin/sh9_migrator.py --tenant-db smriti001 --company-id COMP-001 --dry-run
+# 2. Perform pre-flight dry-run migration against target tenant database (e.g. tileflow001)
+$env:PYTHONPATH="F:\SMRITRretailNX\backend"; python scripts/admin/sh9_migrator.py --tenant-db tileflow001 --company-id COMP-001 --dry-run
 
 # 3. Execute live production migration
-$env:PYTHONPATH="F:\SMRITRretailNX\backend"; python scripts/admin/sh9_migrator.py --tenant-db smriti001 --company-id COMP-001
+$env:PYTHONPATH="F:\SMRITRretailNX\backend"; python scripts/admin/sh9_migrator.py --tenant-db tileflow001 --company-id COMP-001
 ```
 
 ---

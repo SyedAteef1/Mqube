@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.119.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -40,13 +39,13 @@ const BUCKET_STYLE: Record<AgingBucket, string> = {
 
 const BUCKET_LABELS: Record<AgingBucket, string> = {
   CURRENT:    "Current",
-  OVERDUE_30: "1â€“30d",
-  OVERDUE_60: "31â€“60d",
-  OVERDUE_90: "61â€“90d",
+  OVERDUE_30: "1–30d",
+  OVERDUE_60: "31–60d",
+  OVERDUE_90: "61–90d",
   CRITICAL:   ">90d",
 };
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 const asOf = new Date("2026-08-28T00:00:00.000Z");
 
 function buildSampleAccounts(): CreditAccount[] {

@@ -2,7 +2,7 @@
 STAGING VALIDATION COMPLETE - EXECUTIVE SUMMARY
 ================================================================================
 
-Project: SMRITI Retail NX - Schema Reconciliation
+Project: TILEFLOW Retail NX - Schema Reconciliation
 Date: 2026-08-30
 Status: ANALYSIS COMPLETE - READY FOR DECISION
 
@@ -18,7 +18,7 @@ REGRESSION TESTS:
 ROOT CAUSE ANALYSIS:
 
   CRITICAL MISSING TABLES (Blocking 5/8 tests):
-    1. smriti_permissions
+    1. tileflow_permissions
        - Missing from schema
        - Blocks: Permission Schema, Bootstrap Company, Sales Return Contracts, 
                  Inventory tests (4/8 tests total)
@@ -59,7 +59,7 @@ SCHEMA INVENTORY:
     Risk Level: LOW (no production data to protect)
 
 PRODUCTION STATUS:
-  Database: smritisys and smriti001
+  Database: tileflowsys and tileflow001
   Version: v1384 (UNCHANGED - PROTECTED)
   Modifications: NONE
   Status: Production completely untouched
@@ -70,10 +70,10 @@ IMPLEMENTATION ROADMAP
 
 PHASE 1: CRITICAL BLOCKERS (Required to unblock tests)
   Migration: v1390_critical_auth_and_registry
-  Tables: 2 (smriti_permissions, company_database_registries)
+  Tables: 2 (tileflow_permissions, company_database_registries)
   Action: CREATE TABLE with exact DDL
   Impact: Unblocks 5/7 failing tests immediately
-  Dependency: Must extract DDL from production smritisys database first
+  Dependency: Must extract DDL from production tileflowsys database first
 
 PHASE 2: COMPLETE v1388 TABLES
   Migration: v1391_platform_analytics_completion
@@ -104,15 +104,15 @@ IMMEDIATE NEXT STEPS (BLOCKING DECISION REQUIRED)
 
 Before v1390 migration can be created:
 
-[ ] STEP 1: Extract smriti_permissions DDL from production
-    Location: Backend server console access to smritisys (psql)
-    Command: psql smritisys -c "\d+ smriti_permissions"
+[ ] STEP 1: Extract tileflow_permissions DDL from production
+    Location: Backend server console access to tileflowsys (psql)
+    Command: psql tileflowsys -c "\d+ tileflow_permissions"
     Capture: Complete table definition (columns, types, constraints, indexes)
     Deliverable: SQL DDL statement
 
 [ ] STEP 2: Extract company_database_registries DDL from production
-    Location: Backend server console access to smritisys (psql)
-    Command: psql smritisys -c "\d+ company_database_registries"
+    Location: Backend server console access to tileflowsys (psql)
+    Command: psql tileflowsys -c "\d+ company_database_registries"
     Capture: Complete table definition
     Deliverable: SQL DDL statement
 
@@ -152,7 +152,7 @@ DATA PRESERVATION RISK: NONE
   - All existing data untouched by reconciliation
 
 BLOCKING RISK: HIGH
-  - Cannot proceed without smriti_permissions DDL
+  - Cannot proceed without tileflow_permissions DDL
   - Cannot proceed without company_database_registries DDL
   - Without critical tables, tests remain blocked
 
@@ -165,7 +165,7 @@ DECISION POINT: Ready to proceed with implementation?
 Recommendation: YES, PROCEED WITH CAUTION
 
 Conditions:
-  1. Obtain exact DDL for smriti_permissions and company_database_registries
+  1. Obtain exact DDL for tileflow_permissions and company_database_registries
   2. Review and approve v1390 migration design
   3. Run v1390+v1391 on staging clone to verify 8/8 tests PASS
   4. Complete schema drift analysis for v1392

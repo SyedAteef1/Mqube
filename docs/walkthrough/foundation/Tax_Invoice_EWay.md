@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-13
   Modified     : 2026-08-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Tax Invoice — E-Way Bill PDF AcroForm Field Walkthrough (v3.16.0)
+# TILEFLOW Tax Invoice — E-Way Bill PDF AcroForm Field Walkthrough (v3.16.0)
 
 ## 1. Purpose
-This walkthrough documents the implementation of the layout-aware, native PDF AcroForm text field generator for Tax Invoice PDF exports in SMRITI Retail OS. It handles both pre-filled and blank E-Way Bill numbers seamlessly across Print Preview, PDF export, and physical printing.
+This walkthrough documents the implementation of the layout-aware, native PDF AcroForm text field generator for Tax Invoice PDF exports in TILEFLOW Retail OS. It handles both pre-filled and blank E-Way Bill numbers seamlessly across Print Preview, PDF export, and physical printing.
 
 ---
 

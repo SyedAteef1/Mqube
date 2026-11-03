@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from datetime import datetime, date, timezone
 from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey, Date, DateTime, Text, text, UniqueConstraint
 from sqlalchemy.orm import relationship
@@ -42,7 +28,7 @@ class EcomChannel(BaseEntity):
 
 class EcomSkuMapping(BaseEntity):
     """
-    Mapping between External Marketplace SKU and SMRITI Item / Variant SKU.
+    Mapping between External Marketplace SKU and TILEFLOW Item / Variant SKU.
     """
     __tablename__ = "ecom_sku_mappings"
     __table_args__ = (
@@ -52,7 +38,7 @@ class EcomSkuMapping(BaseEntity):
     channel_code = Column(String(50), nullable=False, index=True)
     external_sku = Column(String(100), nullable=False, index=True)
     external_product_id = Column(String(100), nullable=True)
-    smriti_sku = Column(String(100), nullable=False, index=True)
+    tileflow_sku = Column(String(100), nullable=False, index=True)
     item_id = Column(String(50), ForeignKey("items.id", ondelete="CASCADE"), nullable=False, index=True)
     variant_id = Column(String(50), ForeignKey("item_variants.id", ondelete="SET NULL"), nullable=True)
     is_active = Column(Boolean, default=True)
@@ -103,7 +89,7 @@ class EcomStockSyncLog(BaseEntity):
 
     channel_code = Column(String(50), nullable=False, index=True)
     external_sku = Column(String(100), nullable=False, index=True)
-    smriti_sku = Column(String(100), nullable=False, index=True)
+    tileflow_sku = Column(String(100), nullable=False, index=True)
     quantity_synced = Column(Numeric(12, 4), default=0.0000)
     status = Column(String(30), default="SUCCESS")  # SUCCESS, FAILED, THROTTLED
     response_payload = Column(JSONB, nullable=True)
@@ -112,7 +98,7 @@ class EcomStockSyncLog(BaseEntity):
 
 class EcomReconciliation(BaseEntity):
     """
-    Channel vs SMRITI transaction and revenue settlement reconciliation report.
+    Channel vs TILEFLOW transaction and revenue settlement reconciliation report.
     """
     __tablename__ = "ecom_reconciliations"
 
@@ -123,8 +109,8 @@ class EcomReconciliation(BaseEntity):
     
     channel_order_count = Column(Integer, default=0)
     channel_gross_revenue = Column(Numeric(15, 2), default=0.00)
-    smriti_order_count = Column(Integer, default=0)
-    smriti_gross_revenue = Column(Numeric(15, 2), default=0.00)
+    tileflow_order_count = Column(Integer, default=0)
+    tileflow_gross_revenue = Column(Numeric(15, 2), default=0.00)
     variance_amount = Column(Numeric(15, 2), default=0.00)
     
     status = Column(String(30), default="RECONCILED")  # RECONCILED, DISCREPANCY, UNDER_INVESTIGATION

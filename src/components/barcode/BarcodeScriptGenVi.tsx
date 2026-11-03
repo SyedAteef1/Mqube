@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.6.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Stitch Barcode Label Designer & Printer (Industrial Logic)
- */
-
 import React, { useState, useRef } from "react";
 import { 
   Code, 
@@ -362,7 +347,7 @@ export const BarcodeScriptGenerationView: React.FC<BarcodeScriptGenerationViewPr
                   type="text"
                   value={identConfig.textValue1}
                   onChange={e => setIdentConfig({ ...identConfig, textValue1: e.target.value })}
-                  placeholder="e.g. SMRITI RETAIL"
+                  placeholder="e.g. MQube RETAIL"
                   className="w-full bg-surface border border-outline-variant text-on-surface rounded focus:border-secondary focus:ring-1 focus:ring-secondary transition-colors text-xs py-1.5 px-2.5"
                 />
               </div>
@@ -416,7 +401,7 @@ export const BarcodeScriptGenerationView: React.FC<BarcodeScriptGenerationViewPr
 
       {/* Footer */}
       <footer className="bg-surface-container-low border-t border-outline-variant h-10 flex justify-between items-center px-margin-page z-30 font-label-caps text-[11px] shrink-0">
-        <div className="text-secondary font-bold">© 2026 SMRITI Retail OS • Industrial Logic</div>
+        <div className="text-secondary font-bold"> 2026 MQube • Industrial Logic</div>
         <div className="flex gap-4 items-center text-on-surface-variant">
           <span>Target Script: <strong>ModernLabelDesign_TE244.blf</strong></span>
           <span>•</span>

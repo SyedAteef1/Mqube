@@ -2,11 +2,11 @@
 title: "Sprint 30: P1.2 Universal Item Master Completion (Data Plane Convergence)"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
@@ -24,7 +24,7 @@ This sprint fulfills **Blueprint Section 6: P1 Transactional Data-Plane Converge
 - **Warehouse Location Bins**: Sub-entity model `ItemWarehouseLocation` defining warehouse-specific location bins, min reorder levels, and max capacities.
 - **Fast 4-Tier Scanner Resolver**: Instant resolution endpoint prioritizing `Barcode -> Variant SKU -> Item Code -> Serial Number` for POS registers and WMS handheld scanners.
 - **Legacy Product Compatibility Adapter**: `get_legacy_product_view()` projecting universal item identity into legacy product schema for existing frontend components.
-- **DDL Migration Engine**: `backend/app/db/migr_item_ext.py` migrating `smriti001` and `smriti002`.
+- **DDL Migration Engine**: `backend/app/db/migr_item_ext.py` migrating `tileflow001` and `tileflow002`.
 - **Verification**: 6/6 tests passing in `backend/tests/t_item_master.py` (63/63 platform regression tests green).
 
 ## 3. Files Created

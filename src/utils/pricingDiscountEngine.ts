@@ -1,33 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.99.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Advanced Pricing Rules & Promotional Discount Engine
- *
- * Implements a multi-layer pricing resolution hierarchy:
- *   Layer 1 — Base Price List       : Default catalogue price per SKU
- *   Layer 2 — Customer Group Price  : Segment-specific price override
- *   Layer 3 — Promotional Offer     : Time-bound discount (% or flat)
- *   Layer 4 — Coupon / Voucher      : One-time additional reduction
- *
- * Stacking rules:
- *   - Only one promotional offer applies per line (highest-discount wins)
- *   - Coupon applies AFTER promotion on the post-promo price
- *   - Customer group price is the effective base before applying promos
- *   - Global max discount cap enforced at invoice level
- */
-
 export type DiscountType = "PERCENTAGE" | "FLAT_AMOUNT";
 export type OfferStatus  = "ACTIVE" | "SCHEDULED" | "EXPIRED" | "PAUSED";
 export type PriceListType = "STANDARD" | "WHOLESALE" | "VIP" | "STAFF" | "DISTRIBUTOR";

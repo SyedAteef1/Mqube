@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 4.0.0
- * Created      : 2026-08-19
- * Modified     : 2026-08-19
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -38,7 +26,7 @@ import { MasterConfig, MasterColumnDef } from "./types.ts";
 import { MasterFormDrawer } from "./MasterFormDrawer.tsx";
 import { apiFetchV1 } from "../../../lib/apiFetchV1.ts";
 import { recordAuditAction } from "../../../lib/apiFetch.ts";
-import { SmritiScrollArea } from "../../SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../../TileFlowScrollArea.tsx";
 import { useWorkspace } from "../../../contexts/WorkspaceContext.tsx";
 
 export interface MasterListScreenProps<T = any> {

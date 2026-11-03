@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Contextual Navigation & Unified Shell Specification v3.17.0
+# TILEFLOW Contextual Navigation & Unified Shell Specification v3.17.0
 
 ## 1. Objective
-Eliminate duplicate navigation sidebars and dual headers in SMRITI Retail OS v3.17.0 by establishing **AppShell (`AppShell.tsx`)** as the sole authoritative application container with **ONE physical navigation rail (`NavRail.tsx`)**, zero page-level horizontal overflow, and a true Fiori-inspired business capability Launchpad.
+Eliminate duplicate navigation sidebars and dual headers in TILEFLOW Retail OS v3.17.0 by establishing **AppShell (`AppShell.tsx`)** as the sole authoritative application container with **ONE physical navigation rail (`NavRail.tsx`)**, zero page-level horizontal overflow, and a true Fiori-inspired business capability Launchpad.
 
 ---
 
@@ -46,9 +45,9 @@ Eliminate duplicate navigation sidebars and dual headers in SMRITI Retail OS v3.
 
 ## 4. Fiori Launchpad Architecture
 ```text
-SMRITI APPLICATION SHELL
+TILEFLOW APPLICATION SHELL
         ↓
-SMRITI FIORI LAUNCHPAD (Business Capability Entry Point)
+TILEFLOW FIORI LAUNCHPAD (Business Capability Entry Point)
         ↓
 BUSINESS SPACES (Sales, Purchase, Inventory, Masters, Analytics)
         ↓

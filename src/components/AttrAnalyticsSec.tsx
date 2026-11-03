@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-07-10
- * Modified     : 2026-07-13
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
@@ -87,7 +74,7 @@ export const AttributeAnalyticsSection: React.FC<AttributeAnalyticsSectionProps>
         <div>
           <h4 className="font-display font-bold text-sm text-theme-body flex items-center space-x-2">
             <BarChart3 size={16} className="text-violet-400" />
-            <span>SMRITI Attribute Intelligence Analytics</span>
+            <span>MQube Attribute Intelligence Analytics</span>
           </h4>
           <p className="text-[11px] text-theme-muted mt-0.5">Aggregate inventory valuation and sales performance across custom data-driven attributes</p>
         </div>
@@ -182,11 +169,11 @@ export const AttributeAnalyticsSection: React.FC<AttributeAnalyticsSectionProps>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={salesData} margin={{ top: 10, right: 10, left: -10, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2a3a5c" opacity={0.3} />
-                <XAxis dataKey="value" stroke="#8892a4" fontSize={10} fontStyle="mono" />
-                <YAxis stroke="#8892a4" fontSize={10} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#393939" opacity={0.3} />
+                <XAxis dataKey="value" stroke="#171717" fontSize={10} fontStyle="mono" />
+                <YAxis stroke="#171717" fontSize={10} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: "#121c35", border: "1px solid #2a3a5c", borderRadius: "8px" }} 
+                  contentStyle={{ backgroundColor: "#1c1c1c", border: "1px solid #2a3a5c", borderRadius: "8px" }} 
                   labelStyle={{ color: "#fff", fontFamily: "mono" }}
                 />
                 <Bar dataKey="quantitySold" fill="#10b981" radius={[4, 4, 0, 0]} name="Units Sold" />
@@ -220,11 +207,11 @@ export const AttributeAnalyticsSection: React.FC<AttributeAnalyticsSectionProps>
                   ))}
                 </Pie>
                 <Tooltip 
-                  contentStyle={{ backgroundColor: "#121c35", border: "1px solid #2a3a5c", borderRadius: "8px" }}
+                  contentStyle={{ backgroundColor: "#1c1c1c", border: "1px solid #2a3a5c", borderRadius: "8px" }}
                   itemStyle={{ fontSize: "11px" }}
                   formatter={(value: any) => `₹${Number(value).toLocaleString("en-IN")}`}
                 />
-                <Legend layout="horizontal" verticalAlign="bottom" align="center" iconSize={8} iconType="circle" wrapperStyle={{ fontSize: "10px", color: "#8892a4" }} />
+                <Legend layout="horizontal" verticalAlign="bottom" align="center" iconSize={8} iconType="circle" wrapperStyle={{ fontSize: "10px", color: "#171717" }} />
               </PieChart>
             </ResponsiveContainer>
           </div>

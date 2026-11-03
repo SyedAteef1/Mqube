@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.112.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -29,7 +28,7 @@ const TYPE_STYLE: Record<BundleType, string> = {
   BUY_X_GET_Y:     "text-emerald-300 bg-emerald-500/15 border-emerald-500/25",
 };
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 const SAMPLE_CART: CartItem[] = [
   { sku: "FAB-DENIM-BLU",  productName: "Denim Blue 1m",    mrp: 250, qty: 0, availableQty: 10 },
@@ -42,7 +41,7 @@ const SAMPLE_CART: CartItem[] = [
 function buildSampleBundles(): BundleConfig[] {
   return [
     BundlingEngine.createBundle({
-      name: "Fabric Combo Pack", description: "Denim + Cotton â€” 10% off",
+      name: "Fabric Combo Pack", description: "Denim + Cotton — 10% off",
       type: "COMBO_DISCOUNT", discountPct: 10,
       components: [
         { sku: "FAB-DENIM-BLU",  productName: "Denim Blue 1m",  mrp: 250, requiredQty: 2 },
@@ -51,7 +50,7 @@ function buildSampleBundles(): BundleConfig[] {
       validFrom: "2026-01-01", validTo: "2026-12-31",
     }),
     BundlingEngine.createBundle({
-      name: "Accessories Value Pack", description: "Belt + Scarf â€” fixed â‚¹450",
+      name: "Accessories Value Pack", description: "Belt + Scarf — fixed ₹450",
       type: "FIXED_BUNDLE", fixedPrice: 450,
       components: [
         { sku: "ACC-BELT-BRN",   productName: "Leather Belt", mrp: 350, requiredQty: 1 },
@@ -87,7 +86,7 @@ export const BundlingModal: React.FC<BundlingModalProps> = ({ isOpen, onClose, o
     try {
       const result = BundlingEngine.applyBundleToCart(selected, cart, NOW);
       setCart(result.updatedCart);
-      onNotification?.("Bundle Applied", `${selected.name} â€” saved ${fmt(result.totalSavings)}`, "success");
+      onNotification?.("Bundle Applied", `${selected.name} — saved ${fmt(result.totalSavings)}`, "success");
     } catch (e: any) {
       onNotification?.("Error", e.message, "error");
     }
@@ -193,7 +192,7 @@ export const BundlingModal: React.FC<BundlingModalProps> = ({ isOpen, onClose, o
                           <td className="py-2 px-3 font-sans"><p className="text-xs text-slate-200">{l.productName}</p><p className="text-[10px] text-slate-500">{l.sku}</p></td>
                           <td className="py-2 px-3 text-right text-slate-500 line-through">{fmt(l.mrp)}</td>
                           <td className="py-2 px-3 text-right text-slate-300">{l.qty}</td>
-                          <td className="py-2 px-3 text-right text-emerald-400">{l.freeQty > 0 ? `+${l.freeQty}` : "â€”"}</td>
+                          <td className="py-2 px-3 text-right text-emerald-400">{l.freeQty > 0 ? `+${l.freeQty}` : "—"}</td>
                           <td className="py-2 px-3 text-right text-violet-400">{fmt(l.effectivePrice)}</td>
                           <td className="py-2 px-3 text-right text-slate-200">{fmt(l.lineTotal)}</td>
                         </tr>

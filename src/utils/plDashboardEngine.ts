@@ -1,32 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.102.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Store-Level Profit & Loss Dashboard Engine
- *
- * Computes daily, weekly, and monthly P&L metrics for a branch:
- *   Revenue         : Gross Sales − Returns
- *   COGS            : Sum of (costPrice × qty) across sold lines
- *   Gross Margin    : Revenue − COGS
- *   GM%             : Gross Margin / Revenue × 100
- *   Shrinkage Cost  : Value of stock written off (theft, damage, expiry)
- *   Markdown Cost   : Discount value given above policy threshold
- *   Operating Cost  : Rent + Staff + Utilities + Other
- *   Net Profit      : Gross Margin − Shrinkage − Markdown − Operating
- *   Net Margin%     : Net Profit / Revenue × 100
- */
-
 export type PeriodType = "DAILY" | "WEEKLY" | "MONTHLY";
 
 export interface SalesTxn {

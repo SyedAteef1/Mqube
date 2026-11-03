@@ -1,18 +1,5 @@
 #!/usr/bin/env python3
 """
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.14.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
-"""
 scripts/add_author_header.py
 One-off repo hygiene sweep. Idempotent — safe to re-run;
 already-compliant files are left untouched.
@@ -29,12 +16,11 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 TARGET_EXTS = {".py", ".ts", ".tsx", ".md"}
 EXCLUDE_DIRS = {"node_modules", "dist", "build", ".git", "__pycache__", ".venv", "venv"}
 
-AUTHOR_NAME = "Jawahar Ramkripal Mallah"
+AUTHOR_NAME = "Syed Ateef"
 DESIGNATION = "Chief Systems Architect & Creator"
-EMAIL = "support@smritibooks.com"
-WEBSITES = "smritibooks.com | erpnbook.com | aitdl.com"
-COPYRIGHT_LINE = "\u00a9 SMRITIBooks.com. All Rights Reserved."
-LICENSE_LINE = "Proprietary Commercial Software"
+EMAIL = "ateef@tileflow.in"
+COPYRIGHT_LINE = "\u00a9 tileflow.in. Open Source - Permissive Use"
+LICENSE_LINE = "MIT Open Source License"
 DEFAULT_VERSION = "3.14.0"  # CONFIRM against backend/app/core/config.py Settings.VERSION before running
 
 FIELD_WIDTH = 13
@@ -80,7 +66,7 @@ def style_for(path: Path) -> str:
 def build_lines(version: str, created: str) -> list[str]:
     modified = date.today().isoformat()
     return [
-        f"{pad('Project')}: SMRITI Retail OS",
+        f"{pad('Project')}: TILEFLOW Retail OS",
         f"{pad('Author')}: {AUTHOR_NAME}",
         f"{pad('Designation')}: {DESIGNATION}",
         f"{pad('Email')}: {EMAIL}",

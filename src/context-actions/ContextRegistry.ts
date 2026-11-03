@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import { ContextAction, ContextData } from "./ContextAction.ts";
 
 class ContextRegistry {
@@ -34,11 +9,11 @@ class ContextRegistry {
   constructor() {
     // Load favorites & pinned from localStorage if offline-persistence is available
     try {
-      const favs = localStorage.getItem("smriti_acas_favorites");
+      const favs = localStorage.getItem("tileflow_acas_favorites");
       if (favs) this.favoriteActionIds = JSON.parse(favs);
-      const pinned = localStorage.getItem("smriti_acas_pinned");
+      const pinned = localStorage.getItem("tileflow_acas_pinned");
       if (pinned) this.pinnedActionIds = JSON.parse(pinned);
-      const recents = localStorage.getItem("smriti_acas_recents");
+      const recents = localStorage.getItem("tileflow_acas_recents");
       if (recents) this.recentActionIds = JSON.parse(recents);
     } catch (e) {
       console.warn("Could not load ACAS persistent preferences", e);
@@ -76,7 +51,7 @@ class ContextRegistry {
   public recordExecution(actionId: string): void {
     this.recentActionIds = [actionId, ...this.recentActionIds.filter(id => id !== actionId)].slice(0, 8);
     try {
-      localStorage.setItem("smriti_acas_recents", JSON.stringify(this.recentActionIds));
+      localStorage.setItem("tileflow_acas_recents", JSON.stringify(this.recentActionIds));
     } catch (e) {
       // Ignored in strict sandbox environment
     }
@@ -92,7 +67,7 @@ class ContextRegistry {
       this.favoriteActionIds.push(actionId);
     }
     try {
-      localStorage.setItem("smriti_acas_favorites", JSON.stringify(this.favoriteActionIds));
+      localStorage.setItem("tileflow_acas_favorites", JSON.stringify(this.favoriteActionIds));
     } catch (e) {}
   }
 
@@ -106,7 +81,7 @@ class ContextRegistry {
       this.pinnedActionIds.push(actionId);
     }
     try {
-      localStorage.setItem("smriti_acas_pinned", JSON.stringify(this.pinnedActionIds));
+      localStorage.setItem("tileflow_acas_pinned", JSON.stringify(this.pinnedActionIds));
     } catch (e) {}
   }
 

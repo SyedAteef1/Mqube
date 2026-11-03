@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.109.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -30,7 +29,7 @@ const BAND_STYLE: Record<AgingBand, string> = {
   CRITICAL: "text-rose-300 bg-rose-500/15 border-rose-500/25",
 };
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 function buildSamplePlans(): ConsignmentPlan[] {
   let p1 = ConsignmentEngine.createPlan({
@@ -77,7 +76,7 @@ export const ConsignmentStudioModal: React.FC<ConsignmentStudioModalProps> = ({ 
     if (!selected) return;
     const settled = ConsignmentEngine.settle(selected, "VNDR-MGR", NOW);
     update(settled);
-    onNotification?.("Settlement Created", `${selected.planNo} settled â€” billed ${fmt(settled.settlement!.totalBilledAmt)}`, "success");
+    onNotification?.("Settlement Created", `${selected.planNo} settled — billed ${fmt(settled.settlement!.totalBilledAmt)}`, "success");
   };
 
   const totalExposedValue = aging.reduce((s, i) => s + i.exposedValue, 0);
@@ -190,7 +189,7 @@ export const ConsignmentStudioModal: React.FC<ConsignmentStudioModalProps> = ({ 
 
                   {selected.settlement && (
                     <div className="bg-teal-950/20 border border-teal-500/30 rounded-xl p-4">
-                      <p className="text-xs font-bold text-teal-300 mb-2">Settlement â€” {new Date(selected.settlement.settledAt).toLocaleString("en-IN")}</p>
+                      <p className="text-xs font-bold text-teal-300 mb-2">Settlement — {new Date(selected.settlement.settledAt).toLocaleString("en-IN")}</p>
                       <div className="grid grid-cols-3 gap-3 text-xs text-center">
                         {[
                           { label: "Billed",   value: fmt(selected.settlement.totalBilledAmt), color: "text-emerald-400" },
@@ -211,7 +210,7 @@ export const ConsignmentStudioModal: React.FC<ConsignmentStudioModalProps> = ({ 
               {activeTab === "AGING" && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between flex-wrap gap-3">
-                    <p className="text-sm font-bold text-slate-200">Aging Report â€” {NOW.toLocaleDateString("en-IN")}</p>
+                    <p className="text-sm font-bold text-slate-200">Aging Report — {NOW.toLocaleDateString("en-IN")}</p>
                     <div className="flex items-center gap-2">
                       <span className="text-[10px] text-slate-500">Exposed Value:</span>
                       <span className="text-sm font-black font-mono text-orange-400">{fmt(totalExposedValue)}</span>

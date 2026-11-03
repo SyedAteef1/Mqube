@@ -1,29 +1,24 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.2
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS — Troubleshooting & Support Manual
+# TILEFLOW Retail OS — Troubleshooting & Support Manual
 
 This document details common operational issues and resolutions.
 
@@ -34,7 +29,7 @@ This document details common operational issues and resolutions.
 - **Cause:** Network offline state or pending sync queue failure.
 - **Resolution:**
   1. Verify the network status in the browser console.
-  2. If the browser shows offline, verify that mutations are saved in the `smriti_pending_customers` local storage array.
+  2. If the browser shows offline, verify that mutations are saved in the `tileflow_pending_customers` local storage array.
   3. Re-establish network connectivity to trigger automated online queue synchronization.
 
 ## 2. Keyboard Shortcut Collisions

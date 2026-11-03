@@ -1,32 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.103.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Vendor Return & Debit Note Engine
- *
- * Manages the complete return-to-vendor workflow:
- *   RTV Lifecycle   : DRAFT → SUBMITTED → VENDOR_ACKNOWLEDGED → GOODS_DISPATCHED
- *                     → VENDOR_RECEIVED → DEBIT_NOTE_RAISED → SETTLED / DISPUTED
- *
- *   Debit Note      : Auto-generated on DEBIT_NOTE_RAISED status with:
- *                     - Net amount (returned goods cost value)
- *                     - GST reversal line items
- *                     - Reference to original PO and GRN
- *
- *   Balance Ledger  : Open debit notes per vendor; settled vs outstanding tracking
- */
-
 export type RTVStatus =
   | "DRAFT" | "SUBMITTED" | "VENDOR_ACKNOWLEDGED" | "GOODS_DISPATCHED"
   | "VENDOR_RECEIVED" | "DEBIT_NOTE_RAISED" | "SETTLED" | "DISPUTED" | "CANCELLED";

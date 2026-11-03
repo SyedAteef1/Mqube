@@ -1,29 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.3.0
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# Implementation Plan: Project Header Standardization — v3.3.0
 
 This document defines the plan to update the standard project header across all applicable first-party source files in the repository.
 
@@ -47,13 +41,12 @@ Branding, ownership, and copyright attributions must be uniform across all sourc
 ---
 
 ## 4. Current State
-- Files contain varying, older header configurations naming Jawahar Ramkripal Mallah alone.
+- Files contain varying, older header configurations naming Syed Ateef alone.
 - Some newer or configuration files (e.g., `vite.config.ts`) lack standard headers.
 
 ---
 
 ## 5. Gap Analysis
-- Missing founders' metadata (Pushpa Devi Jawahar Mallah) and organization details (AITDL NETWORKS) in the current files.
 - Inconsistent header formats across newly created utilities and config scripts.
 
 ---
@@ -69,50 +62,22 @@ Branding, ownership, and copyright attributions must be uniform across all sourc
 
 #### A. JavaScript, TypeScript, CSS, SCSS, SQL (`/** ... */`)
 ```typescript
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : {Version}
- * * Created    : {Created}
- * * Modified   : {Modified}
- * * Copyright  : {Copyright}
- * * License    : {License}
- */
 ```
 
 #### B. Shell, PowerShell, Python (`# ...`)
 ```python
-# Project      : SMRITI Retail OS
-# Repository   : SMRITIRetailNX
-# Organization : AITDL NETWORKS
+# Project      : TILEFLOW Retail OS
+# Repository   : TILEFLOWRetailNX
 # 
 # Founders
 # 
 # * Pushpa Devi Jawahar Mallah
 #   * Founder & Chairperson
 #   * Phone: +91 9324117007
-#   * Email: founder@aitdl.com
 # 
-# * Jawahar Ramkripal Mallah
+# * Syed Ateef
 #   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-#   * Email: founder@aitdl.com
 # 
-# * Websites: aitdl.com | erpnbook.com | smritibooks.com
 # 
 # * Version    : {Version}
 # * Created    : {Created}
@@ -124,22 +89,18 @@ Branding, ownership, and copyright attributions must be uniform across all sourc
 #### C. HTML, Markdown (`<!-- ... -->`)
 ```html
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : {Version}
   * Created    : {Created}
@@ -151,22 +112,18 @@ Branding, ownership, and copyright attributions must be uniform across all sourc
 
 #### D. Windows Batch (`REM ...`)
 ```batch
-REM Project      : SMRITI Retail OS
-REM Repository   : SMRITIRetailNX
-REM Organization : AITDL NETWORKS
+REM Project      : TILEFLOW Retail OS
+REM Repository   : TILEFLOWRetailNX
 REM 
 REM Founders
 REM 
 REM * Pushpa Devi Jawahar Mallah
 REM   * Founder & Chairperson
 REM   * Phone: +91 9324117007
-REM   * Email: founder@aitdl.com
 REM 
-REM * Jawahar Ramkripal Mallah
+REM * Syed Ateef
 REM   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-REM   * Email: founder@aitdl.com
 REM 
-REM * Websites: aitdl.com | erpnbook.com | smritibooks.com
 REM 
 REM * Version    : {Version}
 REM * Created    : {Created}

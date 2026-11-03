@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import hmac
 import hashlib
 import base64
@@ -46,8 +32,8 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -61,7 +47,7 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
 @pytest.mark.asyncio
 async def test_ecom_channel_configuration_and_sku_mapping():
     """Verify eCommerce channel configuration and external SKU mapping registry."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -73,7 +59,7 @@ async def test_ecom_channel_configuration_and_sku_mapping():
                 channel_code=f"SHOPIFY_{suffix.upper()}",
                 name=f"Shopify Flagship Store {suffix}",
                 channel_type="SHOPIFY",
-                store_url="https://smriti-demo.myshopify.com",
+                store_url="https://tileflow-demo.myshopify.com",
                 webhook_secret=f"secret_{suffix}",
             ),
             user_id="usr-super",
@@ -107,13 +93,13 @@ async def test_ecom_channel_configuration_and_sku_mapping():
                 channel_code=chan.channel_code,
                 external_sku=f"EXT-SH-{suffix.upper()}",
                 external_product_id="gid://shopify/Product/12345",
-                smriti_sku=item.item_code,
+                tileflow_sku=item.item_code,
                 item_id=item.id,
             ),
             user_id="usr-super",
         )
         assert mapping.id is not None
-        assert mapping.smriti_sku == item.item_code
+        assert mapping.tileflow_sku == item.item_code
 
 
 @pytest.mark.asyncio
@@ -133,7 +119,7 @@ async def test_hmac_signature_verification_across_adapters():
 @pytest.mark.asyncio
 async def test_inbound_order_deduplication_and_stock_reservation():
     """Verify inbound order deduplication (idempotency) and transactional stock reservation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -209,7 +195,7 @@ async def test_inbound_order_deduplication_and_stock_reservation():
 @pytest.mark.asyncio
 async def test_insufficient_stock_failure_and_dlq_retries():
     """Verify stock shortage failure logging and Dead Letter Queue (DLQ) retry cycle."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -276,7 +262,7 @@ async def test_insufficient_stock_failure_and_dlq_retries():
 @pytest.mark.asyncio
 async def test_order_convergence_to_sales_invoice():
     """Verify order convergence into authoritative SalesInvoice and outward stock movement."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -350,8 +336,8 @@ async def test_order_convergence_to_sales_invoice():
 
 @pytest.mark.asyncio
 async def test_channel_financial_reconciliation():
-    """Verify channel revenue settlement reconciliation against SMRITI converged invoices."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    """Verify channel revenue settlement reconciliation against TILEFLOW converged invoices."""
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -382,7 +368,7 @@ async def test_channel_financial_reconciliation():
         session.add(imp)
         await session.commit()
 
-        # Run Reconciliation (Channel reports ₹10,000, SMRITI converged is ₹10,000 -> RECONCILED)
+        # Run Reconciliation (Channel reports ₹10,000, TILEFLOW converged is ₹10,000 -> RECONCILED)
         rec = await EcomGrowthEngine.generate_channel_reconciliation(
             session=session,
             company_id="COMP-001",
@@ -397,7 +383,7 @@ async def test_channel_financial_reconciliation():
         )
         assert rec.status == "RECONCILED"
         assert rec.variance_amount == Decimal("0.00")
-        assert rec.smriti_gross_revenue == Decimal("10000.00")
+        assert rec.tileflow_gross_revenue == Decimal("10000.00")
 
 
 @pytest.mark.asyncio
@@ -423,7 +409,7 @@ async def test_api_ecom_endpoints():
 
         # 2. POST /ecom/orders/inbound
         # First seed a product so reservation succeeds
-        sessionmaker = get_company_sessionmaker("smriti001")
+        sessionmaker = get_company_sessionmaker("tileflow001")
         async with sessionmaker() as session:
             p = Product(
                 id=f"prod_api_{suffix}",

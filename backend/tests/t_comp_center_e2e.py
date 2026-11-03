@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -31,11 +18,11 @@ sysadmin_user = User(id="usr-super", role=UserRole.SYSADMIN, company_id="COMP-00
 ordinary_user = User(id="usr-cashier", role=UserRole.CASHIER, company_id="COMP-001")
 
 def test_valid_company_code_validation_abc():
-    """Verify code validation accepts ABC and returns smritiABC."""
+    """Verify code validation accepts ABC and returns tileflowABC."""
     req = ValidateCodeRequest(company_code="abc")
     res = validate_company_code(req)
     assert res["company_code"] == "ABC"
-    assert res["database_name"] == "smritiABC"
+    assert res["database_name"] == "tileflowABC"
     assert res["valid"] is True
 
 def test_invalid_company_code_rejection_000_and_sys():
@@ -57,15 +44,15 @@ def test_unauthorized_company_access_returns_403():
 def test_zero_credentials_in_company_detail_payload():
     """Verify company detail endpoint returns zero DB passwords or connection strings."""
     res = get_company_detail("COMP-001", current_user=sysadmin_user)
-    assert res["database_name"] == "smriti001"
+    assert res["database_name"] == "tileflow001"
     assert "password" not in res
     assert "connection_string" not in res
 
 def test_dry_run_company_create_request_zero_mutations():
     """Verify company create request runs in dry-run mode without DB mutations."""
-    req = CreateCompanyRequest(company_id="COMP-MUM", company_name="SMRITI Mumbai Megastore", company_code="MUM")
+    req = CreateCompanyRequest(company_id="COMP-MUM", company_name="TILEFLOW Mumbai Megastore", company_code="MUM")
     res = create_company_request(req, current_user=sysadmin_user)
-    assert res["dry_run_plan"]["database_name"] == "smritiMUM"
+    assert res["dry_run_plan"]["database_name"] == "tileflowMUM"
     assert res["dry_run_plan"]["database_mutations"] == 0
 
 def test_delete_action_requires_dual_approval_gate():

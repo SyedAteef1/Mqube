@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.8.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { Printer, X, Check, Wifi, Usb, Cable, Activity, RefreshCw, CheckCircle2, AlertTriangle } from "lucide-react";
 import { PrinterTargetConfig, PortType } from "./types.ts";

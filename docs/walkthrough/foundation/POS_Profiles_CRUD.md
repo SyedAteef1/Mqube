@@ -1,15 +1,14 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-07-16
   Modified     : 2026-07-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # POS Profiles CRUD API v3.22.0
@@ -62,7 +61,6 @@ Also delivers GET /pos/shifts/ to complete App.tsx shifts state migration.
 ### A. CashRegister IS the POS Profile
 Rather than creating a separate POSProfile model, the existing CashRegister model was extended with cashier/warehouse/is_locked fields. This avoids join complexity and keeps a single source of truth for terminal configuration.
 
-### B. POSProfileResponse as a camelCase projection
 The frontend POSProfile type uses camelCase (isActive, isLocked, cashier, warehouse). POSProfileResponse.from_register() performs the mapping at the schema boundary, keeping SQLAlchemy model names snake_case while returning frontend-compatible JSON.
 
 ### C. Auto-generated ID and code in create_profile

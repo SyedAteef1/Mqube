@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.5.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Comprehensive Multi-Source Barcode Printing Engine (Transactions, PO, Masters, Direct Scan)
@@ -17,12 +16,12 @@
 **Version:** 6.5.0  
 **Date:** 2026-08-22  
 **Area:** Inventory & Barcode  
-**Author:** Jawahar Ramkripal Mallah  
+**Author:** Syed Ateef  
 
 ---
 
 ## 1. Purpose
-To deliver and verify the full operational matrix for SMRITI Retail OS Barcode Label Printing across all remaining transaction sources:
+To deliver and verify the full operational matrix for TILEFLOW Retail OS Barcode Label Printing across all remaining transaction sources:
 1. **Against Transactions** (GRN Inward, Sales Returns, Transfers)
 2. **Against Purchase Orders** (Cumulative PO aggregation)
 3. **Against Masters** (Date Range period filter & Unprinted confirmation dialog)

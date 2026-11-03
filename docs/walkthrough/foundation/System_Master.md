@@ -1,16 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.28.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Enterprise UI Refactor Walkthrough
 -->
 
@@ -37,7 +35,7 @@ Complete the visual refactor for the remaining application workspaces (**Barcode
 
 ## 5. Architecture Decisions
 - **Fiori Horizon Design System Tokens**: Applied `#FFFFFF` (`bg-theme-surface-1`) for white cards, `#F8FAFC` (`bg-theme-surface-2`) for toolbars, `#EFF6FF` (`bg-theme-selection`) for active navigation items, `#E2E8F0` (`border-theme-border`) for crisp thin borders, and `#0070F2` (`bg-theme-primary`) for primary action controls.
-- **System-wide Theme Consistency**: Unified all workspace sidebars, headers, cards, tables, and modal dialogs under the standard light enterprise visual language across 100% of SMRITI Retail OS application modules.
+- **System-wide Theme Consistency**: Unified all workspace sidebars, headers, cards, tables, and modal dialogs under the standard light enterprise visual language across 100% of TILEFLOW Retail OS application modules.
 
 ## 6. Design Rationale
 System master management and barcode design require high contrast and clean organization to prevent operational errors during inventory tagging and numbering sequence setup. Restructuring all remaining views under Fiori Horizon light standards ensures design coherence across the entire application suite.
@@ -64,7 +62,7 @@ System master management and barcode design require high contrast and clean orga
 - None.
 
 ## 11. Future Work
-- Deploy updated codebase to test environment (`F:\Smriti9`).
+- Deploy updated codebase to test environment (`F:\TileFlow9`).
 
 ## 12. Related ADRs
 - ADR-014: Fiori Horizon Enterprise Light Design System Standard

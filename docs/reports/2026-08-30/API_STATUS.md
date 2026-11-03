@@ -5,7 +5,7 @@
 | Module | API Routes Integrated | Status |
 | :--- | :---: | :--- |
 | Executive Hub | ✅ | Endpoints active and exposed |
-| SMRITI Gyan Kendra | ✅ | Endpoints active and exposed |
+| TILEFLOW Gyan Kendra | ✅ | Endpoints active and exposed |
 | Billing Desk | ✅ | Endpoints active and exposed |
 | Sales Studio | ✅ | Endpoints active and exposed |
 | Create Tax Invoice (B2B) | ✅ | Endpoints active and exposed |
@@ -36,6 +36,6 @@
 | Terms & Conditions | ✅ | Endpoints active and exposed |
 | Data Exchange Hub | ✅ | Endpoints active and exposed |
 | Company Setup Wizard | ✅ | Endpoints active and exposed |
-| About SMRITI | ✅ | Endpoints active and exposed |
+| About TILEFLOW | ✅ | Endpoints active and exposed |
 | Dev Intelligence Center | ✅ | Endpoints active and exposed |
 | Audit Logs | ✅ | Endpoints active and exposed |

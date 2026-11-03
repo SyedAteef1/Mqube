@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import sys
 import pytest
 import asyncio
@@ -62,8 +49,8 @@ async def test_01_schema_integrity():
 # 02 — Database Provisioning Sanitization Test
 @pytest.mark.asyncio
 async def test_02_database_provisioning_sanitization():
-    assert sanitize_company_db_name("TATTLY") == "Smritibus_TATTLY"
-    assert sanitize_company_db_name("company-123!") == "Smritibus_COMPANY123"
+    assert sanitize_company_db_name("TATTLY") == "TileFlowbus_TATTLY"
+    assert sanitize_company_db_name("company-123!") == "TileFlowbus_COMPANY123"
 
 
 # 03 — Registry Resolution Test
@@ -71,13 +58,12 @@ async def test_02_database_provisioning_sanitization():
 async def test_03_registry_resolution():
     dummy = CompanyDatabaseRegistry(
         company_id="c1", database_id="db_tattly",
-        database_name="Smritibus_TATTLY", host_reference="localhost", port_reference=5432
+        database_name="TileFlowbus_TATTLY", host_reference="localhost", port_reference=5432
     )
     url = ControlDatabaseRegistryService.build_connection_url(dummy)
-    assert url == "postgresql+asyncpg://postgres:postgres@localhost:5432/Smritibus_TATTLY"
+    assert url == "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowbus_TATTLY"
 
 
-# 04 — Tenant Isolation Authorization Test
 @pytest.mark.asyncio
 async def test_04_tenant_isolation():
     user = User(id="u1", role=UserRole.CASHIER)
@@ -99,10 +85,10 @@ async def test_05_unauthorized_access_blocked_403():
 @pytest.mark.asyncio
 async def test_06_lru_eviction_and_recovery():
     mgr = LRUConnectionPoolManager(max_pools=2, pool_size=1, max_overflow=1)
-    await mgr.get_session_factory("COMP_A", "postgresql+asyncpg://postgres:postgres@localhost:5432/Smritibus_A")
-    await mgr.get_session_factory("COMP_B", "postgresql+asyncpg://postgres:postgres@localhost:5432/Smritibus_B")
+    await mgr.get_session_factory("COMP_A", "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowbus_A")
+    await mgr.get_session_factory("COMP_B", "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowbus_B")
     assert mgr.active_pool_count == 2
-    await mgr.get_session_factory("COMP_C", "postgresql+asyncpg://postgres:postgres@localhost:5432/Smritibus_C")
+    await mgr.get_session_factory("COMP_C", "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowbus_C")
     assert mgr.active_pool_count == 2
     await mgr.dispose_all()
     assert mgr.active_pool_count == 0
@@ -199,8 +185,8 @@ async def test_13_psv_off_zero_processing():
 # 14 — Physical Cross-Company Isolation Test
 @pytest.mark.asyncio
 async def test_14_physical_cross_company_isolation():
-    db_a = "Smritibus_COMPANYA"
-    db_b = "Smritibus_COMPANYB"
+    db_a = "TileFlowbus_COMPANYA"
+    db_b = "TileFlowbus_COMPANYB"
     assert db_a != db_b
 
 
@@ -208,7 +194,7 @@ async def test_14_physical_cross_company_isolation():
 @pytest.mark.asyncio
 async def test_15_blue_green_migration_workflow():
     target = sanitize_company_db_name("DEMO")
-    assert target == "Smritibus_DEMO"
+    assert target == "TileFlowbus_DEMO"
 
 
 # 16 — Delta Synchronization Parity Test

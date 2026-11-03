@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.24.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Offline Conflict Resolution Policy Matrix & Distributed Sync Protocol
+# TILEFLOW Offline Conflict Resolution Policy Matrix & Distributed Sync Protocol
 
 **Status:** Authoritative Architecture Specification  
 **Version:** v1.0  
@@ -24,7 +23,7 @@
 
 In retail operations, point-of-sale (POS) terminals, mobile vans, and distribution sales agents must execute transactions seamlessly without active internet connectivity. When connectivity restores, concurrent transactions generated across disjoint nodes converge onto the central multi-tenant PostgreSQL database.
 
-SMRITI strictly rejects naive **Last-Write-Wins (LWW)** because financial ledgers, tax compliance snapshots, and inventory balances represent authoritative, immutable truths that must never be silently overwritten. SMRITI implements a **5-Tier Domain-Driven Hybrid Conflict Resolution Engine**:
+TILEFLOW strictly rejects naive **Last-Write-Wins (LWW)** because financial ledgers, tax compliance snapshots, and inventory balances represent authoritative, immutable truths that must never be silently overwritten. TILEFLOW implements a **5-Tier Domain-Driven Hybrid Conflict Resolution Engine**:
 
 ```
                        OFFLINE CLIENT (POS / Terminal)

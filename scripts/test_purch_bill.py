@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, time
 import psycopg2
 from decimal import Decimal
@@ -23,7 +10,7 @@ def test_purchase_bill_e2e():
     Scenario:
     Record GRN Bill Outstanding (Rs 5040.00) -> Record Supplier Payment -> Verify Zero Outstanding Balance.
     """
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
 
     sup_code = "SUP-BILL-E2E-666"
@@ -37,7 +24,7 @@ def test_purchase_bill_e2e():
     cur.execute("""
         INSERT INTO suppliers (id, uuid, tenant_id, code, name, gst_number, city, state, outstanding, is_active)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, 5040.00, true);
-    """, (sup_code, "uuid-sup-bill-e2e", "smritibus_default", sup_code, "E2E Supplier Bill Ltd", "27AAACB6666F1Z6", "Mumbai", "Maharashtra"))
+    """, (sup_code, "uuid-sup-bill-e2e", "tileflowbus_default", sup_code, "E2E Supplier Bill Ltd", "27AAACB6666F1Z6", "Mumbai", "Maharashtra"))
     conn.commit()
 
     # 2. Record Supplier Payment of Rs 5040.00
@@ -46,7 +33,7 @@ def test_purchase_bill_e2e():
             id, uuid, tenant_id, supplier_id, amount, payment_date, payment_mode, reference_no, notes, is_active
         )
         VALUES (%s, %s, %s, %s, 5040.00, CURRENT_DATE, 'BANK_TRANSFER', 'E2E-PAY-666', 'Settled GRN Bill via E2E test', true);
-    """, ("PAY-E2E-666", "uuid-pay-e2e-666", "smritibus_default", sup_code))
+    """, ("PAY-E2E-666", "uuid-pay-e2e-666", "tileflowbus_default", sup_code))
     
     cur.execute("UPDATE suppliers SET outstanding = 0.00 WHERE id = %s;", (sup_code,))
     conn.commit()

@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 from datetime import datetime, date, timezone
 from decimal import Decimal
@@ -89,11 +76,11 @@ def test_real_world_workflow_transaction_chain():
     assert grid_total == chart_total == pivot_total == kpi_total == excel_export_total == pdf_export_total == csv_export_total == Decimal("14400.00")
 
 def test_company_tenancy_isolation_workflow():
-    """Verify smriti001 test company transactions cannot leak into another tenant context."""
-    active_company_id = "smriti001"
-    other_company_id = "smriti002"
+    """Verify tileflow001 test company transactions cannot leak into another tenant context."""
+    active_company_id = "tileflow001"
+    other_company_id = "tileflow002"
 
     query_filter = {"company_id": active_company_id}
-    leaked_records = [r for r in [{"company_id": "smriti001"}, {"company_id": "smriti001"}] if r["company_id"] == other_company_id]
+    leaked_records = [r for r in [{"company_id": "tileflow001"}, {"company_id": "tileflow001"}] if r["company_id"] == other_company_id]
 
     assert len(leaked_records) == 0

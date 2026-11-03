@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.8.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect } from "vitest";
 import {
   LabelPrintRow,
@@ -29,7 +15,7 @@ import {
   queryMasterItemsByDate
 } from "../components/barcode/barcodeTransactionS.ts";
 
-describe("SMRITI Tag & Barcode Label Printing Logic Suite", () => {
+describe("MQube Tag & Barcode Label Printing Logic Suite", () => {
   const sampleProducts: Product[] = [
     { id: "1", code: "000006", name: "Shirt", category: "Apparel", brand: "Beanstalk", color: "Ecru", styleCode: "BeeLine", size: "34", mrp: 1299, price: 999, stock: 12, barcode: "890100000006" },
     { id: "2", code: "000007", name: "Shirt", category: "Apparel", brand: "Beanstalk", color: "Ecru", styleCode: "BeeLine", size: "36", mrp: 1299, price: 999, stock: 15, barcode: "890100000007" },
@@ -47,7 +33,7 @@ describe("SMRITI Tag & Barcode Label Printing Logic Suite", () => {
       sNo: idx + 1,
       stockNo: p.code || String(idx + 1).padStart(6, "0"),
       barcode: p.barcode || p.code || "",
-      brand: p.brand || "SMRITI",
+      brand: p.brand || "MQube",
       product: p.name || p.category || "Item",
       category: p.category || "General",
       colour: p.color || "-",

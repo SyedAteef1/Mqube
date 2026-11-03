@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Version      : 4.9.5
-Created      : 2026-08-18
-Modified     : 2026-08-18
-Copyright    : (C) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-
-Test Suite: Master Tax Invoice Hardening & Functional Verification
-"""
-
 import sys, os, re
 from decimal import Decimal
 import pytest
@@ -334,7 +321,7 @@ def test_non_e_invoice_invoice():
     Test 16 (QR-4): Non-E-Invoice standard invoice
     When e-invoice is not applicable:
     - Must NOT label as GST E-INVOICE QR
-    - Uses standard SMRITI document verification QR (VERIFY INVOICE)
+    - Uses standard TILEFLOW document verification QR (VERIFY INVOICE)
     - Never uses invoice number alone
     """
     inv = MockInvoice(
@@ -397,6 +384,6 @@ def test_pdf_output_with_qr_states():
         assert expected_label in html
         assert "Place of Supply:" in html
         assert "Reverse Charge:" in html
-        assert "SMRITI OS Retail Suite -- Powered by SMRITI SYSTEMS" in html
+        assert "TILEFLOW OS Retail Suite -- Powered by TILEFLOW SYSTEMS" in html
         assert "watermark-logo" in html
 

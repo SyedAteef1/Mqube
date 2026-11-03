@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Journey Analysis
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Journey Analysis
 -->
 
-# SMRITI RETAIL OS — USER JOURNEY MAP & EFFICIENCY BENCHMARKS
+# TILEFLOW RETAIL OS — USER JOURNEY MAP & EFFICIENCY BENCHMARKS
 
 ## Journey 1: POS Retail Checkout Flow (Cashier Workflow)
 ```text

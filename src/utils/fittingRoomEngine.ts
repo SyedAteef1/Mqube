@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.89.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 export type FittingRoomStatus = "VACANT" | "OCCUPIED" | "TRIAL_IN_PROGRESS" | "NEEDS_ATTENTION" | "CLEANING";
 
 export interface RFIDGarmentTag {
@@ -70,7 +56,6 @@ export interface FittingRoomAnalytics {
   abandonedGarments: { sku: string; productName: string; avgTrialMs: number; }[];
 }
 
-/** Cross-sell affinity catalog: category → complementary categories & affinities */
 const CROSS_SELL_AFFINITY: Record<string, { category: string; affinity: number; reason: string }[]> = {
   "Apparel": [
     { category: "Accessories", affinity: 0.92, reason: "Customers who try apparel frequently pair with accessories" },

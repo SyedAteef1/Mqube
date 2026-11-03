@@ -1,4 +1,4 @@
-# Deployment Guide & Troubleshooting — SMRITI Retail OS
+# Deployment Guide & Troubleshooting — TILEFLOW Retail OS
 
 **Date**: 2026-08-31  
 **Version**: 3.30.0  
@@ -48,31 +48,31 @@
 
 ```bash
 # Frontend
-cd /opt/smriti
-docker build -f Dockerfile -t smriti-frontend:3.30.0 .
-docker tag smriti-frontend:3.30.0 gcr.io/project-id/smriti-frontend:3.30.0
-docker tag smriti-frontend:3.30.0 gcr.io/project-id/smriti-frontend:latest
-docker push gcr.io/project-id/smriti-frontend:3.30.0
-docker push gcr.io/project-id/smriti-frontend:latest
+cd /opt/tileflow
+docker build -f Dockerfile -t tileflow-frontend:3.30.0 .
+docker tag tileflow-frontend:3.30.0 gcr.io/project-id/tileflow-frontend:3.30.0
+docker tag tileflow-frontend:3.30.0 gcr.io/project-id/tileflow-frontend:latest
+docker push gcr.io/project-id/tileflow-frontend:3.30.0
+docker push gcr.io/project-id/tileflow-frontend:latest
 
 # Backend
-cd /opt/smriti/backend
-docker build -f Dockerfile -t smriti-backend:3.30.0 .
-docker tag smriti-backend:3.30.0 gcr.io/project-id/smriti-backend:3.30.0
-docker tag smriti-backend:3.30.0 gcr.io/project-id/smriti-backend:latest
-docker push gcr.io/project-id/smriti-backend:3.30.0
-docker push gcr.io/project-id/smriti-backend:latest
+cd /opt/tileflow/backend
+docker build -f Dockerfile -t tileflow-backend:3.30.0 .
+docker tag tileflow-backend:3.30.0 gcr.io/project-id/tileflow-backend:3.30.0
+docker tag tileflow-backend:3.30.0 gcr.io/project-id/tileflow-backend:latest
+docker push gcr.io/project-id/tileflow-backend:3.30.0
+docker push gcr.io/project-id/tileflow-backend:latest
 ```
 
 ### Step 2: Backup Production Database
 
 ```bash
 # Create snapshot
-/opt/smriti/scripts/backup-db-full.sh
+/opt/tileflow/scripts/backup-db-full.sh
 
 # Verify backup
 ls -lh /backups/postgres/full/ | tail -1
-pg_restore --list /backups/postgres/full/smriti_full_*.dump.gz > /dev/null && echo "✅ Backup verified"
+pg_restore --list /backups/postgres/full/tileflow_full_*.dump.gz > /dev/null && echo "✅ Backup verified"
 ```
 
 ### Step 3: Deploy Backend
@@ -84,21 +84,21 @@ pg_restore --list /backups/postgres/full/smriti_full_*.dump.gz > /dev/null && ec
 # New (Green) environment is staging
 
 # 1. Deploy to Green (staging)
-kubectl set image deployment/smriti-backend-green \
-  container=smriti-backend=gcr.io/project-id/smriti-backend:3.30.0 \
+kubectl set image deployment/tileflow-backend-green \
+  container=tileflow-backend=gcr.io/project-id/tileflow-backend:3.30.0 \
   -n production
 
 # 2. Wait for Green pods to be ready
-kubectl rollout status deployment/smriti-backend-green -n production --timeout=5m
+kubectl rollout status deployment/tileflow-backend-green -n production --timeout=5m
 
 # 3. Run smoke tests against Green
-curl http://smriti-backend-green-svc:8000/api/v1/health/status
+curl http://tileflow-backend-green-svc:8000/api/v1/health/status
 
 # 4. Switch traffic to Green
-kubectl patch service smriti-backend -p '{"spec":{"selector":{"version":"green"}}}' -n production
+kubectl patch service tileflow-backend -p '{"spec":{"selector":{"version":"green"}}}' -n production
 
 # 5. Monitor logs for errors
-kubectl logs -f deployment/smriti-backend -n production --tail=100 | head -50
+kubectl logs -f deployment/tileflow-backend -n production --tail=100 | head -50
 
 # 6. Verify health metrics
 curl http://localhost/api/v1/health/status
@@ -109,10 +109,10 @@ curl http://localhost/api/v1/health/db
 
 ```bash
 # Connect to running container
-kubectl exec -it deployment/smriti-backend -n production -- bash
+kubectl exec -it deployment/tileflow-backend -n production -- bash
 
 # Apply migrations
-cd /opt/smriti/backend
+cd /opt/tileflow/backend
 alembic upgrade head
 
 # Verify migration completed
@@ -123,7 +123,7 @@ alembic current
 
 ```bash
 # Update Nginx configuration
-cp /opt/smriti/.nginx/nginx.conf /etc/nginx/sites-available/smriti.conf
+cp /opt/tileflow/.nginx/nginx.conf /etc/nginx/sites-available/tileflow.conf
 
 # Test Nginx config
 nginx -t
@@ -132,7 +132,7 @@ nginx -t
 systemctl reload nginx
 
 # Verify frontend is accessible
-curl https://app.smritibooks.com/
+curl https://app.tileflow.in/
 
 # Check browser console for errors
 # (manual step - open in browser and check Network/Console tabs)
@@ -149,7 +149,7 @@ curl http://localhost/api/v1/health/cache | jq .
 
 # Frontend health checks
 echo "Checking frontend..."
-curl -I https://app.smritibooks.com/ | head -1  # Should be 200
+curl -I https://app.tileflow.in/ | head -1  # Should be 200
 
 # API response time check
 time curl http://localhost/api/v1/companies
@@ -170,7 +170,7 @@ echo "✅ All health checks passed"
 
 ```bash
 # IMMEDIATE: Switch traffic back to Blue (previous version)
-kubectl patch service smriti-backend -p '{"spec":{"selector":{"version":"blue"}}}' -n production
+kubectl patch service tileflow-backend -p '{"spec":{"selector":{"version":"blue"}}}' -n production
 
 # VERIFY: Health checks pass
 curl http://localhost/api/v1/health/status
@@ -180,7 +180,7 @@ curl http://localhost/api/v1/health/db
 # MESSAGE: "Deployment rolled back to 3.29.0 due to [reason]"
 
 # INVESTIGATE: Check logs for root cause
-kubectl logs deployment/smriti-backend -n production | tail -50 > /tmp/rollback_logs.txt
+kubectl logs deployment/tileflow-backend -n production | tail -50 > /tmp/rollback_logs.txt
 
 # FOLLOW UP: Post-incident review within 24 hours
 ```
@@ -208,7 +208,7 @@ alembic current
 
 ```bash
 # Backend logs
-docker logs -f $(docker ps | grep smriti-backend | awk '{print $1}') | head -100
+docker logs -f $(docker ps | grep tileflow-backend | awk '{print $1}') | head -100
 
 # Look for:
 # ✅ "Application started successfully"
@@ -234,11 +234,11 @@ curl -s http://localhost/metrics | grep "response_time"
 
 # Memory Usage
 # Expected: stable, < 80% of pod limit
-docker stats | grep smriti-backend
+docker stats | grep tileflow-backend
 
 # Disk Usage
 # Expected: stable, previous + any new uploads
-df -h | grep /var/lib/smriti
+df -h | grep /var/lib/tileflow
 ```
 
 ### User Acceptance Testing
@@ -283,12 +283,12 @@ alembic current
 alembic status
 
 # 2. Check for database locks
-psql -U smriti -d smriti001 -c \
+psql -U tileflow -d tileflow001 -c \
   "SELECT pid, usename, application_name, state, query \
    FROM pg_stat_activity WHERE state != 'idle';"
 
 # 3. Kill blocking processes (carefully!)
-# psql -U smriti -d smriti001 -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE pid != pg_backend_pid();"
+# psql -U tileflow -d tileflow001 -c "SELECT pg_terminate_backend(pid) FROM pg_stat_activity WHERE pid != pg_backend_pid();"
 
 # 4. Check disk space
 df -h /var/lib/postgresql
@@ -341,7 +341,7 @@ docker stats --no-stream [container-id]
    # - Check for uncleared cache objects
 
 # 6. Increase pod memory limit temporarily
-kubectl set resources deployment/smriti-backend \
+kubectl set resources deployment/tileflow-backend \
   --limits=memory=2Gi --requests=memory=1Gi \
   -n production
 
@@ -369,9 +369,9 @@ HTTP 504: Gateway Timeout
 
 ```bash
 # 1. Enable slow query logging
-psql -U postgres -d smriti001 -c \
+psql -U postgres -d tileflow001 -c \
   "ALTER SYSTEM SET log_min_duration_statement = 1000;"  # 1 second threshold
-psql -U postgres -d smriti001 -c "SELECT pg_reload_conf();"
+psql -U postgres -d tileflow001 -c "SELECT pg_reload_conf();"
 
 # 2. Check slow query log
 tail -50 /var/log/postgresql/postgresql.log | grep "duration:"
@@ -394,7 +394,7 @@ SELECT count(*) FROM pg_stat_activity;  # Should be < pool_size (20)
    # Possible temporary rollback to previous version
 
 # 8. Monitor query performance
-docker exec [backend-container] tail -50 /var/log/smriti/application.log | grep "query_time"
+docker exec [backend-container] tail -50 /var/log/tileflow/application.log | grep "query_time"
 ```
 
 ---
@@ -422,19 +422,19 @@ Uncaught TypeError: Cannot read property 'xxx' of undefined
 # Developer Tools -> Application -> Cache Storage -> Clear All
 
 # 2. Check if bundle was built
-ls -lh /opt/smriti/dist/index.html
-ls -lh /opt/smriti/dist/assets/
+ls -lh /opt/tileflow/dist/index.html
+ls -lh /opt/tileflow/dist/assets/
 
 # 3. Rebuild frontend if needed
-cd /opt/smriti
+cd /opt/tileflow
 npm run build
 
 # 4. Check API endpoint configuration
-grep -r "API_URL" /opt/smriti/src/ | head -5
-# Should be https://app.smritibooks.com/api/v1 in production
+grep -r "API_URL" /opt/tileflow/src/ | head -5
+# Should be https://app.tileflow.in/api/v1 in production
 
 # 5. Verify .env configuration
-cat /opt/smriti/.env | grep API_URL
+cat /opt/tileflow/.env | grep API_URL
 
 # 6. Check for CORS errors
 # Open browser DevTools -> Network tab
@@ -471,18 +471,18 @@ ERROR: remaining connection slots reserved for non-replication superuser connect
 
 ```bash
 # 1. Check active connections
-psql -U postgres -d smriti001 -c \
+psql -U postgres -d tileflow001 -c \
   "SELECT datname, count(*) as connections FROM pg_stat_activity GROUP BY datname;"
 
 # 2. Identify connection hogs
-psql -U postgres -d smriti001 -c \
+psql -U postgres -d tileflow001 -c \
   "SELECT pid, usename, application_name, query_start, state, query \
-   FROM pg_stat_activity WHERE datname = 'smriti001' ORDER BY query_start;"
+   FROM pg_stat_activity WHERE datname = 'tileflow001' ORDER BY query_start;"
 
 # 3. Kill idle connections (safely)
-psql -U postgres -d smriti001 -c \
+psql -U postgres -d tileflow001 -c \
   "SELECT pg_terminate_backend(pid) FROM pg_stat_activity \
-   WHERE datname = 'smriti001' AND state = 'idle' \
+   WHERE datname = 'tileflow001' AND state = 'idle' \
    AND query_start < now() - interval '10 minutes';"
 
 # 4. Increase max connections (temporary)
@@ -491,7 +491,7 @@ psql -U postgres -c "SELECT pg_reload_conf();"
 # Note: Restart PostgreSQL required for permanent change
 
 # 5. Check application pool configuration
-grep -r "pool_size\|max_overflow" /opt/smriti/backend/app/ | head -5
+grep -r "pool_size\|max_overflow" /opt/tileflow/backend/app/ | head -5
 # Should be reasonable: pool_size=20, max_overflow=10
 
 # 6. Review long-running queries
@@ -526,11 +526,11 @@ Invalid token or signature
 ```bash
 # 1. Verify JWT secret hasn't changed
 # Check .env.backend
-grep JWT_SECRET /opt/smriti/.env.backend
+grep JWT_SECRET /opt/tileflow/.env.backend
 # Should be same as before deployment (stored in secure vault)
 
 # 2. Check token expiry settings
-grep JWT_.*_EXPIRE /opt/smriti/.env.backend
+grep JWT_.*_EXPIRE /opt/tileflow/.env.backend
 # ACCESS: should be 15 minutes
 # REFRESH: should be 30 days
 
@@ -573,7 +573,7 @@ watch -n 3600 'curl http://localhost/api/v1/health/status | jq .'
 # Expected: < 5 errors per hour in first 24h (ramp-up period)
 
 # Monitor database performance
-psql -U smriti -d smriti001 -c \
+psql -U tileflow -d tileflow001 -c \
   "SELECT query, calls, mean_time FROM pg_stat_statements \
    ORDER BY mean_time DESC LIMIT 10;"
 

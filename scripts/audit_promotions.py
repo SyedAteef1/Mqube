@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,15 +8,15 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smriti001"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\PROMOTIONS_GROWTH.md"
 DIST_DIR = r"F:\SMRITRretailNX\dist"
 
 def audit_promotions_growth_engine():
     print("============================================================")
-    print("SMRITI COMMERCIAL GROWTH ENGINE — PROMOTIONS & CAMPAIGNS AUDIT")
+    print("TILEFLOW COMMERCIAL GROWTH ENGINE — PROMOTIONS & CAMPAIGNS AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -38,21 +25,21 @@ def audit_promotions_growth_engine():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     # 2. Reconcile Promotion Tables
     promotion_tables = [
-        ("promotion_campaigns", "Promotion & Campaign Master", "smriti001", "IMPLEMENTED"),
-        ("promotion_rules", "Discount Calculation Rules (Percent/Fixed/BuyXGetY)", "smriti001", "IMPLEMENTED"),
-        ("coupons", "Promo Codes & Discount Coupons", "smriti001", "IMPLEMENTED"),
-        ("promotion_redemptions", "Transactional Redemption Ledger & Rule Snapshot", "smriti001", "IMPLEMENTED")
+        ("promotion_campaigns", "Promotion & Campaign Master", "tileflow001", "IMPLEMENTED"),
+        ("promotion_rules", "Discount Calculation Rules (Percent/Fixed/BuyXGetY)", "tileflow001", "IMPLEMENTED"),
+        ("coupons", "Promo Codes & Discount Coupons", "tileflow001", "IMPLEMENTED"),
+        ("promotion_redemptions", "Transactional Redemption Ledger & Rule Snapshot", "tileflow001", "IMPLEMENTED")
     ]
 
     df_arch = pd.DataFrame([
@@ -60,14 +47,14 @@ def audit_promotions_growth_engine():
     ])
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
-        {"Metric": "Company Business Database", "Value": "smriti001 (ACTIVE for COMP-001)"},
-        {"Metric": "Commercial Growth Ecosystem", "Value": "CRM + Loyalty + Promotions + SICE co-located in smriti001 (0 Extra DBs)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Company Business Database", "Value": "tileflow001 (ACTIVE for COMP-001)"},
+        {"Metric": "Commercial Growth Ecosystem", "Value": "CRM + Loyalty + Promotions + SICE co-located in tileflow001 (0 Extra DBs)"},
         {"Metric": "Immutable Invoice Snapshot", "Value": "Rule & Coupon snapshot saved on transaction; historical invoices unchanged"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Database Mutations Executed", "Value": "0 Mutations"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
         {"Metric": "Final Status", "Value": "PROMOTIONS_GROWTH_ENGINE_VERIFIED"}
     ])
 
@@ -112,31 +99,30 @@ def audit_promotions_growth_engine():
     # 4. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Commercial Growth Engine - Promotions & Campaigns Specification v1.0
+# TILEFLOW Commercial Growth Engine - Promotions & Campaigns Specification v1.0
 
 **Status: PROMOTIONS_GROWTH_ENGINE_VERIFIED**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
 ## 1. Executive Summary & Growth Ecosystem Co-Location
 
 ```text
-                    smritisys
+                    tileflowsys
                  CONTROL PLANE
                        │
           ┌────────────┼────────────┐
@@ -146,7 +132,7 @@ def audit_promotions_growth_engine():
           │            │            │
           └────────────┼────────────┘
                        ▼
-                  smriti001
+                  tileflow001
              BUSINESS SYSTEM OF RECORD
                        │
         ┌──────────────┼──────────────┐
@@ -155,12 +141,11 @@ def audit_promotions_growth_engine():
     Campaigns       Members        Commissions
 ```
 
-- **Single Business DB Principle**: Promotions, CRM, Loyalty & SICE Commissions co-located inside `smriti001`. **Zero extra databases created**.
+- **Single Business DB Principle**: Promotions, CRM, Loyalty & SICE Commissions co-located inside `tileflow001`. **Zero extra databases created**.
 - **Immutable Invoice Snapshot**: Invoice retains an immutable snapshot (`rule_snapshot`) of applied promotion & coupon at transaction time.
 
 ---
 
-## 2. Final Classification
 
 ```text
 FINAL STATUS: PROMOTIONS_GROWTH_ENGINE_VERIFIED
@@ -168,10 +153,10 @@ FINAL STATUS: PROMOTIONS_GROWTH_ENGINE_VERIFIED
 """)
 
     # 5. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -180,8 +165,8 @@ FINAL STATUS: PROMOTIONS_GROWTH_ENGINE_VERIFIED
 
     print("\nPROMOTIONS & GROWTH ENGINE AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")

@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.6.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Complete Replacement & Integration of Stitch Barcode Label Designer & Printer Module
@@ -17,12 +16,12 @@
 **Version:** 6.6.0  
 **Date:** 2026-08-22  
 **Area:** Barcode & Inventory  
-**Author:** Jawahar Ramkripal Mallah  
+**Author:** Syed Ateef  
 
 ---
 
 ## 1. Purpose
-To fully replace the legacy barcode label and tag printing module with the authentic **Stitch Barcode Label Designer & Printer (Industrial Logic)** module from `F:\SMRITI\barcode_label_designer_and_printer_Final\stitch_barcode_label_designer_and_printer`.
+To fully replace the legacy barcode label and tag printing module with the authentic **Stitch Barcode Label Designer & Printer (Industrial Logic)** module from `F:\TILEFLOW\barcode_label_designer_and_printer_Final\stitch_barcode_label_designer_and_printer`.
 
 ---
 

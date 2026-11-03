@@ -1,14 +1,3 @@
-"""
-SMRITI Retail OS — True Playwright Chromium DOM UI E2E Certification Script
------------------------------------------------------------------------------
-Executes TRUE DOM UI interaction testing:
-  DOM Clicks -> Input Typing -> UI State Change -> Network Request Capture -> PostgreSQL Record Verification
-
-Author: Jawahar Ramkripal Mallah
-Version: 3.17.0
-Copyright: © SMRITIBooks.com. All Rights Reserved.
-"""
-
 import asyncio
 import json
 import os
@@ -20,14 +9,14 @@ from playwright.async_api import async_playwright
 
 BASE_URL = "http://localhost:3000"
 FASTAPI_URL = "http://localhost:8000"
-DB_DSN = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_DSN = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 SCREENSHOT_DIR = os.path.join(os.getcwd(), "scratch", "true_ui_screenshots")
 
 os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 
 async def run_true_ui_certification():
     print("=" * 80)
-    print("SMRITI RETAIL OS — TRUE PLAYWRIGHT CHROMIUM DOM UI E2E CERTIFICATION")
+    print("TILEFLOW RETAIL OS — TRUE PLAYWRIGHT CHROMIUM DOM UI E2E CERTIFICATION")
     print("=" * 80)
     print(f"Base App URL : {BASE_URL}")
     print(f"FastAPI URL  : {FASTAPI_URL}")
@@ -102,7 +91,7 @@ async def run_true_ui_certification():
         await page.screenshot(path=os.path.join(SCREENSHOT_DIR, "02_ui_post_login_dashboard.png"))
 
         # Verify JWT Token present in localStorage
-        jwt_token = await page.evaluate("localStorage.getItem('smriti_jwt_token')")
+        jwt_token = await page.evaluate("localStorage.getItem('tileflow_jwt_token')")
         print(f"[DOM Auth Success] UI Login completed cleanly in {round((time.time() - t0)*1000, 2)}ms. JWT: {jwt_token[:25]}...")
 
         ui_evidence["DOM Authentication"] = {
@@ -207,7 +196,7 @@ async def run_true_ui_certification():
             fetch('/api/v1/purchase/suppliers/', {{
                 method: 'POST',
                 headers: {{ 'Content-Type': 'application/json', 'Authorization': 'Bearer {jwt_token}', 'X-Company-ID': 'COMP-001' }},
-                body: JSON.stringify({{ code: '{e2e_sup_code}', name: 'SMRITI UI Supplier Ltd', tax_number: '27AAAAA0000A1Z5', is_active: true }})
+                body: JSON.stringify({{ code: '{e2e_sup_code}', name: 'TILEFLOW UI Supplier Ltd', tax_number: '27AAAAA0000A1Z5', is_active: true }})
             }}).then(r => r.json())
             """
             sup_res = await page.evaluate(sup_js)
@@ -216,7 +205,7 @@ async def run_true_ui_certification():
             fetch('/api/v1/purchase/orders/', {{
                 method: 'POST',
                 headers: {{ 'Content-Type': 'application/json', 'Authorization': 'Bearer {jwt_token}', 'X-Company-ID': 'COMP-001' }},
-                body: JSON.stringify({{ order_no: '{e2e_po_code}', supplier_id: '{e2e_sup_code}', supplier_name: 'SMRITI UI Supplier Ltd', status: 'RECEIVED', total_amount: 8500.00, items: [] }})
+                body: JSON.stringify({{ order_no: '{e2e_po_code}', supplier_id: '{e2e_sup_code}', supplier_name: 'TILEFLOW UI Supplier Ltd', status: 'RECEIVED', total_amount: 8500.00, items: [] }})
             }}).then(r => r.json())
             """
             po_res = await page.evaluate(po_js)
@@ -315,7 +304,7 @@ async def run_true_ui_certification():
             fetch('/api/v1/customers', {{
                 method: 'POST',
                 headers: {{ 'Content-Type': 'application/json', 'Authorization': 'Bearer {jwt_token}', 'X-Company-ID': 'COMP-001' }},
-                body: JSON.stringify({{ id: '{e2e_cust_id}', code: '{e2e_cust_code}', customer_group_id: 'cg-default', name: 'UI DOM Enterprise Customer', email: 'domcust@smriti.org', mobile: '{e2e_cust_mobile}', gst_number: '27BBBCC0000D1Z2' }})
+                body: JSON.stringify({{ id: '{e2e_cust_id}', code: '{e2e_cust_code}', customer_group_id: 'cg-default', name: 'UI DOM Enterprise Customer', email: 'domcust@tileflow.org', mobile: '{e2e_cust_mobile}', gst_number: '27BBBCC0000D1Z2' }})
             }}).then(r => r.json())
             """
             cust_res = await page.evaluate(cust_js)
@@ -406,7 +395,7 @@ async def run_true_ui_certification():
         elif "daily-sales" in txt or "500" in txt:
             cls = "TEST-INDUCED"
             impact = "Low — Transient server reload log during uvicorn background task restart; resolved on backend reload."
-        elif "smriti-api:8000" in txt or "ERR_NAME_NOT_RESOLVED" in txt:
+        elif "tileflow-api:8000" in txt or "ERR_NAME_NOT_RESOLVED" in txt:
             cls = "BENIGN"
             impact = "Low — Docker fallback URL in static bundle asset; sanitized by apiFetchV1."
         elif "422" in txt or "405" in txt or "400" in txt:
@@ -433,7 +422,7 @@ async def run_true_ui_certification():
             "code_modifications_governance": [
                 {"file": "backend/app/schemas/crm.py", "change": "Added code: Optional[str] to CustomerBase", "classification": "B. Objectively verified runtime blocker fix"},
                 {"file": "backend/app/services/reports.py", "change": "Fixed DailySalesSummary schema mismatch", "classification": "B. Objectively verified runtime blocker fix"},
-                {"file": "src/lib/apiFetchV1.ts", "change": "Sanitized smriti-api:8000 docker hostname", "classification": "B. Objectively verified runtime blocker fix"},
+                {"file": "src/lib/apiFetchV1.ts", "change": "Sanitized tileflow-api:8000 docker hostname", "classification": "B. Objectively verified runtime blocker fix"},
                 {"file": "vite.config.ts", "change": "Added manual chunking rules", "classification": "A. Test-only infrastructure / Build optimization"}
             ],
             "raw_console_logs_count": len(raw_console_logs),

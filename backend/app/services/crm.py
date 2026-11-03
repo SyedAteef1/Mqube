@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.8.0
-Created      : 2026-07-11
-Modified     : 2026-07-11
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from datetime import datetime, timezone
 from typing import Optional, List
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -231,7 +218,7 @@ class CrmService:
         if getattr(group, "credit_hold", False):
             raise HTTPException(
                 status_code=400,
-                detail="SMRITI-CREDIT-002: Customer account is on credit hold. Invoicing blocked."
+                detail="TILEFLOW-CREDIT-002: Customer account is on credit hold. Invoicing blocked."
             )
 
         if getattr(group, "unlimited_credit", False):
@@ -244,7 +231,7 @@ class CrmService:
             if getattr(group, "auto_block_sales", True):
                 raise HTTPException(
                     status_code=400, 
-                    detail=f"SMRITI-CREDIT-001: Customer credit limit of ₹{limit:,.2f} exceeded. Current Balance: ₹{current_outstanding:,.2f}, New Invoice: ₹{new_amount:,.2f}. Sales blocked."
+                    detail=f"TILEFLOW-CREDIT-001: Customer credit limit of ₹{limit:,.2f} exceeded. Current Balance: ₹{current_outstanding:,.2f}, New Invoice: ₹{new_amount:,.2f}. Sales blocked."
                 )
             return False # Limit warning
         return True

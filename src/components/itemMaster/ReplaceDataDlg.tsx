@@ -1,28 +1,14 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 5.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from "react";
 import { X, Replace, Search } from "lucide-react";
 
-interface SmritiReplaceDataModalProps {
+interface TileFlowReplaceDataModalProps {
   isOpen: boolean;
   onClose: () => void;
   onReplace: (targetField: string, findText: string, replaceText: string, matchCase: boolean) => void;
   fields: { key: string; label: string }[];
 }
 
-export const ReplaceDataDlg: React.FC<SmritiReplaceDataModalProps> = ({
+export const ReplaceDataDlg: React.FC<TileFlowReplaceDataModalProps> = ({
   isOpen,
   onClose,
   onReplace,
@@ -44,18 +30,18 @@ export const ReplaceDataDlg: React.FC<SmritiReplaceDataModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 font-sans select-none animate-in fade-in duration-150">
-      <div className="bg-white dark:bg-[#131b2e] border border-[#c6c6cd] dark:border-[#45464d] rounded-xl shadow-2xl w-full max-w-md overflow-hidden text-[#191c1e] dark:text-[#eff1f3]">
+      <div className="bg-white dark:bg-[#1b1b1b] border border-[#c7c7c7] dark:border-[#464646] rounded-xl shadow-2xl w-full max-w-md overflow-hidden text-[#1c1c1c] dark:text-[#f1f1f1]">
         
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-[#eceef0] dark:border-[#2d3133] bg-[#f2f4f6] dark:bg-[#191c1e]">
+        <div className="flex items-center justify-between p-4 border-b border-[#eeeeee] dark:border-[#303030] bg-[#f4f4f4] dark:bg-[#1c1c1c]">
           <div className="flex items-center gap-2">
-            <Replace size={18} className="text-[#0052cc]" />
+            <Replace size={18} className="text-[#494949]" />
             <h3 className="text-sm font-bold">Replace Data Utility</h3>
           </div>
           <button
             type="button"
             onClick={onClose}
-            className="text-[#76777d] hover:text-[#191c1e] dark:hover:text-white p-1 rounded-md transition"
+            className="text-[#76777d] hover:text-[#1c1c1c] dark:hover:text-white p-1 rounded-md transition"
           >
             <X size={16} />
           </button>
@@ -64,11 +50,11 @@ export const ReplaceDataDlg: React.FC<SmritiReplaceDataModalProps> = ({
         {/* Body Form */}
         <form onSubmit={handleSubmit} className="p-4 space-y-3.5 text-xs">
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold uppercase text-[10px] block mb-1">Target Column / Field</label>
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold uppercase text-[10px] block mb-1">Target Column / Field</label>
             <select
               value={targetField}
               onChange={e => setTargetField(e.target.value)}
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded font-semibold text-xs outline-none focus:ring-1 focus:ring-[#0052cc]"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded font-semibold text-xs outline-none focus:ring-1 focus:ring-[#494949]"
             >
               <option value="ALL">All Editable Columns &amp; Attributes</option>
               {fields.map(f => (
@@ -78,25 +64,25 @@ export const ReplaceDataDlg: React.FC<SmritiReplaceDataModalProps> = ({
           </div>
 
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold uppercase text-[10px] block mb-1">Find Text*</label>
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold uppercase text-[10px] block mb-1">Find Text*</label>
             <input
               type="text"
               required
               value={findText}
               onChange={e => setFindText(e.target.value)}
               placeholder="e.g. Cotton 100%, Old Brand, S"
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded text-xs outline-none focus:ring-1 focus:ring-[#0052cc]"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded text-xs outline-none focus:ring-1 focus:ring-[#494949]"
             />
           </div>
 
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold uppercase text-[10px] block mb-1">Replace With</label>
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold uppercase text-[10px] block mb-1">Replace With</label>
             <input
               type="text"
               value={replaceText}
               onChange={e => setReplaceText(e.target.value)}
               placeholder="e.g. Organic Cotton, New Brand, M"
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded text-xs outline-none focus:ring-1 focus:ring-[#0052cc]"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded text-xs outline-none focus:ring-1 focus:ring-[#494949]"
             />
           </div>
 
@@ -113,17 +99,17 @@ export const ReplaceDataDlg: React.FC<SmritiReplaceDataModalProps> = ({
           </div>
 
           {/* Footer Buttons */}
-          <div className="pt-3 border-t border-[#eceef0] dark:border-[#2d3133] flex justify-end gap-2">
+          <div className="pt-3 border-t border-[#eeeeee] dark:border-[#303030] flex justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-[#76777d] rounded font-semibold text-xs hover:bg-[#eceef0] transition"
+              className="px-4 py-2 border border-[#76777d] rounded font-semibold text-xs hover:bg-[#eeeeee] transition"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-5 py-2 bg-[#0052cc] hover:bg-[#003d9b] text-white rounded font-bold text-xs transition flex items-center gap-1.5 shadow-xs"
+              className="px-5 py-2 bg-[#494949] hover:bg-[#373737] text-white rounded font-bold text-xs transition flex items-center gap-1.5 shadow-xs"
             >
               <Replace size={14} />
               Replace All Matches

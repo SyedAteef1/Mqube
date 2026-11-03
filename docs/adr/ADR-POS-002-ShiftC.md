@@ -1,14 +1,13 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # ADR-POS-002: Foreign Key Constraints and Referential Integrity on ShiftCashTransaction GL References
@@ -32,8 +31,8 @@ Database-level referential integrity is established via migration `v1360_pos_sct
 ## Rationale
 
 1. **Transaction Lifecycle Alignment**: DEFERRABLE INITIALLY DEFERRED ensures that during async flush/commit workflows, both `ShiftCashTransaction` and `JournalVoucher` entries are verified at transaction commit time.
-2. **Canonical Schema Target**: The canonical Chart of Accounts table in SMRITI is `accounts` (created in `v1343_accounting_gl`), and the journal voucher table is `journal_vouchers`.
-3. **Safety & Zero-Orphan Preconditions**: Prior to applying `v1360`, live tenant databases (`smriti001`, `smriti002`) are verified to have 0 orphan account references and 0 orphan voucher references.
+2. **Canonical Schema Target**: The canonical Chart of Accounts table in TILEFLOW is `accounts` (created in `v1343_accounting_gl`), and the journal voucher table is `journal_vouchers`.
+3. **Safety & Zero-Orphan Preconditions**: Prior to applying `v1360`, live tenant databases (`tileflow001`, `tileflow002`) are verified to have 0 orphan account references and 0 orphan voucher references.
 
 ## Precondition & Verification Queries
 

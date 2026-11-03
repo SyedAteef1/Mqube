@@ -1,27 +1,26 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Vertical Slice 6 — Capability, Template, and Workspace Resolution
 
 ## 1. Purpose
-Establish the governed Business Capability Catalog and Industry Workspace Template resolution engine in the control plane (`smritisys`), with dynamic capability binding (`tenant_capability_bindings`) and user workspace layout personalization (`user_workspace_configs`) across tenant environments (`smritiXXX`). This guarantees zero UI bloat, vertical-specific feature isolation, and strict separation between control-plane templates and tenant-plane operational subscriptions.
+Establish the governed Business Capability Catalog and Industry Workspace Template resolution engine in the control plane (`tileflowsys`), with dynamic capability binding (`tenant_capability_bindings`) and user workspace layout personalization (`user_workspace_configs`) across tenant environments (`tileflowXXX`). This guarantees zero UI bloat, vertical-specific feature isolation, and strict separation between control-plane templates and tenant-plane operational subscriptions.
 
 ---
 
 ## 2. Scope
-- **Control Plane (`smritisys`) Governance**: Canonical platform capabilities (`PlatformCapability`) and vertical workspace templates (`WorkspaceTemplate`) for Supermarket, Apparel, Distributor WMS, and Pharmacy.
-- **Tenant Data Plane (`smritiXXX`) Subscriptions**: Explicit capability activation bindings (`TenantCapabilityBinding`).
+- **Control Plane (`tileflowsys`) Governance**: Canonical platform capabilities (`PlatformCapability`) and vertical workspace templates (`WorkspaceTemplate`) for Supermarket, Apparel, Distributor WMS, and Pharmacy.
+- **Tenant Data Plane (`tileflowXXX`) Subscriptions**: Explicit capability activation bindings (`TenantCapabilityBinding`).
 - **User Personalization**: User layout preferences (`UserWorkspaceConfig`) with dynamic capability intersection resolution.
 - **Strict Physical Tenancy**: Subscriptions and user configurations strictly isolated per tenant database.
 
@@ -30,7 +29,7 @@ Establish the governed Business Capability Catalog and Industry Workspace Templa
 ## 3. Files Created
 1. `backend/app/models/capability_template.py`: Canonical `PlatformCapability`, `WorkspaceTemplate`, `TenantCapabilityBinding`, and `UserWorkspaceConfig` models.
 2. `backend/app/services/workspace_cap_svc.py`: Domain service handling control catalog seeding, tenant capability binding, and cross-plane workspace layout resolution.
-3. `backend/tests/t_workspace_cap.py`: Automated verification suite certifying template seeding in `smritisys`, capability filtering in `smriti001`, layout resolution, and tenant isolation.
+3. `backend/tests/t_workspace_cap.py`: Automated verification suite certifying template seeding in `tileflowsys`, capability filtering in `tileflow001`, layout resolution, and tenant isolation.
 4. `docs/implementation/foundation/Platform_Refactor_2.md`: Master 19-section implementation plan for Slice 6.
 
 ---
@@ -44,13 +43,13 @@ Establish the governed Business Capability Catalog and Industry Workspace Templa
 ---
 
 ## 5. Architecture Decisions
-- **ADR-011: Governed Capability Catalog in Control Plane**: Platform capability definitions and master workspace templates live strictly in `smritisys`. Tenant databases (`smritiXXX`) hold only activation records (`tenant_capability_bindings`) and user preferences.
+- **ADR-011: Governed Capability Catalog in Control Plane**: Platform capability definitions and master workspace templates live strictly in `tileflowsys`. Tenant databases (`tileflowXXX`) hold only activation records (`tenant_capability_bindings`) and user preferences.
 - **ADR-012: Dynamic Workspace Layout Intersection**: The runtime layout returned to a client application is the strict intersection of the template's included capabilities and the company's active tenant subscriptions.
 
 ---
 
 ## 6. Design Rationale
-Separating the capability catalog from tenant subscriptions allows SMRITI to introduce new industry verticals and feature modules without migrating individual tenant database schemas.
+Separating the capability catalog from tenant subscriptions allows TILEFLOW to introduce new industry verticals and feature modules without migrating individual tenant database schemas.
 
 ---
 
@@ -62,7 +61,7 @@ Separating the capability catalog from tenant subscriptions allows SMRITI to int
   - Actively enables/disables capability codes for each tenant database.
 - **Cross-Plane Layout Resolution**:
   - Queries `user_workspace_configs` in tenant DB.
-  - Resolves master template from `smritisys`.
+  - Resolves master template from `tileflowsys`.
   - Filters template capabilities to only those enabled in tenant DB.
 
 ---

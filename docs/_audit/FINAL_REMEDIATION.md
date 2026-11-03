@@ -1,16 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal -- Audit Artifact
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source -- Audit Artifact
 -->
 
-# SMRITI POST-AUDIT REMEDIATION REPORT
+# TILEFLOW POST-AUDIT REMEDIATION REPORT
 ## ANTIGRAVITY MASTER COMMAND v2.0 -- Real Verification Phase
 
 > **SUPERSEDED AUDIT ARTIFACT — SEE FINAL CERTIFICATION**  
@@ -20,7 +20,7 @@
 > Final Data Migration Report: [`docs/_audit/FINAL_DATA.md`](file:///F:/SMRITRretailNX/docs/_audit/FINAL_DATA.md)
 
 **Date:** 2026-08-17
-**Branch:** smritiNX | **Commit:** 16898442
+**Branch:** tileflowNX | **Commit:** 16898442
 **Protocol:** NO DRY-RUN COMPLETION -- All claims backed by real executable evidence
 
 ---
@@ -39,7 +39,7 @@ DONE
 Evidence:
 - Fix applied: text("'{}'") -> text("'{}'::jsonb") on lines 28, 51, 80
 - Committed in 16898442
-- DB queried: barcode_providers, identity_rules, product_identities confirmed in smritisys
+- DB queried: barcode_providers, identity_rules, product_identities confirmed in tileflowsys
 - alembic current: v1335_seed_roles (head)
 
 ### CRITICAL-2: backend/tests/conftest.py untracked
@@ -53,30 +53,30 @@ Evidence:
 
 ## NEW Findings Discovered During Remediation
 
-### NEW-1: smriti001 Already Exists (Physical Company DB CONFIRMED)
+### NEW-1: tileflow001 Already Exists (Physical Company DB CONFIRMED)
 DONE (Better than expected)
 
 Evidence:
-SELECT datname FROM pg_database WHERE datname ILIKE 'smriti*':
-  smriti001  -- 99 tables
-  smritisys  -- 284 tables
-  smriti_test_fresh
+SELECT datname FROM pg_database WHERE datname ILIKE 'tileflow*':
+  tileflow001  -- 99 tables
+  tileflowsys  -- 284 tables
+  tileflow_test_fresh
 
 SELECT company_id, database_name, status, schema_version FROM company_database_registries:
-  ('COMP-001', 'smriti001', 'READY', '3.16.0')
+  ('COMP-001', 'tileflow001', 'READY', '3.16.0')
 
-Reality: Physical multi-company isolation IS achieved. smriti001 is provisioned and registered READY.
+Reality: Physical multi-company isolation IS achieved. tileflow001 is provisioned and registered READY.
 
-### NEW-2: SmritiPSV Does NOT Exist as Separate Database
+### NEW-2: TileFlowPSV Does NOT Exist as Separate Database
 PARTIALLY_VERIFIED
 
 Evidence:
-pg_database query for SmritiPSV: NOT FOUND
+pg_database query for TileFlowPSV: NOT FOUND
 
-Reality: PSV tables (psv_stock_events, psv_stock_balances, psv_parties, psv_sku_tracking) are in smritisys (284-table count confirmed). SmritiPSV as a separate database does not exist.
+Reality: PSV tables (psv_stock_events, psv_stock_balances, psv_parties, psv_sku_tracking) are in tileflowsys (284-table count confirmed). TileFlowPSV as a separate database does not exist.
 
-Architecture documents describe SmritiPSV as separate -- this is DOCUMENTATION DIVERGENCE.
-PSV is functionally working (tests pass) but is currently co-located in smritisys.
+Architecture documents describe TileFlowPSV as separate -- this is DOCUMENTATION DIVERGENCE.
+PSV is functionally working (tests pass) but is currently co-located in tileflowsys.
 
 ### NEW-3: USE_MULTI_DB_ROUTER is a Placeholder Flag
 PARTIALLY_VERIFIED
@@ -85,8 +85,8 @@ Evidence:
 grep backend/app for USE_MULTI_DB_ROUTER: found ONLY in config.py (definition) + t_prod_cert.py (assertion)
 Flag is NOT consumed anywhere in routing logic.
 
-Reality: CompanyDatabaseResolver routes unconditionally by querying smritisys.company_database_registries.
-Multi-DB routing IS functional (smriti001 exists and is registered).
+Reality: CompanyDatabaseResolver routes unconditionally by querying tileflowsys.company_database_registries.
+Multi-DB routing IS functional (tileflow001 exists and is registered).
 The flag exists as documentation placeholder -- not a gating mechanism.
 
 ---
@@ -98,7 +98,7 @@ Command: python -m alembic current
 Output: v1335_seed_roles (head)
 Exit code: 0
 
-Tables confirmed in smritisys:
+Tables confirmed in tileflowsys:
 barcode_providers -- PRESENT
 identity_rules -- PRESENT
 product_identities -- PRESENT
@@ -109,10 +109,10 @@ product_identities -- PRESENT
 PASS
 
 Evidence:
-smriti001 database: EXISTS (99 tables)
-company_database_registries entry: ('COMP-001', 'smriti001', 'READY', '3.16.0')
+tileflow001 database: EXISTS (99 tables)
+company_database_registries entry: ('COMP-001', 'tileflow001', 'READY', '3.16.0')
 
-This is NOT a dry-run result. smriti001 is a real PostgreSQL database.
+This is NOT a dry-run result. tileflow001 is a real PostgreSQL database.
 
 ---
 
@@ -120,8 +120,8 @@ This is NOT a dry-run result. smriti001 is a real PostgreSQL database.
 PARTIALLY_VERIFIED
 
 The routing infrastructure IS functional:
-- CompanyDatabaseResolver queries smritisys live and resolves to smriti001
-- company_database_registries confirms COMP-001 -> smriti001 -> READY
+- CompanyDatabaseResolver queries tileflowsys live and resolves to tileflow001
+- company_database_registries confirms COMP-001 -> tileflow001 -> READY
 
 The USE_MULTI_DB_ROUTER flag is a placeholder (not wired to routing logic).
 Physical routing works without the flag.
@@ -136,7 +136,7 @@ test_company_isolation_company_a_vs_b: PASSED
 test_company_db_resolver_unauthorized_user: PASSED (403)
 test_05_company_a_user_accessing_company_b_returns_403: PASSED
 
-smriti001 is a separate PostgreSQL database with its own schema.
+tileflow001 is a separate PostgreSQL database with its own schema.
 Cross-company data access is rejected at resolver level.
 
 ---
@@ -159,7 +159,7 @@ Unassigned user: 403
 PASS (code + DB tables confirmed; runtime API tests passing)
 
 Evidence:
-barcode_providers, identity_rules, product_identities: CONFIRMED IN smritisys
+barcode_providers, identity_rules, product_identities: CONFIRMED IN tileflowsys
 test_barcode.py: PASSED (in app/tests/ suite)
 t_prod_identity.py: PASSED
 
@@ -171,12 +171,12 @@ Note: GS1/EAN-13 NOT implemented -- confirmed by grep; no claim was made for it.
 PARTIALLY_VERIFIED
 
 Evidence:
-psv_stock_events, psv_stock_balances, psv_parties, psv_sku_tracking: CONFIRMED IN smritisys
+psv_stock_events, psv_stock_balances, psv_parties, psv_sku_tracking: CONFIRMED IN tileflowsys
 test_psv.py: PASSED (in app/tests/ suite)
 PSV boundary respected: service writes only to PSVStockEvent/PSVStockBalance, not to products/stock_movements
 
-Gap: SmritiPSV as separate database does NOT exist.
-PSV is co-located in smritisys. Architecture docs should be updated to reflect this.
+Gap: TileFlowPSV as separate database does NOT exist.
+PSV is co-located in tileflowsys. Architecture docs should be updated to reflect this.
 
 PSV ARCHITECTURE BOUNDARY: Not violated. PSV does not modify core inventory. ALIGNED.
 
@@ -208,7 +208,7 @@ Result: 146 passed, 12 failed, 0 errors
 Duration: 14.60s
 
 Architecture-relevant tests ALL PASSED:
-- test_smritisys_control_plane_connection: PASS
+- test_tileflowsys_control_plane_connection: PASS
 - test_company_db_resolver_authorized_user: PASS
 - test_company_db_resolver_unauthorized_user: PASS
 - test_company_isolation_company_a_vs_b: PASS
@@ -249,8 +249,8 @@ Pending (MEDIUM priority):
 
 | Item | Reason |
 |---|---|
-| SmritiPSV separate DB provisioning | DB does not exist; PSV works in smritisys currently |
-| 12 integration test seed data gaps | Hardcoded IDs not in smritisys; need dedicated seed script |
+| TileFlowPSV separate DB provisioning | DB does not exist; PSV works in tileflowsys currently |
+| 12 integration test seed data gaps | Hardcoded IDs not in tileflowsys; need dedicated seed script |
 | Pydantic V2 deprecation warnings | Non-breaking; 5 uses of parse_raw in user.py need updating |
 | PSV architecture document | Creation pending |
 
@@ -272,9 +272,9 @@ Reason: 12 integration tests fail due to missing seed data.
 
 Certification gate status:
 [x] Product Identity migration -- PASS (tables confirmed in DB)
-[x] Actual PostgreSQL tables exist -- PASS (284 in smritisys)
-[x] Control Plane verified -- PASS (smritisys + company_database_registries)
-[x] Company DBs physically exist -- PASS (smriti001 confirmed)
+[x] Actual PostgreSQL tables exist -- PASS (284 in tileflowsys)
+[x] Control Plane verified -- PASS (tileflowsys + company_database_registries)
+[x] Company DBs physically exist -- PASS (tileflow001 confirmed)
 [x] CompanyDatabaseResolver routes correctly -- PASS (test evidence)
 [~] Multi-DB router -- PARTIALLY_VERIFIED (routing works; flag is placeholder)
 [x] Company A/B isolation passes -- PASS (test evidence)
@@ -283,7 +283,7 @@ Certification gate status:
 [x] Barcode DB structures exist -- PASS (tables confirmed)
 [x] Barcode core tests pass -- PASS (app tests)
 [ ] Barcode company isolation (A vs B operational) -- UNVERIFIED
-[~] PSV provisioning -- PARTIAL (tables in smritisys, not separate SmritiPSV)
+[~] PSV provisioning -- PARTIAL (tables in tileflowsys, not separate TileFlowPSV)
 [x] PSV ledger tests pass -- PASS (app tests)
 [ ] PSV isolation (A vs B) -- UNVERIFIED
 [x] Core Inventory boundary -- PASS (PSV does not modify core)
@@ -294,7 +294,7 @@ Certification gate status:
 
 Blockers to PRODUCTION READY:
 1. 12 seed data gaps in integration tests
-2. PSV runs in smritisys not SmritiPSV (doc/arch gap)
+2. PSV runs in tileflowsys not TileFlowPSV (doc/arch gap)
 3. Connection pool leak test not executed
 4. 4 pending documentation updates
 
@@ -305,9 +305,9 @@ Blockers to PRODUCTION READY:
 | Item | Evidence Type | Command |
 |---|---|---|
 | Migration fix | git diff in commit 16898442 | git commit output |
-| Tables in smritisys (284) | Live DB query | psycopg2 SELECT table_name |
+| Tables in tileflowsys (284) | Live DB query | psycopg2 SELECT table_name |
 | barcode/identity tables | Live DB query | psycopg2 IN clause |
-| smriti001 exists (99 tables) | Live DB query | pg_database + information_schema |
+| tileflow001 exists (99 tables) | Live DB query | pg_database + information_schema |
 | company_database_registries | Live DB query | SELECT company_id, database_name, status |
 | App tests 178/178 | pytest stdout | python -m pytest app/tests/ |
 | Integration tests 146/158 | pytest stdout | python -m pytest tests/ |

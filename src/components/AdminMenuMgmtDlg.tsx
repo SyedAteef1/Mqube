@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { X, Settings, ShieldCheck, Save, Eye, EyeOff, History, Layers, ArrowUpDown } from "lucide-react";
 import { apiFetchV1 } from "../lib/apiFetchV1";
@@ -119,7 +106,7 @@ export const AdminMenuManagementModal: React.FC<AdminMenuManagementModalProps> =
               </span>
             </h3>
             <p className="text-xs text-theme-muted">
-              Configure visibility, labels, icons, sort ordering, and inspect smriti_audit_log history.
+              Configure visibility, labels, icons, sort ordering, and inspect tileflow_audit_log history.
             </p>
           </div>
         </div>
@@ -308,7 +295,7 @@ export const AdminMenuManagementModal: React.FC<AdminMenuManagementModalProps> =
                   {auditLogs.length === 0 ? (
                     <tr>
                       <td colSpan={6} className="p-8 text-center text-theme-muted">
-                        No menu audit log records found in smriti_audit_log.
+                        No menu audit log records found in tileflow_audit_log.
                       </td>
                     </tr>
                   ) : (
@@ -344,7 +331,7 @@ export const AdminMenuManagementModal: React.FC<AdminMenuManagementModalProps> =
         <div className="flex items-center justify-between pt-3 border-t border-theme-divider text-xs shrink-0 font-mono text-theme-muted">
           <div className="flex items-center gap-1.5 text-indigo-400">
             <ShieldCheck className="w-4 h-4" />
-            Control Plane Audited: Table smriti_menus & smriti_audit_log
+            Control Plane Audited: Table tileflow_menus & tileflow_audit_log
           </div>
           <button
             onClick={onClose}

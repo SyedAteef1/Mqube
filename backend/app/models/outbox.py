@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from datetime import datetime, timezone
 from typing import Dict, Any
 from sqlalchemy import Column, String, Integer, DateTime, Text, text, Index
@@ -22,7 +8,7 @@ from ..db.base import Base
 
 class IntegrationOutboxEvent(Base):
     """
-    Canonical Transactional Outbox Event inside tenant databases (smritiXXX).
+    Canonical Transactional Outbox Event inside tenant databases (tileflowXXX).
     Written atomically within the exact same database transaction as domain business operations
     (sales invoices, stock movements, payment settlements, approval requests).
     Guarantees reliable asynchronous event publishing without dual-write hazards.

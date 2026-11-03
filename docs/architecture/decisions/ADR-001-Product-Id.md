@@ -1,7 +1,6 @@
 <!--
-  Project      : SMRITI Retail OS
+  Project      : TILEFLOW Retail OS
   Repository   : SMRITRretailNX
-  Organization : AITDL NETWORKS
   Version      : 1.0
   Created      : 2026-07-18
   Status       : Draft
@@ -16,7 +15,7 @@
 Draft
 
 ## Context
-SMRITI requires a governance-grade identity service for SKU and barcode management that supports configurable business rules, GS1 issuance, lifecycle state tracking, audit history, and import simulation.
+TILEFLOW requires a governance-grade identity service for SKU and barcode management that supports configurable business rules, GS1 issuance, lifecycle state tracking, audit history, and import simulation.
 
 ## Decision
 Adopt a dedicated Product Identity Engine (PIE) as a centralized service responsible for:

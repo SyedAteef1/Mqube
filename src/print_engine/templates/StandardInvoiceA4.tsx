@@ -1,21 +1,6 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.28.0
- * Created      : 2026-07-10
- * Modified     : 2026-08-19
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React from "react";
 import { DEFAULT_SBI_BANK_ACCOUNT } from "../../services/bankStore.ts";
+import { GST_STATE_MAP } from "../../utils/gstEngine.ts";
 
 export interface InvoiceItem {
   code?: string;
@@ -45,6 +30,7 @@ export interface InvoiceItem {
   line_total?: number;
   totalAmount?: number;
   total_amount?: number;
+  taxable_value?: number;
 }
 
 export interface BankAccountDetails {
@@ -64,6 +50,7 @@ export interface InvoiceData {
   companyName?: string;
   companyAddress?: string;
   companyGst?: string;
+  companyPhone?: string;
   dispatchEmail?: string;
   accountsEmail?: string;
   website?: string;
@@ -113,6 +100,7 @@ export interface ProcessedItem {
   qty: number;
   mrp: number;
   disc: number;
+  gstRate: number;
   rateInclGst: number;
   taxableVal: number;
   lineGst: number;
@@ -141,7 +129,6 @@ function formatItemDescription(item: InvoiceItem): string {
   if (!rawName) return "-";
   
   let cleaned = rawName
-    .replace(/Tattly\s+Footwear\s+/gi, "")
     .replace(/Size\s+/gi, "")
     .trim();
 
@@ -267,13 +254,12 @@ export function contentAwarePaginate(items: ProcessedItem[]): PageChunk[] {
 export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => {
   const parsed = parseNotes(data.notes);
   
-  // Tattly Threads Approved Branding & Company Info
-  const companyName = "TATTLY THREADS";
-  const companyAddress = data.companyAddress || "Office Number 81, Ibrahim Rehmatulla Road, Beside Jio Gallery, Near HP Petrol Pump, Mumbai, Maharashtra 400003";
-  const companyGst = data.companyGst || "27AAXFT2508H1ZR";
-  const dispatchEmail = data.dispatchEmail || "dispatch@tattlythreads.com";
-  const accountsEmail = data.accountsEmail || "accounts@tattlythreads.com";
-  const website = data.website || "www.tattlythreads.com";
+  const companyName = data.companyName || "";
+  const companyAddress = data.companyAddress || "";
+  const companyGst = data.companyGst || "";
+  const dispatchEmail = data.dispatchEmail || "";
+  const accountsEmail = data.accountsEmail || "";
+  const website = data.website || "";
 
   // Bank Details extraction
   const bankInfo: BankAccountDetails | null = typeof data.bankDetails === "object" && data.bankDetails !== null
@@ -283,91 +269,93 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
     : DEFAULT_SBI_BANK_ACCOUNT;
 
   // Invoice Number
-  const invoiceNo = data.invoiceNo || data.invoice_no || "TT2026-2027/18";
+  const invoiceNo = data.invoiceNo || data.invoice_no || "";
   
   // Dates
-  const invoiceDate = data.invoiceDate || data.invoice_date || data.date || "12-Aug-2026";
+  const invoiceDate = data.invoiceDate || data.invoice_date || data.date || "";
   const formattedDate = typeof invoiceDate === "string" ? invoiceDate.substring(0, 10) : new Date().toISOString().substring(0, 10);
 
   // Metadata
-  const sisCode = data.sisCode || parsed.sisCode || "1888";
-  const posState = data.posState || "Maharashtra (27)";
-  const poNumber = data.poNumber || parsed.poNumber || "5182778151";
+  const sisCode = data.sisCode || parsed.sisCode || "";
+  const poNumber = data.poNumber || parsed.poNumber || "";
   const rawEWayBill = data.ewayBillNo || (data as any).eWayBillNo || (data as any).eway_bill_no || "";
   const ewayBillNo = (rawEWayBill && rawEWayBill !== "null" && rawEWayBill !== "undefined" && rawEWayBill !== "0" && rawEWayBill !== "N/A") ? String(rawEWayBill).trim() : "";
 
   // Customer info
-  const customerName = data.customerName || "Reliance Retail Limited (RRL-TMW3)";
-  const customerAddress = data.customerAddress || "Building 4, Reliance Corporate Park, Thane Belapur Road, Navi Mumbai 400701";
-  const customerGst = data.customerGst || "27AAACR0293P1ZT";
+  const customerName = data.customerName || "Counter Cash Sale";
+  const customerAddress = data.customerAddress || "";
+  const customerGst = data.customerGst || "";
+  const shippingGst = data.shippingGst || data.shipping_gstin || customerGst;
+  const stateCode = (customerGst || companyGst).slice(0, 2);
+  const posState = data.posState || (GST_STATE_MAP[stateCode] ? `${GST_STATE_MAP[stateCode]} (${stateCode})` : stateCode);
 
   // Items processing
   const rawItems = data.items || [];
   
-  let totalPairs = 0;
+  const isInterstate = Boolean(
+    data.isInterstate ?? data.is_interstate ?? rawItems.some((item) => Number(item.igstAmount ?? item.igst_amount ?? 0) > 0),
+  );
+  const round2 = (value: number) => Math.round(value * 100) / 100;
+
+  let totalQty = 0;
   let totalTaxableVal = 0;
   let totalIgst = 0;
   let totalCgst = 0;
   let totalSgst = 0;
-  let totalGrand = 0;
 
   const processedItems: ProcessedItem[] = rawItems.map((item, idx) => {
     const qty = Number(item.qty ?? item.quantity ?? 0);
-    const rateInclGst = Number(item.rate ?? item.price ?? item.unitPrice ?? 0);
-    const hsn = item.hsnCode || item.hsn || item.hsn_code || "64041990";
-    
-    const grossLineValue = qty * rateInclGst;
-    const taxableVal = Math.round((grossLineValue / 1.05) * 100) / 100;
-    const lineGst = Math.round((grossLineValue - taxableVal) * 100) / 100;
+    const rate = Number(item.rate ?? item.price ?? item.unitPrice ?? 0);
+    const gstRate = Number(item.gstRate ?? item.gst_rate ?? 0);
+    const savedTaxable = item.taxable_value;
+    const savedTax = item.taxAmount ?? item.tax_amount;
 
-    totalPairs += qty;
+    // Saved bills carry exact amounts; only unsaved previews work them out from an inclusive rate.
+    const taxableVal = savedTaxable != null ? Number(savedTaxable) : round2((qty * rate) / (1 + gstRate / 100));
+    const lineGst = savedTax != null ? Number(savedTax) : round2(qty * rate - taxableVal);
+    const grossLineValue = Number(item.totalAmount ?? item.total_amount ?? item.lineTotal ?? item.line_total ?? taxableVal + lineGst);
+
+    totalQty += qty;
     totalTaxableVal += taxableVal;
-    totalGrand += grossLineValue;
-
-    const itemIgst = Number(item.igstAmount ?? item.igst_amount ?? 0);
-    if (itemIgst > 0 || data.isInterstate || data.is_interstate !== false) {
-      totalIgst += lineGst;
+    if (isInterstate) {
+      totalIgst += Number(item.igstAmount ?? item.igst_amount ?? lineGst);
     } else {
-      totalCgst += Math.round((lineGst / 2) * 100) / 100;
-      totalSgst += Math.round((lineGst / 2) * 100) / 100;
+      totalCgst += Number(item.cgstAmount ?? item.cgst_amount ?? lineGst / 2);
+      totalSgst += Number(item.sgstAmount ?? item.sgst_amount ?? lineGst / 2);
     }
-
-    const mrp = (item.mrp !== undefined && item.mrp !== null && Number(item.mrp) > 0)
-      ? Number(item.mrp)
-      : (rateInclGst === 1068 ? 1899 : rateInclGst === 1236.72 ? 2199 : rateInclGst === 1011.76 ? 1799 : rateInclGst === 899.28 ? 1599 : (rateInclGst > 0 ? Math.round(rateInclGst * 1.778) : 0));
-
-    const disc = (item.disc !== undefined && item.disc !== null && Number(item.disc) >= 0)
-      ? Number(item.disc)
-      : ((item.discount !== undefined && item.discount !== null && Number(item.discount) >= 0)
-        ? Number(item.discount)
-        : (mrp > rateInclGst ? Math.round((mrp - rateInclGst) * 100) / 100 : 0));
 
     return {
       sno: idx + 1,
       description: formatItemDescription(item),
-      hsn,
+      hsn: item.hsnCode || item.hsn || item.hsn_code || "",
       qty,
-      mrp,
-      disc,
-      rateInclGst,
+      mrp: Number(item.mrp) > 0 ? Number(item.mrp) : rate,
+      disc: Number(item.disc ?? item.discount ?? 0),
+      gstRate,
+      rateInclGst: rate,
       taxableVal,
       lineGst,
-      grossLineValue
+      grossLineValue,
     };
   });
 
-  const isInterstate = data.isInterstate ?? data.is_interstate ?? (totalIgst > 0 || (totalCgst === 0 && totalSgst === 0));
-  const totalTax = isInterstate ? totalIgst : (totalCgst + totalSgst);
+  const totalTax = round2(totalIgst + totalCgst + totalSgst);
+  totalTaxableVal = round2(totalTaxableVal);
+  if (totalTaxableVal === 0 && data.subtotal) totalTaxableVal = Number(data.subtotal);
 
-  if (totalTaxableVal === 0 && data.subtotal) {
-    totalTaxableVal = Number(data.subtotal);
-  }
-  if (totalGrand === 0 && (data.grandTotal || data.grand_total)) {
-    totalGrand = Number(data.grandTotal || data.grand_total);
-  }
+  const hsnSummary = Object.values(
+    processedItems.reduce<Record<string, { hsn: string; gstRate: number; taxable: number; tax: number }>>((groups, item) => {
+      const key = `${item.hsn}|${item.gstRate}`;
+      const group = groups[key] || (groups[key] = { hsn: item.hsn, gstRate: item.gstRate, taxable: 0, tax: 0 });
+      group.taxable += item.taxableVal;
+      group.tax += item.lineGst;
+      return groups;
+    }, {}),
+  );
 
   const unroundedGrand = totalTaxableVal + totalTax;
-  const roundedGrand = Math.round(unroundedGrand);
+  const savedGrand = Number(data.grandTotal ?? data.grand_total ?? 0);
+  const roundedGrand = savedGrand > 0 ? savedGrand : Math.round(unroundedGrand);
   const roundOffVal = roundedGrand - unroundedGrand;
   const displayRoundOff = (roundOffVal >= 0 ? "+" : "") + roundOffVal.toFixed(2);
 
@@ -396,19 +384,16 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                   <div className="flex justify-between items-start border-b-2 border-slate-900 pb-2 mb-3">
                     <div>
                       <div className="flex items-center gap-2.5 mb-1">
-                        <img src="/myImages/tattly_logo_black.png" alt="TATTLY THREADS" className="h-9 w-auto object-contain" />
-                        <h1 className="text-xl font-extrabold tracking-tight text-slate-950 uppercase m-0 leading-tight">
+                        <h1 className="text-xl font-extrabold tracking-tight text-slate-950 m-0 leading-tight">
                           {companyName}
                         </h1>
                       </div>
-                      <p className="text-[10.5px] text-slate-600 mt-0.5 m-0">
-                        Office No. 81, Ibrahim Rehmatullah Road, Beside Jio Gallery, near HP Petrol Pump,<br />
-                        Mumbai, Maharashtra - 400003
-                      </p>
+                      {companyAddress && <p className="text-[10.5px] text-slate-600 mt-0.5 m-0">{companyAddress}</p>}
                       <div className="text-[10.5px] text-slate-600 mt-0.5 font-mono leading-tight">
-                        <div>Web: {website}</div>
-                        <div>Dispatch: {dispatchEmail}</div>
-                        <div>Accounts: {accountsEmail}</div>
+                        {data.companyPhone && <div>Phone: {data.companyPhone}</div>}
+                        {website && <div>Web: {website}</div>}
+                        {dispatchEmail && <div>Dispatch: {dispatchEmail}</div>}
+                        {accountsEmail && <div>Accounts: {accountsEmail}</div>}
                       </div>
                       <p className="text-[10.5px] text-slate-800 font-bold mt-0.5 m-0">
                         GSTIN: <span className="font-mono">{companyGst}</span>
@@ -432,8 +417,7 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                 ) : (
                   <div className="flex justify-between items-center border-b-2 border-slate-900 pb-2 mb-3">
                     <div className="flex items-center gap-2">
-                      <img src="/myImages/tattly_logo_black.png" alt="TATTLY THREADS" className="h-5 w-auto object-contain" />
-                      <span className="font-extrabold text-xs text-slate-900 uppercase tracking-tight">{companyName} — TAX INVOICE</span>
+                      <span className="font-extrabold text-xs text-slate-900 tracking-tight">{companyName} — TAX INVOICE</span>
                     </div>
                     <span className="text-[11px] font-bold font-mono text-slate-700">Invoice No: {invoiceNo}</span>
                   </div>
@@ -462,14 +446,16 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                         Recipient Details (Shipped To)
                       </p>
                       <p className="font-extrabold text-slate-950 text-[10.5px] m-0">
-                        {data.shippingName || data.shipping_name || `Reliance Retail Limited (RRL-${sisCode})`}
+                        {data.shippingName || data.shipping_name || customerName}
                       </p>
                       <p className="text-slate-600 m-0 mt-0.5 leading-snug">
                         {data.shippingAddress || data.shipping_address || customerAddress}
                       </p>
-                      <p className="text-slate-900 font-bold m-0 mt-1">
-                        GSTIN: <span className="font-mono">{data.shippingGst || data.shipping_gstin || customerGst || "27AAACR0293P1ZT"}</span>
-                      </p>
+                      {shippingGst && (
+                        <p className="text-slate-900 font-bold m-0 mt-1">
+                          GSTIN: <span className="font-mono">{shippingGst}</span>
+                        </p>
+                      )}
                     </div>
 
                     {/* BOX 3: INVOICE METADATA */}
@@ -479,10 +465,12 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                       </p>
                       <table className="w-full text-left text-[10px] border-collapse">
                         <tbody>
-                          <tr>
-                            <td className="py-0.5 text-slate-500 font-medium w-24">Store Code:</td>
-                            <td className="py-0.5 font-bold font-mono text-slate-900">{sisCode}</td>
-                          </tr>
+                          {sisCode && (
+                            <tr>
+                              <td className="py-0.5 text-slate-500 font-medium w-24">Store Code:</td>
+                              <td className="py-0.5 font-bold font-mono text-slate-900">{sisCode}</td>
+                            </tr>
+                          )}
                           <tr>
                             <td className="py-0.5 text-slate-500 font-medium">POS State:</td>
                             <td className="py-0.5 font-semibold text-slate-800">{posState}</td>
@@ -585,24 +573,26 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className="border-b border-slate-200">
-                          <td className="p-1 border border-slate-200 text-center font-mono font-bold text-slate-800">64041990</td>
-                          <td className="p-1 border border-slate-200 text-right font-mono font-bold">₹{totalTaxableVal.toFixed(2)}</td>
-                          {isInterstate ? (
-                            <>
-                              <td className="p-1 border border-slate-200 text-right font-mono">5.00%</td>
-                              <td className="p-1 border border-slate-200 text-right font-mono">₹{totalIgst.toFixed(2)}</td>
-                            </>
-                          ) : (
-                            <>
-                              <td className="p-1 border border-slate-200 text-right font-mono">2.50%</td>
-                              <td className="p-1 border border-slate-200 text-right font-mono">₹{totalCgst.toFixed(2)}</td>
-                              <td className="p-1 border border-slate-200 text-right font-mono">2.50%</td>
-                              <td className="p-1 border border-slate-200 text-right font-mono">₹{totalSgst.toFixed(2)}</td>
-                            </>
-                          )}
-                          <td className="p-1 border border-slate-200 text-right font-extrabold font-mono text-slate-950">₹{totalTax.toFixed(2)}</td>
-                        </tr>
+                        {hsnSummary.map((group) => (
+                          <tr key={`${group.hsn}-${group.gstRate}`} className="border-b border-slate-200">
+                            <td className="p-1 border border-slate-200 text-center font-mono font-bold text-slate-800">{group.hsn}</td>
+                            <td className="p-1 border border-slate-200 text-right font-mono font-bold">₹{group.taxable.toFixed(2)}</td>
+                            {isInterstate ? (
+                              <>
+                                <td className="p-1 border border-slate-200 text-right font-mono">{group.gstRate.toFixed(2)}%</td>
+                                <td className="p-1 border border-slate-200 text-right font-mono">₹{group.tax.toFixed(2)}</td>
+                              </>
+                            ) : (
+                              <>
+                                <td className="p-1 border border-slate-200 text-right font-mono">{(group.gstRate / 2).toFixed(2)}%</td>
+                                <td className="p-1 border border-slate-200 text-right font-mono">₹{(group.tax / 2).toFixed(2)}</td>
+                                <td className="p-1 border border-slate-200 text-right font-mono">{(group.gstRate / 2).toFixed(2)}%</td>
+                                <td className="p-1 border border-slate-200 text-right font-mono">₹{(group.tax / 2).toFixed(2)}</td>
+                              </>
+                            )}
+                            <td className="p-1 border border-slate-200 text-right font-extrabold font-mono text-slate-950">₹{group.tax.toFixed(2)}</td>
+                          </tr>
+                        ))}
                       </tbody>
                     </table>
                   </div>
@@ -613,8 +603,8 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                       <table className="w-full text-right text-[10.5px] border-collapse">
                         <tbody>
                           <tr>
-                            <td className="py-0.5 text-slate-600 font-medium">TOTAL PAIRS:</td>
-                            <td className="py-0.5 font-bold font-mono text-slate-900">{totalPairs}</td>
+                            <td className="py-0.5 text-slate-600 font-medium">TOTAL QTY:</td>
+                            <td className="py-0.5 font-bold font-mono text-slate-900">{totalQty}</td>
                           </tr>
                           <tr>
                             <td className="py-0.5 text-slate-600 font-medium">TAXABLE VALUE:</td>
@@ -622,17 +612,17 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                           </tr>
                           {isInterstate ? (
                             <tr>
-                              <td className="py-0.5 text-slate-600 font-medium">IGST (5%):</td>
+                              <td className="py-0.5 text-slate-600 font-medium">IGST:</td>
                               <td className="py-0.5 font-bold font-mono text-slate-900">₹{totalIgst.toFixed(2)}</td>
                             </tr>
                           ) : (
                             <>
                               <tr>
-                                <td className="py-0.5 text-slate-600 font-medium">CGST (2.5%):</td>
+                                <td className="py-0.5 text-slate-600 font-medium">CGST:</td>
                                 <td className="py-0.5 font-bold font-mono text-slate-900">₹{totalCgst.toFixed(2)}</td>
                               </tr>
                               <tr>
-                                <td className="py-0.5 text-slate-600 font-medium">SGST (2.5%):</td>
+                                <td className="py-0.5 text-slate-600 font-medium">SGST:</td>
                                 <td className="py-0.5 font-bold font-mono text-slate-900">₹{totalSgst.toFixed(2)}</td>
                               </tr>
                             </>
@@ -671,7 +661,7 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                       </p>
                       <p className="m-0 text-slate-700 leading-snug font-medium text-[8.5px]">
                         1. Goods once sold will not be taken back without prior written approval.<br />
-                        2. All disputes subject to Mumbai Jurisdiction.
+                        2. All disputes subject to local jurisdiction.
                       </p>
                     </div>
 
@@ -680,7 +670,7 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                         Authorised Signatory
                       </p>
                       <div className="text-right pt-2">
-                        <p className="font-bold text-slate-950 text-[9.5px] m-0">For TATTLY THREADS</p>
+                        <p className="font-bold text-slate-950 text-[9.5px] m-0">For {companyName}</p>
                         <div className="h-4"></div>
                         <p className="text-[8.5px] text-slate-500 font-medium m-0 border-t border-slate-400 pt-0.5 inline-block">Authorised Signatory</p>
                       </div>
@@ -690,8 +680,8 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
                   {/* STATUTORY DECLARATION & WATERMARK */}
                   <div className="mt-2 border-t border-slate-200 pt-1.5 text-center text-[8.5px] text-slate-500 font-medium leading-tight">
                     <p className="m-0">This is a computer-generated tax invoice and does not require a physical signature.</p>
-                    <p className="m-0 font-bold text-slate-700 tracking-wider">SUBJECT TO MUMBAI JURISDICTION.</p>
-                    <p className="m-0 text-[8px] text-slate-400 font-mono tracking-tight mt-0.5">SMRITI OS Retail Suite -- Powered by SMRITI SYSTEMS</p>
+                    <p className="m-0 font-bold text-slate-700 tracking-wider">SUBJECT TO LOCAL JURISDICTION.</p>
+                    <p className="m-0 text-[8px] text-slate-400 font-mono tracking-tight mt-0.5">MQube OS Retail Suite -- Powered by MQube SYSTEMS</p>
                   </div>
 
                 </div>
@@ -700,7 +690,7 @@ export const StandardInvoiceA4: React.FC<{ data: InvoiceData }> = ({ data }) => 
 
             {/* 5. RUNNING PAGE FOOTER (Page X of Y) */}
             <div className="flex justify-between items-center text-[8.5px] text-slate-500 border-t border-slate-200 pt-1 mt-1">
-              <div>TATTLY THREADS — TAX INVOICE</div>
+              <div>{companyName} — TAX INVOICE</div>
               <div>Page {pageNum} of {totalPages} &nbsp;|&nbsp; Invoice No: <span className="font-mono">{invoiceNo}</span></div>
             </div>
 

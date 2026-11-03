@@ -1,24 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Master Framework — Phase A (Foundation Tables) Implementation Plan
+# TILEFLOW Master Framework — Phase A (Foundation Tables) Implementation Plan
 
 ## 1. Objective
-Establish the database schema foundation for the generic SMRITI Master Framework to enable dynamic data-driven types and dynamic master values.
+Establish the database schema foundation for the generic TILEFLOW Master Framework to enable dynamic data-driven types and dynamic master values.
 
 ## 2. Business Motivation
-SMRITI requires a unified, flexible framework to define dynamic metadata schemas (`master_types`) and record respective dynamic dataset values (`master_values`) to support scalable extensibility across different modules (Inventory, CRM, Finance, etc.) without requiring constant physical schema alterations.
+TILEFLOW requires a unified, flexible framework to define dynamic metadata schemas (`master_types`) and record respective dynamic dataset values (`master_values`) to support scalable extensibility across different modules (Inventory, CRM, Finance, etc.) without requiring constant physical schema alterations.
 
 ## 3. Scope
 * Create Alembic migration mapping the `master_types` and `master_values` tables.
@@ -39,7 +38,7 @@ Introduction of `master_types` (metadata registry) and `master_values` (lookup s
 * `master_values`: stores instances referencing `master_types` with data payload (`JSONB`), parent-child value hierarchy.
 
 ## 8. Files Created
-* `backend/alembic/versions/a3e4b5c6d7e8_add_smriti_master_framework_tables.py`
+* `backend/alembic/versions/a3e4b5c6d7e8_add_tileflow_master_framework_tables.py`
 
 ## 9. Files Modified
 * None in this phase.
@@ -73,4 +72,4 @@ In Progress
 * None
 
 ## 19. Related Walkthroughs
-* [SMRITI Master Framework Phase A Walkthrough](../../walkthrough/foundation/Master_Framework__4.md)
+* [TILEFLOW Master Framework Phase A Walkthrough](../../walkthrough/foundation/Master_Framework__4.md)

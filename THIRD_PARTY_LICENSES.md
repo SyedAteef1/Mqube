@@ -1,20 +1,18 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.24.0
   Created      : 2026-07-09
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Retail OS — Third-Party Licenses & IP Boundary Register
 
-This document registers and documents the licenses of upstream systems, frameworks, third-party runtime dependencies, and toolchains used by or interfaced with SMRITI Retail OS.
+This document registers and documents the licenses of upstream systems, frameworks, third-party runtime dependencies, and toolchains used by or interfaced with TILEFLOW Retail OS.
 
 ---
 
@@ -31,7 +29,7 @@ This document registers and documents the licenses of upstream systems, framewor
 
 ## 2. Backend Runtime & Python Ecosystem
 
-| Package | License | Author / Organization | Purpose in SMRITI |
+| Package | License | Author / Organization | Purpose in TILEFLOW |
 |---|---|---|---|
 | **FastAPI** | MIT | Sebastián Ramírez (tiangolo) | High-performance async REST API engine |
 | **Starlette** | BSD-3-Clause | Encode OSS | ASGI core framework for FastAPI |
@@ -49,7 +47,7 @@ This document registers and documents the licenses of upstream systems, framewor
 
 ## 3. Frontend Client & JavaScript Ecosystem
 
-| Package | License | Author / Organization | Purpose in SMRITI |
+| Package | License | Author / Organization | Purpose in TILEFLOW |
 |---|---|---|---|
 | **React** | MIT | Meta Platforms, Inc. | Declarative UI component engine |
 | **React-DOM** | MIT | Meta Platforms, Inc. | Web DOM renderer for React |
@@ -66,7 +64,7 @@ This document registers and documents the licenses of upstream systems, framewor
 
 ## 4. Intellectual Property Boundary & Compliance Principles
 
-In strict accordance with the **SMRITI License & Copyright Governance Policy**:
+In strict accordance with the **TILEFLOW License & Copyright Governance Policy**:
 1. **Third-Party Code Protection**: The licenses, copyright notices, and author attributions of all third-party software are permanently preserved without alteration.
-2. **Proprietary Commercial Core**: All original first-party services, schemas, migrations, AST engines, and UI layers created by SMRITIBooks.com remain **Proprietary Commercial Software** (Copyright © SMRITIBooks.com. All Rights Reserved).
-3. **No License Ambiguity**: The presence of upstream GPL-3.0 references (detailed in [`COPYING`](file:///F:/SMRITRretailNX/COPYING)) governs upstream copyleft components and derivative integrations, while SMRITI first-party assets retain their commercial proprietary status.
+2. **Proprietary Commercial Core**: All original first-party services, schemas, migrations, AST engines, and UI layers created by tileflow.in remain **MIT Open Source License** (Copyright  tileflow.in. Open Source - Permissive Use).
+3. **No License Ambiguity**: The presence of upstream  references (detailed in [`COPYING`](file:///F:/SMRITRretailNX/COPYING)) governs upstream copyleft components and derivative integrations, while TILEFLOW first-party assets retain their commercial proprietary status.

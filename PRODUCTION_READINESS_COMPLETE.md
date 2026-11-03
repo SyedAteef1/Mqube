@@ -39,7 +39,7 @@
 
 **Security Issues Fixed:**
 - JWT_SECRET_KEY: `9a12c418-5a48-43d9-90b5-555a6d71b87a` → `${JWT_SECRET_KEY}` ✅
-- INTERNAL_SERVICE_KEY: `smriti_secret_fallback_key` → `${INTERNAL_SERVICE_KEY}` ✅
+- INTERNAL_SERVICE_KEY: `tileflow_secret_fallback_key` → `${INTERNAL_SERVICE_KEY}` ✅
 - SGIP_VAULT_MASTER_KEY: `sgip_vault_master_secret_key_12345` → `${SGIP_VAULT_MASTER_KEY}` ✅
 
 **Implementation Options Provided:**
@@ -224,7 +224,6 @@ npm run build
 
 ---
 
-## Current Project State
 
 ### ✅ Passing Tests
 - Frontend: **547/547 tests PASS** ✅

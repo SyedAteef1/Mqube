@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import uuid
 from typing import List, Optional
 from datetime import datetime, timezone
@@ -20,8 +7,8 @@ from sqlalchemy.future import select
 
 from ...api.deps import get_db, get_current_user, get_tenant_context, require_role, TenantContext
 from ...models.auth import User, UserRole
-from ...models.menu import SmritiMenu
-from ...schemas.menu import SmritiMenuCreate, SmritiMenuUpdate, SmritiMenuResponse, MenuNode
+from ...models.menu import TileFlowMenu
+from ...schemas.menu import TileFlowMenuCreate, TileFlowMenuUpdate, TileFlowMenuResponse, MenuNode
 
 router = APIRouter()
 
@@ -30,7 +17,7 @@ ADMIN_RESTRICTED_MODULES = {"system-config", "platform-studio", "dev-tracker", "
 
 @router.get(
     "/resolved",
-    response_model=List[SmritiMenuResponse],
+    response_model=List[TileFlowMenuResponse],
 )
 async def get_resolved_menus(
     db: AsyncSession = Depends(get_db),
@@ -39,7 +26,7 @@ async def get_resolved_menus(
 ):
     """
     Centralized Menu Resolver.
-    Evaluates User -> TenantContext -> Role -> smriti_permissions -> smriti_menus.
+    Evaluates User -> TenantContext -> Role -> tileflow_permissions -> tileflow_menus.
     Filters individual items by action='VIEW' and applies parent-child cascade pruning.
     Produces the authoritative navigation tree for the logged-in user.
     """
@@ -49,16 +36,16 @@ async def get_resolved_menus(
         prune_menu_tree_cascade,
     )
 
-    q = select(SmritiMenu).where(
-        SmritiMenu.is_active == True,
-        SmritiMenu.is_deleted == False,
-    ).order_by(SmritiMenu.sequence.asc())
+    q = select(TileFlowMenu).where(
+        TileFlowMenu.is_active == True,
+        TileFlowMenu.is_deleted == False,
+    ).order_by(TileFlowMenu.sequence.asc())
 
     res = await db.execute(q)
     all_menus = res.scalars().all()
 
     # Step 1: Filter menus matching company/branch tenant boundaries
-    scoped_menus: List[SmritiMenu] = []
+    scoped_menus: List[TileFlowMenu] = []
     for m in all_menus:
         if m.company_id and m.company_id != tenant.company_id and current_user.role != UserRole.SYSADMIN:
             continue
@@ -68,7 +55,7 @@ async def get_resolved_menus(
 
     # If SYSADMIN, bypass permission checks and return all scoped menus
     if current_user.role == UserRole.SYSADMIN:
-        return [SmritiMenuResponse.model_validate(m) for m in scoped_menus]
+        return [TileFlowMenuResponse.model_validate(m) for m in scoped_menus]
 
     # Step 2: Determine raw visibility for each scoped menu
     raw_visible_ids = set()
@@ -96,12 +83,12 @@ async def get_resolved_menus(
     # Step 3: Apply two-pass cascade pruning (removes empty parents and orphaned children)
     pruned_menus = prune_menu_tree_cascade(scoped_menus, raw_visible_ids)
 
-    return [SmritiMenuResponse.model_validate(m) for m in pruned_menus]
+    return [TileFlowMenuResponse.model_validate(m) for m in pruned_menus]
 
 
 @router.get(
     "/",
-    response_model=List[SmritiMenuResponse],
+    response_model=List[TileFlowMenuResponse],
 )
 async def list_all_menus(
     db: AsyncSession = Depends(get_db),
@@ -110,18 +97,18 @@ async def list_all_menus(
     """
     List all registered Control Plane menus for admin governance.
     """
-    q = select(SmritiMenu).where(SmritiMenu.is_deleted == False).order_by(SmritiMenu.sequence.asc())
+    q = select(TileFlowMenu).where(TileFlowMenu.is_deleted == False).order_by(TileFlowMenu.sequence.asc())
     res = await db.execute(q)
-    return [SmritiMenuResponse.model_validate(m) for m in res.scalars().all()]
+    return [TileFlowMenuResponse.model_validate(m) for m in res.scalars().all()]
 
 
 @router.put(
     "/{menu_id}",
-    response_model=SmritiMenuResponse,
+    response_model=TileFlowMenuResponse,
 )
 async def update_menu_item(
     menu_id: str,
-    req: SmritiMenuUpdate,
+    req: TileFlowMenuUpdate,
     db: AsyncSession = Depends(get_db),
     tenant: TenantContext = Depends(get_tenant_context),
     current_user: User = Depends(require_role(UserRole.SYSADMIN, UserRole.MANAGER)),
@@ -130,9 +117,9 @@ async def update_menu_item(
     Admin Menu Management.
     Enforces 'system.menu.manage' capability (guarded by SYSADMIN/MANAGER role dependency).
     Modifies menu label, icon, sequence, parent_id, or is_active state.
-    Audits changes into smriti_audit_log.
+    Audits changes into tileflow_audit_log.
     """
-    q = select(SmritiMenu).where(SmritiMenu.id == menu_id, SmritiMenu.is_deleted == False)
+    q = select(TileFlowMenu).where(TileFlowMenu.id == menu_id, TileFlowMenu.is_deleted == False)
     res = await db.execute(q)
     item = res.scalars().first()
 
@@ -166,20 +153,20 @@ async def update_menu_item(
         "is_active": item.is_active,
     }
 
-    # Record audit log entry in smriti_audit_log via raw SQL to ensure exact table compliance
+    # Record audit log entry in tileflow_audit_log via raw SQL to ensure exact table compliance
     from sqlalchemy import text
     import hashlib
     audit_id = f"aud-{uuid.uuid4().hex[:12]}"
     hash_val = hashlib.sha256(f"{audit_id}:{menu_id}:{new_data}".encode()).hexdigest()
     await db.execute(
         text("""
-            INSERT INTO smriti_audit_log (
+            INSERT INTO tileflow_audit_log (
                 id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                 old_value, new_value, change_type, change_reason, change_source,
                 changed_by, changed_by_name, changed_at, sha256_hash
             )
             VALUES (
-                :id, :tenant_id, :entity_id, 'smriti_menus', :record_id, 'menu_config',
+                :id, :tenant_id, :entity_id, 'tileflow_menus', :record_id, 'menu_config',
                 :old_val, :new_val, 'UPDATE', 'Admin Menu Configuration Update', 'Admin Menu Studio',
                 :changed_by, :changed_by_name, :changed_at, :sha256_hash
             )
@@ -200,7 +187,7 @@ async def update_menu_item(
 
     await db.commit()
     await db.refresh(item)
-    return SmritiMenuResponse.model_validate(item)
+    return TileFlowMenuResponse.model_validate(item)
 
 
 @router.get("/audit")
@@ -209,14 +196,14 @@ async def get_menu_audit_logs(
     current_user: User = Depends(require_role(UserRole.SYSADMIN, UserRole.MANAGER)),
 ):
     """
-    Get audit history of menu administration changes from smriti_audit_log.
+    Get audit history of menu administration changes from tileflow_audit_log.
     """
     from sqlalchemy import text
     res = await db.execute(
         text("""
             SELECT id, entity_id, changed_record_id, old_value, new_value, change_type, changed_by, changed_by_name, changed_at
-            FROM smriti_audit_log
-            WHERE changed_table = 'smriti_menus'
+            FROM tileflow_audit_log
+            WHERE changed_table = 'tileflow_menus'
             ORDER BY changed_at DESC
             LIMIT 50;
         """)

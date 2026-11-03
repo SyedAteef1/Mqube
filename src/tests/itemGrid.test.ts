@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.33.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import { describe, it, expect } from "vitest";
 import { 
   DEFAULT_MANDATORY_FIELDS, 
@@ -22,7 +9,7 @@ import {
 import { generateSkuCode } from "../services/skuGenerationEngine.ts";
 import { itemMasterConfig } from "../components/global/configs/itemMaster.config.tsx";
 
-describe("Item Master Tactical Grid (Smriti Prime Specification)", () => {
+describe("Item Master Tactical Grid (MQube Prime Specification)", () => {
 
   describe("1. Field Definitions & Mandatory Attributes", () => {
     it("should have Stock No, Product, MRP, Barcode, Selling Price, Buying Price, Cost Price, GST, and HSN as required mandatory fields", () => {

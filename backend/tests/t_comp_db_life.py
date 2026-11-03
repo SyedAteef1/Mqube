@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -22,7 +9,7 @@ from app.services.db_resolver import (
 
 class CompanyLifecycleStateMachine:
     """
-    SMRITI Company Database Lifecycle State Machine.
+    TILEFLOW Company Database Lifecycle State Machine.
     Governs allowed state transitions:
     PROVISIONING -> READY -> SUSPENDED -> READY
     READY -> ARCHIVED -> DECOMMISSIONED
@@ -60,9 +47,9 @@ def test_lifecycle_disallowed_transitions():
     assert CompanyLifecycleStateMachine.validate_transition("SUSPENDED", "PROVISIONING") is False
 
 def test_lifecycle_naming_integration():
-    """Verify lifecycle DB name generation retains smriti<A-Z0-9> standard."""
-    assert generate_company_database_name("ABC") == "smritiABC"
-    assert generate_company_database_name("MUM") == "smritiMUM"
-    assert validate_company_database_name("smritiABC") is True
-    assert validate_company_database_name("smriti000") is False
-    assert validate_company_database_name("smritiSYS") is False
+    """Verify lifecycle DB name generation retains tileflow<A-Z0-9> standard."""
+    assert generate_company_database_name("ABC") == "tileflowABC"
+    assert generate_company_database_name("MUM") == "tileflowMUM"
+    assert validate_company_database_name("tileflowABC") is True
+    assert validate_company_database_name("tileflow000") is False
+    assert validate_company_database_name("tileflowSYS") is False

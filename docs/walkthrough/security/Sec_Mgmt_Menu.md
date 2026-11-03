@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Security Management — Menu Access Control & Security Configuration v6.16.0
 
 ## 1. Purpose
-This release delivers the complete enterprise **Security Management System** (`Setup > Supervisory Functions > Security Management`), providing granular **Menu Access Control** (User / Group / Node level permissions matrix) and **Security Configuration** (Password policy enforcement & Housekeeping administration). It reuses the authoritative `smriti_menus` and `smriti_permissions` PostgreSQL tables directly in `smritisys` without creating any duplicate tables or engines.
+This release delivers the complete enterprise **Security Management System** (`Setup > Supervisory Functions > Security Management`), providing granular **Menu Access Control** (User / Group / Node level permissions matrix) and **Security Configuration** (Password policy enforcement & Housekeeping administration). It reuses the authoritative `tileflow_menus` and `tileflow_permissions` PostgreSQL tables directly in `tileflowsys` without creating any duplicate tables or engines.
 
 ---
 
@@ -31,9 +30,9 @@ This release delivers the complete enterprise **Security Management System** (`S
   - Housekeeping parameters (log retention days, country code `+91`, patch update reminder, company-wise menu activation toggle, custom reports count, refresh interval).
 - **Backend Architecture & Security Authority**:
   - FastAPI endpoints in `/api/v1/security/menu-access` and `/api/v1/security/config`.
-  - Zero new database tables created — binds directly to existing PostgreSQL tables `smriti_menus`, `smriti_permissions`, `roles`, `system_configs`, and `smriti_audit_log`.
-  - Action-level RBAC guard `require_permission(resource, action)` raising 403 Forbidden with structured business error code `SMRITI-AUTH-001`.
-  - Tamper-evident audit logging in `smriti_audit_log` with SHA-256 cryptographic hashes.
+  - Zero new database tables created — binds directly to existing PostgreSQL tables `tileflow_menus`, `tileflow_permissions`, `roles`, `system_configs`, and `tileflow_audit_log`.
+  - Action-level RBAC guard `require_permission(resource, action)` raising 403 Forbidden with structured business error code `TILEFLOW-AUTH-001`.
+  - Tamper-evident audit logging in `tileflow_audit_log` with SHA-256 cryptographic hashes.
 
 ---
 
@@ -64,7 +63,7 @@ This release delivers the complete enterprise **Security Management System** (`S
 ---
 
 ## 5. Architecture Decisions
-- **AD-1: Direct Database Table Reuse**: Reused existing `smriti_menus` (34 items) and `smriti_permissions` tables instead of introducing separate tables, preserving database normalization and single-source-of-truth invariants.
+- **AD-1: Direct Database Table Reuse**: Reused existing `tileflow_menus` (34 items) and `tileflow_permissions` tables instead of introducing separate tables, preserving database normalization and single-source-of-truth invariants.
 - **AD-2: Unified Single Workspace**: Unified User, Group, and Node access controls within a single classic Windows ERP dialog frame with high-contrast borders and quick keyboard shortcuts (<kbd>Alt+O</kbd>, <kbd>Alt+C</kbd>, <kbd>Alt+X</kbd>).
 - **AD-3: Backend Action Enforcement Guard**: Added `require_permission(resource, action)` dependency in FastAPI to ensure that UI button state is only a reflection of authoritative backend authorization.
 
@@ -76,7 +75,7 @@ Retail supervisory operations require fine-grained authorization. A cashier may 
 ---
 
 ## 7. Implementation Summary
-1. **API Layer**: `/api/v1/security/menu-access` and `/api/v1/security/config` endpoints backed by SQLAlchemy models `SmritiPermission` and `SmritiAuditLog`.
+1. **API Layer**: `/api/v1/security/menu-access` and `/api/v1/security/config` endpoints backed by SQLAlchemy models `TileFlowPermission` and `TileFlowAuditLog`.
 2. **State & Offline Cache Engine**: `securityStore.ts` provides instant optimistic local state caching while asynchronously synchronizing with the FastAPI backend.
 3. **UI Engine**: `SecurityMgmtDlg.tsx` integrates the classic ERP left navigation sidebar with responsive view switching, expand/collapse tree management, and granular checkbox propagation.
 

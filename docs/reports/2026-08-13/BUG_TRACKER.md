@@ -10,4 +10,4 @@
 | Sales Studio | High | Write automated unit tests. |
 | Billing Desk | High | Write automated unit tests. |
 | CRM & Loyalty | Critical | No active recommendations |
-| About SMRITI | High | No active recommendations |
+| About TILEFLOW | High | No active recommendations |

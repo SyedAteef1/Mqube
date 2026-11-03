@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 # Connect to PostgreSQL
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smritisys')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflowsys')
 cur = conn.cursor(cursor_factory=RealDictCursor)
 
 print("=== CHECKING TABLES ===")

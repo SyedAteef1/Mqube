@@ -1,23 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.30.0
   Created      : 2026-08-27
   Modified     : 2026-08-27
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sales Order Fulfillment Variance, Size Matrix & 1-Click Tax Invoice Conversion Suite (v3.30.0)
 
 ## 1. Purpose
-This walkthrough documents the complete architecture and verification of the 4 major Sales Order enhancements delivered in SMRITI Retail OS:
+This walkthrough documents the complete architecture and verification of the 4 major Sales Order enhancements delivered in TILEFLOW Retail OS:
 1. **Sales Order Confirmation / Proforma PDF & HTML Preview Service** (`SalesOrderPdfService.py` and `SalesOrderA4.tsx`).
 2. **Wholesale Footwear Size Matrix Fast-Entry Grid** (`SalesOrderMatrixEntry.tsx`).
 3. **1-Click Sales Order to Statutory Tax Invoice Conversion Engine** with atomic allocation mapping and sequential numbering.
@@ -31,7 +29,7 @@ This walkthrough documents the complete architecture and verification of the 4 m
   - `backend/app/services/sales.py`: Implemented `convert_sales_order_to_invoice` with sequential suffix determination (`TT2026-2027/138`).
   - `backend/app/services/sales_order_pdf_service.py`: Playwright headless PDF generation with watermark and permanent bank details.
   - `backend/app/services/reports.py`: Implemented `sales_order_fulfillment_variance` analytics.
-  - `backend/app/api/v1/reports.py`: Added `/reports/sales-orders/fulfillment-variance` and registered `RPT-SO-009` in `SMRITI_STUDIOS`.
+  - `backend/app/api/v1/reports.py`: Added `/reports/sales-orders/fulfillment-variance` and registered `RPT-SO-009` in `TILEFLOW_STUDIOS`.
 - **Frontend Components & Views**:
   - `src/components/templates/SalesOrderA4.tsx`: High-fidelity A4 React print template for Sales Order Confirmation / Proforma.
   - `src/components/sales/SalesOrderMatrixEntry.tsx`: Fast batch size matrix entry component for wholesale shoe style runs.

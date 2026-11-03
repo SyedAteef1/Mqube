@@ -1,37 +1,32 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.4
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
 # Walkthrough: PostgreSQL Standalone Connection & Tables Seeding — v2.1.4
 
 ## 1. Purpose
-This walkthrough documents the integration of the standalone **PostgreSQL** database engine into the backend layer (`server.ts`) of SMRITI Retail OS, resolving the flat-file database storage issue while retaining the Node.js Express modular services framework.
+This walkthrough documents the integration of the standalone **PostgreSQL** database engine into the backend layer (`server.ts`) of TILEFLOW Retail OS, resolving the flat-file database storage issue while retaining the Node.js Express modular services framework.
 
 ---
 
 ## 2. Scope
-- Create the standard DDL schema script defining all SMRITI tables (customers, products, POS profiles, shifts, invoices, PSV ledger channels, and system audit logs).
+- Create the standard DDL schema script defining all TILEFLOW tables (customers, products, POS profiles, shifts, invoices, PSV ledger channels, and system audit logs).
 - Build the node-postgres pool manager loading connection strings dynamically from `.env` files.
 - Build the database initializer module executing table creation DDLs and seeding initial data from `db_store.json` on startup.
 - Hook database initialization asynchronously inside `server.ts` before the server starts listening on ports.
@@ -43,7 +38,7 @@ This walkthrough documents the integration of the standalone **PostgreSQL** data
 | File Path | Size | Description |
 | :--- | :--- | :--- |
 | `src/db/pool.ts` | 29 lines | PostgreSQL connection pool config with error handlers |
-| `src/db/schema.sql` | 228 lines | DDL schema script mapping SMRITI entities |
+| `src/db/schema.sql` | 228 lines | DDL schema script mapping TILEFLOW entities |
 | `src/db/init.ts` | 228 lines | DB initializer running SQL schema and imports flat-file seed JSON |
 
 ---
@@ -81,7 +76,7 @@ Using a centralized schema initialization module ensures that any fresh develope
 ```
 Command: npm run lint
 Output:
-> smriti-retail-os@2.1.1 lint
+> tileflow-retail-os@2.1.1 lint
 > tsc --noEmit
 
 (Exit code 0 — zero errors)

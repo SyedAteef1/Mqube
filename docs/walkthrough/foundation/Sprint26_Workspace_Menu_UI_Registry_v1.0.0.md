@@ -2,24 +2,24 @@
 title: "Sprint 26: P1.3 Workspace, Menu, and UI Experience Registry (Control Plane)"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
 # Walkthrough: Sprint 26 — P1.3 Workspace, Menu, and UI Experience Registry (Control Plane)
 
 ## 1. Purpose
-This sprint fulfills **Blueprint Section 4: P1 Control Plane Completion (P1.3 Workspace, Menu, and UI Experience Registry)**. It consolidates versioned control-plane metadata in `smritisys` for industry workspace templates, user persona profiles, capability-aware and role-governed hierarchical navigation tree resolution with parent-child cascade pruning, centralized theme design tokens, and comprehensive screen definition packages.
+This sprint fulfills **Blueprint Section 4: P1 Control Plane Completion (P1.3 Workspace, Menu, and UI Experience Registry)**. It consolidates versioned control-plane metadata in `tileflowsys` for industry workspace templates, user persona profiles, capability-aware and role-governed hierarchical navigation tree resolution with parent-child cascade pruning, centralized theme design tokens, and comprehensive screen definition packages.
 
 ## 2. Scope
 - **Workspace Templates**: 6 standard templates (`RETAIL_SUPERMARKET`, `APPAREL_FASHION`, `DISTRIBUTION_HUB`, `PHARMACY_HEALTHCARE`, `RESTAURANT_DINEIN`, `ENTERPRISE_HQ`).
 - **Persona Profiles**: 4 standard profiles (`PROF_SYSADMIN`, `PROF_STORE_MANAGER`, `PROF_CASHIER`, `PROF_ACCOUNTANT`).
-- **Dynamic Navigation Tree**: Resolved from `smriti_menus` with tenant capability gating and role-based access filtering with automatic empty parent pruning.
-- **Theme Design Tokens**: Multi-theme token resolution (`SMRITI_DEFAULT`, `SAP_FIORI_HORIZON`, `HIGH_CONTRAST_OLED`).
+- **Dynamic Navigation Tree**: Resolved from `tileflow_menus` with tenant capability gating and role-based access filtering with automatic empty parent pruning.
+- **Theme Design Tokens**: Multi-theme token resolution (`TILEFLOW_DEFAULT`, `SAP_FIORI_HORIZON`, `HIGH_CONTRAST_OLED`).
 - **Screen Definition Packages**: Full screen metadata aggregation (`SCR_POS_BILLING`, `SCR_INV_MASTER`, `SCR_PURCH_ORDER`, `SCR_SALES_INVOICE`) with form fields and action button triggers.
 - **Verification**: 8/8 new integration tests in `backend/tests/t_workspace_ui.py` (35/35 full regression tests green).
 
@@ -38,7 +38,7 @@ This sprint fulfills **Blueprint Section 4: P1 Control Plane Completion (P1.3 Wo
 - [`CHANGELOG.md`](file:///F:/SMRITRretailNX/CHANGELOG.md) — Registered `v3.42.0`.
 
 ## 5. Architecture Decisions
-- **Preserved `smriti_menus` Sole Source**: Does not create a duplicate navigation table. The resolver pulls from `smriti_menus` and applies capability and permission pruning in memory before returning the tree.
+- **Preserved `tileflow_menus` Sole Source**: Does not create a duplicate navigation table. The resolver pulls from `tileflow_menus` and applies capability and permission pruning in memory before returning the tree.
 - **Fail-Closed Capability Gating**: When a tenant disables an optional capability (e.g. `WMS` or `APPROVAL`), all associated navigation items and parent containers are pruned from the client tree.
 - **Persona Context Overrides**: Automatically resolves density, default route, and shortcuts based on user role (`CASHIER`, `STORE_MANAGER`, `ACCOUNTANT`, `SYSADMIN`).
 

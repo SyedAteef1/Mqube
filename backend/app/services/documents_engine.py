@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import json
 import hashlib
@@ -52,7 +38,7 @@ LIFECYCLE_TRANSITION_GRAPH = {
 
 class DocumentsEngine:
     """
-    Authoritative SMRITI Documents Engine (Section 7).
+    Authoritative TILEFLOW Documents Engine (Section 7).
     Governs document numbering series, locked gapless allocations, versioned layout templates,
     immutable artifact rendering with SHA256 integrity, print dispatch, and lifecycle state machines.
     """
@@ -362,7 +348,7 @@ class DocumentsEngine:
         calculates SHA256 integrity hash, and persists the immutable document artifact.
         """
         ctx = req.data_context
-        seller_name = ctx.get("seller_name", "SMRITI RETAIL")
+        seller_name = ctx.get("seller_name", "TILEFLOW RETAIL")
         buyer_name = ctx.get("buyer_name", "Walk-in Customer")
         line_items = ctx.get("items", [])
         grand_total = ctx.get("grand_total", 0.0)

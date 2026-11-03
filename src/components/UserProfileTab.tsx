@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.21.0
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-16
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   User as UserIcon, 
@@ -104,8 +79,8 @@ export const UserProfileTab: React.FC = () => {
   };
 
   const getUserDisplayName = (user: User | null) => {
-    const name = user?.fullName || user?.displayName || user?.username || "SMRITI User";
-    return typeof name === "string" ? name : "SMRITI User";
+    const name = user?.fullName || user?.displayName || user?.username || "MQube User";
+    return typeof name === "string" ? name : "MQube User";
   };
 
   const fetchProfileData = async () => {
@@ -144,7 +119,7 @@ export const UserProfileTab: React.FC = () => {
       }
 
       // Sessions list removed — JWT is stateless; no in-memory sessions exist in FastAPI.
-      // The Sessions sub-tab renders a "Managed by SMRITI Security Gateway" placeholder.
+      // The Sessions sub-tab renders a "Managed by MQube Security Gateway" placeholder.
       setSessions([]);
 
       // Fetch recent audit log activity for this user (system route — not yet migrated)
@@ -305,8 +280,8 @@ export const UserProfileTab: React.FC = () => {
         priority: "low"
       });
 
-      localStorage.removeItem("smriti_jwt_token");
-      localStorage.removeItem("smriti_session_token");
+      localStorage.removeItem("tileflow_jwt_token");
+      localStorage.removeItem("tileflow_session_token");
       window.location.reload();
     } catch (err: any) {
       addNotification({
@@ -386,7 +361,7 @@ export const UserProfileTab: React.FC = () => {
           </span>
           <button
             type="button"
-            onClick={() => handleRevokeSession(localStorage.getItem("smriti_jwt_token") || "")}
+            onClick={() => handleRevokeSession(localStorage.getItem("tileflow_jwt_token") || "")}
             className="px-3 py-1 bg-rose-500/10 hover:bg-rose-600 hover:text-white border border-rose-500/30 text-rose-400 text-xs rounded-full font-bold uppercase tracking-wide flex items-center gap-1.5 transition-all cursor-pointer shadow-xs"
             title="Log Out and Invalidate Active Session"
           >
@@ -456,7 +431,7 @@ export const UserProfileTab: React.FC = () => {
           </div>
 
           {/* Recent Activity Widget */}
-          <div className="bg-theme-surface-2 border border-theme-divider rounded-xl p-5 space-y-3 shadow-sm hover:shadow-md hover:border-[#2563EB] transition-all">
+          <div className="bg-theme-surface-2 border border-theme-divider rounded-xl p-5 space-y-3 shadow-sm hover:shadow-md hover:border-[#606060] transition-all">
             <h4 className="text-xs font-bold uppercase tracking-wide text-theme-muted flex items-center gap-2">
               <Activity size={14} className="text-blue-500" />
               Recent Activity Ledger
@@ -624,7 +599,7 @@ export const UserProfileTab: React.FC = () => {
                 <div className="border-b border-theme-divider pb-3">
                   <h3 className="text-sm font-bold text-theme-body">Active Operator Sessions</h3>
                   <p className="text-xs text-theme-muted mt-1">
-                    Session management is handled by the SMRITI Security Gateway.
+                    Session management is handled by the MQube Security Gateway.
                   </p>
                 </div>
 
@@ -634,16 +609,16 @@ export const UserProfileTab: React.FC = () => {
                     <Shield size={28} className="text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-theme-body mb-1">Managed by SMRITI Security Gateway</p>
+                    <p className="text-sm font-bold text-theme-body mb-1">Managed by MQube Security Gateway</p>
                     <p className="text-xs text-theme-muted max-w-xs mx-auto">
-                      Your authentication is now secured by JWT tokens issued by the SMRITI FastAPI backend.
+                      Your authentication is now secured by JWT tokens issued by the MQube FastAPI backend.
                       Per-session management will be available in v3.22.0 when the secure session audit table is provisioned.
                     </p>
                   </div>
                   <button
                     onClick={() => {
-                      localStorage.removeItem("smriti_jwt_token");
-                      localStorage.removeItem("smriti_session_token");
+                      localStorage.removeItem("tileflow_jwt_token");
+                      localStorage.removeItem("tileflow_session_token");
                       window.location.reload();
                     }}
                     className="px-4 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-bold flex items-center gap-2 transition-colors"
@@ -668,7 +643,7 @@ export const UserProfileTab: React.FC = () => {
                     <div 
                       key={key} 
                       onClick={() => handleToggleNotification(key as keyof User["notificationSettings"])}
-                      className="flex items-center justify-between p-3.5 bg-theme-surface-2 hover:bg-theme-surface-hover border border-theme-divider rounded-lg cursor-pointer shadow-sm hover:shadow-md hover:border-[#2563EB] transition-all"
+                      className="flex items-center justify-between p-3.5 bg-theme-surface-2 hover:bg-theme-surface-hover border border-theme-divider rounded-lg cursor-pointer shadow-sm hover:shadow-md hover:border-[#606060] transition-all"
                     >
                       <div>
                         <span className="text-xs font-bold text-theme-body capitalize block">

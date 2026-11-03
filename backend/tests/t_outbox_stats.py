@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -35,7 +21,7 @@ from app.models.crm import Customer
 @pytest.fixture(autouse=True)
 async def cleanup_outbox_test_data():
     """Clean up test outbox events, sales invoices, stock movements, and test products before and after tests."""
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             await session.execute(delete(IntegrationOutboxEvent).where(IntegrationOutboxEvent.aggregate_id.like("TEST-%")))
@@ -83,7 +69,7 @@ async def cleanup_outbox_test_data():
 
             await session.commit()
     yield
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             await session.execute(delete(IntegrationOutboxEvent).where(IntegrationOutboxEvent.aggregate_id.like("TEST-%")))
@@ -98,7 +84,7 @@ async def cleanup_outbox_test_data():
 @pytest.mark.asyncio
 async def test_real_domain_service_sales_invoice_outbox_atomicity():
     """Verify that UnifiedSalesLedgerService.post_sales_invoice atomically writes invoice and outbox event."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         inv = await UnifiedSalesLedgerService.post_sales_invoice(
             session=session,
@@ -135,7 +121,7 @@ async def test_real_domain_service_sales_invoice_outbox_atomicity():
 @pytest.mark.asyncio
 async def test_real_domain_service_sales_invoice_cancellation_outbox_atomicity():
     """Verify that UnifiedSalesLedgerService.cancel_sales_invoice atomically stages cancellation outbox event."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         inv = await UnifiedSalesLedgerService.post_sales_invoice(
             session=session,
@@ -177,7 +163,7 @@ async def test_real_domain_service_sales_invoice_cancellation_outbox_atomicity()
 @pytest.mark.asyncio
 async def test_outbox_transaction_rollback_guarantee():
     """Verify that a rollback on failure leaves zero phantom records in both domain and outbox tables."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         try:
             # 1. Add domain invoice
@@ -224,7 +210,7 @@ async def test_outbox_transaction_rollback_guarantee():
 @pytest.mark.asyncio
 async def test_outbox_dispatcher_two_phase_claim_and_retry_backoff():
     """Verify two-phase non-blocking claim, external callback dispatch, and exponential retry backoff."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         # 1. Stage an event that will succeed
         evt_success = await UnifiedOutboxAnalyticsService.stage_outbox_event(
@@ -318,7 +304,7 @@ async def test_outbox_dispatcher_two_phase_claim_and_retry_backoff():
 @pytest.mark.asyncio
 async def test_outbox_dead_letter_queue_transition():
     """Verify that events exceeding max_retries transition to DEAD_LETTER status."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         # Stage an event with retry_count already at 2
         evt = await UnifiedOutboxAnalyticsService.stage_outbox_event(
@@ -359,7 +345,7 @@ async def test_outbox_dead_letter_queue_transition():
 @pytest.mark.asyncio
 async def test_outbox_dispatcher_rejects_missing_callback():
     """Verify dispatcher rejects invocation with missing callback to prevent false positive dispatch."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         with pytest.raises(ValueError, match="No dispatcher_callback configured"):
             await UnifiedOutboxAnalyticsService.dispatch_pending_outbox_events(
@@ -372,7 +358,7 @@ async def test_outbox_dispatcher_rejects_missing_callback():
 @pytest.mark.asyncio
 async def test_authoritative_operational_analytics_summary():
     """Verify operational KPI analytics compute authoritative metrics directly from Postgres ledgers."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         summary = await UnifiedOutboxAnalyticsService.get_authoritative_operational_summary(
             session=session,
@@ -391,9 +377,9 @@ async def test_authoritative_operational_analytics_summary():
 
 @pytest.mark.asyncio
 async def test_outbox_and_analytics_tenant_isolation():
-    """Verify outbox events in smriti001 do not leak into smriti002."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    """Verify outbox events in tileflow001 do not leak into tileflow002."""
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     async with session_001() as s1:
         evt = await UnifiedOutboxAnalyticsService.stage_outbox_event(
@@ -409,15 +395,15 @@ async def test_outbox_and_analytics_tenant_isolation():
     async with session_002() as s2:
         stmt = select(IntegrationOutboxEvent).where(IntegrationOutboxEvent.aggregate_id == "TEST-APR-99")
         leaked = (await s2.execute(stmt)).scalar_one_or_none()
-        assert leaked is None, "IntegrationOutboxEvent from smriti001 must not leak into smriti002!"
+        assert leaked is None, "IntegrationOutboxEvent from tileflow001 must not leak into tileflow002!"
 
 
 @pytest.mark.asyncio
 async def test_outbox_queue_worker_multi_tenant_cycle():
     """Verify OutboxQueueWorker processes batches across multiple company tenant databases."""
-    # 1. Stage events in both smriti001 and smriti002
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    # 1. Stage events in both tileflow001 and tileflow002
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     async with session_001() as s1:
         await UnifiedOutboxAnalyticsService.stage_outbox_event(
@@ -449,15 +435,15 @@ async def test_outbox_queue_worker_multi_tenant_cycle():
         dispatched_worker_events.append((evt.company_id, evt.aggregate_id))
 
     cycle_results = await OutboxQueueWorker.run_worker_cycle(
-        company_databases=["smriti001", "smriti002"],
+        company_databases=["tileflow001", "tileflow002"],
         dispatcher_callback=mock_worker_adapter,
         target_channel="TEST_WORKER_CHANNEL"
     )
 
-    assert "smriti001" in cycle_results
-    assert "smriti002" in cycle_results
-    assert cycle_results["smriti001"]["dispatched_count"] >= 1
-    assert cycle_results["smriti002"]["dispatched_count"] >= 1
+    assert "tileflow001" in cycle_results
+    assert "tileflow002" in cycle_results
+    assert cycle_results["tileflow001"]["dispatched_count"] >= 1
+    assert cycle_results["tileflow002"]["dispatched_count"] >= 1
     assert ("COMP-001", "TEST-AUD-01") in dispatched_worker_events
     assert ("COMP-002", "TEST-AUD-02") in dispatched_worker_events
 

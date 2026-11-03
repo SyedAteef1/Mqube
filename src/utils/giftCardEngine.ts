@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.87.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 export type GiftCardStatus = "ACTIVE" | "PARTIALLY_USED" | "FULLY_REDEEMED" | "EXPIRED" | "BLOCKED";
 export type GiftCardTxnType = "ISSUE" | "TOP_UP" | "REDEMPTION" | "BREAKAGE_CREDIT" | "EXPIRY_REVERSAL";
 
@@ -135,7 +121,7 @@ export class GiftCardEngine {
   /** Top-up an existing gift card */
   public static topUp(card: GiftCard, amount: number, operatorId: string, voucher?: string): GiftCard {
     if (card.status === "BLOCKED" || card.status === "EXPIRED") {
-      throw new Error(`SMRITI-GC-001: Cannot top-up a ${card.status.toLowerCase()} card.`);
+      throw new Error(`TILEFLOW-GC-001: Cannot top-up a ${card.status.toLowerCase()} card.`);
     }
 
     const before = card.currentBalance;

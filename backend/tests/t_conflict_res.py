@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.24.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 import uuid
 import pytest
@@ -48,8 +34,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": UserRole.SYSADMIN.value,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -67,7 +53,7 @@ async def test_simultaneous_last_unit_sale_oversell_conflict():
     NOTE: This test does NOT verify behavior under genuine concurrent drift (asyncio.gather /
     simultaneous writes to the same record). That requires a physical soak test.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as db:
         company_id = "COMP-001"
         prod_id = f"prod_soak_{uuid.uuid4().hex[:8]}"
@@ -155,7 +141,7 @@ async def test_price_book_drift_preservation():
     but terminal checked out offline at 500.00.
     Server MUST honor the client price (Price-at-Sale Preservation) and record diagnostic.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as db:
         company_id = "COMP-001"
         prod_id = f"prod_pdrift_{uuid.uuid4().hex[:8]}"
@@ -211,7 +197,7 @@ async def test_customer_credit_limit_race():
     Scenario 3: Credit Limit Race — Offline sale pushes customer account beyond credit limit.
     Sale is accepted, but flagged with CREDIT_LIMIT warning diagnostic.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as db:
         company_id = "COMP-001"
         group_id = f"cg_{uuid.uuid4().hex[:8]}"
@@ -285,7 +271,7 @@ async def test_idempotent_retry_storm_deduplication():
     Pass 1: 5 ACCEPTED.
     Pass 2–3: 5 DEDUPLICATED on each run.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as db:
         company_id = "COMP-001"
         prod_id = f"prod_storm_{uuid.uuid4().hex[:8]}"
@@ -348,7 +334,7 @@ async def test_governance_rule_version_drift_binding():
     Scenario 5: Governance Rule Snapshot Binding — Offline transaction created under
     governance snapshot 'gov_snap_v1.2' binds permanently to the Sales Invoice.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as db:
         company_id = "COMP-001"
         prod_id = f"prod_gov_{uuid.uuid4().hex[:8]}"
@@ -399,7 +385,7 @@ async def test_sync_reconciliation_queue_api_endpoint():
     """
     Scenario 6: REST API Verification — Test /api/v1/sync/push and /api/v1/sync/reconciliation-queue.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as db:
         prod_id = f"prod_api_{uuid.uuid4().hex[:8]}"
         prod = Product(

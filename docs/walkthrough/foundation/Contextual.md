@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Contextual Navigation & Unified Shell Refactor Walkthrough v3.17.0
+# TILEFLOW Contextual Navigation & Unified Shell Refactor Walkthrough v3.17.0
 
 ## 1. Purpose
-This walkthrough documents the successful architectural refactor of **SMRITI Retail OS v3.17.0** to eliminate duplicate sidebars and dual top headers, establish **`AppShell` (`AppShell.tsx`)** as the sole application container, enforce zero page-level horizontal overflow, and deploy a true Fiori-inspired capability Launchpad.
+This walkthrough documents the successful architectural refactor of **TILEFLOW Retail OS v3.17.0** to eliminate duplicate sidebars and dual top headers, establish **`AppShell` (`AppShell.tsx`)** as the sole application container, enforce zero page-level horizontal overflow, and deploy a true Fiori-inspired capability Launchpad.
 
 ---
 
@@ -25,7 +24,6 @@ This walkthrough documents the successful architectural refactor of **SMRITI Ret
 
 ---
 
-## 3. Authoritative Architecture Map
 
 ```text
 ┌──────────────────────────────────────────────────────────────┐

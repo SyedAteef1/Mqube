@@ -1,19 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.33.0
-Created      : 2026-08-26
-Modified     : 2026-08-26
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Automated Pytest Suite for Shoper9 Blueprint Extraction, Normalization & Safety Audits
-"""
-
 import sys
 import json
 from pathlib import Path

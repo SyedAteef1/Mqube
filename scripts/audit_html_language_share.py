@@ -1,18 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-30
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI HTML Language Share Audit (Read-Only)
-"""
-
 import os, sys, subprocess, json, re
 from pathlib import Path
 
@@ -77,7 +62,6 @@ def find_references(rel_path):
     return exact_refs
 
 # 3. Categorize files
-# Categories: RUNTIME_UI, PRINT_PDF, EMAIL_TEMPLATE, STATIC, LEGACY, GENERATED, TEST_FIXTURE, UNKNOWN
 def categorize_file(rel_path, refs, content):
     p_lower = rel_path.lower()
     base_lower = Path(rel_path).name.lower()

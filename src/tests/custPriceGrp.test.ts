@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.8.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Customer Price Group Master Unit Tests
- */
-
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { CustomerPriceGroup } from "../types.ts";
 import { 
@@ -76,7 +61,7 @@ Object.defineProperty(globalThis, "CustomEvent", {
   writable: true
 });
 
-describe("SMRITI — Customer Price Group Master Specification Tests", () => {
+describe("MQube — Customer Price Group Master Specification Tests", () => {
   beforeEach(() => {
     mockLocalStorage.clear();
     Object.keys(listeners).forEach(k => delete listeners[k]);
@@ -186,13 +171,13 @@ describe("SMRITI — Customer Price Group Master Specification Tests", () => {
   });
 
   // TEST 6: Event Notification Dispatching
-  it("TEST 6: should dispatch smriti_customer_price_groups_updated event when groups change", () => {
+  it("TEST 6: should dispatch tileflow_customer_price_groups_updated event when groups change", () => {
     const eventSpy = vi.fn();
-    window.addEventListener("smriti_customer_price_groups_updated", eventSpy);
+    window.addEventListener("tileflow_customer_price_groups_updated", eventSpy);
 
     saveCustomerPriceGroups(initialCustomerPriceGroups);
     expect(eventSpy).toHaveBeenCalled();
 
-    window.removeEventListener("smriti_customer_price_groups_updated", eventSpy);
+    window.removeEventListener("tileflow_customer_price_groups_updated", eventSpy);
   });
 });

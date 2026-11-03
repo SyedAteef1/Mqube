@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Final Documentation Master Certification Report
 -->
 
-# SMRITI RETAIL OS — FINAL DOCUMENTATION MASTER CERTIFICATION
+# TILEFLOW RETAIL OS — FINAL DOCUMENTATION MASTER CERTIFICATION
 
 **Protocol:** Global Documentation Master Reconciliation & Final Freeze  
 **Canonical Master Index:** [`docs/DOCUMENTATION.md`](file:///F:/SMRITRretailNX/docs/DOCUMENTATION.md)  
 **Date:** 2026-08-17  
-**Verdict:** **SMRITI DOCUMENTATION RECONCILIATION COMPLETE**
+**Verdict:** **TILEFLOW DOCUMENTATION RECONCILIATION COMPLETE**
 
 ---
 
@@ -25,9 +24,9 @@
 ```text
 ================================================================================
 FINAL MASTER CERTIFICATION:
-SMRITI DOCUMENTATION RECONCILIATION COMPLETE
+TILEFLOW DOCUMENTATION RECONCILIATION COMPLETE
 
-Every document across the SMRITI Retail OS repository tells exactly ONE
+Every document across the TILEFLOW Retail OS repository tells exactly ONE
 consistent, unshakeable architectural story backed by directly observable
 database, source code, and test runner evidence.
 ================================================================================
@@ -39,7 +38,7 @@ database, source code, and test runner evidence.
 
 ### 2.1 ARCHITECTURE
 - **Status:** **CORE ARCHITECTURE VERIFIED**
-- **Canonical Model:** Control Plane (`smritisys`) governs identity, auth, routing, and global configs. Dedicated physical databases (`smriti001`, `smriti002`) host operational transactions.
+- **Canonical Model:** Control Plane (`tileflowsys`) governs identity, auth, routing, and global configs. Dedicated physical databases (`tileflow001`, `tileflow002`) host operational transactions.
 - **Reference:** [`docs/architecture/MULTI_COMPANY_2.md`](file:///F:/SMRITRretailNX/docs/architecture/MULTI_COMPANY_2.md)
 
 ### 2.2 MULTI-COMPANY
@@ -49,9 +48,9 @@ database, source code, and test runner evidence.
 
 ### 2.3 PARTY STOCK VISIBILITY (PSV)
 - **Status:** **COMPANY-LOCAL ARCHITECTURE VERIFIED**
-- **Topology:** PSV shadow tables (`psv_parties`, `psv_sku_tracking`, `psv_stock_events`, `psv_stock_balances`) reside directly inside each Company DB (`smriti001`, `smriti002`).
+- **Topology:** PSV shadow tables (`psv_parties`, `psv_sku_tracking`, `psv_stock_events`, `psv_stock_balances`) reside directly inside each Company DB (`tileflow001`, `tileflow002`).
 - **Core Inventory Boundary:** Projections do not mutate core `products.stock` or `stock_movements`.
-- **Shared DB:** No shared operational `SmritiPSV` database exists (Dropped & Superseded).
+- **Shared DB:** No shared operational `TileFlowPSV` database exists (Dropped & Superseded).
 
 ### 2.4 eCOMMERCE & OMNICHANNEL
 - **Status:** **CORE CAPABILITY — PARTIALLY VERIFIED**
@@ -66,9 +65,9 @@ database, source code, and test runner evidence.
 
 ### 2.6 DATABASE & TABLE OWNERSHIP
 - **Status:** **VERIFIED**
-- **Control Plane (`smritisys`):** 284 tables (15 active control plane, 4 central masters, 4 reporting metadata, 172 legacy/scaffolding tables preserved in `RETIRED_IN_SMRITISYS` mode).
-- **Company DB (`smriti001`, `smriti002`):** 99 domain tables each.
-- **No Shared Operational Database:** Neither `SmritiPSV` nor `SmritiEcom` exists as a shared operational store.
+- **Control Plane (`tileflowsys`):** 284 tables (15 active control plane, 4 central masters, 4 reporting metadata, 172 legacy/scaffolding tables preserved in `RETIRED_IN_TILEFLOWSYS` mode).
+- **Company DB (`tileflow001`, `tileflow002`):** 99 domain tables each.
+- **No Shared Operational Database:** Neither `TileFlowPSV` nor `TileFlowEcom` exists as a shared operational store.
 
 ### 2.7 TESTS
 - **Status:** **336 / 336 PASS (100% GREEN, EXIT CODE 0)**
@@ -88,11 +87,11 @@ database, source code, and test runner evidence.
 
 | Domain | Canonical Architecture | Implementation Reality | Certified Status |
 |---|---|---|---|
-| **Control Plane** | `smritisys` | 284 Tables (15 Active, 4 Central Masters, 172 Preserved) | **`Done`** |
-| **Company 001 Operational DB** | `smriti001` | 99 Tables (Core Ledgers + Local PSV) | **`Done`** |
-| **Company 002 Operational DB** | `smriti002` | 99 Tables (Core Ledgers + Local PSV) | **`Done`** |
+| **Control Plane** | `tileflowsys` | 284 Tables (15 Active, 4 Central Masters, 172 Preserved) | **`Done`** |
+| **Company 001 Operational DB** | `tileflow001` | 99 Tables (Core Ledgers + Local PSV) | **`Done`** |
+| **Company 002 Operational DB** | `tileflow002` | 99 Tables (Core Ledgers + Local PSV) | **`Done`** |
 | **Database Router** | `CompanyDatabaseResolver` | Dynamic resolution based on `company_database_registries` | **`Done`** |
-| **Party Stock Visibility (PSV)** | Company-Local Shadow Layer | Shadow tables inside `smriti001` & `smriti002`; SmritiPSV dropped | **`Done`** |
+| **Party Stock Visibility (PSV)** | Company-Local Shadow Layer | Shadow tables inside `tileflow001` & `tileflow002`; TileFlowPSV dropped | **`Done`** |
 | **eCommerce / Omnichannel** | Core Channel Capability | Atomic reservations (`EcomInventoryReservationService`) active; external connectors pending | **`Partially Verified`** |
 | **Barcode (Software)** | PIE & Template Serializer | Formatters, label datasets, unique constraints active | **`Done`** |
 | **Barcode (Physical Printer)** | Zebra / TSC Thermal Printer | Hardware driver staging required | **`Not Runtime Verified`** |
@@ -104,14 +103,14 @@ database, source code, and test runner evidence.
 
 ```text
 ================================================================================
-SMRITI RETAIL OS GLOBAL DOCUMENTATION RECONCILIATION
+TILEFLOW RETAIL OS GLOBAL DOCUMENTATION RECONCILIATION
 FINAL VERDICT:
 ARCHITECTURE FROZEN & CERTIFIED
 IMPLEMENTATION PARTIALLY VERIFIED
 
 - One Canonical Architecture.
-- One Control Plane (smritisys).
-- One Dedicated Database per Company (smriti<Code>).
+- One Control Plane (tileflowsys).
+- One Dedicated Database per Company (tileflow<Code>).
 - Company-Local PSV + eCommerce Ownership = FROZEN ARCHITECTURE
 - eCommerce as a Core Capability.
 - Zero AI Agent Confusion.

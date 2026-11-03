@@ -1,33 +1,32 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sprint 8 — Workspace Functional Parity Matrix
-## Shoper9 → SMRITI Workspace-Level Gap Analysis
+## Shoper9 → TILEFLOW Workspace-Level Gap Analysis
 
 **Date:** 2026-08-24  
-**Source:** Live `smriti_legacy_menu_map` (265 rows, Postgres verified)  
-**Scope:** 22 SMRITI workspaces carrying Shoper9 lineage  
+**Source:** Live `tileflow_legacy_menu_map` (265 rows, Postgres verified)  
+**Scope:** 22 TILEFLOW workspaces carrying Shoper9 lineage  
 
 > **Definition of Parity:** Every MAPPED/MERGED Shoper9 capability has a
-> corresponding SMRITI screen, action, or report. DEPRECATED and NOT_APPLIC
+> corresponding TILEFLOW screen, action, or report. DEPRECATED and NOT_APPLIC
 > entries are explicitly excluded from parity scope.
 
 ---
 
 ## Priority Order (by MAPPED+MERGED count, descending)
 
-| # | SMRITI Workspace | Module | Total | M+M | Pending | Multi | Route Key | SMRITI Component | Parity Status |
+| # | TILEFLOW Workspace | Module | Total | M+M | Pending | Multi | Route Key | TILEFLOW Component | Parity Status |
 |---|---|---|---|---|---|---|---|---|---|
 | 1 | Reports Portal | REPORTS | 48 | 46 | 1 | 0 | `report-designer` | `ReportDesignerTab` | Partially Verified |
 | 2 | Business Ledger | FINANCE | 32 | 29 | 3 | 0 | `business-ledger` | `BusinessLedgerTab` | Partially Verified |
@@ -59,11 +58,11 @@
 
 ## Tier 1 — Reports Portal (48 entries, 46 in scope)
 
-SMRITI workspace: `report-designer` → `ReportDesignerTab`
+TILEFLOW workspace: `report-designer` → `ReportDesignerTab`
 
-### Shoper9 Report Groups → SMRITI Equivalents
+### Shoper9 Report Groups → TILEFLOW Equivalents
 
-| Shoper9 Group | Key Reports | SMRITI Equivalent | Gap |
+| Shoper9 Group | Key Reports | TILEFLOW Equivalent | Gap |
 |---|---|---|---|
 | Sales Reports (MnuNo 410) | Daily Sales Book, Bill-wise, Item-wise, Tax Register | Report Designer — Sales Analytics | Verify axis/filter parity |
 | Cash Reports (MnuNo 460) | Cash Transaction, Till Status, Reconciliation | Business Ledger / Till | Already in Business Ledger |
@@ -84,11 +83,11 @@ SMRITI workspace: `report-designer` → `ReportDesignerTab`
 
 ## Tier 2 — Business Ledger (32 entries, 29 in scope)
 
-SMRITI workspace: `business-ledger` → `BusinessLedgerTab`
+TILEFLOW workspace: `business-ledger` → `BusinessLedgerTab`
 
-### Shoper9 Capability Groups → SMRITI Equivalents
+### Shoper9 Capability Groups → TILEFLOW Equivalents
 
-| Shoper9 Group | Key Functions | SMRITI Equivalent | Gap |
+| Shoper9 Group | Key Functions | TILEFLOW Equivalent | Gap |
 |---|---|---|---|
 | Cash (MnuNo 200) | Cash Payouts, Cash Receipts | Business Ledger — Cash section | Verify both directions |
 | Credit Card Mgmt (250) | Submission, Realisation | Business Ledger — Card section | Submission/realisation workflow |
@@ -101,18 +100,18 @@ SMRITI workspace: `business-ledger` → `BusinessLedgerTab`
 - [ ] Verify `BusinessLedgerTab` has Cash Payouts (debit) and Cash Receipts (credit) entries
 - [ ] Verify Credit Card Submission/Realisation workflow is accessible
 - [ ] Confirm Till Management (Status, Cash Lift, Reconciliation) maps to POS or Ledger
-- [ ] Verify 12 Cash Report equivalents in SMRITI (MnuNo 460)
+- [ ] Verify 12 Cash Report equivalents in TILEFLOW (MnuNo 460)
 - [ ] Franchisee A/C (MnuNo 260) — flag for multi-company design
 
 ---
 
 ## Tier 3 — Governance Masters (31 entries, 25 in scope)
 
-SMRITI workspace: `masters` → `MasterManagementTab`
+TILEFLOW workspace: `masters` → `MasterManagementTab`
 
-### Shoper9 Capability Groups → SMRITI Equivalents
+### Shoper9 Capability Groups → TILEFLOW Equivalents
 
-| Shoper9 Group | Key Functions | SMRITI Equivalent | Gap |
+| Shoper9 Group | Key Functions | TILEFLOW Equivalent | Gap |
 |---|---|---|---|
 | Housekeeping (500) | Open Day, Close Day, Backup, Restore, Compact, Purge | Company Setup / DB Manager | Day open/close critical path |
 | Schedule for Reports (580) | Scheduled report generation | Report Designer — Scheduler | Scheduler confirm |
@@ -126,14 +125,14 @@ SMRITI workspace: `masters` → `MasterManagementTab`
 
 ### Actions Required
 - [ ] `Open Day` / `Close Day` (SR322600/SR309900) → map to shift management
-- [ ] `Year End Process` (SR428100) → SMRITI equivalent?
+- [ ] `Year End Process` (SR428100) → TILEFLOW equivalent?
 - [ ] `Define Sales Promotions` (SR430300) → Loyalty Studio?
 - [ ] `Database Archival` (SR329700) → DB Manager
 - [ ] `HO Chain Stores` — multi-company, defer to PENDING design
 
 ---
 
-## Workspaces with Full SMRITI Coverage (No Gaps Found)
+## Workspaces with Full TILEFLOW Coverage (No Gaps Found)
 
 | Workspace | Reason |
 |---|---|
@@ -147,7 +146,7 @@ SMRITI workspace: `masters` → `MasterManagementTab`
 
 ## Multi-Instance Entries Requiring Special Handling
 
-| Workspace | MnuNo/Opt | Caption | SMRITI Workspace | Action Needed |
+| Workspace | MnuNo/Opt | Caption | TILEFLOW Workspace | Action Needed |
 |---|---|---|---|---|
 | Report Designer | 470/482 | Sales Promotions Report | Report Designer | Multi-tab report session |
 | Report Designer | 650/656 | Schedule Details | Report Designer | Background scheduler tab |
@@ -176,17 +175,17 @@ SMRITI workspace: `masters` → `MasterManagementTab`
 For this sprint, parity is verified when:
 
 1. Each Tier 1/2/3 workspace **action item** above is answered with either:
-   - `VERIFIED` — SMRITI equivalent confirmed in code
+   - `VERIFIED` — TILEFLOW equivalent confirmed in code
    - `GAP FOUND` — capability missing, tracked as backlog item
    - `DEFERRED` — by design (multi-company, deprecated, PENDING)
 
-2. The `smriti_legacy_menu_map.migration_status` for each entry is updated
-   from `MAPPED` → `MERGED` (when SMRITI implementation is confirmed complete)
+2. The `tileflow_legacy_menu_map.migration_status` for each entry is updated
+   from `MAPPED` → `MERGED` (when TILEFLOW implementation is confirmed complete)
    or left as `MAPPED` (when a gap exists and is tracked).
 
 3. A gap registry is produced listing every `GAP FOUND` item with:
    - Shoper9 `MnuNo/MenuOpt`
-   - SMRITI workspace
+   - TILEFLOW workspace
    - Description of missing capability
    - Priority (P1/P2/P3)
 

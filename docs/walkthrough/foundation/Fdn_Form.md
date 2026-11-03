@@ -1,21 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI Form Standardization & Setup Wizard Defaults (v3.16.0)
+# Walkthrough: TILEFLOW Form Standardization & Setup Wizard Defaults (v3.16.0)
 
 ## 1. Purpose
-Provide a single source of truth for Indian-market state mappings, formats, and validations across the setup wizard, registration forms, and import handlers. Update default demo seeding values to Gorakhpur (GIDA) for AITDL NETWORKS.
 
 ## 2. Scope
 - **Shared Constants**: State mappings in `src/constants/indianStates.ts`.
@@ -50,7 +48,6 @@ Using specialized validation functions (`isValidGSTIN`, `isValidPIN`, `isValidMo
 - Replaced manual regex matches in `SalesStudioTab.tsx` and `src/routes/customers.ts` with these helpers.
 - Added validation gates in `SetupWizardTab.tsx` `handleNext` to block navigation if invalid inputs are entered.
 - Added address landmark support to `Supplier`, `User`, and `StoreConfig` types and form views.
-- Updated default demo company configuration to "AITDL NETWORKS" with "Uttar Pradesh" state, "Gorakhpur" city, "273209" pincode, and "Pushpa" (9324117007) contact details.
 - Added a permanent backend integration rule (Rule 5) to `AGENTS.md` specifying that compliance and gateway integrations must be handled strictly inside the FastAPI + Postgres backend, not in the Express layer.
 
 ## 8. Tests Executed
@@ -60,7 +57,7 @@ Executed all unit tests using Vitest.
 
 ### Vitest Unit Test Run Output
 ```text
-> smriti-retail-os@3.15.0 test
+> tileflow-retail-os@3.15.0 test
 > vitest run
 
 
@@ -86,8 +83,8 @@ stdout | src/tests/auth.test.ts
 
 stdout | src/tests/auth.test.ts
 ◇ injected env (0) from .env // tip: ⌘ multiple files { path: ['.env.local', '.env'] }
-[SMRITI Bootstrap] Initializing Platform Abstraction Layer (PAL) with DATABASE_PROVIDER: memory
-[SMRITI SyncEngine] Starting background sync worker (Interval: 30000ms)...
+[TILEFLOW Bootstrap] Initializing Platform Abstraction Layer (PAL) with DATABASE_PROVIDER: memory
+[TILEFLOW SyncEngine] Starting background sync worker (Interval: 30000ms)...
 
  ✓ src/tests/helpers.test.ts (12 tests) 1833ms
        ✓ should verify correct password successfully  968ms
@@ -116,15 +113,14 @@ index 0000000..c361aa1
 +++ b/src/constants/indianStates.ts
 @@ -0,0 +1,57 @@
 +/**
-+ * Project      : SMRITI Retail OS
-+ * Author       : Jawahar Ramkripal Mallah
-+ * Email        : support@smritibooks.com
-+ * Websites     : smritibooks.com | erpnbook.com | aitdl.com
++ * Project      : TILEFLOW Retail OS
++ * Author       : Syed Ateef
++ * Email        : ateef@tileflow.in
 + * Version      : 3.16.0
 + * Created      : 2026-07-12
 + * Modified     : 2026-07-12
-+ * Copyright    : © SMRITIBooks.com. All Rights Reserved.
-+ * License      : Proprietary Commercial Software
++ * Copyright    :  tileflow.in. Open Source - Permissive Use
++ * License      : MIT Open Source License
 + */
 +
 +export interface IndianState {
@@ -183,15 +179,14 @@ index 0000000..9011cd1
 +++ b/src/utils/validators.ts
 @@ -0,0 +1,44 @@
 +/**
-+ * Project      : SMRITI Retail OS
-+ * Author       : Jawahar Ramkripal Mallah
-+ * Email        : support@smritibooks.com
-+ * Websites     : smritibooks.com | erpnbook.com | aitdl.com
++ * Project      : TILEFLOW Retail OS
++ * Author       : Syed Ateef
++ * Email        : ateef@tileflow.in
 + * Version      : 3.16.0
 + * Created      : 2026-07-12
 + * Modified     : 2026-07-12
-+ * Copyright    : © SMRITIBooks.com. All Rights Reserved.
-+ * License      : Proprietary Commercial Software
++ * Copyright    :  tileflow.in. Open Source - Permissive Use
++ * License      : MIT Open Source License
 + */
 +
 +/**
@@ -237,15 +232,14 @@ index 0000000..e4e0345
 +++ b/src/utils/formatters.ts
 @@ -0,0 +1,72 @@
 +/**
-+ * Project      : SMRITI Retail OS
-+ * Author       : Jawahar Ramkripal Mallah
-+ * Email        : support@smritibooks.com
-+ * Websites     : smritibooks.com | erpnbook.com | aitdl.com
++ * Project      : TILEFLOW Retail OS
++ * Author       : Syed Ateef
++ * Email        : ateef@tileflow.in
 + * Version      : 3.16.0
 + * Created      : 2026-07-12
 + * Modified     : 2026-07-12
-+ * Copyright    : © SMRITIBooks.com. All Rights Reserved.
-+ * License      : Proprietary Commercial Software
++ * Copyright    :  tileflow.in. Open Source - Permissive Use
++ * License      : MIT Open Source License
 + */
 +
 +/**
@@ -318,15 +312,13 @@ index 1289d00..2ca8abe 100644
 +++ b/src/types.ts
 @@ -16,9 +16,9 @@
   *
-  * * Websites: aitdl.com | erpnbook.com | smritibooks.com
   *
 - * * Version    : 2.1.2
 + * * Version    : 3.16.0
   * * Created    : 2026-07-10
 - * * Modified   : 2026-07-11
 + * * Modified   : 2026-07-12
-  * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * * License    : Proprietary Commercial Software
+  * * License    : MIT Open Source License
   */
 @@ -632,6 +632,7 @@ export interface User {
    email: string;

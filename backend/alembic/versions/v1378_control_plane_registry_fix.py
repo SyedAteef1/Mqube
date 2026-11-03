@@ -61,7 +61,7 @@ def upgrade() -> None:
             sa.Column("company_code", sa.String(length=50), nullable=False, unique=True),
             sa.Column("psv_enabled", sa.Boolean(), nullable=False, server_default=sa.text("false")),
             sa.Column("psv_mode", sa.String(length=30), nullable=False, server_default="CENTRAL"),
-            sa.Column("psv_database_name", sa.String(length=100), nullable=False, server_default="SmritiPSV"),
+            sa.Column("psv_database_name", sa.String(length=100), nullable=False, server_default="TileFlowPSV"),
             sa.Column("tracked_customer_ids", postgresql.ARRAY(sa.String()), nullable=True, server_default="{}"),
             sa.Column("created_at", sa.DateTime(timezone=True), nullable=True),
             sa.Column("modified_at", sa.DateTime(timezone=True), nullable=True),

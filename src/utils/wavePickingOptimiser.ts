@@ -1,30 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.100.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Warehouse Wave Picking Optimiser
- *
- * Manages batch pick assignments across warehouse zones:
- *   - Wave creation: groups open order lines into a timed pick wave
- *   - Zone-based routing: assigns pick tasks by warehouse zone (A-F)
- *   - Picker assignment: distributes tasks across available pickers
- *   - Pick path optimisation: shortest-path heuristic within zone
- *     (sorts tasks by aisle → bay → level for a serpentine path)
- *   - Progress tracking: per-task status (PENDING → PICKED → SHORTED → SKIPPED)
- *   - Wave completion metrics
- */
-
 export type PickTaskStatus = "PENDING" | "PICKED" | "SHORTED" | "SKIPPED";
 export type WaveStatus     = "OPEN" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED";
 export type Zone           = "A" | "B" | "C" | "D" | "E" | "F";

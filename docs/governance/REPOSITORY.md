@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.25.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Repository Hygiene Audit v1.0
+# TILEFLOW Repository Hygiene Audit v1.0
 
 **Audit Date:** 2026-08-15  
 **Version Target:** v3.25.0  
@@ -19,18 +18,17 @@
 
 ## 1. Executive Summary
 
-This audit records the inventory, classification, and reorganization of root-level artifacts, generated test logs, historical audit reports, and development utility scripts to maintain enterprise repository hygiene and public-facing trust for SMRITI Retail OS v3.25.0.
+This audit records the inventory, classification, and reorganization of root-level artifacts, generated test logs, historical audit reports, and development utility scripts to maintain enterprise repository hygiene and public-facing trust for TILEFLOW Retail OS v3.25.0.
 
 ---
 
-## 2. File Inventory & Classification Matrix
 
 | FILE | CATEGORY | ACTION (KEEP/MOVE/REMOVE) | REASON | RISK |
 |---|---|---|---|---|
 | `CONSIGNMENT_AUDIT.md` | D. ARCHITECTURE / GOVERNANCE DOCUMENTATION | MOVE -> `docs/audits/` | Consignment module historical audit evidence | NONE |
 | `ERP_AUDIT_REPORT.md` | D. ARCHITECTURE / GOVERNANCE DOCUMENTATION | MOVE -> `docs/audits/` | ERP platform historical audit evidence | NONE |
 | `BUSINESS_AUDIT.md` | D. ARCHITECTURE / GOVERNANCE DOCUMENTATION | MOVE -> `docs/audits/` | Business workflow historical audit evidence | NONE |
-| `SMRITI_ERP_AUDIT.md` | D. ARCHITECTURE / GOVERNANCE DOCUMENTATION | MOVE -> `docs/audits/` | ERP audit historical report | NONE |
+| `TILEFLOW_ERP_AUDIT.md` | D. ARCHITECTURE / GOVERNANCE DOCUMENTATION | MOVE -> `docs/audits/` | ERP audit historical report | NONE |
 | `EXISTING_SYSTEM.md` | D. ARCHITECTURE / GOVERNANCE DOCUMENTATION | MOVE -> `docs/audits/` | Legacy system audit report | NONE |
 | `INTERNAL_ROLE.md` | D. ARCHITECTURE / GOVERNANCE DOCUMENTATION | MOVE -> `docs/audits/` | Role dashboards audit evidence | NONE |
 | `MASTER_AUDIT.md` | D. ARCHITECTURE / GOVERNANCE DOCUMENTATION | MOVE -> `docs/audits/` | Master audit master report | NONE |

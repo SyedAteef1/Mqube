@@ -1,35 +1,10 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.18.0
-* Created    : 2026-07-11
-* Modified   : 2026-07-14
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from typing import Optional, List
 from decimal import Decimal
 from datetime import datetime, timezone
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
+from sqlalchemy.orm import selectinload
 from sqlalchemy.exc import IntegrityError
 from fastapi import HTTPException
 
@@ -422,7 +397,9 @@ class PurchaseService:
 
     async def list_purchase_receipts(self) -> list[PurchaseReceipt]:
         res = await self.db.execute(
-            select(PurchaseReceipt).where(
+            select(PurchaseReceipt)
+            .options(selectinload(PurchaseReceipt.items))
+            .where(
                 PurchaseReceipt.company_id == self.tenant.company_id,
                 PurchaseReceipt.branch_id  == self.tenant.branch_id,
                 PurchaseReceipt.is_deleted == False,

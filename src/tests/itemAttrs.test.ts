@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.29.1
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect } from "vitest";
 import { AttributeDefinition, Product } from "../types.ts";
 import { 
@@ -30,7 +16,7 @@ import {
   serializeProductAttributes,
   CORE_STANDARD_ITEM_FIELDS
 } from "../services/unifiedFieldCatalog.ts";
-import { getSmritiItemMasterFields } from "../lib/headerMapping/HeaderAliasRegistry.ts";
+import { getTileFlowItemMasterFields } from "../lib/headerMapping/HeaderAliasRegistry.ts";
 import { HeaderMappingEngine } from "../lib/headerMapping/HeaderMappingEngine.ts";
 
 describe("Item Master Attribute Unification — Authoritative Single Source of Truth", () => {
@@ -106,7 +92,7 @@ describe("Item Master Attribute Unification — Authoritative Single Source of T
       aliases: [a.name, a.label]
     }));
 
-    const allAvailableFields = getSmritiItemMasterFields(dynamicAttrsList);
+    const allAvailableFields = getTileFlowItemMasterFields(dynamicAttrsList);
     const fabricField = allAvailableFields.find(f => f.key === "attr_fabric_type");
 
     expect(fabricField).toBeDefined();
@@ -124,7 +110,7 @@ describe("Item Master Attribute Unification — Authoritative Single Source of T
       }
     ];
 
-    const allAvailableFields = getSmritiItemMasterFields(dynamicAttrsList);
+    const allAvailableFields = getTileFlowItemMasterFields(dynamicAttrsList);
     const engine = new HeaderMappingEngine(allAvailableFields);
 
     const resFabric = engine.mapHeaders(["SKU Code", "Item Name", "Barcode", "Fabric"], "ITEM_MASTER");
@@ -174,7 +160,7 @@ describe("Item Master Attribute Unification — Authoritative Single Source of T
       stockNo: "SKU-OXF-001",
       barcode: "8901234567890",
       product: "Oxford Shirt",
-      brand: "SMRITI",
+      brand: "MQube",
       style: "OXF-01",
       shade: "Blue",
       size: "40",
@@ -191,7 +177,7 @@ describe("Item Master Attribute Unification — Authoritative Single Source of T
 
     const attributesPayload = serializeProductAttributes(primeRow, dynamicDefinitions);
     expect(attributesPayload.fabric_type).toBe("Cotton");
-    expect(attributesPayload.brand).toBe("SMRITI");
+    expect(attributesPayload.brand).toBe("MQube");
   });
 
   // TEST 7 — Excel Persistence
@@ -200,7 +186,7 @@ describe("Item Master Attribute Unification — Authoritative Single Source of T
       code: "SKU-OXF-001",
       name: "Oxford Shirt",
       barcode: "8901234567890",
-      brand: "SMRITI",
+      brand: "MQube",
       category: "Apparel",
       subCategory: "Shirts",
       merchandiseCategory: "Casual",
@@ -222,7 +208,7 @@ describe("Item Master Attribute Unification — Authoritative Single Source of T
     const attributesPayload = serializeProductAttributes(excelRow, dynamicDefinitions);
     expect(attributesPayload.fabric_type).toBe("Cotton");
     expect(attributesPayload.merchandise_category).toBe("Casual");
-    expect(attributesPayload.brand).toBe("SMRITI");
+    expect(attributesPayload.brand).toBe("MQube");
   });
 
   // TEST 8 — Retrieval
@@ -236,7 +222,7 @@ describe("Item Master Attribute Unification — Authoritative Single Source of T
       stock: 100,
       category: "Apparel",
       barcode: "8901234567890",
-      brand: "SMRITI",
+      brand: "MQube",
       color: "Blue",
       size: "40",
       attributes: {

@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.18.0
- * * Created    : 2026-07-11
- * * Modified   : 2026-07-14
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import fs from "fs";
 import path from "path";
 import { pool } from "./pool.js";
@@ -37,23 +12,23 @@ async function seedFromFlatFile() {
   try {
     // Allow skipping seeding via env var for safe restarts
     if (process.env.SKIP_SEED === "true") {
-      console.log("[SMRITI DB] SKIP_SEED=true, skipping flat-file seeding.");
+      console.log("[MQube DB] SKIP_SEED=true, skipping flat-file seeding.");
       return;
     }
     // Check if customer_groups table is already seeded
     const checkRes = await client.query("SELECT COUNT(*) FROM customer_groups");
     const count = parseInt(checkRes.rows[0].count, 10);
     if (count > 0) {
-      console.log("[SMRITI DB] PostgreSQL database already contains data. Seeding skipped.");
+      console.log("[MQube DB] PostgreSQL database already contains data. Seeding skipped.");
       return;
     }
 
     if (!fs.existsSync(DB_FILE)) {
-      console.log("[SMRITI DB] db_store.json seed file not found. Seeding skipped.");
+      console.log("[MQube DB] db_store.json seed file not found. Seeding skipped.");
       return;
     }
 
-    console.log("[SMRITI DB] Seeding PostgreSQL database from db_store.json...");
+    console.log("[MQube DB] Seeding PostgreSQL database from db_store.json...");
     const raw = fs.readFileSync(DB_FILE, "utf8");
     const data = JSON.parse(raw);
 
@@ -222,10 +197,10 @@ async function seedFromFlatFile() {
     // Restore constraints/triggers
     await client.query("SET session_replication_role = 'origin';");
     await client.query("COMMIT");
-    console.log("[SMRITI DB] PostgreSQL database seeded successfully from flat file.");
+    console.log("[MQube DB] PostgreSQL database seeded successfully from flat file.");
   } catch (error) {
     await client.query("ROLLBACK");
-    console.error("[SMRITI DB] Failed to seed PostgreSQL database:", error);
+    console.error("[MQube DB] Failed to seed PostgreSQL database:", error);
     throw error;
   } finally {
     client.release();
@@ -238,7 +213,7 @@ async function seedFromFlatFile() {
 export async function seedDefaultUsers() {
   if (process.env.NODE_ENV === "production") {
     console.warn(
-      "[SMRITI DB] Skipping default seed user creation in production environment. A real admin account must be created via POST /api/v1/auth/bootstrap instead."
+      "[MQube DB] Skipping default seed user creation in production environment. A real admin account must be created via POST /api/v1/auth/bootstrap instead."
     );
     return;
   }
@@ -247,13 +222,13 @@ export async function seedDefaultUsers() {
     // 1. Auto-provision default company and branch entities if missing
     await client.query(
       `INSERT INTO companies (id, uuid, name, gst_number, is_active, is_deleted, created_at, modified_at)
-       VALUES ('comp-default', uuid_generate_v4()::varchar, 'SMRITI Default Company', '27ABCDE1234F1Z5', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+       VALUES ('comp-default', uuid_generate_v4()::varchar, 'MQube Default Company', '27ABCDE1234F1Z5', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
        ON CONFLICT (id) DO NOTHING`
     );
 
     await client.query(
       `INSERT INTO branches (id, uuid, company_id, name, code, is_active, is_deleted, created_at, modified_at)
-       VALUES ('br-default', uuid_generate_v4()::varchar, 'comp-default', 'SMRITI Default Branch', 'BR-DEFAULT', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
+       VALUES ('br-default', uuid_generate_v4()::varchar, 'comp-default', 'MQube Default Branch', 'BR-DEFAULT', true, false, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
        ON CONFLICT (id) DO NOTHING`
     );
 
@@ -274,7 +249,7 @@ export async function seedDefaultUsers() {
       {
         id: "usr-super",
         username: "super",
-        email: "super@smritibooks.com",
+        email: "super@tileflow.in",
         mobile: "9999999999",
         password: process.env.SUPER_ADMIN_PASSWORD || "",
         role: "SYSADMIN",
@@ -309,7 +284,7 @@ export async function seedDefaultUsers() {
       {
         id: "usr-manager",
         username: "manager",
-        email: "manager@smritibooks.com",
+        email: "manager@tileflow.in",
         mobile: "9876543210",
         password: "Password@123",
         role: "MANAGER",
@@ -344,7 +319,7 @@ export async function seedDefaultUsers() {
       {
         id: "usr-cashier",
         username: "cashier",
-        email: "cashier@smritibooks.com",
+        email: "cashier@tileflow.in",
         mobile: "9876543211",
         password: "cashier123",
         role: "CASHIER",
@@ -380,7 +355,7 @@ export async function seedDefaultUsers() {
 
     const missingUsers = defaultUsers.filter((u) => !existingUsernames.has(u.username));
     if (missingUsers.length > 0) {
-      console.log("[SMRITI DB] Seeding default users into PostgreSQL...");
+      console.log("[MQube DB] Seeding default users into PostgreSQL...");
     }
 
     const insertedUsers: string[] = [];
@@ -427,15 +402,15 @@ export async function seedDefaultUsers() {
         .map((u) => u.username)
         .filter((username) => !insertedUsers.includes(username));
       console.warn(
-        `[SMRITI DB] Default user seed validation failed: expected 3 default users, found ${seededCount}. Missing: ${missing.join(", ")}`
+        `[MQube DB] Default user seed validation failed: expected 3 default users, found ${seededCount}. Missing: ${missing.join(", ")}`
       );
     } else if (missingUsers.length === 0) {
-      console.log("[SMRITI DB] Default users already exist in PostgreSQL. Seed skipped.");
+      console.log("[MQube DB] Default users already exist in PostgreSQL. Seed skipped.");
     } else {
-      console.log("[SMRITI DB] Default users seeded successfully in PostgreSQL.");
+      console.log("[MQube DB] Default users seeded successfully in PostgreSQL.");
     }
   } catch (error) {
-    console.error("[SMRITI DB] Failed to seed default users in PostgreSQL:", error);
+    console.error("[MQube DB] Failed to seed default users in PostgreSQL:", error);
   } finally {
     client.release();
   }
@@ -446,22 +421,22 @@ export async function seedDefaultUsers() {
  */
 export async function initializePostgres() {
   try {
-    console.log("[SMRITI DB] Connecting to PostgreSQL pool...");
+    console.log("[MQube DB] Connecting to PostgreSQL pool...");
     await pool.query("SELECT 1"); // Test connection I/O
-    console.log("[SMRITI DB] PostgreSQL connection pool active.");
+    console.log("[MQube DB] PostgreSQL connection pool active.");
 
     try {
       await seedFromFlatFile();
     } catch (e) {
-      console.warn("[SMRITI DB] Flat file seeding warning/error (continuing):", e);
+      console.warn("[MQube DB] Flat file seeding warning/error (continuing):", e);
     }
 
     try {
       await seedDefaultUsers();
     } catch (e) {
-      console.error("[SMRITI DB] Default user seeding failed:", e);
+      console.error("[MQube DB] Default user seeding failed:", e);
     }
   } catch (error) {
-    console.error("[SMRITI DB] PostgreSQL standalone database connection failed:", error);
+    console.error("[MQube DB] PostgreSQL standalone database connection failed:", error);
   }
 }

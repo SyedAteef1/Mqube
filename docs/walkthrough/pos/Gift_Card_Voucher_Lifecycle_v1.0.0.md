@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.87.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Enterprise Gift Card, Voucher Lifecycle & Stored-Value Ledger (v1.0.0-GA)
 
 ## 1. Purpose
-Documents the implementation of the Enterprise Gift Card & Stored-Value Ledger system, enabling card issuance, top-up, OTP-secured redemption, and IndAS 115-compliant breakage revenue recognition in SMRITI Retail OS.
+Documents the implementation of the Enterprise Gift Card & Stored-Value Ledger system, enabling card issuance, top-up, OTP-secured redemption, and IndAS 115-compliant breakage revenue recognition in TILEFLOW Retail OS.
 
 ## 2. Scope
 - `GiftCardEngine` business logic utility covering all card lifecycle operations.
@@ -58,7 +57,7 @@ npm test
 - **Total Frontend Suite**: 60/60 test files, 412/412 tests green in 8.73s.
 
 ## 10. Known Limitations
-- OTP delivery via SMS requires SMRITI SMS gateway integration (not in this version).
+- OTP delivery via SMS requires TILEFLOW SMS gateway integration (not in this version).
 - Breakage calculations are in-memory; production queries PostgreSQL `gift_card_ledger` table.
 
 ## 11. Future Work

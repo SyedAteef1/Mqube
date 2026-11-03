@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.24.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import pytest
 from unittest.mock import patch
@@ -26,10 +13,10 @@ def test_production_mode_fails_on_default_postgres_password():
     """
     env_vars = {
         "ENVIRONMENT": "production",
-        "JWT_SECRET_KEY": "prod-secure-jwt-key-minimum-32-chars-long-smriti",
-        "INTERNAL_SERVICE_KEY": "prod-secure-internal-key-32-chars-long-smriti",
+        "JWT_SECRET_KEY": "prod-secure-jwt-key-minimum-32-chars-long-tileflow",
+        "INTERNAL_SERVICE_KEY": "prod-secure-internal-key-32-chars-long-tileflow",
         "POSTGRES_PASSWORD": "postgres",
-        "DATABASE_URL": "postgresql+asyncpg://postgres:postgres@db.production.local:5432/smritisys"
+        "DATABASE_URL": "postgresql+asyncpg://postgres:postgres@db.production.local:5432/tileflowsys"
     }
     with patch.dict(os.environ, env_vars, clear=False):
         with pytest.raises(ValueError, match="SECURITY FAULT: Production mode requires a dedicated, non-default POSTGRES_PASSWORD"):
@@ -42,10 +29,10 @@ def test_production_mode_fails_on_default_jwt_secret():
     """
     env_vars = {
         "ENVIRONMENT": "production",
-        "JWT_SECRET_KEY": "dev-test-jwt-secret-key-32-chars-long-smriti",
-        "INTERNAL_SERVICE_KEY": "prod-secure-internal-key-32-chars-long-smriti",
+        "JWT_SECRET_KEY": "dev-test-jwt-secret-key-32-chars-long-tileflow",
+        "INTERNAL_SERVICE_KEY": "prod-secure-internal-key-32-chars-long-tileflow",
         "POSTGRES_PASSWORD": "strong-production-password-12345",
-        "DATABASE_URL": "postgresql+asyncpg://postgres:strong-production-password-12345@db.production.local:5432/smritisys"
+        "DATABASE_URL": "postgresql+asyncpg://postgres:strong-production-password-12345@db.production.local:5432/tileflowsys"
     }
     with patch.dict(os.environ, env_vars, clear=False):
         with pytest.raises(ValueError, match="SECURITY FAULT: Production mode requires a dedicated, cryptographically strong JWT_SECRET_KEY"):
@@ -58,10 +45,10 @@ def test_production_mode_fails_on_default_internal_service_key():
     """
     env_vars = {
         "ENVIRONMENT": "production",
-        "JWT_SECRET_KEY": "prod-secure-jwt-key-minimum-32-chars-long-smriti",
+        "JWT_SECRET_KEY": "prod-secure-jwt-key-minimum-32-chars-long-tileflow",
         "INTERNAL_SERVICE_KEY": "dev-test-internal-service-key-32-chars",
         "POSTGRES_PASSWORD": "strong-production-password-12345",
-        "DATABASE_URL": "postgresql+asyncpg://postgres:strong-production-password-12345@db.production.local:5432/smritisys"
+        "DATABASE_URL": "postgresql+asyncpg://postgres:strong-production-password-12345@db.production.local:5432/tileflowsys"
     }
     with patch.dict(os.environ, env_vars, clear=False):
         with pytest.raises(ValueError, match="SECURITY FAULT: Production mode requires a dedicated, cryptographically strong INTERNAL_SERVICE_KEY"):
@@ -74,10 +61,10 @@ def test_production_mode_succeeds_with_strong_credentials():
     """
     env_vars = {
         "ENVIRONMENT": "production",
-        "JWT_SECRET_KEY": "prod-secure-jwt-key-minimum-32-chars-long-smriti",
-        "INTERNAL_SERVICE_KEY": "prod-secure-internal-key-32-chars-long-smriti",
+        "JWT_SECRET_KEY": "prod-secure-jwt-key-minimum-32-chars-long-tileflow",
+        "INTERNAL_SERVICE_KEY": "prod-secure-internal-key-32-chars-long-tileflow",
         "POSTGRES_PASSWORD": "strong-production-password-12345",
-        "DATABASE_URL": "postgresql+asyncpg://smritiapp:strong-production-password-12345@db.production.local:5432/smritisys"
+        "DATABASE_URL": "postgresql+asyncpg://tileflowapp:strong-production-password-12345@db.production.local:5432/tileflowsys"
     }
     with patch.dict(os.environ, env_vars, clear=False):
         loaded = load_settings()
@@ -91,10 +78,10 @@ def test_development_mode_permits_local_credentials():
     """
     env_vars = {
         "ENVIRONMENT": "development",
-        "JWT_SECRET_KEY": "dev-test-jwt-secret-key-32-chars-long-smriti",
+        "JWT_SECRET_KEY": "dev-test-jwt-secret-key-32-chars-long-tileflow",
         "INTERNAL_SERVICE_KEY": "dev-test-internal-service-key-32-chars",
         "POSTGRES_PASSWORD": "postgres",
-        "DATABASE_URL": "postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys"
+        "DATABASE_URL": "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys"
     }
     with patch.dict(os.environ, env_vars, clear=False):
         loaded = load_settings()
@@ -112,10 +99,10 @@ def test_control_database_registry_dynamic_credential_binding():
     dummy_meta = CompanyDatabaseRegistry(
         company_id="c_test",
         database_id="db_test",
-        database_name="smriti001",
+        database_name="tileflow001",
         host_reference="db.cluster.internal",
         port_reference=5432
     )
     with patch.dict(os.environ, env_vars, clear=False):
         url = ControlDatabaseRegistryService.build_connection_url(dummy_meta)
-        assert url == "postgresql+asyncpg://enterprise_user:enterprise_secret_pwd_999@db.cluster.internal:5432/smriti001"
+        assert url == "postgresql+asyncpg://enterprise_user:enterprise_secret_pwd_999@db.cluster.internal:5432/tileflow001"

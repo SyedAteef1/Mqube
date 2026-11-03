@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,14 +8,14 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\COMPANY_CONTROL.md"
 DIST_DIR = r"F:\SMRITRretailNX\dist"
 
 def audit_company_control_center_e2e():
     print("============================================================")
-    print("SMRITI COMPANY CONTROL CENTER — E2E INTEGRATION & AUDIT GATE")
+    print("TILEFLOW COMPANY CONTROL CENTER — E2E INTEGRATION & AUDIT GATE")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -37,13 +24,13 @@ def audit_company_control_center_e2e():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     # 2. Bundle Scan
@@ -56,7 +43,7 @@ def audit_company_control_center_e2e():
                     try:
                         with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
                             content = f.read()
-                        for term in ["postgresql://", "POSTGRES_PASSWORD", "smriti001"]:
+                        for term in ["postgresql://", "POSTGRES_PASSWORD", "tileflow001"]:
                             if term in content:
                                 dist_leaks_cnt += 1
                     except Exception:
@@ -72,21 +59,21 @@ def audit_company_control_center_e2e():
 
     df_db_mgmt = pd.DataFrame([
         {"Component": "Database Resolver", "Function": "CompanyDatabaseResolver server-side mapping", "Status": "IMPLEMENTED"},
-        {"Component": "Naming Standard", "Function": "smriti<A-Z0-9> server-side generation", "Status": "IMPLEMENTED"},
+        {"Component": "Naming Standard", "Function": "tileflow<A-Z0-9> server-side generation", "Status": "IMPLEMENTED"},
         {"Component": "Zero Credentials Boundary", "Function": "FastAPI excludes raw passwords from JSON", "Status": "IMPLEMENTED"}
     ])
 
     df_modules = pd.DataFrame([
-        {"Module": "POS Billing", "Entitlement": "Governed by Control Plane", "Location": "smriti001 DB", "Status": "IMPLEMENTED"},
-        {"Module": "Sales & Invoicing", "Entitlement": "Governed by Control Plane", "Location": "smriti001 DB", "Status": "IMPLEMENTED"},
-        {"Module": "Procurement & GRN", "Entitlement": "Governed by Control Plane", "Location": "smriti001 DB", "Status": "IMPLEMENTED"},
-        {"Module": "E-Commerce", "Entitlement": "Governed by Control Plane", "Location": "smriti001 DB", "Status": "IMPLEMENTED"}
+        {"Module": "POS Billing", "Entitlement": "Governed by Control Plane", "Location": "tileflow001 DB", "Status": "IMPLEMENTED"},
+        {"Module": "Sales & Invoicing", "Entitlement": "Governed by Control Plane", "Location": "tileflow001 DB", "Status": "IMPLEMENTED"},
+        {"Module": "Procurement & GRN", "Entitlement": "Governed by Control Plane", "Location": "tileflow001 DB", "Status": "IMPLEMENTED"},
+        {"Module": "E-Commerce", "Entitlement": "Governed by Control Plane", "Location": "tileflow001 DB", "Status": "IMPLEMENTED"}
     ])
 
     df_config = pd.DataFrame([
-        {"Category": "Billing & POS Config", "Store": "smritisys SystemConfig", "Status": "IMPLEMENTED"},
-        {"Category": "Tax / GST Config", "Store": "smritisys SystemConfig", "Status": "IMPLEMENTED"},
-        {"Category": "E-Way Bill Config", "Store": "smritisys IntegrationOutbox", "Status": "IMPLEMENTED"}
+        {"Category": "Billing & POS Config", "Store": "tileflowsys SystemConfig", "Status": "IMPLEMENTED"},
+        {"Category": "Tax / GST Config", "Store": "tileflowsys SystemConfig", "Status": "IMPLEMENTED"},
+        {"Category": "E-Way Bill Config", "Store": "tileflowsys IntegrationOutbox", "Status": "IMPLEMENTED"}
     ])
 
     df_rbac = pd.DataFrame([
@@ -109,13 +96,13 @@ def audit_company_control_center_e2e():
     ])
 
     df_summary = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (FROZEN / READY)"},
-        {"Metric": "Reference Company Business DB", "Value": "smriti001 (READY for COMP-001)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (FROZEN / READY)"},
+        {"Metric": "Reference Company Business DB", "Value": "tileflow001 (READY for COMP-001)"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Database Mutations Executed", "Value": "0 Mutations"},
         {"Metric": "Frontend Credentials Exposed", "Value": f"{dist_leaks_cnt} Secrets Exposed in dist/"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
         {"Metric": "Overall E2E Readiness Score", "Value": "100 / 100"},
         {"Metric": "Final E2E Classification", "Value": "READY_FOR_E2E_PRODUCTION_DEPLOYMENT"}
     ])
@@ -167,24 +154,23 @@ def audit_company_control_center_e2e():
     # 5. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Company Control Center E2E Specification v1.0
+# TILEFLOW Company Control Center E2E Specification v1.0
 
 **Status: READY_FOR_E2E_PRODUCTION_DEPLOYMENT**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
@@ -199,8 +185,8 @@ HTTP Header: x-company-id: COMP-001
         ▼
 FastAPI Backend (CompanyDatabaseResolver & Control Center APIs)
         │
-        ▼ (Resolves COMP-001 -> smriti001 via smritisys.company_database_registries)
-PostgreSQL Database smriti001
+        ▼ (Resolves COMP-001 -> tileflow001 via tileflowsys.company_database_registries)
+PostgreSQL Database tileflow001
 ```
 
 - **E2E Readiness Score**: **100 / 100**
@@ -211,7 +197,6 @@ PostgreSQL Database smriti001
 
 ---
 
-## 2. Final E2E Classification
 
 ```text
 FINAL STATUS: READY_FOR_E2E_PRODUCTION_DEPLOYMENT
@@ -219,10 +204,10 @@ FINAL STATUS: READY_FOR_E2E_PRODUCTION_DEPLOYMENT
 """)
 
     # 6. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -231,8 +216,8 @@ FINAL STATUS: READY_FOR_E2E_PRODUCTION_DEPLOYMENT
 
     print("\nE2E AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={final_audit}")
 
     if not mutated and dist_leaks_cnt == 0:
         print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")

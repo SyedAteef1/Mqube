@@ -1,12 +1,10 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Version    : 1.0.0
   Created    : 2026-07-18
-  Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  License      : MIT Open Source License
 -->
 
 # Product Identity Engine Implementation Plan

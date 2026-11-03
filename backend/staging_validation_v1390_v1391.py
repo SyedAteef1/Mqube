@@ -19,7 +19,7 @@ DB_CONFIG = {
     'password': 'password',
 }
 
-STAGING_DBS = ['smritisys_stage', 'smriti001_stage']
+STAGING_DBS = ['tileflowsys_stage', 'tileflow001_stage']
 
 def get_conn(dbname):
     """Connect to a database."""
@@ -100,8 +100,8 @@ def validate_migration_result(dbname):
     expected_tables = [
         # v1390
         'company_database_registries',
-        'smriti_permissions',
-        'smriti_audit_log',
+        'tileflow_permissions',
+        'tileflow_audit_log',
         # v1391
         'platform_capabilities',
         'workspace_templates',
@@ -133,20 +133,20 @@ def validate_migration_result(dbname):
             results['tables_missing'].append(table_name)
             results['critical_issues'].append(f"MISSING TABLE: {table_name}")
     
-    # Validate critical constraints on smriti_permissions
-    if table_exists(conn, 'smriti_permissions'):
+    # Validate critical constraints on tileflow_permissions
+    if table_exists(conn, 'tileflow_permissions'):
         cur = conn.cursor()
         # Check for required indexes
         cur.execute("""
             SELECT indexname FROM pg_indexes
-            WHERE tablename = 'smriti_permissions'
-            AND indexname IN ('ix_smriti_permissions_scope_resource_action', 'ix_smriti_permissions_company_branch')
+            WHERE tablename = 'tileflow_permissions'
+            AND indexname IN ('ix_tileflow_permissions_scope_resource_action', 'ix_tileflow_permissions_company_branch')
         """)
         indexes = [r[0] for r in cur.fetchall()]
         cur.close()
         
         if len(indexes) < 2:
-            results['critical_issues'].append(f"MISSING INDEXES on smriti_permissions: found {len(indexes)}, expected 2")
+            results['critical_issues'].append(f"MISSING INDEXES on tileflow_permissions: found {len(indexes)}, expected 2")
     
     # Validate critical constraints on company_database_registries
     if table_exists(conn, 'company_database_registries'):
@@ -224,7 +224,7 @@ def main():
         print("  - Indexes and constraints are in place")
         print()
         print("Next Steps:")
-        print("  1. Create backups of production databases (smritisys, smriti001)")
+        print("  1. Create backups of production databases (tileflowsys, tileflow001)")
         print("  2. Execute Alembic upgrade in production: alembic upgrade head")
         print("  3. Run regression tests in production to verify no data integrity issues")
         print("  4. Monitor application logs for any schema-related errors")

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.8.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import base64
 import datetime
@@ -64,9 +50,9 @@ def _ensure_keys():
         x509.NameAttribute(NameOID.COUNTRY_NAME, "IN"),
         x509.NameAttribute(NameOID.STATE_OR_PROVINCE_NAME, "Maharashtra"),
         x509.NameAttribute(NameOID.LOCALITY_NAME, "Mumbai"),
-        x509.NameAttribute(NameOID.ORGANIZATION_NAME, "SMRITI Systems"),
+        x509.NameAttribute(NameOID.ORGANIZATION_NAME, "TILEFLOW Systems"),
         x509.NameAttribute(NameOID.ORGANIZATIONAL_UNIT_NAME, "Retail OS Security Gateway"),
-        x509.NameAttribute(NameOID.COMMON_NAME, "SMRITI Retail OS QZ Signing Authority"),
+        x509.NameAttribute(NameOID.COMMON_NAME, "MQube QZ Signing Authority"),
     ])
 
     now = datetime.datetime.now(datetime.timezone.utc)

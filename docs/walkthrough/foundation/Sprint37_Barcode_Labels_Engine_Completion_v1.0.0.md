@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Sprint 37: Section 7 Shared Business Engines: Barcode & Labels Engine Completion
 
 ## 1. Purpose
-This sprint delivers the authoritative **SMRITI Barcode & Labels Engine** fulfilling **Blueprint Section 7: Shared Business Engines**. It establishes rigorous symbology formatting (EAN13, UPC_A, CODE128, QR_CODE, CODE39, ITF14), Modulo-10 check digit calculation and validation, multi-DPI thermal label compilation (Zebra ZPL-II, TSC TSPL, ESC/POS), batch label print spooling, and PostgreSQL `PrintHistory` audit ledger tracking.
+This sprint delivers the authoritative **TILEFLOW Barcode & Labels Engine** fulfilling **Blueprint Section 7: Shared Business Engines**. It establishes rigorous symbology formatting (EAN13, UPC_A, CODE128, QR_CODE, CODE39, ITF14), Modulo-10 check digit calculation and validation, multi-DPI thermal label compilation (Zebra ZPL-II, TSC TSPL, ESC/POS), batch label print spooling, and PostgreSQL `PrintHistory` audit ledger tracking.
 
 ---
 
@@ -89,8 +88,8 @@ tests/t_barcodes.py::test_api_barcodes_endpoints PASSED                  [100%]
 
 ## 9. Verification Results
 - `6/6 tests green` in `t_barcodes.py`.
-- `105/105 full platform regression tests green` across all SMRITI modules.
-- SMRITI Naming Guard verified: `0 violations`.
+- `105/105 full platform regression tests green` across all TILEFLOW modules.
+- TILEFLOW Naming Guard verified: `0 violations`.
 - Evidence Level: `A` (Full Automated Suite + Concurrency-Safe DB Test).
 
 ---
@@ -112,4 +111,4 @@ tests/t_barcodes.py::test_api_barcodes_endpoints PASSED                  [100%]
 ---
 
 ## 13. Related RFCs
-- `RFC-BAR-001`: SMRITI Barcode & Label Hardware Printing Specification.
+- `RFC-BAR-001`: TILEFLOW Barcode & Label Hardware Printing Specification.

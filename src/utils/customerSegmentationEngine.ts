@@ -1,32 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.98.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Customer Segmentation & AI Micro-Cohort Engine
- *
- * Implements RFM (Recency-Frequency-Monetary) scoring:
- *   - Recency  : days since last purchase (lower = better, score 1–5)
- *   - Frequency: total transaction count (higher = better, score 1–5)
- *   - Monetary : total lifetime spend (higher = better, score 1–5)
- *
- * Micro-cohort tagging from RFM composite:
- *   Champions, Loyal Customers, Potential Loyalists, New Customers,
- *   At Risk, Can't Lose Them, Hibernating, Lost
- *
- * Targeted promotion eligibility mapping per cohort.
- */
-
 export interface CustomerTransaction {
   customerId: string;
   invoiceNo: string;

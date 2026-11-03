@@ -1,30 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-
-Sprint 12 migration -- three missing tables required for parity:
-
-  1. stock_takes          -- physical stock count sessions (SR323400/SR211000)
-  2. stock_count_lines    -- per-item lines within a stock take session
-  3. sales_invoice_lines  -- invoice line items (SR202000/SR236300/SR214100)
-  4. loyalty_transactions -- points earn/redeem ledger detail
-
-Shoper9 EXE references:
-  SR323400 -- Physical Stock Management (MnuNo 350/351)
-  SR211000 -- Physical vs Computed Stock Report (MnuNo 350/352)
-  SR202000 -- Bill-wise Items (MnuNo 410/415)
-  SR236300 -- Attribute+Size wise Sales (MnuNo 410/422)
-  SR214100 -- Item-wise Sales Returns (MnuNo 410/425)
-"""
-
 # revision identifiers -- must stay <= 32 chars
 revision      = "v1372_sprint12_parity_tables"
 down_revision = "v1371_legacy_menu_map"

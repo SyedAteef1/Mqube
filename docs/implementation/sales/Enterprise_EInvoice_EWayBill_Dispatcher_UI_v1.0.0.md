@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.78.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Enterprise E-Invoice & E-Way Bill Statutory Dispatcher UI (v1.0.0-GA)
 
 ## 1. Objective
-Build an interactive, dual-panel statutory compliance dispatch modal (`ComplianceDispatchModal.tsx`) in SMRITI Sales Studio, enabling 1-click GSTN Schema v1.03 E-Invoice generation (64-char IRN, Ack No, signed QR payload) and NIC E-Way Bill dispatch (12-digit EWB No, transit distance, vehicle details).
+Build an interactive, dual-panel statutory compliance dispatch modal (`ComplianceDispatchModal.tsx`) in TILEFLOW Sales Studio, enabling 1-click GSTN Schema v1.03 E-Invoice generation (64-char IRN, Ack No, signed QR payload) and NIC E-Way Bill dispatch (12-digit EWB No, transit distance, vehicle details).
 
 ## 2. Business Motivation
 Wholesale and B2B retail transactions exceeding statutory turnover thresholds require real-time GSTN E-Invoice registration and NIC E-Way Bill generation before consignment dispatch. Having a dedicated 1-click dispatcher inside Sales Studio ensures seamless compliance.
@@ -78,7 +77,7 @@ Modular modal component that can be disabled or closed cleanly.
 - Run `npm test`.
 
 ## 15. Documentation Impact
-- Update SMRITI Sales Studio User Guide.
+- Update TILEFLOW Sales Studio User Guide.
 
 ## 16. Deployment Plan
 - Build and bundle with frontend client package.
@@ -88,7 +87,7 @@ Completed & Verified (`368/368 frontend tests green`).
 
 ## 18. Related ADRs
 - `ADR-001`: FastAPI Sole System of Record.
-- `ADR-017`: SMRITI Government Integration Platform (SGIP) — E-Invoice & E-Way Bill Gateway.
+- `ADR-017`: TILEFLOW Government Integration Platform (SGIP) — E-Invoice & E-Way Bill Gateway.
 
 ## 19. Related Walkthroughs
 - `docs/walkthrough/sales/Enterprise_EInvoice_EWayBill_Dispatcher_UI_v1.0.0.md`.

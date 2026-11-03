@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.24.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 import uuid
 from decimal import Decimal
@@ -41,7 +27,7 @@ from .compliance_audit import ComplianceAuditService
 
 class OfflineConflictResolutionEngine:
     """
-    SMRITI 5-Tier Domain-Driven Offline Conflict Resolution Engine.
+    TILEFLOW 5-Tier Domain-Driven Offline Conflict Resolution Engine.
     Processes offline transaction streams, enforces strict financial invariants,
     preserves price-at-sale and governance snapshots, deduplicates retries,
     and isolates irreconcilable drifts into a Store Manager Reconciliation Queue.

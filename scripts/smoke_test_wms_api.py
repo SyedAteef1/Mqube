@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import json
@@ -93,7 +79,7 @@ def http_delete(url: str, token: str):
 
 def main():
     print("============================================================")
-    print("SMRITI WMS Phase 1, 2 & 3 Non-Destructive Live API Smoke Test")
+    print("TILEFLOW WMS Phase 1, 2 & 3 Non-Destructive Live API Smoke Test")
     print("============================================================")
 
     created_transfer_id = None
@@ -294,7 +280,7 @@ def main():
     finally:
         print("\n14. Teardown: Performing guaranteed cleanup of smoke-test artifacts in database...")
         import psycopg2
-        conn = psycopg2.connect("dbname=smriti001 user=postgres password=postgres host=localhost port=5432")
+        conn = psycopg2.connect("dbname=tileflow001 user=postgres password=postgres host=localhost port=5432")
         cur = conn.cursor()
         if created_transfer_id:
             cur.execute("DELETE FROM stock_transfer_items WHERE transfer_id = %s;", (created_transfer_id,))
@@ -326,7 +312,7 @@ def main():
         
         conn.commit()
         conn.close()
-        print("   [OK] Teardown complete. Zero residual test rows in smriti001.")
+        print("   [OK] Teardown complete. Zero residual test rows in tileflow001.")
 
     print("\n============================================================")
     print("ALL 13 AUTHENTICATED WMS PHASE 1, 2 & 3 API SMOKE TESTS COMPLETED SUCCESSFULLY!")

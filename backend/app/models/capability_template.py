@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from datetime import datetime, timezone
 from sqlalchemy import (
     Column,
@@ -33,8 +19,8 @@ from ..db.base import Base, BaseEntity
 
 class PlatformCapability(BaseEntity):
     """
-    Control Plane catalog of system-wide industry business capabilities (smritisys).
-    Enforces strict dependency chains across the 26 canonical SMRITI capabilities.
+    Control Plane catalog of system-wide industry business capabilities (tileflowsys).
+    Enforces strict dependency chains across the 26 canonical TILEFLOW capabilities.
     """
     __tablename__ = "platform_capabilities"
 
@@ -51,7 +37,7 @@ class PlatformCapability(BaseEntity):
 
 class WorkspaceTemplate(BaseEntity):
     """
-    Control Plane vertical template defining default feature sets, menus, and UI layouts (smritisys).
+    Control Plane vertical template defining default feature sets, menus, and UI layouts (tileflowsys).
     """
     __tablename__ = "workspace_templates"
 
@@ -67,7 +53,7 @@ class WorkspaceTemplate(BaseEntity):
 
 class TenantCapabilityBinding(BaseEntity):
     """
-    Tenant Data Plane subscription binding activating specific capabilities for a company (smritiXXX).
+    Tenant Data Plane subscription binding activating specific capabilities for a company (tileflowXXX).
     """
     __tablename__ = "tenant_capability_bindings"
     __table_args__ = (
@@ -98,7 +84,7 @@ class FeatureFlag(BaseEntity):
 
 class UserWorkspaceConfig(BaseEntity):
     """
-    Tenant Data Plane user preference customizing workspace templates, pinned widgets, and UI themes (smritiXXX).
+    Tenant Data Plane user preference customizing workspace templates, pinned widgets, and UI themes (tileflowXXX).
     """
     __tablename__ = "user_workspace_configs"
     __table_args__ = (

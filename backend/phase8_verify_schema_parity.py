@@ -2,7 +2,7 @@
 """
 PHASE 8: Schema Parity - Canonical Tables List
 Requirement: Verify specific critical tables exist in all 3 databases
-Expected: All tables present in smritisys, smriti001, and smriti_diag_fresh
+Expected: All tables present in tileflowsys, tileflow001, and tileflow_diag_fresh
 """
 
 import asyncio
@@ -14,7 +14,7 @@ CONTROL_PLANE_TABLES = [
     # Multi-company management
     'companies', 'company_database_registries', 
     # Permissions and audit (control plane)
-    'smriti_permissions', 'smriti_audit_log',
+    'tileflow_permissions', 'tileflow_audit_log',
     # Configuration
     'control_psv_configs', 'company_policy_settings', 'compliance_thresholds',
     # Banking (control plane)
@@ -42,7 +42,7 @@ async def check_database(db_name: str) -> dict:
     engine = create_async_engine(url)
     
     # Determine which tables to check
-    if db_name == 'smritisys':
+    if db_name == 'tileflowsys':
         required_tables = CONTROL_PLANE_TABLES + TENANT_TABLES
         db_type = 'control-plane'
     else:
@@ -99,7 +99,7 @@ async def main():
     
     # Check all three databases
     results = []
-    for db_name in ['smritisys', 'smriti001', 'smriti_diag_fresh']:
+    for db_name in ['tileflowsys', 'tileflow001', 'tileflow_diag_fresh']:
         result = await check_database(db_name)
         results.append(result)
     

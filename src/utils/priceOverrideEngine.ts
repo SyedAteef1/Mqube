@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.108.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Price Override Approval Engine
- *
- * Manager-authorized price exceptions on individual line items:
- *   Deviation Matrix : Configurable percentage bands mapped to authority levels
- *                      (CASHIER, SUPERVISOR, MANAGER, GM, DIRECTOR)
- *   Workflow         : PENDING → APPROVED / REJECTED / AUTO_APPROVED / EXPIRED
- *   Auto-Approve     : Deviations ≤ autoApproveLimitPct are approved instantly
- *   Audit Log        : Immutable entry per request; every approval/rejection
- *                      records approver identity, timestamp, and reason
- */
-
 export type OverrideStatus = "PENDING" | "APPROVED" | "REJECTED" | "AUTO_APPROVED" | "EXPIRED" | "CANCELLED";
 export type AuthorityLevel  = "CASHIER" | "SUPERVISOR" | "MANAGER" | "GM" | "DIRECTOR";
 

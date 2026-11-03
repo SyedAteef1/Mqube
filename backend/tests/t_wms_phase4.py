@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import pytest
 from datetime import datetime, timezone
@@ -26,8 +12,8 @@ from app.models.inventory import (
 from app.services.stock_audit_service import StockAuditService
 from app.api.deps import TenantContext
 
-DB_001_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001"
-DB_002_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smriti002"
+DB_001_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001"
+DB_002_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow002"
 
 
 @pytest.fixture
@@ -448,9 +434,9 @@ async def test_stock_audit_reconciliation_surplus_inward(async_db: AsyncSession,
 
 
 @pytest.mark.asyncio
-async def test_stock_audit_multi_company_isolation_smriti002(async_db_002: AsyncSession, tenant_ctx_002: TenantContext):
+async def test_stock_audit_multi_company_isolation_tileflow002(async_db_002: AsyncSession, tenant_ctx_002: TenantContext):
     """
-    Test that stock audit execution runs cleanly in smriti002 tenant database.
+    Test that stock audit execution runs cleanly in tileflow002 tenant database.
     """
     unique_suffix = uuid.uuid4().hex[:8]
     prod_id = f"prod-comp2-{unique_suffix}"
@@ -458,7 +444,7 @@ async def test_stock_audit_multi_company_isolation_smriti002(async_db_002: Async
     created_audit_id = None
 
     try:
-        # Check warehouse in smriti002 or create fallback
+        # Check warehouse in tileflow002 or create fallback
         wh_res = await async_db_002.execute(
             select(Warehouse).where(Warehouse.company_id == tenant_ctx_002.company_id, Warehouse.is_deleted == False)
         )
@@ -517,7 +503,7 @@ async def test_stock_audit_multi_company_isolation_smriti002(async_db_002: Async
         assert audit.status == "IN_PROGRESS"
         assert len(audit.items) >= 1
 
-        # Scan count in smriti002
+        # Scan count in tileflow002
         scan_res = await service.scan_barcode_increment(
             audit_id=created_audit_id,
             barcode_or_sku=product.barcode,
@@ -527,7 +513,7 @@ async def test_stock_audit_multi_company_isolation_smriti002(async_db_002: Async
         assert scan_res["counted_qty"] == 25.0
         assert scan_res["variance_qty"] == 0.0
 
-        # Reconcile in smriti002
+        # Reconcile in tileflow002
         reconciled = await service.reconcile_and_post_discrepancies(created_audit_id)
         assert reconciled.status == "COMPLETED"
 

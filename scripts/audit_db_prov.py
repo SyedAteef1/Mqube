@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -22,30 +9,30 @@ from openpyxl.utils import get_column_letter
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from backend.app.services.db_provisioner import CompanyDatabaseProvisioner
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_PROVISIONING = r"F:\SMRITRretailNX\docs\architecture\COMPANY_DATABASE.md"
 
 def run_provisioning_audit():
     print("============================================================")
-    print("SMRITI COMPANY DATABASE PROVISIONING ENGINE — AUDIT & DRY-RUN")
+    print("TILEFLOW COMPANY DATABASE PROVISIONING ENGINE — AUDIT & DRY-RUN")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
-    # 1. Connect & Verify smritisys Invariants
+    # 1. Connect & Verify tileflowsys Invariants
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
     # 2. Run Hypothetical Provisioning Dry-Run for Company Code 001
     provisioner = CompanyDatabaseProvisioner(dry_run=True)
-    plan_001 = provisioner.run_dry_run_provisioning("COMP-001", "SMRITI Retail Main Enterprise", company_code="001")
+    plan_001 = provisioner.run_dry_run_provisioning("COMP-001", "TILEFLOW Retail Main Enterprise", company_code="001")
 
     print("\nDRY-RUN PROVISIONING OUTPUT FOR COMPANY CODE 001:")
     print(json.dumps(plan_001, indent=2))
@@ -57,8 +44,8 @@ def run_provisioning_audit():
 
     p_summary = pd.DataFrame([
         {"Metric": "Authoritative Schema Source", "Value": "backend/app/models/ & backend/alembic/"},
-        {"Metric": "Database Name Pattern", "Value": "smriti<3-digit-company-code> (e.g. smriti001)"},
-        {"Metric": "Reserved Database Codes", "Value": "smriti000 (Forbidden), smritisys (Control Plane)"},
+        {"Metric": "Database Name Pattern", "Value": "tileflow<3-digit-company-code> (e.g. tileflow001)"},
+        {"Metric": "Reserved Database Codes", "Value": "tileflow000 (Forbidden), tileflowsys (Control Plane)"},
         {"Metric": "Database Mutations", "Value": "0 (ZERO Real DB Mutations)"},
         {"Metric": "Company DBs Created", "Value": "0 (ZERO Real DBs Created)"},
         {"Metric": "Company DB Schema Migrations", "Value": "0 (DRY_RUN Plan Only)"},
@@ -72,12 +59,12 @@ def run_provisioning_audit():
     sheets_to_add = {
         "PROVISIONING_ENGINE": p_engine_data,
         "COMPANY_CODE_ALLOCATION": pd.DataFrame([{"range": "001-999", "reserved": "000", "concurrency": "SAFE"}]),
-        "DATABASE_NAME_POLICY": pd.DataFrame([{"pattern": "smriti<001-999>", "validation": "Server-side only"}]),
+        "DATABASE_NAME_POLICY": pd.DataFrame([{"pattern": "tileflow<001-999>", "validation": "Server-side only"}]),
         "SCHEMA_INITIALIZATION": pd.DataFrame([{"source": "backend/app/models/", "tables_count": 218}]),
         "PROVISIONING_SECURITY": pd.DataFrame([{"rule": "Client DB name rejected", "status": "ENFORCED"}]),
         "LIFECYCLE": pd.DataFrame([{"states": "PROVISIONING -> READY -> SUSPENDED -> ARCHIVED -> DECOMMISSIONED"}]),
         "BACKUP_RECOVERY": pd.DataFrame([{"strategy": "Pre-migration backup & fail-safe rollback"}]),
-        "PROVISIONING_AUDIT": pd.DataFrame([{"audit_table": "smritisys.smriti_audit_log"}]),
+        "PROVISIONING_AUDIT": pd.DataFrame([{"audit_table": "tileflowsys.tileflow_audit_log"}]),
         "PROVISIONING_TESTS": pd.DataFrame([{"suite": "t_comp_db_prov.py", "status": "5/5 PASSED"}]),
         "PROVISIONING_DECISION": p_summary
     }
@@ -120,24 +107,23 @@ def run_provisioning_audit():
     # 5. Write Documentation Spec: COMPANY_DATABASE.md
     with open(DOC_PROVISIONING, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Company Database Provisioning Engine Specification v1.0
+# TILEFLOW Company Database Provisioning Engine Specification v1.0
 
 **Status: DRY_RUN_PASSED / PENDING_HUMAN_APPROVAL**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Official Naming Standard:** `smriti<3-digit-company-code>`
+**Official Control Plane DB:** `tileflowsys`  
+**Official Naming Standard:** `tileflow<3-digit-company-code>`
 
 ---
 
@@ -146,12 +132,12 @@ def run_provisioning_audit():
 ```text
 Step 1: Validate Company Metadata
 Step 2: Allocate Company Code (001-999)
-Step 3: Generate Database Name (smriti<001-999>)
+Step 3: Generate Database Name (tileflow<001-999>)
 Step 4: Check Database Existence
-Step 5: Create Database Plan (CREATE DATABASE smriti001)
+Step 5: Create Database Plan (CREATE DATABASE tileflow001)
 Step 6: Initialize Schema Plan (218 Tables)
 Step 7: Health Check Plan
-Step 8: Register Database Plan (smritisys.company_database_registries)
+Step 8: Register Database Plan (tileflowsys.company_database_registries)
 Step 9: Assign Company Administrator Plan
 Step 10: Finalize Ready Plan
 ```
@@ -166,10 +152,10 @@ Step 10: Finalize Ready Plan
 """)
 
     # 6. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -177,8 +163,8 @@ Step 10: Finalize Ready Plan
     mutated = (initial_menus != final_menus) or (initial_audit != final_audit)
 
     print("\nPROVISIONING ENGINE AUDIT RESULTS:")
-    print(f"  smriti_menus Count     : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count : Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count     : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count : Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO MUTATIONS VERIFIED")

@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.59.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Sprint 43: P2 PSV, CGE, and PDT Unification
@@ -88,7 +87,7 @@ To implement and unify the three critical foundation capability planes specified
 ---
 
 ## 7. Implementation Summary
-- **Database Schema**: 7 new tables provisioned in tenant databases (`smriti001`, `smriti002`).
+- **Database Schema**: 7 new tables provisioned in tenant databases (`tileflow001`, `tileflow002`).
 - **Engines**: `PSVProjectionService`, `CGEUnifiedPolicyEngine`, `PDTIntelligenceEngine`.
 - **API Surface**: Mounted 10 new REST endpoints under `/api/v1/psv`, `/api/v1/cge-unified`, `/api/v1/pdt`.
 - **Naming Guard**: 100% compliant with `< 22` character filename policy.

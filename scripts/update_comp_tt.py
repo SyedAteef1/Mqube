@@ -1,19 +1,6 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-18
-Modified     : 2026-08-18
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import psycopg2
 
-# Tattly Threads verified canonical details (sourced from actual Tax Invoices in smriti001)
+# Tattly Threads verified canonical details (sourced from actual Tax Invoices in tileflow001)
 COMP_001_UPDATE = {
     "name": "Tattly Threads",
     "address": "Office No. 81, Ibrahim Rehmatullah Road, Beside Jio Gallery, near HP Petrol Pump, Mumbai, Maharashtra - 400003",
@@ -28,7 +15,7 @@ COMP_001_UPDATE = {
     "comp_id": "COMP-001",
 }
 
-conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
 conn.autocommit = False
 cur = conn.cursor()
 
@@ -37,7 +24,6 @@ cur.execute("SELECT id, name, gst_number, is_active FROM companies WHERE id = %s
 before = cur.fetchone()
 print(f"BEFORE: {before}")
 
-# 2. Check if address, email etc columns exist
 cur.execute("""
     SELECT column_name FROM information_schema.columns
     WHERE table_name='companies' ORDER BY ordinal_position;

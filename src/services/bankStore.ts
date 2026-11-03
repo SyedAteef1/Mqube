@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-13
- * Modified     : 2026-08-13
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 export interface BankAccountRecord {
   id: string;
   bankName: string;
@@ -40,7 +28,7 @@ export const DEFAULT_BANK_ACCOUNT: BankAccountRecord = {
 
 export const DEFAULT_SBI_BANK_ACCOUNT = DEFAULT_BANK_ACCOUNT;
 
-const STORAGE_KEY = "smriti_bank_accounts";
+const STORAGE_KEY = "tileflow_bank_accounts";
 
 /**
  * Loads available bank accounts from localStorage fallback or Bank Master

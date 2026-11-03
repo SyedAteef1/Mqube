@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Go-Live Remediation Implementation Plan — v1.0
+# TILEFLOW Go-Live Remediation Implementation Plan — v1.0
 
 ## 1. Objective
 Remediate the 8 primary operational blockers identified in the **Read-Only Forensic Go-Live Readiness Audit**, enabling real business users to complete the entire 3-Day User Training Program workflow (`Master Creation → PO → GRN → Stock → Sales → GST Invoice → Print → E-Way Bill → Dispatch → Return`) directly from the UI without developer intervention, database manipulation, or hardcoded mock data.
 
 ## 2. Business Motivation
-The read-only audit against standard `SMRITI_Retail_OS_3-Day_User_Training_Program_FINAL_v1.1.docx` revealed that while Day 1 Item/Customer Masters and Day 3 Sales Billing/A4 Tax Invoice Printing are fully functional (`PASS`), Day 2 Procurement is `NOT READY` because [`SupplierDashTab.tsx`](file:///F:/SMRITRretailNX/src/components/SupplierDashTab.tsx) displays 100% hardcoded mock data with no UI form to create a Supplier Master. This leaves the `suppliers` database table at 0 rows, blocking PO issuance and GRN material receipt.
+The read-only audit against standard `TILEFLOW_Retail_OS_3-Day_User_Training_Program_FINAL_v1.1.docx` revealed that while Day 1 Item/Customer Masters and Day 3 Sales Billing/A4 Tax Invoice Printing are fully functional (`PASS`), Day 2 Procurement is `NOT READY` because [`SupplierDashTab.tsx`](file:///F:/SMRITRretailNX/src/components/SupplierDashTab.tsx) displays 100% hardcoded mock data with no UI form to create a Supplier Master. This leaves the `suppliers` database table at 0 rows, blocking PO issuance and GRN material receipt.
 
 ## 3. Scope & Safety Constraints
-- **Preserve SMRITI Single Workspace Principle**: All UI updates occur within existing tab layout.
+- **Preserve TILEFLOW Single Workspace Principle**: All UI updates occur within existing tab layout.
 - **No Redesign of Working Modules**: Do NOT touch working modules (`ItemMasterTab.tsx`, `CustomerMasterTab.tsx`, `PosTerminalTab.tsx`, `TaxInvoicePrintPag.tsx`).
 - **Frozen Tattly Threads A4 Format**: Do NOT touch `TaxInvoiceA4.tsx` or corrected Tattly Threads invoices.
 - **No Database Migrations Yet**: Utilize existing SQLAlchemy models and PostgreSQL database tables.

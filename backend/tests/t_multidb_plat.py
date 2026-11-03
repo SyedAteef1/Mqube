@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.26.0
-Created      : 2026-08-14
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import sys
 import pytest
 import asyncio
@@ -33,8 +20,8 @@ from app.models.outbox import IntegrationOutboxEvent
 
 @pytest.mark.asyncio
 async def test_sanitize_company_db_name():
-    assert sanitize_company_db_name("TATTLY") == "Smritibus_TATTLY"
-    assert sanitize_company_db_name("ABC-01") == "Smritibus_ABC01"
+    assert sanitize_company_db_name("TATTLY") == "TileFlowbus_TATTLY"
+    assert sanitize_company_db_name("ABC-01") == "TileFlowbus_ABC01"
 
 
 @pytest.mark.asyncio
@@ -47,17 +34,17 @@ async def test_control_registry_url_building():
     dummy = ControlCompanyDatabase(
         company_id="comp_1",
         database_id="cdb_1",
-        database_name="Smritibus_TATTLY",
+        database_name="TileFlowbus_TATTLY",
         host_reference="localhost",
         port_reference=5432,
     )
     url = ControlDatabaseRegistryService.build_connection_url(dummy)
-    assert url == "postgresql+asyncpg://postgres:postgres@localhost:5432/Smritibus_TATTLY"
+    assert url == "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowbus_TATTLY"
 
 
 @pytest.mark.asyncio
 async def test_router_tenant_isolation_security():
-    user = User(id="u1", email="cashier@smriti.com", role=UserRole.CASHIER)
+    user = User(id="u1", email="cashier@tileflow.com", role=UserRole.CASHIER)
     user.allowed_company_codes = ["TATTLY"]
 
     # Authorized access
@@ -73,12 +60,12 @@ async def test_router_tenant_isolation_security():
 @pytest.mark.asyncio
 async def test_lru_connection_pool_eviction():
     mgr = LRUConnectionPoolManager(max_pools=2, pool_size=1, max_overflow=1)
-    await mgr.get_session_factory("COMP_A", "postgresql+asyncpg://postgres:postgres@localhost:5432/Smritibus_COMPA")
-    await mgr.get_session_factory("COMP_B", "postgresql+asyncpg://postgres:postgres@localhost:5432/Smritibus_COMPB")
+    await mgr.get_session_factory("COMP_A", "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowbus_COMPA")
+    await mgr.get_session_factory("COMP_B", "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowbus_COMPB")
     assert mgr.active_pool_count == 2
 
     # Adding third pool evicts COMP_A
-    await mgr.get_session_factory("COMP_C", "postgresql+asyncpg://postgres:postgres@localhost:5432/Smritibus_COMPC")
+    await mgr.get_session_factory("COMP_C", "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowbus_COMPC")
     assert mgr.active_pool_count == 2
     await mgr.dispose_all()
     assert mgr.active_pool_count == 0

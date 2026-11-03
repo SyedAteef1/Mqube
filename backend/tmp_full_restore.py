@@ -1,9 +1,9 @@
 import io
 import psycopg2
 
-DUMP_PO = r"F:\SMRITRretailNX\backups\smriti001_pre_phase1_po_recon.sql"
+DUMP_PO = r"F:\SMRITRretailNX\backups\tileflow001_pre_phase1_po_recon.sql"
 DUMP_SO = r"F:\SMRITRretailNX\backups\pre_branch_key_reconcile_20260826.sql"
-DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 conn = psycopg2.connect(DB_URL)
 cur = conn.cursor()

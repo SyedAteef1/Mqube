@@ -1,33 +1,28 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.3
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
 # Walkthrough: POS Terminal Deep Review Fixes & Error Boundary — v2.1.3
 
 ## 1. Purpose
 
-This walkthrough documents the implementation of all high- and medium-priority findings from the SMRITI Retail OS Deep Codebase Review (2026-07-11). The changes improve POS accuracy (GST), resilience (Error Boundary), performance (memoization, debounce), session durability (held bills), UX (barcode scanner, customer autocomplete), and memory efficiency (conditional PrintPreviewModal mount).
+This walkthrough documents the implementation of all high- and medium-priority findings from the TILEFLOW Retail OS Deep Codebase Review (2026-07-11). The changes improve POS accuracy (GST), resilience (Error Boundary), performance (memoization, debounce), session durability (held bills), UX (barcode scanner, customer autocomplete), and memory efficiency (conditional PrintPreviewModal mount).
 
 ---
 
@@ -52,7 +47,7 @@ This walkthrough documents the implementation of all high- and medium-priority f
 | File | Change Summary |
 | :--- | :--- |
 | `src/components/PosTerminalTab.tsx` | Per-product GST; sessionStorage held bills; useMemo+debounce filter; useCallback handlers; barcode auto-add; customer datalist; version → v2.1.3 |
-| `src/App.tsx` | SmritiErrorBoundary wrapper for all tabs; conditional PrintPreviewModal mount; version → v2.1.3 |
+| `src/App.tsx` | TileFlowErrorBoundary wrapper for all tabs; conditional PrintPreviewModal mount; version → v2.1.3 |
 
 ---
 
@@ -65,7 +60,7 @@ This walkthrough documents the implementation of all high- and medium-priority f
 `handleHoldBill` now uses a functional `setCart(prev => ...)` pattern. This eliminates the dependency on `cart` and `totalCartValue` in the callback's deps array, breaking a potential stale-closure cycle.
 
 ### 5.3 Error Boundary as Class Component
-React Error Boundaries must be class components (hooks cannot catch render-phase errors). `SmritiErrorBoundary` uses `getDerivedStateFromError` + `componentDidCatch` and auto-resets via `componentDidUpdate` when `tabId` changes (navigating away clears the error state without full page reload).
+React Error Boundaries must be class components (hooks cannot catch render-phase errors). `TileFlowErrorBoundary` uses `getDerivedStateFromError` + `componentDidCatch` and auto-resets via `componentDidUpdate` when `tabId` changes (navigating away clears the error state without full page reload).
 
 ### 5.4 Conditional PrintPreviewModal Mount
 The 112KB `PrintPreviewModal` component was always mounted in the DOM. Wrapping it in `{isPrintPreviewOpen && (...)}` means it is only parsed and mounted when the user triggers a print action — reducing initial JS parse cost.
@@ -79,7 +74,7 @@ The 112KB `PrintPreviewModal` component was always mounted in the DOM. Wrapping 
 | 150ms debounce via `useRef` | Avoids adding a library dependency (`use-debounce`) for a single-file feature |
 | `sessionStorage` for held bills | Persists across F5 refresh but clears when browser tab closes — appropriate for POS session scope |
 | `<datalist>` for autocomplete | Native HTML, zero dependency, keyboard-accessible, works with all barcode input methods |
-| HREP-compliant error UI | Error Boundary message uses business language per SMRITI HREP policy — no stack traces, no technical jargon |
+| HREP-compliant error UI | Error Boundary message uses business language per TILEFLOW HREP policy — no stack traces, no technical jargon |
 
 ---
 
@@ -101,7 +96,7 @@ The 112KB `PrintPreviewModal` component was always mounted in the DOM. Wrapping 
 
 | # | Change |
 |---|---|
-| 8 | `SmritiErrorBoundary` imported and wraps every `renderTab()` call via `renderTabSafe()` |
+| 8 | `TileFlowErrorBoundary` imported and wraps every `renderTab()` call via `renderTabSafe()` |
 | 9 | `FloatingWindowHost` updated to use `renderTabSafe` |
 | 10 | `PrintPreviewModal` wrapped in `{isPrintPreviewOpen && (...)}` conditional |
 
@@ -112,7 +107,7 @@ The 112KB `PrintPreviewModal` component was always mounted in the DOM. Wrapping 
 ```
 Command: npm run lint
 Output:
-> smriti-retail-os@2.1.1 lint
+> tileflow-retail-os@2.1.1 lint
 > tsc --noEmit
 
 (Exit code 0 — zero TypeScript errors)
@@ -126,7 +121,7 @@ Output:
 |---|---|---|
 | TypeScript compilation | **Done** | `tsc --noEmit` exit code 0 |
 | Per-product GST rendering | **Done** | IIFE renders `gstPercentage ?? 18` per cart line |
-| Held bills session persistence | **Done** | `sessionStorage.getItem("smriti_held_bills")` on mount |
+| Held bills session persistence | **Done** | `sessionStorage.getItem("tileflow_held_bills")` on mount |
 | Product filter memoization | **Done** | `useMemo` with `[products, debouncedSearch, selectedCategory]` deps |
 | Error Boundary file created | **Done** | `git diff --stat` shows 98-line new file |
 | PrintPreviewModal conditional | **Done** | `{isPrintPreviewOpen && <PrintPreviewModal ... />}` in App.tsx |
@@ -138,7 +133,7 @@ Output:
 
 - `getCustomers()` in the `<datalist>` calls the in-memory store synchronously. If customers are loaded asynchronously (future backend migration), this must be replaced with a `useEffect`-driven state.
 - The `useCallback` for `handleHoldBill` still references `customerName` from outer scope — if the hold action is triggered milliseconds after a customer name change, the very latest value may not be captured. This is acceptable for POS use (cashier names customer then holds).
-- `SmritiErrorBoundary` does not currently log errors to a remote error tracking service (e.g., Sentry). This is recommended as future work.
+- `TileFlowErrorBoundary` does not currently log errors to a remote error tracking service (e.g., Sentry). This is recommended as future work.
 
 ---
 
@@ -150,7 +145,7 @@ Output:
 | 🔴 High | Migrate flat JSON DB to SQLite (`better-sqlite3`) |
 | 🔴 High | Replace prop-drilling from `App.tsx` with Zustand global store |
 | 🔴 High | Add zod input validation to all API endpoints |
-| 🟡 Medium | Add remote error logging to `SmritiErrorBoundary` |
+| 🟡 Medium | Add remote error logging to `TileFlowErrorBoundary` |
 | 🟡 Medium | Add unit tests (Vitest) for POS cart logic |
 | 🟡 Medium | Move auth to HttpOnly cookies |
 | 🟢 Low | Add quick discount field at POS cart level |

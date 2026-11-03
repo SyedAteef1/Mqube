@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-07-12
- * Modified     : 2026-07-13
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import fs from "fs";
 import path from "path";
 import { hashPassword } from "../lib/helpers.js";
@@ -176,7 +163,7 @@ export function loadDb() {
     }
   } catch (e) {
     console.warn("\n" + "=".repeat(80));
-    console.warn("⚠️  SMRITI SYSTEM WARNING: FLAT-FILE DATABASE PARSE FAILURE  ⚠️");
+    console.warn("⚠️  MQube SYSTEM WARNING: FLAT-FILE DATABASE PARSE FAILURE  ⚠️");
     console.warn("The database JSON file on disk was corrupted or unreadable.");
     console.warn("Error message:", e instanceof Error ? e.message : String(e));
     console.warn("Resetting and overwriting local disk database with current in-memory seeded state.");
@@ -232,7 +219,7 @@ export function migrateUsersAndSeedOrganizationData() {
   // Seed default users if they don't exist (local/dev only)
   if (process.env.NODE_ENV === "production") {
     console.warn(
-      "[SMRITI Store] Skipping default seed user creation in production environment. A real admin account must be created via POST /api/v1/auth/bootstrap instead."
+      "[MQube Store] Skipping default seed user creation in production environment. A real admin account must be created via POST /api/v1/auth/bootstrap instead."
     );
   } else {
     if (!users.find(u => u.username === "super")) {
@@ -251,7 +238,7 @@ export function migrateUsersAndSeedOrganizationData() {
         gender: "Male",
         dateOfBirth: "1980-01-01",
         mobile: "9999999999",
-        email: "super@smritibooks.com",
+        email: "super@tileflow.in",
         emergencyContact: "",
         address: "System Root",
         city: "Mumbai",
@@ -296,7 +283,7 @@ export function migrateUsersAndSeedOrganizationData() {
         gender: "Male",
         dateOfBirth: "1985-05-15",
         mobile: "9876543210",
-        email: "manager@smritibooks.com",
+        email: "manager@tileflow.in",
         emergencyContact: "",
         address: "HQ Store Area",
         city: "Mumbai",
@@ -341,7 +328,7 @@ export function migrateUsersAndSeedOrganizationData() {
         gender: "Female",
         dateOfBirth: "1992-08-20",
         mobile: "9876543211",
-        email: "cashier@smritibooks.com",
+        email: "cashier@tileflow.in",
         emergencyContact: "",
         address: "Billing Counter 1",
         city: "Mumbai",
@@ -375,9 +362,9 @@ export function migrateUsersAndSeedOrganizationData() {
   if (companies.length === 0) {
     companies.push({
       id: "comp-default",
-      code: "SMRITI_IND",
-      name: "SMRITI India Retail Pvt Ltd",
-      abbr: "SMRITI",
+      code: "TILEFLOW_IND",
+      name: "MQube India Retail Pvt Ltd",
+      abbr: "MQube",
       tax_id: "27AAAAA1111A1Z1",
       currency: "INR",
       address: "Corporate Headquarters, Mumbai",
@@ -583,7 +570,7 @@ export function migrateUsersAndSeedOrganizationData() {
         customerGroupId: "CG-Branches",
         name: "Branch - South Delhi",
         mobile: "9911223344",
-        email: "southdelhi@smriti.com",
+        email: "southdelhi@tileflow.com",
         outstanding: 0,
         status: "Active",
         createdDate: "2026-07-10",
@@ -594,7 +581,7 @@ export function migrateUsersAndSeedOrganizationData() {
         customerGroupId: "CG-Franchises",
         name: "Franchise - Mumbai Central",
         mobile: "9922334455",
-        email: "mumbaifranchise@smriti.com",
+        email: "mumbaifranchise@tileflow.com",
         outstanding: 120000,
         status: "Active",
         createdDate: "2026-07-10",

@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-24
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 from sqlalchemy import Column, String, SmallInteger, Integer, Boolean, DateTime, Text, Numeric, ForeignKey, func
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import relationship
@@ -18,11 +5,11 @@ from app.db.base import Base
 
 
 # ---------------------------------------------------------------------------
-# Existing models — Theme & Workspace (smritisys)
+# Existing models — Theme & Workspace (tileflowsys)
 # ---------------------------------------------------------------------------
 
-class SmritiTheme(Base):
-    __tablename__ = "smriti_themes"
+class TileFlowTheme(Base):
+    __tablename__ = "tileflow_themes"
 
     id = Column(String(50), primary_key=True)
     tenant_id = Column(String(50), nullable=True)
@@ -37,14 +24,14 @@ class SmritiTheme(Base):
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
     modified_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now(), onupdate=func.now())
 
-    variants = relationship("SmritiThemeVariant", back_populates="theme", cascade="all, delete-orphan")
+    variants = relationship("TileFlowThemeVariant", back_populates="theme", cascade="all, delete-orphan")
 
 
-class SmritiThemeVariant(Base):
-    __tablename__ = "smriti_theme_variants"
+class TileFlowThemeVariant(Base):
+    __tablename__ = "tileflow_theme_variants"
 
     id = Column(String(50), primary_key=True)
-    theme_id = Column(String(50), ForeignKey("smriti_themes.id", ondelete="CASCADE"), nullable=False)
+    theme_id = Column(String(50), ForeignKey("tileflow_themes.id", ondelete="CASCADE"), nullable=False)
     variant = Column(String(30), nullable=False)  # 'light', 'dark', 'navy', 'high_contrast'
     primary_color = Column(String(20), nullable=False)
     secondary_color = Column(String(20), nullable=False)
@@ -60,11 +47,11 @@ class SmritiThemeVariant(Base):
     is_default = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())
 
-    theme = relationship("SmritiTheme", back_populates="variants")
+    theme = relationship("TileFlowTheme", back_populates="variants")
 
 
-class SmritiWorkspaceProfile(Base):
-    __tablename__ = "smriti_workspace_profiles"
+class TileFlowWorkspaceProfile(Base):
+    __tablename__ = "tileflow_workspace_profiles"
 
     id = Column(String(50), primary_key=True)
     tenant_id = Column(String(50), nullable=True)
@@ -73,7 +60,7 @@ class SmritiWorkspaceProfile(Base):
     persona = Column(String(50), nullable=False)  # 'SYSADMIN', 'CASHIER', 'STORE_MANAGER', 'ACCOUNTANT'
     default_workspace_id = Column(String(50), nullable=False)
     layout_json = Column(Text, nullable=True)
-    theme = Column(String(50), nullable=False, default="theme-smriti-default")
+    theme = Column(String(50), nullable=False, default="theme-tileflow-default")
     shortcuts_json = Column(Text, nullable=True)
     is_default = Column(Boolean, nullable=False, default=False)
     is_active = Column(Boolean, nullable=False, default=True)
@@ -85,14 +72,14 @@ class SmritiWorkspaceProfile(Base):
 
 
 # ---------------------------------------------------------------------------
-# New models — UI/Experience Engine (smritisys) — v1368_ui_experience_engine
+# New models — UI/Experience Engine (tileflowsys) — v1368_ui_experience_engine
 # Blueprint §11: screen_definitions, field_definitions, action_definitions,
 #                layout_definitions, icon_registry
 # ---------------------------------------------------------------------------
 
 class ScreenDefinition(Base):
     """
-    Canonical layout and metadata of each named screen/view in smritisys.
+    Canonical layout and metadata of each named screen/view in tileflowsys.
     Governs SIMPLE / HYBRID / ADVANCED persona contexts.
     Control Plane defines WHAT; application code renders HOW.
     """
@@ -137,7 +124,7 @@ class FieldDefinition(Base):
     """
     Individual field metadata: type, label, validation, visibility.
     Fields are referenced by screen_definitions via layout_config JSONB.
-    Stored in smritisys — governs product-level field configuration.
+    Stored in tileflowsys — governs product-level field configuration.
     """
     __tablename__ = "field_definitions"
 
@@ -184,7 +171,7 @@ class ActionDefinition(Base):
     """
     Button/link action metadata available on screens and toolbars.
     Governs visibility per role/capability. Not executable business logic.
-    Stored in smritisys — application code implements the action handler.
+    Stored in tileflowsys — application code implements the action handler.
     """
     __tablename__ = "action_definitions"
 
@@ -225,9 +212,9 @@ class ActionDefinition(Base):
 
 class LayoutDefinition(Base):
     """
-    Named reusable layout templates for SMRITI screens.
+    Named reusable layout templates for TILEFLOW screens.
     Referenced by ScreenDefinition.layout_config.
-    Stored in smritisys Control Plane.
+    Stored in tileflowsys Control Plane.
     """
     __tablename__ = "layout_definitions"
 
@@ -255,9 +242,9 @@ class LayoutDefinition(Base):
 
 class IconRegistry(Base):
     """
-    Canonical icon catalogue for the SMRITI platform.
+    Canonical icon catalogue for the TILEFLOW platform.
     Decouples icon key references from application source code.
-    Stored in smritisys Control Plane — Blueprint §11 icon_registry.
+    Stored in tileflowsys Control Plane — Blueprint §11 icon_registry.
     """
     __tablename__ = "icon_registry"
 

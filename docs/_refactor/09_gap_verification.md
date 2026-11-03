@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 4.1.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # 09. Gap Verification & Live Database Audit
@@ -37,7 +36,7 @@
 
 ## 2. Live Database Verification (Phase 1 & Phase 2)
 
-### A. Database: `smritisys` (System of Record)
+### A. Database: `tileflowsys` (System of Record)
 ```sql
 -- 1. Columns on products table
 SELECT column_name, data_type, is_nullable
@@ -80,7 +79,7 @@ SELECT COUNT(*) FROM report_flat_inventory_sales WHERE is_deleted = false;
 -- Output: 588 active rows returned.
 ```
 
-### B. Database: `smriti001` (Operational / Invoices)
+### B. Database: `tileflow001` (Operational / Invoices)
 - Additive migration applied: `variant_id` ensured, `idx_products_variant_id` ensured, `uq_variant_identity_active` ensured (0 duplicates), `report_flat_inventory_sales` view ensured (588 active rows).
 
 ---

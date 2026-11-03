@@ -1,19 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.28.0
- * Created      : 2026-07-10
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Target UI    : BI & Reporting Center (Fiori Horizon Inspired Light Theme)
- */
-
 import React, { useState, useEffect } from "react";
 import { apiFetchV1 } from "../lib/apiFetchV1";
 import { isFieldGloballyVisible } from "../services/unifiedFieldCatalog.ts";
@@ -25,7 +9,7 @@ import {
   ResponsiveContainer, AreaChart, Area, BarChart, Bar, XAxis, YAxis,
   Tooltip as RechartsTooltip, CartesianGrid, LineChart, Line, PieChart, Pie, Cell
 } from "recharts";
-import { SmritiScrollArea } from "./SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.tsx";
 import {
   MessageCircle, Mail, Printer, FileBarChart, LayoutGrid, Settings2, ShieldCheck,
   Clock, Download, Search, Plus, Save, Filter, Database, MoreVertical,
@@ -36,7 +20,7 @@ import {
 } from "lucide-react";
 import { SalesOrderA4 } from "./templates/SalesOrderA4";
 import { SalesOrderMatrixEntry } from "./sales/SalesOrderMatrixEntry";
-import { SmritiReportEngine } from "./reports/SmritiReportEngine";
+import { TileFlowReportEngine } from "./reports/TileFlowReportEngine";
 
 // Types for drill down context
 interface DrilldownBreadcrumb {
@@ -87,7 +71,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
 
   // Scheduling forms
   const [scheduleForm, setScheduleForm] = useState({
-    recipientEmail: "manager@smritibooks.com",
+    recipientEmail: "manager@tileflow.in",
     frequency: "Daily",
     format: "PDF",
     cron: "0 8 * * *"
@@ -96,10 +80,10 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
 
   // Sharing form
   const [shareForm, setShareForm] = useState({
-    email: "recipient@smritibooks.com",
+    email: "recipient@tileflow.in",
     phone: "919876543210",
-    subject: "SMRITI Operational BI Report Summary",
-    message: "Hi, please find attached the requested summary report generated from SMRITI Retail OS."
+    subject: "MQube Operational BI Report Summary",
+    message: "Hi, please find attached the requested summary report generated from MQube."
   });
 
   // Advanced Table Filters
@@ -289,8 +273,8 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
       setSelectedReport(null);
     };
 
-    window.addEventListener("smriti_report_studio_select", handleStudioSelect);
-    return () => window.removeEventListener("smriti_report_studio_select", handleStudioSelect);
+    window.addEventListener("tileflow_report_studio_select", handleStudioSelect);
+    return () => window.removeEventListener("tileflow_report_studio_select", handleStudioSelect);
   }, []);
 
   const showNotification = (type: "success" | "error" | "info", text: string) => {
@@ -300,7 +284,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
 
   const handleOpenInGoogleSheets = async () => {
     try {
-      const moduleTitle = selectedReport?.title || "SMRITI Report";
+      const moduleTitle = selectedReport?.title || "MQube Report";
       let columns: any[] = [];
       let rows: any[] = [];
 
@@ -421,7 +405,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
       }
     } catch (e) {
       console.error(e);
-      showNotification("error", "Failed to retrieve reports metadata from SMRITI registry.");
+      showNotification("error", "Failed to retrieve reports metadata from MQube registry.");
     } finally {
       setLoading(false);
       setLastRefreshedAt(new Date());
@@ -493,7 +477,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
     if (upperFormat === "XLSX" && selectedReport?.id === "RPT-TAX-001") {
       const link = document.createElement("a");
       link.href = "/api/v1/reports/export/tax-invoices-excel";
-      link.download = "SMRITI_Statutory_Tax_Invoices_Master.xlsx";
+      link.download = "TILEFLOW_Statutory_Tax_Invoices_Master.xlsx";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -504,7 +488,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
     if (upperFormat === "XLSX" && selectedReport?.id === "RPT-SO-008") {
       const link = document.createElement("a");
       link.href = "/api/v1/reports/sales-orders/export-excel";
-      link.download = "SMRITI_Sales_Orders_Master_Register.xlsx";
+      link.download = "TILEFLOW_Sales_Orders_Master_Register.xlsx";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -515,7 +499,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
     if (upperFormat === "CSV" && selectedReport?.id === "RPT-SO-008") {
       const link = document.createElement("a");
       link.href = "/api/v1/reports/sales-orders/export-csv";
-      link.download = "SMRITI_Sales_Orders_Flat.csv";
+      link.download = "TILEFLOW_Sales_Orders_Flat.csv";
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
@@ -529,7 +513,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
       return;
     }
 
-    // 3. Dynamic Data Extraction across all SMRITI Report states
+    // 3. Dynamic Data Extraction across all MQube Report states
     let activeData: any[] = [];
 
     if (genericReportData) {
@@ -651,7 +635,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
       data: reportRows,
       metadata: {
         moduleTitle: selectedReport?.title || "Report Export",
-        companyName: "SMRITI Enterprise",
+        companyName: "MQube Enterprise",
         searchTerm: drillFilter || undefined,
         exportTimestamp: new Date().toLocaleString(),
       },
@@ -761,7 +745,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
 
   return (
     <div className="space-y-6 select-none">
-      {/* SMRITI Global Notification Banner */}
+      {/* MQube Global Notification Banner */}
       <AnimatePresence>
         {notifMessage && (
           <motion.div
@@ -785,7 +769,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
       <div className="bg-theme-surface-1 border border-theme-border rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-3 shadow-xs">
         <div>
           <div className="flex items-center space-x-2">
-            <h2 className="text-lg font-bold text-theme-body tracking-tight">SMRITI BI &amp; Reporting Center</h2>
+            <h2 className="text-lg font-bold text-theme-body tracking-tight">MQube BI &amp; Reporting Center</h2>
             <span className="bg-blue-50 text-blue-700 border border-blue-200 text-[10px] font-bold px-2 py-0.5 rounded font-mono uppercase">
               Studios v2.2
             </span>
@@ -884,7 +868,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
                     </h3>
                   </div>
                   <p className="text-xs text-theme-muted font-mono">
-                    {studios[activeStudio]?.description} Access checked under SMRITI RBAC guidelines.
+                    {studios[activeStudio]?.description} Access checked under MQube RBAC guidelines.
                   </p>
                 </div>
 
@@ -951,7 +935,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
                   )}
                 </div>
 
-                {/* SMRITI Charts Engine Section */}
+                {/* MQube Charts Engine Section */}
                 <div className="bg-theme-surface-1 border border-theme-border rounded-xl p-4 shadow-xs">
                   <div className="flex items-center justify-between mb-3 border-b border-theme-divider pb-2.5">
                     <div>
@@ -1170,7 +1154,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
           </div>
       )}
 
-      {/* SMRITI ACTIVE REPORT VIEWER (Genuinely interactive tables with mock drill-down state) */}
+      {/* MQube ACTIVE REPORT VIEWER (Genuinely interactive tables with mock drill-down state) */}
       {activeView === "viewer" && selectedReport && (
         <div className="space-y-6">
 
@@ -1281,7 +1265,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
                 onClick={() => {
                   recordAuditAction("PRINT", "reports", selectedReport?.id || "RPT-GEN", `Report printed: ${selectedReport?.title || "Standard Report"}`);
                   window.print();
-                  showNotification("success", "SMRITI print compiler dispatched. Readying thermal layout spool.");
+                  showNotification("success", "MQube print compiler dispatched. Readying thermal layout spool.");
                 }}
                 className="px-3 py-2 bg-theme-surface-2 border border-theme-divider hover:border-blue-500/30 text-theme-body rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer"
               >
@@ -1539,8 +1523,8 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
                               gross: `₹${(parseFloat(line.stock_value) * 1.18).toFixed(0)}`
                             }))
                           : [
-                              { name: "SMRITI Classic Cotton T-Shirt", code: "TSH-COT-N-M", styleCode: "TSH-01", qty: 4, base: "₹677.12", gst: "18%", tax: "₹487.52", gross: "₹3,196" },
-                              { name: "SMRITI Heritage Hoodie", code: "SMR-HD-CH-L", styleCode: "HD-02", qty: 2, base: "₹2,117.80", gst: "18%", tax: "₹762.40", gross: "₹4,998" }
+                              { name: "MQube Classic Cotton T-Shirt", code: "TSH-COT-N-M", styleCode: "TSH-01", qty: 4, base: "₹677.12", gst: "18%", tax: "₹487.52", gross: "₹3,196" },
+                              { name: "MQube Heritage Hoodie", code: "SMR-HD-CH-L", styleCode: "HD-02", qty: 2, base: "₹2,117.80", gst: "18%", tax: "₹762.40", gross: "₹4,998" }
                             ]
                         ).map((row: any, i: number) => (
                           <tr key={i} className="border-b border-theme-divider/40 hover:bg-theme-surface-hover">
@@ -2245,7 +2229,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
                       Statutory GST Tax Invoices Master Register
                     </h5>
                     <p className="text-[10px] text-theme-muted font-mono mt-0.5">
-                      Seller: Tattly Threads (27AAXFT2508H1ZR) • Customer: Reliance Retail Limited • GST Rate: 5.00%
+                      Seller: MQube Tiles & Sanitaryware (27AAXFT2508H1ZR) • Customer: Reliance Retail Limited • GST Rate: 5.00%
                     </p>
                   </div>
                   <a
@@ -2558,7 +2542,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
                       Detailed Line-Item Sales Orders Register
                     </h5>
                     <p className="text-[11px] text-theme-muted font-mono mt-0.5">
-                      Seller: Tattly Threads (27AAXFT2508H1ZR) • Customer: Reliance Retail Limited • GST Rate: 5.00%
+                      Seller: MQube Tiles & Sanitaryware (27AAXFT2508H1ZR) • Customer: Reliance Retail Limited • GST Rate: 5.00%
                     </p>
                   </div>
                   <div className="flex items-center gap-2 flex-wrap">
@@ -3381,7 +3365,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
               "RPT-SO-007",
             ].includes(selectedReport.id) && (
               <div className="p-4">
-                <SmritiReportEngine
+                <TileFlowReportEngine
                   reportId={selectedReport.id}
                   reportTitle={selectedReport.title}
                   reportCategory={selectedReport.category || "Operational Intelligence"}
@@ -3451,7 +3435,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
                     required
                     value={scheduleForm.recipientEmail}
                     onChange={(e) => setScheduleForm({...scheduleForm, recipientEmail: e.target.value})}
-                    placeholder="manager@smritibooks.com"
+                    placeholder="manager@tileflow.in"
                     className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-3 py-2 text-theme-body focus:outline-none focus:border-blue-500"
                     disabled={activeRole === "Cashier"}
                   />
@@ -3596,7 +3580,7 @@ export const ReportDesignerTab: React.FC<ReportDesignerTabProps> = ({ currentUse
                         required
                         value={shareForm.email}
                         onChange={(e) => setShareForm({...shareForm, email: e.target.value})}
-                        placeholder="auditor@smritibooks.com"
+                        placeholder="auditor@tileflow.in"
                         className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-3 py-2 text-theme-body focus:outline-none focus:border-blue-500"
                         disabled={activeRole === "Cashier"}
                       />

@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-07-10
- * Modified     : 2026-07-13
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   Plus, Settings, Trash2, Edit3, Sliders, Check, 
@@ -274,9 +261,9 @@ export const AttributeManagerSection: React.FC<AttributeManagerSectionProps> = (
       <div className="bg-theme-surface-2 border border-blue-900/40 p-4 rounded-xl flex items-start space-x-3 text-blue-300">
         <Info className="shrink-0 mt-0.5" size={16} />
         <div className="text-xs space-y-1">
-          <p className="font-bold">SMRITI Data-Driven Extensible Architecture</p>
+          <p className="font-bold">MQube Data-Driven Extensible Architecture</p>
           <p className="text-theme-muted leading-relaxed">
-            Avoid hardcoding columns. Define attributes, order them inside groups, and let SMRITI auto-generate item codes, validation spreadsheets, size matrix grids, and aggregate reports automatically!
+            Avoid hardcoding columns. Define attributes, order them inside groups, and let MQube auto-generate item codes, validation spreadsheets, size matrix grids, and aggregate reports automatically!
           </p>
         </div>
       </div>
@@ -365,7 +352,7 @@ export const AttributeManagerSection: React.FC<AttributeManagerSectionProps> = (
                     value={defName}
                     onChange={(e) => setDefName(e.target.value)}
                     placeholder="e.g. sole_type"
-                    className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-2.5 py-1.5 text-xs text-theme-body placeholder-[#8892a4] focus:outline-none focus:border-blue-500 font-mono"
+                    className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-2.5 py-1.5 text-xs text-theme-body placeholder-[#919191] focus:outline-none focus:border-blue-500 font-mono"
                   />
                 </div>
                 <div>
@@ -376,7 +363,7 @@ export const AttributeManagerSection: React.FC<AttributeManagerSectionProps> = (
                     value={defLabel}
                     onChange={(e) => setDefLabel(e.target.value)}
                     placeholder="e.g. Sole Material"
-                    className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-2.5 py-1.5 text-xs text-theme-body placeholder-[#8892a4] focus:outline-none focus:border-blue-500"
+                    className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-2.5 py-1.5 text-xs text-theme-body placeholder-[#919191] focus:outline-none focus:border-blue-500"
                   />
                 </div>
               </div>
@@ -429,7 +416,7 @@ export const AttributeManagerSection: React.FC<AttributeManagerSectionProps> = (
                     value={defValues}
                     onChange={(e) => setDefValues(e.target.value)}
                     placeholder="e.g. Rubber, PU, PVC, Leather"
-                    className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-2.5 py-1.5 text-xs text-theme-body placeholder-[#8892a4] focus:outline-none focus:border-blue-500 font-mono"
+                    className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-2.5 py-1.5 text-xs text-theme-body placeholder-[#919191] focus:outline-none focus:border-blue-500 font-mono"
                   />
                 </div>
               )}

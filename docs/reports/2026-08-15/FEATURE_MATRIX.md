@@ -1,11 +1,11 @@
-# SMRITI Feature & Capabilities Matrix
+# TILEFLOW Feature & Capabilities Matrix
 
 *Generated: 2026-08-15T13:48:27.035Z*
 
 | Module | UI | Logic | DB | API | Auth | Reports | Print | Barcode | AI |
 | :--- | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
 | Executive Hub | ✓ | ✓ | ✓ | ✓ | ✓ | ✓ | ✕ | ✕ | ✓ |
-| SMRITI Gyan Kendra | ✓ | ✓ | ✕ | ✓ | ✓ | ✕ | ✕ | ✓ | ✓ |
+| TILEFLOW Gyan Kendra | ✓ | ✓ | ✕ | ✓ | ✓ | ✕ | ✕ | ✓ | ✓ |
 | Billing Desk | ✓ | ✓ | ✓ | ✓ | ✓ | ✕ | ✓ | ✓ | ✓ |
 | Sales Studio | ✓ | ✓ | ✓ | ✓ | ✓ | ✕ | ✓ | ✓ | ✓ |
 | Customer Master | ✓ | ✓ | ✓ | ✓ | ✓ | ✕ | ✕ | ✕ | ✓ |
@@ -33,6 +33,6 @@
 | Terms & Conditions | ✓ | ✓ | ✕ | ✓ | ✓ | ✕ | ✓ | ✕ | ✓ |
 | Data Exchange Hub | ✓ | ✓ | ✕ | ✓ | ✓ | ✕ | ✕ | ✓ | ✓ |
 | Company Setup Wizard | ✕ | ✓ | ✕ | ✓ | ✓ | ✕ | ✕ | ✕ | ✕ |
-| About SMRITI | ✓ | ✓ | ✓ | ✓ | ✓ | ✕ | ✓ | ✕ | ✓ |
+| About TILEFLOW | ✓ | ✓ | ✓ | ✓ | ✓ | ✕ | ✓ | ✕ | ✓ |
 | Dev Intelligence Center | ✓ | ✓ | ✕ | ✓ | ✓ | ✕ | ✓ | ✕ | ✓ |
 | Audit Logs | ✓ | ✓ | ✕ | ✓ | ✓ | ✕ | ✕ | ✕ | ✓ |

@@ -1,37 +1,12 @@
-<!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
 
-  Founders
-
-  * Pushpa Devi Jawahar Mallah
-    * Founder & Chairperson
-    * Phone: +91 9324117007
-    * Email: founder@aitdl.com
-
-  * Jawahar Ramkripal Mallah
-    * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
-
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-  * Version    : 2.1.1
-  * Created    : 2026-07-10
-  * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
--->
-
-# Contributing to SMRITI Retail OS
+# Contributing to TILEFLOW Retail OS
 
 First of all, thank you for taking the time to contribute.
 
-SMRITI Retail OS is an enterprise-grade retail operating system designed for the Indian retail ecosystem. Every contribution—whether code, documentation, testing, design, or feedback—helps improve the platform for thousands of businesses.
+TILEFLOW Retail OS is an enterprise-grade retail operating system designed for the Indian retail ecosystem. Every contribution—whether code, documentation, testing, design, or feedback—helps improve the platform for thousands of businesses.
 
 ---
 
-# Project Vision
 
 Our mission is simple:
 
@@ -75,7 +50,7 @@ Avoid duplicate reports whenever possible.
 
 Please include:
 
-- SMRITI Version
+- TILEFLOW Version
 - Browser
 - Operating System
 - Steps to Reproduce
@@ -211,7 +186,7 @@ Contributors should preserve:
 - Security
 - Stability
 
-## SMRITI Core Framework — Platform Adapter Rule
+## TILEFLOW Core Framework — Platform Adapter Rule
 
 **Every contribution must follow the platform adapter boundary.**
 
@@ -219,18 +194,18 @@ Contributors should preserve:
 
 | Layer | Allowed | Forbidden |
 |---|---|---|
-| Business service / studio / API | `from smriti_retail_os import smriti` | Direct DB/ORM calls bypassing service layer |
+| Business service / studio / API | `from tileflow_retail_os import tileflow` | Direct DB/ORM calls bypassing service layer |
 | `core/platform/` only | `SessionLocal()`, repository calls | Raw SQL outside repository |
-| Repository layer | Delegates to `smriti.core.platform` | Direct session creation in business logic |
+| Repository layer | Delegates to `tileflow.core.platform` | Direct session creation in business logic |
 
 **Correct pattern in a business service:**
 ```python
-from smriti_retail_os import smriti
+from tileflow_retail_os import tileflow
 
 # Good — routes through Framework API
-customer = smriti.documents.get("Customer", name)
-smriti.cache.set("smriti_pos_profiles", data, ttl=600)
-smriti.errors.raise_validation("Supplier Required", "Please select a supplier.")
+customer = tileflow.documents.get("Customer", name)
+tileflow.cache.set("tileflow_pos_profiles", data, ttl=600)
+tileflow.errors.raise_validation("Supplier Required", "Please select a supplier.")
 ```
 
 **Forbidden in a business service:**
@@ -239,7 +214,7 @@ smriti.errors.raise_validation("Supplier Required", "Please select a supplier.")
 db.execute("SELECT * FROM customer")   # Guard will flag this
 ```
 
-### Adding a new SMRITI model
+### Adding a new TILEFLOW model
 
 To map a new business model to a platform DocType, add one entry to `core/platform/document_map.yaml`:
 ```yaml
@@ -253,11 +228,11 @@ No Python changes required.
 
 ```javascript
 // Correct
-smriti.api.call("smriti_retail_os.my_api.method", { arg })
-  .then(data => smriti.notify.success("Done", "Action completed."))
-  .catch(err => smriti.notify.error("Failed", err.message));
+tileflow.api.call("tileflow_retail_os.my_api.method", { arg })
+  .then(data => tileflow.notify.success("Done", "Action completed."))
+  .catch(err => tileflow.notify.error("Failed", err.message));
 
-smriti.navigation.go(smriti.navigation.routes.customers);
+tileflow.navigation.go(tileflow.navigation.routes.customers);
 
 ```javascript
 // Forbidden — bypass apiFetchV1:
@@ -266,7 +241,7 @@ new XMLHttpRequest();                   // VIOLATION
 axios.get("/api/v1/...");               // VIOLATION
 ```
 
-Reference: `ARCHITECTURE.md §15`, `docs/implementation/foundation/SMRITI_Core_Framework_v1.0.md`
+Reference: `ARCHITECTURE.md §15`, `docs/implementation/foundation/TILEFLOW_Core_Framework_v1.0.md`
 
 ---
 
@@ -358,23 +333,21 @@ Harassment or abusive behaviour will not be tolerated.
 
 ---
 
-# License
 
-By contributing to this repository, you agree that your contributions will be licensed under the same license as the project.
 
 ---
 
 # Credits
 
-SMRITI Retail OS
+TILEFLOW Retail OS
 
-Designed & Architected by the Jawahar Ramkripal Mallah.
+Designed & Architected by the Syed Ateef.
 
 ---
 
 # Thank You
 
-Every contribution—no matter how small—helps make SMRITI Retail OS better for the global retail community.
+Every contribution—no matter how small—helps make TILEFLOW Retail OS better for the global retail community.
 
 We sincerely appreciate your support.
 

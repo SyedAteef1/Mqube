@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-07-13
- * Modified     : 2026-07-13
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import { describe, it, expect } from "vitest";
 import { validateCustomerProfile } from "../services/customerValidation.ts";
 import { scoreLead, filterLeads } from "../services/crmService.ts";
@@ -50,7 +37,7 @@ describe("Domain Decoupling - Customer validation, CRM, and Loyalty Services", (
         {
           name: "Jawahar Mallah",
           mobile: "9820012345",
-          email: "support@smritibooks.com",
+          email: "ateef@tileflow.in",
           gstNumber: "27AAAAA1111A1Z0"
         },
         existingCustomers

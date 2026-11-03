@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 4.9.5
   Created      : 2026-08-18
   Modified     : 2026-08-18
-  Copyright    : (C) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (C) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Invoicing
@@ -48,7 +47,7 @@ Implement backend-driven GST and E-Invoice QR compliance architecture, dynamic R
 ## 7. Implementation Summary
 1. Added database columns to `SalesInvoice` for E-Invoice fields.
 2. Updated `InvoicePdfService` with QR 3-state engine and sync model wrappers.
-3. Configured centered footer layout for `"SMRITI OS Retail Suite -- Powered by SMRITI SYSTEMS"`.
+3. Configured centered footer layout for `"TILEFLOW OS Retail Suite -- Powered by TILEFLOW SYSTEMS"`.
 4. Applied subtle background watermark with `.watermark-logo` at 80% page width and 7% opacity.
 5. Executed 19/19 pytest unit tests with 100% pass rate.
 6. Ran single invoice acceptance gate for `TT2026-2027/64` (4 pages, all barcodes and QR verified).

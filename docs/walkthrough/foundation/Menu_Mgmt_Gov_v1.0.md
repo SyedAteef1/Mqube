@@ -1,23 +1,22 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Menu Management & Control Plane Governance Walkthrough
+# TILEFLOW Menu Management & Control Plane Governance Walkthrough
 
 ## 1. Purpose
-Establish authoritative Control Plane Menu Management for SMRITI Retail OS reusing existing `smriti_menus` and `smriti_audit_log` tables without creating duplicate database tables or violating Single Workspace principles.
+Establish authoritative Control Plane Menu Management for TILEFLOW Retail OS reusing existing `tileflow_menus` and `tileflow_audit_log` tables without creating duplicate database tables or violating Single Workspace principles.
 
 ## 2. Scope
-- Control Plane DB table reuse: `smriti_menus` & `smriti_audit_log`
+- Control Plane DB table reuse: `tileflow_menus` & `tileflow_audit_log`
 - Reconciled 32 frontend workspaces + 4 default system rows into 34 active DB menu records
 - Centralized Menu Resolver API: `GET /api/v1/menus/resolved`
 - Admin Menu Studio: [`AdminMenuMgmtDlg.tsx`](file:///F:/SMRITRretailNX/src/components/AdminMenuMgmtDlg.tsx) guarded by `system.menu.manage`
@@ -43,7 +42,7 @@ Establish authoritative Control Plane Menu Management for SMRITI Retail OS reusi
 - `docs/implementation/README.md`
 
 ## 5. Architecture Decisions
-- `smriti_menus` and `smriti_audit_log` are Control Plane assets stored in `smritisys`.
+- `tileflow_menus` and `tileflow_audit_log` are Control Plane assets stored in `tileflowsys`.
 - Global system menus carry `tenant_id=NULL`, `company_id=NULL`, `branch_id=NULL`.
 - Menu hiding is not authorization; backend API endpoints independently enforce `require_role` guards.
 - **8 Clean Navigation Groups**: Dashboard & Operations, System & Knowledge Base, Sales & POS, Inventory & Purchase, Accounts, Reports, Configuration & Governance, Administration.
@@ -53,7 +52,7 @@ Establish authoritative Control Plane Menu Management for SMRITI Retail OS reusi
 Reusing pre-existing Control Plane tables prevents schema duplication, ensures strict audit log hashes (`sha256_hash`), and maintains full backward compatibility with Single Workspace modules.
 
 ## 7. Implementation Summary
-Implemented 9-phase menu governance pipeline, seeded 34 Control Plane menu items, connected frontend layout engine to backend resolver, built Admin Menu Studio, verified role matrix isolation, generated Excel review workbook (`SMRITI_Menu_Management_Database_Review.xlsx`), and generated `TARGET_MODEL_V1` (8 Navigation Groups).
+Implemented 9-phase menu governance pipeline, seeded 34 Control Plane menu items, connected frontend layout engine to backend resolver, built Admin Menu Studio, verified role matrix isolation, generated Excel review workbook (`TILEFLOW_Menu_Management_Database_Review.xlsx`), and generated `TARGET_MODEL_V1` (8 Navigation Groups).
 
 ## 8. Tests Executed
 - `pytest backend/tests/t_menu_gov.py` (PASSED)

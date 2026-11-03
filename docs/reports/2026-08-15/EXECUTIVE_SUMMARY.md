@@ -1,4 +1,4 @@
-# Executive Summary: SMRITI Development Intelligence Center
+# Executive Summary: TILEFLOW Development Intelligence Center
 
 
 *Scan Timestamp: 2026-08-15T13:48:27.035Z*
@@ -8,7 +8,7 @@
 
 ## High-Level Engineering Indices
 
-- **SMRITI Development Health Index (DHI):** 85% (Grade B)
+- **TILEFLOW Development Health Index (DHI):** 85% (Grade B)
 - **Quality Score:** 39% (Deductions based on TODOs and Code Smells)
 - **Security Score:** 100%
 - **Release Readiness Score:** 69%
@@ -22,8 +22,8 @@
 - **Low Gaps:** 18
 
 ## Git Metadata
-- **Branch:** `smritiNX`
+- **Branch:** `tileflowNX`
 - **Total Commit Count:** 22
-- **Last Commit Author:** Jawahar Ramkripal Mallah
+- **Last Commit Author:** Syed Ateef
 - **Last Commit Hash:** `360ca92e`
-- **Last Commit Message:** "chore(config): standardize canonical container service names (smriti-db, smriti-web, smriti-api) in docker-compose.yml"
+- **Last Commit Message:** "chore(config): standardize canonical container service names (tileflow-db, tileflow-web, tileflow-api) in docker-compose.yml"

@@ -1,10 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-Purpose      : Rigorous column-level & constraint-level AST/metadata comparison for eway_bills and ecom_* tables
-"""
 import sys, os, re, json, importlib.util
 import psycopg2
 import psycopg2.extras
@@ -154,16 +147,16 @@ def inspect_database_tables(db_name):
     v_rows = cur.fetchall()
     alembic_v = [r[0] for r in v_rows]
     
-    # Check if smriti_audit_log exists to find creation history
+    # Check if tileflow_audit_log exists to find creation history
     cur.execute("""
-        SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'smriti_audit_log');
+        SELECT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'tileflow_audit_log');
     """)
     has_audit = cur.fetchone()[0]
     audit_events = []
     if has_audit:
         cur.execute("""
             SELECT changed_table, change_type, changed_by, changed_at, change_reason 
-            FROM smriti_audit_log 
+            FROM tileflow_audit_log 
             WHERE changed_table IN %s
             ORDER BY changed_at DESC;
         """, (tuple(target_tables),))
@@ -304,7 +297,7 @@ def inspect_database_tables(db_name):
 # ----------------------------------------------------------------------
 # 3. COMPARE AND REPORT
 # ----------------------------------------------------------------------
-for db_name in ['smritisys', 'smriti001']:
+for db_name in ['tileflowsys', 'tileflow001']:
     alembic_v, audit_events, prod_data = inspect_database_tables(db_name)
     print(f"\n========================================================")
     print(f" DEEP COMPARISON FOR: {db_name}")

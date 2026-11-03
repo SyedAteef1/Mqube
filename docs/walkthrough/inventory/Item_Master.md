@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Item Master Required Fields & Strict Non-Blank Validation
@@ -22,7 +21,7 @@ Enforce strict validation across frontend UI (Grid View & Classic View), backend
 - Frontend UI Components: `src/components/itemMaster/ItemDetGrid.tsx` and `src/components/itemMaster/ItemMasterEntryVie.tsx`.
 - Backend Pydantic Schemas: `backend/app/schemas/inventory.py` (`ProductBase`, `ProductCreate`, `ProductUpdate`).
 - Backend Service Layer: `backend/app/services/item_master_service.py` and `backend/app/services/inventory.py`.
-- Database Migration: Safe legacy NULL backfill and `NOT NULL` constraints on `mrp`, `gst_percentage`, `hsn_code` across tenant databases (`smritisys`, `smriti001`, `smriti002`).
+- Database Migration: Safe legacy NULL backfill and `NOT NULL` constraints on `mrp`, `gst_percentage`, `hsn_code` across tenant databases (`tileflowsys`, `tileflow001`, `tileflow002`).
 - Automated Test Suites: `backend/tests/t_item_val.py`.
 
 ## 3. Files Created
@@ -50,7 +49,7 @@ Enforce strict validation across frontend UI (Grid View & Classic View), backend
    - GST Tax Rate (`gst_percentage` / `tax_rate`)
    - HSN Code (`hsn_code`)
 2. **String Trimming Before Validation:** All input values are sanitized with `.strip()` / `.trim()` on both frontend and backend before validation checks.
-3. **Database NOT NULL Safety:** Legacy NULL values in `smriti001` (149 rows for `mrp`, 184 rows for `hsn_code`) were backfilled (`COALESCE(mrp, price, 0.00)`, `COALESCE(hsn_code, '64041990')`) before setting `NOT NULL` column constraints.
+3. **Database NOT NULL Safety:** Legacy NULL values in `tileflow001` (149 rows for `mrp`, 184 rows for `hsn_code`) were backfilled (`COALESCE(mrp, price, 0.00)`, `COALESCE(hsn_code, '64041990')`) before setting `NOT NULL` column constraints.
 
 ## 6. Design Rationale
 - Allowing blank, empty, or whitespace-only SKU, barcode, price, tax rate, or HSN code leads to severe downstream compliance failures during E-Invoice, E-Way Bill generation, GST filing, and point-of-sale checkout.
@@ -70,7 +69,7 @@ Enforce strict validation across frontend UI (Grid View & Classic View), backend
 ## 9. Verification Results
 - 34/34 tests passed green in 17.50s.
 - 0 TypeScript compilation errors in production build.
-- 0 database NULLs across `products` table in `smritisys`, `smriti001`, `smriti002`.
+- 0 database NULLs across `products` table in `tileflowsys`, `tileflow001`, `tileflow002`.
 
 ## 10. Known Limitations
 - Optional custom attributes (A1..A9), brand, style code, and primary image filename remain optional as intended.

@@ -1,13 +1,9 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
 # Version      : 3.16.0
 # Created      : 2026-07-12
 # Modified     : 2026-07-12
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
-# Classification: Internal
+# Copyright    :  tileflow.in. Open Source - Permissive Use
+# License      : MIT Open Source License
+# Classification: Open Source
 
 id: test_connector
 name: Test Connector
@@ -17,7 +13,7 @@ api_version: v1
 status: active
 display_name: Test Connector Integration
 description: Test connector manifest for registry verification
-documentation_url: https://smritibooks.com/docs/test_connector
+documentation_url: https://tileflow.in/docs/test_connector
 minimum_platform_version: 3.16.0
 authentication:
   type: token

@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.82.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Implementation Plan: SMRITI Real-Time Store Terminal Broadcast Hub & Alerts (v1.0.0-GA)
+# Implementation Plan: TILEFLOW Real-Time Store Terminal Broadcast Hub & Alerts (v1.0.0-GA)
 
 ## 1. Objective
-Establish an edge-to-edge WebSocket/Event broadcast hub (`StoreTerminalBroadcastHub.ts`) and live notification banner (`StoreBroadcastNotificationBanner.tsx`) in SMRITI Retail OS, providing sub-second event distribution across all active store terminals for supervisor authorization requests, price updates, stock-out alerts, system lockouts, and emergency announcements.
+Establish an edge-to-edge WebSocket/Event broadcast hub (`StoreTerminalBroadcastHub.ts`) and live notification banner (`StoreBroadcastNotificationBanner.tsx`) in TILEFLOW Retail OS, providing sub-second event distribution across all active store terminals for supervisor authorization requests, price updates, stock-out alerts, system lockouts, and emergency announcements.
 
 ## 2. Business Motivation
 In busy retail environments, cashiers requesting supervisor overrides, emergency inventory changes, or day-end shift closures require instant store-wide signaling without having to walk across the sales floor or make manual phone calls.
@@ -79,7 +78,7 @@ Modular singleton broadcast bus that operates unobtrusively in background.
 - Run `npm test`.
 
 ## 15. Documentation Impact
-- Update SMRITI Store Operations & Terminal Management Manual.
+- Update TILEFLOW Store Operations & Terminal Management Manual.
 
 ## 16. Deployment Plan
 - Build and bundle with frontend client package.

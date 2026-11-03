@@ -1,28 +1,14 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
-"""Create smriti_legacy_menu_map table
+"""Create tileflow_legacy_menu_map table
 
 Revision ID: v1371_legacy_menu_map
 Revises: v1370_tenant_capability_binding_status
 Create Date: 2026-08-24
 
-Sprint 2 -- Legacy Shoper9 Menu to SMRITI Workspace mapping table.
+Sprint 2 -- Legacy Shoper9 Menu to TILEFLOW Workspace mapping table.
 
 This table is the authoritative join registry between:
   - Shoper9 vaMenu (MnuNo, MenuOpt) natural keys
-  - SMRITI canonical workspace + action + document_type
+  - TILEFLOW canonical workspace + action + document_type
 
 Design constraints:
   - APPEND-ONLY: rows are never deleted
@@ -42,7 +28,7 @@ down_revision = "v1370_tcb_status"
 branch_labels = None
 depends_on = None
 
-TABLE_NAME = "smriti_legacy_menu_map"
+TABLE_NAME = "tileflow_legacy_menu_map"
 
 
 def upgrade() -> None:
@@ -86,11 +72,11 @@ def upgrade() -> None:
         sa.Column("sh9_allow_closed",sa.SmallInteger, nullable=True, server_default="0"),
         sa.Column("sh9_multi_inst",  sa.SmallInteger, nullable=True, server_default="0"),
 
-        # ── SMRITI Target ─────────────────────────────────────────────────
-        sa.Column("smriti_menu_id",   sa.String(80),  nullable=True),
-        sa.Column("smriti_workspace", sa.String(120), nullable=True),
-        sa.Column("smriti_module",    sa.String(50),  nullable=True),
-        sa.Column("smriti_action",    sa.String(60),  nullable=True),
+        # ── TILEFLOW Target ─────────────────────────────────────────────────
+        sa.Column("tileflow_menu_id",   sa.String(80),  nullable=True),
+        sa.Column("tileflow_workspace", sa.String(120), nullable=True),
+        sa.Column("tileflow_module",    sa.String(50),  nullable=True),
+        sa.Column("tileflow_action",    sa.String(60),  nullable=True),
         sa.Column("document_type",    sa.String(60),  nullable=True),
 
         # ── Migration Governance ──────────────────────────────────────────
@@ -119,8 +105,8 @@ def upgrade() -> None:
     # Indexes for common lookup patterns
     op.create_index("ix_legacy_map_mnu_no",  TABLE_NAME, ["sh9_mnu_no"])
     op.create_index("ix_legacy_map_status",  TABLE_NAME, ["migration_status"])
-    op.create_index("ix_legacy_map_menu_id", TABLE_NAME, ["smriti_menu_id"])
-    op.create_index("ix_legacy_map_module",  TABLE_NAME, ["smriti_module"])
+    op.create_index("ix_legacy_map_menu_id", TABLE_NAME, ["tileflow_menu_id"])
+    op.create_index("ix_legacy_map_module",  TABLE_NAME, ["tileflow_module"])
 
 
 def downgrade() -> None:

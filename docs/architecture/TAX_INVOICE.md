@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 4.8.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Tax Invoice Canonical Print & Export Specification
+# TILEFLOW Tax Invoice Canonical Print & Export Specification
 
 **Template ID:** `TAX_INVOICE_TATTLY_THREADS_CANONICAL_V1`  
 **Status:** FROZEN  
@@ -28,10 +27,10 @@
    - All presentation pathways (HTML Print Preview, Browser Print, PDF Streaming, File Download, Document Reprint, Print History) MUST execute through `InvoicePdfService.generate_invoice_html` and `InvoicePdfService.render_pdf_bytes`.
    - Separate, alternate, or divergent rendering engines are strictly prohibited.
 2. **Presentation-Only Mandate**:
-   - The PDF renderer is strictly a visual formatting engine. It receives finalized financial quantities from the PostgreSQL Company Database (`smriti001`) and MUST NOT perform uncoordinated recalculations.
+   - The PDF renderer is strictly a visual formatting engine. It receives finalized financial quantities from the PostgreSQL Company Database (`tileflow001`) and MUST NOT perform uncoordinated recalculations.
 3. **Control Plane Isolation**:
-   - `smritisys` maintains strictly 0 operational invoice records.
-   - All transactional invoice records reside within Company Operational Databases (`smriti<Code>`).
+   - `tileflowsys` maintains strictly 0 operational invoice records.
+   - All transactional invoice records reside within Company Operational Databases (`tileflow<Code>`).
 
 ---
 
@@ -127,7 +126,7 @@ Reprint            Click "Reprint"                    GET /api/v1/sales/invoices
 
 ## 6. Company Database Persistence & Artifact Governance
 
-### 1. Database Entity Models (`smriti<Code>`)
+### 1. Database Entity Models (`tileflow<Code>`)
 - `tax_invoice_templates`:
   - `template_code`: `TAX_INVOICE_TATTLY_THREADS` (Unique PK/Code)
   - `template_name`: `TATTLY THREADS Tax Invoice`

@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 export type NotificationPriority = "low" | "medium" | "high" | "critical";
@@ -72,7 +47,7 @@ export const NotificationProvider: React.FC<{ children: ReactNode }> = ({ childr
     {
       id: "n1",
       title: "System Update",
-      message: "SMRITI OS v2.1.1 has been successfully deployed.",
+      message: "MQube OS v2.1.1 has been successfully deployed.",
       type: "system",
       priority: "low",
       timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago

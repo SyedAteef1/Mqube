@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,12 +8,12 @@ from openpyxl.utils import get_column_letter
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-OUTPUT_FILE = r"F:\SMRITRretailNX\SMRITI_Menu_Management_Database_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+OUTPUT_FILE = r"F:\SMRITRretailNX\TILEFLOW_Menu_Management_Database_Review.xlsx"
 
 def run_export():
     print("============================================================")
-    print("SMRITI MENU MANAGEMENT — DATABASE TABLE & DATA EXPORT")
+    print("TILEFLOW MENU MANAGEMENT — DATABASE TABLE & DATA EXPORT")
     print("============================================================")
 
     # 1. Connect to PostgreSQL (Read-Only session)
@@ -34,16 +21,16 @@ def run_export():
     cur = conn.cursor()
 
     # Pre-export DB state count check
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus_count = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log WHERE changed_table = 'smriti_menus';")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log WHERE changed_table = 'tileflow_menus';")
     initial_audit_count = cur.fetchone()[0]
 
     export_timestamp = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
 
     # ------------------------------------------------------------
-    # 2. Fetch Schema Definition for smriti_menus
+    # 2. Fetch Schema Definition for tileflow_menus
     # ------------------------------------------------------------
     cur.execute("""
         SELECT 
@@ -59,7 +46,7 @@ def run_export():
             ON c.table_name = kcu.table_name AND c.column_name = kcu.column_name
         LEFT JOIN information_schema.table_constraints tc 
             ON kcu.constraint_name = tc.constraint_name AND c.table_name = tc.table_name
-        WHERE c.table_name = 'smriti_menus'
+        WHERE c.table_name = 'tileflow_menus'
         ORDER BY c.ordinal_position;
     """)
     schema_rows = cur.fetchall()
@@ -79,7 +66,7 @@ def run_export():
     df_schema = pd.DataFrame(schema_data)
 
     # ------------------------------------------------------------
-    # 3. Fetch All Rows from smriti_menus
+    # 3. Fetch All Rows from tileflow_menus
     # ------------------------------------------------------------
     cur.execute("""
         SELECT 
@@ -87,7 +74,7 @@ def run_export():
             created_by, updated_by, is_active, is_deleted, deleted_at, deleted_by,
             version, parent_id, title, route, icon, module, permission, sequence,
             feature_flag, badge, workflow_status, document_number
-        FROM smriti_menus
+        FROM tileflow_menus
         ORDER BY sequence ASC, id ASC;
     """)
     cols = [desc[0] for desc in cur.description]
@@ -257,8 +244,8 @@ def run_export():
             id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
             old_value, new_value, change_type, change_reason, change_source,
             changed_by, changed_by_name, changed_at, sha256_hash, prev_hash
-        FROM smriti_audit_log
-        WHERE changed_table = 'smriti_menus'
+        FROM tileflow_audit_log
+        WHERE changed_table = 'tileflow_menus'
         ORDER BY changed_at DESC;
     """)
     audit_cols = [desc[0] for desc in cur.description]
@@ -305,7 +292,7 @@ def run_export():
     unique_ids = len(set(m["id"] for m in menu_records))
 
     audit_summary_data = [
-        {"Metric Category": "Total Menu Records", "Count": total_menus, "Notes": "Total Control Plane menus in smriti_menus"},
+        {"Metric Category": "Total Menu Records", "Count": total_menus, "Notes": "Total Control Plane menus in tileflow_menus"},
         {"Metric Category": "Active Menus", "Count": active_menus, "Notes": "is_active = TRUE"},
         {"Metric Category": "Inactive Menus", "Count": inactive_menus, "Notes": "is_active = FALSE"},
         {"Metric Category": "Global Menus", "Count": global_menus, "Notes": "tenant_id, company_id, branch_id are NULL"},
@@ -320,7 +307,7 @@ def run_export():
         {"Metric Category": "Duplicate Routes", "Count": 0, "Notes": "Zero duplicate routes found"},
         {"Metric Category": "Unique Menu IDs", "Count": unique_ids, "Notes": "Distinct primary keys"},
         {"Metric Category": "Duplicate Menu IDs", "Count": 0, "Notes": "Zero duplicate IDs found"},
-        {"Metric Category": "Total Audit Log Entries", "Count": len(audit_records), "Notes": "Total change logs in smriti_audit_log"},
+        {"Metric Category": "Total Audit Log Entries", "Count": len(audit_records), "Notes": "Total change logs in tileflow_audit_log"},
     ]
     df_audit_summary = pd.DataFrame(audit_summary_data)
 
@@ -362,7 +349,7 @@ def run_export():
     protected_rows = []
 
     for def_id in protected_ids:
-        cur.execute("SELECT id, title, route, icon, module, permission, sequence, parent_id, is_active, tenant_id, company_id, branch_id FROM smriti_menus WHERE id = %s;", (def_id,))
+        cur.execute("SELECT id, title, route, icon, module, permission, sequence, parent_id, is_active, tenant_id, company_id, branch_id FROM tileflow_menus WHERE id = %s;", (def_id,))
         p = cur.fetchone()
         if p:
             protected_rows.append({
@@ -428,11 +415,11 @@ def run_export():
     # ------------------------------------------------------------
     readme_data = [
         ["Attribute", "Specification / Details"],
-        ["Workbook Title", "SMRITI Menu Management — Database Review Workbook"],
-        ["Database Name", "smritisys"],
+        ["Workbook Title", "TILEFLOW Menu Management — Database Review Workbook"],
+        ["Database Name", "tileflowsys"],
         ["Database Engine", "PostgreSQL 15+"],
         ["Export Timestamp", export_timestamp],
-        ["Primary Tables", "smriti_menus, smriti_audit_log"],
+        ["Primary Tables", "tileflow_menus, tileflow_audit_log"],
         ["Script Executed", "scripts/export_menu_review.py"],
         ["Purpose", "Human architectural review & governance analysis only"],
         ["Export Mode", "READ-ONLY Snapshot"],
@@ -507,10 +494,10 @@ def run_export():
     # ------------------------------------------------------------
     # 15. Post-Export Database Mutation Check & Row Count Integrity Audit
     # ------------------------------------------------------------
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus_count = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log WHERE changed_table = 'smriti_menus';")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log WHERE changed_table = 'tileflow_menus';")
     final_audit_count = cur.fetchone()[0]
 
     conn.close()
@@ -520,8 +507,8 @@ def run_export():
     audit_match = (initial_audit_count == len(df_audit_log))
 
     print(f"\nDATABASE ROW COUNTS:")
-    print(f"    smriti_menus                    = {initial_menus_count} rows")
-    print(f"    smriti_audit_log(menu records)  = {initial_audit_count} rows")
+    print(f"    tileflow_menus                    = {initial_menus_count} rows")
+    print(f"    tileflow_audit_log(menu records)  = {initial_audit_count} rows")
     print(f"\nEXCEL ROW COUNTS:")
     print(f"    MENU_DATA                       = {len(df_menu_data)} rows")
     print(f"    MENU_AUDIT_LOG                  = {len(df_audit_log)} rows")

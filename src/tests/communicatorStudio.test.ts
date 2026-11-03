@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.80.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   CommunicatorStudioTab,
@@ -19,7 +5,7 @@ import {
 } from "../components/communicator/CommunicatorStudioTab";
 import * as apiFetchModule from "../lib/apiFetchV1";
 
-describe("SMRITI Omnichannel Communicator Studio & WhatsApp Gateway UI", () => {
+describe("MQube Omnichannel Communicator Studio & WhatsApp Gateway UI", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });

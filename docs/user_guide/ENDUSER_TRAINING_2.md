@@ -1,26 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.2
   * Created    : 2026-07-18
   * Modified   : 2026-07-18
-  * Copyright    : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
 # End-User Training — Sales Studio
@@ -29,7 +24,7 @@
 The Sales Studio is the central commerce workspace for customer quotations, sales orders, GST invoices, sales returns, and customer ledger management. This guide helps sales staff and store managers use the Sales & Commerce Studio efficiently.
 
 ## Accessing Sales Studio
-- Log in to SMRITI Retail OS using your assigned credentials.
+- Log in to TILEFLOW Retail OS using your assigned credentials.
 - Open the left navigation menu and select **Sales Studio** or **Sales & Commerce Studio**.
 - The module loads five subviews: **Quotations**, **Sales Orders**, **Sales Invoices**, **Sales Returns**, and **Customers**.
 

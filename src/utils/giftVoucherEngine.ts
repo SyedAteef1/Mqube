@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.114.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Gift Voucher & Store Credit Engine
- *
- * Manages the full lifecycle of gift vouchers and store credit accounts:
- *   Issuance    : `issueVoucher()` — amount, expiry, single/multi-use
- *   Redemption  : `redeemVoucher()` — partial redemption supported; clamps to balance
- *   Refund      : `refundToCredit()` — converts a sales refund into store credit
- *   Expiry      : `expireIfDue()` / `expireBatch()` — idempotent expiry
- *   Ledger      : append-only transaction ledger per voucher
- *   Balance     : derived on every mutation; never stored separately
- */
-
 export type VoucherType    = "GIFT_VOUCHER" | "STORE_CREDIT" | "REFUND_CREDIT" | "PROMO_CREDIT";
 export type VoucherStatus  = "ACTIVE" | "REDEEMED" | "PARTIALLY_REDEEMED" | "EXPIRED" | "CANCELLED";
 export type TxnKind        = "ISSUE" | "REDEEM" | "REFUND_CREDIT" | "EXPIRE" | "CANCEL" | "ADJUST";

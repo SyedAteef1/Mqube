@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import Optional, List, Dict, Any
 from datetime import datetime, date
 from decimal import Decimal
@@ -53,7 +39,7 @@ class SkuMappingReq(BaseModel):
     channel_code: str
     external_sku: str
     external_product_id: Optional[str] = None
-    smriti_sku: str
+    tileflow_sku: str
     item_id: str
     variant_id: Optional[str] = None
 
@@ -63,7 +49,7 @@ class SkuMappingResponse(BaseModel):
     channel_code: str
     external_sku: str
     external_product_id: Optional[str] = None
-    smriti_sku: str
+    tileflow_sku: str
     item_id: str
     variant_id: Optional[str] = None
     is_active: bool
@@ -157,8 +143,8 @@ class ReconciliationReportResponse(BaseModel):
     period_end: date
     channel_order_count: int
     channel_gross_revenue: Decimal
-    smriti_order_count: int
-    smriti_gross_revenue: Decimal
+    tileflow_order_count: int
+    tileflow_gross_revenue: Decimal
     variance_amount: Decimal
     status: str
 

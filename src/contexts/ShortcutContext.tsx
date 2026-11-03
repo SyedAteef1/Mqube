@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.1
- * Created      : 2026-07-10
- * Modified     : 2026-07-14
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { useLayoutEngine } from "../layout_engine/layout_store.tsx";
 import { useWorkspace } from "./WorkspaceContext.tsx";
@@ -140,7 +127,7 @@ const DEFAULT_SHORTCUTS: KeyboardShortcut[] = [
   {
     id: "open_dashboard",
     name: "Open Executive Dashboard",
-    description: "Open SMRITI operational and inventory dashboard",
+    description: "Open MQube operational and inventory dashboard",
     defaultKey: { key: "d", ctrl: false, alt: true, shift: false, meta: false }, // Alt + D
     currentKey: { key: "d", ctrl: false, alt: true, shift: false, meta: false },
     category: "Navigation",
@@ -183,19 +170,19 @@ const DEFAULT_SHORTCUTS: KeyboardShortcut[] = [
   },
   {
     id: "ai_assistant",
-    name: "Open SMRITI Gyan Kendra",
+    name: "Open MQube Gyan Kendra",
     description: "Access smart interactive help and documentation center (Gyan Kendra)",
     defaultKey: { key: "a", ctrl: false, alt: true, shift: false, meta: false }, // Alt + A
     currentKey: { key: "a", ctrl: false, alt: true, shift: false, meta: false },
     category: "Global",
     roles: ["Shop Owner", "Cashier", "Warehouse Staff", "Purchase Executive", "Sales Executive", "Store Manager", "Branch Manager", "Distributor", "Franchise Owner", "Accountant (Operational)", "Admin"],
     actionType: "tab",
-    actionValue: "about-smriti"
+    actionValue: "about-tileflow"
   },
   {
     id: "toggle_sidebar",
     name: "Toggle Navigation Sidebar",
-    description: "Expand or collapse the primary SMRITI operations rail",
+    description: "Expand or collapse the primary MQube operations rail",
     defaultKey: { key: "m", ctrl: false, alt: true, shift: false, meta: false }, // Alt + M
     currentKey: { key: "m", ctrl: false, alt: true, shift: false, meta: false },
     category: "Global",
@@ -269,15 +256,15 @@ export const ShortcutProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const [paletteOpen, setPaletteOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(() => {
-    return localStorage.getItem("smriti_shortcuts_is_admin") === "true";
+    return localStorage.getItem("tileflow_shortcuts_is_admin") === "true";
   });
 
   const [activeRole, setActiveRole] = useState(() => {
-    return localStorage.getItem("smriti_shortcuts_active_role") || "Admin";
+    return localStorage.getItem("tileflow_shortcuts_active_role") || "Admin";
   });
 
   const [shortcuts, setShortcuts] = useState<KeyboardShortcut[]>(() => {
-    const saved = localStorage.getItem("smriti_custom_shortcuts");
+    const saved = localStorage.getItem("tileflow_custom_shortcuts");
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -286,7 +273,7 @@ export const ShortcutProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       }
     }
     // Try Org Defaults if present
-    const orgSaved = localStorage.getItem("smriti_org_shortcuts");
+    const orgSaved = localStorage.getItem("tileflow_org_shortcuts");
     if (orgSaved) {
       try {
         return JSON.parse(orgSaved);
@@ -298,21 +285,21 @@ export const ShortcutProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   });
 
   const [orgDefaultsExist, setOrgDefaultsExist] = useState(() => {
-    return !!localStorage.getItem("smriti_org_shortcuts");
+    return !!localStorage.getItem("tileflow_org_shortcuts");
   });
 
   useEffect(() => {
-    localStorage.setItem("smriti_shortcuts_is_admin", String(isAdmin));
+    localStorage.setItem("tileflow_shortcuts_is_admin", String(isAdmin));
   }, [isAdmin]);
 
   useEffect(() => {
-    localStorage.setItem("smriti_shortcuts_active_role", activeRole);
+    localStorage.setItem("tileflow_shortcuts_active_role", activeRole);
   }, [activeRole]);
 
   // Save changes
   const persistShortcuts = (updated: KeyboardShortcut[]) => {
     setShortcuts(updated);
-    localStorage.setItem("smriti_custom_shortcuts", JSON.stringify(updated));
+    localStorage.setItem("tileflow_custom_shortcuts", JSON.stringify(updated));
   };
 
   // Helper to format key combo to match
@@ -443,12 +430,12 @@ export const ShortcutProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
   const saveAsOrgDefaults = () => {
     if (!isAdmin) return;
-    localStorage.setItem("smriti_org_shortcuts", JSON.stringify(shortcuts));
+    localStorage.setItem("tileflow_org_shortcuts", JSON.stringify(shortcuts));
     setOrgDefaultsExist(true);
   };
 
   const resetToOrgDefaults = () => {
-    const orgSaved = localStorage.getItem("smriti_org_shortcuts");
+    const orgSaved = localStorage.getItem("tileflow_org_shortcuts");
     if (orgSaved) {
       try {
         const parsed = JSON.parse(orgSaved);

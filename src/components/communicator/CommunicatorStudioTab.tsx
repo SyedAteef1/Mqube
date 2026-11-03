@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.80.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from "react";
 import { apiFetchV1 } from "../../lib/apiFetchV1";
 
@@ -173,7 +159,7 @@ export const CommunicatorStudioTab: React.FC<CommunicatorStudioTabProps> = ({
           </div>
           <div>
             <h1 className="text-xl font-bold text-slate-100 flex items-center gap-3">
-              SMRITI Communicator Studio
+              MQube Communicator Studio
               <span className="text-xs font-mono px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                 WhatsApp Cloud API v19.0
               </span>
@@ -335,7 +321,7 @@ export const CommunicatorStudioTab: React.FC<CommunicatorStudioTabProps> = ({
                   S
                 </div>
                 <div>
-                  <span className="text-xs font-bold text-slate-200 block">SMRITI Store Bot</span>
+                  <span className="text-xs font-bold text-slate-200 block">MQube Store Bot</span>
                   <span className="text-[10px] text-emerald-400 font-mono">Verified Business</span>
                 </div>
               </div>

@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { LabelPrintRow } from "./types.ts";
 
 export interface PTFileRecord {
@@ -102,9 +88,6 @@ export const SAMPLE_PT_FILE_RECORDS: PTFileRecord[] = [
   }
 ];
 
-/**
- * Parse text or CSV content of a Purchase Transaction (.pt / .txt / .csv) file
- */
 export function parsePTFileContent(content: string): LabelPrintRow[] {
   const lines = content.split(/\r?\n/).filter(line => line.trim().length > 0);
   const rows: LabelPrintRow[] = [];
@@ -128,7 +111,7 @@ export function parsePTFileContent(content: string): LabelPrintRow[] {
       const isFormatB = parts.length >= 9 && /^\d{8,14}$/.test(parts[1]);
 
       let product = "Item";
-      let brand = "SMRITI";
+      let brand = "MQube";
       let style = "-";
       let colour = "-";
       let size = "-";
@@ -139,7 +122,7 @@ export function parsePTFileContent(content: string): LabelPrintRow[] {
 
       if (isFormatB) {
         barcode = parts[1];
-        brand = parts[2] || "SMRITI";
+        brand = parts[2] || "MQube";
         product = parts[3] || "Item";
         colour = parts[4] || "-";
         style = parts[5] || "-";
@@ -150,7 +133,7 @@ export function parsePTFileContent(content: string): LabelPrintRow[] {
       } else {
         // Format A: stockNo|product|brand|style|colour|size|qty|mrp|sp|barcode
         product = parts[1] || "Item";
-        brand = parts[2] || "SMRITI";
+        brand = parts[2] || "MQube";
         style = parts[3] || "-";
         colour = parts[4] || "-";
         size = parts[5] || "-";

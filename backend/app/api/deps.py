@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.25.0
-* Created    : 2026-07-11
-* Modified   : 2026-08-20
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-"""
-
 import json
 from dataclasses import dataclass
 from typing import Callable, Tuple, AsyncGenerator, Optional
@@ -42,7 +17,7 @@ from ..db.session import (
 )
 from ..models.auth import User, UserRole
 from ..models.role import Role
-from ..models.security import SmritiPermission
+from ..models.security import TileFlowPermission
 from ..models.user_assignment import UserCompanyAssignment, UserBranchAssignment
 from ..core.security import decode_token
 
@@ -233,7 +208,7 @@ async def get_company_db(
     tenant_ctx: TenantContext = Depends(get_tenant_context),
 ) -> AsyncGenerator[AsyncSession, None]:
     """
-    Authoritative SMRITI Multi-Tenant Company Database Dependency.
+    Authoritative TILEFLOW Multi-Tenant Company Database Dependency.
     Extracts tenant target strictly from validated TenantContext (cryptographic JWT + assignment check).
     Never trusts raw unvalidated client headers or query parameters.
     """
@@ -312,10 +287,10 @@ def require_permission(resource: str, action: str) -> Callable:
     FastAPI dependency factory enforcing granular action-level permissions.
     Evaluates:
     1. SYSADMIN role wildcard access ('*').
-    2. User-specific explicit grant or denial in 'smriti_permissions' (tenant scoped).
+    2. User-specific explicit grant or denial in 'tileflow_permissions' (tenant scoped).
     3. Assigned Role permissions in 'roles.permissions_json'.
     4. Scoped standard role defaults (MANAGER allowlist, CASHIER scoped allowlist).
-    Raises 403 Forbidden with business error SMRITI-AUTH-001 if unauthorized.
+    Raises 403 Forbidden with business error TILEFLOW-AUTH-001 if unauthorized.
     """
     async def _perm_guard(
         current_user: User = Depends(get_current_user),
@@ -336,7 +311,7 @@ def require_permission(resource: str, action: str) -> Callable:
 
         raise HTTPException(
             status_code=403,
-            detail=f"SMRITI-AUTH-001: Permission denied for operation '{action}' on '{resource}'. Required privilege missing."
+            detail=f"TILEFLOW-AUTH-001: Permission denied for operation '{action}' on '{resource}'. Required privilege missing."
         )
 
     return _perm_guard

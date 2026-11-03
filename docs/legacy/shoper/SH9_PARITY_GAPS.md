@@ -1,36 +1,35 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sprint 8a — Parity Gap Registry
-## Shoper9 → SMRITI Capability Gap Tracker
+## Shoper9 → TILEFLOW Capability Gap Tracker
 
 **Date:** 2026-08-24  
-**Source:** Live `smriti_legacy_menu_map` + `reports.py` + `ReportDesignerTab.tsx` inspection  
+**Source:** Live `tileflow_legacy_menu_map` + `reports.py` + `ReportDesignerTab.tsx` inspection  
 **Method:** Each MAPPED/MERGED Shoper9 entry cross-referenced against:  
-1. `SMRITI_STUDIOS` catalog in `reports.py` (8 canonical report IDs)  
+1. `TILEFLOW_STUDIOS` catalog in `reports.py` (8 canonical report IDs)  
 2. `GET /api/v1/reports/*` endpoint inventory (6 endpoints)  
 3. `ReportDesignerTab.tsx` report IDs referenced in JSX  
 
 **Legend:**  
-- ✅ `VERIFIED` — SMRITI equivalent confirmed in code/API  
-- ⚠️ `GAP` — capability missing, no SMRITI equivalent found  
+- ✅ `VERIFIED` — TILEFLOW equivalent confirmed in code/API  
+- ⚠️ `GAP` — capability missing, no TILEFLOW equivalent found  
 - 🔄 `DEFERRED` — multi-company, deprecated, or PENDING by design  
-- 🔗 `OVERLAP` — served by a different SMRITI workspace, not Reports Portal  
+- 🔗 `OVERLAP` — served by a different TILEFLOW workspace, not Reports Portal  
 
 ---
 
-## SMRITI Reports API — Current Inventory
+## TILEFLOW Reports API — Current Inventory
 
 ### Endpoints (`/api/v1/reports/`)
 
@@ -45,7 +44,7 @@
 | `/dashboards` | GET/POST | Dashboard manager |
 | `/schedules` | GET/POST/DELETE | Report scheduler |
 
-### `SMRITI_STUDIOS` Catalog (8 system reports)
+### `TILEFLOW_STUDIOS` Catalog (8 system reports)
 
 | ID | Title | Studio | Gap vs Shoper9 |
 |---|---|---|---|
@@ -64,7 +63,7 @@
 
 ### MnuNo 410 — Sales Reports (15 entries)
 
-| MnuNo/Opt | Shoper9 Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Shoper9 Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 410/411 | Daily Sales Book | SR213600 | MAPPED | RPT-SAL-001 Daily Sales Summary Register | ✅ VERIFIED |
 | 410/412 | Bill-wise Sales | SR202400 | MAPPED | RPT-TAX-002 Bill-wise Sales Register | ✅ VERIFIED |
@@ -88,7 +87,7 @@
 
 ### MnuNo 470 — MIS Reports (15 entries)
 
-| MnuNo/Opt | Shoper9 Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Shoper9 Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 470/471 | Monthly Sales Comparison | SR203700 | MAPPED | ⚠️ No monthly comparison report | ⚠️ GAP |
 | 470/472 | Rate Variation | SR203800 | MAPPED | ⚠️ No rate variation (price change) report | ⚠️ GAP |
@@ -112,7 +111,7 @@
 
 ### MnuNo 490 — Customer Offtake (3 entries)
 
-| MnuNo/Opt | Shoper9 Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Shoper9 Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 490/491 | Period-wise Offtake | SR208500 | MAPPED | ⚠️ No customer period offtake | ⚠️ GAP |
 | 490/492 | Bill-wise Offtake | SR208400 | MAPPED | ⚠️ No customer bill offtake | ⚠️ GAP |
@@ -124,7 +123,7 @@
 
 ### MnuNo 650 — Style Catalogue & Print (4 entries)
 
-| MnuNo/Opt | Shoper9 Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Shoper9 Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 650/653 | Style Catalogue | SR430800 | MAPPED | ⚠️ No style catalogue report | ⚠️ GAP |
 | 650/654 | Sales Promotions | SR230400 | MAPPED | ⚠️ No promotions report in Report Designer | ⚠️ GAP |
@@ -137,7 +136,7 @@
 
 ### MnuNo 900 — Summary / Multi-branch (3 entries)
 
-| MnuNo/Opt | Shoper9 Caption | EXE | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Shoper9 Caption | EXE | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|---|
 | 900/910 | Sales (multi-branch) | — | MAPPED | ⚠️ No multi-branch sales summary | 🔄 DEFERRED |
 | 900/920 | Stock (multi-branch) | — | MAPPED | ⚠️ No multi-branch stock summary | 🔄 DEFERRED |
@@ -149,7 +148,7 @@
 
 ### Parent/Navigation Entries (6 entries)
 
-| MnuNo/Opt | Caption | Status | SMRITI Equivalent | Gap Status |
+| MnuNo/Opt | Caption | Status | TILEFLOW Equivalent | Gap Status |
 |---|---|---|---|---|
 | 0/400 | Reports (root) | MERGED | Reports Portal workspace | ✅ VERIFIED |
 | 400/410 | Sales (group) | MAPPED | Report Designer Sales Studio tab | ✅ VERIFIED |
@@ -226,9 +225,9 @@
 
 ---
 
-## SMRITI_STUDIOS Extension Plan
+## TILEFLOW_STUDIOS Extension Plan
 
-To close the P1+P2 gaps, add 5 new studios to `SMRITI_STUDIOS` in `reports.py`:
+To close the P1+P2 gaps, add 5 new studios to `TILEFLOW_STUDIOS` in `reports.py`:
 
 ```python
 "tax_studio": {
@@ -285,7 +284,7 @@ To close the P1+P2 gaps, add 5 new studios to `SMRITI_STUDIOS` in `reports.py`:
 
 ## Sprint 8b — Business Ledger Gap Pre-analysis
 
-From the DB, Business Ledger has 29 MAPPED+MERGED entries. Current SMRITI API:
+From the DB, Business Ledger has 29 MAPPED+MERGED entries. Current TILEFLOW API:
 - Till management: needs verification vs `GET /api/v1/pos/till-status`
 - Cash Payouts/Receipts: needs verification vs `GET /api/v1/finance/*`
 - 12 Cash Reports (MnuNo 460): cross-reference with Business Ledger API
@@ -299,7 +298,7 @@ Sprint 8b will inspect `BusinessLedgerTab.tsx` + finance API.
 - [x] Reports Portal gap registry complete (46 entries classified)  
 - [x] 14 VERIFIED, 26 GAP, 3 DEFERRED, 2 OVERLAP documented  
 - [x] P1/P2/P3 backlog with endpoint names defined  
-- [x] `SMRITI_STUDIOS` extension plan with 5 new studios + 22 new RPT IDs  
+- [x] `TILEFLOW_STUDIOS` extension plan with 5 new studios + 22 new RPT IDs  
 - [ ] 5 new studios added to `reports.py` (Sprint 8b prerequisite)  
 - [ ] 5 P1 API endpoints implemented  
 - [ ] `ReportDesignerTab.tsx` updated with new studio tiles  

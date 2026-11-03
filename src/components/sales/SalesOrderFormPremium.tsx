@@ -1,22 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Module       : Sales Order Form - Premium Edition
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * 
- * Description  : Enterprise-grade Sales Order Form with premium UI/UX
- *                Professional design, smooth interactions, and working lookups
- * 
- * Version      : 3.30.0
- * Created      : 2026-08-31
- * Modified     : 2026-08-31
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
@@ -275,7 +256,7 @@ const CustomerLookupModal: React.FC<{
                         onSelect(customer);
                         onClose();
                       }}
-                      whileHover={{ backgroundColor: "#f0f9ff" }}
+                      whileHover={{ backgroundColor: "#f8f8f8" }}
                       className="w-full text-left p-4 hover:bg-blue-50 transition flex items-center justify-between"
                     >
                       <div className="flex-1">
@@ -666,7 +647,7 @@ const RecallTransactionModal: React.FC<{
                     <motion.button
                       key={txn.id}
                       onClick={() => handleRecall(txn.id)}
-                      whileHover={{ backgroundColor: "#f8fafc" }}
+                      whileHover={{ backgroundColor: "#fafafa" }}
                       className="w-full text-left p-4 hover:bg-slate-50 transition flex items-center justify-between"
                     >
                       <div className="flex-1">
@@ -1077,7 +1058,7 @@ const PremiumSalesOrderDetail: React.FC<{
                   <motion.tr
                     key={item.id}
                     onClick={() => setSelectedItemIndex(index)}
-                    whileHover={{ backgroundColor: "#f8fafc" }}
+                    whileHover={{ backgroundColor: "#fafafa" }}
                     className={`cursor-pointer transition ${
                       selectedItemIndex === index ? "bg-blue-50 border-l-4 border-l-blue-500" : ""
                     }`}

@@ -1,21 +1,8 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 from datetime import datetime, timezone
 
 def test_fiori_visual_qa_acceptance_criteria():
-    """Verify 10 visual QA acceptance criteria across SMRITI Light Enterprise Workspace."""
+    """Verify 10 visual QA acceptance criteria across TILEFLOW Light Enterprise Workspace."""
     qa_checklist = {
         "LIGHT_MODE_ONLY": True,
         "FIORI_ENTERPRISE_SHELL": True,

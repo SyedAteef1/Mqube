@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 5.3.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 export interface ImagePathConfig {
   basePathType: "relative" | "server" | "cdn" | "local";
   basePathUrl: string;
@@ -20,7 +6,7 @@ export interface ImagePathConfig {
   namingConvention: "custom" | "stock_no" | "barcode";
 }
 
-const STORAGE_KEY = "smriti_item_master_image_config";
+const STORAGE_KEY = "tileflow_item_master_image_config";
 
 export const DEFAULT_IMAGE_PATH_CONFIG: ImagePathConfig = {
   basePathType: "server",
@@ -48,9 +34,6 @@ export const saveImagePathConfig = (cfg: ImagePathConfig): void => {
   }
 };
 
-/**
- * Resolves full preview image URL given only the filename entered in Item Master
- */
 export const resolveProductImageUrl = (
   imageName?: string | null,
   cfg: ImagePathConfig = getImagePathConfig()

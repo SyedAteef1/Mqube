@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -40,8 +26,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -55,7 +41,7 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
 @pytest.mark.asyncio
 async def test_create_item_with_variants_and_barcodes():
     """Verify atomic creation of item with custom variants and primary barcodes."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     sku = f"ITM-{unique_suffix.upper()}"
     barcode_val = f"890{uuid.uuid4().int % 10000000000:010d}"
@@ -65,7 +51,7 @@ async def test_create_item_with_variants_and_barcodes():
         item_name=f"Premium Linen Shirt {unique_suffix}",
         item_type="FINISHED_GOOD",
         category="APPAREL",
-        brand="Smriti Classic",
+        brand="TileFlow Classic",
         hsn_code="6205",
         tax_rate=12.0,
         primary_uom="PCS",
@@ -116,7 +102,7 @@ async def test_create_item_with_variants_and_barcodes():
 @pytest.mark.asyncio
 async def test_matrix_variant_generator_cartesian():
     """Verify matrix variant generator produces Cartesian product of dimensions."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     sku = f"POLO-{unique_suffix.upper()}"
 
@@ -125,7 +111,7 @@ async def test_matrix_variant_generator_cartesian():
         item_code=sku,
         item_name=f"Polo T-Shirt {unique_suffix}",
         category="APPAREL",
-        brand="Smriti Sport",
+        brand="TileFlow Sport",
         tax_rate=18.0,
         mrp=999.0,
         selling_price=799.0,
@@ -163,7 +149,7 @@ async def test_matrix_variant_generator_cartesian():
 @pytest.mark.asyncio
 async def test_fast_4_tier_scanner_resolver():
     """Verify fast 4-tier scanner resolution: Barcode -> Variant SKU -> Item Code -> Serial."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     sku = f"PHN-{unique_suffix.upper()}"
     barcode_val = f"890{uuid.uuid4().int % 10000000000:010d}"
@@ -241,7 +227,7 @@ async def test_fast_4_tier_scanner_resolver():
 @pytest.mark.asyncio
 async def test_batch_registration_and_tracking():
     """Verify batch creation with expiration and MRP tracking for pharma/grocery items."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     sku = f"MED-{unique_suffix.upper()}"
     batch_no = f"BAT-{uuid.uuid4().hex[:8].upper()}"
@@ -282,7 +268,7 @@ async def test_batch_registration_and_tracking():
 @pytest.mark.asyncio
 async def test_legacy_product_adapter():
     """Verify backward-compatible adapter presents Universal Item as legacy Product object."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     sku = f"PROD-{unique_suffix.upper()}"
 
@@ -329,7 +315,7 @@ async def test_api_item_endpoints():
                 "item_code": sku,
                 "item_name": f"API Test Cotton Polo {unique_suffix}",
                 "category": "APPAREL",
-                "brand": "Smriti API",
+                "brand": "TileFlow API",
                 "hsn_code": "6105",
                 "tax_rate": 12.0,
                 "primary_uom": "PCS",

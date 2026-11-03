@@ -1,33 +1,19 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { X, Plus, Trash2, Tag, Check, BookMarked, Sparkles } from "lucide-react";
-import { SmritiFieldDefinition } from "../lib/headerMapping/types";
-import { SMRITI_ITEM_MASTER_FIELDS, addCustomAlias, removeCustomAlias, getCustomAliases } from "../lib/headerMapping/HeaderAliasRegistry";
+import { TileFlowFieldDefinition } from "../lib/headerMapping/types";
+import { TILEFLOW_ITEM_MASTER_FIELDS, addCustomAlias, removeCustomAlias, getCustomAliases } from "../lib/headerMapping/HeaderAliasRegistry";
 
 interface HeaderAliasDlgModalProps {
   isOpen: boolean;
   onClose: () => void;
-  availableFields?: SmritiFieldDefinition[];
+  availableFields?: TileFlowFieldDefinition[];
   onAliasUpdated?: () => void;
 }
 
 export const HeaderAliasDlgModal: React.FC<HeaderAliasDlgModalProps> = ({
   isOpen,
   onClose,
-  availableFields = SMRITI_ITEM_MASTER_FIELDS,
+  availableFields = TILEFLOW_ITEM_MASTER_FIELDS,
   onAliasUpdated
 }) => {
   const [customAliases, setCustomAliases] = useState<Record<string, string[]>>({});
@@ -80,13 +66,13 @@ export const HeaderAliasDlgModal: React.FC<HeaderAliasDlgModalProps> = ({
             </div>
             <div>
               <h3 className="font-bold text-sm text-slate-100 flex items-center space-x-2">
-                <span>SMRITI Header Alias Manager</span>
+                <span>MQube Header Alias Manager</span>
                 <span className="px-2 py-0.5 bg-indigo-500/30 text-indigo-300 text-[10px] uppercase font-mono rounded font-medium">
                   Auto-Mapping Engine
                 </span>
               </h3>
               <p className="text-[11px] text-slate-400">
-                Define custom Excel / CSV column header aliases to automatically map vendor spreadsheets into SMRITI fields.
+                Define custom Excel / CSV column header aliases to automatically map vendor spreadsheets into MQube fields.
               </p>
             </div>
           </div>

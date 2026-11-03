@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.81.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Purchase Studio 3-Way Invoice Matching & GRN Auto-Reconciliation (v1.0.0-GA)
 
 ## 1. Objective
-Establish an automated, interactive 3-Way Matching and Reconciliation modal (`ThreeWayMatchingModal.tsx`) in SMRITI Purchase Studio, cross-validating Purchase Orders (PO), Goods Receipt Notes (GRN), and Vendor Invoices to detect quantity drifts, rate variances, and tax mismatches prior to Accounts Payable (AP) posting.
+Establish an automated, interactive 3-Way Matching and Reconciliation modal (`ThreeWayMatchingModal.tsx`) in TILEFLOW Purchase Studio, cross-validating Purchase Orders (PO), Goods Receipt Notes (GRN), and Vendor Invoices to detect quantity drifts, rate variances, and tax mismatches prior to Accounts Payable (AP) posting.
 
 ## 2. Business Motivation
 In retail procurement, over-billing by suppliers or accepting damaged inventory without corresponding invoice adjustments creates heavy margin erosion. Enforcing 3-way line item validation guarantees that invoices are only paid for physical stock verified and accepted at the warehouse or store dock.
@@ -81,7 +80,7 @@ Modular purchase component that can be opened or closed cleanly.
 - Run `npm test`.
 
 ## 15. Documentation Impact
-- Update SMRITI Purchase & Accounts Payable User Manual.
+- Update TILEFLOW Purchase & Accounts Payable User Manual.
 
 ## 16. Deployment Plan
 - Build and bundle with frontend client package.

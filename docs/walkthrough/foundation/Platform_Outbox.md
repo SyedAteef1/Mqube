@@ -1,27 +1,26 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Vertical Slice 7 — Consolidated Transactional Outbox & Operational Analytics
 
 ## 1. Purpose
-Consolidate all transactional outbox event capture across the repository onto the single canonical ledger `integration_outbox_events` in the tenant data plane (`smritiXXX`), register an authoritative Alembic migration (`v1342_canonical_outbox`), implement an asynchronous row-locking dispatcher (`SKIP LOCKED`) with publisher adapter callbacks, retry backoff, and Dead-Letter Queue (DLQ) support, and establish an Authoritative Operational KPI Service querying PostgreSQL system-of-record ledgers directly.
+Consolidate all transactional outbox event capture across the repository onto the single canonical ledger `integration_outbox_events` in the tenant data plane (`tileflowXXX`), register an authoritative Alembic migration (`v1342_canonical_outbox`), implement an asynchronous row-locking dispatcher (`SKIP LOCKED`) with publisher adapter callbacks, retry backoff, and Dead-Letter Queue (DLQ) support, and establish an Authoritative Operational KPI Service querying PostgreSQL system-of-record ledgers directly.
 
 ---
 
 ## 2. Scope
-- **Tenant Data Plane (`smritiXXX`) Consolidated Outbox**: Single canonical `IntegrationOutboxEvent` (aliased as `OutboxEvent`) capturing domain events (`INVOICE_CONFIRMED`, `STOCK_ADJUSTED`, `PAYMENT_SETTLED`, `APPROVAL_DECISION`) inside active database transactions alongside domain entity mutations.
-- **Alembic Migration Chain**: `backend/alembic/versions/v1342_canonical_outbox.py` upgrading tenant databases (`smritiXXX`) and `alembic/env.py` supporting dynamic multi-database execution via `-x db=<database_name>`.
+- **Tenant Data Plane (`tileflowXXX`) Consolidated Outbox**: Single canonical `IntegrationOutboxEvent` (aliased as `OutboxEvent`) capturing domain events (`INVOICE_CONFIRMED`, `STOCK_ADJUSTED`, `PAYMENT_SETTLED`, `APPROVAL_DECISION`) inside active database transactions alongside domain entity mutations.
+- **Alembic Migration Chain**: `backend/alembic/versions/v1342_canonical_outbox.py` upgrading tenant databases (`tileflowXXX`) and `alembic/env.py` supporting dynamic multi-database execution via `-x db=<database_name>`.
 - **Asynchronous Concurrent Dispatch Engine**: Worker queue polling with `SELECT ... FOR UPDATE SKIP LOCKED`, external publisher adapter callbacks, retry count incrementation on failure, and automatic transition to `DEAD_LETTER` after max retries.
 - **Authoritative Operational KPI Service**: Real-time KPI summaries (confirmed revenue, invoice counts, stock movements, settled payment volumes, pending outbox queues) queried directly against PostgreSQL system-of-record ledgers.
 - **Strict Physical Tenancy**: Outbox events and operational metrics strictly isolated per company database.

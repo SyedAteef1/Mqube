@@ -21,7 +21,7 @@
 
 ## Overview
 
-The Global Field Registry is a **centralized, single-source-of-truth** for all field definitions, lookups, and screen configurations across the SMRITI Retail OS platform.
+The Global Field Registry is a **centralized, single-source-of-truth** for all field definitions, lookups, and screen configurations across the TILEFLOW Retail OS platform.
 
 ### Key Benefits
 
@@ -391,10 +391,10 @@ To enable ESLint rules for registry validation:
 ```js
 // .eslintrc.cjs
 {
-  "plugins": ["smriti-registry"],
+  "plugins": ["tileflow-registry"],
   "rules": {
-    "smriti-registry/require-data-field-key": "warn",
-    "smriti-registry/no-hardcoded-fields": "warn"
+    "tileflow-registry/require-data-field-key": "warn",
+    "tileflow-registry/no-hardcoded-fields": "warn"
   }
 }
 ```
@@ -600,10 +600,8 @@ For issues or questions:
 1. Check this guide's Troubleshooting section
 2. Check [Audit Results](../memories/repo/global-registry-audit-and-automation.md)
 3. Review test examples in `src/tests/globalFieldRegistry.test.ts`
-4. Contact: support@smritibooks.com
+4. Contact: ateef@tileflow.in
 
 ---
 
-**Last Updated:** 2026-09-01  
-**Maintained By:** Chief Systems Architect  
-**License:** Proprietary Commercial Software
+

@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Commercial Growth, Customer 360, Operations & Cost Profitability Architecture v1.0
@@ -17,10 +16,10 @@
 Document the comprehensive data architecture reconciliation for Commercial Growth (CRM, Loyalty, Promotions, Referral, SICE Commissions), Customer 360 Ecosystem, Operations & Fulfillment (Packing Slips, Dispatches, Courier Manifests, Driver Commissions, Reverse Logistics), and Cost & Profitability Intelligence (Multi-Valuation Engine, COGS Snapshots, Net Contribution Waterfall).
 
 ## 2. Scope
-- Co-location of all operational growth, fulfillment, and cost tables in Company Business DB (`smriti001`).
-- Entitlement policies and governance residing in Control Plane (`smritisys`).
-- Zero unapproved company database creations (`smriti002-smriti999` created count = 0).
-- Prevention of database schema mutations in `smritisys`.
+- Co-location of all operational growth, fulfillment, and cost tables in Company Business DB (`tileflow001`).
+- Entitlement policies and governance residing in Control Plane (`tileflowsys`).
+- Zero unapproved company database creations (`tileflow002-tileflow999` created count = 0).
+- Prevention of database schema mutations in `tileflowsys`.
 
 ## 3. Files Created
 - [`backend/app/models/loyalty.py`](file:///F:/SMRITRretailNX/backend/app/models/loyalty.py)
@@ -44,15 +43,15 @@ Document the comprehensive data architecture reconciliation for Commercial Growt
 
 ## 4. Files Modified
 - [`backend/app/models/__init__.py`](file:///F:/SMRITRretailNX/backend/app/models/__init__.py)
-- [`SMRITI_Control_Plane_Architecture_Review.xlsx`](file:///F:/SMRITRretailNX/SMRITI_Control_Plane_Architecture_Review.xlsx)
+- [`TILEFLOW_Control_Plane_Architecture_Review.xlsx`](file:///F:/SMRITRretailNX/TILEFLOW_Control_Plane_Architecture_Review.xlsx)
 
 ## 5. Architecture Decisions
-- **Unambiguous Ownership Rule**: `smritisys` owns capability entitlements & platform defaults; `smriti001` owns operational definitions and transactional ledgers.
-- **Single Business DB Principle**: Commercial Growth, Customer 360, Fulfillment, and Cost Engine operate inside `smriti001`.
+- **Unambiguous Ownership Rule**: `tileflowsys` owns capability entitlements & platform defaults; `tileflow001` owns operational definitions and transactional ledgers.
+- **Single Business DB Principle**: Commercial Growth, Customer 360, Fulfillment, and Cost Engine operate inside `tileflow001`.
 - **Immutable Transactional Snapshots**: Promotions, COGS, and Redemptions retain immutable transaction-time snapshots on invoices.
 
 ## 6. Design Rationale
-Co-locating these domain tables inside `smriti001` avoids database sprawl and prevents transactional queries from making cross-database joins to the Control Plane.
+Co-locating these domain tables inside `tileflow001` avoids database sprawl and prevents transactional queries from making cross-database joins to the Control Plane.
 
 ## 7. Implementation Summary
 Implemented 22 operational tables across CRM, Loyalty, Promotions, Referral, SICE, Fulfillment, Dispatch, Reverse Logistics, and Profitability.
@@ -63,15 +62,15 @@ Executed 66/66 Pytest test suites across all platform test files in 4.27s.
 ## 9. Verification Results
 - Pytest: 66 Passed (0 Failed).
 - Vite Build: Passed in 22.50s (0 credential leaks in `dist/`).
-- Unapproved DBs Created: 0 (`smriti002-smriti999` created count = 0).
-- `smriti_menus`: 34 (FROZEN).
-- `smriti_audit_log`: 61 (INTACT).
+- Unapproved DBs Created: 0 (`tileflow002-tileflow999` created count = 0).
+- `tileflow_menus`: 34 (FROZEN).
+- `tileflow_audit_log`: 61 (INTACT).
 
 ## 10. Known Limitations
 None.
 
 ## 11. Future Work
-Live staging provisioning for additional tenant company databases (`smritiABC`, `smritiMUM`) when explicitly commanded.
+Live staging provisioning for additional tenant company databases (`tileflowABC`, `tileflowMUM`) when explicitly commanded.
 
 ## 12. Related ADRs
 - ADR-001: Multi-Tenant Single Business Database Isolation

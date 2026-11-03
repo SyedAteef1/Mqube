@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 4.0.0
- * Created      : 2026-08-19
- * Modified     : 2026-08-19
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import { describe, it, expect } from "vitest";
 import {
   LAUNCHPAD_CATALOG,
@@ -51,7 +38,7 @@ const REGISTERED_APP_TABS = [
   "data-exchange",
   "database-manager",
   "company-setup",
-  "about-smriti",
+  "about-tileflow",
   "dev-tracker",
   "security-management",
   "menu-manager",
@@ -69,7 +56,7 @@ describe("Fiori Launchpad Canonical Routing & Catalog Integrity", () => {
     const { resolveNavigation } = await import("../components/shell/navigationResolver.ts");
     expect(resolveNavigation({ context: "launchpad" }).items[0]).toMatchObject({
       id: "launchpad",
-      title: "SMRITI Launchpad",
+      title: "MQube Launchpad",
     });
     expect(resolveNavigation({ context: "launchpad" }).nextBestAction).toMatchObject({
       id: "launchpad",

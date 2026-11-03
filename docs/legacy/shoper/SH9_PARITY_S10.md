@@ -1,19 +1,18 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sprint 10 — P2 Sales, CRM & Staff Management Parity Gap Registry
-## Shoper9 MnuNo 100/410/612/613 → SMRITI Gap Analysis
+## Shoper9 MnuNo 100/410/612/613 → TILEFLOW Gap Analysis
 
 **Date:** 2026-08-24  
 **Source:** Live DB probe + model inspection  
@@ -37,7 +36,7 @@
 
 ## MnuNo 410 P2 Sales Reports (5 entries)
 
-| MnuNo/Opt | Caption | EXE | SMRITI Impl | Gap Status |
+| MnuNo/Opt | Caption | EXE | TILEFLOW Impl | Gap Status |
 |---|---|---|---|---|
 | 410/415 | Bill-wise Items | SR202000 | `GET /sales-reports/bill-items` via `rule_snapshots` JSONB | ✅ IMPLEMENTED |
 | 410/422 | Attribute+Size wise | SR236300 | `GET /sales-reports/size-wise` via `rule_snapshots` | ✅ IMPLEMENTED |
@@ -47,7 +46,7 @@
 
 ## MnuNo 612/613 CRM & Staff (7 entries)
 
-| MnuNo/Opt | Caption | EXE | SMRITI Impl | Gap Status |
+| MnuNo/Opt | Caption | EXE | TILEFLOW Impl | Gap Status |
 |---|---|---|---|---|
 | 100/108 | Walk-in Entry/Register | SR120100 | `GET /crm-reports/walk-in` from `customers` | ✅ IMPLEMENTED |
 | 613/6133 | Customer Mailer | SR430900 | `GET /crm-reports/mailer-list` from `customers` | ✅ IMPLEMENTED |

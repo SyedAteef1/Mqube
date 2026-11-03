@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.94.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -35,7 +34,7 @@ const STATUS_STYLE: Record<string, string> = {
 };
 
 const SUPPLIER: GSTParty = {
-  gstin: "27AABCS1234A1Z5", legalName: "SMRITI Fashion Pvt. Ltd.", tradeName: "SMRITI Books",
+  gstin: "27AABCS1234A1Z5", legalName: "MQube Fashion Pvt. Ltd.", tradeName: "MQube Books",
   address1: "123 Commerce Road, Fort", location: "Mumbai", pincode: "400001", stateCode: "27",
 };
 const BUYER: GSTParty = {
@@ -47,9 +46,9 @@ function makeSampleInvoices(): EInvoice[] {
   const itemA = EInvoiceEngine.computeLineItem({ slNo: 1, description: "Polo Shirt Navy M", hsn: "62052090", qty: 50, unit: "NOS", unitPrice: 1000, gstRate: 12, isInterState: true });
   const itemB = EInvoiceEngine.computeLineItem({ slNo: 2, description: "Slim Denim Black 32", hsn: "62034290", qty: 30, unit: "NOS", unitPrice: 1800, gstRate: 12, isInterState: true });
 
-  const d1 = EInvoiceEngine.createDraft({ docType: "INV", docNo: "SMRITI/2026-27/001", docDate: "28/08/2026", supplier: SUPPLIER, buyer: BUYER, items: [itemA] });
-  const d2 = EInvoiceEngine.createDraft({ docType: "INV", docNo: "SMRITI/2026-27/002", docDate: "28/08/2026", supplier: SUPPLIER, buyer: BUYER, items: [itemA, itemB] });
-  const d3 = EInvoiceEngine.createDraft({ docType: "CRN", docNo: "SMRITI/CRN/2026-27/001", docDate: "28/08/2026", supplier: SUPPLIER, buyer: BUYER, items: [itemB] });
+  const d1 = EInvoiceEngine.createDraft({ docType: "INV", docNo: "MQube/2026-27/001", docDate: "28/08/2026", supplier: SUPPLIER, buyer: BUYER, items: [itemA] });
+  const d2 = EInvoiceEngine.createDraft({ docType: "INV", docNo: "MQube/2026-27/002", docDate: "28/08/2026", supplier: SUPPLIER, buyer: BUYER, items: [itemA, itemB] });
+  const d3 = EInvoiceEngine.createDraft({ docType: "CRN", docNo: "MQube/CRN/2026-27/001", docDate: "28/08/2026", supplier: SUPPLIER, buyer: BUYER, items: [itemB] });
 
   const r1 = EInvoiceEngine.registerIRN(d1);
   const r2 = EInvoiceEngine.registerIRN(d2);
@@ -152,7 +151,7 @@ export const EInvoiceStudioModal: React.FC<EInvoiceStudioModalProps> = ({ isOpen
                 <button key={inv.invoiceId} onClick={() => setSelectedId(inv.invoiceId)}
                   className={`w-full text-left p-3 rounded-xl border transition-all ${selectedId === inv.invoiceId ? "bg-orange-950/20 border-orange-500/40" : "border-transparent hover:bg-slate-800/60"}`}>
                   <div className="text-[10px] font-bold text-slate-200 font-mono truncate">{inv.docNo}</div>
-                  <div className="text-[10px] text-slate-500 mt-0.5">{inv.docType} Â· â‚¹{inv.totals.grandTotal.toLocaleString("en-IN")}</div>
+                  <div className="text-[10px] text-slate-500 mt-0.5">{inv.docType} Â· ₹{inv.totals.grandTotal.toLocaleString("en-IN")}</div>
                   <span className={`inline-block mt-1.5 text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${STATUS_STYLE[inv.status]}`}>{inv.status}</span>
                 </button>
               ))}
@@ -192,7 +191,7 @@ export const EInvoiceStudioModal: React.FC<EInvoiceStudioModalProps> = ({ isOpen
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div><p className="text-[10px] text-slate-500 mb-0.5">ACK Number</p><p className="text-xs font-mono text-slate-300">{selected.ackNo}</p></div>
-                      <div><p className="text-[10px] text-slate-500 mb-0.5">ACK Date</p><p className="text-xs text-slate-300">{selected.ackDate ? new Date(selected.ackDate).toLocaleString("en-IN") : "â€”"}</p></div>
+                      <div><p className="text-[10px] text-slate-500 mb-0.5">ACK Date</p><p className="text-xs text-slate-300">{selected.ackDate ? new Date(selected.ackDate).toLocaleString("en-IN") : "—"}</p></div>
                     </div>
                     <div>
                       <p className="text-[10px] text-slate-500 mb-1">QR Payload (CBIC Spec)</p>
@@ -227,10 +226,10 @@ export const EInvoiceStudioModal: React.FC<EInvoiceStudioModalProps> = ({ isOpen
                             <td className="py-2 px-3 font-sans text-slate-200">{item.description}</td>
                             <td className="py-2 px-3 text-center text-slate-400">{item.hsn}</td>
                             <td className="py-2 px-3 text-right text-slate-300">{item.qty}</td>
-                            <td className="py-2 px-3 text-right text-slate-300">â‚¹{item.taxableValue.toLocaleString("en-IN")}</td>
+                            <td className="py-2 px-3 text-right text-slate-300">₹{item.taxableValue.toLocaleString("en-IN")}</td>
                             <td className="py-2 px-3 text-right text-slate-400">{item.gstRate}%</td>
-                            <td className="py-2 px-3 text-right text-orange-400">{item.igst > 0 ? `â‚¹${item.igst}` : `â‚¹${item.cgst}+â‚¹${item.sgst}`}</td>
-                            <td className="py-2 px-3 text-right font-bold text-slate-100">â‚¹{item.lineTotal.toLocaleString("en-IN")}</td>
+                            <td className="py-2 px-3 text-right text-orange-400">{item.igst > 0 ? `₹${item.igst}` : `₹${item.cgst}+₹${item.sgst}`}</td>
+                            <td className="py-2 px-3 text-right font-bold text-slate-100">₹{item.lineTotal.toLocaleString("en-IN")}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -244,7 +243,7 @@ export const EInvoiceStudioModal: React.FC<EInvoiceStudioModalProps> = ({ isOpen
                       ].map((t) => (
                         <div key={t.label} className="text-center">
                           <div className="text-slate-500">{t.label}</div>
-                          <div className={`font-bold ${t.label === "Grand Total" ? "text-orange-400" : "text-slate-300"}`}>â‚¹{t.value.toLocaleString("en-IN")}</div>
+                          <div className={`font-bold ${t.label === "Grand Total" ? "text-orange-400" : "text-slate-300"}`}>₹{t.value.toLocaleString("en-IN")}</div>
                         </div>
                       ))}
                     </div>

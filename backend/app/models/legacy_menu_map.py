@@ -1,33 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Sprint 2 -- Legacy Menu Map Model
-
-smriti_legacy_menu_map is a JOIN TABLE between:
-  - The immutable Shoper9 vaMenu registry (MnuNo/MenuOpt as natural keys)
-  - The canonical SMRITI workspace/action system (SmritiMenu.id)
-
-Design Rules:
-  1. This table is APPEND-ONLY. Legacy data is never deleted from it.
-  2. The canonical SmritiMenu record is the authoritative owner.
-     This table is subordinate and informational.
-  3. MigrationStatus values are a closed enum. No freeform text.
-  4. document_type is a VARCHAR label (e.g. SALES_INVOICE), not a FK.
-     It serves as a routing hint, not a relational constraint.
-  5. The table is GLOBAL (no company_id/branch_id scoping).
-     Every tenant inherits the same Shoper-to-SMRITI lineage.
-"""
-
 from sqlalchemy import (
     Column, String, Integer, SmallInteger, Text,
     UniqueConstraint, CheckConstraint
@@ -39,11 +9,11 @@ from ..db.base import BaseEntity
 class LegacyMenuMap(BaseEntity):
     """
     Maps every Shoper9 vaMenu entry (MnuNo, MenuOpt) to its
-    canonical SMRITI workspace + action equivalent.
+    canonical TILEFLOW workspace + action equivalent.
 
-    Table: smriti_legacy_menu_map
+    Table: tileflow_legacy_menu_map
     """
-    __tablename__ = "smriti_legacy_menu_map"
+    __tablename__ = "tileflow_legacy_menu_map"
     __table_args__ = (
         UniqueConstraint("sh9_mnu_no", "sh9_menu_opt",
                          name="uq_legacy_map_mnu_opt"),
@@ -76,24 +46,24 @@ class LegacyMenuMap(BaseEntity):
     sh9_multi_inst   = Column(SmallInteger, nullable=True, default=0,
                               comment="vaMenu.MultiInstance flag")
 
-    # ── SMRITI Target (resolved from CANONICAL_34_MENU_MATRIX) ───────────────
-    smriti_menu_id   = Column(String(80), nullable=True, index=True,
-                              comment="SMRITI menu_id key from canonical matrix")
-    smriti_workspace = Column(String(120), nullable=True,
-                              comment="Human-readable SMRITI workspace name")
-    smriti_module    = Column(String(50), nullable=True, index=True,
-                              comment="SMRITI functional module: SALES/INVENTORY/etc")
-    smriti_action    = Column(String(60), nullable=True,
-                              comment="SMRITI action verb: NEW_TRANSACTION/VIEW/etc")
+    # ── TILEFLOW Target (resolved from CANONICAL_34_MENU_MATRIX) ───────────────
+    tileflow_menu_id   = Column(String(80), nullable=True, index=True,
+                              comment="TILEFLOW menu_id key from canonical matrix")
+    tileflow_workspace = Column(String(120), nullable=True,
+                              comment="Human-readable TILEFLOW workspace name")
+    tileflow_module    = Column(String(50), nullable=True, index=True,
+                              comment="TILEFLOW functional module: SALES/INVENTORY/etc")
+    tileflow_action    = Column(String(60), nullable=True,
+                              comment="TILEFLOW action verb: NEW_TRANSACTION/VIEW/etc")
     document_type    = Column(String(60), nullable=True,
-                              comment="SMRITI document_type routing label")
+                              comment="TILEFLOW document_type routing label")
 
     # ── Migration Governance ──────────────────────────────────────────────────
     migration_status = Column(
         String(20), nullable=False, default="PENDING", index=True,
         comment=(
             "MAPPED=direct equiv | MERGED=consolidated | "
-            "REPLACED=SMRITI-superior | DEPRECATED=pre-GST/Tally | "
+            "REPLACED=TILEFLOW-superior | DEPRECATED=pre-GST/Tally | "
             "NOT_APPLIC=internal Shoper infra | PENDING=needs review"
         )
     )
@@ -109,6 +79,6 @@ class LegacyMenuMap(BaseEntity):
     def __repr__(self) -> str:
         return (
             f"<LegacyMenuMap sh9=({self.sh9_mnu_no},{self.sh9_menu_opt}) "
-            f"smriti={self.smriti_menu_id} action={self.smriti_action} "
+            f"tileflow={self.tileflow_menu_id} action={self.tileflow_action} "
             f"status={self.migration_status}>"
         )

@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.2
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # DevOps — Git Runtime Metrics Support — Walkthrough v3.14.2
@@ -19,7 +18,7 @@
 ---
 
 ## 1. Purpose
-Ensure the built-in SMRITI Development Intelligence Center (SDIC) code health scanner is capable of executing Git tree analysis inside the container environments.
+Ensure the built-in TILEFLOW Development Intelligence Center (SDIC) code health scanner is capable of executing Git tree analysis inside the container environments.
 
 ---
 
@@ -61,13 +60,13 @@ Enabling direct Git CLI client calls within the container removes scan errors an
 
 ## 8. Tests Executed
 ```bash
-docker logs smriti-api
+docker logs tileflow-api
 ```
 
 ---
 
 ## 9. Verification Results
-- **SDIC Scanner:** Runs and logs `Beginning SMRITI Development Intelligence Center scan...` and completes successfully.
+- **SDIC Scanner:** Runs and logs `Beginning TILEFLOW Development Intelligence Center scan...` and completes successfully.
 - **Docker Compose:** All containers are active and healthy.
 
 ---

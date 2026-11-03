@@ -1,14 +1,13 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.16.0
  * Created      : 2026-08-19
  * Modified     : 2026-08-19
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
  */
 
 import React, { useState, useMemo, useEffect } from "react";
@@ -245,7 +244,7 @@ export const DocumentStudioScreen: React.FC<DocumentStudioScreenProps> = ({
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-blue-400 font-bold uppercase tracking-wider">
             <Layers size={14} />
-            <span>Document Studio â€¢ {config.documentType}</span>
+            <span>Document Studio • {config.documentType}</span>
           </div>
           <h1 className="text-xl md:text-2xl font-bold text-theme-primary font-display mt-1">{config.title}</h1>
           <p className="text-xs text-theme-muted mt-0.5">{config.subtitle}</p>

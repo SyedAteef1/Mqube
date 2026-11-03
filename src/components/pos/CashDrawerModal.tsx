@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.111.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -30,7 +29,7 @@ const RECONCILE_STYLE: Record<ReconcileStatus, string> = {
   OVER:     "text-amber-300 bg-amber-500/15 border-amber-500/25",
 };
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 const INITIAL_FLOAT: Denomination[] = [
   { value: 2000, count: 1 },
@@ -52,7 +51,7 @@ function buildSampleDrawer(): CashDrawer {
   });
   d = CashDrawerEngine.recordMovement(d, "SALE",     1500, "CASHIER-007", "Invoice INV-0001");
   d = CashDrawerEngine.recordMovement(d, "SALE",     800,  "CASHIER-007", "Invoice INV-0002");
-  d = CashDrawerEngine.recordMovement(d, "CASH_OUT", 200,  "CASHIER-007", "Petty expense â€” courier");
+  d = CashDrawerEngine.recordMovement(d, "CASH_OUT", 200,  "CASHIER-007", "Petty expense — courier");
   d = CashDrawerEngine.recordMovement(d, "CASH_IN",  500,  "CASHIER-007", "Petty cash top-up");
   return d;
 }
@@ -163,7 +162,7 @@ export const CashDrawerModal: React.FC<CashDrawerModalProps> = ({ isOpen, onClos
               </div>
               {drawer.reconciliation && (
                 <div className={`rounded-xl border p-4 ${RECONCILE_STYLE[drawer.reconciliation.status]}`}>
-                  <p className="text-xs font-bold mb-2">EOD Reconciliation â€” {new Date(drawer.reconciliation.reconciledAt).toLocaleString("en-IN")}</p>
+                  <p className="text-xs font-bold mb-2">EOD Reconciliation — {new Date(drawer.reconciliation.reconciledAt).toLocaleString("en-IN")}</p>
                   <div className="grid grid-cols-3 gap-3 text-center text-xs">
                     {[
                       { label: "Expected", value: fmt(drawer.reconciliation.expectedCash) },
@@ -206,7 +205,7 @@ export const CashDrawerModal: React.FC<CashDrawerModalProps> = ({ isOpen, onClos
               <div className="grid grid-cols-2 gap-2">
                 {INITIAL_FLOAT.map((d) => (
                   <div key={d.value} className="flex items-center justify-between px-4 py-3 bg-slate-800/30 border border-slate-700/60 rounded-xl text-xs">
-                    <span className="font-mono text-slate-300 font-bold">â‚¹{d.value}</span>
+                    <span className="font-mono text-slate-300 font-bold">₹{d.value}</span>
                     <span className="text-slate-500">Ã—</span>
                     <span className="font-mono text-slate-400">{d.count}</span>
                     <span className="font-mono text-emerald-400 font-bold">{fmt(d.value * d.count)}</span>
@@ -261,7 +260,7 @@ export const CashDrawerModal: React.FC<CashDrawerModalProps> = ({ isOpen, onClos
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-bold text-slate-200">End-of-Day Physical Count</p>
-                  <p className="text-xs text-slate-400">Enter denomination counts â€” expected: <span className="font-mono text-yellow-400">{fmt(drawer.expectedCash)}</span></p>
+                  <p className="text-xs text-slate-400">Enter denomination counts — expected: <span className="font-mono text-yellow-400">{fmt(drawer.expectedCash)}</span></p>
                 </div>
                 <div className="text-right">
                   <div className={`text-xl font-black font-mono ${reconVariance === 0 ? "text-emerald-400" : reconVariance > 0 ? "text-amber-400" : "text-rose-400"}`}>{fmt(reconTotal)}</div>
@@ -273,7 +272,7 @@ export const CashDrawerModal: React.FC<CashDrawerModalProps> = ({ isOpen, onClos
               <div className="grid grid-cols-2 gap-2">
                 {reconDenoms.map((d) => (
                   <div key={d.value} className="flex items-center gap-3 px-3 py-2.5 bg-slate-800/30 border border-slate-700/60 rounded-xl">
-                    <span className="text-xs font-mono font-bold text-slate-300 w-16">â‚¹{d.value}</span>
+                    <span className="text-xs font-mono font-bold text-slate-300 w-16">₹{d.value}</span>
                     <input
                       type="number" min={0} value={d.count}
                       data-field-key="quantity"
@@ -292,7 +291,7 @@ export const CashDrawerModal: React.FC<CashDrawerModalProps> = ({ isOpen, onClos
               )}
               {drawer.status === "RECONCILED" && (
                 <div className={`p-4 rounded-xl border ${RECONCILE_STYLE[drawer.reconciliation!.status]}`}>
-                  <p className="text-sm font-bold">{drawer.reconciliation!.status} â€” Reconciled</p>
+                  <p className="text-sm font-bold">{drawer.reconciliation!.status} — Reconciled</p>
                   <p className="text-xs mt-1">Variance: {fmt(drawer.reconciliation!.variance)}</p>
                 </div>
               )}

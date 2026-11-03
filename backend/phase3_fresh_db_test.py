@@ -29,7 +29,7 @@ try:
         cursor.execute("""
             SELECT pg_terminate_backend(pg_stat_activity.pid)
             FROM pg_stat_activity
-            WHERE pg_stat_activity.datname = 'smriti_diag_fresh_v2'
+            WHERE pg_stat_activity.datname = 'tileflow_diag_fresh_v2'
             AND pid <> pg_backend_pid();
         """)
         print("   ✓ Connections terminated")
@@ -39,14 +39,14 @@ try:
     # Drop fresh DB if exists
     print("2. Dropping existing fresh test database...")
     try:
-        cursor.execute("DROP DATABASE IF EXISTS smriti_diag_fresh_v2;")
+        cursor.execute("DROP DATABASE IF EXISTS tileflow_diag_fresh_v2;")
         print("   ✓ Old database dropped")
     except Exception as e:
         print(f"   (No existing database: {str(e)[:50]})")
     
     # Create fresh DB
     print("3. Creating fresh test database...")
-    cursor.execute("CREATE DATABASE smriti_diag_fresh_v2;")
+    cursor.execute("CREATE DATABASE tileflow_diag_fresh_v2;")
     cursor.close()
     conn.close()
     print("   ✓ Database created")
@@ -59,7 +59,7 @@ print()
 print("3. Running Alembic upgrade on fresh database...")
 try:
     result = subprocess.run(
-        ['alembic', '-x', 'db=smriti_diag_fresh_v2', 'upgrade', 'head'],
+        ['alembic', '-x', 'db=tileflow_diag_fresh_v2', 'upgrade', 'head'],
         cwd='.',
         capture_output=True,
         text=True,
@@ -82,7 +82,7 @@ except Exception as e:
 print()
 print("4. Inspecting fresh database schema...")
 
-fresh_url = 'postgresql://postgres:postgres@localhost:5432/smriti_diag_fresh_v2'
+fresh_url = 'postgresql://postgres:postgres@localhost:5432/tileflow_diag_fresh_v2'
 try:
     engine = create_engine(fresh_url, poolclass=NullPool)
     inspector = inspect(engine)

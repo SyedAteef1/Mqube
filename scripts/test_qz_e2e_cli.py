@@ -1,17 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.30.0
- * Created      : 2026-08-23
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys
 import os
 import json
@@ -56,7 +42,7 @@ def test_tcp_port(host: str, port: int) -> bool:
 
 def main():
     print("=" * 80)
-    print("  SMRITI Retail OS - Comprehensive QZ Tray & Barcode CLI Test Suite")
+    print("  TILEFLOW Retail OS - Comprehensive QZ Tray & Barcode CLI Test Suite")
     print("=" * 80)
 
     # 1. Local QZ Tray WebSocket Daemon Reachability
@@ -80,7 +66,7 @@ def main():
 
     # 3. Test Cryptographic SHA512 Challenge Signing
     print("\n[3/6] Testing Backend RSA SHA512 Challenge Signing (/api/v1/barcode/qz/sign)...")
-    challenge = f"SMRITI_CLI_CHALLENGE_{uuid.uuid4().hex}"
+    challenge = f"TILEFLOW_CLI_CHALLENGE_{uuid.uuid4().hex}"
     status, sig = http_post(f"{BASE_URL}/api/v1/barcode/qz/sign", {"request": challenge})
     assert status == 200, f"Expected 200, got {status}"
     assert len(sig) > 50, "Signature too short"
@@ -116,7 +102,7 @@ def main():
                 "stockNo": "SKU-9901-XL",
                 "barcode": "8901234567890",
                 "product": "Executive Linen Shirt",
-                "brand": "Smriti Signature",
+                "brand": "TileFlow Signature",
                 "style": "Slim Fit",
                 "colour": "Sky Blue",
                 "size": "42",

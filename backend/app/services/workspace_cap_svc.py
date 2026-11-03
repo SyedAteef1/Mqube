@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any, Set
@@ -112,16 +98,16 @@ STANDARD_TEMPLATES = [
 class UnifiedWorkspaceCapabilityService:
     """
     Authoritative Capability Registry, Workspace Template, and Tenant Layout Resolution Service.
-    Enforces control-plane catalog integrity in smritisys and tenant-scoped customization in smritiXXX.
+    Enforces control-plane catalog integrity in tileflowsys and tenant-scoped customization in tileflowXXX.
     """
 
     # =========================================================================
-    # 1. CONTROL PLANE SEEDING & CATALOG MANAGEMENT (smritisys)
+    # 1. CONTROL PLANE SEEDING & CATALOG MANAGEMENT (tileflowsys)
     # =========================================================================
     @classmethod
     async def seed_control_catalog(cls, control_session: AsyncSession) -> Dict[str, int]:
         """
-        Seeds standard platform capabilities and workspace templates in the control plane database (smritisys).
+        Seeds standard platform capabilities and workspace templates in the control plane database (tileflowsys).
         """
         caps_seeded = 0
         templates_seeded = 0
@@ -133,7 +119,7 @@ class UnifiedWorkspaceCapabilityService:
             if not existing:
                 cap = PlatformCapability(
                     id=f"cap_{uuid.uuid4().hex[:12]}",
-                    company_id="SMRITISYS",
+                    company_id="TILEFLOWSYS",
                     branch_id="SYSTEM",
                     name=item["name"],
                     code=item["code"],
@@ -154,7 +140,7 @@ class UnifiedWorkspaceCapabilityService:
             if not existing:
                 wt = WorkspaceTemplate(
                     id=f"wt_{uuid.uuid4().hex[:12]}",
-                    company_id="SMRITISYS",
+                    company_id="TILEFLOWSYS",
                     branch_id="SYSTEM",
                     name=tpl["name"],
                     code=tpl["code"],
@@ -173,7 +159,7 @@ class UnifiedWorkspaceCapabilityService:
         return {"capabilities_seeded": caps_seeded, "templates_seeded": templates_seeded}
 
     # =========================================================================
-    # 2. TENANT PLANE CAPABILITY BINDINGS (smritiXXX)
+    # 2. TENANT PLANE CAPABILITY BINDINGS (tileflowXXX)
     # =========================================================================
     @classmethod
     async def bind_tenant_capability(
@@ -257,7 +243,7 @@ class UnifiedWorkspaceCapabilityService:
         theme = u_cfg.theme_preference if u_cfg else "DARK_RETRO"
         pinned = u_cfg.pinned_modules if u_cfg else []
 
-        # 2. Fetch master template from control plane (smritisys)
+        # 2. Fetch master template from control plane (tileflowsys)
         t_stmt = select(WorkspaceTemplate).where(
             WorkspaceTemplate.code == template_code,
             WorkspaceTemplate.status == "ACTIVE",

@@ -1,29 +1,24 @@
 @echo off
-REM Project      : SMRITI Retail OS
-REM Repository   : SMRITIRetailNX
-REM Organization : AITDL NETWORKS
+REM Project      : TILEFLOW Retail OS
+REM Repository   : TILEFLOWRetailNX
 REM 
 REM Founders
 REM 
 REM * Pushpa Devi Jawahar Mallah
 REM   * Founder & Chairperson
 REM   * Phone: +91 9324117007
-REM   * Email: founder@aitdl.com
 REM 
-REM * Jawahar Ramkripal Mallah
+REM * Syed Ateef
 REM   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-REM   * Email: founder@aitdl.com
 REM 
-REM * Websites: aitdl.com | erpnbook.com | smritibooks.com
 REM 
 REM * Version    : 3.1.0
 REM * Created    : 2026-07-11
 REM * Modified   : 2026-07-11
-REM * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-REM * License    : Proprietary Commercial Software
+REM * License    : MIT Open Source License
 
 echo =====================================================================
-echo SMRITI Retail OS - Automatic Docker Startup Launcher
+echo TILEFLOW Retail OS - Automatic Docker Startup Launcher
 echo =====================================================================
 
 REM 1. Verify Docker CLI is accessible
@@ -37,7 +32,7 @@ if %errorlevel% neq 0 (
 REM 2. Check if Docker Daemon is active
 docker info >nul 2>nul
 if %errorlevel% neq 0 (
-    echo [SMRITI] Docker daemon is not running. Attempting to start Docker Desktop...
+    echo [TILEFLOW] Docker daemon is not running. Attempting to start Docker Desktop...
     
     REM Launch Docker Desktop from standard install path
     if exist "%ProgramFiles%\Docker\Docker\Docker Desktop.exe" (
@@ -55,12 +50,12 @@ if %errorlevel% neq 0 (
     if %errorlevel% neq 0 goto wait_loop
 )
 
-echo [SMRITI] Docker daemon is active. Starting containers...
+echo [TILEFLOW] Docker daemon is active. Starting containers...
 cd /d "%~dp0"
 docker compose up -d
 
 echo =====================================================================
-echo SMRITI Retail OS running in the background.
+echo TILEFLOW Retail OS running in the background.
 echo API endpoint: http://localhost:3000
 echo =====================================================================
 timeout /t 5 >nul

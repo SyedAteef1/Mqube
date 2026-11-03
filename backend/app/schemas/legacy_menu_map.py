@@ -1,23 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Sprint 3 -- Legacy Menu Map Pydantic Schemas
-
-Read-only schemas only. This endpoint exposes migration lineage data.
-Write operations on smriti_legacy_menu_map are PROHIBITED through the API;
-they are seeded exclusively via scripts/sh9_seed.py (governance boundary).
-"""
-
 from typing import Optional
 from datetime import datetime
 from pydantic import BaseModel, Field
@@ -27,8 +7,8 @@ from pydantic import BaseModel, Field
 
 class LegacyMenuItemResponse(BaseModel):
     """
-    Single smriti_legacy_menu_map record.
-    Represents one Shoper9 vaMenu entry and its SMRITI mapping.
+    Single tileflow_legacy_menu_map record.
+    Represents one Shoper9 vaMenu entry and its TILEFLOW mapping.
     """
     id:              str
     uuid:            str
@@ -43,12 +23,12 @@ class LegacyMenuItemResponse(BaseModel):
     sh9_allow_closed:Optional[int] = Field(None, description="AllowWhenTrnClosed flag")
     sh9_multi_inst:  Optional[int] = Field(None, description="MultiInstance flag")
 
-    # SMRITI target
-    smriti_menu_id:   Optional[str] = Field(None, description="SMRITI canonical menu_id")
-    smriti_workspace: Optional[str] = Field(None, description="SMRITI workspace name")
-    smriti_module:    Optional[str] = Field(None, description="SMRITI functional module")
-    smriti_action:    Optional[str] = Field(None, description="SMRITI action verb")
-    document_type:    Optional[str] = Field(None, description="SMRITI document_type routing label")
+    # TILEFLOW target
+    tileflow_menu_id:   Optional[str] = Field(None, description="TILEFLOW canonical menu_id")
+    tileflow_workspace: Optional[str] = Field(None, description="TILEFLOW workspace name")
+    tileflow_module:    Optional[str] = Field(None, description="TILEFLOW functional module")
+    tileflow_action:    Optional[str] = Field(None, description="TILEFLOW action verb")
+    document_type:    Optional[str] = Field(None, description="TILEFLOW document_type routing label")
 
     # Migration governance
     migration_status: str  = Field(..., description=(
@@ -75,9 +55,9 @@ class LegacyMenuSummary(BaseModel):
     sh9_menu_opt:    int
     sh9_mnu_cap:     Optional[str] = None
     sh9_exe_name:    Optional[str] = None
-    smriti_menu_id:  Optional[str] = None
-    smriti_workspace:Optional[str] = None
-    smriti_action:   Optional[str] = None
+    tileflow_menu_id:  Optional[str] = None
+    tileflow_workspace:Optional[str] = None
+    tileflow_action:   Optional[str] = None
     migration_status:str
 
     class Config:

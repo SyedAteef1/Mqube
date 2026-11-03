@@ -1,34 +1,20 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import {
   ConfidenceLevel,
   MappingContext,
   ColumnMappingResult,
   HeaderMappingEngineResult,
-  SmritiFieldDefinition,
+  TileFlowFieldDefinition,
   SavedMappingProfile
 } from "./types";
 import { normalizeHeader, calculateSimilarity, calculateSemanticSimilarity } from "./HeaderNormalizer";
-import { SMRITI_ITEM_MASTER_FIELDS, AMBIGUOUS_HEADER_RULES } from "./HeaderAliasRegistry";
+import { TILEFLOW_ITEM_MASTER_FIELDS, AMBIGUOUS_HEADER_RULES } from "./HeaderAliasRegistry";
 
-const PROFILES_STORAGE_KEY = "smriti_header_mapping_profiles";
+const PROFILES_STORAGE_KEY = "tileflow_header_mapping_profiles";
 
 export class HeaderMappingEngine {
-  private fields: SmritiFieldDefinition[];
+  private fields: TileFlowFieldDefinition[];
 
-  constructor(fields: SmritiFieldDefinition[] = SMRITI_ITEM_MASTER_FIELDS) {
+  constructor(fields: TileFlowFieldDefinition[] = TILEFLOW_ITEM_MASTER_FIELDS) {
     this.fields = fields;
   }
 
@@ -109,7 +95,7 @@ export class HeaderMappingEngine {
       }
 
       // 4. Known Alias Registry Match
-      let aliasMatchField: SmritiFieldDefinition | null = null;
+      let aliasMatchField: TileFlowFieldDefinition | null = null;
       for (const field of this.fields) {
         for (const alias of field.aliases) {
           const normalizedAlias = normalizeHeader(alias);
@@ -137,7 +123,7 @@ export class HeaderMappingEngine {
       }
 
       // 5. Semantic Fuzzy / Typo Matcher (Levenshtein + Token Overlap)
-      let bestFuzzyField: SmritiFieldDefinition | null = null;
+      let bestFuzzyField: TileFlowFieldDefinition | null = null;
       let highestSimilarity = 0;
 
       for (const field of this.fields) {

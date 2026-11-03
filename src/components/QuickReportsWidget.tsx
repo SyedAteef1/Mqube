@@ -1,19 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.28.0
- * Created      : 2026-07-10
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Target UI    : Quick Reports Widget (Fiori Horizon Inspired Light Theme)
- */
-
 import React, { useState, useEffect } from "react";
 import { apiFetchV1 } from "../lib/apiFetchV1";
 import { recordAuditAction } from "../lib/apiFetch";
@@ -49,36 +33,36 @@ type LayoutMode = "a4" | "thermal";
 const PREDEFINED_REPORTS = [
   {
     id: "day-summary" as ReportType,
-    title: "Daily Operations Summary",
+    title: "Day summary",
     code: "RPT-OPS-001",
-    description: "Gross revenue, ticket size, and payment modes.",
+    description: "Sales, average bill and payment modes",
     icon: FileBarChart,
     color: "text-blue-700",
     bg: "bg-blue-50"
   },
   {
     id: "sales-billing" as ReportType,
-    title: "Sales & Billing Register",
+    title: "Sales register",
     code: "RPT-SAL-002",
-    description: "Completed cash, card, and UPI invoice records.",
+    description: "All completed cash, card and UPI bills",
     icon: Receipt,
     color: "text-emerald-700",
     bg: "bg-emerald-50"
   },
   {
     id: "inventory-status" as ReportType,
-    title: "Critical Inventory Report",
+    title: "Low-stock report",
     code: "RPT-INV-003",
-    description: "Safety stocks, reorders, and capital locked.",
+    description: "Items to reorder and stock value",
     icon: AlertTriangle,
     color: "text-amber-700",
     bg: "bg-amber-50"
   },
   {
     id: "compliance-audit" as ReportType,
-    title: "System Compliance Ledger",
+    title: "Change log",
     code: "RPT-CMP-004",
-    description: "Rule 10 non-repudiation audit trails & logs.",
+    description: "Who changed what, and when",
     icon: ShieldCheck,
     color: "text-indigo-700",
     bg: "bg-indigo-50"
@@ -198,7 +182,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
         };
       case "sales-billing":
         return {
-          title: "Sales & Billing Register",
+          title: "Sales register",
           subtitle: "Detailed itemized transaction log & checkout desk audit ledger.",
           code: "RPT-SAL-002"
         };
@@ -222,172 +206,132 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
   return (
     <>
       {/* SIDEBAR WIDGET UI */}
-      <div id="quick-reports-sidebar-card" className="bg-theme-surface-1 rounded-xl p-4 border border-theme-border shadow-xs flex flex-col space-y-3.5">
-        <div className="flex items-center space-x-2">
-          <Printer size={18} className="text-theme-primary" />
-          <div className="flex-1">
-            <h4 className="font-bold text-xs text-theme-body uppercase tracking-wider font-mono">
-              Quick Reports Printout
-            </h4>
-            <p className="text-[10px] text-theme-muted font-mono">
-              Trigger high-fidelity reports instantly
-            </p>
-          </div>
-          <span className="text-[9px] font-mono font-bold bg-blue-50 text-blue-700 px-1.5 py-0.5 rounded border border-blue-200 uppercase">
-            Instant
-          </span>
-        </div>
+      <div id="quick-reports-sidebar-card" className="bg-white rounded-xl p-4 border border-theme-divider flex flex-col gap-3">
+        <h3 className="text-[15px] font-semibold text-theme-body">Reports</h3>
 
         {/* Predefined Reports List */}
-        <div id="predefined-reports-list-container" className="space-y-2">
-          <label className="text-[9px] text-theme-muted uppercase font-bold font-mono tracking-wider">Predefined Reports</label>
-          <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+        <div id="predefined-reports-list-container">
+          <ul className="divide-y divide-theme-divider">
             {PREDEFINED_REPORTS.map((report) => {
               const ReportIcon = report.icon;
               const isSelected = selectedReport === report.id;
               return (
-                <div
+                <li
                   id={`report-item-${report.id}`}
                   key={report.id}
                   onClick={() => setSelectedReport(report.id)}
-                  className={`group p-2.5 rounded-lg border transition-all cursor-pointer flex flex-col justify-between gap-2 ${
-                    isSelected
-                      ? "bg-theme-selection border-theme-primary shadow-xs"
-                      : "bg-theme-surface-2 border-theme-border hover:bg-theme-surface-hover"
-                  }`}
+                  className={`group flex items-center gap-2.5 py-2 cursor-pointer ${isSelected ? "" : ""}`}
                 >
-                  <div className="flex items-start gap-2.5">
-                    <div className={`p-1.5 rounded-lg ${report.bg} ${report.color} flex-shrink-0 border border-theme-border`}>
-                      <ReportIcon size={15} />
+                  <ReportIcon size={16} className="text-theme-muted shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-[13px] truncate ${isSelected ? "font-semibold text-theme-body" : "text-theme-body"}`}>
+                      {report.title}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between gap-1">
-                        <h5 className={`font-bold text-xs truncate ${isSelected ? "text-theme-primary font-bold" : "text-theme-body"}`}>
-                          {report.title}
-                        </h5>
-                        <span className="text-[8px] font-mono bg-theme-surface-1 text-theme-muted px-1.5 py-0.5 rounded border border-theme-border flex-shrink-0">
-                          {report.code}
-                        </span>
-                      </div>
-                      <p className="text-[10px] text-theme-muted line-clamp-2 mt-0.5 font-mono">
-                        {report.description}
-                      </p>
-                    </div>
+                    <div className="text-xs text-theme-muted truncate">{report.description}</div>
                   </div>
-                  
-                  {/* Action buttons inside each report item */}
-                  <div className="flex items-center justify-end gap-2 pt-2 border-t border-theme-divider/40 group-hover:border-theme-divider/80 transition-colors">
-                    <button
-                      id={`report-preview-btn-${report.id}`}
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setSelectedReport(report.id);
-                        setIsPreviewOpen(true);
-                      }}
-                      className="px-2.5 py-1 bg-theme-surface-3 hover:bg-theme-surface-hover text-theme-body border border-theme-divider rounded-md text-[10px] font-semibold flex items-center gap-1 transition-all cursor-pointer"
-                      title="Open interactive print preview"
-                    >
-                      <Eye size={10} />
-                      <span>Preview</span>
-                    </button>
-                    <button
-                      id={`report-print-btn-${report.id}`}
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handlePrintReport(report.id);
-                      }}
-                      className="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-md text-[10px] font-bold flex items-center gap-1 shadow-sm transition-all cursor-pointer"
-                      title="Instantly trigger printer dialogue for this report"
-                    >
-                      <Printer size={10} />
-                      <span>Print</span>
-                    </button>
-                  </div>
-                </div>
+                  <button
+                    id={`report-preview-btn-${report.id}`}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedReport(report.id);
+                      setIsPreviewOpen(true);
+                    }}
+                    className="p-1.5 rounded-full text-theme-muted hover:text-theme-body hover:bg-[#f5f5f5] cursor-pointer"
+                    title="Preview"
+                    aria-label={`Preview ${report.title}`}
+                  >
+                    <Eye size={15} />
+                  </button>
+                  <button
+                    id={`report-print-btn-${report.id}`}
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrintReport(report.id);
+                    }}
+                    className="p-1.5 rounded-full text-theme-muted hover:text-theme-body hover:bg-[#f5f5f5] cursor-pointer"
+                    title="Print"
+                    aria-label={`Print ${report.title}`}
+                  >
+                    <Printer size={15} />
+                  </button>
+                </li>
               );
             })}
-          </div>
+          </ul>
         </div>
 
-        {/* Layout Mode Selection */}
-        <div id="layout-mode-selection-container" className="space-y-1">
-          <label className="text-[9px] text-theme-muted uppercase font-bold font-mono">Print Engine Format</label>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              id="layout-mode-a4"
-              onClick={() => setLayoutMode("a4")}
-              className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
-                layoutMode === "a4"
-                  ? "bg-theme-surface-3 text-blue-400 border-blue-500/40 shadow-sm"
-                  : "bg-theme-surface-2 text-theme-muted border-theme-divider hover:text-theme-body"
-              }`}
-            >
-              <FileText size={13} />
-              <span>A4 Corporate Page</span>
-            </button>
-            <button
-              id="layout-mode-thermal"
-              onClick={() => setLayoutMode("thermal")}
-              className={`flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
-                layoutMode === "thermal"
-                  ? "bg-theme-surface-3 text-blue-400 border-blue-500/40 shadow-sm"
-                  : "bg-theme-surface-2 text-theme-muted border-theme-divider hover:text-theme-body"
-              }`}
-            >
-              <Receipt size={13} />
-              <span>80mm Thermal Slip</span>
-            </button>
+        {/* Print options (collapsed by default) */}
+        <details className="text-[13px] text-theme-muted">
+          <summary className="cursor-pointer select-none hover:text-theme-body">Print options</summary>
+          <div className="mt-2 space-y-2">
+            <div id="layout-mode-selection-container" className="flex items-center gap-1" role="group" aria-label="Paper size">
+              <button
+                id="layout-mode-a4"
+                type="button"
+                onClick={() => setLayoutMode("a4")}
+                className={`px-3 py-1 rounded-full text-xs border cursor-pointer ${
+                  layoutMode === "a4" ? "bg-[#171717] border-[#171717] text-white" : "bg-white border-theme-divider text-theme-muted hover:text-theme-body"
+                }`}
+              >
+                A4
+              </button>
+              <button
+                id="layout-mode-thermal"
+                type="button"
+                onClick={() => setLayoutMode("thermal")}
+                className={`px-3 py-1 rounded-full text-xs border cursor-pointer ${
+                  layoutMode === "thermal" ? "bg-[#171717] border-[#171717] text-white" : "bg-white border-theme-divider text-theme-muted hover:text-theme-body"
+                }`}
+              >
+                80mm slip
+              </button>
+            </div>
+            <label id="options-toggles-container" className="flex items-center justify-between gap-2 cursor-pointer">
+              <span>Include low-stock list</span>
+              <input
+                id="toggle-stock-warnings"
+                type="checkbox"
+                checked={includeStockWarnings}
+                onChange={(e) => setIncludeStockWarnings(e.target.checked)}
+                className="cursor-pointer"
+              />
+            </label>
+            <label className="flex items-center justify-between gap-2 cursor-pointer">
+              <span>Include change log</span>
+              <input
+                id="toggle-audit-trail"
+                type="checkbox"
+                checked={includeAuditTrail}
+                onChange={(e) => setIncludeAuditTrail(e.target.checked)}
+                className="cursor-pointer"
+              />
+            </label>
+            <div id="quick-actions-footer-container">
+              <button
+                id="export-excel-btn"
+                type="button"
+                onClick={() => handleExport("xlsx")}
+                disabled={isExporting !== null}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs border border-theme-divider bg-white text-theme-body hover:bg-[#f5f5f5] cursor-pointer disabled:opacity-50"
+              >
+                {isExporting === "xlsx" ? (
+                  <span className="w-3 h-3 border-2 border-theme-body border-t-transparent rounded-full animate-spin"></span>
+                ) : (
+                  <Download size={13} />
+                )}
+                <span>Export to Excel</span>
+              </button>
+            </div>
           </div>
-        </div>
-
-        {/* Options Toggles */}
-        <div id="options-toggles-container" className="space-y-2 bg-theme-surface-3/40 p-2.5 rounded-lg border border-theme-divider/60 text-[11px] text-theme-muted">
-          <div className="flex items-center justify-between">
-            <span className="font-mono">Include low stock warning lists</span>
-            <input
-              id="toggle-stock-warnings"
-              type="checkbox"
-              checked={includeStockWarnings}
-              onChange={(e) => setIncludeStockWarnings(e.target.checked)}
-              className="rounded border-theme-divider text-blue-500 focus:ring-0 cursor-pointer"
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="font-mono">Attach live audit trails</span>
-            <input
-              id="toggle-audit-trail"
-              type="checkbox"
-              checked={includeAuditTrail}
-              onChange={(e) => setIncludeAuditTrail(e.target.checked)}
-              className="rounded border-theme-divider text-blue-500 focus:ring-0 cursor-pointer"
-            />
-          </div>
-        </div>
-
-        {/* Quick Actions Footer */}
-        <div id="quick-actions-footer-container" className="pt-1">
-          <button
-            id="export-excel-btn"
-            onClick={() => handleExport("xlsx")}
-            disabled={isExporting !== null}
-            className="w-full py-2 bg-theme-surface-3 text-theme-body hover:bg-theme-surface-hover font-semibold rounded-lg text-xs border border-theme-divider flex items-center justify-center gap-1.5 cursor-pointer disabled:opacity-50 transition-colors"
-          >
-            {isExporting === "xlsx" ? (
-              <span className="w-3 h-3 border-2 border-theme-body border-t-transparent rounded-full animate-spin"></span>
-            ) : (
-              <Download size={13} />
-            )}
-            <span>Export Active Report to Excel</span>
-          </button>
-        </div>
+        </details>
       </div>
 
       {/* DYNAMIC INTERACTIVE LIVE PREVIEW OVERLAY MODAL */}
       {isPreviewOpen && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-4 animate-fadeIn">
-          <div className="bg-theme-surface-1 border border-[#2a3a5c] rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+          <div className="bg-theme-surface-1 border border-[#393939] rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
             {/* Modal Header */}
             <div className="px-6 py-4 border-b border-theme-divider bg-theme-surface-3 flex items-center justify-between">
               <div className="flex items-center space-x-2.5">
@@ -404,7 +348,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
               <div className="flex items-center space-x-2">
                 <button
                   onClick={handlePrint}
-                  className="px-3.5 py-1.5 bg-[#2563EB] hover:bg-blue-700 text-white font-semibold rounded-lg text-xs flex items-center gap-1.5 transition-colors cursor-pointer shadow-md shadow-blue-500/10"
+                  className="px-3.5 py-1.5 bg-[#606060] hover:bg-blue-700 text-white font-semibold rounded-lg text-xs flex items-center gap-1.5 transition-colors cursor-pointer shadow-md shadow-blue-500/10"
                 >
                   <Printer size={13} />
                   <span>Execute Print</span>
@@ -428,7 +372,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
                     <div className="flex justify-between items-start border-b-2 border-slate-800 pb-5 mb-5">
                       <div>
                         <div className="flex items-center gap-1.5">
-                          <span className="font-display font-black tracking-tighter text-lg text-slate-950 uppercase">SMRITI Retail OS</span>
+                          <span className="font-display font-black tracking-tighter text-lg text-slate-950 uppercase">MQube</span>
                           <span className="text-[9px] bg-slate-100 border border-slate-300 px-1 py-0.2 rounded font-mono uppercase font-semibold text-slate-600">Enterprise Edition</span>
                         </div>
                         <p className="text-[10px] text-slate-500 font-mono mt-0.5">Automated Intelligence & Audit Ledger Engine</p>
@@ -762,7 +706,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
                     </div>
                     <div className="text-center flex flex-col items-center justify-end">
                       <div className="border border-slate-300 px-3 py-1.5 rounded-full font-mono text-[8px] bg-slate-50 inline-block font-bold">
-                        SMRITI SECURITY STAMP
+                        MQube SECURITY STAMP
                       </div>
                       <div className="mt-2 text-[8px]">DIGITALLY VERIFIED POS</div>
                     </div>
@@ -778,7 +722,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
                   <div>
                     {/* Thermal Header */}
                     <div className="text-center border-b border-dashed border-slate-400 pb-3 mb-3">
-                      <h3 className="font-bold text-xs uppercase tracking-tight">SMRITI RETAIL OS</h3>
+                      <h3 className="font-bold text-xs uppercase tracking-tight">MQube</h3>
                       <p className="text-[8px] uppercase mt-0.5">Andheri West, Mumbai</p>
                       <p className="text-[8px] mt-0.5">Operator: jawahar.mallah@gmail.com</p>
                       <p className="text-[8px] font-bold mt-2">*** INSTANT OPERATIONS REPORT ***</p>
@@ -946,7 +890,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
                     {/* Thermal Cut lines */}
                     <div className="text-center text-[8px] border-t border-dashed border-slate-400 pt-3 mt-4 text-slate-600">
                       <div>*** END OF SECURE PRINT ***</div>
-                      <div className="mt-1 font-sans">SMRITI Ledger Security v{APP_VERSION}</div>
+                      <div className="mt-1 font-sans">MQube Ledger Security v{APP_VERSION}</div>
                       <div className="mt-2 text-[6px] tracking-widest text-slate-400">===========================</div>
                     </div>
                   </div>
@@ -988,7 +932,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
           <div style={{ fontFamily: 'system-ui, sans-serif', fontSize: '12px', lineHeight: '1.4', padding: '40px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '2px solid black', paddingBottom: '15px', marginBottom: '20px' }}>
               <div>
-                <h1 style={{ fontSize: '20px', fontWeight: 'bold', textTransform: 'uppercase', margin: '0' }}>SMRITI RETAIL OS</h1>
+                <h1 style={{ fontSize: '20px', fontWeight: 'bold', textTransform: 'uppercase', margin: '0' }}>MQube</h1>
                 <p style={{ fontSize: '10px', color: '#555', margin: '3px 0 0 0' }}>Automated Operations Summary & Compliance Ledger</p>
                 <p style={{ fontSize: '11px', margin: '12px 0 0 0' }}>
                   <strong>Operator:</strong> Jawahar.mallah@gmail.com<br />
@@ -1249,13 +1193,13 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
               </div>
               <div style={{ textAlign: 'center', width: '30%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ border: '2px solid black', borderRadius: '50%', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '8px', textAlign: 'center' }}>
-                  SMRITI<br />SECURE<br />STAMP
+                  MQube<br />SECURE<br />STAMP
                 </div>
               </div>
               <div style={{ textAlign: 'center', width: '30%' }}>
                 <div style={{ borderBottom: '1px solid black', height: '25px', marginBottom: '5px' }}></div>
                 <strong>AUDIT CONTROLLER SEAL</strong>
-                <p style={{ margin: '3px 0 0 0', fontSize: '9px', color: '#666' }}>SMRITI Centralized Audit Unit</p>
+                <p style={{ margin: '3px 0 0 0', fontSize: '9px', color: '#666' }}>MQube Centralized Audit Unit</p>
               </div>
             </div>
           </div>
@@ -1263,7 +1207,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
           /* High Fidelity Thermal slip Print layout */
           <div style={{ width: '280px', fontFamily: 'monospace', fontSize: '10px', lineHeight: '1.2', padding: '10px', color: 'black' }}>
             <div style={{ textAlign: 'center', borderBottom: '1px dashed black', paddingBottom: '10px', marginBottom: '10px' }}>
-              <h2 style={{ fontSize: '12px', fontWeight: 'bold', margin: '0' }}>SMRITI RETAIL OS</h2>
+              <h2 style={{ fontSize: '12px', fontWeight: 'bold', margin: '0' }}>MQube</h2>
               <p style={{ margin: '2px 0 0 0', fontSize: '8px' }}>Andheri West, Mumbai</p>
               <p style={{ margin: '2px 0 0 0', fontSize: '8px' }}>Operator: jawahar.mallah@gmail.com</p>
               <h3 style={{ margin: '6px 0 0 0', fontSize: '10px', fontWeight: 'bold' }}>*** INSTANT SHIFT REPORT ***</h3>
@@ -1397,7 +1341,7 @@ export const QuickReportsWidget: React.FC<QuickReportsWidgetProps> = ({
 
             <div style={{ textAlign: 'center', borderTop: '1px dashed black', paddingTop: '10px', marginTop: '15px', fontSize: '8px' }}>
               <div>*** END OF DOCUMENT ***</div>
-              <div style={{ margin: '4px 0', fontWeight: 'bold' }}>SMRITI OS LEDGER SECURITY</div>
+              <div style={{ margin: '4px 0', fontWeight: 'bold' }}>MQube OS LEDGER SECURITY</div>
               <div style={{ fontSize: '6px', color: '#666' }}>MD5-HASH: EF89AC245BD3C19F200A5BEE</div>
             </div>
           </div>

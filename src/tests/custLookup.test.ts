@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Customer Lookup & Selection Verification Tests
- */
-
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { Customer } from "../types.ts";
 import { getCustomers, initialCustomers } from "../services/customerStore.ts";
@@ -35,7 +20,7 @@ Object.defineProperty(globalThis, "localStorage", {
   writable: true
 });
 
-describe("SMRITI — Customer Lookup, Selection & Invoice Header Attachment Tests", () => {
+describe("MQube — Customer Lookup, Selection & Invoice Header Attachment Tests", () => {
   beforeEach(() => {
     mockLocalStorage.clear();
   });
@@ -126,7 +111,7 @@ describe("SMRITI — Customer Lookup, Selection & Invoice Header Attachment Test
   });
 
   // TEST 5: Docker Hostname Sanitization in API Fetchers
-  it("TEST 5: should sanitize smriti-api:8000 and python-core:8000 URLs to avoid ERR_NAME_NOT_RESOLVED", async () => {
+  it("TEST 5: should sanitize tileflow-api:8000 and python-core:8000 URLs to avoid ERR_NAME_NOT_RESOLVED", async () => {
     const fetchSpy = vi.spyOn(globalThis, "fetch").mockImplementation(async (url) => {
       return new Response(JSON.stringify([{ id: "CUST-001", name: "Rahul Sharma" }]), {
         status: 200,
@@ -134,12 +119,12 @@ describe("SMRITI — Customer Lookup, Selection & Invoice Header Attachment Test
       });
     });
 
-    const res = await apiFetchV1("http://smriti-api:8000/api/v1/customers");
+    const res = await apiFetchV1("http://tileflow-api:8000/api/v1/customers");
     expect(res).toBeDefined();
     expect(fetchSpy).toHaveBeenCalled();
     const calledUrl = fetchSpy.mock.calls[0][0];
     expect(calledUrl).toContain("/api/v1/customers");
-    expect(calledUrl).not.toContain("smriti-api");
+    expect(calledUrl).not.toContain("tileflow-api");
 
     fetchSpy.mockRestore();
   });

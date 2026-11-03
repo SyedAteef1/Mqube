@@ -1,7 +1,6 @@
 <!--
-  Project      : SMRITI Retail OS
+  Project      : TILEFLOW Retail OS
   Repository   : SMRITRretailNX
-  Organization : AITDL NETWORKS
   Version      : 1.0
   Created      : 2026-07-18
   Status       : Draft

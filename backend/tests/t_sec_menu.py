@@ -1,17 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import pytest
 import psycopg2
 import json
@@ -26,27 +12,27 @@ from app.core.security_matrix import (
     CANONICAL_34_MENU_MATRIX,
 )
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 def test_security_menu_access_persistence_and_audit():
     """
-    Test that granular action permissions are stored in smriti_permissions
-    and recorded into smriti_audit_log with SHA-256 integrity hash.
+    Test that granular action permissions are stored in tileflow_permissions
+    and recorded into tileflow_audit_log with SHA-256 integrity hash.
     """
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    # 1. Assert smriti_menus and smriti_permissions exist
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    # 1. Assert tileflow_menus and tileflow_permissions exist
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     menus_count = cur.fetchone()[0]
     assert menus_count >= 30, f"Expected >= 30 menus, got {menus_count}"
 
-    # 2. Insert test permission row into smriti_permissions
+    # 2. Insert test permission row into tileflow_permissions
     test_scope = "User:test_runner"
-    cur.execute("DELETE FROM smriti_permissions WHERE scope = %s;", (test_scope,))
+    cur.execute("DELETE FROM tileflow_permissions WHERE scope = %s;", (test_scope,))
     
     cur.execute("""
-        INSERT INTO smriti_permissions (
+        INSERT INTO tileflow_permissions (
             id, uuid, code, resource, action, scope, module, is_active, is_deleted, created_at, modified_at
         )
         VALUES (
@@ -55,8 +41,8 @@ def test_security_menu_access_persistence_and_audit():
         );
     """, (test_scope,))
 
-    # 3. Verify row in smriti_permissions
-    cur.execute("SELECT resource, action, is_active FROM smriti_permissions WHERE id = 'perm-test-001';")
+    # 3. Verify row in tileflow_permissions
+    cur.execute("SELECT resource, action, is_active FROM tileflow_permissions WHERE id = 'perm-test-001';")
     perm_row = cur.fetchone()
     assert perm_row is not None
     assert perm_row[0] == "sales_billing"
@@ -64,7 +50,7 @@ def test_security_menu_access_persistence_and_audit():
     assert perm_row[2] is True
 
     # 4. Clean up test row
-    cur.execute("DELETE FROM smriti_permissions WHERE id = 'perm-test-001';")
+    cur.execute("DELETE FROM tileflow_permissions WHERE id = 'perm-test-001';")
     conn.commit()
     cur.close()
     conn.close()

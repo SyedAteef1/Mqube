@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone, timedelta
 from decimal import Decimal
@@ -42,8 +28,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -57,7 +43,7 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
 @pytest.mark.asyncio
 async def test_base_item_and_variant_price_resolution():
     """Verify fallback price resolution from Item and ItemVariant masters."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     item_id = f"item_{unique_suffix}"
     variant_id = f"var_{unique_suffix}"
@@ -119,7 +105,7 @@ async def test_base_item_and_variant_price_resolution():
 @pytest.mark.asyncio
 async def test_price_book_volume_breaks_resolution():
     """Verify Price Book volume breaks: higher quantity tier triggers discounted price point."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     item_id = f"item_vol_{unique_suffix}"
     pb_code = f"PB-WHOLESALE-{unique_suffix.upper()}"
@@ -218,7 +204,7 @@ async def test_price_book_volume_breaks_resolution():
 @pytest.mark.asyncio
 async def test_customer_price_tier_discount_percentage():
     """Verify Customer Price Tier applies percentage discount modifier over base price."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     item_id = f"item_tier_{unique_suffix}"
     tier_code = f"TIER-GOLD-{unique_suffix.upper()}"
@@ -266,7 +252,7 @@ async def test_customer_price_tier_discount_percentage():
 @pytest.mark.asyncio
 async def test_price_book_date_validity_gating():
     """Verify date-gated price books are ignored when expired and fall back to base prices."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     item_id = f"item_date_{unique_suffix}"
     pb_code_exp = f"PB-EXP-{unique_suffix.upper()}"
@@ -339,7 +325,7 @@ async def test_price_book_date_validity_gating():
 @pytest.mark.asyncio
 async def test_bulk_pricing_and_transaction_snapshot():
     """Verify multi-line bulk cart pricing resolution and immutable snapshot generation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     item1_id = f"item_bulk1_{unique_suffix}"
     item2_id = f"item_bulk2_{unique_suffix}"

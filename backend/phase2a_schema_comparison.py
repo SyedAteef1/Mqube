@@ -1,6 +1,6 @@
 """
 PHASE 2A: Schema Comparison
-Compare fresh database vs smriti001 for schema parity
+Compare fresh database vs tileflow001 for schema parity
 """
 import psycopg2
 from psycopg2 import sql
@@ -114,11 +114,11 @@ def get_schema_info(conn_str, db_name):
     
     return schema
 
-def compare_schemas(fresh_schema, smriti001_schema):
+def compare_schemas(fresh_schema, tileflow001_schema):
     """Compare two schemas and report differences"""
     diffs = {
         'fresh_only_tables': [],
-        'smriti001_only_tables': [],
+        'tileflow001_only_tables': [],
         'columns_diff': {},
         'pk_diff': {},
         'fk_diff': {},
@@ -127,63 +127,63 @@ def compare_schemas(fresh_schema, smriti001_schema):
     }
     
     fresh_tables = set(fresh_schema['tables'].keys())
-    smriti001_tables = set(smriti001_schema['tables'].keys())
+    tileflow001_tables = set(tileflow001_schema['tables'].keys())
     
     # Table-level differences
-    diffs['fresh_only_tables'] = sorted(fresh_tables - smriti001_tables)
-    diffs['smriti001_only_tables'] = sorted(smriti001_tables - fresh_tables)
+    diffs['fresh_only_tables'] = sorted(fresh_tables - tileflow001_tables)
+    diffs['tileflow001_only_tables'] = sorted(tileflow001_tables - fresh_tables)
     
     # Column differences in common tables
-    for table in fresh_tables & smriti001_tables:
+    for table in fresh_tables & tileflow001_tables:
         fresh_cols = fresh_schema['tables'][table]['columns']
-        smriti001_cols = smriti001_schema['tables'][table]['columns']
+        tileflow001_cols = tileflow001_schema['tables'][table]['columns']
         
         fresh_col_names = set(fresh_cols.keys())
-        smriti001_col_names = set(smriti001_cols.keys())
+        tileflow001_col_names = set(tileflow001_cols.keys())
         
-        if fresh_col_names != smriti001_col_names:
+        if fresh_col_names != tileflow001_col_names:
             diffs['columns_diff'][table] = {
-                'fresh_only': sorted(fresh_col_names - smriti001_col_names),
-                'smriti001_only': sorted(smriti001_col_names - fresh_col_names)
+                'fresh_only': sorted(fresh_col_names - tileflow001_col_names),
+                'tileflow001_only': sorted(tileflow001_col_names - fresh_col_names)
             }
         
         # Check column type/nullable differences
-        for col in fresh_col_names & smriti001_col_names:
-            if fresh_cols[col] != smriti001_cols[col]:
+        for col in fresh_col_names & tileflow001_col_names:
+            if fresh_cols[col] != tileflow001_cols[col]:
                 if table not in diffs['columns_diff']:
                     diffs['columns_diff'][table] = {}
                 if 'modified' not in diffs['columns_diff'][table]:
                     diffs['columns_diff'][table]['modified'] = {}
                 diffs['columns_diff'][table]['modified'][col] = {
                     'fresh': fresh_cols[col],
-                    'smriti001': smriti001_cols[col]
+                    'tileflow001': tileflow001_cols[col]
                 }
         
         # PK differences
         fresh_pk = fresh_schema['tables'][table]['pk']
-        smriti001_pk = smriti001_schema['tables'][table]['pk']
-        if fresh_pk != smriti001_pk:
+        tileflow001_pk = tileflow001_schema['tables'][table]['pk']
+        if fresh_pk != tileflow001_pk:
             diffs['pk_diff'][table] = {
                 'fresh': fresh_pk,
-                'smriti001': smriti001_pk
+                'tileflow001': tileflow001_pk
             }
     
     return diffs
 
 def main():
-    fresh_conn = 'postgresql://postgres:postgres@localhost:5432/smriti_diag_fresh'
-    smriti001_conn = 'postgresql://postgres:postgres@localhost:5432/smriti001'
+    fresh_conn = 'postgresql://postgres:postgres@localhost:5432/tileflow_diag_fresh'
+    tileflow001_conn = 'postgresql://postgres:postgres@localhost:5432/tileflow001'
     
     print("[PHASE 2A] Analyzing fresh database schema...")
-    fresh_schema = get_schema_info(fresh_conn, 'smriti_diag_fresh')
+    fresh_schema = get_schema_info(fresh_conn, 'tileflow_diag_fresh')
     print(f"✓ Fresh DB: {len(fresh_schema['tables'])} tables")
     
-    print("[PHASE 2A] Analyzing smriti001 schema...")
-    smriti001_schema = get_schema_info(smriti001_conn, 'smriti001')
-    print(f"✓ smriti001: {len(smriti001_schema['tables'])} tables")
+    print("[PHASE 2A] Analyzing tileflow001 schema...")
+    tileflow001_schema = get_schema_info(tileflow001_conn, 'tileflow001')
+    print(f"✓ tileflow001: {len(tileflow001_schema['tables'])} tables")
     
     print("\n[PHASE 2A] Comparing schemas...")
-    diffs = compare_schemas(fresh_schema, smriti001_schema)
+    diffs = compare_schemas(fresh_schema, tileflow001_schema)
     
     # Report results
     print("\n" + "="*70)
@@ -191,10 +191,10 @@ def main():
     print("="*70)
     
     if diffs['fresh_only_tables']:
-        print(f"\n⚠ Tables in fresh DB but NOT in smriti001: {diffs['fresh_only_tables']}")
+        print(f"\n⚠ Tables in fresh DB but NOT in tileflow001: {diffs['fresh_only_tables']}")
     
-    if diffs['smriti001_only_tables']:
-        print(f"\n⚠ Tables in smriti001 but NOT in fresh DB: {diffs['smriti001_only_tables']}")
+    if diffs['tileflow001_only_tables']:
+        print(f"\n⚠ Tables in tileflow001 but NOT in fresh DB: {diffs['tileflow001_only_tables']}")
     
     if diffs['columns_diff']:
         print("\n⚠ Column differences (in common tables):")
@@ -202,16 +202,16 @@ def main():
             print(f"  {table}:")
             if 'fresh_only' in col_diffs and col_diffs['fresh_only']:
                 print(f"    - Fresh only: {col_diffs['fresh_only']}")
-            if 'smriti001_only' in col_diffs and col_diffs['smriti001_only']:
-                print(f"    - smriti001 only: {col_diffs['smriti001_only']}")
+            if 'tileflow001_only' in col_diffs and col_diffs['tileflow001_only']:
+                print(f"    - tileflow001 only: {col_diffs['tileflow001_only']}")
             if 'modified' in col_diffs:
                 for col, specs in col_diffs['modified'].items():
                     print(f"    - {col} modified:")
                     print(f"      Fresh:     {specs['fresh']}")
-                    print(f"      smriti001: {specs['smriti001']}")
+                    print(f"      tileflow001: {specs['tileflow001']}")
     
-    if not (diffs['fresh_only_tables'] or diffs['smriti001_only_tables'] or diffs['columns_diff']):
-        print("\n✓ SCHEMA PARITY VERIFIED: fresh database and smriti001 are identical")
+    if not (diffs['fresh_only_tables'] or diffs['tileflow001_only_tables'] or diffs['columns_diff']):
+        print("\n✓ SCHEMA PARITY VERIFIED: fresh database and tileflow001 are identical")
     else:
         print("\n✗ SCHEMA DIVERGENCE DETECTED: see differences above")
     
@@ -219,7 +219,7 @@ def main():
     with open('phase2_schema_comparison.json', 'w') as f:
         json.dump({
             'fresh_tables': sorted(fresh_schema['tables'].keys()),
-            'smriti001_tables': sorted(smriti001_schema['tables'].keys()),
+            'tileflow001_tables': sorted(tileflow001_schema['tables'].keys()),
             'differences': diffs
         }, f, indent=2)
     print("\n✓ Detailed report saved: phase2_schema_comparison.json")

@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 5.3.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Item Master Stitch Management System Architecture & Image Resolver
@@ -41,7 +40,7 @@ This walkthrough documents the full synthesis and deployment of the Item Master 
 
 ## 3. Files Created
 1. `src/components/itemMaster/ItemDetGrid.tsx` — Dual-mode Grid & Classic View matrix with inline row actions.
-2. `src/components/itemMaster/SmritiCommonFieldsSetup.tsx` — Batch baseline presets and field inclusion checklist.
+2. `src/components/itemMaster/TileFlowCommonFieldsSetup.tsx` — Batch baseline presets and field inclusion checklist.
 3. `src/components/itemMaster/ViewConfig.tsx` — Dual-list column selector, order manager, and frozen count selector.
 4. `src/components/itemMaster/ReplaceDataDlg.tsx` — Global find & replace utility modal.
 5. `src/components/itemMaster/CodeSelectDlg.tsx` — SKU pattern & EAN-13 barcode generator.
@@ -84,17 +83,17 @@ Retail operators require high data entry velocity without mouse dependency. Comb
 
 ## 8. Tests Executed
 - Production Vite Build (`npm run build`): 0 errors, 3,445 modules compiled in ~19.5s.
-- Docker Rebuild (`docker compose up -d --build`): All containers (`smriti-db`, `smriti-api`, `smriti-web`) verified healthy.
+- Docker Rebuild (`docker compose up -d --build`): All containers (`tileflow-db`, `tileflow-api`, `tileflow-web`) verified healthy.
 
 ---
 
 ## 9. Verification Results
 ```
- Image smritrretailnx-smriti-api Built 
- Image smritrretailnx-smriti-web Built (✓ built in 16.45s)
- Container smriti-db   Started → Healthy
- Container smriti-api  Started → Healthy
- Container smriti-web  Started
+ Image smritrretailnx-tileflow-api Built 
+ Image smritrretailnx-tileflow-web Built (✓ built in 16.45s)
+ Container tileflow-db   Started → Healthy
+ Container tileflow-api  Started → Healthy
+ Container tileflow-web  Started
 ```
 - **Status:** **Done**
 

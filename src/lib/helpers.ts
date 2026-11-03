@@ -1,20 +1,3 @@
-/**
- * @file src/lib/helpers.ts
- * @description Common utility and helper functions for SMRITI Retail OS.
- * @module src/lib/helpers
- *
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-07-12
- * Modified     : 2026-07-12
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import crypto from "crypto";
 import { roles, auditLogs, stockLedger } from "../state/store.js";
 import { pool } from "../db/pool.js";
@@ -176,14 +159,14 @@ export async function allocateVoucherNumber(docType: string, context?: { branch?
     });
 
     if (!response.ok) {
-      console.error(`[SMRITI] Upstream allocation failed with status ${response.status}: ${await response.text()}`);
+      console.error(`[MQube] Upstream allocation failed with status ${response.status}: ${await response.text()}`);
       return docType.substring(0, 3).toUpperCase() + "-" + Date.now();
     }
 
     const data = await response.json();
     return data.documentNo;
   } catch (err) {
-    console.error("[SMRITI] Failed to allocate voucher number via python-core:", err);
+    console.error("[MQube] Failed to allocate voucher number via python-core:", err);
     return docType.substring(0, 3).toUpperCase() + "-" + Date.now();
   }
 }
@@ -309,10 +292,10 @@ export async function recordStockMovement(productId: any, productCode: any, prod
     
     if (!res.ok) {
       const errText = await res.text();
-      console.error(`[SMRITI] FastAPI stock movement registration failed with status ${res.status}: ${errText}`);
+      console.error(`[MQube] FastAPI stock movement registration failed with status ${res.status}: ${errText}`);
     }
   } catch (err) {
-    console.error("[SMRITI] Failed to dispatch stock movement to python-core:", err);
+    console.error("[MQube] Failed to dispatch stock movement to python-core:", err);
   }
 }
 

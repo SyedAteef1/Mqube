@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.9.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Customer Flow & Database Integrity Unit Tests
- */
-
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { Customer, CustomerGroup } from "../types.ts";
 import { 
@@ -76,7 +61,7 @@ Object.defineProperty(globalThis, "CustomEvent", {
   writable: true
 });
 
-describe("SMRITI — Customer Flow & Tenant Integrity Tests", () => {
+describe("MQube — Customer Flow & Tenant Integrity Tests", () => {
   beforeEach(() => {
     mockLocalStorage.clear();
     Object.keys(listeners).forEach(k => delete listeners[k]);
@@ -123,10 +108,10 @@ describe("SMRITI — Customer Flow & Tenant Integrity Tests", () => {
       status: "Active"
     };
 
-    mockStorage["smriti_pending_customers"] = JSON.stringify([pendingCust]);
+    mockStorage["tileflow_pending_customers"] = JSON.stringify([pendingCust]);
     
     // Check queue reads properly
-    const queued = JSON.parse(mockStorage["smriti_pending_customers"]);
+    const queued = JSON.parse(mockStorage["tileflow_pending_customers"]);
     expect(queued.length).toBe(1);
     expect(queued[0].id).toBe("CUST-OFFLINE-001");
   });
@@ -134,11 +119,11 @@ describe("SMRITI — Customer Flow & Tenant Integrity Tests", () => {
   // TEST 4: Customer Status and Tags Updates
   it("TEST 4: should trigger event notifications on customer save", () => {
     const eventSpy = vi.fn();
-    window.addEventListener("smriti_customer_updated", eventSpy);
+    window.addEventListener("tileflow_customer_updated", eventSpy);
 
     saveCustomers(initialCustomers);
     expect(eventSpy).toHaveBeenCalled();
 
-    window.removeEventListener("smriti_customer_updated", eventSpy);
+    window.removeEventListener("tileflow_customer_updated", eventSpy);
   });
 });

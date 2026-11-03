@@ -1,24 +1,10 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.28.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import os
 import json
 import uuid
 import psycopg2
 
 def import_item_master():
-    json_path = os.path.join(os.path.dirname(__file__), "..", "exports", "SMRITI_Item_Master_842.json")
+    json_path = os.path.join(os.path.dirname(__file__), "..", "exports", "TILEFLOW_Item_Master_842.json")
     json_path = os.path.abspath(json_path)
 
     if not os.path.exists(json_path):
@@ -50,7 +36,7 @@ def import_item_master():
           "code": code,
           "sku": code,
           "name": item.get("item_description", "Item") + (" - " + item.get("style_code") if item.get("style_code") else ""),
-          "description": f"{item.get('brand', 'SMRITI')} {item.get('category', 'Apparel')} Style {item.get('style_code', '')}",
+          "description": f"{item.get('brand', 'TILEFLOW')} {item.get('category', 'Apparel')} Style {item.get('style_code', '')}",
           "barcode": barcode,
           "price": float(item.get("selling_price", 0.0)),
           "costPrice": float(item.get("cost_price", 0.0)),
@@ -82,9 +68,9 @@ def import_item_master():
 
     print(f"Successfully seeded {len(db_products)} products into db_store.json")
 
-    # 2. Update Postgres smriti001 if active
+    # 2. Update Postgres tileflow001 if active
     try:
-        conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+        conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
         cur = conn.cursor()
         
         inserted_pg = 0
@@ -107,7 +93,7 @@ def import_item_master():
 
         conn.commit()
         conn.close()
-        print(f"Successfully seeded {inserted_pg} products into PostgreSQL smriti001 database!")
+        print(f"Successfully seeded {inserted_pg} products into PostgreSQL tileflow001 database!")
     except Exception as e:
         print(f"PostgreSQL sync result: {e}")
 

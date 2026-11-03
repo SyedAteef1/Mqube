@@ -1,19 +1,6 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import psycopg2
 
-for db in ['smriti001', 'smriti002', 'smritisys', 'smriti_test_fresh']:
+for db in ['tileflow001', 'tileflow002', 'tileflowsys', 'tileflow_test_fresh']:
     try:
         conn = psycopg2.connect(f"postgresql://postgres:postgres@localhost:5432/{db}")
         cur = conn.cursor()

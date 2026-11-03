@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 5.2.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import hashlib
@@ -32,13 +18,13 @@ WORKSPACE_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(WORKSPACE_ROOT / "backend"))
 from app.services.invoice_pdf_service import InvoicePdfService
 
-DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 TARGET_SIS_CODE = "TW07"
 
-OUTPUT_CLIENT_DIR = r"F:\Smriti-Clients Data\Tattly Threads\24_08_26\Invoices"
+OUTPUT_CLIENT_DIR = r"F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Invoices"
 OUTPUT_EXPORTS_DIR = str(WORKSPACE_ROOT / "exports" / "tt_batch_129_137")
 OUTPUT_TT_DIR = str(WORKSPACE_ROOT / "TT")
-DISPATCH_PATH = r"F:\Smriti-Clients Data\Tattly Threads\24_08_26\RIL_Dispatch_09-08-2026-2.xlsx"
+DISPATCH_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\24_08_26\RIL_Dispatch_09-08-2026-2.xlsx"
 
 
 class InvoiceItemMock:
@@ -103,7 +89,7 @@ async def update_bill_136_sis_tw07():
     cur.execute("SELECT * FROM sales_invoices WHERE invoice_no = 'TT2026-2027/136' OR id = 'inv-tt-2026-2027-136';")
     inv_row = cur.fetchone()
     if not inv_row:
-        print("ERROR: Invoice 136 not found in smriti001!")
+        print("ERROR: Invoice 136 not found in tileflow001!")
         return
 
     inv_id = inv_row['id']
@@ -236,7 +222,7 @@ async def update_bill_136_sis_tw07():
 
     conn.commit()
     conn.close()
-    print(f"✓ Updated smriti001 database record: sis_code set to '{TARGET_SIS_CODE}'.")
+    print(f"✓ Updated tileflow001 database record: sis_code set to '{TARGET_SIS_CODE}'.")
 
     # 5. Update Dispatch Workbook Sheet2 Column A to TW07
     if os.path.exists(DISPATCH_PATH):

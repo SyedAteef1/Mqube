@@ -1,27 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.36.0
   * Created    : 2026-08-27
   * Modified   : 2026-08-27
-  * Copyright  : © SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
-  * Classification: Internal
+  * Copyright  :  tileflow.in. Open Source - Permissive Use
+  * License    : MIT Open Source License
+  * Classification: Open Source
 -->
 
 # Walkthrough: Stock Movement Ledger Safety, FEFO Batch Allocation & Historical Reconciliation
@@ -33,7 +29,7 @@
 ---
 
 ## 1. Purpose
-To establish a complete, audited, and strictly isolated Stock Movement Ledger mechanism in SMRITI Retail OS that logs every inventory movement (Outward Sales, Returns, GRNs, Adjustments, Transfers) atomically without corrupting production balances, while providing a 5-guard historical reconciliation tool for pre-migration invoice logs.
+To establish a complete, audited, and strictly isolated Stock Movement Ledger mechanism in TILEFLOW Retail OS that logs every inventory movement (Outward Sales, Returns, GRNs, Adjustments, Transfers) atomically without corrupting production balances, while providing a 5-guard historical reconciliation tool for pre-migration invoice logs.
 
 ## 2. Scope
 - Backend FastAPI inventory routes (`/api/v1/inventory/ledger` and route aliases).
@@ -65,7 +61,7 @@ Prevents duplicate stock deductions when opening balances already reflect histor
 
 ## 7. Implementation Summary
 - Standardized FastAPI `/api/v1/inventory/ledger` endpoint with date, search, and type filtering.
-- Wrapped test suites in transactional `try...finally` cleanups, ensuring 0 rows remain written to `smriti001`.
+- Wrapped test suites in transactional `try...finally` cleanups, ensuring 0 rows remain written to `tileflow001`.
 - Built dry-run audit engine evaluating 120 invoices (6,661 lines), identifying 3,758 would-create movements and 2,903 legacy unmapped lines.
 
 ## 8. Tests Executed
@@ -76,9 +72,9 @@ Prevents duplicate stock deductions when opening balances already reflect histor
 - `git diff --check` (0 whitespace issues)
 
 ## 9. Verification Results
-- Database `stock_movements` count in `smriti001`: **6,661** (100% of historical invoice lines mapped and applied)
-- Database `sales_invoices` count in `smriti001`: **120**
-- Database `sales_orders` count in `smriti001`: **60**
+- Database `stock_movements` count in `tileflow001`: **6,661** (100% of historical invoice lines mapped and applied)
+- Database `sales_invoices` count in `tileflow001`: **120**
+- Database `sales_orders` count in `tileflow001`: **60**
 - Live API (`GET /api/v1/inventory/ledger`): HTTP 200, returns verified historical movements with canonical `reference_doc_id`, `OUTWARD_SALE`, `quantity`, `sku`, `product_id`, and `company_id`/`branch_id`.
 
 ## 10. Known Limitations

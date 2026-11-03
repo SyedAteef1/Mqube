@@ -1,19 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritisys.com | smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 4.0.0 (SEEF & UCR-001 Compliant Tax Invoice Workspace)
- * License      : Proprietary Commercial Software
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- *
- * Mandatory Safety Constraints Enforced:
- *   - Statutory invoice records are strictly READ-ONLY (No DB mutations).
- *   - Header Customization affects ONLY presentation/template configuration.
- *   - Presentation settings update live in A4 print preview and persist to localStorage & SPK.configuration.branding.
- */
-
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { TaxInvoiceA4 } from "./templates/TaxInvoiceA4";
 import { apiFetchV1, isLocalMockToken } from "../lib/apiFetchV1";
@@ -72,7 +56,7 @@ export interface HeaderCustomizationConfig {
 }
 
 const DEFAULT_HEADER_CONFIG: HeaderCustomizationConfig = {
-  companyDisplayName: "Tattly Threads",
+  companyDisplayName: "MQube Tiles & Sanitaryware",
   companyAddressDisplay: "Office No. 81, Ibrahim Rehmatullah Road, Beside Jio Gallery, near HP Petrol Pump, Mumbai, Maharashtra - 400003",
   companyPhone: "",
   companyEmail: "",
@@ -90,14 +74,14 @@ const DEFAULT_HEADER_CONFIG: HeaderCustomizationConfig = {
   bankBranch: "",
 };
 
-const STORAGE_KEY = "smriti_print_header_config_tattly_threads";
+const STORAGE_KEY = "tileflow_print_header_config_tattly_threads";
 
 export const TaxInvoicePrintPage: React.FC = () => {
   const [invoice, setInvoice] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   
-  // Sequence and navigation state across the 54 Tattly Threads invoices
+  // Sequence and navigation state across the 54 MQube Tiles & Sanitaryware invoices
   const [invoicesList, setInvoicesList] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [showListModal, setShowListModal] = useState<boolean>(false);
@@ -143,8 +127,8 @@ export const TaxInvoicePrintPage: React.FC = () => {
   const companyCodeUrl = queryParams.get("company_code") || queryParams.get("companyCode");
   if (companyCodeUrl && typeof localStorage !== "undefined") {
     try {
-      localStorage.setItem("smriti_company_code", companyCodeUrl);
-      localStorage.setItem("smriti_active_company", companyCodeUrl);
+      localStorage.setItem("tileflow_company_code", companyCodeUrl);
+      localStorage.setItem("tileflow_active_company", companyCodeUrl);
     } catch { }
   }
   const initialInvoiceId = queryParams.get("id") || "inv-60a109a6ab4c";
@@ -181,7 +165,7 @@ export const TaxInvoicePrintPage: React.FC = () => {
   // Inject A4 portrait print page styles into document head
   useEffect(() => {
     if (typeof document === "undefined") return;
-    const styleId = "smriti-a4-print-head-style";
+    const styleId = "tileflow-a4-print-head-style";
     let styleEl = document.getElementById(styleId) as HTMLStyleElement;
     if (!styleEl) {
       styleEl = document.createElement("style");
@@ -216,7 +200,7 @@ export const TaxInvoicePrintPage: React.FC = () => {
     // Rely on standard session token from login
   };
 
-  // Load the 54 Tattly Threads invoices for sequence navigation
+  // Load the 54 MQube Tiles & Sanitaryware invoices for sequence navigation
   useEffect(() => {
     const fetchInvoicesList = async () => {
       try {
@@ -293,7 +277,7 @@ export const TaxInvoicePrintPage: React.FC = () => {
         invoiceNo: data.invoiceNo || data.invoice_number || data.invoice_no || targetId,
         date: data.date || data.invoice_date || "2026-08-12",
         customerName: data.customerName || data.customer_name || "Reliance Retail Limited",
-        companyName: headerConfig.companyDisplayName || data.companyName || data.seller_name || "Tattly Threads",
+        companyName: headerConfig.companyDisplayName || data.companyName || data.seller_name || "MQube Tiles & Sanitaryware",
         companyAddress: headerConfig.companyAddressDisplay || data.companyAddress || data.seller_address,
         companyGst: data.companyGst || data.seller_gstin || "27AAXFT2508H1ZR",
         companyPhone: headerConfig.companyPhone || data.companyPhone || "9604990390",
@@ -341,7 +325,7 @@ export const TaxInvoicePrintPage: React.FC = () => {
       setInvoice(normalizedInvoice);
     } catch (err: any) {
       console.error("Failed to fetch tax invoice details:", err);
-      setError(`SMRITI-DATA-002: The requested tax invoice '${targetId}' could not be retrieved. (${err?.message || "Verify document ID or backend connection"})`);
+      setError(`TILEFLOW-DATA-002: The requested tax invoice '${targetId}' could not be retrieved. (${err?.message || "Verify document ID or backend connection"})`);
     } finally {
       setLoading(false);
     }
@@ -387,7 +371,7 @@ export const TaxInvoicePrintPage: React.FC = () => {
       }
     } catch (err: any) {
       printWindow?.close();
-      setError(`SMRITI-DATA-002: Unable to open the invoice document. (${err?.message || "Verify authentication and backend connection"})`);
+      setError(`TILEFLOW-DATA-002: Unable to open the invoice document. (${err?.message || "Verify authentication and backend connection"})`);
     }
   };
 
@@ -440,7 +424,7 @@ export const TaxInvoicePrintPage: React.FC = () => {
         invoice_no: invoice.invoiceNo || "INV/2026/001",
         invoice_date: invoice.date ? invoice.date.split("T")[0] : "28/08/2026",
         supplier_gstin: invoice.companyGst || "27AAXFT2508H1ZR",
-        supplier_legal_name: headerConfig.companyDisplayName || "Tattly Threads",
+        supplier_legal_name: headerConfig.companyDisplayName || "MQube Tiles & Sanitaryware",
         supplier_address: headerConfig.companyAddressDisplay || "Mumbai",
         supplier_pincode: "400003",
         supplier_state_code: "27",
@@ -574,7 +558,7 @@ export const TaxInvoicePrintPage: React.FC = () => {
     return (
       <div className="min-h-screen bg-slate-900 text-white flex flex-col items-center justify-center font-sans p-6">
         <div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mb-4" />
-        <p className="text-sm font-mono tracking-wider text-slate-400">LOADING TATTLY THREADS TAX INVOICE...</p>
+        <p className="text-sm font-mono tracking-wider text-slate-400">LOADING MQube Tiles & Sanitaryware TAX INVOICE...</p>
       </div>
     );
   }
@@ -840,7 +824,7 @@ export const TaxInvoicePrintPage: React.FC = () => {
                   type="text"
                   value={headerConfig.companyDisplayName}
                   onChange={(e) => updateHeaderConfig({ companyDisplayName: e.target.value })}
-                  placeholder="e.g. Tattly Threads"
+                  placeholder="e.g. MQube Tiles & Sanitaryware"
                   className="w-full px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-white font-medium focus:outline-none focus:border-indigo-500"
                 />
               </div>

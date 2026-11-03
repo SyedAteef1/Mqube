@@ -1,4 +1,4 @@
-# Security Hardening Guide — SMRITI Retail OS
+# Security Hardening Guide — TILEFLOW Retail OS
 
 **Date**: 2026-08-31  
 **Version**: 3.30.0  
@@ -11,14 +11,14 @@
 ### Frontend (Nginx/Reverse Proxy)
 
 ```nginx
-# /etc/nginx/sites-available/smriti.conf
+# /etc/nginx/sites-available/tileflow.conf
 server {
     listen 443 ssl http2;
-    server_name app.smritibooks.com;
+    server_name app.tileflow.in;
     
     # SSL Certificates (use Let's Encrypt or your provider)
-    ssl_certificate /etc/letsencrypt/live/app.smritibooks.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/app.smritibooks.com/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/app.tileflow.in/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/app.tileflow.in/privkey.pem;
     
     # Strong SSL config (Mozilla Modern)
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -39,7 +39,7 @@ server {
     add_header Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' *.sentry.io; style-src 'self' 'unsafe-inline';" always;
     
     # Redirect HTTP to HTTPS
-    root /var/www/smriti/dist;
+    root /var/www/tileflow/dist;
     index index.html;
     
     location / {
@@ -58,7 +58,7 @@ server {
 # HTTP redirect
 server {
     listen 80;
-    server_name app.smritibooks.com;
+    server_name app.tileflow.in;
     return 301 https://$server_name$request_uri;
 }
 ```
@@ -173,10 +173,10 @@ async function apiFetchWithRetry(url: string, options: RequestInit, retries = 0)
 **In `.env.backend`**:
 ```bash
 # Only allow your frontend domain
-ALLOWED_ORIGINS=https://app.smritibooks.com,https://admin.smritibooks.com
+ALLOWED_ORIGINS=https://app.tileflow.in,https://admin.tileflow.in
 
 # Optionally add mobile apps
-# ALLOWED_ORIGINS=https://app.smritibooks.com,mobile://app.smritibooks
+# ALLOWED_ORIGINS=https://app.tileflow.in,mobile://app.tileflowbooks
 
 # Do NOT use "*" (allow all) in production!
 ```
@@ -298,7 +298,7 @@ async def refresh_token(request: Request):
 **In `.env.backend`**:
 ```bash
 # PostgreSQL SSL mode
-DATABASE_URL=postgresql+asyncpg://smriti:PASSWORD@db.smritibooks.com/smriti001?ssl=require
+DATABASE_URL=postgresql+asyncpg://tileflow:PASSWORD@db.tileflow.in/tileflow001?ssl=require
 
 # SSL certificate verification (optional, for self-signed certs)
 # DATABASE_URL=...&sslmode=require&sslcert=/path/to/cert.pem
@@ -310,21 +310,21 @@ DATABASE_URL=postgresql+asyncpg://smriti:PASSWORD@db.smritibooks.com/smriti001?s
 
 ```sql
 -- Create read-only user for analytics
-CREATE USER smriti_analytics WITH PASSWORD 'SECURE_PASSWORD';
-GRANT USAGE ON SCHEMA public TO smriti_analytics;
-GRANT SELECT ON ALL TABLES IN SCHEMA public TO smriti_analytics;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO smriti_analytics;
+CREATE USER tileflow_analytics WITH PASSWORD 'SECURE_PASSWORD';
+GRANT USAGE ON SCHEMA public TO tileflow_analytics;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO tileflow_analytics;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO tileflow_analytics;
 
 -- Create user with limited write access for specific module
-CREATE USER smriti_sales WITH PASSWORD 'SECURE_PASSWORD';
-GRANT USAGE ON SCHEMA public TO smriti_sales;
-GRANT SELECT, INSERT, UPDATE ON sales_invoices TO smriti_sales;
-GRANT SELECT ON products, customers TO smriti_sales;
+CREATE USER tileflow_sales WITH PASSWORD 'SECURE_PASSWORD';
+GRANT USAGE ON SCHEMA public TO tileflow_sales;
+GRANT SELECT, INSERT, UPDATE ON sales_invoices TO tileflow_sales;
+GRANT SELECT ON products, customers TO tileflow_sales;
 
 -- Main app user (full access to intended schema)
-CREATE USER smriti WITH PASSWORD 'SECURE_PASSWORD';
-GRANT USAGE ON SCHEMA public TO smriti;
-GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO smriti;
+CREATE USER tileflow WITH PASSWORD 'SECURE_PASSWORD';
+GRANT USAGE ON SCHEMA public TO tileflow;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO tileflow;
 ```
 
 ### Connection Pool Security
@@ -363,17 +363,17 @@ AWS_SECRET_ACCESS_KEY=your_aws_secret_key_here
 
 ```bash
 # Option 1: Kubernetes Secrets
-kubectl create secret generic smriti-secrets \
+kubectl create secret generic tileflow-secrets \
   --from-literal=JWT_SECRET=your_secret \
   --from-literal=DB_PASSWORD=your_password
 
 # Option 2: AWS Secrets Manager
 aws secretsmanager create-secret \
-  --name smriti/production/secrets \
+  --name tileflow/production/secrets \
   --secret-string '{"JWT_SECRET":"...", "DB_PASSWORD":"..."}'
 
 # Option 3: HashiCorp Vault
-vault kv put secret/smriti/production \
+vault kv put secret/tileflow/production \
   jwt_secret=... \
   db_password=...
 ```
@@ -392,17 +392,17 @@ NEW_DB_PASSWORD=$(python -c "import secrets; print(secrets.token_urlsafe(24))")
 
 # 2. Update secret store (e.g., AWS Secrets Manager)
 aws secretsmanager update-secret \
-  --secret-id smriti/production/secrets \
+  --secret-id tileflow/production/secrets \
   --secret-string "{\"JWT_SECRET\":\"$NEW_JWT_SECRET\", \"DB_PASSWORD\":\"$NEW_DB_PASSWORD\"}"
 
 # 3. Update database user password
-psql -U postgres -c "ALTER USER smriti WITH PASSWORD '$NEW_DB_PASSWORD';"
+psql -U postgres -c "ALTER USER tileflow WITH PASSWORD '$NEW_DB_PASSWORD';"
 
 # 4. Deploy new configuration (triggers container restart)
-kubectl rollout restart deployment/smriti-backend
+kubectl rollout restart deployment/tileflow-backend
 
 # 5. Log rotation event
-echo "Secrets rotated at $(date)" >> /var/log/smriti-audit.log
+echo "Secrets rotated at $(date)" >> /var/log/tileflow-audit.log
 ```
 
 ---
@@ -490,7 +490,7 @@ async def log_audit_event(
     await session.commit()
     
     # Also log to file for immutability
-    with open("/var/log/smriti-audit.log", "a") as f:
+    with open("/var/log/tileflow-audit.log", "a") as f:
         f.write(json.dumps(audit_entry) + "\n")
 ```
 
@@ -555,18 +555,17 @@ logged_data = mask_sensitive_fields(
 # 3. Update secret store
 # 4. Restart affected services
 # 5. Notify security team
-# 6. Review audit logs for unauthorized access
 
 # Example: JWT secret compromise
 NEW_SECRET=$(python -c "import secrets; print(secrets.token_urlsafe(32))")
 
 # Update in secret manager
 aws secretsmanager update-secret \
-  --secret-id smriti/production/secrets \
+  --secret-id tileflow/production/secrets \
   --secret-string "{\"JWT_SECRET\":\"$NEW_SECRET\"}"
 
 # Restart backend to use new secret
-kubectl rollout restart deployment/smriti-backend
+kubectl rollout restart deployment/tileflow-backend
 
 # Invalidate all existing tokens (optional, if token blacklist implemented)
 redis-cli FLUSHDB 0  # Clear token cache if using Redis

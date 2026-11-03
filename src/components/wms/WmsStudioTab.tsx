@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect, useMemo } from "react";
 import { apiFetchV1 } from "../../lib/apiFetch.ts";
 import { 
@@ -69,6 +55,7 @@ interface StockTransferItem {
   product_id: string;
   batch_no: string;
   quantity: number;
+  quantity_dispatched?: number;
   quantity_received?: number;
   quantity_shortage?: number;
   quantity_damaged?: number;
@@ -122,7 +109,7 @@ export const WmsStudioTab: React.FC<{
   currentUser?: any;
   onNotification?: (title: string, message: string, type?: "success" | "error") => void;
 }> = ({ currentUser, onNotification }) => {
-  const [activeSubTab, setActiveSubTab] = useState<"batches" | "transfers" | "inward" | "fefo" | "audit">("batches");
+  const [activeSubTab, setActiveSubTab] = useState<"batches" | "groups" | "transfers" | "inward" | "fefo" | "audit">("batches");
   const [warehouses, setWarehouses] = useState<Godown[]>([]);
   const [batchStocks, setBatchStocks] = useState<BatchStock[]>([]);
   const [transfers, setTransfers] = useState<StockTransfer[]>([]);
@@ -142,7 +129,10 @@ export const WmsStudioTab: React.FC<{
   const [vehicleNo, setVehicleNo] = useState("");
 
   // Inward GRN form state
-  const [grnSupplierId, setGrnSupplierId] = useState("sup-test-01");
+  const [grnSupplierId, setGrnSupplierId] = useState("");
+  const [suppliers, setSuppliers] = useState<{ id: string; name: string }[]>([]);
+  const [tileGroups, setTileGroups] = useState<{ name: string; description?: string; products: number; boxes: number | string; sqft: number | string }[]>([]);
+  const [newGroupName, setNewGroupName] = useState("");
   const [grnWarehouseId, setGrnWarehouseId] = useState("");
   const [grnProductId, setGrnProductId] = useState("");
   const [grnBatchNo, setGrnBatchNo] = useState("");
@@ -168,6 +158,22 @@ export const WmsStudioTab: React.FC<{
   const [viewingChallan, setViewingChallan] = useState<any | null>(null);
   const [viewingEwayBill, setViewingEwayBill] = useState<any | null>(null);
 
+  const handleAddGroup = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newGroupName.trim()) return;
+    try {
+      await apiFetchV1("/wms/groups", {
+        method: "POST",
+        body: JSON.stringify({ name: newGroupName.trim() }),
+      });
+      setNewGroupName("");
+      onNotification?.("Group Added", "Tile group created.", "success");
+      fetchWmsData();
+    } catch (err: any) {
+      onNotification?.("Group Error", err.message || "Failed creating group", "error");
+    }
+  };
+
   const fetchWmsData = async () => {
     setLoading(true);
     try {
@@ -177,16 +183,22 @@ export const WmsStudioTab: React.FC<{
         apiFetchV1<StockTransfer[]>("/wms/transfers"),
         apiFetchV1<StockAudit[]>("/wms/audits").catch(() => []),
       ]);
+      apiFetchV1<any>("/suppliers/")
+        .then((res) => setSuppliers(Array.isArray(res) ? res : res?.items || []))
+        .catch(() => setSuppliers([]));
+      apiFetchV1<any[]>("/wms/groups")
+        .then((res) => setTileGroups(res || []))
+        .catch(() => setTileGroups([]));
       setWarehouses(whRes || []);
       setBatchStocks(batchRes || []);
       setTransfers(transferRes || []);
       setAudits(auditRes || []);
 
       if (whRes && whRes.length > 0) {
-        if (!sourceWh) setSourceWh(whRes[0].id);
-        if (!destWh && whRes.length > 1) setDestWh(whRes[1].id);
-        if (!grnWarehouseId) setGrnWarehouseId(whRes[0].id);
-        if (!fefoWarehouseId) setFefoWarehouseId(whRes[0].id);
+        setSourceWh((current) => current || whRes[0].id);
+        if (whRes.length > 1) setDestWh((current) => current || whRes[1].id);
+        setGrnWarehouseId((current) => current || whRes[0].id);
+        setFefoWarehouseId((current) => current || whRes[0].id);
         if (!auditWarehouseId) setAuditWarehouseId(whRes[0].id);
       }
     } catch (err: any) {
@@ -269,7 +281,7 @@ export const WmsStudioTab: React.FC<{
     try {
       const receiptDetails = transfer.items.map((i) => ({
         item_id: i.id,
-        quantity_received: i.quantity,
+        quantity_received: i.quantity_dispatched ?? i.quantity,
         quantity_shortage: 0,
         quantity_damaged: 0,
       }));
@@ -517,6 +529,17 @@ export const WmsStudioTab: React.FC<{
               Stock Transfers (STO)
             </button>
             <button
+              onClick={() => setActiveSubTab("groups")}
+              className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
+                activeSubTab === "groups"
+                  ? "bg-indigo-600 text-white shadow-sm"
+                  : "text-theme-muted hover:text-theme-body"
+              }`}
+            >
+              <PackagePlus className="w-4 h-4" />
+              Tile Groups
+            </button>
+            <button
               onClick={() => setActiveSubTab("inward")}
               className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
                 activeSubTab === "inward"
@@ -683,6 +706,43 @@ export const WmsStudioTab: React.FC<{
         )}
 
         {/* SUBTAB 2: STOCK TRANSFERS (STO) */}
+        {activeSubTab === "groups" && (
+          <div className="bg-theme-surface border border-theme-divider rounded-xl p-5 space-y-4">
+            <form onSubmit={handleAddGroup} className="flex gap-2 max-w-md">
+              <input
+                type="text"
+                value={newGroupName}
+                onChange={(e) => setNewGroupName(e.target.value)}
+                placeholder="New group, e.g. Vitrified Tiles"
+                className="flex-1 bg-theme-surface-2 border border-theme-divider rounded-lg px-3 py-2 text-xs text-theme-body focus:outline-none focus:border-indigo-500"
+              />
+              <button type="submit" className="px-3 py-2 bg-indigo-600 text-white rounded-lg text-xs font-semibold">
+                Add Group
+              </button>
+            </form>
+            <table className="w-full text-left text-xs" aria-label="Tile groups">
+              <thead>
+                <tr className="text-theme-muted border-b border-theme-divider">
+                  <th className="py-2">Group</th>
+                  <th className="py-2 text-right">Products</th>
+                  <th className="py-2 text-right">Boxes</th>
+                  <th className="py-2 text-right">Sq.Ft.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {tileGroups.map((g) => (
+                  <tr key={g.name} className="border-b border-theme-divider text-theme-body">
+                    <td className="py-2 font-semibold">{g.name}</td>
+                    <td className="py-2 text-right">{g.products}</td>
+                    <td className="py-2 text-right">{Number(g.boxes).toFixed(0)}</td>
+                    <td className="py-2 text-right">{Number(g.sqft).toFixed(2)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+
         {activeSubTab === "transfers" && (
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Create Transfer Form */}
@@ -869,7 +929,7 @@ export const WmsStudioTab: React.FC<{
                             <span className="text-theme-body">
                               Product: <strong className="text-indigo-400">{item.product_id}</strong> (Batch: {item.batch_no})
                             </span>
-                            <span className="font-bold text-emerald-400">{item.quantity} units</span>
+                            <span className="font-bold text-emerald-400">{item.quantity_dispatched ?? item.quantity} units</span>
                           </div>
                         ))}
                       </div>
@@ -911,13 +971,20 @@ export const WmsStudioTab: React.FC<{
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-theme-muted mb-1">Supplier ID</label>
-                  <input
-                    type="text"
+                  <label className="block text-xs font-semibold text-theme-muted mb-1">Vendor</label>
+                  <select
                     value={grnSupplierId}
                     onChange={(e) => setGrnSupplierId(e.target.value)}
-                    className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-3 py-2 text-xs text-theme-body focus:outline-none focus:border-indigo-500 font-mono"
-                  />
+                    required
+                    className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-3 py-2 text-xs text-theme-body focus:outline-none focus:border-indigo-500"
+                  >
+                    <option value="">Select vendor...</option>
+                    {suppliers.map((s) => (
+                      <option key={s.id} value={s.id}>
+                        {s.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
               </div>
 
@@ -979,7 +1046,7 @@ export const WmsStudioTab: React.FC<{
 
               <button
                 type="submit"
-                className="w-full mt-4 py-2.5 px-4 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+                className="w-full mt-4 py-2.5 px-4 rounded-lg bg-[#171717] hover:bg-[#0a0a0a] text-white text-xs font-bold transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
               >
                 <PackagePlus className="w-4 h-4" />
                 Post Goods Receipt & Inward Batch Stock

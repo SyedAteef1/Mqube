@@ -1,27 +1,26 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Reporting Platform & Data Integrity Engine Walkthrough v1.0
+# TILEFLOW Reporting Platform & Data Integrity Engine Walkthrough v1.0
 
 **Status: REPORTING PLATFORM — CLOSED & FROZEN**  
 **Audit Timestamp:** 2026-08-15 13:23:04 UTC  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
 ## 1. Purpose
-Document the complete architectural closure, UI/UX integration, dataset consistency, and 20-point forensic runtime execution verification for the SMRITI Reporting & Analytics Platform.
+Document the complete architectural closure, UI/UX integration, dataset consistency, and 20-point forensic runtime execution verification for the TILEFLOW Reporting & Analytics Platform.
 
 ## 2. Scope
 - Excel / Grid Reports with interactive analytical capabilities (filters, column drag, multi-sort, group-by, subtotals, pivot, copy/paste directly to Excel).
@@ -44,11 +43,11 @@ Document the complete architectural closure, UI/UX integration, dataset consiste
 - [`backend/app/models/__init__.py`](file:///F:/SMRITRretailNX/backend/app/models/__init__.py) — Exported reporting models.
 - [`backend/app/api/v1/reports.py`](file:///F:/SMRITRretailNX/backend/app/api/v1/reports.py) — Added endpoints for Report Definitions, Flexi Studio, Saved Views, and Dashboards.
 - [`backend/app/services/reports.py`](file:///F:/SMRITRretailNX/backend/app/services/reports.py) — Implemented runtime dataset execution for domain reports.
-- [`SMRITI_Control_Plane_Architecture_Review.xlsx`](file:///F:/SMRITRretailNX/SMRITI_Control_Plane_Architecture_Review.xlsx) — Added sheets `REPORTING_DASHBOARD_ARCH` and `REPORT_EXECUTION_DATA_INTEGRITY`.
+- [`TILEFLOW_Control_Plane_Architecture_Review.xlsx`](file:///F:/SMRITRretailNX/TILEFLOW_Control_Plane_Architecture_Review.xlsx) — Added sheets `REPORTING_DASHBOARD_ARCH` and `REPORT_EXECUTION_DATA_INTEGRITY`.
 
 ## 5. Architecture Decisions
-1. **Co-location Principle**: System and user report definitions, saved views, and dashboards reside in `smriti001`. **Zero extra databases created**.
-2. **Control Plane Separation**: `smritisys` manages tenant identity, entitlements, RBAC, and menu governance; `smriti001` serves transactional queries.
+1. **Co-location Principle**: System and user report definitions, saved views, and dashboards reside in `tileflow001`. **Zero extra databases created**.
+2. **Control Plane Separation**: `tileflowsys` manages tenant identity, entitlements, RBAC, and menu governance; `tileflow001` serves transactional queries.
 3. **Single Authoritative Dataset Rule**: `Grid total = Chart total = Pivot total = Dashboard KPI total = Export total`.
 
 ## 6. Design Rationale
@@ -56,7 +55,7 @@ Prevents fragmented reporting metrics across screens and guarantees end-to-end d
 
 ## 7. Implementation Summary
 - Verified 75/75 Pytest tests across 25 backend test suites.
-- Verified 20/20 forensic audit points with zero unapproved database creations (`smriti002-smriti999` count = 0).
+- Verified 20/20 forensic audit points with zero unapproved database creations (`tileflow002-tileflow999` count = 0).
 - Clean Vite production build in 21.47s.
 
 ## 8. Tests Executed

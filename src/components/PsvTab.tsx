@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, Legend } from "recharts";
 import { PSVParty } from "../types";
@@ -85,8 +60,8 @@ export const PsvTab: React.FC<PsvTabProps> = ({ psvParties, currentUser }) => {
               onClick={() => setSelectedPartyId(p.id)}
               className={`p-4 rounded-xl border cursor-pointer transition-all space-y-2.5 ${
                 selectedPartyId === p.id 
-                  ? "bg-theme-surface-3 border-[#2563EB]" 
-                  : "bg-theme-surface-1 border-theme-divider hover:border-[#2563EB]"
+                  ? "bg-theme-surface-3 border-[#606060]" 
+                  : "bg-theme-surface-1 border-theme-divider hover:border-[#606060]"
               }`}
             >
               <div className="flex justify-between items-start">
@@ -148,15 +123,15 @@ export const PsvTab: React.FC<PsvTabProps> = ({ psvParties, currentUser }) => {
               <div className="h-60 bg-theme-surface-3 bg-opacity-40 p-4 rounded-lg border border-theme-divider">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={activeParty.history} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#2a3a5c" />
-                    <XAxis dataKey="date" stroke="#8892a4" fontSize={11} />
-                    <YAxis stroke="#8892a4" fontSize={11} />
+                    <CartesianGrid strokeDasharray="3 3" stroke="#393939" />
+                    <XAxis dataKey="date" stroke="#171717" fontSize={11} />
+                    <YAxis stroke="#171717" fontSize={11} />
                     <Tooltip 
-                      contentStyle={{ backgroundColor: "#16213e", borderColor: "#2a3a5c", borderRadius: 8 }}
+                      contentStyle={{ backgroundColor: "#212121", borderColor: "#2a3a5c", borderRadius: 8 }}
                       labelStyle={{ color: "white" }}
                     />
                     <Legend wrapperStyle={{ fontSize: 11 }} />
-                    <Line type="monotone" dataKey="stock" stroke="#2563EB" activeDot={{ r: 6 }} name="On-Hand Inventory" strokeWidth={2} />
+                    <Line type="monotone" dataKey="stock" stroke="#606060" activeDot={{ r: 6 }} name="On-Hand Inventory" strokeWidth={2} />
                     <Line type="monotone" dataKey="sales" stroke="#22c55e" name="Daily Sales Velocity" strokeWidth={2} />
                   </LineChart>
                 </ResponsiveContainer>

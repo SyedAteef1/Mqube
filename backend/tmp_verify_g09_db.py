@@ -7,7 +7,7 @@ HOST = 'localhost'
 PORT = 5432
 USER = 'postgres'
 PASSWORD = 'postgres'
-TARGET_DB = 'smritisys'
+TARGET_DB = 'tileflowsys'
 
 print('host=' + HOST)
 print('port=' + str(PORT))

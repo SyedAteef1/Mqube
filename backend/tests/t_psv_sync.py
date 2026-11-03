@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -49,8 +35,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": UserRole.SYSADMIN.value,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -63,7 +49,7 @@ async def test_cge_loyalty_lifecycle_and_tier_advancement():
     Verifies loyalty member enrollment, spend calculation with tier multipliers,
     points earning, redemption, and automatic tier advancement.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         branch_id = None
@@ -76,7 +62,7 @@ async def test_cge_loyalty_lifecycle_and_tier_advancement():
             branch_id=None,
             name="Loyalty Test Customer",
             mobile=f"99{uuid.uuid4().hex[:8]}",
-            email=f"cust_{uuid.uuid4().hex[:4]}@smriti.test",
+            email=f"cust_{uuid.uuid4().hex[:4]}@tileflow.test",
             is_active=True,
             is_deleted=False
         )
@@ -192,7 +178,7 @@ async def test_cge_promotions_and_coupons():
     """
     Verifies campaign coupon validation, discount calculations, usage limits, and redemption recording.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         branch_id = "BR-001"
@@ -294,7 +280,7 @@ async def test_pdt_inventory_velocity_and_reorder_simulation():
     Verifies Predictive Distribution Twin (PDT) stock velocity calculation,
     days-of-cover projections, and suggested reorder points from StockMovement records.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         branch_id = "BR-001"
@@ -369,7 +355,7 @@ async def test_offline_sync_and_idempotent_deduplication():
     Verifies offline sync batch ingestion, deduplication of previously processed transactions,
     durable queue persistence in pos_offline_sync_queue, and atomic posting of new sales invoices.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         branch_id = "BR-001"
@@ -463,7 +449,7 @@ async def test_psv_stock_event_projection():
     """
     Verifies PSV (Public Stock Verification) projection service idempotency and party balance accumulation.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         party_id = f"psv_pty_{uuid.uuid4().hex[:6]}"
@@ -474,7 +460,7 @@ async def test_psv_stock_event_projection():
             "source_event_id": src_event_id,
             "correlation_id": "corr-psv-01",
             "company_code": comp_id,
-            "source_database": "smriti001",
+            "source_database": "tileflow001",
             "source_document_type": "DELIVERY_CHALLAN",
             "source_document_id": "DC-9901",
             "psv_party_id": party_id,

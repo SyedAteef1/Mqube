@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,12 +8,12 @@ from openpyxl.utils import get_column_letter
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 
 def run_forensic_review():
     print("============================================================")
-    print("SMRITI MULTI-COMPANY ARCHITECTURE — FINAL PRE-APPLY FORENSIC REVIEW")
+    print("TILEFLOW MULTI-COMPANY ARCHITECTURE — FINAL PRE-APPLY FORENSIC REVIEW")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -35,13 +22,13 @@ def run_forensic_review():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    # 2. Check if table company_database_registries exists in live PostgreSQL smritisys
+    # 2. Check if table company_database_registries exists in live PostgreSQL tileflowsys
     cur.execute("""
         SELECT table_name 
         FROM information_schema.tables 
@@ -71,7 +58,7 @@ def run_forensic_review():
     company_mappings = []
     for c in companies_in_db:
         cid, cname, active = c
-        target_db = "smritisys" if cid == "COMP-001" else f"company_{cid.lower().replace('-', '_')}"
+        target_db = "tileflowsys" if cid == "COMP-001" else f"company_{cid.lower().replace('-', '_')}"
         status = "READY" if active else "SUSPENDED"
         company_mappings.append({
             "company_id": cid,
@@ -79,17 +66,17 @@ def run_forensic_review():
             "database_name": target_db,
             "database_status": status,
             "schema_version": "3.16.0",
-            "mapping_source": "smritisys.companies -> Convention / Registry"
+            "mapping_source": "tileflowsys.companies -> Convention / Registry"
         })
 
     if not company_mappings:
         company_mappings.append({
             "company_id": "COMP-001",
-            "company_name": "SMRITI Retail Enterprise Default",
-            "database_name": "smritisys",
+            "company_name": "TILEFLOW Retail Enterprise Default",
+            "database_name": "tileflowsys",
             "database_status": "READY",
             "schema_version": "3.16.0",
-            "mapping_source": "smritisys.companies (Default Single-Tenant Fallback)"
+            "mapping_source": "tileflowsys.companies (Default Single-Tenant Fallback)"
         })
 
     df_company_mappings = pd.DataFrame(company_mappings)
@@ -109,13 +96,13 @@ def run_forensic_review():
         {"Category": "1. Database Registry Origin", "Finding": "NEW ORM Model created in backend code. Table company_database_registries does NOT exist in live DB yet." if not reg_table_exists else "Table company_database_registries exists in live DB.", "Status": "GENUINELY_NEW_TABLE_REQUIRED", "Impact": "Requires Alembic DDL Migration"},
         {"Category": "2. Existing Company Mapping", "Finding": f"Mapped {len(company_mappings)} enterprise companies.", "Status": "MAPPED", "Impact": "Ready for multi-tenant routing"},
         {"Category": "3. Business DB Boundary", "Finding": "Sales, POS, Stock Ledger, GRN, Payments remain in Company DB System-of-Record.", "Status": "VERIFIED", "Impact": "Zero business transaction leakage"},
-        {"Category": "4. Control Plane Boundary", "Finding": "smritisys governs Identity, Tenancy, Roles, Menus, UI/UX, Policies, Audit.", "Status": "VERIFIED", "Impact": "Authoritative Control Plane"},
+        {"Category": "4. Control Plane Boundary", "Finding": "tileflowsys governs Identity, Tenancy, Roles, Menus, UI/UX, Policies, Audit.", "Status": "VERIFIED", "Impact": "Authoritative Control Plane"},
         {"Category": "5. Resolver Security", "Finding": "CompanyDatabaseResolver enforces company assignment, active status, 403 Forbidden fail-closed.", "Status": "VERIFIED", "Impact": "No arbitrary client DB routing"},
         {"Category": "6. Production Routing Status", "Finding": "Backend API transaction endpoints currently use static SessionLocal. CompanyDatabaseResolver is implemented & tested in service layer.", "Status": "MULTI_COMPANY_RUNTIME_ROUTING = NOT_YET_COMPLETE", "Impact": "Requires middleware integration for multi-tenant HTTP requests"},
-        {"Category": "7. Fresh Installation", "Finding": "install.ps1, docker-compose.yml set POSTGRES_DB=smritisys as Control Plane.", "Status": "VERIFIED", "Impact": "Single control plane base install"},
+        {"Category": "7. Fresh Installation", "Finding": "install.ps1, docker-compose.yml set POSTGRES_DB=tileflowsys as Control Plane.", "Status": "VERIFIED", "Impact": "Single control plane base install"},
         {"Category": "8. Database Lifecycle", "Finding": "SUSPENDED != DELETED. Administrative suspension preserves data.", "Status": "VERIFIED", "Impact": "Zero data loss safety"},
         {"Category": "9. Security Isolation", "Finding": "Cross-company access (Company A -> Company B) returns 403 Forbidden.", "Status": "VERIFIED", "Impact": "Complete tenant isolation"},
-        {"Category": "10. Database Mutations", "Finding": "Initial smriti_menus=34, smriti_audit_log=44. Final smriti_menus=34, smriti_audit_log=44. Mutations=0.", "Status": "ZERO_MUTATIONS", "Impact": "100% Read-Only Audit Guaranteed"}
+        {"Category": "10. Database Mutations", "Finding": "Initial tileflow_menus=34, tileflow_audit_log=44. Final tileflow_menus=34, tileflow_audit_log=44. Mutations=0.", "Status": "ZERO_MUTATIONS", "Impact": "100% Read-Only Audit Guaranteed"}
     ]
 
     df_decisions = pd.DataFrame(decision_data)
@@ -154,10 +141,10 @@ def run_forensic_review():
     wb.close()
 
     # 6. Database Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -165,8 +152,8 @@ def run_forensic_review():
     mutated = (initial_menus != final_menus) or (initial_audit != final_audit)
 
     print("\nDATABASE MUTATION VERIFICATION:")
-    print(f"  smriti_menus     : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log : Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus     : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log : Initial={initial_audit}, Final={final_audit}")
     print(f"  reg_table_exists : {reg_table_exists}")
     print(f"  static_session   : {uses_static_db_session}")
 

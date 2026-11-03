@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.30.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Tag & Barcode Label Printing with QZ Tray Direct Thermal Dispatch
 
 ## 1. Purpose
-This release provides a production-grade upgrade for Tag & Barcode Label Printing in SMRITI Retail OS, transitioning thermal barcode printing from a browser dialog-dependent mode to an enterprise direct-dispatch architecture. By integrating the official QZ Tray client with backend RSA 2048-bit X.509 cryptographic signing, the system spools raw DPL, TSPL, and ZPL printer streams silently and directly to Windows USB printer queues (such as `IMPACT by Honeywell IH-2 (300 dpi) - DPL`), while preserving fallback paths for Windows Print Dialog and offline PRN file downloads.
+This release provides a production-grade upgrade for Tag & Barcode Label Printing in TILEFLOW Retail OS, transitioning thermal barcode printing from a browser dialog-dependent mode to an enterprise direct-dispatch architecture. By integrating the official QZ Tray client with backend RSA 2048-bit X.509 cryptographic signing, the system spools raw DPL, TSPL, and ZPL printer streams silently and directly to Windows USB printer queues (such as `IMPACT by Honeywell IH-2 (300 dpi) - DPL`), while preserving fallback paths for Windows Print Dialog and offline PRN file downloads.
 
 ## 2. Scope
 - **Backend Services:**
@@ -67,7 +66,7 @@ This release provides a production-grade upgrade for Tag & Barcode Label Printin
 - **Backend Test Suites:**
   - `python -m pytest backend/app/tests/test_barcode.py` (7/7 passed)
 - **Live Container Tests:**
-  - `docker ps` (smriti-web, smriti-api, smriti-db healthy)
+  - `docker ps` (tileflow-web, tileflow-api, tileflow-db healthy)
   - `curl.exe http://localhost:8000/api/v1/barcode/qz/certificate` (HTTP 200 returned valid X.509 certificate)
   - `curl.exe http://localhost:8000/api/v1/barcode/qz/sign` (HTTP 200 returned SHA512 RSA signature)
 

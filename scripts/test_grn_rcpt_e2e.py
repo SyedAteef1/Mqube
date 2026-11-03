@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, time
 import psycopg2
 from decimal import Decimal
@@ -23,7 +10,7 @@ def test_grn_receipt_e2e():
     Scenario:
     Supplier -> PO = 50 -> Approved PO -> GRN = 48 -> Short = 2 -> Stock +48.
     """
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
 
     sup_code = "SUP-GRN-E2E-777"
@@ -43,7 +30,7 @@ def test_grn_receipt_e2e():
     cur.execute("""
         INSERT INTO suppliers (id, uuid, tenant_id, code, name, gst_number, city, state, is_active)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, true);
-    """, (sup_code, "uuid-sup-grn-e2e", "smritibus_default", sup_code, "E2E GRN Supplier Ltd", "27AAACG7777F1Z7", "Mumbai", "Maharashtra"))
+    """, (sup_code, "uuid-sup-grn-e2e", "tileflowbus_default", sup_code, "E2E GRN Supplier Ltd", "27AAACG7777F1Z7", "Mumbai", "Maharashtra"))
     conn.commit()
 
     # 2. Issue PO for 50 Units
@@ -54,7 +41,7 @@ def test_grn_receipt_e2e():
             status, workflow_status, is_active
         )
         VALUES (%s, %s, %s, %s, %s, %s, 5000.00, 250.00, 5250.00, 'Approved', 'Approved', true);
-    """, (po_id, "uuid-po-grn-e2e", "smritibus_default", "PO-2026-GRN-E2E", "PO-2026-GRN-E2E", sup_code))
+    """, (po_id, "uuid-po-grn-e2e", "tileflowbus_default", "PO-2026-GRN-E2E", "PO-2026-GRN-E2E", sup_code))
     
     cur.execute("""
         INSERT INTO purchase_order_items (
@@ -62,7 +49,7 @@ def test_grn_receipt_e2e():
             quantity, cost_price, gst_rate, tax_amount, line_total, is_manually_overridden, is_active
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, 50, 100.00, 5.00, 250.00, 5250.00, false, true);
-    """, ("POI-GRN-E2E-1", "uuid-poi-grn-e2e", "smritibus_default", po_id, product_id, "CH-24-G-BLACK-36", "CH-24-G BLACK 36"))
+    """, ("POI-GRN-E2E-1", "uuid-poi-grn-e2e", "tileflowbus_default", po_id, product_id, "CH-24-G-BLACK-36", "CH-24-G BLACK 36"))
     conn.commit()
 
     # 3. Post GRN Material Receipt (GRN = 48, Short = 2)
@@ -76,7 +63,7 @@ def test_grn_receipt_e2e():
             status, subtotal, tax_total, grand_total, is_active
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, 'RECEIVED', 4800.00, 240.00, 5040.00, true);
-    """, (grn_id, "uuid-grn-e2e-777", "smritibus_default", "GRN-2026-E2E-777", "GRN-2026-E2E-777", sup_code, po_id))
+    """, (grn_id, "uuid-grn-e2e-777", "tileflowbus_default", "GRN-2026-E2E-777", "GRN-2026-E2E-777", sup_code, po_id))
 
     cur.execute("""
         INSERT INTO purchase_receipt_items (
@@ -84,7 +71,7 @@ def test_grn_receipt_e2e():
             quantity_ordered, quantity_received, cost_price, gst_rate, tax_amount, line_total, is_active
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, 100.00, 5.00, 240.00, 5040.00, true);
-    """, ("PRI-E2E-1", "uuid-pri-e2e-1", "smritibus_default", grn_id, product_id, "CH-24-G-BLACK-36", "CH-24-G BLACK 36", po_qty, grn_qty))
+    """, ("PRI-E2E-1", "uuid-pri-e2e-1", "tileflowbus_default", grn_id, product_id, "CH-24-G-BLACK-36", "CH-24-G BLACK 36", po_qty, grn_qty))
     conn.commit()
 
     # 4. Verify Signature Transaction Record

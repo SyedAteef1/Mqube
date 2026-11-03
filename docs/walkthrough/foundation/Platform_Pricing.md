@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Vertical Slice 4 — Pricing, GST, Payments, and Document Engine Unification
 
 ## 1. Purpose
-Unify Price Book resolution, volume break pricing tiers, statutory document sequence numbering, and multi-tender payment settlement ledgers inside the SMRITI tenant data plane (`smritiXXX`). This guarantees deterministic 4-level price evaluation, gapless document numbering sequences with full audit logs, and idempotent split-tender payment processing across POS and B2B sales channels.
+Unify Price Book resolution, volume break pricing tiers, statutory document sequence numbering, and multi-tender payment settlement ledgers inside the TILEFLOW tenant data plane (`tileflowXXX`). This guarantees deterministic 4-level price evaluation, gapless document numbering sequences with full audit logs, and idempotent split-tender payment processing across POS and B2B sales channels.
 
 ---
 
 ## 2. Scope
-- **Tenant Data Plane (`smritiXXX`) Only**: All price books, price book entries, payment transactions, allocations, document series, and audit logs reside strictly in tenant databases.
+- **Tenant Data Plane (`tileflowXXX`) Only**: All price books, price book entries, payment transactions, allocations, document series, and audit logs reside strictly in tenant databases.
 - **Hierarchical Pricing Resolution**: 4-level evaluation hierarchy (Explicit Price Book -> Customer Tier -> Default Price Book -> Master Item/Product baseline) with volume break (`min_quantity`) matching.
 - **Atomic Locked Sequence Generator**: `document_series` with `SELECT ... FOR UPDATE` row locks, formatters, and immutable `numbering_audit_logs`.
 - **Idempotent Multi-Tender Payment Ledger**: `payment_transactions` and `payment_allocations` enforcing `idempotency_key` unique constraints to eliminate double-charging risks on network retries.

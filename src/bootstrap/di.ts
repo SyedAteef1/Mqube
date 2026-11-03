@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.15.0
- * * Created    : 2026-07-11
- * * Modified   : 2026-07-13
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import dotenv from "dotenv";
 import { IProductRepository, ICustomerRepository, IShiftRepository, ISalesInvoiceRepository, IAuditRepository, ISyncRepository, IUserRepository, IPOSProfileRepository, IPurchaseRepository, IStateRepository } from "../core/interfaces/db.js";
 import { PostgresProductRepository, PostgresCustomerRepository, PostgresShiftRepository, PostgresSalesInvoiceRepository, PostgresAuditRepository, PostgresSyncRepository, PostgresUserRepository, PostgresPOSProfileRepository, PostgresPurchaseRepository, PostgresStateRepository } from "../db/postgres/PgRepos.js";
@@ -58,7 +33,7 @@ export function bootstrapDI(): DIContainer {
     return instances as DIContainer;
   }
 
-  console.log(`[SMRITI Bootstrap] Initializing Platform Abstraction Layer (PAL) with DATABASE_PROVIDER: ${dbProvider}`);
+  console.log(`[MQube Bootstrap] Initializing Platform Abstraction Layer (PAL) with DATABASE_PROVIDER: ${dbProvider}`);
 
   if (dbProvider === "postgres") {
     instances.products = new PostgresProductRepository();

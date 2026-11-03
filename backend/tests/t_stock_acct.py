@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -37,8 +23,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -52,7 +38,7 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
 @pytest.mark.asyncio
 async def test_record_authoritative_stock_movement():
     """Verify recording stock movements writes immutable audit logs and adjusts on-hand balances."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     product_id = f"prod_{unique_suffix}"
     sku = f"SKU-{unique_suffix.upper()}"
@@ -120,7 +106,7 @@ async def test_record_authoritative_stock_movement():
 @pytest.mark.asyncio
 async def test_rebuild_materialized_balances_from_movements():
     """Verify materialized balances are accurately rebuildable from immutable movement ledgers."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     product_id = f"prod_reb_{unique_suffix}"
     sku = f"SKU-REB-{unique_suffix.upper()}"
@@ -173,7 +159,7 @@ async def test_rebuild_materialized_balances_from_movements():
 @pytest.mark.asyncio
 async def test_double_entry_equality_invariant_enforcement():
     """Verify strict double-entry balance: Debits == Credits succeeds; unbalanced fails closed."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -216,7 +202,7 @@ async def test_double_entry_equality_invariant_enforcement():
 @pytest.mark.asyncio
 async def test_stock_reconciliation_detects_drift():
     """Verify stock reconciliation job detects manual/unauthorized stock mutations and fixes drift."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     product_id = f"prod_drift_{unique_suffix}"
     sku = f"SKU-DRIFT-{unique_suffix.upper()}"
@@ -272,7 +258,7 @@ async def test_stock_reconciliation_detects_drift():
 @pytest.mark.asyncio
 async def test_gl_trial_balance_reconciliation():
     """Verify General Ledger reconciliation job verifies total debits == total credits and voucher validity."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:

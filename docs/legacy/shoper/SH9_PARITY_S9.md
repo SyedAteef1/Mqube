@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sprint 9 — Sales Reports, Finance Extensions & CRM Parity Gap Registry
-## Shoper9 MnuNo 100/410/460/612/613/650 → SMRITI Gap Analysis
+## Shoper9 MnuNo 100/410/460/612/613/650 → TILEFLOW Gap Analysis
 
 **Date:** 2026-08-24  
-**Source:** Live `smriti_legacy_menu_map` + code inspection  
+**Source:** Live `tileflow_legacy_menu_map` + code inspection  
 **Total entries analysed:** 40 rows (SALES + FINANCE + CRM + ADMIN modules)
 
 **Files Inspected:**
@@ -30,7 +29,7 @@
 
 ## MnuNo 100 — Sales Workspace (9 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 100/101 | Billing | SR130000 | MAPPED | `create_sales_invoice_contract` | ✅ VERIFIED |
 | 100/104 | Sales Advice Slips | SR115500 | MERGED | `create_sales_quotation` | ✅ VERIFIED |
@@ -48,7 +47,7 @@
 
 ## MnuNo 410 — Sales Reports (13 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 410/411 | Daily Sales Book | SR213600 | MAPPED | `/reports/daily-sales` (pre-existing) | ✅ VERIFIED |
 | 410/412 | Bill-wise Sales | SR202400 | MAPPED | `/reports/bill-wise-sales` (Sprint 8a) | ✅ VERIFIED |
@@ -72,7 +71,7 @@
 
 ## MnuNo 460 — Business Ledger / Finance Extensions (11 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 460/461 | Cash Transaction | SR203100 | MAPPED | `/finance/cash-transactions` (Sprint 8b) | ✅ VERIFIED |
 | 460/462 | Submission/Realisation List | SR203300 | MAPPED | No submission list endpoint | ⚠️ GAP |
@@ -92,7 +91,7 @@
 
 ## MnuNo 612/613/650 — CRM & Staff (7 entries)
 
-| MnuNo/Opt | Caption | EXE | SH9 Status | SMRITI Coverage | Gap Status |
+| MnuNo/Opt | Caption | EXE | SH9 Status | TILEFLOW Coverage | Gap Status |
 |---|---|---|---|---|---|
 | 612/6121 | Personnel Catalogue | SR442900 | MAPPED | No staff/personnel API file exists | ⚠️ GAP |
 | 612/6124 | Incentive Definition | SR443900 | MAPPED | No incentive API | ⚠️ GAP |

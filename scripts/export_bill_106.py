@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.9.5
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 import os
 import sys
@@ -39,7 +25,7 @@ OUTPUT_DIR_BATCH = REPO_ROOT / "exports" / "tt_batch_104_106"
 for d in [OUTPUT_DIR_CANONICAL, OUTPUT_DIR_FINAL, OUTPUT_DIR_ALL54, OUTPUT_DIR_BATCH]:
     d.mkdir(parents=True, exist_ok=True)
 
-DATABASE_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001"
+DATABASE_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001"
 
 async def export_bill_106():
     print("=== EXPORTING BILL 106 CANONICAL TAX INVOICE ===")

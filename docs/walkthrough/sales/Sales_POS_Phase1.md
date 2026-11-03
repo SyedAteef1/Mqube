@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.18.1
   Created      : 2026-07-15
   Modified     : 2026-07-15
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # MC2 Phase 1 and Phase 2 - Sales/POS Checkout Migration Walkthrough
@@ -141,7 +140,7 @@ Recommendation:
 ## 12. Related ADRs
 
 - ADR-001: FastAPI + Postgres as system of record (Backend System-of-Record Policy)
-- ADR-002: Strangler-Fig migration order (SMRITI Platform Abstraction Layer)
+- ADR-002: Strangler-Fig migration order (TILEFLOW Platform Abstraction Layer)
 
 ## 13. Related RFCs
 

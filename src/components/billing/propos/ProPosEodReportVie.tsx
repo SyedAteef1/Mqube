@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { EodRegisterCloseout, POSZReportData, CashDenominations, ShiftCashMovementRecord } from "./types.ts";
 import ProPosDenomination, { calculateDenominationTotal } from "./ProPosDenomination.tsx";
@@ -36,13 +22,13 @@ import {
   RefreshCw
 } from "lucide-react";
 
-interface SmritiProPosEodReportwProps {
+interface TileFlowProPosEodReportwProps {
   initialEod?: EodRegisterCloseout;
   onCommitCloseout: (eod: EodRegisterCloseout) => void;
   onNotification?: (title: string, msg: string, type: "success" | "error") => void;
 }
 
-export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
+export const TileFlowProPosEodReportw: React.FC<TileFlowProPosEodReportwProps> = ({
   initialEod,
   onCommitCloseout,
   onNotification
@@ -194,21 +180,21 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col bg-[#f8f9fa] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] overflow-y-auto p-6 font-sans">
+    <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] overflow-y-auto p-6 font-sans">
       <div className="max-w-5xl mx-auto w-full space-y-6">
         
         {/* Header Bar */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c4c5d5] dark:border-[#444653]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c6c6c6] dark:border-[#474747]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 bg-[#00288e] text-white font-mono text-[11px] font-bold rounded">
+              <span className="px-2.5 py-0.5 bg-[#272727] text-white font-mono text-[11px] font-bold rounded">
                 Z-REPORT #{zReport?.shift_code || `ZR-${new Date().toISOString().slice(0, 10)}`}
               </span>
-              <h1 className="text-xl font-bold text-[#00288e] dark:text-[#a8b8ff]">
+              <h1 className="text-xl font-bold text-[#272727] dark:text-[#bababa]">
                 End of Day (EOD) Register Closeout &amp; Cash Reconciliation
               </h1>
             </div>
-            <p className="text-xs text-[#565e74] dark:text-[#bec6e0] mt-0.5">
+            <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6] mt-0.5">
               Daily sales settlement, denomination audit, safe transfers, petty payouts, and dual-entry GL balancing.
             </p>
           </div>
@@ -219,7 +205,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
               onClick={() => {
                 if (selectedShiftId) loadZReportForShift(selectedShiftId);
               }}
-              className="px-3 py-2 border border-[#c4c5d5] dark:border-[#444653] bg-white dark:bg-[#2d3133] hover:bg-[#eceef0] rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
+              className="px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] bg-white dark:bg-[#303030] hover:bg-[#eeeeee] rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
             >
               <RefreshCw size={14} className={loading ? "animate-spin" : ""} />
               <span>Refresh</span>
@@ -228,7 +214,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
             <button
               type="button"
               onClick={handlePrint}
-              className="px-4 py-2 border border-[#c4c5d5] dark:border-[#444653] bg-white dark:bg-[#2d3133] hover:bg-[#eceef0] rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
+              className="px-4 py-2 border border-[#c6c6c6] dark:border-[#474747] bg-white dark:bg-[#303030] hover:bg-[#eeeeee] rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs"
             >
               <Printer size={14} />
               <span>Print Z-Report</span>
@@ -238,7 +224,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
               type="button"
               disabled={isLocked || loading}
               onClick={handleCloseRegister}
-              className="px-6 py-2 bg-[#00288e] hover:bg-[#1e40af] text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm disabled:opacity-40"
+              className="px-6 py-2 bg-[#272727] hover:bg-[#414141] text-white rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm disabled:opacity-40"
             >
               <Lock size={14} />
               <span>{isLocked ? "Register Locked (Closed)" : "Finalize & Close Register"}</span>
@@ -264,38 +250,38 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
 
         {/* Register Overview KPI Strip */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-          <div className="bg-white dark:bg-[#2d3133] p-4 rounded-xl border border-[#c4c5d5] dark:border-[#444653] shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Gross Turnover</span>
-            <div className="text-xl font-bold font-mono text-[#00288e] dark:text-[#a8b8ff] mt-1">₹{grossSales.toFixed(2)}</div>
-            <span className="text-[10px] text-[#565e74]">{zReport?.total_bills || 48} Invoices</span>
+          <div className="bg-white dark:bg-[#303030] p-4 rounded-xl border border-[#c6c6c6] dark:border-[#474747] shadow-xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">Gross Turnover</span>
+            <div className="text-xl font-bold font-mono text-[#272727] dark:text-[#bababa] mt-1">₹{grossSales.toFixed(2)}</div>
+            <span className="text-[10px] text-[#5e5e5e]">{zReport?.total_bills || 48} Invoices</span>
           </div>
 
-          <div className="bg-white dark:bg-[#2d3133] p-4 rounded-xl border border-[#c4c5d5] dark:border-[#444653] shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Discounts &amp; Promos</span>
+          <div className="bg-white dark:bg-[#303030] p-4 rounded-xl border border-[#c6c6c6] dark:border-[#474747] shadow-xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">Discounts &amp; Promos</span>
             <div className="text-xl font-bold font-mono text-[#ba1a1a] mt-1">-₹{discountsTotal.toFixed(2)}</div>
-            <span className="text-[10px] text-[#565e74]">Schemes Applied</span>
+            <span className="text-[10px] text-[#5e5e5e]">Schemes Applied</span>
           </div>
 
-          <div className="bg-white dark:bg-[#2d3133] p-4 rounded-xl border border-[#c4c5d5] dark:border-[#444653] shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Cash Drops (Safe)</span>
+          <div className="bg-white dark:bg-[#303030] p-4 rounded-xl border border-[#c6c6c6] dark:border-[#474747] shadow-xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">Cash Drops (Safe)</span>
             <div className="text-xl font-mono font-bold text-[#ba1a1a] mt-1">
               -₹{(zReport?.cash_drops_total || 0).toFixed(2)}
             </div>
-            <span className="text-[10px] text-[#565e74]">Safe Transfers</span>
+            <span className="text-[10px] text-[#5e5e5e]">Safe Transfers</span>
           </div>
 
-          <div className="bg-white dark:bg-[#2d3133] p-4 rounded-xl border border-[#c4c5d5] dark:border-[#444653] shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Till Expenses</span>
+          <div className="bg-white dark:bg-[#303030] p-4 rounded-xl border border-[#c6c6c6] dark:border-[#474747] shadow-xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">Till Expenses</span>
             <div className="text-xl font-mono font-bold text-[#ba1a1a] mt-1">
               -₹{(zReport?.till_expenses_total || 0).toFixed(2)}
             </div>
-            <span className="text-[10px] text-[#565e74]">Petty Disbursals</span>
+            <span className="text-[10px] text-[#5e5e5e]">Petty Disbursals</span>
           </div>
 
-          <div className="bg-[#dde1ff] dark:bg-[#1e40af]/30 p-4 rounded-xl border border-[#00288e]/30 shadow-xs">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#00288e] dark:text-[#a8b8ff]">Net Expected Cash</span>
-            <div className="text-2xl font-bold font-mono text-[#00288e] dark:text-white mt-1">₹{systemCash.toFixed(2)}</div>
-            <span className="text-[10px] text-[#00288e] dark:text-[#a8b8ff] font-semibold">Opening + Cash Sales - Drops - Exp</span>
+          <div className="bg-[#e2e2e2] dark:bg-[#414141]/30 p-4 rounded-xl border border-[#272727]/30 shadow-xs">
+            <span className="text-[10px] font-bold uppercase tracking-wider text-[#272727] dark:text-[#bababa]">Net Expected Cash</span>
+            <div className="text-2xl font-bold font-mono text-[#272727] dark:text-white mt-1">₹{systemCash.toFixed(2)}</div>
+            <span className="text-[10px] text-[#272727] dark:text-[#bababa] font-semibold">Opening + Cash Sales - Drops - Exp</span>
           </div>
         </div>
 
@@ -309,19 +295,19 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
 
         {/* Mid-Shift Cash Movements History (if any) */}
         {zReport?.cash_movements && zReport.cash_movements.length > 0 && (
-          <div className="bg-white dark:bg-[#2d3133] rounded-2xl border border-[#c4c5d5] dark:border-[#444653] p-6 shadow-xs space-y-3">
-            <div className="flex justify-between items-center pb-2 border-b border-[#eceef0] dark:border-[#444653]">
-              <h3 className="text-sm font-bold text-[#191c1d] dark:text-white uppercase tracking-wider flex items-center gap-2">
-                <Vault size={16} className="text-[#00288e]" />
+          <div className="bg-white dark:bg-[#303030] rounded-2xl border border-[#c6c6c6] dark:border-[#474747] p-6 shadow-xs space-y-3">
+            <div className="flex justify-between items-center pb-2 border-b border-[#eeeeee] dark:border-[#474747]">
+              <h3 className="text-sm font-bold text-[#1b1b1b] dark:text-white uppercase tracking-wider flex items-center gap-2">
+                <Vault size={16} className="text-[#272727]" />
                 Mid-Shift Cash Movements &amp; Petty Disbursals
               </h3>
-              <span className="text-xs font-mono font-bold text-[#565e74]">
+              <span className="text-xs font-mono font-bold text-[#5e5e5e]">
                 {zReport.cash_movements.length} transactions recorded
               </span>
             </div>
 
             <table className="w-full text-left border-collapse text-xs">
-              <thead className="bg-[#f8f9fa] dark:bg-[#131b2e] text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] border-b border-[#c4c5d5] dark:border-[#444653]">
+              <thead className="bg-[#f9f9f9] dark:bg-[#1b1b1b] text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] border-b border-[#c6c6c6] dark:border-[#474747]">
                 <tr>
                   <th className="px-4 py-2.5">Type</th>
                   <th className="px-4 py-2.5">Reason &amp; Reference</th>
@@ -329,24 +315,24 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
                   <th className="px-4 py-2.5 text-right">GL Voucher ID</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+              <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
                 {zReport.cash_movements.map((mov) => (
-                  <tr key={mov.id} className="hover:bg-[#f8f9fa] dark:hover:bg-[#131b2e]">
+                  <tr key={mov.id} className="hover:bg-[#f9f9f9] dark:hover:bg-[#1b1b1b]">
                     <td className="px-4 py-2.5 font-bold">
                       <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                        mov.type === "CASH_DROP" ? "bg-[#e0e7ff] text-[#3730a3]" : "bg-[#fef3c7] text-[#92400e]"
+                        mov.type === "CASH_DROP" ? "bg-[#e7e7e7] text-[#3a3a3a]" : "bg-[#fef3c7] text-[#92400e]"
                       }`}>
                         {mov.type === "CASH_DROP" ? "Safe Drop" : "Till Expense"}
                       </span>
                     </td>
                     <td className="px-4 py-2.5 font-mono">
                       <span>{mov.reason}</span>
-                      {mov.reference && <span className="text-[#94a3b8] ml-2">({mov.reference})</span>}
+                      {mov.reference && <span className="text-[#a1a1a1] ml-2">({mov.reference})</span>}
                     </td>
                     <td className="px-4 py-2.5 text-right font-mono font-bold text-[#ba1a1a]">
                       -₹{mov.amount.toFixed(2)}
                     </td>
-                    <td className="px-4 py-2.5 text-right font-mono text-[11px] text-[#00288e] dark:text-[#a8b8ff]">
+                    <td className="px-4 py-2.5 text-right font-mono text-[11px] text-[#272727] dark:text-[#bababa]">
                       {mov.journalVoucherId || "JV-AUTO"}
                     </td>
                   </tr>
@@ -357,9 +343,9 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
         )}
 
         {/* Tender Reconciliation Table */}
-        <div className="bg-white dark:bg-[#2d3133] rounded-2xl border border-[#c4c5d5] dark:border-[#444653] p-6 shadow-xs space-y-4">
-          <div className="flex justify-between items-center pb-2 border-b border-[#eceef0] dark:border-[#444653]">
-            <h3 className="text-sm font-bold text-[#191c1d] dark:text-white uppercase tracking-wider">
+        <div className="bg-white dark:bg-[#303030] rounded-2xl border border-[#c6c6c6] dark:border-[#474747] p-6 shadow-xs space-y-4">
+          <div className="flex justify-between items-center pb-2 border-b border-[#eeeeee] dark:border-[#474747]">
+            <h3 className="text-sm font-bold text-[#1b1b1b] dark:text-white uppercase tracking-wider">
               Tender Reconciliation &amp; Settlement Variance
             </h3>
             <span className={`px-2.5 py-0.5 rounded text-xs font-bold ${
@@ -371,7 +357,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs">
-              <thead className="bg-[#f8f9fa] dark:bg-[#131b2e] text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] border-b border-[#c4c5d5] dark:border-[#444653]">
+              <thead className="bg-[#f9f9f9] dark:bg-[#1b1b1b] text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] border-b border-[#c6c6c6] dark:border-[#474747]">
                 <tr>
                   <th className="px-4 py-3">Tender Mode</th>
                   <th className="px-4 py-3 text-right">System Expected</th>
@@ -380,15 +366,15 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
                   <th className="px-4 py-3 text-center">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+              <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
                 {/* Cash Row */}
                 <tr>
                   <td className="px-4 py-3 font-bold flex items-center gap-2">
-                    <Banknote size={16} className="text-[#00288e]" />
+                    <Banknote size={16} className="text-[#272727]" />
                     <span>Physical Cash in Drawer</span>
                   </td>
                   <td className="px-4 py-3 text-right font-mono font-bold">₹{systemCash.toFixed(2)}</td>
-                  <td className="px-4 py-3 text-right font-mono font-bold text-[#00288e] dark:text-[#a8b8ff]">
+                  <td className="px-4 py-3 text-right font-mono font-bold text-[#272727] dark:text-[#bababa]">
                     ₹{actualCashCounted.toFixed(2)}
                   </td>
                   <td className={`px-4 py-3 text-right font-mono font-bold ${
@@ -410,7 +396,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
                 {/* Card Row */}
                 <tr>
                   <td className="px-4 py-3 font-bold flex items-center gap-2">
-                    <CreditCard size={16} className="text-[#00288e]" />
+                    <CreditCard size={16} className="text-[#272727]" />
                     <span>Credit / Debit Card (EDC Batch)</span>
                   </td>
                   <td className="px-4 py-3 text-right font-mono font-bold">₹{systemCard.toFixed(2)}</td>
@@ -420,7 +406,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
                       disabled={isLocked}
                       value={actualCardInput}
                       onChange={e => setActualCardInput(e.target.value)}
-                      className="w-32 px-2 py-1 text-right font-mono font-bold border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-[#f8f9fa] dark:bg-[#191c1e] text-xs outline-none"
+                      className="w-32 px-2 py-1 text-right font-mono font-bold border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-[#f9f9f9] dark:bg-[#1c1c1c] text-xs outline-none"
                     />
                   </td>
                   <td className="px-4 py-3 text-right font-mono font-bold text-[#16a34a]">₹0.00</td>
@@ -430,7 +416,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
                 {/* UPI Row */}
                 <tr>
                   <td className="px-4 py-3 font-bold flex items-center gap-2">
-                    <QrCode size={16} className="text-[#00288e]" />
+                    <QrCode size={16} className="text-[#272727]" />
                     <span>UPI / Dynamic QR Payments</span>
                   </td>
                   <td className="px-4 py-3 text-right font-mono font-bold">₹{systemUpi.toFixed(2)}</td>
@@ -440,7 +426,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
                       disabled={isLocked}
                       value={actualUpiInput}
                       onChange={e => setActualUpiInput(e.target.value)}
-                      className="w-32 px-2 py-1 text-right font-mono font-bold border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-[#f8f9fa] dark:bg-[#191c1e] text-xs outline-none"
+                      className="w-32 px-2 py-1 text-right font-mono font-bold border border-[#c6c6c6] dark:border-[#474747] rounded-lg bg-[#f9f9f9] dark:bg-[#1c1c1c] text-xs outline-none"
                     />
                   </td>
                   <td className="px-4 py-3 text-right font-mono font-bold text-[#16a34a]">₹0.00</td>
@@ -452,7 +438,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
 
           {/* Remarks input */}
           <div className="pt-2">
-            <label className="block text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] mb-1">
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] mb-1">
               Cashier Closeout Notes / Shift Handover Remarks
             </label>
             <textarea
@@ -461,7 +447,7 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
               value={remarks}
               onChange={e => setRemarks(e.target.value)}
               placeholder="Enter any variance notes, safe drop handover references, or shift remarks..."
-              className="w-full p-2.5 border border-[#c4c5d5] dark:border-[#444653] rounded-xl bg-[#f8f9fa] dark:bg-[#191c1e] text-xs outline-none"
+              className="w-full p-2.5 border border-[#c6c6c6] dark:border-[#474747] rounded-xl bg-[#f9f9f9] dark:bg-[#1c1c1c] text-xs outline-none"
             />
           </div>
         </div>
@@ -471,4 +457,4 @@ export const SmritiProPosEodReportw: React.FC<SmritiProPosEodReportwProps> = ({
   );
 };
 
-export default SmritiProPosEodReportw;
+export default TileFlowProPosEodReportw;

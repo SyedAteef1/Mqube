@@ -1,25 +1,24 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.5.0
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Implementation Plan: SMRITI Development Intelligence Center (SDIC) — v3.5.0
+# Implementation Plan: TILEFLOW Development Intelligence Center (SDIC) — v3.5.0
 
-This document defines the plan to implement the automated Development Intelligence Center (SDIC) for SMRITI Retail OS.
+This document defines the plan to implement the automated Development Intelligence Center (SDIC) for TILEFLOW Retail OS.
 
 ---
 
 ## 1. Objective
-Design and implement an automated **SMRITI Development Intelligence Center (SDIC)** that scans codebase files, routers, schemas, tests, and documentation, generates 15 live markdown reports in the workspace root, tracks historical metrics over time, and renders an interactive dashboard page in the application.
+Design and implement an automated **TILEFLOW Development Intelligence Center (SDIC)** that scans codebase files, routers, schemas, tests, and documentation, generates 15 live markdown reports in the workspace root, tracks historical metrics over time, and renders an interactive dashboard page in the application.
 
 ---
 

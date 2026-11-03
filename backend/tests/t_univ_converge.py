@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -46,8 +32,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": UserRole.SYSADMIN.value,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -57,7 +43,7 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
 @pytest.mark.asyncio
 async def test_polymorphic_multi_role_party_convergence():
     """Verify that an entity acting as both Customer and Supplier converges into a single Party with both roles."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         gstin_shared = f"27TESTP{uuid.uuid4().hex[:5].upper()}1Z5"
         
@@ -105,7 +91,7 @@ async def test_polymorphic_multi_role_party_convergence():
 @pytest.mark.asyncio
 async def test_universal_item_and_variant_barcode_resolution():
     """Verify fast hierarchical item resolution: Barcode -> Variant SKU -> Item Code."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         test_sku = f"TSHIRT-{uuid.uuid4().hex[:6].upper()}"
         test_barcode = f"890{uuid.uuid4().hex[:10].upper()}"
@@ -175,7 +161,7 @@ async def test_transaction_governance_snapshot_persistence():
     Verify that financial transactions (SalesInvoice & PurchaseOrder) persist immutable
     governance snapshots directly in their database records.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         # Create governance snapshot
         snapshot = TransactionReproducibilityService.create_governance_snapshot(
@@ -208,8 +194,8 @@ async def test_transaction_governance_snapshot_persistence():
 
 @pytest.mark.asyncio
 async def test_live_converged_database_counts():
-    """Verify smriti001 and smriti002 contain populated converged party and item master records."""
-    for db_name in ["smriti001", "smriti002"]:
+    """Verify tileflow001 and tileflow002 contain populated converged party and item master records."""
+    for db_name in ["tileflow001", "tileflow002"]:
         sessionmaker = get_company_sessionmaker(db_name)
         async with sessionmaker() as session:
             p_cnt = (await session.execute(select(text("COUNT(*) FROM parties;")))).scalar()

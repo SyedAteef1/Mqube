@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Data Audit
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Data Audit
 -->
 
-# SMRITI RETAIL OS — DATA & TRANSACTIONAL LEDGER CONNECTIVITY AUDIT
+# TILEFLOW RETAIL OS — DATA & TRANSACTIONAL LEDGER CONNECTIVITY AUDIT
 
 ## 1. System of Record Policy Compliance
-Per SMRITI Backend System-of-Record Policy:
+Per TILEFLOW Backend System-of-Record Policy:
 - **FastAPI + PostgreSQL (`backend/app/`)** is the mandatory transactional system of record.
 - **`db_store.json`** is strictly frozen as a transient local cache / development fallback engine.
 

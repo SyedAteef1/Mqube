@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Vertical Slice 5 — Approval, Workflow, and Communicator Engines
 
 ## 1. Purpose
-Unify multi-tier document approval governance (Draft -> Pending Approval -> Approved / Rejected -> Cancelled), configurable threshold matrices, and multi-channel communicator dispatch audit ledgers (Email, SMS, WhatsApp) inside the SMRITI tenant data plane (`smritiXXX`). This guarantees that high-value transactions undergo verified role-based sign-offs and customer notifications maintain immutable dispatch audit trails.
+Unify multi-tier document approval governance (Draft -> Pending Approval -> Approved / Rejected -> Cancelled), configurable threshold matrices, and multi-channel communicator dispatch audit ledgers (Email, SMS, WhatsApp) inside the TILEFLOW tenant data plane (`tileflowXXX`). This guarantees that high-value transactions undergo verified role-based sign-offs and customer notifications maintain immutable dispatch audit trails.
 
 ---
 
 ## 2. Scope
-- **Tenant Data Plane (`smritiXXX`) Only**: All approval policies, approval requests, approval actions, communicator templates, and dispatch logs reside strictly in tenant databases.
+- **Tenant Data Plane (`tileflowXXX`) Only**: All approval policies, approval requests, approval actions, communicator templates, and dispatch logs reside strictly in tenant databases.
 - **Configurable Approval Matrix**: Threshold-driven approval evaluation (`ApprovalPolicy`) routing requests to assigned operational roles (`STORE_MANAGER`, `FINANCE_CONTROLLER`, `DIRECTOR`).
 - **Immutable Approval Action Audit**: Permanent recording of approver identity, timestamp, decision, and comments in `approval_actions`.
 - **Multi-Channel Communicator Engine**: Template placeholder variable substitution (`{{key}}`) and dispatch audit logging in `communicator_logs`.

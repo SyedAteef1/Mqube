@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.1.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Item Master Non-Editable SKU and Barcode Enforcement in Edit Mode (v6.1.0)
 
 ## 1. Purpose
-To ensure transactional data integrity and stock ledger consistency across SMRITI Retail OS by locking Stock Number (SKU/Code) and Barcode as immutable identifiers when editing existing products in the Item Master workspace and master drawer forms, while preserving full editability for all other core and dynamic product attributes.
+To ensure transactional data integrity and stock ledger consistency across TILEFLOW Retail OS by locking Stock Number (SKU/Code) and Barcode as immutable identifiers when editing existing products in the Item Master workspace and master drawer forms, while preserving full editability for all other core and dynamic product attributes.
 
 ## 2. Scope
 - **Item Master Matrix Grid (`ItemDetGrid.tsx`)**: Enforce `readOnly` and disabled cursor styling on SKU and Barcode columns when `activeMode === "edit"`.
@@ -78,4 +77,4 @@ npx vitest run src/tests/itemGrid.test.ts
 - `ADR-0044`: Platform Abstraction Layer (PAL) & Single Source of Truth
 
 ## 13. Related RFCs
-- `RFC-2026-08-01`: SMRITI Item Master Tactical Grid & Catalog Protection Policy
+- `RFC-2026-08-01`: TILEFLOW Item Master Tactical Grid & Catalog Protection Policy

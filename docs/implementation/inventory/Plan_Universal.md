@@ -1,23 +1,22 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 5.4.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Universal View Configuration as Global Schema & Visibility Control
 
 **Document ID:** IP-INV-5.4.0  
 **Status:** Completed  
-**Author:** Jawahar Ramkripal Mallah  
-**Target:** SMRITI Retail OS — Global UI Schema & Column Ordering Governance  
+**Author:** Syed Ateef  
+**Target:** TILEFLOW Retail OS — Global UI Schema & Column Ordering Governance  
 
 ---
 
@@ -29,7 +28,7 @@ In modern retail operations, different industry verticals (Footwear, Apparel, El
 
 ## 3. Scope
 * Centralized field catalog registry (`unifiedFieldCatalog.ts`).
-* Real-time reactive event dispatching (`smriti_field_visibility_updated`).
+* Real-time reactive event dispatching (`tileflow_field_visibility_updated`).
 * Matrix spreadsheet grid, catalog search browser, and report designer integration.
 
 ## 4. Current State
@@ -44,7 +43,7 @@ Previously, View Configuration saved the custom column arrangement locally for t
 * Utilizes reactive DOM custom event listeners with instant in-memory $O(1)$ lookup maps.
 
 ## 7. Proposed Design
-* `saveGlobalFieldVisibility(visibleKeys: string[])` persists both visibility and sequence ordering into local storage and dispatches `smriti_field_visibility_updated`.
+* `saveGlobalFieldVisibility(visibleKeys: string[])` persists both visibility and sequence ordering into local storage and dispatches `tileflow_field_visibility_updated`.
 * All catalog, matrix, and report viewer tables consume `isFieldGloballyVisible(key)` and `getGloballyVisibleFields()`.
 
 ## 8. Files Created
@@ -64,13 +63,13 @@ Previously, View Configuration saved the custom column arrangement locally for t
 ## 10. Dependencies
 * `localStorage` API
 * CustomEvent Web API
-* SMRITI Header Alias Registry
+* TILEFLOW Header Alias Registry
 
 ## 11. Risks
 * Accidental hiding of primary identifier columns (mitigated by retaining mandatory fallback keys).
 
 ## 12. Rollback Strategy
-* Calling `localStorage.removeItem("smriti_global_field_visibility")` restores standard defaults.
+* Calling `localStorage.removeItem("tileflow_global_field_visibility")` restores standard defaults.
 
 ## 13. Verification Plan
 * Toggle field visibility in View Configuration and verify instant reflection in both Item Details Matrix and Report Designer tables.

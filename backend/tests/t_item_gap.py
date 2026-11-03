@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.1.0
-Created      : 2026-08-20
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -37,7 +23,7 @@ def test_variant_id_on_product_model():
 def test_barcode_company_isolation_live():
     """Verify uq_company_barcode_active and idx_products_barcode live on PostgreSQL."""
     try:
-        conn = psycopg2.connect(host="localhost", port=5432, user="postgres", password="postgres", dbname="smriti001")
+        conn = psycopg2.connect(host="localhost", port=5432, user="postgres", password="postgres", dbname="tileflow001")
         cur = conn.cursor()
         cur.execute("""
             SELECT indexname, indexdef
@@ -49,12 +35,12 @@ def test_barcode_company_isolation_live():
         assert "uq_company_barcode_active" in idx_dict
         conn.close()
     except Exception as e:
-        pytest.skip(f"PostgreSQL smriti001 not reachable: {e}")
+        pytest.skip(f"PostgreSQL tileflow001 not reachable: {e}")
 
 def test_report_flat_inventory_sales_view_live():
     """Verify that report_flat_inventory_sales view exists and is queryable in PostgreSQL."""
     try:
-        conn = psycopg2.connect(host="localhost", port=5432, user="postgres", password="postgres", dbname="smritisys")
+        conn = psycopg2.connect(host="localhost", port=5432, user="postgres", password="postgres", dbname="tileflowsys")
         cur = conn.cursor()
         cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'report_flat_inventory_sales' ORDER BY ordinal_position")
         columns = [r[0] for r in cur.fetchall()]
@@ -74,4 +60,4 @@ def test_report_flat_inventory_sales_view_live():
         assert count >= 0, "View query must succeed"
         conn.close()
     except Exception as e:
-        pytest.skip(f"PostgreSQL smritisys not reachable: {e}")
+        pytest.skip(f"PostgreSQL tileflowsys not reachable: {e}")

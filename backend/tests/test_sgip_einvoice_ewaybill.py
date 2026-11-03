@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Government Integration Platform (SGIP) — Master Test Suite.
-Verifies GSTN Schema v1.03, deterministic IRN generation, signed QR construction,
-NIC E-Way Bill generation, statutory thresholds, and transactional outbox retries.
-"""
-
 import pytest
 import pytest_asyncio
 import hashlib
@@ -153,7 +135,7 @@ def test_04_einvoice_submission(einvoice_connector):
     payload = {
         "TranDtls": {"TaxSch": "GST", "SupTyp": "B2B"},
         "DocDtls": {"Typ": "INV", "No": "INV-001", "Dt": "28/08/2026", "FinYear": "2026-27"},
-        "SellerDtls": {"Gstin": "27AABCU9603R1ZM", "LglNm": "SMRITI RETAIL CORP"},
+        "SellerDtls": {"Gstin": "27AABCU9603R1ZM", "LglNm": "TILEFLOW RETAIL CORP"},
         "BuyerDtls": {"Gstin": "27BBBCU9603R1ZM", "LglNm": "BUYER CORP"},
         "ItemList": [{"HsnCd": "6203", "Qty": 2, "UnitPrice": 1000}],
         "ValDtls": {"TotInvVal": 2000.0}
@@ -260,10 +242,10 @@ async def test_09_fastapi_compliance_endpoints():
         # 3. Generate E-Invoice endpoint
         req_einvoice = {
             "invoice_id": "INV-TEST-001",
-            "invoice_no": "SMRITI/2026/001",
+            "invoice_no": "TILEFLOW/2026/001",
             "invoice_date": "28/08/2026",
             "supplier_gstin": "27AABCU9603R1ZM",
-            "supplier_legal_name": "SMRITI ENTERPRISES",
+            "supplier_legal_name": "TILEFLOW ENTERPRISES",
             "supplier_address": "Retail Park, Mumbai",
             "supplier_pincode": "400001",
             "supplier_state_code": "27",
@@ -308,7 +290,7 @@ async def test_09_fastapi_compliance_endpoints():
         # 4. Generate E-Way Bill endpoint
         req_ewb = {
             "invoice_id": "INV-TEST-001",
-            "doc_no": "SMRITI/2026/001",
+            "doc_no": "TILEFLOW/2026/001",
             "doc_type": "INV",
             "from_gstin": "27AABCU9603R1ZM",
             "to_gstin": "27BBBCU9603R1ZM",

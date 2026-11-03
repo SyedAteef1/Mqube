@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # User Training Blueprint Walkthrough — v3.16.0
 
 ## 1. Purpose
-This walkthrough documents the creation and integration of the official **SMRITI Retail OS — User Training Blueprint** (`docs/user_guide/USER_TRAINING.md`), establishing a 7-day transaction-lifecycle training program for store operators, cashiers, inventory clerks, and retail managers.
+This walkthrough documents the creation and integration of the official **TILEFLOW Retail OS — User Training Blueprint** (`docs/user_guide/USER_TRAINING.md`), establishing a 7-day transaction-lifecycle training program for store operators, cashiers, inventory clerks, and retail managers.
 
 ## 2. Scope
 - Authoring the comprehensive 7-Day User Training Blueprint covering Master Creation, Purchase Order, Purchase Receipt/GRN, Sales/Billing, Complete Business Cycle execution, Returns & Corrections, and Reports + Certification.
@@ -46,18 +45,18 @@ Teaching software by screen isolates features and prevents users from understand
 - File link resolution and index cross-link verification.
 
 ## 9. Verification Results
-- All documentation files include mandatory SMRITI header blocks.
+- All documentation files include mandatory TILEFLOW header blocks.
 - Markdown links resolve accurately within the repository documentation structure.
 
 ## 10. Known Limitations
 - Visual video recordings/slides will be linked in future releases as training media assets are uploaded.
 
 ## 11. Future Work
-- Add interactive training checklists into the SMRITI Retail OS UI onboarding modal.
+- Add interactive training checklists into the TILEFLOW Retail OS UI onboarding modal.
 - Create automated user assessment quizzes within the store manager console.
 
 ## 12. Related ADRs
-- `ADR-001`: SMRITI Platform Architecture & Documentation Governance
+- `ADR-001`: TILEFLOW Platform Architecture & Documentation Governance
 
 ## 13. Related RFCs
 - `RFC-2026-08`: User Training & Store Onboarding Blueprint Standard

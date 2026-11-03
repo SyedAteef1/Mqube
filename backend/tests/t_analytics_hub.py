@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.23.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import pytest
 from decimal import Decimal
@@ -44,8 +30,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": UserRole.SYSADMIN.value,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -58,7 +44,7 @@ async def test_daily_sales_aggregates_computation():
     Verifies that AnalyticalIntelligenceService aggregates confirmed invoices,
     computes exact revenue, tax, COGS, and gross margin percentages into AnalyticsDailySalesFact.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         branch_id = "BR-001"
@@ -154,7 +140,7 @@ async def test_category_margin_analytics():
     """
     Verifies category-level profitability and volume rollups.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         categories = await AnalyticalIntelligenceService.get_category_profitability_rollups(
@@ -177,7 +163,7 @@ async def test_tally_sales_voucher_xml_generation():
     Verifies that TallyIntegrationService generates valid, well-formed Tally XML
     containing standard ENVELOPE, VOUCHER, LEDGERENTRIES, and INVENTORYENTRIES.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         branch_id = "BR-001"
@@ -249,7 +235,7 @@ async def test_tally_journal_voucher_xml_generation():
     """
     Verifies that TallyIntegrationService generates balanced Tally Journal Vouchers.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         branch_id = "BR-001"
@@ -325,7 +311,7 @@ async def test_compliance_immutable_audit_log_hash_integrity():
     Verifies that ComplianceAuditService generates SHA-256 tamper-evident audit logs
     and successfully detects unauthorized payload tampering.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         comp_id = "COMP-001"
         branch_id = "BR-001"

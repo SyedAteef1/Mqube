@@ -10,4 +10,4 @@
 | Sales Studio | ❌ | Missing or incomplete DB tables mapping |
 | Billing Desk | ❌ | Missing or incomplete DB tables mapping |
 | CRM & Loyalty | ❌ | Missing or incomplete DB tables mapping |
-| About SMRITI | ✅ | Schema tables fully validated |
+| About TILEFLOW | ✅ | Schema tables fully validated |

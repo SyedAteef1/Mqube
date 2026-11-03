@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import glob
 import pandas as pd
@@ -35,8 +22,8 @@ for ef in excel_files:
         # print(f"Error reading {ef}: {e}")
         pass
 
-print("\n=== 2. CHECKING POSTGRES (smriti001.sales_invoices) ===")
-conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+print("\n=== 2. CHECKING POSTGRES (tileflow001.sales_invoices) ===")
+conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
 cur = conn.cursor()
 for s in target_sis:
     cur.execute("""

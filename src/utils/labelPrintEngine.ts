@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.116.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Barcode & Label Printing Engine
- *
- * Manages SKU-level label templates and print queue:
- *   Templates   : Configurable fields (barcode, QR, price, MRP, SKU, name, HSN)
- *   Print Queue : `addToBatch()` — batches SKU + qty combos for a print run
- *   Format      : CODE128, QR_CODE, EAN13, CODE39
- *   Status      : QUEUED → PRINTING → PRINTED / FAILED
- *   Reprint     : `reprint()` — copies a previous job with new jobId + audit
- *   Audit       : Immutable log per batch job
- */
-
 export type BarcodeFormat  = "CODE128" | "QR_CODE" | "EAN13" | "CODE39";
 export type PrintJobStatus = "QUEUED" | "PRINTING" | "PRINTED" | "FAILED" | "CANCELLED";
 

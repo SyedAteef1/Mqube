@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -94,9 +81,9 @@ def test_commission_ledger_multi_role_payout_and_reversal():
     assert ledger_reversal_sp.transaction_type == "REVERSED"
 
 def test_crm_loyalty_sice_control_plane_isolation():
-    """Verify entitlement policies belong to Control Plane, while ledgers belong to smriti001."""
+    """Verify entitlement policies belong to Control Plane, while ledgers belong to tileflow001."""
     # Entitlement policy definition
-    program = CommissionProgram(name="SMRITI Universal Commission 2026", is_active=True)
+    program = CommissionProgram(name="TILEFLOW Universal Commission 2026", is_active=True)
     rule = CommissionRule(program_id="prog_001", participant_role="SALESPERSON", calculation_type="PERCENTAGE", rate_percent=2.00)
     assert program.is_active is True
     assert rule.rate_percent == 2.00

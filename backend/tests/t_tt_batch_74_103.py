@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.8.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import io
@@ -23,8 +9,8 @@ import fitz
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-COMPANY_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
-CONTROL_PLANE_DB_URL = "postgresql://postgres:postgres@localhost:5432/smritisys"
+COMPANY_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+CONTROL_PLANE_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 TT_DIR = r"F:\SMRITRretailNX\TT"
 EXPORTS_PDF_DIR = r"F:\SMRITRretailNX\exports\tt_batch_74_103"
 TATTLY_LOGO_PATH = os.path.join(TT_DIR, "logo", "tattly_logo_black.png")
@@ -200,7 +186,7 @@ def test_10_amount_in_words():
 
 
 def test_11_company_db_routing_and_no_duplicates():
-    """11. Verify all 30 invoices are stored in smriti001 with unique invoice numbers."""
+    """11. Verify all 30 invoices are stored in tileflow001 with unique invoice numbers."""
     conn = psycopg2.connect(COMPANY_DB_URL)
     cur = conn.cursor()
     cur.execute("""
@@ -216,13 +202,13 @@ def test_11_company_db_routing_and_no_duplicates():
     conn.close()
 
 
-def test_12_smritisys_zero_operational_mutation():
-    """12. Verify zero operational invoice records exist in smritisys Control Plane."""
+def test_12_tileflowsys_zero_operational_mutation():
+    """12. Verify zero operational invoice records exist in tileflowsys Control Plane."""
     conn = psycopg2.connect(CONTROL_PLANE_DB_URL)
     cur = conn.cursor()
     cur.execute("SELECT count(*) FROM sales_invoices WHERE invoice_no LIKE 'TT2026-2027%';")
     count = cur.fetchone()[0]
-    assert count == 0, f"smritisys contains {count} operational invoices! Must be 0."
+    assert count == 0, f"tileflowsys contains {count} operational invoices! Must be 0."
     conn.close()
 
 

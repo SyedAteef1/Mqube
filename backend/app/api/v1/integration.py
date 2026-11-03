@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-23
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import Optional, List, Dict, Any
 from fastapi import APIRouter, Depends, Query, HTTPException, Response
 from pydantic import BaseModel
@@ -102,7 +88,7 @@ async def search_compliance_audit_logs(
 
 
 # ---------------------------------------------------------------------------
-# Integration Hub Registry Endpoints (smritisys Control Plane)
+# Integration Hub Registry Endpoints (tileflowsys Control Plane)
 # Blueprint §45: connector_registry, provider_registry, integration_registry
 # ---------------------------------------------------------------------------
 
@@ -114,7 +100,7 @@ async def get_integration_providers(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Returns the canonical integration provider catalogue from smritisys.provider_registry.
+    Returns the canonical integration provider catalogue from tileflowsys.provider_registry.
     Optional filters: category (GOVERNMENT | PAYMENT | ECOMMERCE | ACCOUNTING | COMMUNICATION),
     provider_type (GST | ERP | MARKETPLACE | SMS | EMAIL).
     """
@@ -150,7 +136,7 @@ async def get_connector_registry(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Returns connector type definitions from smritisys.connector_registry.
+    Returns connector type definitions from tileflowsys.connector_registry.
     Optional filters: provider_code, connector_type.
     """
     stmt = select(ConnectorRegistry).where(ConnectorRegistry.is_active == True)
@@ -183,7 +169,7 @@ async def get_integration_registry(
     db: AsyncSession = Depends(get_db),
 ):
     """
-    Returns named integration definitions from smritisys.integration_registry.
+    Returns named integration definitions from tileflowsys.integration_registry.
     Optional filters: integration_category, provider_code.
     """
     stmt = select(IntegrationRegistry).where(

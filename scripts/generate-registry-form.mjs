@@ -77,7 +77,7 @@ function generateComponent(entity, screenId, fields) {
     : `getVisibleFieldIds("${screenId}", "${entity}")`;
 
   const template = `/**
- * Project      : SMRITI Retail OS
+ * Project      : TILEFLOW Retail OS
  * Module       : ${entityTitle} Form
  * Auto-Generated: $(date)
  * 

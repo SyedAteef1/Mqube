@@ -5,7 +5,7 @@
 | Module | Unit Tests Complete | Integration Tests Complete | Status |
 | :--- | :---: | :---: | :--- |
 | Executive Hub | ✅ | ✅ | Fully covered with assertions |
-| SMRITI Gyan Kendra | ❌ | ❌ | No test suite found |
+| TILEFLOW Gyan Kendra | ❌ | ❌ | No test suite found |
 | Billing Desk | ✅ | ✅ | Fully covered with assertions |
 | Sales Studio | ✅ | ✅ | Fully covered with assertions |
 | Create Tax Invoice (B2B) | ✅ | ✅ | Fully covered with assertions |
@@ -36,6 +36,6 @@
 | Terms & Conditions | ❌ | ❌ | No test suite found |
 | Data Exchange Hub | ✅ | ✅ | Fully covered with assertions |
 | Company Setup Wizard | ✅ | ✅ | Fully covered with assertions |
-| About SMRITI | ✅ | ✅ | Fully covered with assertions |
+| About TILEFLOW | ✅ | ✅ | Fully covered with assertions |
 | Dev Intelligence Center | ✅ | ✅ | Fully covered with assertions |
 | Audit Logs | ✅ | ✅ | Fully covered with assertions |

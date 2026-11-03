@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.26.0
-Created      : 2026-08-23
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 from typing import Dict, Any, List
@@ -27,7 +13,7 @@ from ..models.governed_logic import (
     WorkflowDefinition,
 )
 from ..models.ui_control_plane import (
-    SmritiTheme, SmritiThemeVariant, SmritiWorkspaceProfile,
+    TileFlowTheme, TileFlowThemeVariant, TileFlowWorkspaceProfile,
     IconRegistry, ScreenDefinition, FieldDefinition, ActionDefinition, LayoutDefinition,
 )
 from ..models.integration_hub import ProviderRegistry, IntegrationRegistry
@@ -53,7 +39,7 @@ from ..services.localization_svc import LocalizationService
 
 class ControlPlaneSeeder:
     """
-    Idempotent Control Plane Database Seeder for SmritiSys and Tenant reference data.
+    Idempotent Control Plane Database Seeder for TileFlowSys and Tenant reference data.
     Seeds the 26 canonical capabilities, ISO countries, GST states, currencies, UOMs, and translations.
     """
 
@@ -266,10 +252,10 @@ class ControlPlaneSeeder:
     @classmethod
     async def seed_platform_company(cls, session: AsyncSession) -> int:
         """
-        Seeds a sentinel platform company row into smritisys.companies.
-        Required because smriti_themes and smriti_workspace_profiles carry a
+        Seeds a sentinel platform company row into tileflowsys.companies.
+        Required because tileflow_themes and tileflow_workspace_profiles carry a
         non-nullable FK (company_id -> companies.id). The seed row represents
-        the SMRITI Control Plane itself, not any individual business tenant.
+        the TILEFLOW Control Plane itself, not any individual business tenant.
         Idempotent: no-op if id='comp-default' already exists.
         """
         tbl = await session.execute(text("SELECT to_regclass('public.companies')"))
@@ -281,7 +267,7 @@ class ControlPlaneSeeder:
         if not existing:
             session.add(Company(
                 id="comp-default",
-                name="SMRITI Platform Control Plane",
+                name="TILEFLOW Platform Control Plane",
                 is_active=True,
                 is_deleted=False,
             ))
@@ -294,19 +280,19 @@ class ControlPlaneSeeder:
         """Seeds standard themes, variants, workspace profiles, and templates on control plane."""
         counts = {"themes": 0, "variants": 0, "profiles": 0, "templates": 0}
 
-        # Check if smriti_themes exists
-        tbl_theme = await session.execute(text("SELECT to_regclass('public.smriti_themes');"))
+        # Check if tileflow_themes exists
+        tbl_theme = await session.execute(text("SELECT to_regclass('public.tileflow_themes');"))
         if not tbl_theme.scalar():
             return counts
 
         # 1. Themes & Variants
-        theme_id = "theme_smriti_obsidian"
-        existing_theme = (await session.execute(select(SmritiTheme).where(SmritiTheme.id == theme_id))).scalar_one_or_none()
+        theme_id = "theme_tileflow_obsidian"
+        existing_theme = (await session.execute(select(TileFlowTheme).where(TileFlowTheme.id == theme_id))).scalar_one_or_none()
         if not existing_theme:
-            theme = SmritiTheme(
+            theme = TileFlowTheme(
                 id=theme_id,
                 company_id="comp-default",
-                theme_name="SMRITI Modern Obsidian",
+                theme_name="TILEFLOW Modern Obsidian",
                 icon_pack="Material Symbols Outlined",
                 illustration_set="default",
                 font_heading="Space Grotesk",
@@ -356,23 +342,23 @@ class ControlPlaneSeeder:
                 }
             ]
             for v in variants:
-                session.add(SmritiThemeVariant(**v))
+                session.add(TileFlowThemeVariant(**v))
                 counts["variants"] += 1
 
         # 2. Workspace Profiles
-        tbl_prof = await session.execute(text("SELECT to_regclass('public.smriti_workspace_profiles');"))
+        tbl_prof = await session.execute(text("SELECT to_regclass('public.tileflow_workspace_profiles');"))
         if tbl_prof.scalar():
             profiles = [
-                {"id": "prof_sysadmin", "code": "PROF_SYSADMIN", "name": "System Administrator Console", "persona": "SYSADMIN", "default_workspace_id": "ws-admin", "theme": "theme-smriti-default", "is_default": False, "is_active": True},
-                {"id": "prof_cashier", "code": "PROF_CASHIER", "name": "Cashier POS Terminal", "persona": "CASHIER", "default_workspace_id": "ws-pos", "theme": "theme-smriti-default", "is_default": False, "is_active": True},
-                {"id": "prof_manager", "code": "PROF_STORE_MANAGER", "name": "Store Manager Hub", "persona": "STORE_MANAGER", "default_workspace_id": "ws-manager", "theme": "theme-smriti-default", "is_default": False, "is_active": True},
-                {"id": "prof_accountant", "code": "PROF_ACCOUNTANT", "name": "Finance & Accounts Station", "persona": "ACCOUNTANT", "default_workspace_id": "ws-accounts", "theme": "theme-smriti-default", "is_default": False, "is_active": True},
-                {"id": "prof_default", "code": "PROF_DEFAULT", "name": "General Enterprise Workspace", "persona": "USER", "default_workspace_id": "ws-default", "theme": "theme-smriti-default", "is_default": True, "is_active": True},
+                {"id": "prof_sysadmin", "code": "PROF_SYSADMIN", "name": "System Administrator Console", "persona": "SYSADMIN", "default_workspace_id": "ws-admin", "theme": "theme-tileflow-default", "is_default": False, "is_active": True},
+                {"id": "prof_cashier", "code": "PROF_CASHIER", "name": "Cashier POS Terminal", "persona": "CASHIER", "default_workspace_id": "ws-pos", "theme": "theme-tileflow-default", "is_default": False, "is_active": True},
+                {"id": "prof_manager", "code": "PROF_STORE_MANAGER", "name": "Store Manager Hub", "persona": "STORE_MANAGER", "default_workspace_id": "ws-manager", "theme": "theme-tileflow-default", "is_default": False, "is_active": True},
+                {"id": "prof_accountant", "code": "PROF_ACCOUNTANT", "name": "Finance & Accounts Station", "persona": "ACCOUNTANT", "default_workspace_id": "ws-accounts", "theme": "theme-tileflow-default", "is_default": False, "is_active": True},
+                {"id": "prof_default", "code": "PROF_DEFAULT", "name": "General Enterprise Workspace", "persona": "USER", "default_workspace_id": "ws-default", "theme": "theme-tileflow-default", "is_default": True, "is_active": True},
             ]
             for p in profiles:
-                existing = (await session.execute(select(SmritiWorkspaceProfile).where(SmritiWorkspaceProfile.code == p["code"]))).scalar_one_or_none()
+                existing = (await session.execute(select(TileFlowWorkspaceProfile).where(TileFlowWorkspaceProfile.code == p["code"]))).scalar_one_or_none()
                 if not existing:
-                    session.add(SmritiWorkspaceProfile(**p))
+                    session.add(TileFlowWorkspaceProfile(**p))
                     counts["profiles"] += 1
 
         # 3. Workspace Templates
@@ -709,7 +695,7 @@ class ControlPlaneSeeder:
 
     @classmethod
     async def seed_icon_registry(cls, session: AsyncSession) -> int:
-        """Seeds canonical platform icon catalogue into smritisys.icon_registry."""
+        """Seeds canonical platform icon catalogue into tileflowsys.icon_registry."""
         tbl_check = await session.execute(text("SELECT to_regclass('public.icon_registry');"))
         if not tbl_check.scalar():
             return 0
@@ -779,7 +765,7 @@ class ControlPlaneSeeder:
 
     @classmethod
     async def seed_integration_providers(cls, session: AsyncSession) -> int:
-        """Seeds canonical integration provider and registry definitions into smritisys."""
+        """Seeds canonical integration provider and registry definitions into tileflowsys."""
         tbl_check = await session.execute(text("SELECT to_regclass('public.provider_registry');"))
         if not tbl_check.scalar():
             return 0
@@ -850,7 +836,7 @@ class ControlPlaneSeeder:
 
     @classmethod
     async def seed_layout_definitions(cls, session: AsyncSession) -> int:
-        """Seeds canonical SMRITI layout templates into smritisys.layout_definitions."""
+        """Seeds canonical TILEFLOW layout templates into tileflowsys.layout_definitions."""
         tbl_check = await session.execute(text("SELECT to_regclass('public.layout_definitions');"))
         if not tbl_check.scalar():
             return 0
@@ -941,7 +927,7 @@ class ControlPlaneSeeder:
 
     @classmethod
     async def seed_screen_definitions(cls, session: AsyncSession) -> int:
-        """Seeds the top 5 canonical business flow screen definitions into smritisys."""
+        """Seeds the top 5 canonical business flow screen definitions into tileflowsys."""
         tbl_check = await session.execute(text("SELECT to_regclass('public.screen_definitions');"))
         if not tbl_check.scalar():
             return 0
@@ -1185,7 +1171,7 @@ class ControlPlaneSeeder:
         """Runs capability, reference data, UI metadata, feature flags, governed logic,
         icon registry, integration provider, layout, screen and action definition seeders."""
         # seed_platform_company MUST run before seed_ui_metadata so that
-        # smriti_themes.company_id FK constraint can be satisfied.
+        # tileflow_themes.company_id FK constraint can be satisfied.
         platform_company_count = await cls.seed_platform_company(session)
         cap_count = await cls.seed_capabilities(session)
         ref_counts = await cls.seed_reference_data(session)

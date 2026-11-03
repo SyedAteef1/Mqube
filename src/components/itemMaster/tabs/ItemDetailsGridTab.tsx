@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { 
   ClipboardPaste, Plus, Trash2, CheckCircle, 
@@ -378,10 +365,10 @@ export const ItemDetailsGridTab: React.FC<ItemDetailsGridTabProps> = ({
       >
         <table className="w-full text-left whitespace-nowrap border-collapse min-w-[1200px]">
           {/* Table Header */}
-          <thead className="bg-[#F4F5F7] dark:bg-slate-800 sticky top-0 z-30 shadow-xs">
+          <thead className="bg-[#f5f5f5] dark:bg-slate-800 sticky top-0 z-30 shadow-xs">
             <tr className="border-b border-slate-300 dark:border-slate-700">
               {/* Row Index Column */}
-              <th className="w-12 px-3 py-2.5 border-r border-slate-300 dark:border-slate-700 text-center text-[11px] font-bold text-slate-500 uppercase sticky left-0 z-40 bg-[#F4F5F7] dark:bg-slate-800">
+              <th className="w-12 px-3 py-2.5 border-r border-slate-300 dark:border-slate-700 text-center text-[11px] font-bold text-slate-500 uppercase sticky left-0 z-40 bg-[#f5f5f5] dark:bg-slate-800">
                 #
               </th>
 
@@ -402,8 +389,8 @@ export const ItemDetailsGridTab: React.FC<ItemDetailsGridTabProps> = ({
                     }}
                     className={`px-3 py-2.5 text-[11px] font-bold uppercase tracking-wider border-r border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 ${
                       isFrozen
-                        ? "sticky z-30 bg-[#F4F5F7] dark:bg-slate-800 border-r-2 border-r-slate-400 dark:border-r-slate-600 shadow-xs"
-                        : "bg-[#F4F5F7] dark:bg-slate-800"
+                        ? "sticky z-30 bg-[#f5f5f5] dark:bg-slate-800 border-r-2 border-r-slate-400 dark:border-r-slate-600 shadow-xs"
+                        : "bg-[#f5f5f5] dark:bg-slate-800"
                     }`}
                   >
                     <div className="flex items-center gap-1">
@@ -438,7 +425,7 @@ export const ItemDetailsGridTab: React.FC<ItemDetailsGridTabProps> = ({
                 >
                   {/* Row Index Cell */}
                   <td className={`px-3 py-2 text-center text-[11px] font-mono font-bold text-slate-500 border-r border-slate-200 dark:border-slate-800 sticky left-0 z-20 ${
-                    isSelected ? "bg-blue-100/90 dark:bg-blue-900/60 text-blue-900 dark:text-blue-200" : "bg-[#F4F5F7] dark:bg-slate-800"
+                    isSelected ? "bg-blue-100/90 dark:bg-blue-900/60 text-blue-900 dark:text-blue-200" : "bg-[#f5f5f5] dark:bg-slate-800"
                   }`}>
                     {rIdx + 1}
                   </td>
@@ -598,7 +585,7 @@ export const ItemDetailsGridTab: React.FC<ItemDetailsGridTabProps> = ({
                 />
 
                 <div className="text-xs text-slate-500 dark:text-slate-400">
-                  <strong>Tip:</strong> If your spreadsheet has a header row (like <span className="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">SKU, Name, Barcode...</span>), SMRITI will auto-detect and map them. If not, columns map positionally left-to-right.
+                  <strong>Tip:</strong> If your spreadsheet has a header row (like <span className="font-mono bg-slate-100 dark:bg-slate-800 px-1 rounded">SKU, Name, Barcode...</span>), MQube will auto-detect and map them. If not, columns map positionally left-to-right.
                 </div>
 
                 <div className="flex justify-end gap-3 pt-1">
@@ -637,7 +624,7 @@ export const ItemDetailsGridTab: React.FC<ItemDetailsGridTabProps> = ({
                         <th className="px-4 py-2 text-left border-r border-slate-200 dark:border-slate-700 w-8">#</th>
                         <th className="px-4 py-2 text-left border-r border-slate-200 dark:border-slate-700">Excel Column Header</th>
                         <th className="px-4 py-2 text-left border-r border-slate-200 dark:border-slate-700">Confidence</th>
-                        <th className="px-4 py-2 text-left">Maps To (SMRITI Field)</th>
+                        <th className="px-4 py-2 text-left">Maps To (MQube Field)</th>
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-slate-100 dark:divide-slate-800">

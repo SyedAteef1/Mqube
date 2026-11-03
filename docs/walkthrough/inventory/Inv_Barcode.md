@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.4.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Printing Barcode Labels against Purchase (PT File) & Manifest Navigation
@@ -17,12 +16,12 @@
 **Version:** 6.4.0  
 **Date:** 2026-08-22  
 **Area:** Inventory & Barcode  
-**Author:** Jawahar Ramkripal Mallah  
+**Author:** Syed Ateef  
 
 ---
 
 ## 1. Purpose
-To implement and verify the **"Printing Barcode Labels against Purchase (PT File)"** workflow in SMRITI Retail OS Barcode Studio, enabling retail operators to ingest purchase transaction files (`.pt`, `.txt`, `.csv`), navigate sequential items via standard 4-way navigation (`|<<`, `<`, `>`, `>>|`), enforce fixed purchase quantities from the PT file, and spool single or batch thermal barcode labels.
+To implement and verify the **"Printing Barcode Labels against Purchase (PT File)"** workflow in TILEFLOW Retail OS Barcode Studio, enabling retail operators to ingest purchase transaction files (`.pt`, `.txt`, `.csv`), navigate sequential items via standard 4-way navigation (`|<<`, `<`, `>`, `>>|`), enforce fixed purchase quantities from the PT file, and spool single or batch thermal barcode labels.
 
 ---
 

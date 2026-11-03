@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — WMS Phase 4: Warehouse Physical Inventory Audit, Stock Discrepancy Reconciliation & Barcode Batch Counting
 
 **Version:** `v6.16.0`  
 **Area:** `wms` / `inventory_audit`  
-**Status:** Implemented and runtime-tested across `smriti001` and `smriti002`; control plane boundary enforced and concurrency-locked  
+**Status:** Implemented and runtime-tested across `tileflow001` and `tileflow002`; control plane boundary enforced and concurrency-locked  
 
 ---
 
@@ -27,8 +26,8 @@ Provide distributors and warehouse operations with a complete physical stocktaki
 
 ## 2. Scope
 1. **Multi-Company Architecture & Tenant Isolation (`stock_audits` & `stock_audit_items`)**:
-   - Company-local tables deployed strictly to tenant databases (`smriti001`, `smriti002`, `smriti_test_fresh`).
-   - Cleaned control plane `smritisys` to eliminate architecture violations.
+   - Company-local tables deployed strictly to tenant databases (`tileflow001`, `tileflow002`, `tileflow_test_fresh`).
+   - Cleaned control plane `tileflowsys` to eliminate architecture violations.
    - Comprehensive CHECK constraints on status, audit type, non-negative quantities, and discrepancy reasons.
 2. **Versioned Alembic Migration**:
    - Registered `v1341_add_stock_audit_tables.py` chaining from `v1340_add_grn_sales_batch_columns`.
@@ -54,7 +53,7 @@ Provide distributors and warehouse operations with a complete physical stocktaki
 ## 3. Files Created
 1. `backend/app/services/stock_audit_service.py`: Domain engine for audit snapshots, scanner increments, variance calculation, pessimistic row locking, and ledger reconciliation.
 2. `backend/alembic/versions/v1341_add_stock_audit_tables.py`: Official versioned Alembic migration for company databases.
-3. `backend/tests/t_wms_phase4.py`: Complete isolated pytest suite (6 tests) covering snapshotting, secondary barcodes, deficit write-offs, surplus inwards, `smriti002` multi-company execution, and intervening transaction detection.
+3. `backend/tests/t_wms_phase4.py`: Complete isolated pytest suite (6 tests) covering snapshotting, secondary barcodes, deficit write-offs, surplus inwards, `tileflow002` multi-company execution, and intervening transaction detection.
 4. `scripts/smoke_wms_phase4.py`: End-to-end async HTTP smoke test executing all 7 physical audit operations with database cleanup.
 5. `docs/walkthrough/wms/WMS_Phase4_Stock.md`: This comprehensive walkthrough document.
 
@@ -71,7 +70,7 @@ Provide distributors and warehouse operations with a complete physical stocktaki
 
 ## 5. Architecture Decisions
 1. **Strict Control Plane Separation**:
-   - `stock_audits` and `stock_audit_items` are strictly company-local tables and do not reside in `smritisys`.
+   - `stock_audits` and `stock_audit_items` are strictly company-local tables and do not reside in `tileflowsys`.
 2. **Pessimistic Concurrency Guarding**:
    - Stock reconciliation locks batch rows with `with_for_update()` to prevent race conditions during concurrent POS/invoicing dispatches.
 3. **Multi-Identifier & Secondary Barcode Resolution**:
@@ -88,7 +87,7 @@ Provide distributors and warehouse operations with a complete physical stocktaki
 ---
 
 ## 7. Implementation Summary
-- **Database DDL**: Tables `stock_audits` and `stock_audit_items` created in `smriti001`, `smriti002`, and `smriti_test_fresh` with CHECK constraints.
+- **Database DDL**: Tables `stock_audits` and `stock_audit_items` created in `tileflow001`, `tileflow002`, and `tileflow_test_fresh` with CHECK constraints.
 - **FastAPI Endpoints**:
   - `GET /api/v1/wms/audits`
   - `POST /api/v1/wms/audits`
@@ -106,7 +105,7 @@ Provide distributors and warehouse operations with a complete physical stocktaki
    - `test_stock_audit_barcode_scanning_and_secondary_barcodes` (Passed)
    - `test_stock_audit_reconciliation_deficit_write_off` (Passed)
    - `test_stock_audit_reconciliation_surplus_inward` (Passed)
-   - `test_stock_audit_multi_company_isolation_smriti002` (Passed)
+   - `test_stock_audit_multi_company_isolation_tileflow002` (Passed)
    - `test_stock_audit_intervening_movement_detection_and_locking` (Passed)
 2. `scripts/smoke_wms_phase4.py`:
    - 7/7 live HTTP steps executed and verified with zero residual database rows.

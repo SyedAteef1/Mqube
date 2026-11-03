@@ -1,24 +1,10 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.83.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   ConsolidatedBalanceSheetModal,
   BalanceSheetLine,
 } from "../components/reports/ConsolidatedBalanceSheetModal";
 
-describe("SMRITI Multi-Branch Consolidated Balance Sheet Matrix", () => {
+describe("MQube Multi-Branch Consolidated Balance Sheet Matrix", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });

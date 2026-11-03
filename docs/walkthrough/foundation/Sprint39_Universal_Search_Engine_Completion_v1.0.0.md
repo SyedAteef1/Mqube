@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Sprint 39 — Section 7 Shared Business Engines: Universal Search Engine Completion
@@ -84,7 +83,7 @@ tests/t_search.py::test_api_search_endpoints PASSED                      [100%]
 ======================= 6 passed, 10 warnings in 9.22s ========================
 ```
 - Full platform regression suite passed: `117/117 passed in 67.33s`.
-- SMRITI Naming Guard passed: `0 naming violations`.
+- TILEFLOW Naming Guard passed: `0 naming violations`.
 
 ## 10. Known Limitations
 - Trigram and full-text search (tsvector/GIN) can be enabled in future database migration phases when catalog sizes exceed 500,000 SKUs per tenant.

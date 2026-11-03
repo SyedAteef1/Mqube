@@ -1,29 +1,16 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.22.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-17
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import uuid
 import pytest
 import psycopg2
 from decimal import Decimal
 
 # Architecture Rule: eway_bills is an operational table.
-# Operational data belongs in Company DB (smriti001), NOT in smritisys (Control Plane).
-COMPANY_001_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+# Operational data belongs in Company DB (tileflow001), NOT in tileflowsys (Control Plane).
+COMPANY_001_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 def test_eway_bill_dispatch_workflow():
     """
-    Test Blocker #7 E-Way Bill & Dispatch Workflow against Company 001 database (smriti001).
-    ARCHITECTURE: eway_bills is operational data -> Company DB (smriti001). NOT smritisys.
+    Test Blocker #7 E-Way Bill & Dispatch Workflow against Company 001 database (tileflow001).
+    ARCHITECTURE: eway_bills is operational data -> Company DB (tileflow001). NOT tileflowsys.
     Verifies:
     - Creation of an E-Way Bill record for invoice dispatch
     - Transport metadata persistence (vehicle_no, transporter_name, distance_km, status='DISPATCHED')
@@ -76,7 +63,7 @@ def test_eway_bill_dispatch_workflow():
         WHERE id = %s;
     """, (ewb_id,))
     row = cur.fetchone()
-    assert row is not None, "E-Way Bill record must exist in Company DB (smriti001) eway_bills table"
+    assert row is not None, "E-Way Bill record must exist in Company DB (tileflow001) eway_bills table"
     assert row[0] == ewb_no
     assert row[1] == inv_id
     assert row[2] == "V-Trans Logistics Pvt Ltd"

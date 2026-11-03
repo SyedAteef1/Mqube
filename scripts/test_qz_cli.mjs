@@ -1,23 +1,9 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.30.0
- * Created      : 2026-08-23
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import qz from "qz-tray";
 
 const BACKEND_URL = process.env.VITE_BACKEND_URL || "http://localhost:8000";
 
 console.log("================================================================================");
-console.log("  SMRITI Retail OS — QZ Tray & Thermal Printing CLI End-to-End Diagnostics");
+console.log("  TILEFLOW Retail OS — QZ Tray & Thermal Printing CLI End-to-End Diagnostics");
 console.log("================================================================================");
 console.log(`[1/5] Backend URL target: ${BACKEND_URL}`);
 
@@ -51,7 +37,7 @@ async function runDiagnostics() {
 
     // Step 2: Test Backend Cryptographic Signing Endpoint
     console.log("\n--- [Step 2: Test SHA512 RSA Signature from Backend] ---");
-    const challenge = "SMRITI_QZ_CLI_CHALLENGE_" + Date.now();
+    const challenge = "TILEFLOW_QZ_CLI_CHALLENGE_" + Date.now();
     const signRes = await fetch(`${BACKEND_URL}/api/v1/barcode/qz/sign`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

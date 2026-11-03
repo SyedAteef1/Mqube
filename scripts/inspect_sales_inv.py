@@ -1,6 +1,6 @@
 import psycopg2
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 cur.execute("SELECT column_name FROM information_schema.columns WHERE table_name='sales_invoices';")
 print("Columns:", [r[0] for r in cur.fetchall()])

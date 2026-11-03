@@ -5,11 +5,11 @@ Status: READY FOR EXECUTION
 
 PRE-EXECUTION (Do Now)
 ================================
-□ Create full backup of smritisys
-  Command: pg_dump smritisys > backup_smritisys_pre_v1390_20260830.sql
+□ Create full backup of tileflowsys
+  Command: pg_dump tileflowsys > backup_tileflowsys_pre_v1390_20260830.sql
   
-□ Create full backup of smriti001
-  Command: pg_dump smriti001 > backup_smriti001_pre_v1390_20260830.sql
+□ Create full backup of tileflow001
+  Command: pg_dump tileflow001 > backup_tileflow001_pre_v1390_20260830.sql
 
 □ Verify backups are valid
   Command: pg_restore -l backup_*.sql | head -20
@@ -35,7 +35,7 @@ EXECUTION WINDOW (During Maintenance Window)
 □ Verify tables were created
   Commands: 
     SELECT to_regclass('public.company_database_registries');
-    SELECT to_regclass('public.smriti_permissions');
+    SELECT to_regclass('public.tileflow_permissions');
     SELECT to_regclass('public.platform_capabilities');
   Expected: All return non-NULL (oid values)
 
@@ -69,7 +69,7 @@ POST-EXECUTION (Immediate After)
 VALIDATION (30 Minutes After)
 ================================
 □ Query newly-created tables
-  - Test smriti_permissions queries
+  - Test tileflow_permissions queries
   - Test company_database_registries lookups
   - Verify indexes are used (EXPLAIN plans)
 
@@ -89,7 +89,7 @@ Command (if needed):
   alembic downgrade v1389_park
 
 Restore from backup:
-  pg_restore backup_smritisys_pre_v1390_20260830.sql
+  pg_restore backup_tileflowsys_pre_v1390_20260830.sql
 
 Timeline: Should complete in <5 minutes
 

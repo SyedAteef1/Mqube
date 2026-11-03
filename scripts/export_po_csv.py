@@ -4,7 +4,7 @@ from scripts.convert_po_5182778158_to_excel import parse_po_pdf, PDF_PATH
 
 items = parse_po_pdf(PDF_PATH)
 
-csv_path = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads\PO_5182778158_Items_Register.csv"
+csv_path = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads\PO_5182778158_Items_Register.csv"
 
 fieldnames = [
     "sr_no", "article_no", "hsn", "ean", "vendor_art", "description",

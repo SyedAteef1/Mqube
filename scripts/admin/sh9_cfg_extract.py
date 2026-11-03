@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.63.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import re
 import json
@@ -272,17 +258,16 @@ def main():
     md_path = out_dir / "SH9_CONFIG_SUMMARY.md"
     md_content = [
         "<!--",
-        "  Project      : SMRITI Retail OS",
-        "  Author       : Jawahar Ramkripal Mallah",
+        "  Project      : TILEFLOW Retail OS",
+        "  Author       : Syed Ateef",
         "  Designation  : Chief Systems Architect & Creator",
-        "  Email        : support@smritibooks.com",
-        "  Websites     : smritibooks.com | erpnbook.com | aitdl.com",
+        "  Email        : ateef@tileflow.in",
         "  Version      : 3.63.0",
         "  Created      : 2026-08-25",
         "  Modified     : 2026-08-25",
-        "  Copyright    : © SMRITIBooks.com. All Rights Reserved.",
-        "  License      : Proprietary Commercial Software",
-        "  Classification: Internal",
+        "  Copyright    :  tileflow.in. Open Source - Permissive Use",
+        "  License      : MIT Open Source License",
+        "  Classification: Open Source",
         "-->",
         "",
         "# Shoper 9 System Parameters & Configuration Catalog",

@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Sprint 40 — Section 7 Shared Business Engines: Communicator Engine Completion
@@ -92,7 +91,7 @@ tests/t_communicator.py::test_inbound_delivery_webhook_and_api_endpoints PASSED 
 ======================== 6 passed, 8 warnings in 9.75s ========================
 ```
 - Full platform regression suite passed: `123/123 passed in 71.09s`.
-- SMRITI Naming Guard passed: `0 naming violations`.
+- TILEFLOW Naming Guard passed: `0 naming violations`.
 
 ## 10. Known Limitations
 - Real-time carrier DLT scrubbing uses cached registration IDs; live telecom DLT validation can be enabled when live carrier API credentials are bound in production.

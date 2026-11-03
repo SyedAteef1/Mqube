@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-18
-Modified     : 2026-08-18
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -68,7 +54,7 @@ async def test_full_login_company_selector_to_dashboard_flow(db_session):
     db_reg_a = CompanyDatabaseRegistry(
         company_id=comp_a.id,
         database_id=f"db-ready-{suffix}",
-        database_name=f"smriti_rdy_{suffix}",
+        database_name=f"tileflow_rdy_{suffix}",
         status="READY",
     )
 
@@ -89,7 +75,7 @@ async def test_full_login_company_selector_to_dashboard_flow(db_session):
     db_reg_b = CompanyDatabaseRegistry(
         company_id=comp_b.id,
         database_id=f"db-pending-{suffix}",
-        database_name=f"smriti_pnd_{suffix}",
+        database_name=f"tileflow_pnd_{suffix}",
         status="PROVISIONING",
     )
 
@@ -97,7 +83,7 @@ async def test_full_login_company_selector_to_dashboard_flow(db_session):
     user = User(
         id=f"usr-{suffix}",
         username=f"operator_{suffix}",
-        email=f"operator_{suffix}@smriti.test",
+        email=f"operator_{suffix}@tileflow.test",
         hashed_password=hash_password("Operator@123"),
         role=UserRole.MANAGER,
         is_active=True,
@@ -193,16 +179,16 @@ async def test_switch_context_rejects_unassigned_company_and_preserves_security(
 
     comp_auth = Company(id=f"comp-auth-{suffix}", name=f"Auth Comp {suffix}", is_active=True)
     br_auth = Branch(id=f"br-auth-{suffix}", company_id=comp_auth.id, name="Auth Br", code=f"BRA-{suffix}", is_active=True)
-    db_reg_auth = CompanyDatabaseRegistry(company_id=comp_auth.id, database_id=f"db-a-{suffix}", database_name=f"smriti_a_{suffix}", status="READY")
+    db_reg_auth = CompanyDatabaseRegistry(company_id=comp_auth.id, database_id=f"db-a-{suffix}", database_name=f"tileflow_a_{suffix}", status="READY")
 
     comp_unauth = Company(id=f"comp-unauth-{suffix}", name=f"Unauth Comp {suffix}", is_active=True)
     br_unauth = Branch(id=f"br-unauth-{suffix}", company_id=comp_unauth.id, name="Unauth Br", code=f"BRU-{suffix}", is_active=True)
-    db_reg_unauth = CompanyDatabaseRegistry(company_id=comp_unauth.id, database_id=f"db-u-{suffix}", database_name=f"smriti_u_{suffix}", status="READY")
+    db_reg_unauth = CompanyDatabaseRegistry(company_id=comp_unauth.id, database_id=f"db-u-{suffix}", database_name=f"tileflow_u_{suffix}", status="READY")
 
     user = User(
         id=f"usr-lmt-{suffix}",
         username=f"limited_{suffix}",
-        email=f"limited_{suffix}@smriti.test",
+        email=f"limited_{suffix}@tileflow.test",
         hashed_password=hash_password("Limited@123"),
         role=UserRole.CASHIER,
         is_active=True,

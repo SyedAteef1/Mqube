@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import re
 from datetime import datetime
 from typing import Dict, Any, Optional, List, Tuple
@@ -181,20 +167,20 @@ class EWayBillService:
 
         company = await self._get_company()
         company_gstin = (getattr(company, 'gst_number', None) or getattr(company, 'gstin', None) or "27AAXFT2508H1ZR") if company else "27AAXFT2508H1ZR"
-        company_name = company.name if company else "SMRITI Enterprise"
+        company_name = company.name if company else "TILEFLOW Enterprise"
         company_state_code = int(company_gstin[:2]) if company_gstin and len(company_gstin) >= 2 and company_gstin[:2].isdigit() else 27
 
         warnings: List[str] = []
         is_valid_gstin, gstin_err = self._validate_gstin(company_gstin, "Company GSTIN")
         if not is_valid_gstin:
             if is_strict:
-                raise HTTPException(status_code=422, detail=f"SMRITI-STAT-001: {gstin_err}")
+                raise HTTPException(status_code=422, detail=f"TILEFLOW-STAT-001: {gstin_err}")
             warnings.append(gstin_err)
 
         if not transfer.vehicle_number and trans_mode == "1":
             msg = "Missing vehicle number for Road Transport."
             if is_strict:
-                raise HTTPException(status_code=422, detail=f"SMRITI-STAT-004: {msg}")
+                raise HTTPException(status_code=422, detail=f"TILEFLOW-STAT-004: {msg}")
             warnings.append(msg)
 
         # Batch load all products in a single query
@@ -211,7 +197,7 @@ class EWayBillService:
             raw_hsn = getattr(product, 'hsn_code', None) or getattr(product, 'hsn', None)
             if not raw_hsn or not str(raw_hsn).strip().isdigit() or len(str(raw_hsn).strip()) not in (2, 4, 6, 8):
                 if is_strict:
-                    raise HTTPException(status_code=422, detail=f"SMRITI-STAT-002: Product '{prod_name}' has missing or invalid statutory HSN code.")
+                    raise HTTPException(status_code=422, detail=f"TILEFLOW-STAT-002: Product '{prod_name}' has missing or invalid statutory HSN code.")
                 hsn_code = 8471
                 warnings.append(f"Product '{prod_name}' missing HSN; defaulted to 8471.")
             else:
@@ -340,9 +326,9 @@ class EWayBillService:
         if is_strict:
             is_valid_gst, gst_err = self._validate_gstin(company_gstin, "Company GSTIN")
             if not is_valid_gst:
-                raise HTTPException(status_code=422, detail=f"SMRITI-STAT-001: {gst_err}")
+                raise HTTPException(status_code=422, detail=f"TILEFLOW-STAT-001: {gst_err}")
             if not src_wh or not (src_wh.address or src_wh.city) or not dst_wh or not (dst_wh.address or dst_wh.city):
-                raise HTTPException(status_code=422, detail="SMRITI-STAT-005: Source or destination godown is missing registered dispatch location.")
+                raise HTTPException(status_code=422, detail="TILEFLOW-STAT-005: Source or destination godown is missing registered dispatch location.")
 
         product_ids = [it.product_id for it in transfer.items if it.product_id]
         products_map = await self._batch_load_products(product_ids)
@@ -357,7 +343,7 @@ class EWayBillService:
             raw_hsn = getattr(prod, 'hsn_code', None) or getattr(prod, 'hsn', None)
             if not raw_hsn or not str(raw_hsn).strip().isdigit() or len(str(raw_hsn).strip()) not in (2, 4, 6, 8):
                 if is_strict:
-                    raise HTTPException(status_code=422, detail=f"SMRITI-STAT-002: Product '{prod_name}' has missing or invalid statutory HSN code.")
+                    raise HTTPException(status_code=422, detail=f"TILEFLOW-STAT-002: Product '{prod_name}' has missing or invalid statutory HSN code.")
                 hsn_str = "8471"
             else:
                 hsn_str = str(raw_hsn).strip()
@@ -386,7 +372,7 @@ class EWayBillService:
             "transfer_no": transfer.transfer_no,
             "date": transfer.created_at.strftime("%d-%b-%Y") if transfer.created_at else datetime.now().strftime("%d-%b-%Y"),
             "company": {
-                "name": company.name if company else "SMRITI Enterprise",
+                "name": company.name if company else "TILEFLOW Enterprise",
                 "gstin": company_gstin,
                 "address": getattr(company, 'address', "Corporate Head Office") if company else "Corporate Head Office"
             },
@@ -451,7 +437,7 @@ class EWayBillService:
         company = await self._get_company()
 
         company_gstin = (getattr(company, 'gst_number', None) or getattr(company, 'gstin', None) or "27AABCS1429B1Z") if company else "27AABCS1429B1Z"
-        company_name = company.name if company else "SMRITI Enterprise"
+        company_name = company.name if company else "TILEFLOW Enterprise"
         company_state_code = int(company_gstin[:2]) if company_gstin and len(company_gstin) >= 2 and company_gstin[:2].isdigit() else 27
 
         customer_gstin = (getattr(customer, 'gst_number', None) or getattr(customer, 'gstin', None) or "URP") if customer else "URP"
@@ -464,14 +450,14 @@ class EWayBillService:
         is_valid_gst, gst_err = self._validate_gstin(company_gstin, "Company GSTIN")
         if not is_valid_gst:
             if is_strict:
-                raise HTTPException(status_code=422, detail=f"SMRITI-STAT-001: {gst_err}")
+                raise HTTPException(status_code=422, detail=f"TILEFLOW-STAT-001: {gst_err}")
             warnings.append(gst_err)
 
         if customer_gstin != "URP":
             is_valid_cgst, cgst_err = self._validate_gstin(customer_gstin, "Customer GSTIN")
             if not is_valid_cgst:
                 if is_strict:
-                    raise HTTPException(status_code=422, detail=f"SMRITI-STAT-001: {cgst_err}")
+                    raise HTTPException(status_code=422, detail=f"TILEFLOW-STAT-001: {cgst_err}")
                 warnings.append(cgst_err)
 
         product_ids = [it.product_id for it in invoice.items if it.product_id]
@@ -486,7 +472,7 @@ class EWayBillService:
             raw_hsn = getattr(prod, 'hsn_code', None) or getattr(prod, 'hsn', None)
             if not raw_hsn or not str(raw_hsn).strip().isdigit() or len(str(raw_hsn).strip()) not in (2, 4, 6, 8):
                 if is_strict:
-                    raise HTTPException(status_code=422, detail=f"SMRITI-STAT-002: Product '{prod_name}' has missing or invalid statutory HSN code.")
+                    raise HTTPException(status_code=422, detail=f"TILEFLOW-STAT-002: Product '{prod_name}' has missing or invalid statutory HSN code.")
                 hsn_code = 8471
                 warnings.append(f"Product '{prod_name}' missing HSN; defaulted to 8471.")
             else:

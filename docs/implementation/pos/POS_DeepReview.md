@@ -1,33 +1,28 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.3
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
 # Implementation Plan: POS Terminal Deep Review Fixes — v2.1.3
 
 ## 1. Objective
 
-Resolve all high- and medium-priority findings from the SMRITI Retail OS deep codebase review conducted on 2026-07-11, improving POS correctness, reliability, performance, and UX without breaking existing functionality.
+Resolve all high- and medium-priority findings from the TILEFLOW Retail OS deep codebase review conducted on 2026-07-11, improving POS correctness, reliability, performance, and UX without breaking existing functionality.
 
 ---
 
@@ -72,7 +67,7 @@ Resolve all high- and medium-priority findings from the SMRITI Retail OS deep co
 | Hardcoded GST | Incorrect tax on 5%/12% items | Per-product `gstPercentage` IIFE |
 | No held bill persistence | Lost active transactions on refresh | `sessionStorage` restore + save |
 | No memoization | Render bottleneck with 100+ products | `useMemo` + 150ms debounce |
-| No Error Boundary | Full app crash on module error | `SmritiErrorBoundary` class component |
+| No Error Boundary | Full app crash on module error | `TileFlowErrorBoundary` class component |
 | No barcode Enter handling | Manual click required after scan | `onKeyDown` → `addToCart` |
 | Free-text customer field | No CRM link at POS | `<datalist>` from `getCustomers()` |
 
@@ -80,7 +75,7 @@ Resolve all high- and medium-priority findings from the SMRITI Retail OS deep co
 
 ## 6. Architecture Impact
 
-- New component `SmritiErrorBoundary` (class component, required by React ErrorBoundary API).
+- New component `TileFlowErrorBoundary` (class component, required by React ErrorBoundary API).
 - `renderTab()` replaced by `renderTabSafe()` wrapper in `App.tsx`.
 - No new context, store, or API endpoint required.
 - `getCustomers()` from `customerStore.ts` now called from a UI component — acceptable for current in-memory store; will need async state when migrating to backend.
@@ -182,7 +177,7 @@ All user-facing docs updated: User Guide, Developer Guide, Troubleshooting, Walk
 1. `git add` all modified files
 2. `git commit -m "v2.1.3: POS deep review fixes, Error Boundary, conditional PrintPreviewModal"`
 3. Push to dev branch
-4. Pull on test environment `F:\Smriti9`
+4. Pull on test environment `F:\TileFlow9`
 
 ---
 

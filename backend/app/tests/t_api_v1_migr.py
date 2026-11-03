@@ -1,15 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smriti.com
-Version      : 3.21.0
-Created      : 2026-07-16
-Modified     : 2026-07-16
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import uuid
 import pytest
 from jose import jwt
@@ -65,7 +53,7 @@ async def _create_user(db_session, role=UserRole.MANAGER):
     user = User(
         id=f"usr-test-{s}",
         username=f"test_user_{s}",
-        email=f"test_{s}@smriti.test",
+        email=f"test_{s}@tileflow.test",
         hashed_password=hash_password("Test@1234"),
         role=role,
         is_active=True,
@@ -213,7 +201,7 @@ async def test_setup_creates_tenant_assigned_user_and_resolves_tenant_context(db
         admin = User(
             id=f"usr-admin-{s}",
             username=f"sysadmin_{s}",
-            email=f"sysadmin_{s}@smriti.test",
+            email=f"sysadmin_{s}@tileflow.test",
             hashed_password=hash_password("SysAdmin@123"),
             role=UserRole.SYSADMIN,
             is_active=True,

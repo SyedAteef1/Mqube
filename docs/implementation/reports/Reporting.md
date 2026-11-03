@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Reporting Platform & Data Integrity Engine Implementation Plan v1.0
+# TILEFLOW Reporting Platform & Data Integrity Engine Implementation Plan v1.0
 
 **Status: Completed**  
 **Created:** 2026-08-15  
@@ -39,7 +38,7 @@ Provide enterprise-grade business intelligence across Sales, Purchase, Inventory
 - Resolved: Single Authoritative Dataset Rule enforced (`Grid total = Chart total = Pivot total = Dashboard KPI total = Export total`).
 
 ## 6. Architecture Impact
-- Zero Extra DBs: Reporting schemas co-located in `smriti001`. `smritisys` maintains governance and entitlements.
+- Zero Extra DBs: Reporting schemas co-located in `tileflow001`. `tileflowsys` maintains governance and entitlements.
 
 ## 7. Proposed Design
 - Schema models: [`backend/app/models/reporting.py`](file:///F:/SMRITRretailNX/backend/app/models/reporting.py).
@@ -59,17 +58,17 @@ Provide enterprise-grade business intelligence across Sales, Purchase, Inventory
 - `backend/app/models/__init__.py`
 - `backend/app/api/v1/reports.py`
 - `backend/app/services/reports.py`
-- `SMRITI_Control_Plane_Architecture_Review.xlsx`
+- `TILEFLOW_Control_Plane_Architecture_Review.xlsx`
 
 ## 10. Dependencies
-- FastAPI, SQLAlchemy, PostgreSQL (`smritisys`, `smriti001`), Recharts, Motion, Lucide React.
+- FastAPI, SQLAlchemy, PostgreSQL (`tileflowsys`, `tileflow001`), Recharts, Motion, Lucide React.
 
 ## 11. Risks
 - Risk of data discrepancies if visualizers calculate metrics independently.
 - Mitigation: Single Authoritative Dataset Rule enforced across all visuals.
 
 ## 12. Rollback Strategy
-- Revert commit; single DB co-location requires zero DB schema dropping outside `smriti001`.
+- Revert commit; single DB co-location requires zero DB schema dropping outside `tileflow001`.
 
 ## 13. Verification Plan
 - Executed Pytest across all 25 backend test suites (75 passed).

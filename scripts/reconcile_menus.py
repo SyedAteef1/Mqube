@@ -1,20 +1,7 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys, json, psycopg2
 from datetime import datetime, timezone
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 TARGET_SPECIFICATIONS = {
     # 1. Dashboard & Operations
@@ -22,8 +9,8 @@ TARGET_SPECIFICATIONS = {
     "menu-user-profile": {"title": "My Profile Dashboard", "route": "/user-profile", "module": "Dashboard & Operations", "parent_id": None, "sequence": 20, "permission": "PROFILE.ACCESS", "is_active": True},
 
     # 2. System & Knowledge Base
-    "menu-wiki": {"title": "SMRITI Gyan Kendra", "route": "/wiki", "module": "System & Knowledge Base", "parent_id": None, "sequence": 30, "permission": "WIKI.ACCESS", "is_active": True},
-    "menu-about-smriti": {"title": "About SMRITI Retail OS", "route": "/about-smriti", "module": "System & Knowledge Base", "parent_id": None, "sequence": 40, "permission": "ABOUT.ACCESS", "is_active": True},
+    "menu-wiki": {"title": "TILEFLOW Gyan Kendra", "route": "/wiki", "module": "System & Knowledge Base", "parent_id": None, "sequence": 30, "permission": "WIKI.ACCESS", "is_active": True},
+    "menu-about-tileflow": {"title": "About TILEFLOW Retail OS", "route": "/about-tileflow", "module": "System & Knowledge Base", "parent_id": None, "sequence": 40, "permission": "ABOUT.ACCESS", "is_active": True},
     "menu-dev-tracker": {"title": "Dev Intelligence Center", "route": "/dev-tracker", "module": "System & Knowledge Base", "parent_id": None, "sequence": 50, "permission": "SYSTEM.DEV", "is_active": True},
 
     # 3. Sales & POS (Parent: menu-pos)
@@ -76,13 +63,13 @@ def reconcile():
         cur.execute("BEGIN;")
 
         # Delete any existing placeholder menus menu-0 to menu-29
-        cur.execute("DELETE FROM smriti_menus WHERE id LIKE 'menu-%' AND id NOT IN ('menu-dashboard', 'menu-inventory', 'menu-reports', 'menu-sales');")
+        cur.execute("DELETE FROM tileflow_menus WHERE id LIKE 'menu-%' AND id NOT IN ('menu-dashboard', 'menu-inventory', 'menu-reports', 'menu-sales');")
 
         # Upsert root parent menus first (where parent_id is NULL)
         for mid, spec in TARGET_SPECIFICATIONS.items():
             if spec["parent_id"] is None:
                 cur.execute("""
-                    INSERT INTO smriti_menus (id, uuid, title, route, module, parent_id, sequence, permission, is_active, is_deleted, created_at, modified_at)
+                    INSERT INTO tileflow_menus (id, uuid, title, route, module, parent_id, sequence, permission, is_active, is_deleted, created_at, modified_at)
                     VALUES (%s, gen_random_uuid(), %s, %s, %s, NULL, %s, %s, %s, false, NOW(), NOW())
                     ON CONFLICT (id) DO UPDATE SET
                         title = EXCLUDED.title,
@@ -100,7 +87,7 @@ def reconcile():
         for mid, spec in TARGET_SPECIFICATIONS.items():
             if spec["parent_id"] is not None:
                 cur.execute("""
-                    INSERT INTO smriti_menus (id, uuid, title, route, module, parent_id, sequence, permission, is_active, is_deleted, created_at, modified_at)
+                    INSERT INTO tileflow_menus (id, uuid, title, route, module, parent_id, sequence, permission, is_active, is_deleted, created_at, modified_at)
                     VALUES (%s, gen_random_uuid(), %s, %s, %s, %s, %s, %s, %s, false, NOW(), NOW())
                     ON CONFLICT (id) DO UPDATE SET
                         title = EXCLUDED.title,

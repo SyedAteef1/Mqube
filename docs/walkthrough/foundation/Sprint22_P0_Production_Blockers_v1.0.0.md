@@ -1,39 +1,35 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.38.0
   * Created    : 2026-08-25
   * Modified   : 2026-08-25
-  * Copyright  : © SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
-  * Classification: Internal
+  * Copyright  :  tileflow.in. Open Source - Permissive Use
+  * License    : MIT Open Source License
+  * Classification: Open Source
 -->
 
 # Walkthrough: Sprint 22 — P0 Production Blockers Stabilization
 
 ## 1. Purpose
-This document records the engineering certification, test hardening, and governance status transition of the three **P0 Production Blockers** identified in the SMRITI Retail OS platform blueprint:
+This document records the engineering certification, test hardening, and governance status transition of the three **P0 Production Blockers** identified in the TILEFLOW Retail OS platform blueprint:
 - **P0.1**: POS Foreign Key Constraints & Financial Ledger Integrity (`v1360_pos_sct_fk_constraints`).
 - **P0.2**: Secure eCommerce Omnichannel Routing, HMAC Ingress & Database Idempotency.
 - **P0.3**: Fail-Closed Production Security & Dynamic Credential Binding.
 
 ## 2. Scope
-- Verification of PostgreSQL foreign key constraints on `shift_cash_transactions` (`fk_sct_account_id` → `accounts.id`, `fk_sct_gl_voucher_id` → `journal_vouchers.id`) across active tenant databases (`smriti001`, `smriti002`, `smritisys`).
+- Verification of PostgreSQL foreign key constraints on `shift_cash_transactions` (`fk_sct_account_id` → `accounts.id`, `fk_sct_gl_voucher_id` → `journal_vouchers.id`) across active tenant databases (`tileflow001`, `tileflow002`, `tileflowsys`).
 - Zero orphan GL reference assertions across all active tenant databases.
 - Enforcement of ADR-POS-002 forward-only migration governance preventing financial state corruption.
 - Verification of credential omission in `CompanyDatabaseResolver`.
@@ -59,7 +55,7 @@ This document records the engineering certification, test hardening, and governa
 - **Fail-Closed Production Security**: The application refuses to boot when `ENVIRONMENT=production` if default or weak passwords/keys are detected.
 
 ## 6. Design Rationale
-By testing against live tenant PostgreSQL instances (`smriti001`, `smriti002`, `smritisys`) and verifying credential omission in memory, SMRITI achieves zero-trust isolation between control plane routing and company-local transaction engines.
+By testing against live tenant PostgreSQL instances (`tileflow001`, `tileflow002`, `tileflowsys`) and verifying credential omission in memory, TILEFLOW achieves zero-trust isolation between control plane routing and company-local transaction engines.
 
 ## 7. Implementation Summary
 

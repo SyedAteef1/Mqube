@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.77.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: UI Automation Hub & Report Scheduling Modal (v1.0.0-GA)
 
 ## 1. Objective
-Establish an interactive, multi-channel automated report distribution modal (`ScheduleReportModal.tsx`) in SMRITI Reporting Studio, allowing users to configure cron schedules, export formats, distribution channels (Email, WhatsApp, Statutory Vault), and trigger immediate executions.
+Establish an interactive, multi-channel automated report distribution modal (`ScheduleReportModal.tsx`) in TILEFLOW Reporting Studio, allowing users to configure cron schedules, export formats, distribution channels (Email, WhatsApp, Statutory Vault), and trigger immediate executions.
 
 ## 2. Business Motivation
 Store directors, accountants, and CFOs require automated delivery of daily EOD sales digests, weekly tax summaries, and monthly statutory registers to their inboxes and WhatsApp without requiring manual report generation.
@@ -79,7 +78,7 @@ Modular UI component that can be disabled or closed cleanly.
 - Run `npm test`.
 
 ## 15. Documentation Impact
-- Update SMRITI Reporting User Guide.
+- Update TILEFLOW Reporting User Guide.
 
 ## 16. Deployment Plan
 - Build and bundle with frontend client package.

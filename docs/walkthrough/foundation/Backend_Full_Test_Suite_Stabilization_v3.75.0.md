@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.75.0
   Created      : 2026-08-30
   Modified     : 2026-08-30
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Full Backend Test Suite Stabilization & Multi-Tenant Test Isolation (v3.75.0)
 
 ## 1. Purpose
-Stabilize, repair, and certify 100% of automated test suites across the FastAPI backend (`backend/app/tests/` and `backend/tests/`). Eliminate cross-test fixture pollution, isolate multi-tenant database states between `smritisys` (Control Plane) and `smriti001` (Company Operational DB), and ensure all 304 test cases pass green with 0 failures under full end-to-end execution.
+Stabilize, repair, and certify 100% of automated test suites across the FastAPI backend (`backend/app/tests/` and `backend/tests/`). Eliminate cross-test fixture pollution, isolate multi-tenant database states between `tileflowsys` (Control Plane) and `tileflow001` (Company Operational DB), and ensure all 304 test cases pass green with 0 failures under full end-to-end execution.
 
 ## 2. Scope
 - Dependency injection fixture isolation in `backend/app/tests/conftest.py`.
@@ -31,7 +30,7 @@ None.
 
 ## 4. Files Modified
 - `backend/app/tests/conftest.py`: Added automatic cleanup of `get_current_user` and `get_tenant_context` dependency overrides in fixture teardown.
-- `backend/tests/conftest.py`: Added migration guard columns on `sales_returns` and seeded default return policy in `smriti001`.
+- `backend/tests/conftest.py`: Added migration guard columns on `sales_returns` and seeded default return policy in `tileflow001`.
 - `backend/tests/test_multitenant_concurrency_benchmark.py`: Wrapped offline sync benchmark in `try...finally` with automated DB record cleanup.
 - `backend/tests/test_stock_movement_ledger.py`: Dynamically bound return item quantity, prices, and taxes to matching invoice line items.
 - `backend/tests/test_sales_orders_api.py`: Added `FULFILLED` to valid `fulfillment_status` enum assertion.
@@ -40,7 +39,7 @@ None.
 ## 5. Architecture Decisions
 - **Strict Dependency Override Teardown**: FastAPI `app.dependency_overrides` modifications during tests must always be popped during fixture cleanup to prevent role leakage across async tests.
 - **Transactional Test Isolation**: High-throughput benchmark suites that populate operational tables must self-clean test-generated rows (`OFF-T%`) on completion via `try...finally` blocks.
-- **Tenant Database Integrity**: Control Plane (`smritisys`) and Company Operational Plane (`smriti001`) remain strictly isolated with independent connection pools and session factories.
+- **Tenant Database Integrity**: Control Plane (`tileflowsys`) and Company Operational Plane (`tileflow001`) remain strictly isolated with independent connection pools and session factories.
 
 ## 6. Design Rationale
 By ensuring that test fixtures clean up their own overrides and test artifacts, subsequent test runs execute in deterministic, predictable states regardless of test execution order or test batch grouping.
@@ -73,7 +72,7 @@ python -m pytest app/tests -q
 - Consolidate legacy test helpers in `backend/tests/` into `backend/app/tests/` to maintain a single unified test directory.
 
 ## 12. Related ADRs
-- `ADR-0044`: Multi-Tenant Dual Database Architecture (`smritisys` vs `smriti001`).
+- `ADR-0044`: Multi-Tenant Dual Database Architecture (`tileflowsys` vs `tileflow001`).
 - `ADR-0052`: PostgreSQL System-of-Record Sole Backend Architecture.
 
 ## 13. Related RFCs

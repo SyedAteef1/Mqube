@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Sales & Invoice Frontend-to-Backend Wiring & Contract Certification v3.22.0
 
 ## 1. Purpose
-Wire the completed Sales & Invoice backend (`backend/app/api/v1/sales.py`, `backend/app/services/sales.py`) to the existing SMRITI frontend (`SalesStudioTab.tsx`) without altering the frozen v1.1 architecture. Implement double-submit idempotency protection, JWT-based tenant header validation, stock deduction, and transactional outbox recording in `smritisys`. Verify end-to-end browser and API flows via dedicated contract tests (TEST-01 to TEST-10) and the 29-test production certification suite.
+Wire the completed Sales & Invoice backend (`backend/app/api/v1/sales.py`, `backend/app/services/sales.py`) to the existing TILEFLOW frontend (`SalesStudioTab.tsx`) without altering the frozen v1.1 architecture. Implement double-submit idempotency protection, JWT-based tenant header validation, stock deduction, and transactional outbox recording in `tileflowsys`. Verify end-to-end browser and API flows via dedicated contract tests (TEST-01 to TEST-10) and the 29-test production certification suite.
 
 ## 2. Scope
 - **Frontend Wiring**: Connected `src/components/SalesStudioTab.tsx` to FastAPI endpoints (`POST /api/v1/sales/invoices`, `GET /api/v1/sales/invoices/{id}`, `GET /api/v1/sales/invoices/{id}/html`, `GET /api/v1/sales/invoices/{id}/pdf`) via `apiFetchV1`.
@@ -56,7 +55,7 @@ Wire the completed Sales & Invoice backend (`backend/app/api/v1/sales.py`, `back
 2. Verified stock deductions in `products` and atomic `stock_movements` generation.
 3. Verified transactional outbox event creation in `integration_outbox_events`.
 4. Hardened PostgreSQL database schema with required missing columns (`secondary_barcodes`, `category_code`, `cbm_m3`, etc.) and default column constraints.
-5. Deployed updated Python core backend image `smritrretailnx-python-core:latest` in Docker container `smriti-python-core`.
+5. Deployed updated Python core backend image `smritrretailnx-python-core:latest` in Docker container `tileflow-python-core`.
 
 ## 8. Tests Executed
 ```powershell

@@ -1,29 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.115.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Purchase Return to Vendor (PRTV) Engine
- *
- * Manages vendor return orders from creation through settlement:
- *   PRTV Order  : `createReturn()` — line-level qty, reason, and return type
- *   Debit Note  : `generateDebitNote()` — calculates net debit value incl. tax
- *   Dispatch    : `markDispatched()` — records courier + tracking
- *   Vendor Ack  : `acknowledge()` — vendor confirms receipt
- *   Settlement  : `settle()` — links debit note against open payables
- *   Status flow : DRAFT → APPROVED → DISPATCHED → ACKNOWLEDGED → SETTLED / REJECTED
- */
-
 export type PRTVStatus  = "DRAFT" | "APPROVED" | "DISPATCHED" | "ACKNOWLEDGED" | "SETTLED" | "REJECTED";
 export type ReturnReason = "DEFECTIVE" | "EXCESS_STOCK" | "QUALITY_REJECTION" | "WRONG_ITEM" | "EXPIRED" | "OTHER";
 

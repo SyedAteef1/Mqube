@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Schema Integrity Verification: Compare actual `smritisys` schema against v1386/v1387 migration definitions.
+Schema Integrity Verification: Compare actual `tileflowsys` schema against v1386/v1387 migration definitions.
 
 Target tables:
   1. eway_bills (v1386)
@@ -27,7 +27,7 @@ import re
 # Database connection
 DB_HOST = os.getenv("DATABASE_HOST", "localhost")
 DB_PORT = os.getenv("DATABASE_PORT", "5432")
-DB_NAME = os.getenv("DATABASE_NAME", "smritisys")
+DB_NAME = os.getenv("DATABASE_NAME", "tileflowsys")
 DB_USER = os.getenv("DATABASE_USER", "postgres")
 DB_PASSWORD = os.getenv("DATABASE_PASSWORD", "postgres")
 
@@ -71,7 +71,7 @@ class ColumnDef:
         return t
 
 def get_db_connection():
-    """Connect to smritisys database."""
+    """Connect to tileflowsys database."""
     try:
         conn = psycopg2.connect(
             host=DB_HOST,
@@ -267,7 +267,7 @@ def main():
                 print(f"  Primary key: {result['constraints']['primary_keys']}")
                 
                 # Show critical columns
-                critical_cols = ['id', 'uuid', 'channel_code', 'external_sku', 'smriti_sku', 'converged_invoice_id']
+                critical_cols = ['id', 'uuid', 'channel_code', 'external_sku', 'tileflow_sku', 'converged_invoice_id']
                 present = [c['name'] for c in cols]
                 found_critical = [c for c in critical_cols if c in present]
                 if found_critical:

@@ -1,4 +1,4 @@
-# Operational Readiness Guide — SMRITI Retail OS
+# Operational Readiness Guide — TILEFLOW Retail OS
 
 **Date**: 2026-08-31  
 **Version**: 3.30.0  
@@ -66,7 +66,7 @@ readinessProbe:
 
 Backend logs are written to:
 - **Console**: Real-time streaming for development
-- **File**: `/var/log/smriti/backend.log` (production)
+- **File**: `/var/log/tileflow/backend.log` (production)
 - **JSON Format**: Structured logs for aggregation
 
 ### Environment Variables for Logging
@@ -117,16 +117,16 @@ SQLALCHEMY_ECHO=false
 docker-compose logs -f backend
 
 # Kubernetes
-kubectl logs -f deployment/smriti-backend -c backend
+kubectl logs -f deployment/tileflow-backend -c backend
 
 # Tail from file (if deployed on VM)
-tail -f /var/log/smriti/backend.log
+tail -f /var/log/tileflow/backend.log
 
 # Search for errors
-grep "ERROR" /var/log/smriti/backend.log
+grep "ERROR" /var/log/tileflow/backend.log
 
 # Watch request performance
-grep "duration_ms" /var/log/smriti/backend.log | tail -20
+grep "duration_ms" /var/log/tileflow/backend.log | tail -20
 ```
 
 ---
@@ -219,7 +219,7 @@ LOG_LEVEL=INFO
 **Check backend logs**:
 ```bash
 # Find slow queries
-grep "duration_ms.*duration_ms" /var/log/smriti/backend.log | \
+grep "duration_ms.*duration_ms" /var/log/tileflow/backend.log | \
   awk '{print $NF}' | sort -rn | head -10
 ```
 
@@ -248,7 +248,7 @@ DATABASE_POOL_RECYCLE=3600
 
 ```yaml
 groups:
-  - name: SMRITI Alerts
+  - name: TILEFLOW Alerts
     rules:
       # High error rate
       - alert: HighErrorRate
@@ -285,7 +285,7 @@ groups:
 ### Alert Delivery
 
 **Setup notification channels**:
-- Slack: `#smriti-alerts` channel
+- Slack: `#tileflow-alerts` channel
 - Email: `ops@company.com`
 - PagerDuty: For critical alerts
 
@@ -302,10 +302,10 @@ groups:
 **Resolution**:
 ```bash
 # 1. Check active connections
-psql -U smriti -d smriti001 -c "SELECT count(*) FROM pg_stat_activity;"
+psql -U tileflow -d tileflow001 -c "SELECT count(*) FROM pg_stat_activity;"
 
 # 2. Kill idle connections
-psql -U smriti -d smriti001 -c "
+psql -U tileflow -d tileflow001 -c "
 SELECT pg_terminate_backend(pid) 
 FROM pg_stat_activity 
 WHERE state = 'idle' AND query_start < now() - interval '1 hour';"
@@ -333,7 +333,7 @@ curl -s http://localhost:8000/api/v1/auth/refresh -X POST | jq .
 echo $JWT_SECRET | wc -c  # Should be > 32 chars
 
 # 3. Check token expiry in logs
-grep "token.*expired" /var/log/smriti/backend.log
+grep "token.*expired" /var/log/tileflow/backend.log
 
 # 4. Clear frontend session cache
 # User should clear browser localStorage:
@@ -352,7 +352,7 @@ docker-compose restart backend
 **Resolution**:
 ```bash
 # 1. Check memory usage
-docker stats smriti-backend
+docker stats tileflow-backend
 
 # 2. Identify memory leaks
 # Check for N+1 query patterns in logs
@@ -379,7 +379,7 @@ docker-compose up -d
 **Resolution**:
 ```bash
 # 1. Profile slow query
-psql -U smriti -d smriti001 << 'EOF'
+psql -U tileflow -d tileflow001 << 'EOF'
 EXPLAIN ANALYZE
 SELECT ... FROM your_report_query;
 EOF
@@ -405,26 +405,26 @@ VACUUM ANALYZE sales_invoices;
 
 **Automated daily backup** (cron):
 ```bash
-# /etc/cron.d/smriti-backup
-0 2 * * * /scripts/backup_postgres.sh >> /var/log/smriti-backup.log 2>&1
+# /etc/cron.d/tileflow-backup
+0 2 * * * /scripts/backup_postgres.sh >> /var/log/tileflow-backup.log 2>&1
 ```
 
 **Backup Script**:
 ```bash
 #!/bin/bash
-BACKUP_DIR="/backups/smriti"
-DB_NAME="smriti001"
+BACKUP_DIR="/backups/tileflow"
+DB_NAME="tileflow001"
 DATE=$(date +%Y%m%d_%H%M%S)
 
 # Full database dump
-pg_dump -U smriti -d $DB_NAME --format=custom > \
-  $BACKUP_DIR/smriti_$DATE.dump
+pg_dump -U tileflow -d $DB_NAME --format=custom > \
+  $BACKUP_DIR/tileflow_$DATE.dump
 
 # Keep only last 30 days
-find $BACKUP_DIR -name "smriti_*.dump" -mtime +30 -delete
+find $BACKUP_DIR -name "tileflow_*.dump" -mtime +30 -delete
 
 # Verify backup integrity
-pg_restore --list $BACKUP_DIR/smriti_$DATE.dump > /dev/null && \
+pg_restore --list $BACKUP_DIR/tileflow_$DATE.dump > /dev/null && \
   echo "Backup OK: $DATE" || echo "Backup FAILED: $DATE"
 ```
 
@@ -432,13 +432,13 @@ pg_restore --list $BACKUP_DIR/smriti_$DATE.dump > /dev/null && \
 
 ```bash
 # 1. Create test database
-createdb smriti_test
+createdb tileflow_test
 
 # 2. Restore from backup
-pg_restore -U smriti -d smriti_test --jobs=4 /backups/smriti/smriti_LATEST.dump
+pg_restore -U tileflow -d tileflow_test --jobs=4 /backups/tileflow/tileflow_LATEST.dump
 
 # 3. Run data validation queries
-psql -U smriti -d smriti_test << 'EOF'
+psql -U tileflow -d tileflow_test << 'EOF'
 SELECT COUNT(*) FROM sales_invoices;
 SELECT COUNT(*) FROM purchase_orders;
 SELECT COUNT(*) FROM products;
@@ -448,7 +448,7 @@ EOF
 # Should match (or be within expected variance for time-based data)
 
 # 5. Drop test database
-dropdb smriti_test
+dropdb tileflow_test
 ```
 
 ---
@@ -479,7 +479,7 @@ dropdb smriti_test
 
 - Check health endpoints: `/api/v1/health/*`
 - Review application logs: `docker-compose logs backend`
-- Verify database connectivity: `psql -U smriti -d smriti001 -c "SELECT 1"`
+- Verify database connectivity: `psql -U tileflow -d tileflow001 -c "SELECT 1"`
 
 ### Tier 2: Development Team
 

@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.18.1
   Created      : 2026-08-17
   Modified     : 2026-08-19
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Sales
@@ -16,15 +15,15 @@
 ## 1. Purpose
 
 Import 54 historical Tattly Threads Tax Invoice PDFs (TT2026-2027/18–71) into the
-existing SMRITI company database (`smriti001`) as `HISTORICAL_IMPORT` records,
+existing TILEFLOW company database (`tileflow001`) as `HISTORICAL_IMPORT` records,
 preserving PDF-authoritative financial identity, and re-export each in the
-frozen canonical SMRITI Tax Invoice format.
+frozen canonical TILEFLOW Tax Invoice format.
 
 ## 2. Scope
 
 - **Source:** 54 PDF files at `C:\Users\netma\Downloads\Tax_Invoice_Tattly_Threads`
 - **Invoice range:** TT2026-2027/18 through TT2026-2027/71
-- **Target DB:** `smriti001` (Company COMP-001, Branch MAIN)
+- **Target DB:** `tileflow001` (Company COMP-001, Branch MAIN)
 - **Supplier:** TATTLY THREADS | GSTIN: 27AAXFT2508H1ZR
 - **Customer:** Reliance Retail Limited (various GSTINs per POS state)
 - **Batch ID:** `HIST-TT-18-71-20260817105552`
@@ -34,21 +33,21 @@ frozen canonical SMRITI Tax Invoice format.
 | File | Purpose |
 |---|---|
 | `backend/app/db/migrations/add_historical_import_columns.py` | Schema migration — additive columns for historical import tracking |
-| `exports/tt_canonical_18_71/TT2026-2027_[18-71]_CANONICAL_V1.pdf` | 54 canonical PDFs (frozen SMRITI template) |
+| `exports/tt_canonical_18_71/TT2026-2027_[18-71]_CANONICAL_V1.pdf` | 54 canonical PDFs (frozen TILEFLOW template) |
 | `exports/tt_originals_18_71/TT2026-2027_[18-71]_ORIGINAL.pdf` | 54 archived original PDFs (immutable) |
 | `exports/tt_canonical_18_71/phase2_results.json` | Import batch result manifest |
-| `exports/backups/smriti001_pre_historical_import_20260817_160746.json` | Pre-import database backup |
+| `exports/backups/tileflow001_pre_historical_import_20260817_160746.json` | Pre-import database backup |
 
 ## 4. Files Modified
 
 | Table | Type | Change |
 |---|---|---|
-| `smriti001.sales_invoices` | UPDATE (54 rows) | grand_total, taxable_value, tax_total, source_type, sis_code, pos_state, po_reference, import_batch_id, original_pdf_sha256 etc. |
-| `smriti001.sales_invoice_items` | INSERT (4052 rows) | Line items extracted from PDFs |
-| `smriti001.invoice_document_artifacts` | INSERT (108 rows) | 54 ORIGINAL_PDF + 54 CANONICAL artifacts |
-| `smriti001.sales_invoices` columns | ALTER TABLE | Added 16 new columns via migration |
-| `smriti001.sales_invoice_items` columns | ALTER TABLE | Added 5 new columns via migration |
-| `smriti001.invoice_document_artifacts` columns | ALTER TABLE | Added artifact_subtype, source_type, source_file, import_batch_id |
+| `tileflow001.sales_invoices` | UPDATE (54 rows) | grand_total, taxable_value, tax_total, source_type, sis_code, pos_state, po_reference, import_batch_id, original_pdf_sha256 etc. |
+| `tileflow001.sales_invoice_items` | INSERT (4052 rows) | Line items extracted from PDFs |
+| `tileflow001.invoice_document_artifacts` | INSERT (108 rows) | 54 ORIGINAL_PDF + 54 CANONICAL artifacts |
+| `tileflow001.sales_invoices` columns | ALTER TABLE | Added 16 new columns via migration |
+| `tileflow001.sales_invoice_items` columns | ALTER TABLE | Added 5 new columns via migration |
+| `tileflow001.invoice_document_artifacts` columns | ALTER TABLE | Added artifact_subtype, source_type, source_file, import_batch_id |
 
 ## 5. Architecture Decisions
 
@@ -61,11 +60,11 @@ frozen canonical SMRITI Tax Invoice format.
    as synthetic shells. They were reconciled in place. Zero new invoice IDs generated for headers.
 4. **Dual artifact registration**: Each invoice has two artifacts:
    - `ORIGINAL_PDF`: immutable copy of the source PDF, SHA256-locked
-   - `CANONICAL`: new PDF in frozen SMRITI Retail OS template (reportlab)
+   - `CANONICAL`: new PDF in frozen TILEFLOW Retail OS template (reportlab)
 5. **Additive schema migration only**: 21 new columns added via `IF NOT EXISTS`. Zero columns
    dropped. Zero data deleted. The migration is fully reversible by dropping the added columns.
-6. **smritisys isolation**: The operational `smritisys` database was not touched.
-   Confirmed: `smritisys.sales_invoices` = 0 rows (zero operational mutations).
+6. **tileflowsys isolation**: The operational `tileflowsys` database was not touched.
+   Confirmed: `tileflowsys.sales_invoices` = 0 rows (zero operational mutations).
 
 ## 6. Design Rationale
 
@@ -77,12 +76,12 @@ positional analysis (X-coordinate column mapping), validates math, and updates t
 
 The canonical re-export uses ReportLab (synchronous, headless) rather than Playwright/InvoicePdfService
 (which requires async + browser context) to make the pipeline fully headless-compatible.
-The frozen SMRITI canonical template layout is preserved in the ReportLab renderer.
+The frozen TILEFLOW canonical template layout is preserved in the ReportLab renderer.
 
 ## 7. Implementation Summary
 
 ### Phase 1 — Schema Migration
-- Applied `add_historical_import_columns.py` to `smriti001`
+- Applied `add_historical_import_columns.py` to `tileflow001`
 - Added 16 columns to `sales_invoices`, 5 to `sales_invoice_items`
 - Added 4 columns to existing `invoice_document_artifacts` (which already had 27 columns)
 - All changes additive, idempotent, verified with `information_schema.columns` queries
@@ -129,11 +128,11 @@ Output:
      Canonical PDFs: 54
      Archived originals: 54
   
-  6. Operational DB (smritisys):
-     smritisys.sales_invoices: 0 rows (UNCHANGED — zero operational mutations)
+  6. Operational DB (tileflowsys):
+     tileflowsys.sales_invoices: 0 rows (UNCHANGED — zero operational mutations)
   
   7. Pre-import backup:
-     smriti001_pre_historical_import_20260817_160746.json (541,222 bytes)
+     tileflow001_pre_historical_import_20260817_160746.json (541,222 bytes)
 ```
 
 ## 9. Verification Results
@@ -148,7 +147,7 @@ Output:
 | CANONICAL artifacts | 54 | 54 | ✅ PASS |
 | Canonical PDFs on disk | 54 | 54 | ✅ PASS |
 | Original PDFs archived | 54 | 54 | ✅ PASS |
-| smritisys operational mutations | 0 | 0 | ✅ PASS |
+| tileflowsys operational mutations | 0 | 0 | ✅ PASS |
 | Duplicate invoices created | 0 | 0 | ✅ PASS |
 | New invoice numbers consumed | 0 | 0 | ✅ PASS |
 | Pre-import backup exists | YES | 541KB JSON | ✅ PASS |
@@ -173,7 +172,7 @@ Output:
    Stored as-is for historical integrity. Not re-formatted.
 
 4. **ReportLab canonical vs InvoicePdfService canonical**: The frozen canonical
-   SMRITI template uses InvoicePdfService (Playwright-based HTML→PDF). The canonical
+   TILEFLOW template uses InvoicePdfService (Playwright-based HTML→PDF). The canonical
    PDFs generated here use ReportLab for headless compatibility. They contain the same
    financial data in the same layout structure, but the visual rendering differs
    from the browser-printed version. The ReportLab version is labeled

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import hmac
 import hashlib
 import base64
@@ -70,7 +56,7 @@ class BaseEcomAdapter:
 
 
 class InternalStoreAdapter(BaseEcomAdapter):
-    """Adapter for SMRITI Native Online Storefront & B2B Web Portal."""
+    """Adapter for TILEFLOW Native Online Storefront & B2B Web Portal."""
     pass
 
 
@@ -195,7 +181,7 @@ class EcomGrowthEngine:
         )
         existing = (await session.execute(stmt)).scalars().first()
         if existing:
-            existing.smriti_sku = req.smriti_sku
+            existing.tileflow_sku = req.tileflow_sku
             existing.item_id = req.item_id
             existing.variant_id = req.variant_id
             existing.external_product_id = req.external_product_id
@@ -210,7 +196,7 @@ class EcomGrowthEngine:
             channel_code=req.channel_code,
             external_sku=req.external_sku,
             external_product_id=req.external_product_id,
-            smriti_sku=req.smriti_sku,
+            tileflow_sku=req.tileflow_sku,
             item_id=req.item_id,
             variant_id=req.variant_id,
             created_by=user_id,
@@ -308,7 +294,7 @@ class EcomGrowthEngine:
                 EcomSkuMapping.is_deleted == False,
             )
             mapping = (await session.execute(stmt_m)).scalars().first()
-            internal_sku = mapping.smriti_sku if mapping else line.sku
+            internal_sku = mapping.tileflow_sku if mapping else line.sku
 
             res_result = await EcomInventoryReservationService.reserve_stock_for_ecom_order(
                 session=session,
@@ -330,7 +316,7 @@ class EcomGrowthEngine:
         return order_import
 
     # -----------------------------------------------------------------------
-    # Order Convergence into SMRITI Sales Invoice
+    # Order Convergence into TILEFLOW Sales Invoice
     # -----------------------------------------------------------------------
     @classmethod
     async def converge_order(
@@ -341,7 +327,7 @@ class EcomGrowthEngine:
         user_id: Optional[str] = None,
     ) -> OrderConvergenceResponse:
         """
-        Converges a RESERVED eCommerce order into an authoritative SMRITI SalesInvoice.
+        Converges a RESERVED eCommerce order into an authoritative TILEFLOW SalesInvoice.
         """
         stmt = select(EcomOrderImport).where(
             EcomOrderImport.company_id == company_id,
@@ -521,7 +507,7 @@ class EcomGrowthEngine:
         req: ReconciliationRunReq,
         user_id: Optional[str] = None,
     ) -> EcomReconciliation:
-        # Sum converged orders in SMRITI for channel in period
+        # Sum converged orders in TILEFLOW for channel in period
         stmt = select(
             func.count(EcomOrderImport.id),
             func.coalesce(func.sum(EcomOrderImport.net_amount), Decimal("0.00")),
@@ -534,10 +520,10 @@ class EcomGrowthEngine:
             EcomOrderImport.is_deleted == False,
         )
         res = (await session.execute(stmt)).first()
-        smriti_cnt = res[0] or 0
-        smriti_rev = Decimal(str(res[1] or 0.00))
+        tileflow_cnt = res[0] or 0
+        tileflow_rev = Decimal(str(res[1] or 0.00))
 
-        variance = Decimal(str(req.channel_gross_revenue)) - smriti_rev
+        variance = Decimal(str(req.channel_gross_revenue)) - tileflow_rev
         status = "RECONCILED" if abs(variance) < Decimal("1.00") else "DISCREPANCY"
 
         rec_no = f"REC-{req.channel_code[:3].upper()}-{datetime.now(timezone.utc).strftime('%Y%m%d')}-{uuid.uuid4().hex[:4].upper()}"
@@ -550,8 +536,8 @@ class EcomGrowthEngine:
             period_end=req.period_end,
             channel_order_count=req.channel_order_count,
             channel_gross_revenue=req.channel_gross_revenue,
-            smriti_order_count=smriti_cnt,
-            smriti_gross_revenue=smriti_rev,
+            tileflow_order_count=tileflow_cnt,
+            tileflow_gross_revenue=tileflow_rev,
             variance_amount=variance,
             status=status,
             created_by=user_id,

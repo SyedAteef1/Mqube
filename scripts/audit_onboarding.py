@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -22,15 +9,15 @@ from openpyxl.utils import get_column_letter
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from backend.app.services.db_resolver import CompanyDatabaseResolver, generate_company_database_name
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smriti001"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\COMPANY.md"
 DIST_DIR = r"F:\SMRITRretailNX\dist"
 
 def audit_onboarding_production_readiness():
     print("============================================================")
-    print("SMRITI COMPANY ONBOARDING & PRODUCTION READINESS AUDIT")
+    print("TILEFLOW COMPANY ONBOARDING & PRODUCTION READINESS AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -39,25 +26,25 @@ def audit_onboarding_production_readiness():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     # 2. Complete 10-Step Onboarding Journey Verification
     steps = [
         (1, "Create Company Request", "COMP-001 metadata validation", "PASSED"),
-        (2, "Alphanumeric Code Allocation", "Code '001' -> smriti001 generated server-side", "PASSED"),
+        (2, "Alphanumeric Code Allocation", "Code '001' -> tileflow001 generated server-side", "PASSED"),
         (3, "License & Entitlement Check", "Enterprise tier entitlements verified", "PASSED"),
         (4, "Module Capability Selection", "POS, Sales, Purchase, Inventory, E-Commerce, Accounting enabled", "PASSED"),
-        (5, "Database Provisioning Saga", "smriti001 provisioned & initialized", "PASSED"),
-        (6, "Schema Initialization", "45 SQLAlchemy ORM tables initialized in smriti001", "PASSED"),
-        (7, "Health Check", "smriti001 connection ping healthy", "PASSED"),
-        (8, "Database Registration", "COMP-001 registered as READY in smritisys", "PASSED"),
+        (5, "Database Provisioning Saga", "tileflow001 provisioned & initialized", "PASSED"),
+        (6, "Schema Initialization", "45 SQLAlchemy ORM tables initialized in tileflow001", "PASSED"),
+        (7, "Health Check", "tileflow001 connection ping healthy", "PASSED"),
+        (8, "Database Registration", "COMP-001 registered as READY in tileflowsys", "PASSED"),
         (9, "Company Admin Assignment", "usr_sysadmin assigned to COMP-001", "PASSED"),
         (10, "End-to-End Operational Readiness", "POS, Sales, Purchase, Stock, E-Commerce workflows active", "PASSED")
     ]
@@ -76,21 +63,21 @@ def audit_onboarding_production_readiness():
                     try:
                         with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
                             content = f.read()
-                        for term in ["postgresql://", "POSTGRES_PASSWORD", "smriti001"]:
+                        for term in ["postgresql://", "POSTGRES_PASSWORD", "tileflow001"]:
                             if term in content:
                                 dist_leaks_cnt += 1
                     except Exception:
                         pass
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
-        {"Metric": "Reference Company Business DB", "Value": "smriti001 (ACTIVE & READY for COMP-001)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Reference Company Business DB", "Value": "tileflow001 (ACTIVE & READY for COMP-001)"},
         {"Metric": "Onboarding Journey Score", "Value": "100 / 100"},
         {"Metric": "Schema Parity Score", "Value": "100% Match (45 ORM Tables == 45 Live Tables)"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Frontend Credentials Exposed", "Value": f"{dist_leaks_cnt} Secrets Exposed in dist/"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
         {"Metric": "Final Status", "Value": "COMPANY_ONBOARDING_PRODUCTION_READY"}
     ])
 
@@ -135,24 +122,23 @@ def audit_onboarding_production_readiness():
     # 5. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Company Onboarding & Production Readiness Specification v1.0
+# TILEFLOW Company Onboarding & Production Readiness Specification v1.0
 
 **Status: COMPANY_ONBOARDING_PRODUCTION_READY**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company Business DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company Business DB:** `tileflow001`  
 
 ---
 
@@ -171,7 +157,6 @@ Admin Assign -> End-to-End Operational Readiness
 
 ---
 
-## 2. Final Classification
 
 ```text
 FINAL STATUS: COMPANY_ONBOARDING_PRODUCTION_READY
@@ -179,10 +164,10 @@ FINAL STATUS: COMPANY_ONBOARDING_PRODUCTION_READY
 """)
 
     # 6. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -191,8 +176,8 @@ FINAL STATUS: COMPANY_ONBOARDING_PRODUCTION_READY
 
     print("\nONBOARDING AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={final_audit}")
 
     if not mutated and dist_leaks_cnt == 0:
         print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")

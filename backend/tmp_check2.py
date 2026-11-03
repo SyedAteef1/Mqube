@@ -1,5 +1,5 @@
 import psycopg2
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 cur.execute("SELECT id, code FROM products WHERE company_id='COMP-001' AND is_deleted=false ORDER BY id;")

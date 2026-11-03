@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-SMRITI Retail OS - Secure Secrets Generator
+TILEFLOW Retail OS - Secure Secrets Generator
 Generates cryptographically secure random secrets for production deployment.
 
 Usage:
@@ -85,7 +85,7 @@ def format_json(secrets_dict: dict) -> str:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="Generate secure secrets for SMRITI Retail OS production deployment"
+        description="Generate secure secrets for TILEFLOW Retail OS production deployment"
     )
     parser.add_argument(
         "--format",

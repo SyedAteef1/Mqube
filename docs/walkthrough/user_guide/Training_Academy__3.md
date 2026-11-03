@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Training Academy Phase 2 Guided Simulators Walkthrough — v1.0
+# TILEFLOW Training Academy Phase 2 Guided Simulators Walkthrough — v1.0
 
 ## 1. Purpose
-This walkthrough documents the implementation of **Phase 2 Guided Simulators** for the **SMRITI Training Academy**, providing interactive, step-by-step form simulators for **Day 1 (Master Creation)**, **Day 2 (Purchase Order)**, **Day 3 (Purchase Receipt / GRN)**, and **Day 4 (Sales / Billing)** operating in 100% session sandbox isolation.
+This walkthrough documents the implementation of **Phase 2 Guided Simulators** for the **TILEFLOW Training Academy**, providing interactive, step-by-step form simulators for **Day 1 (Master Creation)**, **Day 2 (Purchase Order)**, **Day 3 (Purchase Receipt / GRN)**, and **Day 4 (Sales / Billing)** operating in 100% session sandbox isolation.
 
 ## 2. Scope
 - Authoring `Day1MasterSim.tsx` for creating Item & Supplier masters in the sandbox session.
@@ -35,14 +34,14 @@ This walkthrough documents the implementation of **Phase 2 Guided Simulators** f
 - [`docs/walkthrough/README.md`](file:///F:/SMRITRretailNX/docs/walkthrough/README.md): Registered Phase 2 walkthrough.
 
 ## 5. Architecture Decisions
-- **Session Sandbox Data Isolation**: All Day 1–4 form inputs write exclusively to `trainingSandboxStore`, mutating zero production database records in `Smritibus_<CompanyCode>`.
+- **Session Sandbox Data Isolation**: All Day 1–4 form inputs write exclusively to `trainingSandboxStore`, mutating zero production database records in `TileFlowbus_<CompanyCode>`.
 - **Immediate Business Feedback**: Every simulator action instantly updates the Live Training State View (e.g. GRN receipt increments available stock; POS sale decrements available stock).
 
 ## 6. Design Rationale
 Simulating realistic form inputs (SKU Codes, HSN, Tax rates, Purchase Rates, Short receipts, Tender payments) gives trainees hands-on operational experience while preventing mistakes on live billing terminals.
 
 ## 7. Implementation Summary
-- Developed 4 dedicated simulator components with standard SMRITI UADHP headers.
+- Developed 4 dedicated simulator components with standard TILEFLOW UADHP headers.
 - Wired form submissions to `trainingSandboxStore` methods.
 - Verified TypeScript compilation and production bundle build.
 

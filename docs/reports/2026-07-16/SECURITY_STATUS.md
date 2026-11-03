@@ -10,4 +10,4 @@
 | Sales Studio | ❌ | ❌ | Non-compliant / Public |
 | Billing Desk | ❌ | ❌ | Non-compliant / Public |
 | CRM & Loyalty | ❌ | ❌ | Non-compliant / Public |
-| About SMRITI | ❌ | ❌ | Non-compliant / Public |
+| About TILEFLOW | ❌ | ❌ | Non-compliant / Public |

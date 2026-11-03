@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.35.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Reporting & BI Engine Phase 12 — Integration, Reconciliation & Certification v1.0.0-GA
 
 ## 1. Objective
-Execute formal end-to-end integration, 4-dimensional reconciliation (Horizontal, Vertical, Temporal, Security), and release candidate certification across the SMRITI Reporting & BI Engine.
+Execute formal end-to-end integration, 4-dimensional reconciliation (Horizontal, Vertical, Temporal, Security), and release candidate certification across the TILEFLOW Reporting & BI Engine.
 
 ## 2. Business Motivation
 Provide provable mathematical and architectural certification that no report formula diverges, no financial metric leaks across roles, no inventory valuation requires unbounded transaction replay, and all surfaces (Grid, BI, XLSX, CSV, PDF) deliver identical numbers.

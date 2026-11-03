@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.98.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Customer Segmentation & AI Micro-Cohort Engine (v1.0.0-GA)
@@ -41,7 +40,7 @@ Documents the implementation of the Customer Segmentation Engine — RFM (Recenc
 4. **Promotion eligibility as derived flags**: `resolvePromotion()` derives boolean flags from cohort and monetary score — no separate promotion mapping table needed, and eligibility updates automatically when RFM score changes.
 
 ## 6. Design Rationale
-Undifferentiated marketing wastes budget and erodes customer trust. Micro-cohort segmentation lets SMRITI stores run 6 distinct targeted campaigns simultaneously — win-back for At Risk, double-points for Champions, re-engagement for Lost — without manual list building.
+Undifferentiated marketing wastes budget and erodes customer trust. Micro-cohort segmentation lets TILEFLOW stores run 6 distinct targeted campaigns simultaneously — win-back for At Risk, double-points for Champions, re-engagement for Lost — without manual list building.
 
 ## 7. Implementation Summary
 - `scoreCustomer()`: Computes R/F/M scores from transaction history, resolves cohort via COHORT_RULES, derives promotion eligibility.

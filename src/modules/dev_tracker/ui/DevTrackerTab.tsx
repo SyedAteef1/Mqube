@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 1.0.0
- * * Created    : 2026-07-11
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip as ChartTooltip, Legend 
@@ -34,7 +9,7 @@ import {
   CheckCircle2, HelpCircle, Layers, Cpu, Database, Server, Info, Search, X, Sparkles
 } from "lucide-react";
 import { ScanResult, ModuleStatus } from "../models/interfaces.ts";
-import { SmritiScrollArea } from "../../../components/SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../../../components/TileFlowScrollArea.tsx";
 
 export const DevTrackerTab: React.FC = () => {
   const [data, setData] = useState<ScanResult | null>(null);
@@ -74,7 +49,7 @@ export const DevTrackerTab: React.FC = () => {
     if (!data) return;
     let exportData = "";
     let mimeType = "text/plain";
-    let filename = `smriti_dev_status.${format}`;
+    let filename = `tileflow_dev_status.${format}`;
 
     if (format === "json") {
       exportData = JSON.stringify(data, null, 2);
@@ -84,7 +59,7 @@ export const DevTrackerTab: React.FC = () => {
         data.modules.map(m => `"${m.name}","${m.category}",${m.overallPercentage}%,"${m.riskRating}"`).join("\n");
       mimeType = "text/csv";
     } else if (format === "md") {
-      exportData = `# SMRITI Development Status Dashboard\n\nGenerated: ${data.timestamp}\n\nDHI: ${data.releaseScores.dhi}%\nGrade: ${data.releaseScores.grade}\n`;
+      exportData = `# MQube Development Status Dashboard\n\nGenerated: ${data.timestamp}\n\nDHI: ${data.releaseScores.dhi}%\nGrade: ${data.releaseScores.grade}\n`;
       mimeType = "text/markdown";
     }
 
@@ -135,7 +110,7 @@ export const DevTrackerTab: React.FC = () => {
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
             <h1 className="text-2xl font-bold font-display text-white tracking-tight">
-              SMRITI Development Intelligence Center (SDIC)
+              MQube Development Intelligence Center (SDIC)
             </h1>
           </div>
           <p className="text-xs text-theme-muted mt-1 font-mono">
@@ -195,7 +170,7 @@ export const DevTrackerTab: React.FC = () => {
               </svg>
               <div className="absolute flex flex-col items-center">
                 <span className="text-3xl font-bold font-display text-white">{data.releaseScores.dhi}%</span>
-                <span className="text-[10px] font-mono font-bold bg-[#2563EB]/15 text-blue-400 px-2 py-0.5 rounded border border-[#2563EB]/25 mt-1">Grade {data.releaseScores.grade}</span>
+                <span className="text-[10px] font-mono font-bold bg-[#606060]/15 text-blue-400 px-2 py-0.5 rounded border border-[#606060]/25 mt-1">Grade {data.releaseScores.grade}</span>
               </div>
             </div>
           </div>
@@ -280,7 +255,7 @@ export const DevTrackerTab: React.FC = () => {
                 onClick={() => setActiveTab(tab.id)}
                 className={`px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer transition-colors ${
                   activeTab === tab.id 
-                    ? "bg-[#2563EB]/15 text-blue-400 font-bold border border-[#2563EB]/30" 
+                    ? "bg-[#606060]/15 text-blue-400 font-bold border border-[#606060]/30" 
                     : "text-theme-muted hover:text-theme-body"
                 }`}
               >
@@ -290,14 +265,14 @@ export const DevTrackerTab: React.FC = () => {
           </div>
 
           {/* Details Pane scroll space */}
-          <SmritiScrollArea className="flex-1 p-6">
+          <TileFlowScrollArea className="flex-1 p-6">
             <div className="max-w-4xl mx-auto space-y-6">
 
               {/* OVERVIEW PANEL */}
               {activeTab === "overview" && (
                 <div className="space-y-6">
                   {/* AI Suggestions / Recommendations Panel */}
-                  <div className="bg-gradient-to-r from-blue-900/30 via-indigo-900/25 to-theme-surface-1 border border-[#2563EB]/20 rounded-xl p-6 shadow-sm">
+                  <div className="bg-gradient-to-r from-blue-900/30 via-indigo-900/25 to-theme-surface-1 border border-[#606060]/20 rounded-xl p-6 shadow-sm">
                     <h3 className="text-xs font-bold font-mono uppercase tracking-wider text-white mb-4 flex items-center gap-1.5">
                       <Sparkles size={14} className="text-blue-400" /> AI Steering Intelligence Suggestions
                     </h3>
@@ -305,7 +280,7 @@ export const DevTrackerTab: React.FC = () => {
                       {data.modules.slice(0, 3).map((m, idx) => (
                         <div key={idx} className="bg-theme-surface-2/60 border border-theme-divider/70 p-4 rounded-lg flex items-start justify-between gap-4">
                           <div>
-                            <span className="px-2 py-0.5 bg-[#2563EB]/10 border border-[#2563EB]/20 text-[9px] font-mono text-blue-400 font-bold rounded uppercase">
+                            <span className="px-2 py-0.5 bg-[#606060]/10 border border-[#606060]/20 text-[9px] font-mono text-blue-400 font-bold rounded uppercase">
                               {m.name} module
                             </span>
                             <p className="text-xs text-theme-muted mt-2 leading-relaxed">
@@ -558,14 +533,14 @@ export const DevTrackerTab: React.FC = () => {
                         { timestamp: "2026-07-10", dhi: 70, qualityScore: 80, releaseScore: 72 },
                         { timestamp: new Date().toISOString().split("T")[0], dhi: data.releaseScores.dhi, qualityScore: data.releaseScores.qualityScore, releaseScore: data.releaseScores.releaseScore }
                       ]}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#25355a" />
-                        <XAxis dataKey="timestamp" stroke="#68738D" fontSize={10} />
-                        <YAxis stroke="#68738D" fontSize={10} />
-                        <ChartTooltip contentStyle={{ backgroundColor: "#1e293b", borderColor: "#334155" }} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#343434" />
+                        <XAxis dataKey="timestamp" stroke="#171717" fontSize={10} />
+                        <YAxis stroke="#171717" fontSize={10} />
+                        <ChartTooltip contentStyle={{ backgroundColor: "#282828", borderColor: "#334155" }} />
                         <Legend wrapperStyle={{ fontSize: 11 }} />
-                        <Line type="monotone" dataKey="dhi" stroke="#3b82f6" name="DHI score" strokeWidth={2.5} activeDot={{ r: 6 }} />
+                        <Line type="monotone" dataKey="dhi" stroke="#171717" name="DHI score" strokeWidth={2.5} activeDot={{ r: 6 }} />
                         <Line type="monotone" dataKey="qualityScore" stroke="#10b981" name="Quality Score" strokeWidth={1.5} />
-                        <Line type="monotone" dataKey="releaseScore" stroke="#6366f1" name="Release Readiness" strokeWidth={1.5} />
+                        <Line type="monotone" dataKey="releaseScore" stroke="#171717" name="Release Readiness" strokeWidth={1.5} />
                       </LineChart>
                     </ResponsiveContainer>
                   </div>
@@ -573,7 +548,7 @@ export const DevTrackerTab: React.FC = () => {
               )}
 
             </div>
-          </SmritiScrollArea>
+          </TileFlowScrollArea>
         </div>
       </div>
     </div>

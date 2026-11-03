@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-07-14
   Modified     : 2026-07-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI Master Data Consolidation
+# Walkthrough: TILEFLOW Master Data Consolidation
 
 ## 1. Purpose
 Consolidate dynamic lookup tables (Tier-1) and organizational structures (Tier-2: Company, Branch, Store, Warehouse) onto the FastAPI + Postgres backend, serving as the single system of record. This completes theStrangler-Fig migration for the foundation module, decommissioning redundant Express controllers and repositories.

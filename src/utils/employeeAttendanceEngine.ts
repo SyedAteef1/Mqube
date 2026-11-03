@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.121.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Employee Attendance & Commission Tracking Engine
- *
- * Manages daily attendance records and commission calculation:
- *   Attendance : `clockIn()` / `clockOut()` / `markAbsent()` / `markLeave()`
- *   Commission : `computeCommission()` — tiered/flat slabs on net sales
- *   Target     : `salesTargetStatus()` — actual vs target + achievement %
- *   Payout     : `payoutSummary()` — base + commission + deductions per employee
- *   Period     : `periodReport()` — attendance + payout across employees
- */
-
 export type AttendanceStatus = "PRESENT" | "ABSENT" | "LEAVE" | "HALF_DAY" | "HOLIDAY";
 export type CommissionType   = "FLAT_PCT" | "TIERED" | "TARGET_BASED";
 export type LeaveType        = "CASUAL" | "SICK" | "EARNED" | "UNPAID";

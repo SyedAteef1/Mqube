@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Retail OS — User Training Blueprint
+# TILEFLOW Retail OS — User Training Blueprint
 
 ### Objective
 
@@ -155,7 +154,7 @@ Stock Updated
 2. **Physical Inspection**: Inspect physical delivery against vendor delivery challan/invoice.
 3. **Quantity Verification**: Enter actual received quantities; system automatically flags short receipts or excess delivery variances.
 4. **Batch & Expiry Control**: Capture batch number, manufacturing date, and expiry date for perishable or batch-tracked inventory.
-5. **Goods Receipt Note (GRN) Generation**: Post GRN transaction into SMRITI backend system of record.
+5. **Goods Receipt Note (GRN) Generation**: Post GRN transaction into TILEFLOW backend system of record.
 6. **Stock Ledger Update**: Instant automated update to available stock ledgers across specified warehouse locations.
 
 ---
@@ -270,7 +269,7 @@ PRACTICAL USER ASSESSMENT & CERTIFICATION
 
 ## Training Rule
 
-**Don't teach SMRITI as separate screens. Teach it as one connected business workflow.**
+**Don't teach TILEFLOW as separate screens. Teach it as one connected business workflow.**
 
 > **Master → Purchase → Receipt → Stock → Sales → Reports**
 

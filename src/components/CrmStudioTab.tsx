@@ -1,23 +1,6 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.29.0
- * Created      : 2026-07-13
- * Modified     : 2026-08-25
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Target UI    : CRM Studio (Fiori Horizon Inspired Light Theme)
- */
-
-
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
-import { SmritiScrollArea } from "./SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.tsx";
 import { recordAuditAction } from "../lib/apiFetch.ts";
 import { LeadManager } from "./crm/LeadManager.tsx";
 import { OpportunityPipeline } from "./crm/OppPipe.tsx";
@@ -154,7 +137,7 @@ export const CrmStudioTab: React.FC<CrmStudioTabProps> = ({ currentUser }) => {
       </div>
 
       {/* Main Content Workspace */}
-      <SmritiScrollArea className="flex-1">
+      <TileFlowScrollArea className="flex-1">
         <motion.div
           key={activeSubTab}
           initial={{ opacity: 0, y: 10 }}
@@ -249,7 +232,7 @@ export const CrmStudioTab: React.FC<CrmStudioTabProps> = ({ currentUser }) => {
             <LoyaltyAdjPanel currentUser={currentUser} />
           )}
         </motion.div>
-      </SmritiScrollArea>
+      </TileFlowScrollArea>
     </div>
   );
 };

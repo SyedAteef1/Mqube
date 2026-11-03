@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -19,16 +6,16 @@ import psycopg2
 from fastapi import HTTPException
 from app.services.db_resolver import CompanyDatabaseResolver
 
-CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/smritisys"
+CONTROL_PLANE_URL = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 def test_control_plane_db_connection_target():
-    """Verify Control Plane session always targets smritisys."""
+    """Verify Control Plane session always targets tileflowsys."""
     conn = psycopg2.connect(CONTROL_PLANE_URL)
     cur = conn.cursor()
     cur.execute("SELECT current_database();")
     db_name = cur.fetchone()[0]
     conn.close()
-    assert db_name == "smritisys"
+    assert db_name == "tileflowsys"
 
 def test_company_db_runtime_routing_allow():
     """Verify Company A authorized routing returns READY company database target."""
@@ -60,13 +47,13 @@ def test_company_db_runtime_routing_unknown():
         CompanyDatabaseResolver.resolve_company_database("usr-admin", "COMP-UNKNOWN-XYZ")
     assert exc_info.value.status_code == 403
 
-def test_no_business_endpoint_accidental_smritisys_mutation():
-    """Verify business transaction tables cannot be accidentally mutated in smritisys."""
+def test_no_business_endpoint_accidental_tileflowsys_mutation():
+    """Verify business transaction tables cannot be accidentally mutated in tileflowsys."""
     conn = psycopg2.connect(CONTROL_PLANE_URL)
     cur = conn.cursor()
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     menus_cnt = cur.fetchone()[0]
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     audit_cnt = cur.fetchone()[0]
     conn.close()
     assert menus_cnt == 34

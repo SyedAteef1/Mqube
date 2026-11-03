@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
@@ -26,7 +12,7 @@ from ..models.purchase import Supplier
 
 class UniversalPartyService:
     """
-    Authoritative Universal Party Domain Service for Tenant Data Planes (smritiXXX).
+    Authoritative Universal Party Domain Service for Tenant Data Planes (tileflowXXX).
     Provides unified entity management, polymorphic role assignment, and legacy compatibility adapters.
     """
 

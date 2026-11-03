@@ -1,24 +1,11 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import glob
 import pandas as pd
 
 dirs_to_check = [
-    r"F:\Smriti-Clients Data\Tattly Threads",
+    r"F:\TileFlow-Clients Data\Tattly Threads",
     r"F:\SMRITRretailNX\TT",
-    r"F:\Smriti-Clients Data",
+    r"F:\TileFlow-Clients Data",
     r"C:\Users\netma\Downloads",
     r"F:\SMRITRretailNX"
 ]

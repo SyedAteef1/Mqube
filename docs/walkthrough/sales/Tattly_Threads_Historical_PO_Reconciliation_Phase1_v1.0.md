@@ -1,27 +1,26 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-26
   Modified     : 2026-08-26
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Phase 1 Historical PO Reconciliation — Tattly Threads
 
 ## 1. Purpose
-This document presents the formal technical walkthrough and audit trail for Phase 1 Historical Purchase Order (PO) Reconciliation for client **Tattly Threads** against **Reliance Retail Limited**. The objective is to ingest the 60 authoritative Reliance Retail PO PDFs into canonical SMRITI Sales Orders, deduplicate and populate Item Master products, archive immutable legal terms snapshots, and reconcile invoice allocations across historical tax invoices `TT2026-2027/18` through `TT2026-2027/137`.
+This document presents the formal technical walkthrough and audit trail for Phase 1 Historical Purchase Order (PO) Reconciliation for client **Tattly Threads** against **Reliance Retail Limited**. The objective is to ingest the 60 authoritative Reliance Retail PO PDFs into canonical TILEFLOW Sales Orders, deduplicate and populate Item Master products, archive immutable legal terms snapshots, and reconcile invoice allocations across historical tax invoices `TT2026-2027/18` through `TT2026-2027/137`.
 
 ---
 
 ## 2. Scope
-- **Authoritative Ingestion Source**: 60 Reliance Retail Purchase Order PDFs (`5182778151.pdf` through `5182778210.pdf`) located at `F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads\`.
-- **Target Company Database**: `smriti001` (Tenant Data Plane for Tattly Threads).
+- **Authoritative Ingestion Source**: 60 Reliance Retail Purchase Order PDFs (`5182778151.pdf` through `5182778210.pdf`) located at `F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads\`.
+- **Target Company Database**: `tileflow001` (Tenant Data Plane for Tattly Threads).
 - **Core Entities Created**:
   - 60 Historical `SalesOrder` entities (`SO-5182778151` to `SO-5182778210`).
   - 18,036 `SalesOrderItem` line records linking to canonical products.
@@ -39,9 +38,9 @@ This document presents the formal technical walkthrough and audit trail for Phas
 - `scripts/reconcile_historical_pos.py`: Production-grade CLI engine supporting `--dry-run`, `--commit`, and automatic backup verification.
 - `scripts/test_po_extractor_all.py`: High-performance PDF parser validating 60 PO PDFs and line calculations.
 - `backend/tests/test_tattly_po_reconciliation.py`: Pytest test suite asserting the 7 core invariants of the reconciliation.
-- `docs/implementation/sales/Tattly_Threads_Historical_PO_Reconciliation_Plan_v1.0.md`: SMRITI IPGP 19-section engineering plan.
+- `docs/implementation/sales/Tattly_Threads_Historical_PO_Reconciliation_Plan_v1.0.md`: TILEFLOW IPGP 19-section engineering plan.
 - `docs/walkthrough/sales/Tattly_Threads_Historical_PO_Reconciliation_Phase1_v1.0.md`: This walkthrough document.
-- `backups/smriti001_pre_phase1_po_recon.sql`: Pre-migration PostgreSQL backup snapshot (4.52 MB).
+- `backups/tileflow001_pre_phase1_po_recon.sql`: Pre-migration PostgreSQL backup snapshot (4.52 MB).
 
 ---
 
@@ -138,7 +137,7 @@ backend\tests\test_tattly_po_reconciliation.py::test_07_no_stock_movements_or_ne
 
 ## 12. Related ADRs
 - `ADR-0012`: Sole System-of-Record Architecture (FastAPI + PostgreSQL).
-- `ADR-0024`: Multi-Tenant Isolation & Partitioning in Tenant Data Plane (`smriti001`).
+- `ADR-0024`: Multi-Tenant Isolation & Partitioning in Tenant Data Plane (`tileflow001`).
 
 ---
 

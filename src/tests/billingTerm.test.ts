@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Stitch Distributor Invoicing & Settlement Studio Unit Tests
- */
-
 import { describe, it, expect } from "vitest";
 import { Product } from "../types.ts";
 import { 
@@ -25,14 +10,14 @@ import {
   CashDenominationState
 } from "../components/billing/types.ts";
 
-describe("SMRITI — Distributor Invoicing, Settlement & PDT Import Tests", () => {
+describe("MQube — Distributor Invoicing, Settlement & PDT Import Tests", () => {
   const sampleProducts: Product[] = [
     {
       id: "prod-001",
       code: "SKU-OXF-001",
       name: "Oxford Cotton Shirt",
       barcode: "8901234567890",
-      brand: "SMRITI",
+      brand: "MQube",
       category: "Apparel",
       price: 1499.0,
       mrp: 1999.0,
@@ -45,7 +30,7 @@ describe("SMRITI — Distributor Invoicing, Settlement & PDT Import Tests", () =
       code: "SKU-DNM-002",
       name: "Slim Fit Denim Jeans",
       barcode: "8909876543210",
-      brand: "SMRITI",
+      brand: "MQube",
       category: "Apparel",
       price: 2499.0,
       mrp: 2999.0,
@@ -257,7 +242,7 @@ describe("SMRITI — Distributor Invoicing, Settlement & PDT Import Tests", () =
       size: "40",
       color: "Blue",
       gstPercentage: 12,
-      brand: "SMRITI Heritage",
+      brand: "MQube Heritage",
       category: "Apparel",
       hsnCode: "6205",
       pricingMode: "Fixed",
@@ -305,7 +290,7 @@ describe("SMRITI — Distributor Invoicing, Settlement & PDT Import Tests", () =
     expect(line.gstPercentage).toBe(12);
     expect(line.taxAmount).toBe(359.76);
     expect(line.hsnCode).toBe("6205");
-    expect(line.brand).toBe("SMRITI Heritage");
+    expect(line.brand).toBe("MQube Heritage");
     expect(line.size).toBe("40");
   });
 });

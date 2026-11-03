@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.0.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 import pytest
@@ -114,7 +100,7 @@ async def _seed_products(db_session, comp_id, br_id, count=30, suffix="pag"):
             hsn_code="6403",
             stock=i * 5,
             barcode=f"BC-{s}-{i:04d}",
-            brand="SmritiBrand",
+            brand="TileFlowBrand",
             company_id=comp_id,
             branch_id=br_id,
             is_active=True,

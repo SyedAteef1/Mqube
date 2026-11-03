@@ -10,4 +10,4 @@
 | Sales Studio | ❌ | No active endpoint routes found |
 | Billing Desk | ❌ | No active endpoint routes found |
 | CRM & Loyalty | ❌ | No active endpoint routes found |
-| About SMRITI | ❌ | No active endpoint routes found |
+| About TILEFLOW | ❌ | No active endpoint routes found |

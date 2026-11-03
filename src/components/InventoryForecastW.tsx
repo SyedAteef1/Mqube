@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 2.1.1
- * Created      : 2026-07-10
- * Modified     : 2026-07-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
 import React, { useState, useEffect } from "react";
 import { apiFetchV1 } from "../lib/apiFetchV1";
 import { TrendingDown, TrendingUp, AlertTriangle, Package, CalendarClock, RefreshCw } from "lucide-react";

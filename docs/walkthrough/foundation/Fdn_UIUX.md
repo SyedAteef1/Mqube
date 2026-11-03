@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.29.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Walkthrough — UI/UX Duplication & Hardcode Remediation (v3.29.0)
+# TILEFLOW Walkthrough — UI/UX Duplication & Hardcode Remediation (v3.29.0)
 
 ## 1. Purpose
 Eliminate hardcoded plaintext demo credentials, eliminate duplicate Indian currency number-to-words formatting logic and sub-rupee/singular bugs across Python and TypeScript, decouple parallel A4 invoice templates, remove hardcoded frontend printer IP configurations, establish a single source of truth for UI application versions, and centralize backend API target host resolution.
@@ -62,7 +61,7 @@ Eliminate hardcoded plaintext demo credentials, eliminate duplicate Indian curre
    - Created `src/config/api.ts` to manage `FASTAPI_BASE_URL` with Docker `@db:` detection and `FASTAPI_BASE_URL` environment override.
 
 ## 6. Design Rationale
-- Plaintext passwords in client-side state files pose a security risk and violate SMRITI Security Governance.
+- Plaintext passwords in client-side state files pose a security risk and violate TILEFLOW Security Governance.
 - Independent, drifting implementations of numerical formatting lead to statutory calculation discrepancies in legal tax invoices.
 - Hardcoded IP addresses in UI form state bypass database-backed per-tenant configuration (`SystemConfig`).
 

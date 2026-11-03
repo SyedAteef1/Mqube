@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.29.0
- * Created      : 2026-08-20
- * Modified     : 2026-08-20
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useMemo } from "react";
 import {
   Database,
@@ -122,7 +110,7 @@ export interface DatabaseManagerTabProps {
 export const DatabaseManagerTab: React.FC<DatabaseManagerTabProps> = ({ onNotification }) => {
   // State: Databases & Selection
   const [databases, setDatabases] = useState<DatabaseSummary[]>([]);
-  const [selectedDb, setSelectedDb] = useState<string>("smriti001");
+  const [selectedDb, setSelectedDb] = useState<string>("tileflow001");
   const [tables, setTables] = useState<TableSummary[]>([]);
   const [selectedTable, setSelectedTable] = useState<string>("");
   const [activeSubTab, setActiveSubTab] = useState<"data" | "schema" | "migrations" | "sql">("data");
@@ -162,9 +150,9 @@ export const DatabaseManagerTab: React.FC<DatabaseManagerTabProps> = ({ onNotifi
       const res = await apiFetchV1("/database-manager/databases");
       if (Array.isArray(res)) {
         setDatabases(res);
-        // Default to smriti001 or first available
+        // Default to tileflow001 or first available
         if (!selectedDb && res.length > 0) {
-          const defaultDb = res.find((d: DatabaseSummary) => d.name === "smriti001") || res[0];
+          const defaultDb = res.find((d: DatabaseSummary) => d.name === "tileflow001") || res[0];
           setSelectedDb(defaultDb.name);
         }
       }

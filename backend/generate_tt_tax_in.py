@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.8.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import io
@@ -57,8 +43,8 @@ FROZEN_BILLING_DATE_STR = "14-08-2026"
 FROZEN_BILLING_DATE_DB = datetime.date(2026, 8, 14)
 START_INVOICE_NUM = 74
 
-COMPANY_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
-CONTROL_PLANE_DB_URL = "postgresql://postgres:postgres@localhost:5432/smritisys"
+COMPANY_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+CONTROL_PLANE_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 SELLER_INFO = {
     "name": "TATTLY THREADS",
@@ -686,7 +672,7 @@ def generate_pixel_faithful_a4_html(inv: dict) -> str:
       <div class="mt-6 text-center text-gray-500 border-t border-dashed pt-2 font-mono" style="font-size: 9px;">
         <p style="margin: 0 0 2px 0;">This is a computer-generated tax invoice and does not require a physical signature.</p>
         <p class="font-bold uppercase tracking-wider text-gray-700" style="font-size: 8.5px; margin: 0 0 2px 0;">Subject to Mumbai Jurisdiction.</p>
-        <p class="font-bold text-gray-600" style="margin: 0;">SMRITI OS Retail Suite - Powered by SMRITI SYSTEMS</p>
+        <p class="font-bold text-gray-600" style="margin: 0;">TILEFLOW OS Retail Suite - Powered by TILEFLOW SYSTEMS</p>
       </div>
     </div>
   </div>
@@ -701,7 +687,7 @@ def generate_pixel_faithful_a4_html(inv: dict) -> str:
 # ==============================================================================
 async def run_batch_generation():
     print("=" * 80)
-    print("SMRITI RETAIL OS — PIXEL-FAITHFUL TT TAX INVOICE GENERATION ENGINE")
+    print("TILEFLOW RETAIL OS — PIXEL-FAITHFUL TT TAX INVOICE GENERATION ENGINE")
     print("=" * 80)
 
     # 1. Verify Excel files exist
@@ -872,7 +858,7 @@ async def run_batch_generation():
 
         current_seq += 1
 
-    # 6. Database Persistence in Company DB (`smriti001`)
+    # 6. Database Persistence in Company DB (`tileflow001`)
     comp_conn = psycopg2.connect(COMPANY_DB_URL)
     comp_cur = comp_conn.cursor()
 
@@ -947,7 +933,7 @@ async def run_batch_generation():
 
     comp_conn.commit()
     comp_conn.close()
-    print("Database persistence in smriti001 (Company Operational DB) COMPLETE.")
+    print("Database persistence in tileflow001 (Company Operational DB) COMPLETE.")
 
     # 7. Render Pixel-Faithful Statutory A4 PDFs via Playwright
     logo_uri = get_tattly_logo_base64()
@@ -1049,14 +1035,14 @@ async def run_batch_generation():
     print(f"First invoice number        : {generated_pdfs[0]['invoice_no']}")
     print(f"Last invoice number         : {generated_pdfs[-1]['invoice_no']}")
     print(f"Billing date                : {FROZEN_BILLING_DATE_STR} (DB: {FROZEN_BILLING_DATE_DB})")
-    print(f"Company DB used             : smriti001")
+    print(f"Company DB used             : tileflow001")
     print(f"Total line items            : {total_line_items_sum}")
     print(f"Total quantity (Pairs)      : {total_qty_sum}")
     print(f"Total taxable value         : ₹{total_taxable_sum:,.2f}")
     print(f"Total GST                   : ₹{total_tax_sum:,.2f}")
     print(f"Total invoice value         : ₹{total_invoice_val_sum:,.2f}")
     print(f"PDF files generated         : {len(generated_pdfs)}")
-    print(f"smritisys operational count : {ctrl_inv_count} (Must be 0)")
+    print(f"tileflowsys operational count : {ctrl_inv_count} (Must be 0)")
     print("=" * 80)
 
 

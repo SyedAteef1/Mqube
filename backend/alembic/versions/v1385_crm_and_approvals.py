@@ -1,13 +1,3 @@
-"""v1385 -- CRM and Approvals module tables.
-
-Revision ID: v1385_crm_and_approvals
-Revises: v1384_company_code_constraint
-Create Date: 2026-08-30 00:00:00.000000
-
-Project      : SMRITI Retail OS
-Author       : Migration Integrity Protocol
-Description  : Add CRM (leads, opportunities, campaigns, activities) and Approvals (policies, requests, actions) module tables for v3.25.0 canonical schema.
-"""
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
@@ -20,7 +10,7 @@ depends_on = None
 
 
 def upgrade() -> None:
-    # crm_leads - SMRITI Commercial Growth Engine Lead Master
+    # crm_leads - TILEFLOW Commercial Growth Engine Lead Master
     op.create_table(
         'crm_leads',
         sa.Column('id', sa.String(50), nullable=False),
@@ -43,7 +33,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_crm_leads_email'), 'crm_leads', ['email'], unique=False, schema='public')
     op.create_index(op.f('ix_crm_leads_mobile'), 'crm_leads', ['mobile'], unique=False, schema='public')
 
-    # crm_opportunities - SMRITI Commercial Growth Engine Deal Pipeline
+    # crm_opportunities - TILEFLOW Commercial Growth Engine Deal Pipeline
     op.create_table(
         'crm_opportunities',
         sa.Column('id', sa.String(50), nullable=False),

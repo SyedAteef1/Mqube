@@ -1,30 +1,5 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
-import { SmritiScrollArea } from "./SmritiScrollArea.js";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.js";
 import { apiFetchV1 } from "../lib/apiFetchV1.ts";
 
 export const AccountingSyncTab: React.FC = () => {
@@ -93,7 +68,7 @@ export const AccountingSyncTab: React.FC = () => {
         </div>
       </div>
 
-      <SmritiScrollArea className="flex-1 p-6">
+      <TileFlowScrollArea className="flex-1 p-6">
         <div className="max-w-4xl mx-auto space-y-6">
           {activeSubTab === "export" && (
           <div className="bg-white dark:bg-slate-950 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
@@ -195,7 +170,7 @@ export const AccountingSyncTab: React.FC = () => {
 
           {activeSubTab === "mapping" && (
             <div className="bg-white dark:bg-slate-950 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm text-center text-slate-500">
-              Tally Ledger to SMRITI Category Mappings will appear here.
+              Tally Ledger to MQube Category Mappings will appear here.
             </div>
           )}
 
@@ -203,11 +178,11 @@ export const AccountingSyncTab: React.FC = () => {
             <span className="material-symbols-outlined text-amber-600 dark:text-amber-500">info</span>
             <div className="text-sm text-amber-800 dark:text-amber-400">
               <p className="font-semibold mb-1">Accounting Policy Note</p>
-              <p>SMRITI Retail OS acts as the operational source of truth. All complex accounting, taxation, and final GL consolidation should be performed in TallyPrime. Ensure your ledger names mapped in SMRITI perfectly match your Tally chart of accounts.</p>
+              <p>MQube acts as the operational source of truth. All complex accounting, taxation, and final GL consolidation should be performed in TallyPrime. Ensure your ledger names mapped in MQube perfectly match your Tally chart of accounts.</p>
             </div>
           </div>
         </div>
-      </SmritiScrollArea>
+      </TileFlowScrollArea>
     </div>
   );
 };

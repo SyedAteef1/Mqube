@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-14
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys, os
 import pytest
 import asyncio
@@ -30,7 +16,7 @@ from app.core.security import create_access_token
 BASE_URL = "http://test/api/v1"
 
 sysadmin_user_a = User(id="usr-super", username="usr_super", role=UserRole.SYSADMIN, company_id="COMP-001", branch_id="MAIN", is_active=True, is_deleted=False)
-# COMP-002 is registered in smritisys.company_database_registries -> smriti002 (READY).
+# COMP-002 is registered in tileflowsys.company_database_registries -> tileflow002 (READY).
 # Using COMPANY_B (fictitious code) caused 403 fail-closed from resolve_company_database_name.
 sysadmin_user_b = User(id="usr-super", username="usr_super", role=UserRole.SYSADMIN, company_id="COMP-002", branch_id="BR-002", is_active=True, is_deleted=False)
 cashier_user = User(id="usr-cashier", username="usr_cashier", role=UserRole.CASHIER, company_id="comp-default", branch_id="br-default", is_active=True, is_deleted=False)
@@ -38,9 +24,9 @@ cashier_user = User(id="usr-cashier", username="usr_cashier", role=UserRole.CASH
 from sqlalchemy.pool import NullPool
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
-# Architecture Rule: Sales invoices are operational data -> Company DB (smriti001).
-# The test session MUST target smriti001, not smritisys (Control Plane).
-COMPANY_001_ASYNC_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001"
+# Architecture Rule: Sales invoices are operational data -> Company DB (tileflow001).
+# The test session MUST target tileflow001, not tileflowsys (Control Plane).
+COMPANY_001_ASYNC_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001"
 test_engine = create_async_engine(COMPANY_001_ASYNC_URL, poolclass=NullPool)
 test_sessionmaker = async_sessionmaker(bind=test_engine, class_=AsyncSession, expire_on_commit=False)
 
@@ -88,7 +74,7 @@ def auth_headers_company_a():
 
 @pytest.fixture
 def auth_headers_company_b():
-    # COMP-002 is the registered company_id for smriti002 in smritisys.company_database_registries.
+    # COMP-002 is the registered company_id for tileflow002 in tileflowsys.company_database_registries.
     token = create_access_token({"sub": "usr-super", "company_id": "COMP-002", "branch_id": "BR-002"})
     return {
         "Authorization": f"Bearer {token}",
@@ -114,7 +100,7 @@ async def test_02_multi_tenant_routing_company_b(auth_headers_company_b):
         assert res.status_code == 200
         invoices = res.json()
         assert isinstance(invoices, list)
-        # smriti002 may contain existing invoices from prior migrations.
+        # tileflow002 may contain existing invoices from prior migrations.
         # The architectural invariant is: SYSADMIN can route to COMP-002 and get a 200.
 
 @pytest.mark.asyncio

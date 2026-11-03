@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.4
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Foundation — Alembic Schema Unification Walkthrough (v3.14.4)
 
 ## 1. Purpose
-This walkthrough documents the unification of the SMRITI database schema initialization under Alembic migrations, deprecating the Express-side direct execution of `schema.sql` (DDL). This guarantees a single source of truth for the database layout across both Node.js and Python container instances, preventing discrepancies.
+This walkthrough documents the unification of the TILEFLOW database schema initialization under Alembic migrations, deprecating the Express-side direct execution of `schema.sql` (DDL). This guarantees a single source of truth for the database layout across both Node.js and Python container instances, preventing discrepancies.
 
 ## 2. Scope
 The scope of this refactoring encompasses:
@@ -51,7 +50,7 @@ Separating the database layout definition from the Node container and unifying i
 ## 8. Tests Executed
 Backend test suite executed inside the container:
 ```bash
-docker exec -e PYTHONPATH=/app smriti-python-core python -m pytest
+docker exec -e PYTHONPATH=/app tileflow-python-core python -m pytest
 ```
 
 ## 9. Verification Results

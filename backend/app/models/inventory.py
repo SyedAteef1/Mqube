@@ -1,18 +1,5 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.21.0
- * Created      : 2026-07-11
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- """
-
 from datetime import datetime, timezone
-from sqlalchemy import Column, String, Numeric, Boolean, Integer, BigInteger, Index, ForeignKey, Text, text
+from sqlalchemy import CheckConstraint, Column, String, Numeric, Boolean, Integer, BigInteger, Index, ForeignKey, Text, text
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from ..db.base import BaseEntity
 
@@ -38,7 +25,7 @@ class Product(BaseEntity):
     buying_price = Column(Numeric(15, 2))
     cost_price = Column(Numeric(15, 2))
     sku = Column(String(100), unique=True)
-    hsn_code = Column(String(15), default="6403", server_default="6403")
+    hsn_code = Column(String(15), default="6907", server_default="6907")
     pricing_mode = Column(String(30), default="Fixed")
     tracking_mode = Column(String(30), default="Standard")
     variant_template_id = Column(String(50))
@@ -56,6 +43,12 @@ class Product(BaseEntity):
     sourcing_mode_override = Column(String(30))
     tenant_id = Column(String(50))
     workflow_status = Column(String(30), default="Approved")
+
+    # Tile & sanitaryware attributes; sqft_per_box drives Sq.Ft. to box billing
+    sqft_per_box = Column(Numeric(10, 4), nullable=True)
+    pieces_per_box = Column(Integer, nullable=True)
+    batch_shade_no = Column(String(100), nullable=True)
+    caliber_code = Column(String(50), nullable=True)
 
     __table_args__ = (
         Index("idx_products_attributes", "attributes", postgresql_using="gin"),
@@ -88,6 +81,11 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import relationship
 from ..db.base import BaseEntity
+
+
+class LocationType(str, enum.Enum):
+    SHOWROOM = "SHOWROOM"  # Sales & billing counter
+    GODOWN = "GODOWN"      # Warehouse stock & dispatch
 
 
 class TransferStatus(str, enum.Enum):
@@ -149,6 +147,7 @@ class Warehouse(BaseEntity):
     name = Column(String(200), nullable=False)
     is_transit = Column(Boolean, default=False)
     is_central_godown = Column(Boolean, default=False)
+    location_type = Column(String(20), nullable=False, default=LocationType.GODOWN.value, server_default=LocationType.GODOWN.value)
     address = Column(Text, nullable=True)
     city = Column(String(100), nullable=True)
     state = Column(String(100), nullable=True)
@@ -161,6 +160,25 @@ class Warehouse(BaseEntity):
             "uq_company_warehouse_code_active",
             "company_id",
             "code",
+            unique=True,
+            postgresql_where=text("is_deleted = false"),
+        ),
+        CheckConstraint("location_type IN ('SHOWROOM', 'GODOWN')", name="ck_warehouses_location_type"),
+    )
+
+
+class TileGroup(BaseEntity):
+    """A stock group such as Floor Tiles; products join it through Product.category."""
+    __tablename__ = "tile_groups"
+
+    name = Column(String(100), nullable=False)
+    description = Column(Text, nullable=True)
+
+    __table_args__ = (
+        Index(
+            "uq_company_tile_group_active",
+            "company_id",
+            text("lower(name)"),
             unique=True,
             postgresql_where=text("is_deleted = false"),
         ),

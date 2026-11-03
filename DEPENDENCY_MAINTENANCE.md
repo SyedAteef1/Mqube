@@ -1,4 +1,4 @@
-# Dependency Maintenance Guide — SMRITI Retail OS
+# Dependency Maintenance Guide — TILEFLOW Retail OS
 
 **Date**: 2026-08-31  
 **Version**: 3.30.0  
@@ -21,7 +21,7 @@ set -e
 echo "====== NPM Dependency Audit ======"
 echo "Date: $(date)"
 
-cd /opt/smriti
+cd /opt/tileflow
 
 # Run audit and capture results
 npm audit --audit-level=moderate > audit-report.json 2>&1 || true
@@ -39,7 +39,7 @@ if [ "$CRITICAL" -gt 0 ]; then
     
     # Send alert to ops team
     curl -X POST https://hooks.slack.com/services/YOUR/WEBHOOK/URL \
-      -d '{"text":"⚠️ CRITICAL: NPM vulnerabilities detected in SMRITI"}'
+      -d '{"text":"⚠️ CRITICAL: NPM vulnerabilities detected in TILEFLOW"}'
     
     exit 1
 fi
@@ -49,13 +49,13 @@ if [ "$HIGH" -gt 0 ]; then
     npm audit --audit-level=high
 fi
 
-echo "Audit complete: $(date)" >> /var/log/smriti-maintenance.log
+echo "Audit complete: $(date)" >> /var/log/tileflow-maintenance.log
 ```
 
 **Add to crontab**:
 ```bash
 # Run npm audit every Monday at 9 AM
-0 9 * * MON /opt/smriti/scripts/audit-npm.sh
+0 9 * * MON /opt/tileflow/scripts/audit-npm.sh
 
 # Run npm audit on every PR (via GitHub Actions - see CI/CD pipeline)
 ```
@@ -73,7 +73,7 @@ set -e
 echo "====== Python Dependency Audit ======"
 echo "Date: $(date)"
 
-cd /opt/smriti/backend
+cd /opt/tileflow/backend
 
 # Install safety if not present
 pip install --quiet safety
@@ -92,18 +92,18 @@ if [ "$VULN_COUNT" -gt 0 ]; then
     
     # Send alert
     curl -X POST https://hooks.slack.com/services/YOUR/WEBHOOK/URL \
-      -d '{"text":"⚠️ ALERT: Python vulnerabilities detected in SMRITI"}'
+      -d '{"text":"⚠️ ALERT: Python vulnerabilities detected in TILEFLOW"}'
     
     exit 1
 fi
 
-echo "Audit complete: $(date)" >> /var/log/smriti-maintenance.log
+echo "Audit complete: $(date)" >> /var/log/tileflow-maintenance.log
 ```
 
 **Add to crontab**:
 ```bash
 # Run pip audit every Tuesday at 9 AM
-0 9 * * TUE /opt/smriti/scripts/audit-pip.sh
+0 9 * * TUE /opt/tileflow/scripts/audit-pip.sh
 ```
 
 ---
@@ -118,7 +118,7 @@ echo "Audit complete: $(date)" >> /var/log/smriti-maintenance.log
 # scripts/update-npm-safe.sh
 # Run monthly on 1st of month
 
-cd /opt/smriti
+cd /opt/tileflow
 
 # Update minor and patch versions (safe)
 npm update --save
@@ -141,7 +141,7 @@ fi
 # scripts/check-npm-major.sh
 # Run quarterly (check for breaking changes)
 
-cd /opt/smriti
+cd /opt/tileflow
 
 # Check for available major updates
 echo "Checking for major npm updates..."
@@ -160,10 +160,10 @@ echo "  5. Create PR for review"
 **Add to crontab**:
 ```bash
 # Minor/patch updates: 1st of month at 2 AM
-0 2 1 * * /opt/smriti/scripts/update-npm-safe.sh
+0 2 1 * * /opt/tileflow/scripts/update-npm-safe.sh
 
 # Check for major updates: quarterly (1st, 4th, 7th, 10th month)
-0 3 1 1,4,7,10 * /opt/smriti/scripts/check-npm-major.sh
+0 3 1 1,4,7,10 * /opt/tileflow/scripts/check-npm-major.sh
 ```
 
 ### Backend: pip Update Strategy
@@ -173,7 +173,7 @@ echo "  5. Create PR for review"
 #!/bin/bash
 # scripts/update-pip-safe.sh
 
-cd /opt/smriti/backend
+cd /opt/tileflow/backend
 
 # Create temp venv to test updates
 python -m venv test_venv
@@ -200,7 +200,7 @@ rm -rf test_venv
 **Add to crontab**:
 ```bash
 # Pip minor/patch updates: 3rd of month at 2 AM
-0 2 3 * * /opt/smriti/scripts/update-pip-safe.sh
+0 2 3 * * /opt/tileflow/scripts/update-pip-safe.sh
 ```
 
 ---
@@ -433,20 +433,7 @@ pip freeze > requirements-snapshot.txt
 # For audit/compliance purposes
 ```
 
-### License Compliance
 
-**Check dependency licenses** (to avoid GPL conflicts):
-```bash
-# Frontend
-npm install -g license-report
-license-report --only=prod > LICENSE_REPORT.md
-
-# Backend
-pip install pip-licenses
-pip-licenses --format=csv > LICENSE_REPORT.csv
-```
-
----
 
 ## 7. Dependency Update Checklist
 
@@ -508,7 +495,7 @@ alembic upgrade head
 | npm major update check | Quarterly | Dev Team | Review manually, create PR |
 | pip minor/patch update | Monthly | CI/CD | Auto-create PR, test, merge if green |
 | Dependabot review | As needed | Dev Team | Approve/merge security updates |
-| License compliance | Quarterly | Compliance | Review SBOM, flag GPL/incompatible licenses |
+
 | Security advisories | Real-time | GitHub | Via email/webhook notifications |
 
 ---

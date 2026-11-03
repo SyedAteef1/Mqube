@@ -1,23 +1,11 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-07-11
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
-os.environ.setdefault("JWT_SECRET_KEY", "dev-test-jwt-secret-key-32-chars-long-smriti")
+os.environ.setdefault("JWT_SECRET_KEY", "dev-test-jwt-secret-key-32-chars-long-tileflow")
 os.environ.setdefault("INTERNAL_SERVICE_KEY", "dev-test-internal-service-key-32-chars")
 import asyncio
 import sys
 
 import pytest
+from sqlalchemy import text
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
@@ -36,16 +24,39 @@ def event_loop():
     yield loop
     loop.close()
 
+async def _company_ids():
+    engine = create_async_engine(settings.DATABASE_URL)
+    async with engine.connect() as conn:
+        ids = set((await conn.execute(text("SELECT id FROM companies"))).scalars().all())
+    await engine.dispose()
+    return ids
+
+
+async def _retire_companies_not_in(existing_ids):
+    """Tests share the local app database, so hide their companies from the workspace picker."""
+    engine = create_async_engine(settings.DATABASE_URL)
+    async with engine.begin() as conn:
+        await conn.execute(
+            text("UPDATE companies SET is_active = false WHERE NOT (id = ANY(:ids))"),
+            {"ids": list(existing_ids)},
+        )
+    await engine.dispose()
+
+
 @pytest.fixture(scope="session", autouse=True)
 def restore_baseline_after_tests():
     """Restores development baseline users and companies after pytest completes."""
+    existing_ids = asyncio.run(_company_ids())
     yield
+    try:
+        asyncio.run(_retire_companies_not_in(existing_ids))
+    except Exception as e:
+        print(f"[conftest] Post-test company cleanup error: {e}")
     try:
         try:
             from app.db.seed_baseline_users import seed
         except ImportError:
             from backend.app.db.seed_baseline_users import seed
-        import asyncio
         asyncio.run(seed())
     except Exception as e:
         print(f"[conftest] Post-test seed error: {e}")
@@ -127,7 +138,7 @@ async def db_engine():
                 "CREATE UNIQUE INDEX IF NOT EXISTS uq_sales_return_idempotency_active ON sales_returns (company_id, branch_id, idempotency_key) WHERE is_deleted = false AND idempotency_key IS NOT NULL;",
                 "ALTER TABLE IF EXISTS products ALTER COLUMN mrp SET DEFAULT 0.00;",
                 "ALTER TABLE IF EXISTS products ALTER COLUMN gst_percentage SET DEFAULT 18.00;",
-                "ALTER TABLE IF EXISTS products ALTER COLUMN hsn_code SET DEFAULT '6403';",
+                "ALTER TABLE IF EXISTS products ALTER COLUMN hsn_code SET DEFAULT '6907';",
                 "ALTER TABLE IF EXISTS products ALTER COLUMN mrp DROP NOT NULL;",
             ]
             for stmt in statements:
@@ -252,11 +263,11 @@ async def clear_db(db_session: AsyncSession):
         "company_tax_profiles",
         "company_database_registry",
         "company_center",
-        "smriti_theme_variants",
-        "smriti_themes",
-        "smriti_workspace_profiles",
-        "smriti_menus",
-        "smriti_audit_log",
+        "tileflow_theme_variants",
+        "tileflow_themes",
+        "tileflow_workspace_profiles",
+        "tileflow_menus",
+        "tileflow_audit_log",
         "audit_logs",
         "tenants",
         "companies"

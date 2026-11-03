@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.15.0
- * Created      : 2026-07-12
- * Modified     : 2026-07-12
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import { describe, it, expect } from 'vitest';
 import { calculateItemGstRate, hashPassword, verifyPassword, resolveTermsText, buildSafeFallback } from '../lib/helpers.js';
 
@@ -59,8 +46,8 @@ describe('helpers.ts Unit Tests', () => {
     });
 
     it('should verify legacy plaintext passwords', () => {
-      expect(verifyPassword('smriti123', 'smriti123')).toBe(true);
-      expect(verifyPassword('wrongpass', 'smriti123')).toBe(false);
+      expect(verifyPassword('tileflow123', 'tileflow123')).toBe(true);
+      expect(verifyPassword('wrongpass', 'tileflow123')).toBe(false);
     });
   });
 

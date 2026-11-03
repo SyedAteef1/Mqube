@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from "react";
 import { 
   TrendingUp, 
@@ -26,7 +12,7 @@ import {
   PieChart
 } from "lucide-react";
 
-export const SmritiDailyReportsDashDashboard: React.FC = () => {
+export const TileFlowDailyReportsDashDashboard: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().slice(0, 10));
 
   const HOURLY_SALES = [
@@ -49,17 +35,17 @@ export const SmritiDailyReportsDashDashboard: React.FC = () => {
   ];
 
   return (
-    <div className="h-full flex flex-col bg-[#f8f9fa] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] overflow-y-auto p-6 font-sans">
+    <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] overflow-y-auto p-6 font-sans">
       <div className="max-w-6xl mx-auto w-full space-y-6">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c4c5d5] dark:border-[#444653]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c6c6c6] dark:border-[#474747]">
           <div>
-            <h1 className="text-xl font-bold text-[#00288e] dark:text-[#a8b8ff] flex items-center gap-2">
+            <h1 className="text-xl font-bold text-[#272727] dark:text-[#bababa] flex items-center gap-2">
               <BarChart3 size={22} />
               ProPOS Daily Sales &amp; Shift Analytics
             </h1>
-            <p className="text-xs text-[#565e74] dark:text-[#bec6e0] mt-0.5">
+            <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6] mt-0.5">
               Live intraday performance, hourly rush hours, and cashier performance breakdown.
             </p>
           </div>
@@ -69,12 +55,12 @@ export const SmritiDailyReportsDashDashboard: React.FC = () => {
               type="date"
               value={selectedDate}
               onChange={e => setSelectedDate(e.target.value)}
-              className="px-3 py-1.5 border border-[#c4c5d5] dark:border-[#444653] rounded-xl bg-white dark:bg-[#2d3133] text-xs font-semibold outline-none"
+              className="px-3 py-1.5 border border-[#c6c6c6] dark:border-[#474747] rounded-xl bg-white dark:bg-[#303030] text-xs font-semibold outline-none"
             />
             <button
               type="button"
               onClick={() => window.print()}
-              className="px-4 py-2 bg-[#00288e] text-white rounded-xl text-xs font-bold hover:bg-[#1e40af] transition flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-2 bg-[#272727] text-white rounded-xl text-xs font-bold hover:bg-[#414141] transition flex items-center gap-1.5 shadow-sm"
             >
               <Download size={14} />
               Export Daily Report
@@ -83,13 +69,13 @@ export const SmritiDailyReportsDashDashboard: React.FC = () => {
         </div>
 
         {/* Hourly Rush Bar Matrix */}
-        <div className="bg-white dark:bg-[#2d3133] p-6 rounded-2xl border border-[#c4c5d5] dark:border-[#444653] shadow-xs space-y-4">
-          <div className="flex justify-between items-center pb-2 border-b border-[#eceef0] dark:border-[#444653]">
-            <h3 className="text-sm font-bold text-[#191c1d] dark:text-white uppercase tracking-wider flex items-center gap-2">
-              <Clock size={16} className="text-[#00288e]" />
+        <div className="bg-white dark:bg-[#303030] p-6 rounded-2xl border border-[#c6c6c6] dark:border-[#474747] shadow-xs space-y-4">
+          <div className="flex justify-between items-center pb-2 border-b border-[#eeeeee] dark:border-[#474747]">
+            <h3 className="text-sm font-bold text-[#1b1b1b] dark:text-white uppercase tracking-wider flex items-center gap-2">
+              <Clock size={16} className="text-[#272727]" />
               Hourly Sales &amp; Customer Footfall Trend
             </h3>
-            <span className="text-xs text-[#565e74] font-mono font-bold">Peak Rush: 06:00 PM - 07:00 PM</span>
+            <span className="text-xs text-[#5e5e5e] font-mono font-bold">Peak Rush: 06:00 PM - 07:00 PM</span>
           </div>
 
           <div className="grid grid-cols-10 gap-2 h-44 items-end pt-4">
@@ -98,15 +84,15 @@ export const SmritiDailyReportsDashDashboard: React.FC = () => {
               const heightPct = Math.round((h.sales / maxSale) * 100);
               return (
                 <div key={h.hour} className="flex flex-col items-center gap-1.5 h-full justify-end group">
-                  <span className="text-[10px] font-mono font-bold text-[#00288e] dark:text-[#a8b8ff] opacity-0 group-hover:opacity-100 transition">
+                  <span className="text-[10px] font-mono font-bold text-[#272727] dark:text-[#bababa] opacity-0 group-hover:opacity-100 transition">
                     ₹{(h.sales / 1000).toFixed(1)}k
                   </span>
                   <div
                     style={{ height: `${heightPct}%` }}
-                    className="w-full bg-[#00288e] hover:bg-[#1e40af] rounded-t-lg transition shadow-xs cursor-pointer"
+                    className="w-full bg-[#272727] hover:bg-[#414141] rounded-t-lg transition shadow-xs cursor-pointer"
                     title={`${h.hour}: ₹${h.sales.toLocaleString()} (${h.bills} bills)`}
                   ></div>
-                  <span className="text-[9px] font-mono text-[#565e74] dark:text-[#bec6e0] truncate w-full text-center">
+                  <span className="text-[9px] font-mono text-[#5e5e5e] dark:text-[#c6c6c6] truncate w-full text-center">
                     {h.hour.split(" ")[0]}
                   </span>
                 </div>
@@ -116,14 +102,14 @@ export const SmritiDailyReportsDashDashboard: React.FC = () => {
         </div>
 
         {/* Cashier & Register Performance */}
-        <div className="bg-white dark:bg-[#2d3133] p-6 rounded-2xl border border-[#c4c5d5] dark:border-[#444653] shadow-xs space-y-4">
-          <h3 className="text-sm font-bold text-[#191c1d] dark:text-white uppercase tracking-wider flex items-center gap-2 pb-2 border-b border-[#eceef0] dark:border-[#444653]">
-            <Users size={16} className="text-[#00288e]" />
+        <div className="bg-white dark:bg-[#303030] p-6 rounded-2xl border border-[#c6c6c6] dark:border-[#474747] shadow-xs space-y-4">
+          <h3 className="text-sm font-bold text-[#1b1b1b] dark:text-white uppercase tracking-wider flex items-center gap-2 pb-2 border-b border-[#eeeeee] dark:border-[#474747]">
+            <Users size={16} className="text-[#272727]" />
             Cashier Shift Breakdown &amp; Average Basket Value
           </h3>
 
           <table className="w-full text-left border-collapse text-xs">
-            <thead className="bg-[#f8f9fa] dark:bg-[#131b2e] text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] border-b border-[#c4c5d5] dark:border-[#444653]">
+            <thead className="bg-[#f9f9f9] dark:bg-[#1b1b1b] text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] border-b border-[#c6c6c6] dark:border-[#474747]">
               <tr>
                 <th className="px-4 py-3">Cashier / Terminal</th>
                 <th className="px-4 py-3 text-center">Bills Count</th>
@@ -132,12 +118,12 @@ export const SmritiDailyReportsDashDashboard: React.FC = () => {
                 <th className="px-4 py-3 text-center">Returns</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+            <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
               {CASHIER_STATS.map(c => (
-                <tr key={c.name} className="hover:bg-[#f8f9fa] dark:hover:bg-[#131b2e] transition">
+                <tr key={c.name} className="hover:bg-[#f9f9f9] dark:hover:bg-[#1b1b1b] transition">
                   <td className="px-4 py-3 font-bold">{c.name}</td>
                   <td className="px-4 py-3 text-center font-mono">{c.bills}</td>
-                  <td className="px-4 py-3 text-right font-mono font-bold text-[#00288e] dark:text-[#a8b8ff]">
+                  <td className="px-4 py-3 text-right font-mono font-bold text-[#272727] dark:text-[#bababa]">
                     ₹{c.totalSales.toLocaleString()}
                   </td>
                   <td className="px-4 py-3 text-right font-mono">₹{c.avgTicket}</td>
@@ -153,4 +139,4 @@ export const SmritiDailyReportsDashDashboard: React.FC = () => {
   );
 };
 
-export default SmritiDailyReportsDashDashboard;
+export default TileFlowDailyReportsDashDashboard;

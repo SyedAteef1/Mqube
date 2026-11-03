@@ -2,11 +2,11 @@
 title: "Sprint 25: P1.2 Capability & Module Registry (Control Plane)"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
@@ -39,7 +39,7 @@ This sprint fulfills **Blueprint Section 4: P1 Control Plane Completion (P1.2 Ca
 
 ## 5. Architecture Decisions
 - **Fail-Closed Dependency Guards**: Disabling a prerequisite capability (e.g. `INVENTORY`) while dependent capabilities (e.g. `POS`, `WMS`, `SALES`) remain active is rejected with HTTP 400 unless explicit cascading is forced.
-- **Tenant Context Isolation**: Platform catalog metadata queries the `smritisys` control plane, while company-specific activations query and write to the tenant database connection (`get_company_db`).
+- **Tenant Context Isolation**: Platform catalog metadata queries the `tileflowsys` control plane, while company-specific activations query and write to the tenant database connection (`get_company_db`).
 - **Feature Flag Layering**: Evaluates flags hierarchically: `global_default` overlaid by `company_overrides[company_id]`.
 
 ## 6. Design Rationale

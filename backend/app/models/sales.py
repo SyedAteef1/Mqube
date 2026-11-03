@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.18.0
-Created      : 2026-07-11
-Modified     : 2026-08-18
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from datetime import datetime, timezone
 from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey, Date, Text, text
 from sqlalchemy.orm import relationship
@@ -111,6 +97,10 @@ class SalesInvoiceItem(Base):
     cgst_amount  = Column(Numeric(15, 2), default=0.00)
     sgst_amount  = Column(Numeric(15, 2), default=0.00)
     line_no      = Column(Integer)
+    # Tile lines: quantity holds boxes; these keep the area the customer asked for and received
+    sqft_requested = Column(Numeric(12, 4))
+    sqft_per_box   = Column(Numeric(10, 4))
+    sqft_billed    = Column(Numeric(12, 4))
 
     # Relationships
     invoice = relationship("SalesInvoice", back_populates="items")

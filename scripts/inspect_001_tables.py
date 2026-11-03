@@ -1,10 +1,10 @@
 import psycopg2
 
-conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
 cur = conn.cursor()
 cur.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';")
 tables = [r[0] for r in cur.fetchall()]
-print("=== TABLES WITH ROWS IN smriti001 ===")
+print("=== TABLES WITH ROWS IN tileflow001 ===")
 for t in tables:
     try:
         cur.execute(f"SELECT count(*) FROM {t};")

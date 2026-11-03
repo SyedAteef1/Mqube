@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import base64
 import hashlib
 import hmac
@@ -38,7 +24,7 @@ async def test_resolver_omits_credentials_and_connection_urls():
     )
     assert "connection_url" not in res, "connection_url must not be exposed by resolver"
     assert "password" not in res, "database password must not be exposed by resolver"
-    assert res["database_name"] == "smriti001"
+    assert res["database_name"] == "tileflow001"
     assert res["database_status"] == "READY"
     assert res["company_id"] == "COMP-001"
     assert res["company_code"] == "001"
@@ -209,7 +195,7 @@ def test_production_security_configuration_fails_closed():
     old_jwt = os.environ.get("JWT_SECRET_KEY")
     try:
         os.environ["ENVIRONMENT"] = "production"
-        os.environ["JWT_SECRET_KEY"] = "dev-test-jwt-secret-key-32-chars-long-smriti"
+        os.environ["JWT_SECRET_KEY"] = "dev-test-jwt-secret-key-32-chars-long-tileflow"
         with pytest.raises(ValueError) as exc:
             load_settings()
         assert "SECURITY FAULT" in str(exc.value)

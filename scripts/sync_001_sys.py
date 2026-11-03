@@ -1,16 +1,16 @@
 """
-Sync schema columns and business data (invoices, products, customers) from smriti001 to smritisys.
+Sync schema columns and business data (invoices, products, customers) from tileflow001 to tileflowsys.
 """
 import psycopg2
 
 def sync():
-    conn_src = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
-    conn_dst = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn_src = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
+    conn_dst = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     conn_dst.autocommit = True
     cur_src = conn_src.cursor()
     cur_dst = conn_dst.cursor()
 
-    # 1. Sync missing columns from smriti001 to smritisys for all tables
+    # 1. Sync missing columns from tileflow001 to tileflowsys for all tables
     cur_src.execute("SELECT table_name FROM information_schema.tables WHERE table_schema='public';")
     tables = [r[0] for r in cur_src.fetchall()]
 
@@ -97,8 +97,8 @@ def sync():
         except Exception as e:
             print(f"  Error syncing {t}: {e}")
 
-    # Verify final count in smritisys
-    print("\n=== FINAL VERIFICATION IN smritisys ===")
+    # Verify final count in tileflowsys
+    print("\n=== FINAL VERIFICATION IN tileflowsys ===")
     for t in ["products", "sales_invoices", "sales_invoice_items", "customers"]:
         cur_dst.execute(f"SELECT count(*) FROM {t};")
         c = cur_dst.fetchone()[0]

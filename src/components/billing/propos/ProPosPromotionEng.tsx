@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState } from "react";
 import { PromotionRule } from "./types.ts";
 import { 
@@ -28,7 +14,7 @@ import {
   Filter
 } from "lucide-react";
 
-export const SmritiPromotionEngineine: React.FC = () => {
+export const TileFlowPromotionEngineine: React.FC = () => {
   const [promotions, setPromotions] = useState<PromotionRule[]>([
     {
       id: "promo-1",
@@ -83,17 +69,17 @@ export const SmritiPromotionEngineine: React.FC = () => {
   };
 
   return (
-    <div className="h-full flex flex-col bg-[#f8f9fa] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] overflow-y-auto p-6 font-sans">
+    <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] overflow-y-auto p-6 font-sans">
       <div className="max-w-6xl mx-auto w-full space-y-6">
         
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c4c5d5] dark:border-[#444653]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c6c6c6] dark:border-[#474747]">
           <div>
-            <h1 className="text-xl font-bold text-[#00288e] dark:text-[#a8b8ff] flex items-center gap-2">
+            <h1 className="text-xl font-bold text-[#272727] dark:text-[#bababa] flex items-center gap-2">
               <Sparkles size={22} />
               ProPOS Promotion &amp; Discount Engine
             </h1>
-            <p className="text-xs text-[#565e74] dark:text-[#bec6e0] mt-0.5">
+            <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6] mt-0.5">
               Automated campaign rules, Buy X Get Y, basket thresholds, and time-based triggers.
             </p>
           </div>
@@ -101,7 +87,7 @@ export const SmritiPromotionEngineine: React.FC = () => {
           <div className="flex items-center gap-3">
             <button
               type="button"
-              className="px-4 py-2 bg-[#00288e] text-white rounded-xl text-xs font-bold hover:bg-[#1e40af] transition flex items-center gap-1.5 shadow-sm"
+              className="px-4 py-2 bg-[#272727] text-white rounded-xl text-xs font-bold hover:bg-[#414141] transition flex items-center gap-1.5 shadow-sm"
             >
               <Plus size={14} />
               New Promotion Rule
@@ -114,18 +100,18 @@ export const SmritiPromotionEngineine: React.FC = () => {
           {filteredPromos.map(p => (
             <div
               key={p.id}
-              className="bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4 hover:shadow-md transition"
+              className="bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] rounded-2xl p-5 shadow-xs flex flex-col justify-between space-y-4 hover:shadow-md transition"
             >
               <div className="space-y-2">
                 <div className="flex justify-between items-start">
-                  <span className="px-2.5 py-0.5 bg-[#dde1ff] dark:bg-[#1e40af] text-[#00288e] dark:text-white rounded-lg text-[10px] font-bold font-mono uppercase">
+                  <span className="px-2.5 py-0.5 bg-[#e2e2e2] dark:bg-[#414141] text-[#272727] dark:text-white rounded-lg text-[10px] font-bold font-mono uppercase">
                     {p.code}
                   </span>
                   <button
                     type="button"
                     onClick={() => togglePromoStatus(p.id)}
                     className={`px-2 py-0.5 rounded text-[10px] font-bold transition flex items-center gap-1 ${
-                      p.isActive ? "bg-[#dcfce7] text-[#166534]" : "bg-[#f3f4f5] text-[#565e74]"
+                      p.isActive ? "bg-[#dcfce7] text-[#166534]" : "bg-[#f4f4f4] text-[#5e5e5e]"
                     }`}
                   >
                     {p.isActive ? <CheckCircle size={11} /> : <PauseCircle size={11} />}
@@ -133,18 +119,18 @@ export const SmritiPromotionEngineine: React.FC = () => {
                   </button>
                 </div>
 
-                <h3 className="text-sm font-bold text-[#191c1d] dark:text-white leading-tight">
+                <h3 className="text-sm font-bold text-[#1b1b1b] dark:text-white leading-tight">
                   {p.name}
                 </h3>
-                <p className="text-xs text-[#565e74] dark:text-[#bec6e0]">{p.description}</p>
+                <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">{p.description}</p>
               </div>
 
-              <div className="pt-3 border-t border-[#eceef0] dark:border-[#444653] flex justify-between items-center text-xs">
-                <div className="flex items-center gap-1 text-[#565e74] dark:text-[#bec6e0]">
+              <div className="pt-3 border-t border-[#eeeeee] dark:border-[#474747] flex justify-between items-center text-xs">
+                <div className="flex items-center gap-1 text-[#5e5e5e] dark:text-[#c6c6c6]">
                   <Calendar size={13} />
                   <span>Valid: {p.endDate}</span>
                 </div>
-                <span className="font-bold text-[#00288e] dark:text-[#a8b8ff] font-mono">
+                <span className="font-bold text-[#272727] dark:text-[#bababa] font-mono">
                   {p.usageCount} Redeemed
                 </span>
               </div>
@@ -157,4 +143,4 @@ export const SmritiPromotionEngineine: React.FC = () => {
   );
 };
 
-export default SmritiPromotionEngineine;
+export default TileFlowPromotionEngineine;

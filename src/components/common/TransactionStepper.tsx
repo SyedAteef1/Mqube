@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React from 'react';
 
 export type TransactionState = 'DRAFT' | 'VERIFICATION' | 'COMPLETED' | 'CANCELLED';
@@ -58,9 +46,9 @@ export const TransactionStepper: React.FC<TransactionStepperProps> = ({
   };
 
   return (
-    <div className="w-full bg-[#f8f9ff] border-b border-[#c5c5d4] px-4 py-2.5 flex items-center justify-between shadow-xs">
+    <div className="w-full bg-[#f9f9f9] border-b border-[#c6c6c6] px-4 py-2.5 flex items-center justify-between shadow-xs">
       <div className="flex items-center gap-2">
-        <span className="text-xs font-semibold uppercase tracking-wider text-[#3d425f]">
+        <span className="text-xs font-semibold uppercase tracking-wider text-[#434343]">
           Transaction State:
         </span>
         {currentState === 'CANCELLED' && (
@@ -83,15 +71,15 @@ export const TransactionStepper: React.FC<TransactionStepperProps> = ({
                 onClick={() => isClickable && onStateChange(step.key)}
                 className={`flex items-center gap-2 px-3 py-1.5 rounded-lg transition-all text-left ${
                   status === 'active'
-                    ? 'bg-[#3f51b5] text-white shadow-xs font-semibold'
+                    ? 'bg-[#545454] text-white shadow-xs font-semibold'
                     : status === 'completed'
                     ? 'bg-[#abf4ac]/30 text-[#286b33] font-medium border border-[#286b33]/20'
-                    : 'bg-white text-[#454652] border border-[#c5c5d4] hover:border-[#3f51b5]'
+                    : 'bg-white text-[#474747] border border-[#c6c6c6] hover:border-[#545454]'
                 } ${isClickable ? 'cursor-pointer' : 'cursor-default'}`}
               >
                 <span
                   className={`material-symbols-outlined text-[18px] ${
-                    status === 'active' ? 'text-white' : status === 'completed' ? 'text-[#286b33]' : 'text-[#757684]'
+                    status === 'active' ? 'text-white' : status === 'completed' ? 'text-[#286b33]' : 'text-[#777777]'
                   }`}
                 >
                   {status === 'completed' ? 'check_circle' : step.icon}
@@ -100,7 +88,7 @@ export const TransactionStepper: React.FC<TransactionStepperProps> = ({
                   <div className="text-xs leading-none">{step.label}</div>
                   <div
                     className={`text-[10px] mt-0.5 leading-none ${
-                      status === 'active' ? 'text-indigo-100' : 'text-[#757684]'
+                      status === 'active' ? 'text-indigo-100' : 'text-[#777777]'
                     }`}
                   >
                     {step.description}
@@ -111,7 +99,7 @@ export const TransactionStepper: React.FC<TransactionStepperProps> = ({
               {index < STEPS.length - 1 && (
                 <div
                   className={`h-0.5 flex-1 max-w-[32px] ${
-                    status === 'completed' ? 'bg-[#286b33]' : 'bg-[#c5c5d4]'
+                    status === 'completed' ? 'bg-[#286b33]' : 'bg-[#c6c6c6]'
                   }`}
                 />
               )}

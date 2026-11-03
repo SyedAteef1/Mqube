@@ -1,15 +1,14 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.25.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Foundation: Blueprint v1.0 — UI/Experience Engine Schema & Integration Hub Registry v1.0
@@ -17,8 +16,8 @@
 ## 1. Purpose
 
 Close the two named implementation gaps identified during the formal Blueprint v1.0 verification (2026-08-24):
-1. **UI/Experience Engine ss11** — screen, field, action, layout, and icon registry tables missing from smritisys Control Plane schema.
-2. **Integration Hub ss45** — connector, provider, and integration registry metadata tables missing from smritisys.
+1. **UI/Experience Engine ss11** — screen, field, action, layout, and icon registry tables missing from tileflowsys Control Plane schema.
+2. **Integration Hub ss45** — connector, provider, and integration registry metadata tables missing from tileflowsys.
 
 ## 2. Scope
 
@@ -34,8 +33,8 @@ Close the two named implementation gaps identified during the formal Blueprint v
 
 | File | Purpose |
 |---|---|
-| backend/alembic/versions/v1368_ui_experience_engine.py | Creates 5 UI/Experience Engine tables in smritisys |
-| backend/alembic/versions/v1369_integration_hub_registry.py | Creates 6 Integration Hub registry tables in smritisys |
+| backend/alembic/versions/v1368_ui_experience_engine.py | Creates 5 UI/Experience Engine tables in tileflowsys |
+| backend/alembic/versions/v1369_integration_hub_registry.py | Creates 6 Integration Hub registry tables in tileflowsys |
 | backend/app/models/integration_hub.py | SQLAlchemy models for Integration Hub |
 
 ## 4. Files Modified
@@ -50,11 +49,11 @@ Close the two named implementation gaps identified during the formal Blueprint v
 
 ## 5. Architecture Decisions
 
-### AD-1: UI definitions in smritisys, rendering in React
-Blueprint Rule 07-09 requires that screen/field/action definitions are governed metadata in the Control Plane (smritisys), not hardcoded in application source. This migration creates the schema; seeding populates defaults; React reads definitions at runtime via /api/v1/ui/*.
+### AD-1: UI definitions in tileflowsys, rendering in React
+Blueprint Rule 07-09 requires that screen/field/action definitions are governed metadata in the Control Plane (tileflowsys), not hardcoded in application source. This migration creates the schema; seeding populates defaults; React reads definitions at runtime via /api/v1/ui/*.
 
 ### AD-2: Integration credentials as references only
-integration_credentials_reference stores only an env var name or secret manager path — never the actual credential value. This enforces Blueprint Rule 09 (no secrets in smritisys) and aligns with 12-factor app and secret manager patterns.
+integration_credentials_reference stores only an env var name or secret manager path — never the actual credential value. This enforces Blueprint Rule 09 (no secrets in tileflowsys) and aligns with 12-factor app and secret manager patterns.
 
 ### AD-3: icon_key as the decoupling mechanism
 All screens, actions, and menu entries reference icons by key (e.g., icon.pos.checkout), not by the Material Symbols identifier directly. The icon_registry maps key -> pack -> identifier. This allows the icon pack to be changed at the platform level without touching screen or action definitions.
@@ -100,7 +99,7 @@ docs/architecture/PLATFORM.md  |  49 ++++-
 
 **Interpretation:** All 8 files changed as planned. 3 new files created (migrations and model). 5 existing files extended. No deletions except header line updates.
 
-**Recommendation:** Run lembic upgrade head against smritisys to apply v1368 and v1369, then run seed_all() to populate icons and integration providers.
+**Recommendation:** Run lembic upgrade head against tileflowsys to apply v1368 and v1369, then run seed_all() to populate icons and integration providers.
 
 ## 10. Known Limitations
 
@@ -125,4 +124,4 @@ docs/architecture/PLATFORM.md  |  49 ++++-
 
 - Blueprint ss11: UI/Experience Engine
 - Blueprint ss45: Integration Hub
-- Blueprint ss54 Rule 07-09: Control Plane / No executable code in smritisys
+- Blueprint ss54 Rule 07-09: Control Plane / No executable code in tileflowsys

@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Version    : 3.21.0
- * Created    : 2026-07-17
- * Modified   : 2026-07-17
- * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * License    : Proprietary Commercial Software
- */
-
 import React, { useState } from "react";
 import { Lock, ArrowRight, AlertTriangle } from "lucide-react";
 import { apiFetchV1 } from "../lib/apiFetch.ts";

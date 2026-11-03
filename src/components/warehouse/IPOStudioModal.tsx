@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.105.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -61,7 +60,7 @@ function buildSampleIPOs(): InterStorePO[] {
     { lineId: "IPOL-3", pickedQty: 30  },
   ], "PICKER-01");
 
-  // IPO 2: Draft â€” just created
+  // IPO 2: Draft — just created
   const ipo2 = IPOEngine.createIPO({
     requestingBranch: "BR-BLR-01", fulfillingBranch: "BR-MUM-01",
     requestedBy: "MGR-BLR-01",
@@ -157,7 +156,7 @@ export const IPOStudioModal: React.FC<IPOStudioModalProps> = ({ isOpen, onClose,
                 <div className="text-[10px] text-slate-500 mt-0.5">{o.requestingBranch} â† {o.fulfillingBranch}</div>
                 <div className="flex items-center justify-between mt-1.5">
                   <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${STATUS_STYLE[o.status]}`}>{o.status.replace(/_/g, " ")}</span>
-                  {o.totalValue > 0 && <span className="text-[10px] font-mono text-slate-400">â‚¹{o.totalValue.toLocaleString("en-IN")}</span>}
+                  {o.totalValue > 0 && <span className="text-[10px] font-mono text-slate-400">₹{o.totalValue.toLocaleString("en-IN")}</span>}
                 </div>
               </button>
             ))}
@@ -193,7 +192,7 @@ export const IPOStudioModal: React.FC<IPOStudioModalProps> = ({ isOpen, onClose,
                       { label: "Requested Qty",  value: selected.totalRequestedQty,  color: "text-slate-300" },
                       { label: "Dispatched Qty", value: selected.totalDispatchedQty, color: "text-indigo-400" },
                       { label: "Fulfillment %",  value: `${selected.fulfillmentRate}%`, color: selected.fulfillmentRate >= 90 ? "text-emerald-400" : "text-amber-400" },
-                      { label: "Total Value",    value: `â‚¹${selected.totalValue.toLocaleString("en-IN")}`, color: "text-violet-400" },
+                      { label: "Total Value",    value: `₹${selected.totalValue.toLocaleString("en-IN")}`, color: "text-violet-400" },
                     ].map((m) => (
                       <div key={m.label} className="bg-slate-800/30 border border-slate-700/60 rounded-xl p-3 text-center">
                         <div className={`text-base font-black font-mono ${m.color}`}>{m.value}</div>
@@ -221,9 +220,9 @@ export const IPOStudioModal: React.FC<IPOStudioModalProps> = ({ isOpen, onClose,
                           <tr key={l.lineId}>
                             <td className="py-2 px-3 font-sans"><p className="text-xs text-slate-200">{l.productName}</p><p className="text-[10px] text-slate-500">{l.sku}</p></td>
                             <td className="py-2 px-3 text-right text-slate-400">{l.requestedQty}</td>
-                            <td className="py-2 px-3 text-right text-sky-400">{l.approvedQty || "â€”"}</td>
-                            <td className="py-2 px-3 text-right text-indigo-400">{l.dispatchedQty || "â€”"}</td>
-                            <td className="py-2 px-3 text-right text-slate-200">â‚¹{l.lineValue.toLocaleString("en-IN") || "â€”"}</td>
+                            <td className="py-2 px-3 text-right text-sky-400">{l.approvedQty || "—"}</td>
+                            <td className="py-2 px-3 text-right text-indigo-400">{l.dispatchedQty || "—"}</td>
+                            <td className="py-2 px-3 text-right text-slate-200">₹{l.lineValue.toLocaleString("en-IN") || "—"}</td>
                             <td className="py-2 px-3 text-center">
                               <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${
                                 l.lineStatus === "FULFILLED" ? "text-emerald-300 bg-emerald-500/10 border-emerald-500/20" :
@@ -294,7 +293,7 @@ export const IPOStudioModal: React.FC<IPOStudioModalProps> = ({ isOpen, onClose,
                               <td className="py-2 px-3 font-sans text-slate-300 text-xs">{l.productName}<div className="text-[10px] text-slate-500">{l.sku}</div></td>
                               <td className="py-2 px-3 text-right text-indigo-400">{l.dispatchedQty}</td>
                               <td className="py-2 px-3 text-right text-emerald-400">{l.receivedQty}</td>
-                              <td className="py-2 px-3 text-right text-rose-400">{l.shortQty > 0 ? l.shortQty : "â€”"}</td>
+                              <td className="py-2 px-3 text-right text-rose-400">{l.shortQty > 0 ? l.shortQty : "—"}</td>
                               <td className="py-2 px-3 text-center">{l.hasVariance ? <span className="text-rose-400">âš </span> : <span className="text-emerald-400">âœ“</span>}</td>
                             </tr>
                           ))}

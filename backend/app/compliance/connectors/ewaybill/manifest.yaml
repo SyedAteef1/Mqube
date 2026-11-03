@@ -1,14 +1,9 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Designation  : Chief Systems Architect & Creator
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
 # Version      : 3.35.0
 # Created      : 2026-08-28
 # Modified     : 2026-08-28
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
-# Classification: Internal
+# Copyright    :  tileflow.in. Open Source - Permissive Use
+# License      : MIT Open Source License
+# Classification: Open Source
 
 id: ewaybill
 name: NIC E-Way Bill Gateway
@@ -18,7 +13,7 @@ api_version: v1.0
 status: active
 display_name: E-Way Bill Integration (EWB Generation & Transit Tracking)
 description: Statutory E-Way Bill generation, vehicle update, cancellation, and barcode tokenization for goods movement.
-documentation_url: https://smritibooks.com/docs/compliance/ewaybill
+documentation_url: https://tileflow.in/docs/compliance/ewaybill
 minimum_platform_version: 3.16.0
 authentication:
   type: token

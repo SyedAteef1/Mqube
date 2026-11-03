@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, glob, re
 
 sys.stdout.reconfigure(encoding='utf-8')
@@ -22,7 +9,7 @@ def inspect_frontend():
 
     keywords = {
         "AWE / SAEF": [r"AWE", r"SAEF", r"SIMPLE", r"HYBRID", r"ADVANCED", r"AdaptiveWorkspace", r"max_clicks", r"max_fields"],
-        "Theme / Tokens": [r"theme", r"design_tokens", r"dark", r"light", r"density", r"accent", r"smriti-theme"],
+        "Theme / Tokens": [r"theme", r"design_tokens", r"dark", r"light", r"density", r"accent", r"tileflow-theme"],
         "Layout / Navigation": [r"layout_store", r"registeredWorkspaces", r"onTabChange", r"sidebar", r"dock"],
         "Storage / Cache": [r"localStorage", r"sessionStorage", r"indexedDB"],
         "Form / Field Config": [r"fieldVisibility", r"columnVisibility", r"field_order", r"quick_actions"]

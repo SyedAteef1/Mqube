@@ -1,4 +1,4 @@
-# SMRITI Feature Matrix
+# TILEFLOW Feature Matrix
 
 *Generated: Thu 08/13/2026*
 
@@ -10,4 +10,4 @@
 | Sales Studio | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
 | Billing Desk | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
 | CRM & Loyalty | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| About SMRITI | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| About TILEFLOW | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |

@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.24.0
- * Created      : 2026-07-10
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { createContext, useContext, useEffect } from "react";
 
 type Theme = "light" | "dark";
@@ -27,7 +14,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const [theme, setThemeState] = React.useState<Theme>(() => {
-    const saved = localStorage.getItem("smriti-theme");
+    const saved = localStorage.getItem("tileflow-theme");
     return (saved === "dark" || saved === "light") ? saved : "light";
   });
 
@@ -39,7 +26,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     } else {
       root.classList.remove("dark");
     }
-    localStorage.setItem("smriti-theme", theme);
+    localStorage.setItem("tileflow-theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {

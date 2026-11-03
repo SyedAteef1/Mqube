@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.120.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -37,7 +36,7 @@ const RESTOCK_STYLE: Record<RestockDecision, string> = {
   DISPOSE:    "text-rose-400",
 };
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 function buildSampleOrders(): SalesReturnOrder[] {
   const r1 = SalesReturnEngine.createReturn({
@@ -76,7 +75,7 @@ export const SalesReturnModal: React.FC<SalesReturnModalProps> = ({ isOpen, onCl
     if (!selected) return;
     try {
       updateOrder(SalesReturnEngine.approve(selected, "FLOOR-MGR"));
-      onNotification?.("Approved", `${selected.returnNo} â€” ${selected.refundMethod}`, "success");
+      onNotification?.("Approved", `${selected.returnNo} — ${selected.refundMethod}`, "success");
     } catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
@@ -94,7 +93,7 @@ export const SalesReturnModal: React.FC<SalesReturnModalProps> = ({ isOpen, onCl
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800 bg-slate-950/60">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-2xl">â†©ï¸</div>
+            <div className="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-2xl">â†ï¸</div>
             <div>
               <h2 className="text-base font-bold text-slate-100">Sales Return & Exchange Engine</h2>
               <p className="text-xs text-slate-400">Return Orders Â· Exchange Â· Restock Â· Refund Routing</p>
@@ -231,7 +230,7 @@ export const SalesReturnModal: React.FC<SalesReturnModalProps> = ({ isOpen, onCl
                 </div>
               )}
               {activeTab === "EXCHANGE" && selected.exchangeLines.length === 0 && (
-                <p className="text-slate-500 text-sm text-center py-8">No exchange lines â€” this is a pure return order.</p>
+                <p className="text-slate-500 text-sm text-center py-8">No exchange lines — this is a pure return order.</p>
               )}
 
               {activeTab === "AUDIT" && (

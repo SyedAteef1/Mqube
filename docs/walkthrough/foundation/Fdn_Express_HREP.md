@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.3
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Foundation — Express HREP Compliance — Walkthrough v3.14.3
@@ -19,13 +18,13 @@
 ---
 
 ## 1. Purpose
-Introduce standard error formatting inside the Node.js Express server to ensure that unhandled database query issues, access authorization failures, and validation syntax exceptions are caught globally and returned in human-readable SMRITI-HREP formatted payloads rather than raw stacks.
+Introduce standard error formatting inside the Node.js Express server to ensure that unhandled database query issues, access authorization failures, and validation syntax exceptions are caught globally and returned in human-readable TILEFLOW-HREP formatted payloads rather than raw stacks.
 
 ---
 
 ## 2. Scope
 - Create a global `hrepErrorHandler` middleware function inside `server.ts` checking error categories (Database, Permission, Validation, System).
-- Format errors with fields `title`, `explanation`, `suggestedAction`, `referenceId` (using date and random hex format), and `code` (standard SMRITI code).
+- Format errors with fields `title`, `explanation`, `suggestedAction`, `referenceId` (using date and random hex format), and `code` (standard TILEFLOW code).
 - Register the error middleware at the end of the routing stack in `server.ts`.
 
 ---

@@ -1,8 +1,8 @@
 """
-SMRITI LIVE PRODUCTION SCHEMA MATRIX (READ-ONLY)
+TILEFLOW LIVE PRODUCTION SCHEMA MATRIX (READ-ONLY)
 
 This script reads the canonical schema definitions from the v1385-v1388 Alembic files,
-reads live metadata from smritisys and smriti001 via psycopg2, and produces the required
+reads live metadata from tileflowsys and tileflow001 via psycopg2, and produces the required
 80-row matrix without executing any migration or production change.
 """
 
@@ -423,7 +423,7 @@ def compare_table(canonical, production):
 
 def build_matrix():
     matrix = []
-    dbs = [("smritisys", get_production_metadata("smritisys")), ("smriti001", get_production_metadata("smriti001"))]
+    dbs = [("tileflowsys", get_production_metadata("tileflowsys")), ("tileflow001", get_production_metadata("tileflow001"))]
 
     for db_name, db_meta in dbs:
         for table_name in sorted(CANONICAL_DEFS.keys()):
@@ -459,16 +459,16 @@ for row in matrix:
     assert key not in seen, f"Duplicate key: {key}"
     seen.add(key)
 
-summary = {"smritisys": {}, "smriti001": {}}
+summary = {"tileflowsys": {}, "tileflow001": {}}
 for row in matrix:
     db = row["database"]
     summary.setdefault(db, {})
     summary[db][row["schema_class"]] = summary[db].get(row["schema_class"], 0) + 1
 
-assert sum(summary["smritisys"].values()) == 40
-assert sum(summary["smriti001"].values()) == 40
-assert summary["smritisys"].get("MISSING", 0) == 11
-assert summary["smriti001"].get("MISSING", 0) == 6
+assert sum(summary["tileflowsys"].values()) == 40
+assert sum(summary["tileflow001"].values()) == 40
+assert summary["tileflowsys"].get("MISSING", 0) == 11
+assert summary["tileflow001"].get("MISSING", 0) == 6
 
 csv_path = REPORT_DIR / "live_production_schema_matrix_80.csv"
 with csv_path.open("w", newline="", encoding="utf-8") as fh:
@@ -499,8 +499,8 @@ md_lines = [
     "",
     "## Summary",
     "",
-    f"- smritisys: {summary['smritisys']}",
-    f"- smriti001: {summary['smriti001']}",
+    f"- tileflowsys: {summary['tileflowsys']}",
+    f"- tileflow001: {summary['tileflow001']}",
     "",
     "| database | table | exists | row_count | canonical_migration | schema_class | column_diff_count | pk_diff | unique_diff | fk_diff | check_diff | index_diff | exact_differences | data_risk | recommended_action |",
     "|---|---|---|---:|---|---|---:|---|---|---|---|---|---|---|---|",
@@ -515,8 +515,8 @@ md_path.write_text("\n".join(md_lines) + "\n", encoding="utf-8")
 
 print(json.dumps({
     "matrix_rows": len(matrix),
-    "smritisys": summary["smritisys"],
-    "smriti001": summary["smriti001"],
+    "tileflowsys": summary["tileflowsys"],
+    "tileflow001": summary["tileflow001"],
     "csv": str(csv_path),
     "md": str(md_path),
 }, indent=2))

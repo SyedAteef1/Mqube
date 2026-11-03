@@ -1,4 +1,4 @@
-# SMRITI CONTROL-PLANE REGRESSION DIAGNOSIS
+# TILEFLOW CONTROL-PLANE REGRESSION DIAGNOSIS
 # Phase 1–3 Findings (DIAGNOSIS ONLY — NO CODE CHANGES)
 
 Date: 2026-08-30
@@ -31,22 +31,22 @@ Status: BLOCKING ISSUES IDENTIFIED
 
 **Source 4: backend/app/services/db_provisioner.py**
 - Line 60: generate_database_name() Docstring
-- Expected Format: "Step 3: Server-side database name generation: smriti<4-character-code>."
-- **STATUS: MISMATCH (says 4 in docstring, but code generates smriti<3-char>)**
+- Expected Format: "Step 3: Server-side database name generation: tileflow<4-character-code>."
+- **STATUS: MISMATCH (says 4 in docstring, but code generates tileflow<3-char>)**
 
 **Source 5: EXISTING TEST backend/tests/t_comp_db_name.py**
 - Line 25: test_generate_company_database_name_valid_alphanumeric()
-- Expected Format: "smriti<4-character-alphanumeric>"
+- Expected Format: "tileflow<4-character-alphanumeric>"
 - Test Assertions: 
-  - "001" -> "smriti0001"
-  - "007" -> "smriti0007"
-  - "ABC1" -> "smritiABC1"
+  - "001" -> "tileflow0001"
+  - "007" -> "tileflow0007"
+  - "ABC1" -> "tileflowABC1"
   - Reserved Codes: "0000", "SYS0"
 - **STATUS: EXPECTS 4-CHARACTER FORMAT WITH ZERO-PADDING**
 
 **Source 6: EXISTING TEST backend/tests/t_comp_db_prov.py**
 - Line 26: test_provisioning_dry_run_alphanumeric_abc()
-- Expected Format: "ABC" -> "smritiABC"
+- Expected Format: "ABC" -> "tileflowABC"
 - **STATUS: INCONSISTENT (expects 3-character format)**
 
 ### Verdict
@@ -70,7 +70,7 @@ Choose ONE:
 1. **Option A: Keep 3-character rule** 
    - Modify EXISTING tests t_comp_db_name.py to expect 3-character format
    - Update reserved codes to "000" and "SYS"
-   - Reject the stored 4-character database names (smriti0001, smriti0124, etc.)
+   - Reject the stored 4-character database names (tileflow0001, tileflow0124, etc.)
 
 2. **Option B: Revert to 4-character rule**
    - Revert backend/app/api/v1/company_center.py to enforce 4-character
@@ -102,12 +102,12 @@ if "logo_url" not in company_columns:
 ```
 **STATUS: Migration DEFINES company_code ✓**
 
-**Live Database: smritisys (Control Plane)**
+**Live Database: tileflowsys (Control Plane)**
 - companies.company_code: **EXISTS** ✓
 - Alembic HEAD: v1382_menu_registry ✓
 - **STATUS: APPLIED**
 
-**Live Database: smriti001 (Operational Company DB)**
+**Live Database: tileflow001 (Operational Company DB)**
 - companies.company_code: **MISSING** ✗
 - Alembic HEAD: v1375_backfill_sales_return_cust ✗
 - Missing Migrations: v1376, v1377, v1378, v1379, v1380, v1381, v1382
@@ -115,9 +115,8 @@ if "logo_url" not in company_columns:
 
 ### Root Cause
 
-The migration v1381 and v1382 were only applied to `smritisys` (control plane) but NOT to `smriti001` (operational database). The inventory tests run against `smriti001`, which lacks the schema changes.
+The migration v1381 and v1382 were only applied to `tileflowsys` (control plane) but NOT to `tileflow001` (operational database). The inventory tests run against `tileflow001`, which lacks the schema changes.
 
-### Classification
 
 **CLASSIFICATION: MIGRATION_NOT_APPLIED**
 
@@ -131,7 +130,7 @@ sqlalchemy.dialects.postgresql.asyncpg.AsyncAdapt_asyncpg_dbapi.ProgrammingError
 <class 'asyncpg.exceptions.UndefinedColumnError'>: column companies.company_code does not exist
 ```
 
-This occurs in test_stock_movement_ledger.py which queries the `companies` table in smriti001.
+This occurs in test_stock_movement_ledger.py which queries the `companies` table in tileflow001.
 
 ---
 
@@ -191,7 +190,7 @@ This occurs in test_stock_movement_ledger.py which queries the `companies` table
 
 ### Inventory Schema Status
 
-**BLOCKED**: Cannot proceed to regression testing until smriti001 migrations are applied.
+**BLOCKED**: Cannot proceed to regression testing until tileflow001 migrations are applied.
 
 ### Company-Code Contract Status
 
@@ -208,7 +207,7 @@ This occurs in test_stock_movement_ledger.py which queries the `companies` table
 | Blocker | Category | Classification | Business Impact | Resolution Path |
 |---------|----------|-----------------|-----------------|-----------------|
 | Company-Code Contract | Business Logic | CONFLICTING | Contradictory between API, tests, and code | Requires explicit business approval (Option A or B) |
-| Inventory Schema | Database | MIGRATION_NOT_APPLIED | smriti001 lacks v1376–v1382 migrations | Apply alembic upgrade head to smriti001 |
+| Inventory Schema | Database | MIGRATION_NOT_APPLIED | tileflow001 lacks v1376–v1382 migrations | Apply alembic upgrade head to tileflow001 |
 | Unrelated Changes | Git Scope | VIOLATION | 19 files dirty | Clean working tree (git restore or discard) |
 
 ---

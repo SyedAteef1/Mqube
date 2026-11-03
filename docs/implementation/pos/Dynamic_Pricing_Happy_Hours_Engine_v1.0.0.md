@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.86.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Real-Time Dynamic Pricing & Happy Hours POS Discount Engine (v1.0.0-GA)
 
 ## 1. Objective
-Establish a Real-Time Dynamic Pricing & Happy Hours Automated Discount Engine (`DynamicPricingEngine.ts` and `DynamicPricingStudioModal.tsx`) in SMRITI Retail OS, providing time-of-day, day-of-week, category-tiered, and cart-level promotional discounting with live POS simulation and register synchronization.
+Establish a Real-Time Dynamic Pricing & Happy Hours Automated Discount Engine (`DynamicPricingEngine.ts` and `DynamicPricingStudioModal.tsx`) in TILEFLOW Retail OS, providing time-of-day, day-of-week, category-tiered, and cart-level promotional discounting with live POS simulation and register synchronization.
 
 ## 2. Business Motivation
 Retailers leverage afternoon happy hours, flash weekend sales, and off-peak promotional discounts to drive store footfall without relying on manual cashier discount entry.
@@ -80,7 +79,7 @@ Non-destructive modular utility and studio modal with dedicated test suite.
 - Run `npm test`.
 
 ## 15. Documentation Impact
-- Update SMRITI Pricing & Promotional Campaigns Governance Manual.
+- Update TILEFLOW Pricing & Promotional Campaigns Governance Manual.
 
 ## 16. Deployment Plan
 - Build and bundle with frontend client package.

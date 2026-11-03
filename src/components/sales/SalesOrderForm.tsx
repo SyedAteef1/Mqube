@@ -1,22 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Module       : Sales Order Form
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * 
- * Description  : Complete Sales Order Form with Header, Detail, and Footer sections
- *                based on distributor-style sales order processing
- * 
- * Version      : 3.30.0
- * Created      : 2026-08-31
- * Modified     : 2026-08-31
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useCallback } from "react";
 import { motion } from "motion/react";
 import {

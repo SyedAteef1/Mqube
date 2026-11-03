@@ -1,24 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-09-01
- * Modified     : 2026-09-01
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Shared Transaction Attachment Contract
- * 
- * Purpose: Unified attachment model for sales orders, quotations, purchase orders,
- * invoices, returns, and all other transactional documents across SMRITI.
- */
-
-/**
- * Supported document types for attachments
- */
 export type DocumentType = 
   | "sales_order"
   | "quotation"

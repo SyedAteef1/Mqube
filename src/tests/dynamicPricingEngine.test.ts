@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.86.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   DynamicPricingEngine,
@@ -20,7 +6,7 @@ import {
 } from "../utils/dynamicPricingEngine";
 import { DynamicPricingStudioModal } from "../components/billing/propos/DynamicPricingStudioModal";
 
-describe("SMRITI Real-Time Dynamic Pricing & Happy Hours Discount Engine", () => {
+describe("MQube Real-Time Dynamic Pricing & Happy Hours Discount Engine", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });

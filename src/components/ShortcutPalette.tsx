@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.25.0
- * * Created    : 2026-07-10
- * * Modified   : 2026-08-16
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -30,7 +5,7 @@ import {
   AlertTriangle, Save, HelpCircle, ArrowRight, CornerDownLeft
 } from "lucide-react";
 import { useShortcuts, KeyboardShortcut, ShortcutKeyConfig } from "../contexts/ShortcutContext.tsx";
-import { SmritiScrollArea } from "./SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.tsx";
 
 const AVAILABLE_ROLES = [
   "Admin",
@@ -237,7 +212,7 @@ export const ShortcutPalette: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-sm font-bold text-white tracking-wide flex items-center">
-                    SMRITI Command & Shortcuts Manager
+                    MQube Command & Shortcuts Manager
                   </h3>
                   <p className="text-[10px] text-theme-muted font-mono mt-0.5">
                     Conflict-Free Hotkeys & Organization Command Palette
@@ -349,7 +324,7 @@ export const ShortcutPalette: React.FC = () => {
             </div>
 
             {/* List Body */}
-            <SmritiScrollArea className="flex-1 p-6">
+            <TileFlowScrollArea className="flex-1 p-6">
               {filteredShortcuts.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-16 text-center text-theme-muted">
                   <Keyboard size={48} className="mb-4 opacity-30" />
@@ -490,7 +465,7 @@ export const ShortcutPalette: React.FC = () => {
                   })}
                 </div>
               )}
-            </SmritiScrollArea>
+            </TileFlowScrollArea>
 
             {/* Footer Operations */}
             <div className="px-6 py-4 border-t border-theme-divider/60 bg-theme-surface-2/40 flex flex-col sm:flex-row gap-4 items-center justify-between text-xs text-theme-muted">

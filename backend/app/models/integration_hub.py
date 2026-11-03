@@ -1,24 +1,23 @@
 ﻿"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
+Project      : TILEFLOW Retail OS
+Author       : Syed Ateef
 Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
+Email        : ateef@tileflow.in
 Version      : 3.25.0
 Created      : 2026-08-24
 Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
+Copyright    : (c) tileflow.in. Open Source - Permissive Use
+License      : MIT Open Source License
+Classification: Open Source
 
-Integration Hub Connector Registry Models (smritisys Control Plane).
+Integration Hub Connector Registry Models (tileflowsys Control Plane).
 Blueprint ss45: integration_registry, connector_registry, provider_registry,
                integration_credentials_reference, integration_policies,
                integration_versions.
 
-Blueprint Rule 08: Integration Hub definitions belong in smritisys.
+Blueprint Rule 08: Integration Hub definitions belong in tileflowsys.
 Blueprint Rule 09: Credentials are references only -- no secrets stored.
-Blueprint Rule 10: smriti-api is the execution layer.
+Blueprint Rule 10: tileflow-api is the execution layer.
 """
 
 from sqlalchemy import Column, String, Integer, Boolean, DateTime, Text, func, UniqueConstraint
@@ -30,7 +29,7 @@ class ProviderRegistry(Base):
     """
     Canonical catalogue of external providers (GST portal, payment gateways,
     eCommerce channels, accounting ERPs, communication providers).
-    Stored in smritisys Control Plane.
+    Stored in tileflowsys Control Plane.
     """
     __tablename__ = "provider_registry"
 
@@ -58,7 +57,7 @@ class ConnectorRegistry(Base):
     """
     Connector type definitions that implement communication with providers.
     Defines protocol, direction, retry policy, and configuration schema.
-    Stored in smritisys Control Plane — not executable code.
+    Stored in tileflowsys Control Plane — not executable code.
     """
     __tablename__ = "connector_registry"
 
@@ -85,8 +84,8 @@ class ConnectorRegistry(Base):
 class IntegrationRegistry(Base):
     """
     Named integration instances linking business events to connectors.
-    Defines what SMRITI integrates with, not how the integration executes.
-    Stored in smritisys Control Plane. Execution is in smriti-api services.
+    Defines what TILEFLOW integrates with, not how the integration executes.
+    Stored in tileflowsys Control Plane. Execution is in tileflow-api services.
     """
     __tablename__ = "integration_registry"
 
@@ -118,8 +117,8 @@ class IntegrationCredentialReference(Base):
     """
     References to credentials for integrations.
     ONLY stores the pointer (env var name or secret manager path).
-    Actual credential values are NEVER stored in smritisys or smritiXXX.
-    Blueprint Rule 09: No executable business logic or secrets in smritisys.
+    Actual credential values are NEVER stored in tileflowsys or tileflowXXX.
+    Blueprint Rule 09: No executable business logic or secrets in tileflowsys.
     """
     __tablename__ = "integration_credentials_reference"
 
@@ -145,7 +144,7 @@ class IntegrationPolicy(Base):
     """
     Per-integration policy definitions (rate limiting, retry windows,
     error escalation, data filtering policies).
-    Stored in smritisys as governed metadata, not executable code.
+    Stored in tileflowsys as governed metadata, not executable code.
     """
     __tablename__ = "integration_policies"
 

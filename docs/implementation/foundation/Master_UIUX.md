@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Master UI/UX Refactor & Application Shell Specification v3.17.0
+# TILEFLOW Master UI/UX Refactor & Application Shell Specification v3.17.0
 
 ## 1. Objective
-Establish the definitive, unified UI/UX application shell and visual system for SMRITI Retail OS v3.17.0 by combining:
-1. **Stitch "SMRITI Launchpad Rebrand" Visual System** (`projects/5290707397196745553`)
+Establish the definitive, unified UI/UX application shell and visual system for TILEFLOW Retail OS v3.17.0 by combining:
+1. **Stitch "TILEFLOW Launchpad Rebrand" Visual System** (`projects/5290707397196745553`)
 2. **SAP Fiori-Inspired Interaction Architecture** (Tile Launchpad, Domain Grouping, Live Metric Counters)
 3. **Unified Business Workspace** (Master-Detail, Hideable Navigation Rail, Focus Mode, Transaction Lifecycle)
 4. **Standalone PWA Application Mode** (Self-contained app shell navigation: Home, Back, Omni-Search, Launcher, Notifications, User Menu)
@@ -24,7 +23,7 @@ Establish the definitive, unified UI/UX application shell and visual system for 
 ---
 
 ## 2. Business Motivation
-SMRITI Retail OS serves high-volume retail operations, cashier billing points, and inventory controllers. Prior interfaces risked visual fragmentation across modules. By codifying the **"Smriti Cognitive System"** design tokens alongside Fiori's structured interaction architecture, the application reduces operator decision fatigue, accelerates transaction throughput, and provides a desktop/mobile experience across touchpoints.
+TILEFLOW Retail OS serves high-volume retail operations, cashier billing points, and inventory controllers. Prior interfaces risked visual fragmentation across modules. By codifying the **"TileFlow Cognitive System"** design tokens alongside Fiori's structured interaction architecture, the application reduces operator decision fatigue, accelerates transaction throughput, and provides a desktop/mobile experience across touchpoints.
 
 ---
 
@@ -43,14 +42,14 @@ SMRITI Retail OS serves high-volume retail operations, cashier billing points, a
 ---
 
 ## 4. Current State
-The existing codebase features individual module tabs (Item Master, Sales, PO, GRN) operating within separate layout wrappers. Styling uses basic CSS variables that do not yet enforce the full 16-screen Stitch "Smriti Cognitive System" design system or Fiori Launchpad layout structure.
+The existing codebase features individual module tabs (Item Master, Sales, PO, GRN) operating within separate layout wrappers. Styling uses basic CSS variables that do not yet enforce the full 16-screen Stitch "TileFlow Cognitive System" design system or Fiori Launchpad layout structure.
 
 ---
 
 ## 5. Gap Analysis
 | Aspect | Current State | Target State (v3.17.0) |
 |---|---|---|
-| **Visual Design** | Partial CSS variables | Full Stitch "Smriti Cognitive System" design tokens |
+| **Visual Design** | Partial CSS variables | Full Stitch "TileFlow Cognitive System" design tokens |
 | **Typography** | Mixed system fonts | `Inter` font family strictly formatted |
 | **Home Screen** | Module tab bar | Fiori-inspired domain tile Launchpad |
 | **Navigation** | Static tab bar | Hideable 3-state Nav Rail (Expanded, Compact, Hidden) |
@@ -64,9 +63,9 @@ The existing codebase features individual module tabs (Item Master, Sales, PO, G
 ## 6. Architecture Impact
 
 ```text
-SMRITI Cognitive System (Stitch Visual Baseline & Design Tokens)
+TILEFLOW Cognitive System (Stitch Visual Baseline & Design Tokens)
         ↓
-SMRITI Fiori-Inspired Launchpad (Domain Tiles & Live Badges)
+TILEFLOW Fiori-Inspired Launchpad (Domain Tiles & Live Badges)
         ↓
 Unified Application Shell (Global Header & Hideable Rail)
         ↓
@@ -176,8 +175,8 @@ If issues arise, revert `src/App.tsx` and `src/index.css` to their git commit ba
 ---
 
 ## 16. Deployment Plan
-* Deploy code changes directly to Development environment (`D:\Smriti_Retail_OS`).
-* Sync to Test environment (`F:\Smriti9`) via `git pull` per Environment Rule.
+* Deploy code changes directly to Development environment (`D:\TileFlow_Retail_OS`).
+* Sync to Test environment (`F:\TileFlow9`) via `git pull` per Environment Rule.
 
 ---
 

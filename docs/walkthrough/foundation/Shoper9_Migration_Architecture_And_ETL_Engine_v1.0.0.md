@@ -1,28 +1,27 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.0.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Legacy Tally Shoper 9 Configuration Extractor, Retail Governance Policies & Tenant ETL Ingestion Engine
 
 ## 1. Purpose
-To establish a robust, cloud-native long-term migration pathway for enterprise retail businesses transitioning from legacy Tally Shoper 9 POS/ERP to SMRITI Retail OS. This implementation extracts over 20 years of battle-tested retail domain parameters (`SysParam`, `ParamDef`), integrates standard retail operational policies into the SMRITI Control Plane, and delivers a transactional, zero-loss tenant data migration ETL engine.
+To establish a robust, cloud-native long-term migration pathway for enterprise retail businesses transitioning from legacy Tally Shoper 9 POS/ERP to TILEFLOW Retail OS. This implementation extracts over 20 years of battle-tested retail domain parameters (`SysParam`, `ParamDef`), integrates standard retail operational policies into the TILEFLOW Control Plane, and delivers a transactional, zero-loss tenant data migration ETL engine.
 
 ---
 
 ## 2. Scope
 - Parsing and indexing 185 `.S9Q` XML patch scripts and 596 UI parameter definition files from `D:\Shoper9\ini` and `D:\Shoper9\ParamDef`.
 - Publishing the complete Shoper 9 configuration catalog (`SH9_CONFIG_CATALOG.json` and `SH9_CONFIG_SUMMARY.md`).
-- Seeding 4 standard retail operational policies into `smritisys` via `ControlPlaneSeeder` (`POLICY_BILLING_CONTROLS`, `POLICY_BARCODE_COST_MASK`, `POLICY_INWARDS_PROCUREMENT`, `POLICY_CREDIT_MANAGEMENT`).
+- Seeding 4 standard retail operational policies into `tileflowsys` via `ControlPlaneSeeder` (`POLICY_BILLING_CONTROLS`, `POLICY_BARCODE_COST_MASK`, `POLICY_INWARDS_PROCUREMENT`, `POLICY_CREDIT_MANAGEMENT`).
 - Building the automated Shoper 9 tenant migration ETL engine (`scripts/admin/sh9_migrator.py`) with pre-flight ledger invariant verification.
 - Publishing the definitive `docs/architecture/SHOPER9_MIGRATION_BLUEPRINT.md`.
 
@@ -39,14 +38,14 @@ To establish a robust, cloud-native long-term migration pathway for enterprise r
 ---
 
 ## 4. Files Modified
-- [`backend/app/db/ctrl_seeder.py`](file:///F:/SMRITRretailNX/backend/app/db/ctrl_seeder.py) — Enriched `seed_governed_logic()` to seed standard retail operational policies in `smritisys`.
+- [`backend/app/db/ctrl_seeder.py`](file:///F:/SMRITRretailNX/backend/app/db/ctrl_seeder.py) — Enriched `seed_governed_logic()` to seed standard retail operational policies in `tileflowsys`.
 - [`docs/walkthrough/README.md`](file:///F:/SMRITRretailNX/docs/walkthrough/README.md) — Appended Walkthrough entry.
 - [`CHANGELOG.md`](file:///F:/SMRITRretailNX/CHANGELOG.md) — Updated for `v3.63.0`.
 
 ---
 
 ## 5. Architecture Decisions
-1. **Dynamic AST Governance vs. Static Booleans**: Legacy Shoper 9 stored raw flags in `sysparam` (`Boolean`, `Intg`, `Txt`). SMRITI stores these as versioned AST policy definitions in `smritisys.policy_definitions`, allowing tenants to configure overrides dynamically without database schema alterations.
+1. **Dynamic AST Governance vs. Static Booleans**: Legacy Shoper 9 stored raw flags in `sysparam` (`Boolean`, `Intg`, `Txt`). TILEFLOW stores these as versioned AST policy definitions in `tileflowsys.policy_definitions`, allowing tenants to configure overrides dynamically without database schema alterations.
 2. **Universal Master Data Polymorphism**: Legacy customers and vendors are mapped into `Party` with `PartyRole`, `CustomerProfile`, and `SupplierProfile`. Items, Class combos, and barcodes are mapped into `Item`, `ItemVariant`, and `ItemBarcode`.
 3. **Double-Entry Opening Balance Reconciliation**: All migrated accounts must satisfy the strict balance invariant $\sum \text{Debit} == \sum \text{Credit}$ with zero variance before committing.
 
@@ -62,15 +61,15 @@ To establish a robust, cloud-native long-term migration pathway for enterprise r
 - Extracted 78 core system parameters across 13 functional categories from 185 `.S9Q` scripts and 596 parameter definition files.
 - Seeded `POLICY_BILLING_CONTROLS`, `POLICY_BARCODE_COST_MASK`, `POLICY_INWARDS_PROCUREMENT`, and `POLICY_CREDIT_MANAGEMENT` into `ControlPlaneSeeder`.
 - Built `Shoper9TenantMigrator` with end-to-end migration handlers for Parties, Items, Variants, Barcodes, and Stock Movements.
-- Verified dry-run execution against `smriti001` with clean rollback and invariant assertion.
+- Verified dry-run execution against `tileflow001` with clean rollback and invariant assertion.
 
 ---
 
 ## 8. Tests Executed
 1. `python scripts/admin/sh9_cfg_extract.py`: Successfully extracted and generated `SH9_CONFIG_CATALOG.json` and `SH9_CONFIG_SUMMARY.md`.
-2. `python scripts/admin/sh9_migrator.py --tenant-db smriti001 --company-id COMP-001 --dry-run`: Pre-flight migration dry-run completed with `Invariant Verification: Balanced=True`.
+2. `python scripts/admin/sh9_migrator.py --tenant-db tileflow001 --company-id COMP-001 --dry-run`: Pre-flight migration dry-run completed with `Invariant Verification: Balanced=True`.
 3. `python -m pytest backend/tests/t_gov_logic.py backend/tests/t_ctrl_ref.py`: 19/19 tests passed in 13.27s.
-4. `python scripts/smriti_naming_guard.py`: 0 naming violations.
+4. `python scripts/tileflow_naming_guard.py`: 0 naming violations.
 5. `npx tsc --noEmit`: 0 TypeScript errors.
 
 ---

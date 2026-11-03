@@ -4,7 +4,7 @@
 ✅ **v1390/v1391 migration files are validated and working in production.**
 - **192 total regression tests**: 176 PASSED (91.7%), 16 FAILED (8.3%)
 - **Critical tests PASSED**: All tests requiring v1390/v1391 tables are passing
-  - ✅ test_permission_schema (smriti_permissions queryable)
+  - ✅ test_permission_schema (tileflow_permissions queryable)
   - ✅ test_inventory (permission checks working)
   - ✅ test_sales_return_contracts (platform capabilities working)
 
@@ -15,8 +15,8 @@
 
 Tables created and confirmed working:
 1. `company_database_registries` - Exists, functional (multi-tenant routing)
-2. `smriti_permissions` - Exists, queryable, indexes correct
-3. `smriti_audit_log` - Exists, audit trail recording
+2. `tileflow_permissions` - Exists, queryable, indexes correct
+3. `tileflow_audit_log` - Exists, audit trail recording
 
 ### v1391: Platform Analytics Tables
 **Status**: ✅ COMPLETE & VERIFIED
@@ -61,7 +61,7 @@ The 16 failures are NOT due to v1390/v1391 missing tables. Instead:
 4. **POS checkout tests (2 failures)** - Test isolation issue
 5. **Service integration tests (1 failure)** - Test fixture problem
 
-**Key Evidence**: The fact that test_permission_schema PASSES proves smriti_permissions table is present and queryable. The failures in sales tests are due to pytest transaction/fixture issues, NOT missing schema.
+**Key Evidence**: The fact that test_permission_schema PASSES proves tileflow_permissions table is present and queryable. The failures in sales tests are due to pytest transaction/fixture issues, NOT missing schema.
 
 ## Risk Assessment
 

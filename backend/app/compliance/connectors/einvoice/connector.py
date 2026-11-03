@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Government Integration Platform (SGIP) — NIC/GSTN E-Invoice Connector (v1.0.0).
-Implements GSTN Schema v1.03, deterministic 64-char SHA-256 IRN hash generation, 
-statutory signed QR code construction, and sandbox/production dispatch.
-"""
-
 import base64
 import hashlib
 import json

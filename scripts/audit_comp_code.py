@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, glob, re, json
 from datetime import datetime, timezone
 import psycopg2
@@ -22,13 +9,13 @@ from openpyxl.utils import get_column_letter
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 from backend.app.services.db_provisioner import CompanyDatabaseProvisioner
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_ARCH = r"F:\SMRITRretailNX\docs\architecture\MULTI_COMPANY.md"
 
 def audit_alphanumeric_company_code():
     print("============================================================")
-    print("SMRITI ALPHANUMERIC 3-CHARACTER COMPANY CODE GOVERNANCE REFACTOR")
+    print("TILEFLOW ALPHANUMERIC 3-CHARACTER COMPANY CODE GOVERNANCE REFACTOR")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -37,21 +24,21 @@ def audit_alphanumeric_company_code():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
     # Check database count to ensure 0 new DBs are created
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     # 2. Execute Alphanumeric Dry-Run Provisioning Plans
     provisioner = CompanyDatabaseProvisioner(dry_run=True)
-    plan_abc = provisioner.run_dry_run_provisioning("COMP-ABC", "SMRITI Alpha Retail", company_code="ABC")
-    plan_mum = provisioner.run_dry_run_provisioning("COMP-MUM", "SMRITI Mumbai Megastore", company_code="MUM")
-    plan_001 = provisioner.run_dry_run_provisioning("COMP-001", "SMRITI Enterprise Default", company_code="001")
+    plan_abc = provisioner.run_dry_run_provisioning("COMP-ABC", "TILEFLOW Alpha Retail", company_code="ABC")
+    plan_mum = provisioner.run_dry_run_provisioning("COMP-MUM", "TILEFLOW Mumbai Megastore", company_code="MUM")
+    plan_001 = provisioner.run_dry_run_provisioning("COMP-001", "TILEFLOW Enterprise Default", company_code="001")
 
     print("\nDRY-RUN PROVISIONING EXAMPLES:")
     print(f"  Code 'ABC' -> DB: {plan_abc['database_name']} (Dry-Run: {plan_abc['dry_run']})")
@@ -60,16 +47,16 @@ def audit_alphanumeric_company_code():
 
     # 3. Create Excel Worksheet Data
     code_matrix = pd.DataFrame([
-        {"Company Code Input": "001", "Normalized Code": "001", "Target Database Name": "smriti001", "Validation Result": "APPROVED", "Governance Notes": "Numeric code compliant with 3-char alphanumeric"},
-        {"Company Code Input": "007", "Normalized Code": "007", "Target Database Name": "smriti007", "Validation Result": "APPROVED", "Governance Notes": "Numeric code compliant with 3-char alphanumeric"},
-        {"Company Code Input": "abc", "Normalized Code": "ABC", "Target Database Name": "smritiABC", "Validation Result": "APPROVED", "Governance Notes": "Normalized lowercase to uppercase"},
-        {"Company Code Input": "ABC", "Normalized Code": "ABC", "Target Database Name": "smritiABC", "Validation Result": "APPROVED", "Governance Notes": "Standard 3-character uppercase alphanumeric"},
-        {"Company Code Input": "A01", "Normalized Code": "A01", "Target Database Name": "smritiA01", "Validation Result": "APPROVED", "Governance Notes": "Mixed letter-digit code"},
-        {"Company Code Input": "R01", "Normalized Code": "R01", "Target Database Name": "smritiR01", "Validation Result": "APPROVED", "Governance Notes": "Region-prefixed code"},
-        {"Company Code Input": "MUM", "Normalized Code": "MUM", "Target Database Name": "smritiMUM", "Validation Result": "APPROVED", "Governance Notes": "City/Hub code"},
-        {"Company Code Input": "TT1", "Normalized Code": "TT1", "Target Database Name": "smritiTT1", "Validation Result": "APPROVED", "Governance Notes": "Tenant test code"},
-        {"Company Code Input": "000", "Normalized Code": "FORBIDDEN", "Target Database Name": "RESERVED", "Validation Result": "REJECTED", "Governance Notes": "smriti000 is permanently reserved"},
-        {"Company Code Input": "SYS", "Normalized Code": "FORBIDDEN", "Target Database Name": "RESERVED", "Validation Result": "REJECTED", "Governance Notes": "smritisys is permanently reserved for Control Plane"},
+        {"Company Code Input": "001", "Normalized Code": "001", "Target Database Name": "tileflow001", "Validation Result": "APPROVED", "Governance Notes": "Numeric code compliant with 3-char alphanumeric"},
+        {"Company Code Input": "007", "Normalized Code": "007", "Target Database Name": "tileflow007", "Validation Result": "APPROVED", "Governance Notes": "Numeric code compliant with 3-char alphanumeric"},
+        {"Company Code Input": "abc", "Normalized Code": "ABC", "Target Database Name": "tileflowABC", "Validation Result": "APPROVED", "Governance Notes": "Normalized lowercase to uppercase"},
+        {"Company Code Input": "ABC", "Normalized Code": "ABC", "Target Database Name": "tileflowABC", "Validation Result": "APPROVED", "Governance Notes": "Standard 3-character uppercase alphanumeric"},
+        {"Company Code Input": "A01", "Normalized Code": "A01", "Target Database Name": "tileflowA01", "Validation Result": "APPROVED", "Governance Notes": "Mixed letter-digit code"},
+        {"Company Code Input": "R01", "Normalized Code": "R01", "Target Database Name": "tileflowR01", "Validation Result": "APPROVED", "Governance Notes": "Region-prefixed code"},
+        {"Company Code Input": "MUM", "Normalized Code": "MUM", "Target Database Name": "tileflowMUM", "Validation Result": "APPROVED", "Governance Notes": "City/Hub code"},
+        {"Company Code Input": "TT1", "Normalized Code": "TT1", "Target Database Name": "tileflowTT1", "Validation Result": "APPROVED", "Governance Notes": "Tenant test code"},
+        {"Company Code Input": "000", "Normalized Code": "FORBIDDEN", "Target Database Name": "RESERVED", "Validation Result": "REJECTED", "Governance Notes": "tileflow000 is permanently reserved"},
+        {"Company Code Input": "SYS", "Normalized Code": "FORBIDDEN", "Target Database Name": "RESERVED", "Validation Result": "REJECTED", "Governance Notes": "tileflowsys is permanently reserved for Control Plane"},
         {"Company Code Input": "A-1", "Normalized Code": "FORBIDDEN", "Target Database Name": "INVALID", "Validation Result": "REJECTED", "Governance Notes": "Hyphen separator forbidden"},
         {"Company Code Input": "A_1", "Normalized Code": "FORBIDDEN", "Target Database Name": "INVALID", "Validation Result": "REJECTED", "Governance Notes": "Underscore separator forbidden"},
         {"Company Code Input": "ABCD", "Normalized Code": "FORBIDDEN", "Target Database Name": "INVALID", "Validation Result": "REJECTED", "Governance Notes": "4-character code forbidden (exact length 3 required)"}
@@ -114,48 +101,47 @@ def audit_alphanumeric_company_code():
     # 5. Update Documentation
     with open(DOC_ARCH, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Multi-Company Database Architecture Specification v1.0
+# TILEFLOW Multi-Company Database Architecture Specification v1.0
 
 **Status: COMPANY_CODE_STANDARD_UPDATED — ZERO DATABASE PROVISIONING**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Official Company Business DB Naming Standard:** `smriti<3-character-alphanumeric-code>`
+**Official Control Plane DB:** `tileflowsys`  
+**Official Company Business DB Naming Standard:** `tileflow<3-character-alphanumeric-code>`
 
 ---
 
-## 1. Official Alphanumeric Company Code Standard (`smriti<A-Z0-9>`)
+## 1. Official Alphanumeric Company Code Standard (`tileflow<A-Z0-9>`)
 
 | Rule | Specification | Example |
 |---|---|---|
-| **Prefix** | Exactly `smriti` | `smriti` |
-| **Separator** | **NO** underscore, hyphen, space | `smritiABC` (NOT `smriti_ABC`) |
+| **Prefix** | Exactly `tileflow` | `tileflow` |
+| **Separator** | **NO** underscore, hyphen, space | `tileflowABC` (NOT `tileflow_ABC`) |
 | **Company Code** | Exactly 3 alphanumeric characters `[A-Z0-9]` | `001`, `ABC`, `A01`, `MUM`, `TT1` |
-| **Case Normalization** | Lowercase automatically converted to UPPERCASE | `abc` -> `ABC` (`smritiABC`) |
-| **Reserved Code 000** | `000` is permanently reserved | `smriti000` (Forbidden) |
-| **Reserved Code SYS** | `SYS` is permanently reserved for Control Plane | `smritisys` (Control Plane) |
+| **Case Normalization** | Lowercase automatically converted to UPPERCASE | `abc` -> `ABC` (`tileflowABC`) |
+| **Reserved Code 000** | `000` is permanently reserved | `tileflow000` (Forbidden) |
+| **Reserved Code SYS** | `SYS` is permanently reserved for Control Plane | `tileflowsys` (Control Plane) |
 
 ```text
 PostgreSQL Server
 │
-├── smritisys (SMRITI Control Plane)
+├── tileflowsys (TILEFLOW Control Plane)
 │
-├── smriti001 (Company Business DB #001)
-├── smriti007 (Company Business DB #007)
-├── smritiABC (Company Business DB #ABC)
-├── smritiMUM (Company Business DB #MUM)
-└── smritiTT1 (Company Business DB #TT1)
+├── tileflow001 (Company Business DB #001)
+├── tileflow007 (Company Business DB #007)
+├── tileflowABC (Company Business DB #ABC)
+├── tileflowMUM (Company Business DB #MUM)
+└── tileflowTT1 (Company Business DB #TT1)
 ```
 
 ---
@@ -164,21 +150,21 @@ PostgreSQL Server
 
 ```python
 def generate_company_database_name(company_code: str) -> str:
-    \"\"\"Generates server-side database name: smriti<3-character-alphanumeric>.\"\"\"
+    \"\"\"Generates server-side database name: tileflow<3-character-alphanumeric>.\"\"\"
     code = str(company_code).strip().upper()
     if len(code) != 3 or not code.isalnum():
         raise ValueError("Company code must be exactly 3 alphanumeric characters [A-Z0-9].")
     if code in ("000", "SYS"):
         raise ValueError(f"Company code '{{code}}' is permanently reserved.")
-    return f"smriti{{code}}"
+    return f"tileflow{{code}}"
 ```
 """)
 
     # 6. Post-Audit Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -187,8 +173,8 @@ def generate_company_database_name(company_code: str) -> str:
 
     print("\nREFACTOR AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")

@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Product } from "../../types.ts";
 import { apiFetchV1 } from "../../lib/apiFetch.ts";
@@ -169,7 +155,7 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
           ...next[0],
           stockNo: p1.code || "000001",
           product: p1.name,
-          brand: p1.brand || "SMRITI",
+          brand: p1.brand || "MQube",
           style: p1.styleCode || "REG",
           shade: p1.color || "Blue",
           size: p1.size || "32",
@@ -254,7 +240,7 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
       updateLineItem(activeRowIndex, {
         stockNo: product.code || product.barcode,
         product: product.name,
-        brand: product.brand || "SMRITI",
+        brand: product.brand || "MQube",
         style: product.styleCode || "-",
         shade: product.color || "-",
         size: product.size || "-",
@@ -271,7 +257,7 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
       updatePivotRow(activeRowIndex, {
         articleNo: product.code || product.barcode,
         product: product.name,
-        brand: product.brand || "SMRITI",
+        brand: product.brand || "MQube",
         style: product.styleCode || "-",
         color: product.color || "-",
         gstPercent: (product as any).taxPercent ?? 5,
@@ -429,17 +415,17 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
   };
 
   return (
-    <div className="bg-[#faf9ff] text-[#1a1b20] font-sans h-full flex flex-col antialiased select-none overflow-hidden relative">
+    <div className="bg-[#fafafa] text-[#1b1b1b] font-sans h-full flex flex-col antialiased select-none overflow-hidden relative">
       {/* Top Header & Sub-Tabs */}
-      <div className="bg-[#e9edff] border-b border-[#c4c6d4] shrink-0">
-        <div className="px-4 py-1.5 border-b border-[#c4c6d4] flex items-center justify-between">
+      <div className="bg-[#ededed] border-b border-[#c7c7c7] shrink-0">
+        <div className="px-4 py-1.5 border-b border-[#c7c7c7] flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="material-symbols-outlined text-[#00296d] text-[20px]">shopping_cart</span>
-            <h1 className="font-bold text-[#00296d] text-sm tracking-tight">
-              Purchase Order / Indent Generation - SMRITI 9
+            <span className="material-symbols-outlined text-[#252525] text-[20px]">shopping_cart</span>
+            <h1 className="font-bold text-[#252525] text-sm tracking-tight">
+              Purchase Order / Indent Generation - MQube 9
             </h1>
           </div>
-          <span className="text-[10px] font-mono bg-white border border-[#c4c6d4] px-2 py-0.5 rounded text-[#434652] font-bold">
+          <span className="text-[10px] font-mono bg-white border border-[#c7c7c7] px-2 py-0.5 rounded text-[#464646] font-bold">
             PO Mode: {activeTab === "size_pivot" ? "Size Pivot Matrix" : "Standard Line Items"}
           </span>
         </div>
@@ -451,8 +437,8 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
             onClick={() => setActiveTab("generation")}
             className={`px-4 py-1 text-xs font-mono font-bold rounded-t transition-colors ${
               activeTab === "generation"
-                ? "bg-white text-[#00296d] border-t border-x border-[#c4c6d4]"
-                : "text-[#434652] hover:bg-[#e2e2e8]"
+                ? "bg-white text-[#252525] border-t border-x border-[#c7c7c7]"
+                : "text-[#464646] hover:bg-[#e2e2e2]"
             }`}
           >
             Generation
@@ -462,8 +448,8 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
             onClick={() => setActiveTab("size_pivot")}
             className={`px-4 py-1 text-xs font-mono font-bold rounded-t transition-colors ${
               activeTab === "size_pivot"
-                ? "bg-white text-[#00296d] border-t border-x border-[#c4c6d4]"
-                : "text-[#434652] hover:bg-[#e2e2e8]"
+                ? "bg-white text-[#252525] border-t border-x border-[#c7c7c7]"
+                : "text-[#464646] hover:bg-[#e2e2e2]"
             }`}
           >
             Size Pivot Grid
@@ -473,8 +459,8 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
             onClick={() => setActiveTab("other")}
             className={`px-4 py-1 text-xs font-mono font-bold rounded-t transition-colors ${
               activeTab === "other"
-                ? "bg-white text-[#00296d] border-t border-x border-[#c4c6d4]"
-                : "text-[#434652] hover:bg-[#e2e2e8]"
+                ? "bg-white text-[#252525] border-t border-x border-[#c7c7c7]"
+                : "text-[#464646] hover:bg-[#e2e2e2]"
             }`}
           >
             Other Details
@@ -483,63 +469,63 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
       </div>
 
       {/* Form Header Area (Split Pane) */}
-      <div className="p-3 shrink-0 bg-[#faf9ff] border-b border-[#c4c6d4] grid grid-cols-1 lg:grid-cols-12 gap-3 text-xs">
+      <div className="p-3 shrink-0 bg-[#fafafa] border-b border-[#c7c7c7] grid grid-cols-1 lg:grid-cols-12 gap-3 text-xs">
         {/* Document Details */}
-        <div className="lg:col-span-4 bg-white p-2.5 border border-[#c4c6d4] rounded shadow-2xs flex flex-col justify-between">
-          <h3 className="text-[10px] font-bold uppercase text-[#00296d] mb-1.5 border-b border-[#c4c6d4] pb-1 tracking-wider">
+        <div className="lg:col-span-4 bg-white p-2.5 border border-[#c7c7c7] rounded shadow-2xs flex flex-col justify-between">
+          <h3 className="text-[10px] font-bold uppercase text-[#252525] mb-1.5 border-b border-[#c7c7c7] pb-1 tracking-wider">
             Purchase / Indent Document Details
           </h3>
           <div className="grid grid-cols-3 gap-1.5 items-center mb-1">
-            <label className="font-semibold text-[#434652]">Type</label>
+            <label className="font-semibold text-[#464646]">Type</label>
             <select
               value={header.documentType}
               onChange={(e) => setHeader({ ...header, documentType: e.target.value as any })}
-              className="col-span-2 border border-[#737685] rounded px-2 h-6 bg-white outline-none focus:ring-1 focus:ring-[#00296d]"
+              className="col-span-2 border border-[#767676] rounded px-2 h-6 bg-white outline-none focus:ring-1 focus:ring-[#252525]"
             >
               <option value="Purchase Order">Purchase Order</option>
               <option value="Indent">Indent</option>
             </select>
           </div>
           <div className="grid grid-cols-3 gap-1.5 items-center mb-1">
-            <label className="font-semibold text-[#434652]">Prefix</label>
+            <label className="font-semibold text-[#464646]">Prefix</label>
             <input
               type="text"
               value={header.prefix}
               onChange={(e) => setHeader({ ...header, prefix: e.target.value })}
-              className="col-span-2 border border-[#737685] rounded px-2 h-6 font-mono font-bold bg-white outline-none focus:ring-1 focus:ring-[#00296d]"
+              className="col-span-2 border border-[#767676] rounded px-2 h-6 font-mono font-bold bg-white outline-none focus:ring-1 focus:ring-[#252525]"
             />
           </div>
           <div className="grid grid-cols-3 gap-1.5 items-center mb-1">
-            <label className="font-semibold text-[#434652]">Number</label>
+            <label className="font-semibold text-[#464646]">Number</label>
             <input
               type="text"
               value={header.orderNumber}
               onChange={(e) => setHeader({ ...header, orderNumber: e.target.value })}
-              className="col-span-2 border border-[#737685] rounded px-2 h-6 text-right font-mono font-bold bg-white outline-none focus:ring-1 focus:ring-[#00296d]"
+              className="col-span-2 border border-[#767676] rounded px-2 h-6 text-right font-mono font-bold bg-white outline-none focus:ring-1 focus:ring-[#252525]"
             />
           </div>
           <div className="grid grid-cols-3 gap-1.5 items-center">
-            <label className="font-semibold text-[#434652]">Date</label>
+            <label className="font-semibold text-[#464646]">Date</label>
             <input
               type="text"
               value={header.orderDate}
               onChange={(e) => setHeader({ ...header, orderDate: e.target.value })}
-              className="col-span-2 border border-[#737685] rounded px-2 h-6 font-mono bg-white outline-none focus:ring-1 focus:ring-[#00296d]"
+              className="col-span-2 border border-[#767676] rounded px-2 h-6 font-mono bg-white outline-none focus:ring-1 focus:ring-[#252525]"
             />
           </div>
         </div>
 
         {/* Supplier Details */}
-        <div className="lg:col-span-6 bg-white p-2.5 border border-[#c4c6d4] rounded shadow-2xs flex flex-col justify-between">
+        <div className="lg:col-span-6 bg-white p-2.5 border border-[#c7c7c7] rounded shadow-2xs flex flex-col justify-between">
           <div className="grid grid-cols-12 gap-1.5 items-center mb-1">
-            <label className="col-span-3 font-semibold text-[#434652]">Supplier</label>
+            <label className="col-span-3 font-semibold text-[#464646]">Supplier</label>
             <select
               value={header.supplierId}
               onChange={(e) => {
                 const s = suppliersList.find(x => x.id === e.target.value);
                 setHeader({ ...header, supplierId: e.target.value, supplierName: s ? s.name : header.supplierName });
               }}
-              className="col-span-9 border border-[#737685] rounded px-2 h-6 bg-white outline-none focus:ring-1 focus:ring-[#00296d] font-medium"
+              className="col-span-9 border border-[#767676] rounded px-2 h-6 bg-white outline-none focus:ring-1 focus:ring-[#252525] font-medium"
             >
               {suppliersList.map(s => (
                 <option key={s.id} value={s.id}>{s.name}</option>
@@ -547,57 +533,57 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
             </select>
           </div>
           <div className="grid grid-cols-12 gap-1.5 items-center mb-1">
-            <label className="col-span-3 font-semibold text-[#434652]">Bill to</label>
+            <label className="col-span-3 font-semibold text-[#464646]">Bill to</label>
             <input
               type="text"
               value={header.billTo}
               onChange={(e) => setHeader({ ...header, billTo: e.target.value })}
-              className="col-span-9 border border-[#737685] rounded px-2 h-6 bg-white outline-none focus:ring-1 focus:ring-[#00296d]"
+              className="col-span-9 border border-[#767676] rounded px-2 h-6 bg-white outline-none focus:ring-1 focus:ring-[#252525]"
             />
           </div>
           <div className="grid grid-cols-12 gap-1.5 items-center mb-1">
-            <label className="col-span-3 font-semibold text-[#434652]">Delivery Date</label>
+            <label className="col-span-3 font-semibold text-[#464646]">Delivery Date</label>
             <input
               type="text"
               value={header.deliveryDate}
               onChange={(e) => setHeader({ ...header, deliveryDate: e.target.value })}
-              className="col-span-4 border border-[#737685] rounded px-2 h-6 font-mono bg-white outline-none focus:ring-1 focus:ring-[#00296d]"
+              className="col-span-4 border border-[#767676] rounded px-2 h-6 font-mono bg-white outline-none focus:ring-1 focus:ring-[#252525]"
             />
-            <label className="col-span-2 text-right font-semibold text-[#434652] pr-1">Lead Time</label>
+            <label className="col-span-2 text-right font-semibold text-[#464646] pr-1">Lead Time</label>
             <input
               type="number"
               value={header.leadTimeDays}
               onChange={(e) => setHeader({ ...header, leadTimeDays: parseInt(e.target.value) || 0 })}
-              className="col-span-3 border border-[#737685] rounded px-2 h-6 text-right font-mono font-bold bg-white outline-none focus:ring-1 focus:ring-[#00296d]"
+              className="col-span-3 border border-[#767676] rounded px-2 h-6 text-right font-mono font-bold bg-white outline-none focus:ring-1 focus:ring-[#252525]"
             />
           </div>
           <div className="grid grid-cols-12 gap-1.5 items-center">
-            <label className="col-span-3 font-semibold text-[#434652]">Delivery Location</label>
+            <label className="col-span-3 font-semibold text-[#464646]">Delivery Location</label>
             <input
               type="text"
               value={header.deliveryLocation}
               onChange={(e) => setHeader({ ...header, deliveryLocation: e.target.value })}
-              className="col-span-9 border border-[#737685] rounded px-2 h-6 bg-white outline-none focus:ring-1 focus:ring-[#00296d]"
+              className="col-span-9 border border-[#767676] rounded px-2 h-6 bg-white outline-none focus:ring-1 focus:ring-[#252525]"
             />
           </div>
         </div>
 
         {/* Picture Preview */}
-        <div className="lg:col-span-2 bg-white p-2.5 border border-[#c4c6d4] rounded shadow-2xs flex flex-col justify-between items-center">
-          <h3 className="text-[10px] font-bold uppercase text-[#00296d] mb-1 text-center w-full border-b border-[#c4c6d4] pb-1 tracking-wider">
+        <div className="lg:col-span-2 bg-white p-2.5 border border-[#c7c7c7] rounded shadow-2xs flex flex-col justify-between items-center">
+          <h3 className="text-[10px] font-bold uppercase text-[#252525] mb-1 text-center w-full border-b border-[#c7c7c7] pb-1 tracking-wider">
             Picture
           </h3>
-          <div className="w-full h-16 border border-dashed border-[#c4c6d4] bg-[#eeedf3] flex items-center justify-center rounded overflow-hidden mb-1">
+          <div className="w-full h-16 border border-dashed border-[#c7c7c7] bg-[#eeeeee] flex items-center justify-center rounded overflow-hidden mb-1">
             {header.pictureUrl ? (
               <img src={header.pictureUrl} alt="Product" className="h-full object-contain" />
             ) : (
-              <span className="material-symbols-outlined text-[#737685] text-2xl">image</span>
+              <span className="material-symbols-outlined text-[#767676] text-2xl">image</span>
             )}
           </div>
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="w-full bg-[#eeedf3] hover:bg-[#e8e7ed] border border-[#c4c6d4] text-[#1a1b20] rounded h-6 text-[11px] font-bold font-mono transition-colors"
+            className="w-full bg-[#eeeeee] hover:bg-[#e8e8e8] border border-[#c7c7c7] text-[#1b1b1b] rounded h-6 text-[11px] font-bold font-mono transition-colors"
           >
             Load
           </button>
@@ -618,12 +604,12 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
       </div>
 
       {/* Action Bar */}
-      <div className="bg-[#eeedf3] px-3 py-1 border-b border-[#c4c6d4] flex items-center justify-between shrink-0 text-xs">
+      <div className="bg-[#eeeeee] px-3 py-1 border-b border-[#c7c7c7] flex items-center justify-between shrink-0 text-xs">
         <div className="flex items-center gap-4">
           <button
             type="button"
             onClick={() => setActiveTab(activeTab === "generation" ? "size_pivot" : "generation")}
-            className="bg-white hover:bg-[#faf9ff] text-[#00296d] border border-[#00296d] font-bold rounded px-3 py-1 text-xs transition-colors shadow-2xs flex items-center gap-1"
+            className="bg-white hover:bg-[#fafafa] text-[#252525] border border-[#252525] font-bold rounded px-3 py-1 text-xs transition-colors shadow-2xs flex items-center gap-1"
           >
             <span className="material-symbols-outlined text-[14px]">
               {activeTab === "generation" ? "grid_view" : "table_rows"}
@@ -636,7 +622,7 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
           <button
             type="button"
             onClick={() => setShowBrowseModal(true)}
-            className="bg-[#00296d] hover:bg-[#0052cc] text-white px-3 py-1 rounded font-bold text-xs flex items-center gap-1 shadow-xs"
+            className="bg-[#252525] hover:bg-[#494949] text-white px-3 py-1 rounded font-bold text-xs flex items-center gap-1 shadow-xs"
           >
             <span className="material-symbols-outlined text-[14px]">search</span>
             Browse Catalog (F2)
@@ -653,47 +639,47 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
             className="absolute top-6 left-12 z-20 cursor-pointer animate-bounce"
             title="Click to dismiss"
           >
-            <div className="bg-[#d6e3ff] border border-[#00296d] rounded-lg shadow-lg px-4 py-2 flex items-center gap-2 text-[#00296d]">
+            <div className="bg-[#e2e2e2] border border-[#252525] rounded-lg shadow-lg px-4 py-2 flex items-center gap-2 text-[#252525]">
               <span className="material-symbols-outlined text-[18px]">info</span>
               <p className="font-bold text-xs m-0">
                 Press <strong>F2</strong> to browse for stock items
               </p>
             </div>
-            <div className="absolute -top-2 left-6 w-3 h-3 bg-[#d6e3ff] border-t border-l border-[#00296d] transform rotate-45"></div>
+            <div className="absolute -top-2 left-6 w-3 h-3 bg-[#e2e2e2] border-t border-l border-[#252525] transform rotate-45"></div>
           </div>
         )}
 
         {/* Tab 1: Standard Generation Grid */}
         {activeTab === "generation" && (
           <table className="w-full text-left border-collapse min-w-[1300px] text-xs">
-            <thead className="sticky top-0 z-10 bg-[#eeedf3] shadow-xs text-[10px] font-bold uppercase text-[#434652]">
+            <thead className="sticky top-0 z-10 bg-[#eeeeee] shadow-xs text-[10px] font-bold uppercase text-[#464646]">
               <tr>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 w-8 text-center bg-[#e8e7ed]">#</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[100px]">Stock Number</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[130px]">Product</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[90px]">Brand</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px]">Style</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px]">Shade</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[60px]">Size</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px]">Fibre</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px]">Colour Base</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px]">Styling</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px] text-right">Rate</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px] text-right">Order Qty</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[100px] text-right bg-[#e2e2e8]">Value</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 text-center min-w-[90px]">Stock On Hand</th>
-                <th colSpan={2} className="border-b border-r border-[#c4c6d4] p-1 text-center">Tax / Duty</th>
-                <th colSpan={2} className="border-b border-r border-[#c4c6d4] p-1 text-center">Add-On After Tax</th>
-                <th rowSpan={2} className="border-b border-[#c4c6d4] p-1 px-2 min-w-[100px] text-right bg-[#e2e2e8]">Total Value</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 w-8 text-center bg-[#e8e8e8]">#</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[100px]">Stock Number</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[130px]">Product</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[90px]">Brand</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px]">Style</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px]">Shade</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[60px]">Size</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px]">Fibre</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px]">Colour Base</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px]">Styling</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px] text-right">Rate</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px] text-right">Order Qty</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[100px] text-right bg-[#e2e2e2]">Value</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 text-center min-w-[90px]">Stock On Hand</th>
+                <th colSpan={2} className="border-b border-r border-[#c7c7c7] p-1 text-center">Tax / Duty</th>
+                <th colSpan={2} className="border-b border-r border-[#c7c7c7] p-1 text-center">Add-On After Tax</th>
+                <th rowSpan={2} className="border-b border-[#c7c7c7] p-1 px-2 min-w-[100px] text-right bg-[#e2e2e2]">Total Value</th>
               </tr>
               <tr>
-                <th className="border-b border-r border-[#c4c6d4] p-0.5 text-center text-[9px] w-14">Per (%)</th>
-                <th className="border-b border-r border-[#c4c6d4] p-0.5 text-center text-[9px] w-20">Amount</th>
-                <th className="border-b border-r border-[#c4c6d4] p-0.5 text-center text-[9px] w-14">Per (%)</th>
-                <th className="border-b border-r border-[#c4c6d4] p-0.5 text-center text-[9px] w-20">Amount</th>
+                <th className="border-b border-r border-[#c7c7c7] p-0.5 text-center text-[9px] w-14">Per (%)</th>
+                <th className="border-b border-r border-[#c7c7c7] p-0.5 text-center text-[9px] w-20">Amount</th>
+                <th className="border-b border-r border-[#c7c7c7] p-0.5 text-center text-[9px] w-14">Per (%)</th>
+                <th className="border-b border-r border-[#c7c7c7] p-0.5 text-center text-[9px] w-20">Amount</th>
               </tr>
             </thead>
-            <tbody className="font-mono divide-y divide-[#c4c6d4]/40 font-medium">
+            <tbody className="font-mono divide-y divide-[#c7c7c7]/40 font-medium">
               {lineItems.map((item, idx) => {
                 const isSelected = idx === activeRowIndex;
                 return (
@@ -703,14 +689,14 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
                       setActiveRowIndex(idx);
                       setShowF2Hint(false);
                     }}
-                    className={`hover:bg-[#f4f3f9] transition-colors ${
-                      isSelected ? "bg-[#cdddff]/40" : ""
+                    className={`hover:bg-[#f4f4f4] transition-colors ${
+                      isSelected ? "bg-[#dcdcdc]/40" : ""
                     }`}
                   >
-                    <td className="border-r border-[#c4c6d4] p-1 text-center text-[#737685] bg-[#f4f3f9]">
+                    <td className="border-r border-[#c7c7c7] p-1 text-center text-[#767676] bg-[#f4f4f4]">
                       {item.sNo}
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.stockNo}
@@ -719,120 +705,120 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
                         data-context-type="product"
                         name="stockNo"
                         aria-label="Stock Number — Product Lookup"
-                        className="w-full bg-transparent border-none p-1 h-6 font-mono font-bold text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 font-mono font-bold text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.product}
                         onChange={(e) => updateLineItem(idx, { product: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.brand}
                         onChange={(e) => updateLineItem(idx, { brand: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.style}
                         onChange={(e) => updateLineItem(idx, { style: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.shade}
                         onChange={(e) => updateLineItem(idx, { shade: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.size}
                         onChange={(e) => updateLineItem(idx, { size: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.fibre}
                         onChange={(e) => updateLineItem(idx, { fibre: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.colourBase}
                         onChange={(e) => updateLineItem(idx, { colourBase: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={item.styling}
                         onChange={(e) => updateLineItem(idx, { styling: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="number"
                         min="0"
                         value={item.rate || ""}
                         onChange={(e) => updateLineItem(idx, { rate: parseFloat(e.target.value) || 0 })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right font-bold focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right font-bold focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="number"
                         min="0"
                         value={item.orderQty || ""}
                         onChange={(e) => updateLineItem(idx, { orderQty: parseInt(e.target.value) || 0 })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right font-bold text-[#00296d] focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right font-bold text-[#252525] focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-1 px-2 text-right bg-[#eeedf3]/60 font-bold">
+                    <td className="border-r border-[#c7c7c7] p-1 px-2 text-right bg-[#eeeeee]/60 font-bold">
                       {item.value.toFixed(2)}
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-1 px-2 text-right text-[#737685]">
+                    <td className="border-r border-[#c7c7c7] p-1 px-2 text-right text-[#767676]">
                       {item.stockOnHand}
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="number"
                         value={item.taxPercent || ""}
                         onChange={(e) => updateLineItem(idx, { taxPercent: parseFloat(e.target.value) || 0 })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-1 px-1.5 text-right text-[11px]">
+                    <td className="border-r border-[#c7c7c7] p-1 px-1.5 text-right text-[11px]">
                       {item.taxAmount.toFixed(2)}
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="number"
                         value={item.addOnPercent || ""}
                         onChange={(e) => updateLineItem(idx, { addOnPercent: parseFloat(e.target.value) || 0 })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-1 px-1.5 text-right text-[11px]">
+                    <td className="border-r border-[#c7c7c7] p-1 px-1.5 text-right text-[11px]">
                       {item.addOnAmount.toFixed(2)}
                     </td>
-                    <td className="p-1 px-2 text-right bg-[#eeedf3]/60 font-bold">
+                    <td className="p-1 px-2 text-right bg-[#eeeeee]/60 font-bold">
                       {item.totalValue.toFixed(2)}
                     </td>
                   </tr>
@@ -845,39 +831,39 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
         {/* Tab 2: Size Pivot Grid */}
         {activeTab === "size_pivot" && (
           <table className="w-full text-left border-collapse min-w-[1200px] text-xs">
-            <thead className="sticky top-0 z-10 bg-[#eeedf3] shadow-xs text-[10px] font-bold uppercase text-[#434652]">
+            <thead className="sticky top-0 z-10 bg-[#eeeeee] shadow-xs text-[10px] font-bold uppercase text-[#464646]">
               <tr>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 w-8 text-center bg-[#e8e7ed]">#</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[100px]">Article No</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[130px]">Product</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[90px]">Brand</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px]">Style</th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px]">Color</th>
-                <th colSpan={DEFAULT_SIZES.length} className="border-b border-r border-[#c4c6d4] p-1 text-center bg-[#e2e2e8]">
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 w-8 text-center bg-[#e8e8e8]">#</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[100px]">Article No</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[130px]">Product</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[90px]">Brand</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px]">Style</th>
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px]">Color</th>
+                <th colSpan={DEFAULT_SIZES.length} className="border-b border-r border-[#c7c7c7] p-1 text-center bg-[#e2e2e2]">
                   Size Pivot (Qty)
                 </th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[65px] text-right bg-[#e2e2e8] font-bold">
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[65px] text-right bg-[#e2e2e2] font-bold">
                   QTY
                 </th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[55px] text-right bg-[#e2e2e8] font-bold">
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[55px] text-right bg-[#e2e2e2] font-bold">
                   GST %
                 </th>
-                <th rowSpan={2} className="border-b border-r border-[#c4c6d4] p-1 px-2 min-w-[80px] text-right">
+                <th rowSpan={2} className="border-b border-r border-[#c7c7c7] p-1 px-2 min-w-[80px] text-right">
                   Rate
                 </th>
-                <th rowSpan={2} className="border-b border-[#c4c6d4] p-1 px-2 min-w-[100px] text-right bg-[#e2e2e8]">
+                <th rowSpan={2} className="border-b border-[#c7c7c7] p-1 px-2 min-w-[100px] text-right bg-[#e2e2e2]">
                   Total Value
                 </th>
               </tr>
               <tr>
                 {DEFAULT_SIZES.map(sz => (
-                  <th key={sz} className="border-b border-r border-[#c4c6d4] p-1 text-center w-10 font-mono font-bold bg-[#eeedf3]">
+                  <th key={sz} className="border-b border-r border-[#c7c7c7] p-1 text-center w-10 font-mono font-bold bg-[#eeeeee]">
                     {sz}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="font-mono divide-y divide-[#c4c6d4]/40 font-medium">
+            <tbody className="font-mono divide-y divide-[#c7c7c7]/40 font-medium">
               {sizePivotRows.map((row, idx) => {
                 const isSelected = idx === activeRowIndex;
                 return (
@@ -887,14 +873,14 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
                       setActiveRowIndex(idx);
                       setShowF2Hint(false);
                     }}
-                    className={`hover:bg-[#f4f3f9] transition-colors ${
-                      isSelected ? "bg-[#cdddff]/40" : ""
+                    className={`hover:bg-[#f4f4f4] transition-colors ${
+                      isSelected ? "bg-[#dcdcdc]/40" : ""
                     }`}
                   >
-                    <td className="border-r border-[#c4c6d4] p-1 text-center text-[#737685] bg-[#f4f3f9]">
+                    <td className="border-r border-[#c7c7c7] p-1 text-center text-[#767676] bg-[#f4f4f4]">
                       {row.sNo}
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={row.articleNo}
@@ -903,73 +889,73 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
                         data-context-type="product"
                         name="articleNo"
                         aria-label="Article Number — Product Lookup"
-                        className="w-full bg-transparent border-none p-1 h-6 font-mono font-bold text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 font-mono font-bold text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={row.product}
                         onChange={(e) => updatePivotRow(idx, { product: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={row.brand}
                         onChange={(e) => updatePivotRow(idx, { brand: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={row.style}
                         onChange={(e) => updatePivotRow(idx, { style: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="text"
                         value={row.color}
                         onChange={(e) => updatePivotRow(idx, { color: e.target.value })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
                     {DEFAULT_SIZES.map((sz) => (
-                      <td key={sz} className="border-r border-[#c4c6d4] p-0 w-10 text-center">
+                      <td key={sz} className="border-r border-[#c7c7c7] p-0 w-10 text-center">
                         <input
                           type="number"
                           min="0"
                           value={row.sizeQuantities[sz] || ""}
                           onChange={(e) => updatePivotSizeQty(idx, sz, parseInt(e.target.value) || 0)}
-                          className="w-full bg-transparent border-none p-1 h-6 text-xs font-mono text-center focus:ring-1 focus:ring-[#00296d]"
+                          className="w-full bg-transparent border-none p-1 h-6 text-xs font-mono text-center focus:ring-1 focus:ring-[#252525]"
                         />
                       </td>
                     ))}
-                    <td className="border-r border-[#c4c6d4] p-1 px-2 text-right font-mono font-bold bg-[#f4f3f9] text-[#00296d]">
+                    <td className="border-r border-[#c7c7c7] p-1 px-2 text-right font-mono font-bold bg-[#f4f4f4] text-[#252525]">
                       {row.totalQty}
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="number"
                         min="0"
                         value={row.gstPercent || ""}
                         onChange={(e) => updatePivotRow(idx, { gstPercent: parseFloat(e.target.value) || 0 })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right font-mono focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right font-mono focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="border-r border-[#c4c6d4] p-0.5">
+                    <td className="border-r border-[#c7c7c7] p-0.5">
                       <input
                         type="number"
                         value={row.rate || ""}
                         onChange={(e) => updatePivotRow(idx, { rate: parseFloat(e.target.value) || 0 })}
-                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right font-bold focus:ring-1 focus:ring-[#00296d]"
+                        className="w-full bg-transparent border-none p-1 h-6 text-xs text-right font-bold focus:ring-1 focus:ring-[#252525]"
                       />
                     </td>
-                    <td className="p-1 px-2 text-right bg-[#eeedf3]/60 font-bold">
+                    <td className="p-1 px-2 text-right bg-[#eeeeee]/60 font-bold">
                       {row.totalValue.toFixed(2)}
                     </td>
                   </tr>
@@ -982,67 +968,67 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
         {/* Tab 3: Other Details */}
         {activeTab === "other" && (
           <div className="p-6 max-w-2xl text-xs space-y-4">
-            <div className="bg-[#eeedf3] p-4 rounded border border-[#c4c6d4]">
-              <h4 className="font-bold text-[#00296d] mb-2 uppercase text-[11px]">Payment & Commercial Terms</h4>
+            <div className="bg-[#eeeeee] p-4 rounded border border-[#c7c7c7]">
+              <h4 className="font-bold text-[#252525] mb-2 uppercase text-[11px]">Payment & Commercial Terms</h4>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-semibold text-[#434652] mb-1">Payment Terms</label>
-                  <input type="text" defaultValue="30 Days Net" className="w-full border border-[#737685] rounded px-2 h-7 bg-white" />
+                  <label className="block font-semibold text-[#464646] mb-1">Payment Terms</label>
+                  <input type="text" defaultValue="30 Days Net" className="w-full border border-[#767676] rounded px-2 h-7 bg-white" />
                 </div>
                 <div>
-                  <label className="block font-semibold text-[#434652] mb-1">Freight Charges</label>
-                  <input type="text" defaultValue="Paid by Supplier" className="w-full border border-[#737685] rounded px-2 h-7 bg-white" />
+                  <label className="block font-semibold text-[#464646] mb-1">Freight Charges</label>
+                  <input type="text" defaultValue="Paid by Supplier" className="w-full border border-[#767676] rounded px-2 h-7 bg-white" />
                 </div>
               </div>
             </div>
 
-            <div className="bg-[#eeedf3] p-4 rounded border border-[#c4c6d4]">
-              <h4 className="font-bold text-[#00296d] mb-2 uppercase text-[11px]">Special Instructions</h4>
-              <textarea rows={3} defaultValue="Please ensure all garments carry SMRITI 9 Barcode tags and standard export polybag packaging." className="w-full border border-[#737685] rounded p-2 bg-white" />
+            <div className="bg-[#eeeeee] p-4 rounded border border-[#c7c7c7]">
+              <h4 className="font-bold text-[#252525] mb-2 uppercase text-[11px]">Special Instructions</h4>
+              <textarea rows={3} defaultValue="Please ensure all garments carry MQube 9 Barcode tags and standard export polybag packaging." className="w-full border border-[#767676] rounded p-2 bg-white" />
             </div>
           </div>
         )}
       </div>
 
       {/* Summary Totals Bar */}
-      <div className="bg-[#e9edff] px-4 py-2 border-t border-[#c4c6d4] flex items-center justify-between shrink-0 text-xs">
-        <div className="flex-1 text-[#434652] font-mono font-bold">
+      <div className="bg-[#ededed] px-4 py-2 border-t border-[#c7c7c7] flex items-center justify-between shrink-0 text-xs">
+        <div className="flex-1 text-[#464646] font-mono font-bold">
           Active Mode: {activeTab === "size_pivot" ? "Size Matrix" : "Standard Line Items"} ({activeTab === "size_pivot" ? sizePivotRows.filter(r => r.articleNo).length : lineItems.filter(l => l.stockNo).length} Active Rows)
         </div>
         <div className="flex items-center gap-4 font-mono">
           <div className="flex items-center gap-1.5">
-            <span className="font-bold text-[#434652]">Total Qty:</span>
+            <span className="font-bold text-[#464646]">Total Qty:</span>
             <input
               type="text"
               readOnly
               value={totals.totalQty}
-              className="w-20 bg-white border border-[#c4c6d4] rounded h-7 px-2 text-right font-bold text-[#00296d]"
+              className="w-20 bg-white border border-[#c7c7c7] rounded h-7 px-2 text-right font-bold text-[#252525]"
             />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="font-bold text-[#434652]">Gross Value:</span>
+            <span className="font-bold text-[#464646]">Gross Value:</span>
             <input
               type="text"
               readOnly
               value={`₹${totals.grossValue.toFixed(2)}`}
-              className="w-28 bg-white border border-[#c4c6d4] rounded h-7 px-2 text-right font-bold"
+              className="w-28 bg-white border border-[#c7c7c7] rounded h-7 px-2 text-right font-bold"
             />
           </div>
           <div className="flex items-center gap-1.5">
-            <span className="font-bold text-[#00296d]">Total Value:</span>
+            <span className="font-bold text-[#252525]">Total Value:</span>
             <input
               type="text"
               readOnly
               value={`₹${totals.totalValue.toFixed(2)}`}
-              className="w-32 bg-[#00296d] text-white border border-[#00296d] rounded h-7 px-2 text-right font-bold text-sm"
+              className="w-32 bg-[#252525] text-white border border-[#252525] rounded h-7 px-2 text-right font-bold text-sm"
             />
           </div>
         </div>
       </div>
 
       {/* Bottom Control Action Bar */}
-      <div className="bg-[#eeedf3] px-4 py-1.5 border-t border-[#c4c6d4] flex items-center justify-between shrink-0 text-xs">
-        <div className="flex items-center gap-3 text-xs text-[#00296d] font-mono">
+      <div className="bg-[#eeeeee] px-4 py-1.5 border-t border-[#c7c7c7] flex items-center justify-between shrink-0 text-xs">
+        <div className="flex items-center gap-3 text-xs text-[#252525] font-mono">
           <span><strong>F2</strong> - Browse</span>
           <span><strong>F4</strong> - Delete Row</span>
           <span><strong>F6</strong> - Copy Previous Row</span>
@@ -1051,7 +1037,7 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
           <button
             type="button"
             onClick={handleClear}
-            className="bg-white hover:bg-[#faf9ff] text-[#1a1b20] border border-[#c4c6d4] rounded px-4 py-1 font-bold text-xs transition-colors"
+            className="bg-white hover:bg-[#fafafa] text-[#1b1b1b] border border-[#c7c7c7] rounded px-4 py-1 font-bold text-xs transition-colors"
           >
             Clear
           </button>
@@ -1059,12 +1045,12 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
       </div>
 
       {/* Global Operational Controls (Add / Edit / View / Exit) */}
-      <div className="bg-[#e2e2e8] px-2 py-1.5 flex items-center gap-2 shrink-0 border-t border-[#c4c6d4] text-xs">
+      <div className="bg-[#e2e2e2] px-2 py-1.5 flex items-center gap-2 shrink-0 border-t border-[#c7c7c7] text-xs">
         <button
           type="button"
           disabled={saving}
           onClick={handleSavePO}
-          className="flex-1 bg-[#00296d] hover:bg-[#0052cc] text-white rounded py-1.5 font-bold uppercase tracking-wider transition-colors shadow-xs disabled:opacity-50 flex items-center justify-center gap-1"
+          className="flex-1 bg-[#252525] hover:bg-[#494949] text-white rounded py-1.5 font-bold uppercase tracking-wider transition-colors shadow-xs disabled:opacity-50 flex items-center justify-center gap-1"
         >
           <span className="material-symbols-outlined text-[16px]">save</span>
           {saving ? "Saving PO..." : "Save Purchase Order"}
@@ -1072,7 +1058,7 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
         <button
           type="button"
           onClick={() => window.print()}
-          className="flex-1 bg-white hover:bg-[#eeedf3] text-[#1a1b20] border border-[#c4c6d4] rounded py-1.5 font-bold uppercase tracking-wider transition-colors shadow-2xs"
+          className="flex-1 bg-white hover:bg-[#eeeeee] text-[#1b1b1b] border border-[#c7c7c7] rounded py-1.5 font-bold uppercase tracking-wider transition-colors shadow-2xs"
         >
           Print Preview (F9)
         </button>
@@ -1086,8 +1072,8 @@ export const PoGenerateTab: React.FC<PurchaseOrderGenerationTabProps> = ({
       </div>
 
       {/* Footer Status Bar */}
-      <footer className="bg-[#e2e2e8] text-[#434652] font-mono text-[11px] border-t border-[#c4c6d4] flex justify-between items-center px-4 py-1 w-full shrink-0">
-        <span className="font-bold text-[#00296d]">SMRITI 9 Enterprise POS | Ver 4.2.0</span>
+      <footer className="bg-[#e2e2e2] text-[#464646] font-mono text-[11px] border-t border-[#c7c7c7] flex justify-between items-center px-4 py-1 w-full shrink-0">
+        <span className="font-bold text-[#252525]">MQube 9 Enterprise POS | Ver 4.2.0</span>
         <div className="flex items-center gap-6">
           <span>F1: Help</span>
           <span>F2: Browse Stock</span>

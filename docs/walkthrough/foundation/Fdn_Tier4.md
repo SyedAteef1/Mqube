@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Foundation Walkthrough: Backend Tier 4 FastAPI Migration
@@ -69,7 +68,7 @@ The scope includes database model definitions, Pydantic request/response schemas
 ## 5. Architecture Decisions
 - **Strangler-Fig Migration:** Ported remaining modules directly to the FastAPI + PostgreSQL stack on port 8000.
 - **Transactional Row Locking:** Document sequence generation uses standard database lock `select().with_for_update()` to prevent numbering collision during concurrent transactions.
-- **Metadata Isolation:** Restricting migrations exclusively to registered SMRITI tables via the `include_object` hook in Alembic config to safeguard third-party or shared tables.
+- **Metadata Isolation:** Restricting migrations exclusively to registered TILEFLOW tables via the `include_object` hook in Alembic config to safeguard third-party or shared tables.
 
 ## 6. Design Rationale
 - **CamelCase JSON Payload Preservation:** Maintained camelCase naming conventions across Pydantic models (e.g. `branchId`, `fullName`) to match the legacy Express JS client payload expectation without breaking client interfaces.
@@ -83,7 +82,7 @@ The scope includes database model definitions, Pydantic request/response schemas
 - Mounted compliance and vault keys `SGIP_VAULT_MASTER_KEY` directly inside container configurations.
 
 ## 8. Tests Executed
-- Executed full test suite containing 99 tests using `pytest` inside the dockerized `smriti-python-core` container.
+- Executed full test suite containing 99 tests using `pytest` inside the dockerized `tileflow-python-core` container.
 - Customized `t_user_mgmt.py` assertions to align with new REST endpoints.
 
 ## 9. Verification Results

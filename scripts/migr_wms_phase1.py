@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 import uuid
 import psycopg2
@@ -20,12 +6,12 @@ def get_company_databases():
     try:
         conn = psycopg2.connect("dbname=postgres user=postgres password=postgres host=localhost port=5432")
         cur = conn.cursor()
-        cur.execute("SELECT datname FROM pg_database WHERE datname LIKE 'smriti%' AND datname != 'smritisys';")
+        cur.execute("SELECT datname FROM pg_database WHERE datname LIKE 'tileflow%' AND datname != 'tileflowsys';")
         dbs = [r[0] for r in cur.fetchall()]
         conn.close()
         return dbs
     except Exception:
-        return ["smriti001", "smriti002", "smriti_test_fresh"]
+        return ["tileflow001", "tileflow002", "tileflow_test_fresh"]
 
 def migrate_company_database(db_name: str):
     print(f"\n============================================================")
@@ -323,7 +309,7 @@ def migrate_company_database(db_name: str):
         conn.close()
 
 def main():
-    print("Starting SMRITI WMS Phase 1 Database Migration across Company Data Planes...")
+    print("Starting TILEFLOW WMS Phase 1 Database Migration across Company Data Planes...")
     dbs = get_company_databases()
     for db in dbs:
         try:

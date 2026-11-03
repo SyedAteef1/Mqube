@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.108.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -46,12 +45,12 @@ function buildSampleRequests(): PriceOverrideRequest[] {
   const r1 = PriceOverrideEngine.createRequest({ ...base, sku: "FAB-DENIM-BLU", productName: "Denim Blue 1m", standardPrice: 250, requestedPrice: 246 });   // AUTO_APPROVED 1.6%
   const r2 = PriceOverrideEngine.createRequest({ ...base, sku: "FAB-SILK-RED",  productName: "Silk Red 1m",   standardPrice: 600, requestedPrice: 570 });   // PENDING 5%
   let r3   = PriceOverrideEngine.createRequest({ ...base, sku: "ACC-BELT-BRN",  productName: "Leather Belt",  standardPrice: 350, requestedPrice: 297.5 }); // MANAGER 15%
-  r3 = PriceOverrideEngine.approve(r3, "MGR-001", "MANAGER", "Customer VIP â€” approved");
+  r3 = PriceOverrideEngine.approve(r3, "MGR-001", "MANAGER", "Customer VIP — approved");
   const r4 = PriceOverrideEngine.createRequest({ ...base, sku: "FAB-LINEN-WHT", productName: "Linen White 1m", standardPrice: 180, requestedPrice: 162 }); // PENDING 10%
   return [r1, r2, r3, r4];
 }
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 export const PriceOverrideModal: React.FC<PriceOverrideModalProps> = ({ isOpen, onClose, onNotification }) => {
   const [requests, setRequests] = useState<PriceOverrideRequest[]>(buildSampleRequests);
@@ -78,7 +77,7 @@ export const PriceOverrideModal: React.FC<PriceOverrideModalProps> = ({ isOpen, 
 
   const handleReject = () => {
     if (!selected) return;
-    const rejected = PriceOverrideEngine.reject(selected, "MGR-001", "Price threshold exceeded â€” policy violation");
+    const rejected = PriceOverrideEngine.reject(selected, "MGR-001", "Price threshold exceeded — policy violation");
     update(rejected);
     onNotification?.("Rejected", `${selected.requestNo} rejected`, "info");
   };
@@ -226,7 +225,7 @@ export const PriceOverrideModal: React.FC<PriceOverrideModalProps> = ({ isOpen, 
                 <div className="grid grid-cols-2 gap-2">
                   {DEFAULT_OVERRIDE_CONFIG.deviationMatrix.map((rule, i) => (
                     <div key={i} className={`flex items-center justify-between rounded-xl px-3 py-2 text-xs border ${selected.deviationPct >= rule.fromPct && selected.deviationPct < rule.toPct ? "bg-violet-950/20 border-violet-500/40" : "bg-slate-800/20 border-slate-800/40"}`}>
-                      <span className="font-mono text-slate-400">{rule.fromPct}% â€“ {rule.toPct === Infinity ? "âˆž" : `${rule.toPct}%`}</span>
+                      <span className="font-mono text-slate-400">{rule.fromPct}% – {rule.toPct === Infinity ? "âˆž" : `${rule.toPct}%`}</span>
                       <span className={`font-bold ${AUTHORITY_STYLE[rule.requiredAuthority]}`}>{rule.requiredAuthority}</span>
                     </div>
                   ))}

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 from sqlalchemy import (
@@ -33,7 +19,7 @@ from ..db.base import Base
 
 class CountryRef(Base):
     """
-    ISO 3166-1 standard country reference data (smritisys / control plane).
+    ISO 3166-1 standard country reference data (tileflowsys / control plane).
     """
     __tablename__ = "countries_ref"
 

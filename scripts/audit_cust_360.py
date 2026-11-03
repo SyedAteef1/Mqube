@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,15 +8,15 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smriti001"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\CUSTOMER_360.md"
 DIST_DIR = r"F:\SMRITRretailNX\dist"
 
 def audit_customer_360_growth_ecosystem():
     print("============================================================")
-    print("SMRITI CUSTOMER 360 & COMMERCIAL GROWTH ECOSYSTEM AUDIT")
+    print("TILEFLOW CUSTOMER 360 & COMMERCIAL GROWTH ECOSYSTEM AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -38,34 +25,34 @@ def audit_customer_360_growth_ecosystem():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     # 2. Unambiguous Ownership Reconciled Table Matrix
     cge_tables = [
-        ("customers", "Customer Profile Master", "smriti001", "IMPLEMENTED"),
-        ("customer_groups", "Customer Credit & Margin Policy", "smriti001", "IMPLEMENTED"),
-        ("loyalty_tiers", "Loyalty Tiers (Bronze, Silver, Gold, Platinum)", "smriti001", "IMPLEMENTED"),
-        ("loyalty_rules", "Loyalty Earning Rules", "smriti001", "IMPLEMENTED"),
-        ("loyalty_members", "Loyalty Member Master", "smriti001", "IMPLEMENTED"),
-        ("loyalty_points_ledgers", "Loyalty Points Transactional Ledger", "smriti001", "IMPLEMENTED"),
-        ("promotion_campaigns", "Promotion & Campaign Master", "smriti001", "IMPLEMENTED"),
-        ("promotion_rules", "Discount Calculation Rules", "smriti001", "IMPLEMENTED"),
-        ("coupons", "Promo Codes & Coupons", "smriti001", "IMPLEMENTED"),
-        ("promotion_redemptions", "Transactional Redemption Ledger & Snapshot", "smriti001", "IMPLEMENTED"),
-        ("referral_programs", "Referral Program Master", "smriti001", "IMPLEMENTED"),
-        ("referral_relationships", "Referrer -> Referee Link", "smriti001", "IMPLEMENTED"),
-        ("referral_rewards", "Referral Reward Transactional Ledger", "smriti001", "IMPLEMENTED"),
-        ("commission_programs", "SICE Program Master", "smriti001", "IMPLEMENTED"),
-        ("commission_rules", "SICE Calculation Rules (Sales/Referral/Driver)", "smriti001", "IMPLEMENTED"),
-        ("commission_participants", "Universal Person Role Assignments", "smriti001", "IMPLEMENTED"),
-        ("commission_ledgers", "SICE Commission Transactional Ledger", "smriti001", "IMPLEMENTED")
+        ("customers", "Customer Profile Master", "tileflow001", "IMPLEMENTED"),
+        ("customer_groups", "Customer Credit & Margin Policy", "tileflow001", "IMPLEMENTED"),
+        ("loyalty_tiers", "Loyalty Tiers (Bronze, Silver, Gold, Platinum)", "tileflow001", "IMPLEMENTED"),
+        ("loyalty_rules", "Loyalty Earning Rules", "tileflow001", "IMPLEMENTED"),
+        ("loyalty_members", "Loyalty Member Master", "tileflow001", "IMPLEMENTED"),
+        ("loyalty_points_ledgers", "Loyalty Points Transactional Ledger", "tileflow001", "IMPLEMENTED"),
+        ("promotion_campaigns", "Promotion & Campaign Master", "tileflow001", "IMPLEMENTED"),
+        ("promotion_rules", "Discount Calculation Rules", "tileflow001", "IMPLEMENTED"),
+        ("coupons", "Promo Codes & Coupons", "tileflow001", "IMPLEMENTED"),
+        ("promotion_redemptions", "Transactional Redemption Ledger & Snapshot", "tileflow001", "IMPLEMENTED"),
+        ("referral_programs", "Referral Program Master", "tileflow001", "IMPLEMENTED"),
+        ("referral_relationships", "Referrer -> Referee Link", "tileflow001", "IMPLEMENTED"),
+        ("referral_rewards", "Referral Reward Transactional Ledger", "tileflow001", "IMPLEMENTED"),
+        ("commission_programs", "SICE Program Master", "tileflow001", "IMPLEMENTED"),
+        ("commission_rules", "SICE Calculation Rules (Sales/Referral/Driver)", "tileflow001", "IMPLEMENTED"),
+        ("commission_participants", "Universal Person Role Assignments", "tileflow001", "IMPLEMENTED"),
+        ("commission_ledgers", "SICE Commission Transactional Ledger", "tileflow001", "IMPLEMENTED")
     ]
 
     df_arch = pd.DataFrame([
@@ -73,15 +60,15 @@ def audit_customer_360_growth_ecosystem():
     ])
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
-        {"Metric": "Company Business Database", "Value": "smriti001 (ACTIVE for COMP-001)"},
-        {"Metric": "Unambiguous Ownership Rule", "Value": "smritisys = Entitlements & Policy; smriti001 = ALL Operational Defs & Ledgers"},
-        {"Metric": "Customer 360 Ecosystem", "Value": "CRM + Loyalty + Promotions + Referrals + SICE co-located in smriti001 (0 Extra DBs)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Company Business Database", "Value": "tileflow001 (ACTIVE for COMP-001)"},
+        {"Metric": "Unambiguous Ownership Rule", "Value": "tileflowsys = Entitlements & Policy; tileflow001 = ALL Operational Defs & Ledgers"},
+        {"Metric": "Customer 360 Ecosystem", "Value": "CRM + Loyalty + Promotions + Referrals + SICE co-located in tileflow001 (0 Extra DBs)"},
         {"Metric": "Universal Person Principle", "Value": "One person holds multiple roles (Salesperson, Driver, Referrer, Agent, Dealer, Affiliate)"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Database Mutations Executed", "Value": "0 Mutations"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
         {"Metric": "Final Status", "Value": "CUSTOMER_360_GROWTH_ECOSYSTEM_VERIFIED"}
     ])
 
@@ -126,36 +113,35 @@ def audit_customer_360_growth_ecosystem():
     # 4. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Customer 360 & Commercial Growth Ecosystem Specification v1.0
+# TILEFLOW Customer 360 & Commercial Growth Ecosystem Specification v1.0
 
 **Status: CUSTOMER_360_GROWTH_ECOSYSTEM_VERIFIED**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
 ## 1. Unambiguous Database Ownership Architecture
 
 ```text
-smritisys
+tileflowsys
 ├── Capability Entitlements (CRM, Loyalty, Promotions, SICE, Referrals)
 ├── Platform Global Defaults
 └── Company-Level Policy / Governance Configuration
 
-smriti001
+tileflow001
 ├── commission_programs
 ├── commission_rules
 ├── commission_participants (Salesperson, Driver, Referrer, Agent, Dealer, Affiliate, Influencer)
@@ -173,7 +159,6 @@ smriti001
 
 ---
 
-## 2. Final Classification
 
 ```text
 FINAL STATUS: CUSTOMER_360_GROWTH_ECOSYSTEM_VERIFIED
@@ -181,10 +166,10 @@ FINAL STATUS: CUSTOMER_360_GROWTH_ECOSYSTEM_VERIFIED
 """)
 
     # 5. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -193,8 +178,8 @@ FINAL STATUS: CUSTOMER_360_GROWTH_ECOSYSTEM_VERIFIED
 
     print("\nCUSTOMER 360 & GROWTH ECOSYSTEM AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")

@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-19
   Modified     : 2026-08-19
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # 07. Phase 2 — Migration Execution Log
 
 **Execution Timestamp:** 2026-08-19 12:12:52 IST  
 **Environment:** PostgreSQL 16 (Local / Multi-Tenant Docker Cluster)  
-**Database:** `smritisys`
+**Database:** `tileflowsys`
 
 ---
 

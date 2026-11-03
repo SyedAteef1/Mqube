@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah — Founder & Chairperson
-* Jawahar Ramkripal Mallah  — Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.17.1 (Phase 1 — POS Checkout)
-* Created    : 2026-07-11
-* Modified   : 2026-08-17
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-"""
-
 import uuid
 from typing import Optional, List, Dict, Any
 from decimal import Decimal
@@ -328,7 +310,7 @@ class POSService:
             )
 
         # ── Cash In Source Balance Policy ──────────────────────────────────────────
-        # SMRITI POS Treasury Float Policy (ADR-POS-001):
+        # TILEFLOW POS Treasury Float Policy (ADR-POS-001):
         #   Cash In is a manager-authorized treasury float injection from a bank or
         #   vault account (e.g. Account 1020 — Bank, or a configured safe account).
         #   Source-account balance validation is deliberately NOT enforced here because:

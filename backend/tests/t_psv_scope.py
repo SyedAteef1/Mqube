@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -39,8 +25,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": role,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -54,7 +40,7 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
 @pytest.mark.asyncio
 async def test_psv_party_visibility_policy_and_scoping():
     """Verify PSV visibility policy creation and party scope bindings."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     party_id = f"pty_psv_{suffix}"
 
@@ -92,7 +78,7 @@ async def test_psv_party_visibility_policy_and_scoping():
 @pytest.mark.asyncio
 async def test_psv_projection_idempotency_and_balance_accumulation():
     """Verify idempotent PSV stock event ingestion and balance aggregation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     party_id = f"pty_bal_{suffix}"
     sku = f"SKU-PSV-{suffix.upper()}"
@@ -153,7 +139,7 @@ async def test_psv_projection_idempotency_and_balance_accumulation():
 @pytest.mark.asyncio
 async def test_psv_multi_party_scoped_isolation():
     """Verify strict multi-party projection isolation (Party A cannot see Party B's inventory)."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     party_a = f"pty_a_{suffix}"
     party_b = f"pty_b_{suffix}"

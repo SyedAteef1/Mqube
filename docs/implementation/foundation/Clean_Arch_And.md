@@ -1,36 +1,31 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.0.0
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
 # Implementation Plan: Offline-First Clean Architecture — v3.0.0
 
-This plan establishes the Ports and Adapters (Hexagonal) Clean Architecture for SMRITI Retail OS. It isolates business modules from framework-specific and database-specific dependencies (Express, React, pg, SQLite) using repository abstractions, introduces a background Sync Engine, and reorganizes the codebase to support future swappable database tiers (PostgreSQL, SQLite, IndexedDB).
+This plan establishes the Ports and Adapters (Hexagonal) Clean Architecture for TILEFLOW Retail OS. It isolates business modules from framework-specific and database-specific dependencies (Express, React, pg, SQLite) using repository abstractions, introduces a background Sync Engine, and reorganizes the codebase to support future swappable database tiers (PostgreSQL, SQLite, IndexedDB).
 
 ---
 
 ## 1. Objective
-Refactor the backend structure of SMRITI Retail OS to make business logic entirely independent of runtime frameworks and persistent storage engines. The same core module logic will run on PostgreSQL (Store Server/Desktop), SQLite (Android App), or IndexedDB (Web PWA), decoupled from Express HTTP details, and integrated with an offline-first Sync Engine.
+Refactor the backend structure of TILEFLOW Retail OS to make business logic entirely independent of runtime frameworks and persistent storage engines. The same core module logic will run on PostgreSQL (Store Server/Desktop), SQLite (Android App), or IndexedDB (Web PWA), decoupled from Express HTTP details, and integrated with an offline-first Sync Engine.
 
 ---
 
@@ -191,7 +186,7 @@ Revert files to the last git state using `git checkout -- .` and clean out the n
 ---
 
 ## 16. Deployment Plan
-Commit files to development workspace `D:\Smriti_Retail_OS` and push to test environment.
+Commit files to development workspace `D:\TileFlow_Retail_OS` and push to test environment.
 
 ---
 

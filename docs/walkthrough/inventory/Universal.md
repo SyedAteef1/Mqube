@@ -1,22 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 5.4.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Universal View Configuration as Global Schema & Visibility Control
 
 **Version:** 5.4.0  
 **Area:** Inventory & UI Platform Engine  
-**Author:** Jawahar Ramkripal Mallah  
+**Author:** Syed Ateef  
 
 ---
 
@@ -25,7 +24,7 @@ Establish the **View Configuration** studio as the central control panel for bot
 
 ## 2. Scope
 * Centralized field catalog registry (`unifiedFieldCatalog.ts`).
-* Real-time reactive broadcast engine (`smriti_field_visibility_updated`).
+* Real-time reactive broadcast engine (`tileflow_field_visibility_updated`).
 * Integration across Item Details Grid, Item Catalog Search, and Report Designer tables.
 
 ## 3. Files Created

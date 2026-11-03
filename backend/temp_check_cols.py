@@ -3,7 +3,7 @@ import os
 os.environ['POSTGRES_PASSWORD'] = 'postgres'
 os.environ['POSTGRES_USER'] = 'postgres'
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 # Check sales_orders columns

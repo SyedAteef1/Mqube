@@ -1,24 +1,11 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 import openpyxl
 import psycopg2
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-EXCEL_PATH = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
+EXCEL_PATH = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 DOCS = [
     r"F:\SMRITRretailNX\docs\architecture\MULTI_COMPANY.md",
@@ -52,27 +39,27 @@ def verify_multi_company_architecture():
     cur.execute("SELECT COUNT(*) FROM company_database_registries;")
     reg_cnt = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     menus_cnt = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     audit_cnt = cur.fetchone()[0]
     conn.close()
 
     assert reg_cnt == 0, f"Expected 0 pre-seeded rows in company_database_registries, got {reg_cnt}"
-    assert menus_cnt == 34, f"smriti_menus row count changed! Expected 34, got {menus_cnt}"
-    assert audit_cnt >= 45, f"smriti_audit_log count invalid! Expected >= 45, got {audit_cnt}"
+    assert menus_cnt == 34, f"tileflow_menus row count changed! Expected 34, got {menus_cnt}"
+    assert audit_cnt >= 45, f"tileflow_audit_log count invalid! Expected >= 45, got {audit_cnt}"
 
     print("============================================================")
-    print("SMRITI MULTI-COMPANY DDL MIGRATION VERIFICATION PASSED")
+    print("TILEFLOW MULTI-COMPANY DDL MIGRATION VERIFICATION PASSED")
     print("============================================================")
-    print(f"Control Plane Database        : smritisys")
+    print(f"Control Plane Database        : tileflowsys")
     print(f"company_database_registries   : CREATED (0 pre-seeded rows)")
     print(f"Excel Workbook Path           : {EXCEL_PATH}")
     print(f"Worksheets Count              : {len(sheets)} Worksheets Verified (100% Intact)")
     print(f"Architecture Specs            : 5 Specification Docs Verified (100% Intact)")
-    print(f"smriti_menus Count            : {menus_cnt} rows (UNCHANGED)")
-    print(f"smriti_audit_log Count        : {audit_cnt} rows (SHA-256 Audit Log Entry Intact)")
+    print(f"tileflow_menus Count            : {menus_cnt} rows (UNCHANGED)")
+    print(f"tileflow_audit_log Count        : {audit_cnt} rows (SHA-256 Audit Log Entry Intact)")
     print("Approved Scope Permitted DDL : STRICTLY EXECUTED")
     print("FINAL STATUS                  : APPLY_COMPLETED_SUCCESSFULLY")
 

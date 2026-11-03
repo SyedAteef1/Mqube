@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.15.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Reports module migration to FastAPI & Postgres (v3.15.0)
 
 ## 1. Purpose
-This walkthrough documents the successful migration of the SMRITI reporting module from local client-side mocks to live backend transactional statistics served by the FastAPI + Postgres backend, along with the alignment of governance structures in `AGENTS.md`.
+This walkthrough documents the successful migration of the TILEFLOW reporting module from local client-side mocks to live backend transactional statistics served by the FastAPI + Postgres backend, along with the alignment of governance structures in `AGENTS.md`.
 
 ## 2. Scope
 - Verify PostgreSQL database health connection status.
@@ -31,9 +30,9 @@ None.
 - [docs/implementation/db/FastAPI_Reports.md](file:///d:/IMP/GitHub/SMRITRretailNX/docs/implementation/db/FastAPI_Reports.md) (Detailed bridge details and verified results)
 - [.agents/AGENTS.md](file:///d:/IMP/GitHub/SMRITRretailNX/.agents/AGENTS.md) (Governance rules mapping the strangler-fig migration and Express freeze)
 - [backend/app/core/security.py](file:///d:/IMP/GitHub/SMRITRretailNX/backend/app/core/security.py) (Added legacy PBKDF2 hash support to FastAPI password checker)
-- [src/App.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/App.tsx) (Clear `smriti_jwt_token` on logout)
+- [src/App.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/App.tsx) (Clear `tileflow_jwt_token` on logout)
 - [src/components/LoginScreen.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/LoginScreen.tsx) (Fetches FastAPI JWT in background on login)
-- [src/lib/apiFetchV1.ts](file:///d:/IMP/GitHub/SMRITRretailNX/src/lib/apiFetchV1.ts) (Passes `smriti_jwt_token` in authentication headers)
+- [src/lib/apiFetchV1.ts](file:///d:/IMP/GitHub/SMRITRretailNX/src/lib/apiFetchV1.ts) (Passes `tileflow_jwt_token` in authentication headers)
 - [src/components/QuickReportsWidget.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/QuickReportsWidget.tsx) (Daily revenue, payment modes, safety stock capital locked wired to FastAPI)
 - [src/components/ReportDesignerTab.tsx](file:///d:/IMP/GitHub/SMRITRretailNX/src/components/ReportDesignerTab.tsx) (BI Designer table drilldowns wired to `/reports/daily-sales` and `/reports/purchase-summary`)
 
@@ -42,7 +41,7 @@ To advance the Strangleg-Fig Reports migration without waiting for a full Authen
 - Express auth remains the primary login resolver, issuing opaque session tokens.
 - On successful Express login, `LoginScreen.tsx` client-side queries FastAPI `/api/v1/auth/login` to get a signed JWT.
 - FastAPI's `verify_password` validates the credentials against PostgreSQL using legacy PBKDF2 algorithm matching for migrated seeds.
-- The JWT is saved as `smriti_jwt_token` and injected into the Bearer headers of all `/api/v1` routes.
+- The JWT is saved as `tileflow_jwt_token` and injected into the Bearer headers of all `/api/v1` routes.
 
 ## 6. Design Rationale
 - Binding UI elements dynamically using React `useEffect` hooks allows the client to retrieve fresh statistics from Postgres.

@@ -1,16 +1,4 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-11
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
+from typing import Optional
 import uuid
 import json
 import random
@@ -284,7 +272,7 @@ class UserService:
     # ==================================================================
     # Staff Management Extended Operations
     # ==================================================================
-    async def create_staff_user(self, req: StaffUserCreate) -> StaffUserResponse:
+    async def create_staff_user(self, req: StaffUserCreate, company_id_hint: Optional[str] = None) -> StaffUserResponse:
         # Check if username exists
         q = select(User).where(User.username == req.username, User.is_deleted == False)
         existing = (await self.db.execute(q)).scalars().first()
@@ -294,7 +282,9 @@ class UserService:
         emp_id = req.employeeId or f"EMP-{random.randint(1000, 9999)}"
         emp_code = req.employeeCode or f"EMP-{random.randint(1000, 9999)}"
         display_name = req.displayName or (req.fullName.split(" ")[0] if req.fullName else "")
-        pwd = req.passwordHash or "smriti123"
+        pwd = (req.passwordHash or "").strip()
+        if len(pwd) < 8:
+            raise HTTPException(status_code=422, detail="Set a password of at least 8 characters for the new staff member.")
         hashed = hash_password(pwd)
 
         salary_str = req.salary.json() if req.salary else json.dumps({
@@ -335,28 +325,41 @@ class UserService:
             "policyAnnouncements": True
         })
 
-        # Resolve company_id from branch
+        # Resolve company and branch. Staff can only sign in once they belong to a company and branch,
+        # so when the form sends no branch ID, use the branch named in the form, else the company's main branch.
         comp_id = None
-        if req.branchId:
-            br_q = select(Branch).where(Branch.id == req.branchId)
+        branch_id = req.branchId
+        br_obj = None
+        if branch_id:
+            br_q = select(Branch).where(Branch.id == branch_id)
             br_obj = (await self.db.execute(br_q)).scalars().first()
             if not br_obj:
                 raise HTTPException(status_code=400, detail=f"Branch with ID '{req.branchId}' does not exist.")
+        elif company_id_hint:
+            branches = (await self.db.execute(
+                select(Branch).where(Branch.company_id == company_id_hint, Branch.is_active == True).order_by(Branch.id)
+            )).scalars().all()
+            wanted = (req.branch or "").strip().lower()
+            br_obj = next((b for b in branches if wanted and wanted in {str(b.id).lower(), str(b.code).lower(), str(b.name).lower()}), None) \
+                or next((b for b in branches if str(b.code).upper() == "MAIN"), None) \
+                or (branches[0] if branches else None)
+        if br_obj:
             comp_id = br_obj.company_id
+            branch_id = br_obj.id
 
         allowed_br = json.dumps(req.allowedBranches) if req.allowedBranches else json.dumps([req.branch or "Andheri West, Mumbai"])
 
         user = User(
             id=f"usr-{uuid.uuid4().hex[:8]}",
             username=req.username,
-            email=req.email or "",
+            email=(req.email or "").strip() or None,  # blank emails must be NULL: the column is unique
             mobile=req.mobile or "0000000000",
             hashed_password=hashed,
             role=req.role,
             is_active=True,
             is_deleted=False,
             company_id=comp_id,
-            branch_id=req.branchId,
+            branch_id=branch_id,
             employee_id=emp_id,
             employee_code=emp_code,
             display_name=display_name,
@@ -372,7 +375,7 @@ class UserService:
             pin_code=req.pinCode or "",
             department=req.department or "Retail Operations",
             designation=req.designation or "Executive",
-            branch=req.branch or "Andheri West, Mumbai",
+            branch=(br_obj.name if br_obj else req.branch) or "",
             department_id=req.departmentId,
             designation_id=req.designationId,
             date_of_joining=req.dateOfJoining or datetime.now().strftime("%Y-%m-%d"),

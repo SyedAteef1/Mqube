@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Shared Business Engines (Section 7) & Distribution Core (Section 8)
@@ -69,7 +68,7 @@ Provide enterprise clients with B2B distribution capabilities alongside retail o
 - Concurrent dispatch operations on stock movements mitigated via atomic transaction boundaries.
 
 ## 12. Rollback Strategy
-- Forward-only migrations per SMRITI Data Governance Policy. Fixes applied through forward revisions.
+- Forward-only migrations per TILEFLOW Data Governance Policy. Fixes applied through forward revisions.
 
 ## 13. Verification Plan
 - Unit testing of PricingEngine volume break math and customer tiers.
@@ -85,7 +84,7 @@ Provide enterprise clients with B2B distribution capabilities alongside retail o
 - Implementation Plan Index: `docs/implementation/README.md`
 
 ## 16. Deployment Plan
-- Upgrade tenant databases (`smriti001`, `smriti002`, `smritisys`) to revision `v1365_distribution_core`.
+- Upgrade tenant databases (`tileflow001`, `tileflow002`, `tileflowsys`) to revision `v1365_distribution_core`.
 
 ## 17. Status
 Completed

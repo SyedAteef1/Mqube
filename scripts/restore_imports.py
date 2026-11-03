@@ -20,7 +20,7 @@ IMPORT_PATH_RESTORE = {
         ("./components/drilldown/ContextualInspectorHUD.tsx", "./components/drilldown/CtxInspectorHUD.tsx"),
         ("./components/TaxInvoicePrintPage.tsx", "./components/TaxInvoicePrintPag.tsx"),
         ("./components/CompanySelectionScreen.tsx", "./components/CompanySelectScree.tsx"),
-        ("./components/SmritiErrorBoundary.tsx", "./components/ErrorBoundary.tsx"),
+        ("./components/TileFlowErrorBoundary.tsx", "./components/ErrorBoundary.tsx"),
     ],
     # BarcodeStudioTab: restore import path
     "src/components/BarcodeStudioTab.tsx": [
@@ -35,14 +35,14 @@ IMPORT_PATH_RESTORE = {
     ],
     # ProPosBillingTerm: restore import paths that were mangled
     "src/components/billing/propos/ProPosBillingTerm.tsx": [
-        ("./SmritiPosSettlement.tsx", "./ProPosSettlementDl.tsx"),
-        ("./SmritiProPosRecallDlg.tsx", "./ProPosRecallDlg.tsx"),
-        ("./SmritiProPosCancelDlg.tsx", "./ProPosCancellation.tsx"),
-        ("./SmritiPdtImportDlg.tsx", "./ProPosPdtImportDlg.tsx"),
-        ("./SmritiCustomerBrowseModal.tsx", "./CustBrowseDlg.tsx"),
-        ("./SmritiProPosHotkeysDlg.tsx", "./ProPosHotkeysDlg.tsx"),
-        ("./SmritiProPosReprintDlg.tsx", "./ProPosReprintDlg.tsx"),
-        ("../../common/SmritiItemTypeaheadDropdown.tsx", "../../common/ItemTypeaheadDrop.tsx"),
+        ("./TileFlowPosSettlement.tsx", "./ProPosSettlementDl.tsx"),
+        ("./TileFlowProPosRecallDlg.tsx", "./ProPosRecallDlg.tsx"),
+        ("./TileFlowProPosCancelDlg.tsx", "./ProPosCancellation.tsx"),
+        ("./TileFlowPdtImportDlg.tsx", "./ProPosPdtImportDlg.tsx"),
+        ("./TileFlowCustomerBrowseModal.tsx", "./CustBrowseDlg.tsx"),
+        ("./TileFlowProPosHotkeysDlg.tsx", "./ProPosHotkeysDlg.tsx"),
+        ("./TileFlowProPosReprintDlg.tsx", "./ProPosReprintDlg.tsx"),
+        ("../../common/TileFlowItemTypeaheadDropdown.tsx", "../../common/ItemTypeaheadDrop.tsx"),
     ],
 }
 
@@ -55,7 +55,7 @@ IMPORT_PATH_RESTORE = {
 IMPORT_ALIAS_FIXES = {
     "src/components/billing/propos/ProPosBillingTerm.tsx": [
         # Import aliases need to match what the file actually exports
-        # ProPosSettlementDl.tsx exports SmritiPosSettlement -- check:
+        # ProPosSettlementDl.tsx exports TileFlowPosSettlement -- check:
         # (already correct from original)
     ],
 }
@@ -76,7 +76,7 @@ IMPORT_LINE_ALIAS_FIX = {
         # CtxInspectorHUD.tsx exports ContextualInspectorHUD -- alias is correct
         # TaxInvoicePrintPag.tsx exports TaxInvoicePrintPage -- alias is correct
         # CompanySelectScree.tsx exports CompanySelectionScreen -- alias is correct
-        # ErrorBoundary.tsx exports SmritiErrorBoundary -- alias is correct
+        # ErrorBoundary.tsx exports TileFlowErrorBoundary -- alias is correct
         # (no changes needed — alias names are already matching exported names)
     ],
 }
@@ -92,9 +92,9 @@ JSX_TAG_FIXES = {
         # Now that import paths are restored, the import aliases are:
         # MasterManagementTab, SupplierDashboardTab, DrillDownBreadcrumbs,
         # GlobalF2BrowseModal, ContextualInspectorHUD, TaxInvoicePrintPage,
-        # CompanySelectionScreen, SmritiErrorBoundary
+        # CompanySelectionScreen, TileFlowErrorBoundary
         # The previous fix already changed JSX from short names to full names -- good.
-        # But "ErrorBoundary" was changed to "SmritiErrorBoundary" -- check if that was right.
+        # But "ErrorBoundary" was changed to "TileFlowErrorBoundary" -- check if that was right.
     ],
     "src/components/BarcodeStudioTab.tsx": [
         # TagLabelPrintingTa → TagLabelPrintingTab (already fixed by previous run -- keep)

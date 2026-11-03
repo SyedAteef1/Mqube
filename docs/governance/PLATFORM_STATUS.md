@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.18.0
   Created      : 2026-07-14
   Modified     : 2026-07-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Platform Status Registry
+# TILEFLOW Platform Status Registry
 
-This document records high-level metrics of SMRITI Retail OS's evolutionary status. It is updated at the conclusion of every Master Command.
+This document records high-level metrics of TILEFLOW Retail OS's evolutionary status. It is updated at the conclusion of every Master Command.
 
 ## Codebase Status Summary
 * **Current Version:** v3.18.0

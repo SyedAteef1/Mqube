@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-13
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import json
 import random
 from typing import List, Dict, Any
@@ -285,7 +272,7 @@ async def list_templates(
             id=t.id,
             styleCode=t.style_code,
             name=t.name,
-            brand=t.brand or "SMRITI",
+            brand=t.brand or "TILEFLOW",
             category=t.category or "General",
             hsnCode=t.hsn_code or "61091000",
             basePrice=float(t.base_price or 0),
@@ -318,7 +305,7 @@ async def create_template(
         id=t.id,
         styleCode=t.style_code,
         name=t.name,
-        brand=t.brand or "SMRITI",
+        brand=t.brand or "TILEFLOW",
         category=t.category or "General",
         hsnCode=t.hsn_code or "61091000",
         basePrice=float(t.base_price or 0),
@@ -350,7 +337,7 @@ async def update_template(
         id=t.id,
         styleCode=t.style_code,
         name=t.name,
-        brand=t.brand or "SMRITI",
+        brand=t.brand or "TILEFLOW",
         category=t.category or "General",
         hsnCode=t.hsn_code or "61091000",
         basePrice=float(t.base_price or 0),
@@ -665,7 +652,7 @@ async def import_commit(
                 id=f"vt-{int(datetime.now(timezone.utc).timestamp())}-{index}",
                 style_code=style_code,
                 name=row.get("BaseName"),
-                brand=row.get("Brand") or "SMRITI",
+                brand=row.get("Brand") or "TILEFLOW",
                 category=row.get("Category") or "General",
                 hsn_code=row.get("HSN") or "61091000",
                 base_price=int(float(row.get("Price") or 0)),

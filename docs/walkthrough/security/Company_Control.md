@@ -1,17 +1,15 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Company Control Center Authentication & Authorization Hardening Walkthrough v1.0
 
 ## 1. Purpose
 Document the security defect remediation for Company Control Center and Dev Tracker API endpoints to eliminate unauthenticated access and header spoofing (`x-user-id: usr_sysadmin`).
@@ -39,7 +37,7 @@ Document the security defect remediation for Company Control Center and Dev Trac
 - Enforced tenant scope for non-SYSADMIN users requesting company detail or module entitlements (`company_id == current_user.company_id`).
 
 ## 6. Design Rationale
-Identity and permissions must be derived exclusively from server-side JWT verification against the PostgreSQL control plane database (`smritisys`), failing closed with HTTP 401/403 on missing or invalid authentication.
+Identity and permissions must be derived exclusively from server-side JWT verification against the PostgreSQL control plane database (`tileflowsys`), failing closed with HTTP 401/403 on missing or invalid authentication.
 
 ## 7. Implementation Summary
 Removed default administrative headers, added `require_role(UserRole.SYSADMIN)` dependencies, mounted `company_control_center` router in `main.py`, and added a regression security test suite.

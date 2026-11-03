@@ -1,7 +1,7 @@
 ================================================================================
-SMRITI REGRESSION TEST FAILURE ANALYSIS
+TILEFLOW REGRESSION TEST FAILURE ANALYSIS
 Generated: 2026-08-30T13:07:16.833538
-Database: smriti001_stage
+Database: tileflow001_stage
 ================================================================================
 
 SUMMARY
@@ -23,7 +23,7 @@ Exit Code: 1
 ERROR ANALYSIS
 ----------------------------------------
 Error Type: MISSING_TABLE
-Missing Table: backend\app\tests\test_sales_return_contracts.py::test_sr_policy_version_001 DB EXCEPTION TRIGGERED: ProgrammingError('(sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class \'asyncpg.exceptions.UndefinedTableError\'>: relation "smriti_permissions" does not exist')
+Missing Table: backend\app\tests\test_sales_return_contracts.py::test_sr_policy_version_001 DB EXCEPTION TRIGGERED: ProgrammingError('(sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class \'asyncpg.exceptions.UndefinedTableError\'>: relation "tileflow_permissions" does not exist')
 
 OUTPUT EXCERPT (Last 30 Lines)
 ----------------------------------------
@@ -50,10 +50,10 @@ OUTPUT EXCERPT (Last 30 Lines)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
   File "C:\Users\netma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 780, in _handle_exception
     raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "smriti_permissions" does not exist
-[SQL: SELECT smriti_permissions.code, smriti_permissions.resource, smriti_permissions.action, smriti_permissions.scope, smriti_permissions.module, smriti_permissions.description, smriti_permissions.tenant_id, smriti_permissions.id, smriti_permissions.uuid, smriti_permissions.company_id, smriti_permissions.branch_id, smriti_permissions.created_at, smriti_permissions.modified_at, smriti_permissions.created_by, smriti_permissions.updated_by, smriti_permissions.is_active, smriti_permissions.is_deleted, smriti_permissions.deleted_at, smriti_permissions.deleted_by, smriti_permissions.version 
-FROM smriti_permissions 
-WHERE smriti_permissions.scope = $1::VARCHAR AND smriti_permissions.resource = $2::VARCHAR AND smriti_permissions.action = $3::VARCHAR AND smriti_permissions.is_deleted = false AND (smriti_permissions.company_id IS NULL OR smriti_permissions.company_id = $4::VARCHAR) AND (smriti_permissions.branch_id IS NULL OR smriti_permissions.branch_id = $5::VARCHAR)]
+sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "tileflow_permissions" does not exist
+[SQL: SELECT tileflow_permissions.code, tileflow_permissions.resource, tileflow_permissions.action, tileflow_permissions.scope, tileflow_permissions.module, tileflow_permissions.description, tileflow_permissions.tenant_id, tileflow_permissions.id, tileflow_permissions.uuid, tileflow_permissions.company_id, tileflow_permissions.branch_id, tileflow_permissions.created_at, tileflow_permissions.modified_at, tileflow_permissions.created_by, tileflow_permissions.updated_by, tileflow_permissions.is_active, tileflow_permissions.is_deleted, tileflow_permissions.deleted_at, tileflow_permissions.deleted_by, tileflow_permissions.version 
+FROM tileflow_permissions 
+WHERE tileflow_permissions.scope = $1::VARCHAR AND tileflow_permissions.resource = $2::VARCHAR AND tileflow_permissions.action = $3::VARCHAR AND tileflow_permissions.is_deleted = false AND (tileflow_permissions.company_id IS NULL OR tileflow_permissions.company_id = $4::VARCHAR) AND (tileflow_permissions.branch_id IS NULL OR tileflow_permissions.branch_id = $5::VARCHAR)]
 [parameters: ('User:usr-csh-14c733', 'sales_billing', 'VIEW', 'comp-sal-14c733-a49343', 'br-sal-14c733-a49343')]
 (Background on this error at: https://sqlalche.me/e/20/f405)
 
@@ -65,7 +65,7 @@ FAILED backend\app\tests\test_sales_return_contracts.py::test_sr_audit_001 - ass
  +  where 400 = <Response [400 Bad Request]>.status_code
 FAILED backend\app\tests\test_sales_return_contracts.py::test_sr_auth_001 - assert 400 == 422
  +  where 400 = <Response [400 Bad Request]>.status_code
-FAILED backend\app\tests\test_sales_return_contracts.py::test_sr_propos_context_001 - AssertionError: {"detail":"A database operations conflict occurred or referential integrity check failed.","error":{"title":"Data Conflict","explanation":"A database operations conflict occurred or referential integrity check failed.","suggested_action":"Please verify the information (e.g. code, barcode, or ID) is unique and correct.","reference_id":"SMRITI-ERR-20260830-A7B51D","error_code":"SMRITI-DATA-001"},"success":false,"status":400,"title":"Data Conflict","message":"A database operations conflict occurred or referential integrity check failed.","suggested_action":"Please verify the information (e.g. code, barcode, or ID) is unique and correct.","error_code":"SMRITI-DATA-001","reference_id":"SMRITI-ERR-20260830-A7B51D","timestamp":"2026-08-30T07:38:28.489486+00:00Z","documentation":"/docs"}
+FAILED backend\app\tests\test_sales_return_contracts.py::test_sr_propos_context_001 - AssertionError: {"detail":"A database operations conflict occurred or referential integrity check failed.","error":{"title":"Data Conflict","explanation":"A database operations conflict occurred or referential integrity check failed.","suggested_action":"Please verify the information (e.g. code, barcode, or ID) is unique and correct.","reference_id":"TILEFLOW-ERR-20260830-A7B51D","error_code":"TILEFLOW-DATA-001"},"success":false,"status":400,"title":"Data Conflict","message":"A database operations conflict occurred or referential integrity check failed.","suggested_action":"Please verify the information (e.g. code, barcode, or ID) is unique and correct.","error_code":"TILEFLOW-DATA-001","reference_id":"TILEFLOW-ERR-20260830-A7B51D","timestamp":"2026-08-30T07:38:28.489486+00:00Z","documentation":"/docs"}
 assert 400 == 200
  +  where 400 = <Response [400 Bad Request]>.status_code
 FAILED backend\app\tests\test_sales_return_contracts.py::test_sr_propos_context_security_001 - assert 400 == 404
@@ -89,10 +89,10 @@ etma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\dialec
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
   File "C:\Users\netma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 780, in _handle_exception
     raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "smriti_permissions" does not exist
-[SQL: SELECT smriti_permissions.code, smriti_permissions.resource, smriti_permissions.action, smriti_permissions.scope, smriti_permissions.module, smriti_permissions.description, smriti_permissions.tenant_id, smriti_permissions.id, smriti_permissions.uuid, smriti_permissions.company_id, smriti_permissions.branch_id, smriti_permissions.created_at, smriti_permissions.modified_at, smriti_permissions.created_by, smriti_permissions.updated_by, smriti_permissions.is_active, smriti_permissions.is_deleted, smriti_permissions.deleted_at, smriti_permissions.deleted_by, smriti_permissions.version 
-FROM smriti_permissions 
-WHERE smriti_permissions.scope = $1::VARCHAR AND smriti_permissions.resource = $2::VARCHAR AND smriti_permissions.action = $3::VARCHAR AND smriti_permissions.is_deleted = false AND (smriti_permissions.company_id IS NULL OR smriti_permissions.company_id = $4::VARCHAR) AND (smriti_permissions.branch_id IS NULL OR smriti_permissions.branch_id = $5::VARCHAR)]
+sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "tileflow_permissions" does not exist
+[SQL: SELECT tileflow_permissions.code, tileflow_permissions.resource, tileflow_permissions.action, tileflow_permissions.scope, tileflow_permissions.module, tileflow_permissions.description, tileflow_permissions.tenant_id, tileflow_permissions.id, tileflow_permissions.uuid, tileflow_permissions.company_id, tileflow_permissions.branch_id, tileflow_permissions.created_at, tileflow_permissions.modified_at, tileflow_permissions.created_by, tileflow_permissions.updated_by, tileflow_permissions.is_active, tileflow_permissions.is_deleted, tileflow_permissions.deleted_at, tileflow_permissions.deleted_by, tileflow_permissions.version 
+FROM tileflow_permissions 
+WHERE tileflow_permissions.scope = $1::VARCHAR AND tileflow_permissions.resource = $2::VARCHAR AND tileflow_permissions.action = $3::VARCHAR AND tileflow_permissions.is_deleted = false AND (tileflow_permissions.company_id IS NULL OR tileflow_permissions.company_id = $4::VARCHAR) AND (tileflow_permissions.branch_id IS NULL OR tileflow_permissions.branch_id = $5::VARCHAR)]
 [parameters: ('User:usr-csh-14c733', 'sales_billing', 'VIEW', 'comp-sal-14c733-a49343', 'br-sal-14c733-a49343')]
 (Background on this error at: https://sqlalche.me/e/20/f405)
 
@@ -171,7 +171,7 @@ Exit Code: 1
 ERROR ANALYSIS
 ----------------------------------------
 Error Type: MISSING_TABLE
-Missing Table: backend\app\tests\test_inventory.py::test_soft_delete_product_success DB EXCEPTION TRIGGERED: ProgrammingError('(sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class \'asyncpg.exceptions.UndefinedTableError\'>: relation "smriti_permissions" does not exist')
+Missing Table: backend\app\tests\test_inventory.py::test_soft_delete_product_success DB EXCEPTION TRIGGERED: ProgrammingError('(sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class \'asyncpg.exceptions.UndefinedTableError\'>: relation "tileflow_permissions" does not exist')
 
 OUTPUT EXCERPT (Last 30 Lines)
 ----------------------------------------
@@ -198,10 +198,10 @@ OUTPUT EXCERPT (Last 30 Lines)
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
   File "C:\Users\netma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 780, in _handle_exception
     raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "smriti_permissions" does not exist
-[SQL: SELECT smriti_permissions.code, smriti_permissions.resource, smriti_permissions.action, smriti_permissions.scope, smriti_permissions.module, smriti_permissions.description, smriti_permissions.tenant_id, smriti_permissions.id, smriti_permissions.uuid, smriti_permissions.company_id, smriti_permissions.branch_id, smriti_permissions.created_at, smriti_permissions.modified_at, smriti_permissions.created_by, smriti_permissions.updated_by, smriti_permissions.is_active, smriti_permissions.is_deleted, smriti_permissions.deleted_at, smriti_permissions.deleted_by, smriti_permissions.version 
-FROM smriti_permissions 
-WHERE smriti_permissions.scope = $1::VARCHAR AND smriti_permissions.resource = $2::VARCHAR AND smriti_permissions.action = $3::VARCHAR AND smriti_permissions.is_deleted = false AND (smriti_permissions.company_id IS NULL OR smriti_permissions.company_id = $4::VARCHAR) AND (smriti_permissions.branch_id IS NULL OR smriti_permissions.branch_id = $5::VARCHAR)]
+sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "tileflow_permissions" does not exist
+[SQL: SELECT tileflow_permissions.code, tileflow_permissions.resource, tileflow_permissions.action, tileflow_permissions.scope, tileflow_permissions.module, tileflow_permissions.description, tileflow_permissions.tenant_id, tileflow_permissions.id, tileflow_permissions.uuid, tileflow_permissions.company_id, tileflow_permissions.branch_id, tileflow_permissions.created_at, tileflow_permissions.modified_at, tileflow_permissions.created_by, tileflow_permissions.updated_by, tileflow_permissions.is_active, tileflow_permissions.is_deleted, tileflow_permissions.deleted_at, tileflow_permissions.deleted_by, tileflow_permissions.version 
+FROM tileflow_permissions 
+WHERE tileflow_permissions.scope = $1::VARCHAR AND tileflow_permissions.resource = $2::VARCHAR AND tileflow_permissions.action = $3::VARCHAR AND tileflow_permissions.is_deleted = false AND (tileflow_permissions.company_id IS NULL OR tileflow_permissions.company_id = $4::VARCHAR) AND (tileflow_permissions.branch_id IS NULL OR tileflow_permissions.branch_id = $5::VARCHAR)]
 [parameters: ('User:usr-inv-csh_89b713', 'item_master', 'DELETE', 'comp-inv-s2_9362b6', 'br-inv-s2_9362b6')]
 (Background on this error at: https://sqlalche.me/e/20/f405)
 
@@ -245,10 +245,10 @@ rs\netma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\di
     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
   File "C:\Users\netma\AppData\Local\Programs\Python\Python313\Lib\site-packages\sqlalchemy\dialects\postgresql\asyncpg.py", line 780, in _handle_exception
     raise translated_error from error
-sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "smriti_permissions" does not exist
-[SQL: SELECT smriti_permissions.code, smriti_permissions.resource, smriti_permissions.action, smriti_permissions.scope, smriti_permissions.module, smriti_permissions.description, smriti_permissions.tenant_id, smriti_permissions.id, smriti_permissions.uuid, smriti_permissions.company_id, smriti_permissions.branch_id, smriti_permissions.created_at, smriti_permissions.modified_at, smriti_permissions.created_by, smriti_permissions.updated_by, smriti_permissions.is_active, smriti_permissions.is_deleted, smriti_permissions.deleted_at, smriti_permissions.deleted_by, smriti_permissions.version 
-FROM smriti_permissions 
-WHERE smriti_permissions.scope = $1::VARCHAR AND smriti_permissions.resource = $2::VARCHAR AND smriti_permissions.action = $3::VARCHAR AND smriti_permissions.is_deleted = false AND (smriti_permissions.company_id IS NULL OR smriti_permissions.company_id = $4::VARCHAR) AND (smriti_permissions.branch_id IS NULL OR smriti_permissions.branch_id = $5::VARCHAR)]
+sqlalchemy.exc.ProgrammingError: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "tileflow_permissions" does not exist
+[SQL: SELECT tileflow_permissions.code, tileflow_permissions.resource, tileflow_permissions.action, tileflow_permissions.scope, tileflow_permissions.module, tileflow_permissions.description, tileflow_permissions.tenant_id, tileflow_permissions.id, tileflow_permissions.uuid, tileflow_permissions.company_id, tileflow_permissions.branch_id, tileflow_permissions.created_at, tileflow_permissions.modified_at, tileflow_permissions.created_by, tileflow_permissions.updated_by, tileflow_permissions.is_active, tileflow_permissions.is_deleted, tileflow_permissions.deleted_at, tileflow_permissions.deleted_by, tileflow_permissions.version 
+FROM tileflow_permissions 
+WHERE tileflow_permissions.scope = $1::VARCHAR AND tileflow_permissions.resource = $2::VARCHAR AND tileflow_permissions.action = $3::VARCHAR AND tileflow_permissions.is_deleted = false AND (tileflow_permissions.company_id IS NULL OR tileflow_permissions.company_id = $4::VARCHAR) AND (tileflow_permissions.branch_id IS NULL OR tileflow_permissions.branch_id = $5::VARCHAR)]
 [parameters: ('User:usr-inv-csh_89b713', 'item_master', 'DELETE', 'comp-inv-s2_9362b6', 'br-inv-s2_9362b6')]
 (Background on this error at: https://sqlalche.me/e/20/f405)
 
@@ -468,7 +468,7 @@ Exit Code: 1
 ERROR ANALYSIS
 ----------------------------------------
 Error Type: MISSING_TABLE
-Missing Table: backend\app\tests\test_permission_schema.py::test_smriti_permissions_schema_is_present_and_queryable FAILED[conftest] Post-test seed error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "company_database_registries" does not exist
+Missing Table: backend\app\tests\test_permission_schema.py::test_tileflow_permissions_schema_is_present_and_queryable FAILED[conftest] Post-test seed error: (sqlalchemy.dialects.postgresql.asyncpg.ProgrammingError) <class 'asyncpg.exceptions.UndefinedTableError'>: relation "company_database_registries" does not exist
 
 OUTPUT EXCERPT (Last 30 Lines)
 ----------------------------------------
@@ -477,16 +477,16 @@ OUTPUT EXCERPT (Last 30 Lines)
 
 
 ================================== FAILURES ===================================
-___________ test_smriti_permissions_schema_is_present_and_queryable ___________
+___________ test_tileflow_permissions_schema_is_present_and_queryable ___________
 
-    def test_smriti_permissions_schema_is_present_and_queryable():
+    def test_tileflow_permissions_schema_is_present_and_queryable():
         url = settings.DATABASE_URL.replace("postgresql+asyncpg://", "postgresql://")
         conn = psycopg2.connect(url)
         cur = conn.cursor()
     
-        cur.execute("SELECT to_regclass('public.smriti_permissions')")
->       assert cur.fetchone()[0] is not None, "smriti_permissions table must exist"
-E       AssertionError: smriti_permissions table must exist
+        cur.execute("SELECT to_regclass('public.tileflow_permissions')")
+>       assert cur.fetchone()[0] is not None, "tileflow_permissions table must exist"
+E       AssertionError: tileflow_permissions table must exist
 E       assert None is not None
 
 backend\app\tests\test_permission_schema.py:12: AssertionError
@@ -497,7 +497,7 @@ app/tests/test_permission_schema.py: 10 warnings
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
-FAILED backend\app\tests\test_permission_schema.py::test_smriti_permissions_schema_is_present_and_queryable - AssertionError: smriti_permissions table must exist
+FAILED backend\app\tests\test_permission_schema.py::test_tileflow_permissions_schema_is_present_and_queryable - AssertionError: tileflow_permissions table must exist
 assert None is not None
 ======================= 1 failed, 10 warnings in 7.24s ========================
 
@@ -513,16 +513,16 @@ WHERE company_database_registries.company_id = $1::VARCHAR]
 
 
 ================================== FAILURES ===================================
-___________ test_smriti_permissions_schema_is_present_and_queryable ___________
+___________ test_tileflow_permissions_schema_is_present_and_queryable ___________
 
-    def test_smriti_permissions_schema_is_present_and_queryable():
+    def test_tileflow_permissions_schema_is_present_and_queryable():
         url = settings.DATABASE_URL.replace("postgresql+asyncpg://", "postgresql://")
         conn = psycopg2.connect(url)
         cur = conn.cursor()
     
-        cur.execute("SELECT to_regclass('public.smriti_permissions')")
->       assert cur.fetchone()[0] is not None, "smriti_permissions table must exist"
-E       AssertionError: smriti_permissions table must exist
+        cur.execute("SELECT to_regclass('public.tileflow_permissions')")
+>       assert cur.fetchone()[0] is not None, "tileflow_permissions table must exist"
+E       AssertionError: tileflow_permissions table must exist
 E       assert None is not None
 
 backend\app\tests\test_permission_schema.py:12: AssertionError
@@ -533,7 +533,7 @@ app/tests/test_permission_schema.py: 10 warnings
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
 =========================== short test summary info ===========================
-FAILED backend\app\tests\test_permission_schema.py::test_smriti_permissions_schema_is_present_and_queryable - AssertionError: smriti_permissions table must exist
+FAILED backend\app\tests\test_permission_schema.py::test_tileflow_permissions_schema_is_present_and_queryable - AssertionError: tileflow_permissions table must exist
 assert None is not None
 ======================= 1 failed, 10 warnings in 7.24s ========================
 

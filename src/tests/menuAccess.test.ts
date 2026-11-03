@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Security Management & Menu Access Control Unit Tests
- */
-
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import {
   initialSecurityUsers,
@@ -46,7 +31,7 @@ Object.defineProperty(globalThis, "localStorage", {
   writable: true,
 });
 
-describe("SMRITI — Security Management & Menu Access Control Tests", () => {
+describe("MQube — Security Management & Menu Access Control Tests", () => {
   beforeEach(() => {
     mockLocalStorage.clear();
     vi.clearAllMocks();

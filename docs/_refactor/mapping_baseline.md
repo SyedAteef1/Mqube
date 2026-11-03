@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-19
   Modified     : 2026-08-19
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Phase 0 & Phase 1: Header Auto-Mapping Model Baseline & Refactor Specification
@@ -25,7 +24,7 @@
 - **UI:** The UI currently renders 1 row per source column with a single `<select>` dropdown for `mappedFieldKey`.
 
 ### 1.3 Where does "Save as Permanent Alias" persist to?
-- **Persistence Mechanism:** In [`src/lib/headerMapping/HeaderAliasRegistry.ts`](file:///F:/SMRITRretailNX/src/lib/headerMapping/HeaderAliasRegistry.ts), custom aliases are stored in browser localStorage under key `"smriti_header_custom_aliases_v1"` via `addCustomAlias(targetFieldKey, sourceAlias)`.
+- **Persistence Mechanism:** In [`src/lib/headerMapping/HeaderAliasRegistry.ts`](file:///F:/SMRITRretailNX/src/lib/headerMapping/HeaderAliasRegistry.ts), custom aliases are stored in browser localStorage under key `"tileflow_header_custom_aliases_v1"` via `addCustomAlias(targetFieldKey, sourceAlias)`.
 - It maps normalized alias string $\to$ `fieldKey`.
 
 ### 1.4 UI Constraints on Source/Target Reuse:
@@ -41,7 +40,7 @@
 ### 2.1 Updated Session Mapping Types
 ```ts
 export interface MappingTarget {
-  target: string;         // Smriti field key (e.g. "mrp", "price", "attr_color")
+  target: string;         // TileFlow field key (e.g. "mrp", "price", "attr_color")
   targetLabel?: string;   // Display label (e.g. "MRP", "SELLING PRICE")
   note?: string;          // Optional reason text
 }

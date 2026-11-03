@@ -1,30 +1,17 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.22.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-17
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import uuid
 import pytest
 import psycopg2
 from decimal import Decimal
 
 # Architecture Rule: suppliers, purchase_orders, purchase_receipts are operational tables.
-# Operational data belongs in Company DB (smriti001), NOT in smritisys (Control Plane).
-COMPANY_001_DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+# Operational data belongs in Company DB (tileflow001), NOT in tileflowsys (Control Plane).
+COMPANY_001_DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 def test_grn_shortage_and_stock_increment_signature_scenario():
     """
-    Test Blocker #3 GRN / Material Receipt Signature Scenario against Company 001 database (smriti001):
+    Test Blocker #3 GRN / Material Receipt Signature Scenario against Company 001 database (tileflow001):
     PO = 50 | Approved PO | GRN = 48 | Short = 2 | Stock Increment = +48
-    ARCHITECTURE: purchase_orders, suppliers, purchase_receipts are operational -> Company DB (smriti001).
+    ARCHITECTURE: purchase_orders, suppliers, purchase_receipts are operational -> Company DB (tileflow001).
     """
     conn = psycopg2.connect(COMPANY_001_DB_URL)
     cur = conn.cursor()
@@ -117,7 +104,7 @@ def test_grn_shortage_and_stock_increment_signature_scenario():
         WHERE poi.product_id = %s;
     """, (po_id, grn_id, product_id))
     row = cur.fetchone()
-    assert row is not None, "GRN receipt item must be linked to PO item in Company DB (smriti001)"
+    assert row is not None, "GRN receipt item must be linked to PO item in Company DB (tileflow001)"
     assert Decimal(str(row[0])) == Decimal("50")   # PO Qty
     assert Decimal(str(row[1])) == Decimal("48")   # GRN Qty
     assert Decimal(str(row[2])) == Decimal("2")    # Short Qty

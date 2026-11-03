@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -39,8 +25,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -57,7 +43,7 @@ async def test_create_party_with_multi_roles():
     """Verify atomic creation of a party holding Customer, Supplier, Dealer, and Transporter roles."""
     unique_suffix = uuid.uuid4().hex[:4]
     gstin = f"27AABCT{unique_suffix.upper()}1Z5"
-    async with get_company_sessionmaker("smriti001")() as session:
+    async with get_company_sessionmaker("tileflow001")() as session:
         req = PartyCreateRequest(
             party_code=f"PTY-TEST-{unique_suffix.upper()}",
             party_type="ORGANIZATION",
@@ -135,7 +121,7 @@ async def test_find_party_by_identifiers_deduplication():
     phone = f"99887{unique_suffix}"
     email = f"dedup_{unique_suffix}@test.com"
 
-    async with get_company_sessionmaker("smriti001")() as session:
+    async with get_company_sessionmaker("tileflow001")() as session:
         req = PartyCreateRequest(
             party_code=f"PTY-DEDUP-{unique_suffix.upper()}",
             legal_name=f"Dedup Test Corp {unique_suffix}",
@@ -166,7 +152,7 @@ async def test_find_party_by_identifiers_deduplication():
 async def test_add_and_toggle_party_role():
     """Verify adding dynamic roles (e.g. adding SALESMAN and EMPLOYEE)."""
     unique_suffix = uuid.uuid4().hex[:4]
-    async with get_company_sessionmaker("smriti001")() as session:
+    async with get_company_sessionmaker("tileflow001")() as session:
         req = PartyCreateRequest(
             party_code=f"PTY-ROLE-{unique_suffix.upper()}",
             legal_name=f"Role Test Ltd {unique_suffix}",
@@ -190,7 +176,7 @@ async def test_add_and_toggle_party_role():
 async def test_party_merge_policy_consolidation():
     """Verify party merge consolidates roles, profiles, addresses, and marks secondary as MERGED."""
     unique_suffix = uuid.uuid4().hex[:4]
-    async with get_company_sessionmaker("smriti001")() as session:
+    async with get_company_sessionmaker("tileflow001")() as session:
         # Primary Party: Customer only
         primary_req = PartyCreateRequest(
             party_code=f"PTY-PRI-{unique_suffix.upper()}",
@@ -249,13 +235,13 @@ async def test_legacy_customer_and_supplier_adapters():
     """Verify legacy Customer and Supplier compatibility adapters."""
     unique_suffix = uuid.uuid4().hex[:4]
     gstin = f"27XYZAB{unique_suffix.upper()}1Z9"
-    async with get_company_sessionmaker("smriti001")() as session:
+    async with get_company_sessionmaker("tileflow001")() as session:
         req = PartyCreateRequest(
             party_code=f"PTY-ADAPT-{unique_suffix.upper()}",
             legal_name=f"Dual Role Partner {unique_suffix}",
             gstin=gstin,
             phone="9821098210",
-            email=f"adapter_{unique_suffix}@smriti.com",
+            email=f"adapter_{unique_suffix}@tileflow.com",
             city="Pune",
             state="Maharashtra",
             roles=["CUSTOMER", "SUPPLIER"],

@@ -1,17 +1,3 @@
-"""v1383 -- Add missing invoice and communicator schemas.
-
-Revision ID: v1383_invoice_communicator
-Revises: v1382_menu_registry
-Create Date: 2026-08-30 00:00:00.000000
-
-Project      : SMRITI Retail OS
-Author       : Migration Integrity Recovery
-Description  : Alembic migration to add missing invoice document artifacts,
-               tax invoice templates, sales order allocations, and communicator
-               templates/logs. These tables are defined in ORM models but were
-               missing from the migration chain.
-
-"""
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql

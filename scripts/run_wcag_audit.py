@@ -1,18 +1,3 @@
-"""
-SMRITI Retail OS — Gate 9 Accessibility (WCAG 2.1 AA) Automated Audit Script
------------------------------------------------------------------------------
-Scans rendered DOM elements across all core workspaces for:
-  - Form field labeling & aria-labelledby / aria-label coverage
-  - Interactive element role & tabIndex focusability
-  - Color contrast ratio compliance (WCAG 2.1 AA >= 4.5:1)
-  - Dialog modal accessibility & focus isolation
-  - Keyboard navigation focus outline visibility
-
-Author: Jawahar Ramkripal Mallah
-Version: 3.17.0
-Copyright: © SMRITIBooks.com. All Rights Reserved.
-"""
-
 import asyncio
 import json
 import os
@@ -25,7 +10,7 @@ SUMMARY_PATH = os.path.join(os.getcwd(), "scratch", "accessibility_wcag_summary.
 
 async def run_accessibility_audit():
     print("=" * 80)
-    print("SMRITI RETAIL OS — GATE 9 ACCESSIBILITY (WCAG 2.1 AA) AUTOMATED AUDIT")
+    print("TILEFLOW RETAIL OS — GATE 9 ACCESSIBILITY (WCAG 2.1 AA) AUTOMATED AUDIT")
     print("=" * 80)
 
     async with async_playwright() as p:
@@ -36,7 +21,7 @@ async def run_accessibility_audit():
         context = await browser.new_context(viewport={"width": 1920, "height": 1080})
         page = await context.new_page()
 
-        print("Navigating to SMRITI Retail OS and authenticating...")
+        print("Navigating to TILEFLOW Retail OS and authenticating...")
         await page.goto(BASE_URL)
         await page.wait_for_timeout(1000)
 

@@ -1,24 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — Report Registry Service Layer.
-Enforces Invariants 1, 2, 3, 4, and 7:
-- Validates all requests against central registry
-- Enforces Governed Metric Dictionary formula contracts
-- Resolves Shoper 9 aliases without polluting core domain models
-- Constructs forensic Execution Identity Envelopes
-"""
-
 import uuid
 from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional
@@ -76,7 +55,7 @@ class ReportRegistryService:
     def resolve_legacy_alias(cls, query_code: str) -> LegacyAliasResolutionResponse:
         """
         Resolve a legacy Shoper 9 jump-code (e.g., '411', '412', 'SR202000', 'SR236300')
-        to its canonical modern SMRITI report contract.
+        to its canonical modern TILEFLOW report contract.
         """
         clean_query = query_code.strip().upper()
         # Normalize and strip natural query prefixes

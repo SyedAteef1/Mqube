@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.25.0
   Created      : 2026-08-18
   Modified     : 2026-08-18
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Login → Company Database Selector → Dashboard Implementation Plan v3.25.0
+# TILEFLOW Login → Company Database Selector → Dashboard Implementation Plan v3.25.0
 
 ## 1. Objective
-Implement the post-login **Company Database Selector → Dashboard** flow across SMRITI Retail OS based strictly on the single authoritative reconciled live architecture, providing seamless multi-tenant database routing and company selection without architectural duplication.
+Implement the post-login **Company Database Selector → Dashboard** flow across TILEFLOW Retail OS based strictly on the single authoritative reconciled live architecture, providing seamless multi-tenant database routing and company selection without architectural duplication.
 
 ## 2. Business Motivation
 Provide an enterprise post-authentication user experience where operators choose or auto-connect to their authorized company database workspace, guaranteeing tenant data isolation, server-side assignment enforcement, and company-scoped JWT tokens.

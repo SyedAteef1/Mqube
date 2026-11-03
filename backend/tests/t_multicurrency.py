@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -31,7 +17,7 @@ from app.models.accounting import (
 @pytest.mark.asyncio
 async def test_set_and_get_exchange_rate():
     """Verify upserting and resolving currency exchange rates."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         # 1. Set USD rate
         rate_obj = await UnifiedAccountingLedgerService.set_exchange_rate(
@@ -69,7 +55,7 @@ async def test_set_and_get_exchange_rate():
         )
         assert inr_rate == Decimal("1.000000")
 
-        # 4. Unconfigured currency raises SMRITI-GL-007
+        # 4. Unconfigured currency raises TILEFLOW-GL-007
         with pytest.raises(HTTPException) as exc_info:
             await UnifiedAccountingLedgerService.get_exchange_rate(
                 session=session,
@@ -79,9 +65,9 @@ async def test_set_and_get_exchange_rate():
                 as_of_date=date(2026, 7, 1)
             )
         assert exc_info.value.status_code == 400
-        assert "SMRITI-GL-007" in str(exc_info.value.detail)
+        assert "TILEFLOW-GL-007" in str(exc_info.value.detail)
 
-        # 5. Non-positive rate raises SMRITI-GL-008
+        # 5. Non-positive rate raises TILEFLOW-GL-008
         with pytest.raises(HTTPException) as exc_info2:
             await UnifiedAccountingLedgerService.set_exchange_rate(
                 session=session,
@@ -91,13 +77,13 @@ async def test_set_and_get_exchange_rate():
                 exchange_rate=Decimal("-10.00")
             )
         assert exc_info2.value.status_code == 400
-        assert "SMRITI-GL-008" in str(exc_info2.value.detail)
+        assert "TILEFLOW-GL-008" in str(exc_info2.value.detail)
 
 
 @pytest.mark.asyncio
 async def test_multi_currency_journal_voucher_posting():
     """Verify posting a multi-currency journal voucher converts foreign amounts to base currency."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_debtors = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1030")
@@ -150,7 +136,7 @@ async def test_multi_currency_journal_voucher_posting():
 @pytest.mark.asyncio
 async def test_realized_fx_gain_on_customer_settlement():
     """Verify Realized FX Gain when foreign customer payment is received at a higher exchange rate."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_bank = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1020")
@@ -219,7 +205,7 @@ async def test_realized_fx_gain_on_customer_settlement():
 @pytest.mark.asyncio
 async def test_realized_fx_loss_on_supplier_settlement():
     """Verify Realized FX Loss when foreign supplier bill is paid at a higher exchange rate."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_bank = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1020")
@@ -287,7 +273,7 @@ async def test_realized_fx_loss_on_supplier_settlement():
 @pytest.mark.asyncio
 async def test_unrealized_fx_mtm_periodic_revaluation():
     """Verify period-end Mark-to-Market (MTM) unrealized FX gain/loss revaluation."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_debtors = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1030")
@@ -326,9 +312,9 @@ async def test_unrealized_fx_mtm_periodic_revaluation():
 
 @pytest.mark.asyncio
 async def test_multicurrency_tenant_isolation():
-    """Verify that exchange rates and vouchers in smriti001 do not leak to smriti002."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    """Verify that exchange rates and vouchers in tileflow001 do not leak to tileflow002."""
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     async with session_001() as s1:
         rate1 = await UnifiedAccountingLedgerService.set_exchange_rate(
@@ -345,13 +331,13 @@ async def test_multicurrency_tenant_isolation():
     async with session_002() as s2:
         stmt = select(CurrencyExchangeRate).where(CurrencyExchangeRate.id == rate_id)
         leaked = (await s2.execute(stmt)).scalar_one_or_none()
-        assert leaked is None, "CurrencyExchangeRate from smriti001 must not leak into smriti002!"
+        assert leaked is None, "CurrencyExchangeRate from tileflow001 must not leak into tileflow002!"
 
 
 @pytest.mark.asyncio
 async def test_duplicate_settlement_reconciliation_idempotent():
     """Verify that reconciling the same invoice and payment twice returns the existing voucher and does not double-post."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_bank = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1020")
@@ -415,7 +401,7 @@ async def test_duplicate_settlement_reconciliation_idempotent():
 @pytest.mark.asyncio
 async def test_over_settlement_and_currency_mismatch_rejection():
     """Verify rejection when settlement exceeds document limits or currencies mismatch."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_bank = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1020")
@@ -450,7 +436,7 @@ async def test_over_settlement_and_currency_mismatch_rejection():
         )
         await session.commit()
 
-        # Attempting to settle $500 on $100 invoice raises SMRITI-GL-009
+        # Attempting to settle $500 on $100 invoice raises TILEFLOW-GL-009
         with pytest.raises(HTTPException) as exc_over:
             await UnifiedAccountingLedgerService.reconcile_foreign_settlement_fx(
                 session=session,
@@ -460,13 +446,13 @@ async def test_over_settlement_and_currency_mismatch_rejection():
                 settled_foreign_amount=Decimal("500.00")
             )
         assert exc_over.value.status_code == 400
-        assert "SMRITI-GL-009" in str(exc_over.value.detail)
+        assert "TILEFLOW-GL-009" in str(exc_over.value.detail)
 
 
 @pytest.mark.asyncio
 async def test_currency_code_validation_and_rejection():
     """Verify validation of 3-letter uppercase ISO currency codes."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         # Invalid currency format
         with pytest.raises(HTTPException) as exc1:
@@ -478,7 +464,7 @@ async def test_currency_code_validation_and_rejection():
                 exchange_rate=Decimal("80.00")
             )
         assert exc1.value.status_code == 400
-        assert "SMRITI-VAL-002" in str(exc1.value.detail)
+        assert "TILEFLOW-VAL-002" in str(exc1.value.detail)
 
         # Identical currency pair
         with pytest.raises(HTTPException) as exc2:
@@ -490,13 +476,13 @@ async def test_currency_code_validation_and_rejection():
                 exchange_rate=Decimal("1.00")
             )
         assert exc2.value.status_code == 400
-        assert "SMRITI-GL-011" in str(exc2.value.detail)
+        assert "TILEFLOW-GL-011" in str(exc2.value.detail)
 
 
 @pytest.mark.asyncio
 async def test_unrealized_mtm_revaluation_idempotency():
     """Verify that running MTM revaluation multiple times for the same date returns cached idempotent result."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_debtors = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1030")
@@ -541,8 +527,8 @@ async def test_unrealized_mtm_revaluation_idempotency():
 
 @pytest.mark.asyncio
 async def test_unbalanced_foreign_currency_voucher_rejected():
-    """Verify that posting a foreign voucher with unbalanced foreign debits/credits raises SMRITI-GL-010."""
-    session_factory = get_company_sessionmaker("smriti001")
+    """Verify that posting a foreign voucher with unbalanced foreign debits/credits raises TILEFLOW-GL-010."""
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_debtors = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1030")
@@ -563,13 +549,13 @@ async def test_unbalanced_foreign_currency_voucher_rejected():
                 narration="Unbalanced foreign voucher"
             )
         assert exc_info.value.status_code == 400
-        assert "SMRITI-GL-010" in str(exc_info.value.detail)
+        assert "TILEFLOW-GL-010" in str(exc_info.value.detail)
 
 
 @pytest.mark.asyncio
 async def test_ledger_immutability_guard():
     """Verify that posted journal vouchers are guarded against direct mutation."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
         acc_debtors = await UnifiedAccountingLedgerService.get_account_by_code(session, "COMP-001", "1030")
@@ -590,5 +576,5 @@ async def test_ledger_immutability_guard():
         with pytest.raises(HTTPException) as exc_info:
             await UnifiedAccountingLedgerService.assert_voucher_immutable(session, voucher.id, "COMP-001")
         assert exc_info.value.status_code == 400
-        assert "SMRITI-GL-015" in str(exc_info.value.detail)
+        assert "TILEFLOW-GL-015" in str(exc_info.value.detail)
 

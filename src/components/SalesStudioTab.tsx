@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 2.1.4
- * Created      : 2026-07-10
- * Modified     : 2026-08-19
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
 import React, { useState, useEffect } from "react";
 import { Printer, MessageCircle, Mail, AlignJustify,
   FileText, Plus, Search, Grid, Trash2, Edit3,
@@ -20,7 +8,7 @@ import { Printer, MessageCircle, Mail, AlignJustify,
   Upload, Download, AlertTriangle, XCircle, Info, FileSpreadsheet
 } from "lucide-react";
 import { motion } from "motion/react";
-import { SmritiScrollArea } from "./SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.tsx";
 import { Product, Quotation, SalesOrder, SalesItemLine, SalesInvoice, SalesReturn, Customer, CustomerGroup } from "../types.js";
 import { SmartFilter, FilterDefinition } from "./SmartFilter.tsx";
 import { apiFetchV1 } from "../lib/apiFetchV1.ts";
@@ -637,16 +625,16 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
       }
     };
 
-    window.addEventListener("SMRITI_PRINT_SALES_INVOICE", handlePrintInvoice);
-    window.addEventListener("SMRITI_WHATSAPP_SALES_INVOICE", handleWhatsAppInvoice);
-    window.addEventListener("SMRITI_APPROVE_SALES_INVOICE", handleApproveInvoice);
-    window.addEventListener("SMRITI_CANCEL_SALES_INVOICE", handleCancelInvoice);
+    window.addEventListener("TILEFLOW_PRINT_SALES_INVOICE", handlePrintInvoice);
+    window.addEventListener("TILEFLOW_WHATSAPP_SALES_INVOICE", handleWhatsAppInvoice);
+    window.addEventListener("TILEFLOW_APPROVE_SALES_INVOICE", handleApproveInvoice);
+    window.addEventListener("TILEFLOW_CANCEL_SALES_INVOICE", handleCancelInvoice);
 
     return () => {
-      window.removeEventListener("SMRITI_PRINT_SALES_INVOICE", handlePrintInvoice);
-      window.removeEventListener("SMRITI_WHATSAPP_SALES_INVOICE", handleWhatsAppInvoice);
-      window.removeEventListener("SMRITI_APPROVE_SALES_INVOICE", handleApproveInvoice);
-      window.removeEventListener("SMRITI_CANCEL_SALES_INVOICE", handleCancelInvoice);
+      window.removeEventListener("TILEFLOW_PRINT_SALES_INVOICE", handlePrintInvoice);
+      window.removeEventListener("TILEFLOW_WHATSAPP_SALES_INVOICE", handleWhatsAppInvoice);
+      window.removeEventListener("TILEFLOW_APPROVE_SALES_INVOICE", handleApproveInvoice);
+      window.removeEventListener("TILEFLOW_CANCEL_SALES_INVOICE", handleCancelInvoice);
     };
   }, [selectedInvoice]);
 
@@ -661,9 +649,9 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
         setQuickEditErrors([]);
       }
     };
-    window.addEventListener("SMRITI_QUICK_EDIT_CUSTOMER", handleQuickEditCustomer);
+    window.addEventListener("TILEFLOW_QUICK_EDIT_CUSTOMER", handleQuickEditCustomer);
     return () => {
-      window.removeEventListener("SMRITI_QUICK_EDIT_CUSTOMER", handleQuickEditCustomer);
+      window.removeEventListener("TILEFLOW_QUICK_EDIT_CUSTOMER", handleQuickEditCustomer);
     };
   }, []);
 
@@ -1142,7 +1130,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
       </div>
 
       {/* Content Area */}
-      <SmritiScrollArea className="flex-1 bg-theme-base p-6">
+      <TileFlowScrollArea className="flex-1 bg-theme-base p-6">
         {isReadOnly && (
           <div className="bg-amber-950/60 border border-amber-500/30 text-amber-300 rounded-xl p-3 px-4 flex items-center space-x-3 mb-5 shadow-lg">
             <ShieldAlert className="w-5 h-5 text-amber-400 shrink-0" />
@@ -1282,7 +1270,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
             <button
               onClick={() => setIsCreatingQuotation(true)}
               disabled={isReadOnly}
-              className={`px-4 py-2 bg-[#2563EB] hover:bg-blue-600 active:bg-blue-700 text-white rounded-lg text-xs font-bold flex items-center space-x-2 shadow-lg hover:shadow-blue-900/30 transition-all ${isReadOnly ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
+              className={`px-4 py-2 bg-[#606060] hover:bg-blue-600 active:bg-blue-700 text-white rounded-lg text-xs font-bold flex items-center space-x-2 shadow-lg hover:shadow-blue-900/30 transition-all ${isReadOnly ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
             >
               <Plus size={14} />
               <span>Generate Quotation</span>
@@ -1424,7 +1412,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                         value={editorCustomerName}
                         onChange={(e) => setEditorCustomerName(e.target.value)}
                         placeholder="Enter Client or Company Name"
-                        className="w-full bg-theme-surface-1 border border-theme-divider rounded-lg pl-9 pr-4 py-2 text-xs text-theme-body placeholder-[#8892a4] focus:outline-none focus:border-blue-500"
+                        className="w-full bg-theme-surface-1 border border-theme-divider rounded-lg pl-9 pr-4 py-2 text-xs text-theme-body placeholder-[#919191] focus:outline-none focus:border-blue-500"
                       />
                     </div>
                   </div>
@@ -1436,7 +1424,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                         onClick={() => setEditorStatus("Draft")}
                         className={`flex-1 py-2 rounded-lg text-xs font-semibold border transition-all ${
                           editorStatus === "Draft"
-                            ? "bg-[#2563EB] border-blue-500 text-theme-body"
+                            ? "bg-[#606060] border-blue-500 text-theme-body"
                             : "bg-theme-surface-1 border-theme-divider text-theme-muted hover:text-theme-body"
                         }`}
                       >
@@ -1478,7 +1466,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                       }`}
                     >
                       <Grid size={14} />
-                      <span>Matrix Grid Entry (SMRITI Footwear/Apparel)</span>
+                      <span>Matrix Grid Entry (MQube Footwear/Apparel)</span>
                     </button>
                   </div>
 
@@ -1653,7 +1641,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                             const lineTotal = baseTotal + taxAmount;
 
                             const relatedProd = products.find(p => p.id === item.productId || p.code === item.code);
-                            const policyStr = localStorage.getItem("smriti_spif_display_policy");
+                            const policyStr = localStorage.getItem("tileflow_spif_display_policy");
                             const showImage = policyStr ? JSON.parse(policyStr).showInSales : true;
                             const hoverZoom = policyStr ? JSON.parse(policyStr).hoverZoom : true;
                             const imageSize = (policyStr ? JSON.parse(policyStr).salesSize : "small") as "small" | "medium";
@@ -1712,7 +1700,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                       {/* Summary Section */}
                       <div className="p-4 bg-theme-surface-3 border-t border-theme-divider text-xs text-theme-muted flex flex-col sm:flex-row justify-between items-center gap-4">
                         <div className="text-[11px] leading-relaxed">
-                          SMRITI tax engine automatically back-calculates and segregates SGST/CGST breakdown lines.
+                          MQube tax engine automatically back-calculates and segregates SGST/CGST breakdown lines.
                         </div>
                         <div className="space-y-1 text-right w-full sm:w-auto">
                           <div>
@@ -1753,7 +1741,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
               </div>
             </div>
           ) : isCreatingInvoice ? (
-            /* Smriti Distributor Stitch-Integrated Tax Invoice Workspace */
+            /* MQube Distributor Stitch-Integrated Tax Invoice Workspace */
             <div className="w-full h-full overflow-hidden animate-in fade-in duration-200">
               <DistTaxInvoice
                 onExit={() => {
@@ -1908,7 +1896,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                             const lineTotal = (item.quantity * item.price) + taxAmount;
 
                             const relatedProd = products.find(p => p.id === item.productId || p.code === item.code);
-                            const policyStr = localStorage.getItem("smriti_spif_display_policy");
+                            const policyStr = localStorage.getItem("tileflow_spif_display_policy");
                             const showImage = policyStr ? JSON.parse(policyStr).showInSales : true;
                             const hoverZoom = policyStr ? JSON.parse(policyStr).hoverZoom : true;
                             const imageSize = (policyStr ? JSON.parse(policyStr).salesSize : "small") as "small" | "medium";
@@ -1971,7 +1959,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                       {/* Summary Section */}
                       <div className="p-4 bg-theme-surface-3 border-t border-theme-divider text-xs text-theme-muted flex flex-col sm:flex-row justify-between items-center gap-4">
                         <div className="text-[11px] leading-relaxed">
-                          SMRITI return manager will auto-generate an approved Credit Note voucher upon submission.
+                          MQube return manager will auto-generate an approved Credit Note voucher upon submission.
                         </div>
                         <div className="space-y-1 text-right w-full sm:w-auto">
                           <div className="text-sm font-bold text-rose-400">
@@ -2014,7 +2002,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                     <User size={16} className="text-indigo-400" />
                     <span>Create Customer Profile</span>
                   </h3>
-                  <p className="text-[11px] text-theme-muted">Register a single client with real-time Smriti verification</p>
+                  <p className="text-[11px] text-theme-muted">Register a single client with real-time MQube verification</p>
                 </div>
                 <button
                   onClick={() => {
@@ -2154,7 +2142,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                     {isManualValidatingOnServer && (
                       <span className="flex items-center space-x-1.5 text-[10px] text-indigo-400 font-medium font-mono animate-pulse">
                         <RefreshCw size={10} className="animate-spin text-indigo-400" />
-                        <span>Verifying with Smriti Server...</span>
+                        <span>Verifying with MQube Server...</span>
                       </span>
                     )}
                   </div>
@@ -2230,7 +2218,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                           onNotification("Customer Created", `Successfully registered ${newCustomerName} with ID ${nextIdStr}`, "success");
                         } catch (err) {
                           console.error("Manual customer validation failed:", err);
-                          setManualValidationErrors(["Smriti Network validation timed out. Please try again."]);
+                          setManualValidationErrors(["MQube Network validation timed out. Please try again."]);
                           setIsManualValidatingOnServer(false);
                         }
                       }}
@@ -2338,7 +2326,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                         <span className="text-xs font-bold font-display uppercase tracking-wider">CSV Format Guidelines</span>
                       </div>
                       <p className="text-[11px] text-theme-muted leading-relaxed">
-                        SMRITI automatically scans, maps, and validates columns. For perfect results, we recommend using these headers or equivalents:
+                        MQube automatically scans, maps, and validates columns. For perfect results, we recommend using these headers or equivalents:
                       </p>
                       <div className="grid grid-cols-2 gap-3 text-[10px] font-mono text-theme-muted bg-theme-surface-1 p-3 rounded-lg border border-theme-divider/60">
                         <div><span className="text-theme-body font-semibold">Name</span> (Required)</div>
@@ -2379,7 +2367,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                             const url = URL.createObjectURL(blob);
                             const link = document.createElement("a");
                             link.setAttribute("href", url);
-                            link.setAttribute("download", "smriti_customers_import_template.csv");
+                            link.setAttribute("download", "tileflow_customers_import_template.csv");
                             link.style.visibility = "hidden";
                             document.body.appendChild(link);
                             link.click();
@@ -2410,7 +2398,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                             {isValidatingOnServer ? (
                               <span className="flex items-center space-x-1 text-[10px] text-indigo-400 font-medium animate-pulse bg-indigo-950/40 px-2 py-0.5 rounded border border-indigo-900">
                                 <RefreshCw size={10} className="animate-spin text-indigo-400" />
-                                <span>Verifying with Smriti Server...</span>
+                                <span>Verifying with MQube Server...</span>
                               </span>
                             ) : (
                               <span className="text-[10px] text-emerald-400 font-medium flex items-center space-x-1 bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-900">
@@ -2506,7 +2494,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                               setRawCsvText("");
                               setParsedRows([]);
 
-                              onNotification("Import Complete", `Successfully imported ${importedCustomers.length} customer profiles to SMRITI ledger.`, "success");
+                              onNotification("Import Complete", `Successfully imported ${importedCustomers.length} customer profiles to MQube ledger.`, "success");
                             }}
                             className="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-lg text-xs shadow-lg transition-colors cursor-pointer flex items-center space-x-2"
                           >
@@ -2677,7 +2665,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                 /* Quotations Registry Table */
                 quotations.length === 0 ? (
                   <div className="p-16 text-center text-theme-muted text-xs">
-                    No quotations match the current filters or none exist in SMRITI.
+                    No quotations match the current filters or none exist in MQube.
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
@@ -2819,7 +2807,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                 /* Sales Orders Book Registry */
                 isCreatingSalesOrder ? null : salesOrders.length === 0 ? (
                   <div className="p-16 text-center text-theme-muted text-xs font-mono">
-                    No sales orders match current filters or none exist in SMRITI.
+                    No sales orders match current filters or none exist in MQube.
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
@@ -2924,7 +2912,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                 /* Sales Invoices Registry Table */
                 salesInvoices.length === 0 ? (
                   <div className="p-16 text-center text-theme-muted text-xs">
-                    No sales invoices match current filters or none exist in SMRITI.
+                    No sales invoices match current filters or none exist in MQube.
                   </div>
                 ) : (
                   <div className="overflow-x-auto">
@@ -3177,7 +3165,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                 /* Customers Directory Table */
                 customers.length === 0 ? (
                   <div className="p-16 text-center text-theme-muted text-xs">
-                    No customer records exist in SMRITI database yet.
+                    No customer records exist in MQube database yet.
                   </div>
                 ) : filteredCustomers.length === 0 ? (
                   <div className="p-16 text-center text-theme-muted text-xs">
@@ -3759,7 +3747,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
               <div className="space-y-2">
                 {(selectedInvoice.status === "Submitted" || selectedInvoice.status === "Draft") && (
                   <button
-                    onClick={() => window.dispatchEvent(new CustomEvent("SMRITI_APPROVE_SALES_INVOICE", { detail: selectedInvoice }))}
+                    onClick={() => window.dispatchEvent(new CustomEvent("TILEFLOW_APPROVE_SALES_INVOICE", { detail: selectedInvoice }))}
                     disabled={isReadOnly}
                     className={`w-full py-3 ${isReadOnly ? "bg-theme-surface-3 text-theme-muted cursor-not-allowed" : "bg-emerald-600 hover:bg-emerald-500 text-white"} font-bold text-xs rounded-xl shadow-lg flex items-center justify-center space-x-2.5 transition-all`}
                   >
@@ -3769,7 +3757,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                 )}
                 {selectedInvoice.status === "Approved" && (
                   <button
-                    onClick={() => window.dispatchEvent(new CustomEvent("SMRITI_CANCEL_SALES_INVOICE", { detail: selectedInvoice }))}
+                    onClick={() => window.dispatchEvent(new CustomEvent("TILEFLOW_CANCEL_SALES_INVOICE", { detail: selectedInvoice }))}
                     disabled={isReadOnly}
                     className={`w-full py-3 ${isReadOnly ? "bg-theme-surface-3 text-theme-muted cursor-not-allowed" : "bg-rose-600 hover:bg-rose-500 text-white"} font-bold text-xs rounded-xl shadow-lg flex items-center justify-center space-x-2.5 transition-all`}
                   >
@@ -3816,7 +3804,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
 
                 <div className="grid grid-cols-1 gap-2">
                   <button
-                    onClick={() => window.dispatchEvent(new CustomEvent("SMRITI_WHATSAPP_SALES_INVOICE", { detail: selectedInvoice }))}
+                    onClick={() => window.dispatchEvent(new CustomEvent("TILEFLOW_WHATSAPP_SALES_INVOICE", { detail: selectedInvoice }))}
                     className="w-full py-2 bg-theme-surface-3 hover:bg-theme-surface-hover border border-theme-divider text-theme-body rounded-xl text-xs font-semibold transition-colors"
                   >
                     WhatsApp
@@ -3953,7 +3941,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                         (c) => c.id !== quickEditingCustomer.id && (c.mobile === cleanMobile || c.mobile === quickEditMobile.trim())
                       );
                       if (duplicateMobile) {
-                        errors.push(`Mobile number '${quickEditMobile}' is already registered to another SMRITI customer.`);
+                        errors.push(`Mobile number '${quickEditMobile}' is already registered to another MQube customer.`);
                       }
                     }
 
@@ -3970,7 +3958,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
                           (c) => c.id !== quickEditingCustomer.id && c.email && c.email.toLowerCase() === email.toLowerCase()
                         );
                         if (duplicateEmail) {
-                          errors.push(`Email address '${email}' is already registered to another SMRITI customer.`);
+                          errors.push(`Email address '${email}' is already registered to another MQube customer.`);
                         }
                       }
                     }
@@ -4021,7 +4009,7 @@ export const SalesStudioTab: React.FC<SalesStudioTabProps> = ({ products, onNoti
       )}
 
         </motion.div>
-      </SmritiScrollArea>
+      </TileFlowScrollArea>
     </div>
   );
 };

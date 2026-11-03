@@ -1,18 +1,5 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-11
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 from typing import Optional, List
-from fastapi import APIRouter, Depends, Query, HTTPException, Body
+from fastapi import APIRouter, Depends, Query, HTTPException, Body, Request
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from ...api.deps import get_db, get_current_user, require_role
@@ -38,13 +25,16 @@ router = APIRouter()
 )
 async def create_staff_user(
     req: StaffUserCreate,
+    request: Request,
     db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
     """
-    Create a new staff user profile.
+    Create a new staff user profile in the company the creator is working in.
     """
     service = UserService(db)
-    return await service.create_staff_user(req)
+    company_id = request.headers.get("x-company-id") or current_user.company_id
+    return await service.create_staff_user(req, company_id_hint=company_id)
 
 
 @router.get(

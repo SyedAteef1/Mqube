@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Master UI/UX Refactor Walkthrough v3.17.0
+# TILEFLOW Master UI/UX Refactor Walkthrough v3.17.0
 
 ## 1. Purpose
-This walkthrough documents the implementation of the **Master UI/UX Refactor Specification v3.17.0** for SMRITI Retail OS. It details how the **Stitch "SMRITI Launchpad Rebrand"** visual tokens (`projects/5290707397196745553`), **SAP Fiori-inspired Launchpad architecture**, **Unified Business Application Shell**, and **Standalone PWA Mode** were integrated into the SMRITI codebase.
+This walkthrough documents the implementation of the **Master UI/UX Refactor Specification v3.17.0** for TILEFLOW Retail OS. It details how the **Stitch "TILEFLOW Launchpad Rebrand"** visual tokens (`projects/5290707397196745553`), **SAP Fiori-inspired Launchpad architecture**, **Unified Business Application Shell**, and **Standalone PWA Mode** were integrated into the TILEFLOW codebase.
 
 ---
 
 ## 2. Scope
-* Integration of "Smriti Cognitive System" design system tokens in `src/index.css`.
+* Integration of "TileFlow Cognitive System" design system tokens in `src/index.css`.
 * Standalone PWA manifest setup in `public/manifest.json` and web app meta tags in `index.html`.
 * Creation of core shell components:
   * `AppShell.tsx` (`src/components/shell/AppShell.tsx`)
@@ -63,7 +62,7 @@ This walkthrough documents the implementation of the **Master UI/UX Refactor Spe
 ---
 
 ## 6. Design Rationale
-The "Smriti Cognitive System" philosophy prioritizes low contrast fatigue, high information legibility, and anticipatory UI controls. By incorporating Fiori's structured interaction architecture inside a standalone PWA shell, users benefit from native app navigation (Home, Back, Omni-Search, User/Shift Profile) without reliance on browser UI elements.
+The "TileFlow Cognitive System" philosophy prioritizes low contrast fatigue, high information legibility, and anticipatory UI controls. By incorporating Fiori's structured interaction architecture inside a standalone PWA shell, users benefit from native app navigation (Home, Back, Omni-Search, User/Shift Profile) without reliance on browser UI elements.
 
 ---
 

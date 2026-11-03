@@ -1,23 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — Phase 2 Security Masking & Query Router Test Suite.
-Verifies:
-- Invariant 4: Zero frontend security trust (Server-side field masking)
-- Invariant 5: Workload isolation via 4 Performance Tiers
-- Invariant 9: Uniform security masking across all consumer views
-"""
-
 import pytest
 from datetime import date, timedelta
 from app.core.report_security import (

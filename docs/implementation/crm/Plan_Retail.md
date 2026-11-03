@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 5.5.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan — Retail Customer Catalogue & Advanced Search Workspace (v5.5.0)
 
 ## 1. Objective
-Refactor and modernize the Customer Management module into a high-density, 3-tab **Customer Catalogue** and **Advanced Customer Search** suite aligning with SMRITI Retail OS UI/UX standards.
+Refactor and modernize the Customer Management module into a high-density, 3-tab **Customer Catalogue** and **Advanced Customer Search** suite aligning with TILEFLOW Retail OS UI/UX standards.
 
 ## 2. Business Motivation
 Provide cashiers, store managers, and retail administrators with an administrative and operational interface to create, audit, search, and manage retail customer profiles, demographic classifications, loyalty program associations, multi-address profiles, and financial credit limits.

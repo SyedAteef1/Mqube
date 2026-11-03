@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 6.17.0
  * Created      : 2026-08-21
  * Modified     : 2026-08-25
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useEffect, useMemo, useRef } from "react";
@@ -23,22 +22,22 @@ import {
   POSZReportData,
   ShiftCashMovementRecord
 } from "./types.ts";
-import { SmritiPosSettlement } from "./ProPosSettlementDl.tsx";
-import { SmritiProPosRecallDlg } from "./ProPosRecallDlg.tsx";
-import { SmritiProPosCancelDlg } from "./ProPosCancellation.tsx";
-import { SmritiLoyaltyLookupDlgpModal } from "./ProPosLoyaltyLooku.tsx";
-import { SmritiProPosSalesReturnModal } from "./ProPosSalesReturnD.tsx";
-import { SmritiProPosTaxInvoiceReceipt } from "./ProPosTaxInvoiceRc.tsx";
-import { SmritiPdtImportDlg } from "./ProPosPdtImportDlg.tsx";
-import { SmritiCustomerBrowseModal } from "./CustBrowseDlg.tsx";
-import { SmritiProPosHotkeysDlg } from "./ProPosHotkeysDlg.tsx";
-import { SmritiProPosReprintDlg } from "./ProPosReprintDlg.tsx";
-import { SmritiProPosCashMovementsModal } from "./ProPosCashMovesDlg.tsx";
-import { SmritiProPosShiftCloseModal } from "./ProPosShiftCloseDl.tsx";
+import { TileFlowPosSettlement } from "./ProPosSettlementDl.tsx";
+import { TileFlowProPosRecallDlg } from "./ProPosRecallDlg.tsx";
+import { TileFlowProPosCancelDlg } from "./ProPosCancellation.tsx";
+import { TileFlowLoyaltyLookupDlgpModal } from "./ProPosLoyaltyLooku.tsx";
+import { TileFlowProPosSalesReturnModal } from "./ProPosSalesReturnD.tsx";
+import { TileFlowProPosTaxInvoiceReceipt } from "./ProPosTaxInvoiceRc.tsx";
+import { TileFlowPdtImportDlg } from "./ProPosPdtImportDlg.tsx";
+import { TileFlowCustomerBrowseModal } from "./CustBrowseDlg.tsx";
+import { TileFlowProPosHotkeysDlg } from "./ProPosHotkeysDlg.tsx";
+import { TileFlowProPosReprintDlg } from "./ProPosReprintDlg.tsx";
+import { TileFlowProPosCashMovementsModal } from "./ProPosCashMovesDlg.tsx";
+import { TileFlowProPosShiftCloseModal } from "./ProPosShiftCloseDl.tsx";
 import { apiFetchV1 } from "../../../lib/apiFetchV1.ts";
 import { calculateGST, parseAndValidateGSTIN, GST_STATE_MAP } from "../../../utils/gstEngine.ts";
 import { searchBackendProducts, AutoPopulateProductResult } from "../../../services/autoPopulateService.ts";
-import { SmritiItemTypeaheadDropdown } from "../../common/ItemTypeaheadDrop.tsx";
+import { TileFlowItemTypeaheadDropdown } from "../../common/ItemTypeaheadDrop.tsx";
 import { 
   Barcode, 
   Search, 
@@ -67,14 +66,15 @@ import {
   Calculator,
   RefreshCw,
   Vault,
-  Lock
+  Lock,
+  ChevronDown
 } from "lucide-react";
 
-interface SmritiProPosBillinginalProps {
+interface TileFlowProPosBillinginalProps {
   onNotification?: (title: string, message: string, type: "success" | "error" | "info") => void;
 }
 
-export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = ({
+export const TileFlowProPosBillinginal: React.FC<TileFlowProPosBillinginalProps> = ({
   onNotification
 }) => {
   // --- POS Mode & Activity State ---
@@ -93,8 +93,8 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
   const [customer, setCustomer] = useState<ProPosCustomer>({
     id: "cust-01",
     code: "C01",
-    name: "Customer01 (Walk-in)",
-    phone: "9876543210",
+    name: "Walk-in Customer",
+    phone: "",
     loyaltyPoints: 1200,
     loyaltyTier: "Gold",
     creditLimit: 50000,
@@ -112,66 +112,48 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
   const posStateName = gstAnalysis.stateName || customer.state || GST_STATE_MAP[posStateCode] || "Home State";
   const isInterstate = storeStateCode !== posStateCode;
 
-  const [salesStaff, setSalesStaff] = useState<string>("SM1");
+  const [salesStaff, setSalesStaff] = useState<string>("");
   const [selectedRowIndex, setSelectedRowIndex] = useState<number>(1);
   const [showTotalsPanel, setShowTotalsPanel] = useState<boolean>(true);
+  const [showMoreColumns, setShowMoreColumns] = useState<boolean>(false);
+  const [showMoreMenu, setShowMoreMenu] = useState<boolean>(false);
 
   // --- Detail Group: Accepted Item Details Grid State ---
-  const [cartItems, setCartItems] = useState<ProPosCartItem[]>([
-    {
-      id: "item-init-1",
-      itemNo: 1,
-      sku: "8887462974641",
-      barcode: "8887462974641",
-      name: "regular straight Med Beige",
-      size: "32",
-      color: "Beige",
-      brand: "SMRITI",
-      salesStaff: "SM1",
-      qty: 1.00,
-      mrp: 999.00,
-      unitPrice: 999.00,
-      discCode: "ILD",
-      discQty: 1.00,
-      discountPct: 10.00,
-      discountAmt: 99.90,
-      taxPct: 5.00,
-      taxAmt: 42.81,
-      lineTotal: 899.10
-    },
-    {
-      id: "item-init-2",
-      itemNo: 2,
-      sku: "8887462974825",
-      barcode: "8887462974825",
-      name: "regular straight Med Beige",
-      size: "34",
-      color: "Beige",
-      brand: "SMRITI",
-      salesStaff: "SM1",
-      qty: 1.00,
-      mrp: 999.00,
-      unitPrice: 999.00,
-      discCode: "ILD",
-      discQty: 1.00,
-      discountPct: 10.00,
-      discountAmt: 99.90,
-      taxPct: 5.00,
-      taxAmt: 42.81,
-      lineTotal: 899.10
-    }
-  ]);
+  const [cartItems, setCartItems] = useState<ProPosCartItem[]>([]);
 
   // --- Detail Group: Direct Entry Grid State ---
   const [directBarcode, setDirectBarcode] = useState<string>("");
   const [directStockNo, setDirectStockNo] = useState<string>("");
   const [directDescription, setDirectDescription] = useState<string>("");
-  const [directRate, setDirectRate] = useState<string>("999.00");
+  const [directRate, setDirectRate] = useState<string>("");
   const [directQty, setDirectQty] = useState<string>("1.00");
-  const [directDiscCode, setDirectDiscCode] = useState<string>("ILD");
+  const [directSqft, setDirectSqft] = useState<string>("");
+  const [salesPeople, setSalesPeople] = useState<string[]>([]);
+  const [locations, setLocations] = useState<{ id: string; name: string }[]>([]);
+  const [dispatchFrom, setDispatchFrom] = useState("");
+  const [catalog, setCatalog] = useState<Record<string, { name: string; price: number; gst: number; sqftPerBox: number }>>({});
+
+  useEffect(() => {
+    apiFetchV1<any[]>("/staff/personnel?role=SALESPERSON")
+      .then(people => setSalesPeople((people || []).map(p => p.person_name).filter(Boolean)))
+      .catch(() => setSalesPeople([]));
+    apiFetchV1<any[]>("/wms/warehouses").then(setLocations).catch(() => setLocations([]));
+    apiFetchV1<any>("/products?page_size=100")
+      .then(res => {
+        const list: any[] = Array.isArray(res) ? res : res?.items || [];
+        setCatalog(Object.fromEntries(list.map(p => [p.code, {
+          name: p.name,
+          price: Number(p.price || 0),
+          gst: Number(p.gst_percentage ?? 18),
+          sqftPerBox: Number(p.sqft_per_box || 0)
+        }])));
+      })
+      .catch(() => setCatalog({}));
+  }, []);
+  const [directDiscCode, setDirectDiscCode] = useState<string>("");
   const [directDiscQty, setDirectDiscQty] = useState<string>("1.00");
-  const [directDiscPct, setDirectDiscPct] = useState<string>("10.00");
-  const [directDiscAmtInput, setDirectDiscAmtInput] = useState<string>("99.90");
+  const [directDiscPct, setDirectDiscPct] = useState<string>("0.00");
+  const [directDiscAmtInput, setDirectDiscAmtInput] = useState<string>("0.00");
   const [directStaff, setDirectStaff] = useState<string>("SM1");
 
   // Live Item Typeahead / Auto-Populate State
@@ -219,7 +201,7 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
     setDirectStockNo(item.stockNo || item.code);
     setDirectBarcode(item.barcode);
     setDirectDescription(item.name);
-    const unitP = item.sellingPrice ? item.sellingPrice.toFixed(2) : (item.mrp || 999).toFixed(2);
+    const unitP = item.sellingPrice ? item.sellingPrice.toFixed(2) : (item.mrp || 0).toFixed(2);
     handleRateOrQtyChange(unitP, directQty);
     setSelectedProductMeta(item);
     setIsProductSearchOpen(false);
@@ -380,20 +362,20 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
         unitPrice: it.unitPrice,
         quantity: it.qty,
         discountAmount: it.discountAmt,
-        gstRate: it.taxPct || 5.00,
+        gstRate: it.taxPct ?? 18,
         isTaxInclusive: it.isTaxInclusive ?? !isB2B,
         isInterstate: isInterstate,
       });
       return acc + gst.taxAmount;
     }, 0);
   }, [cartItems, isB2B, isInterstate]);
-  const netPayableAmount = useMemo(() => {
+  const exactBillAmount = useMemo(() => {
     const raw = cartItems.reduce((acc, it) => {
       const gst = calculateGST({
         unitPrice: it.unitPrice,
         quantity: it.qty,
         discountAmount: it.discountAmt,
-        gstRate: it.taxPct || 5.00,
+        gstRate: it.taxPct ?? 18,
         isTaxInclusive: it.isTaxInclusive ?? !isB2B,
         isInterstate: isInterstate,
       });
@@ -401,6 +383,9 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
     }, 0);
     return Math.round(raw * 100) / 100;
   }, [cartItems, isB2B, isInterstate]);
+  // Round to the nearest rupee, as the server does when the bill is saved.
+  const netPayableAmount = Math.round(exactBillAmount);
+  const roundOffAmount = Math.round((netPayableAmount - exactBillAmount) * 100) / 100;
 
   // Create New Bill (Alt+1)
   const handleNewBill = () => {
@@ -408,8 +393,8 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
     setCustomer({
       id: "cust-01",
       code: "C01",
-      name: "Customer01 (Walk-in)",
-      phone: "9876543210",
+      name: "Walk-in Customer",
+      phone: "",
       loyaltyPoints: 1200,
       loyaltyTier: "Gold",
       creditLimit: 50000,
@@ -418,9 +403,10 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
     setDirectStockNo("");
     setDirectDescription("");
     setDirectQty("1.00");
+    setDirectSqft("");
     setDirectDiscQty("1.00");
-    setDirectDiscPct("10.00");
-    setDirectDiscAmtInput("99.90");
+    setDirectDiscPct("0.00");
+    setDirectDiscAmtInput("0.00");
     setActiveActivity("BILLING");
     directStockNoRef.current?.focus();
     onNotification?.("New Bill Created", "Terminal reset for new billing transaction [Alt+1].", "info");
@@ -437,7 +423,7 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       if (items.length > 0) {
         const p = items[0];
         setDirectDescription(p.product_name || p.name || `Retail Item ${term}`);
-        const unitP = (parseFloat(p.selling_price || p.mrp || p.price) || 999.00).toFixed(2);
+        const unitP = (parseFloat(p.selling_price || p.mrp || p.price) || 0).toFixed(2);
         handleRateOrQtyChange(unitP, directQty);
         return;
       }
@@ -445,9 +431,6 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       console.warn("Direct lookup fallback to auto-generated details", e);
     }
 
-    if (!directDescription) {
-      setDirectDescription(`regular straight Med Beige`);
-    }
   };
 
   // Keyboard navigation helper for Typeahead dropdown
@@ -503,14 +486,20 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
 
     const stockCode = directStockNo.trim() || directBarcode.trim();
     const barcodeCode = directBarcode.trim() || selectedProductMeta?.barcode || stockCode;
-    const desc = directDescription.trim() || selectedProductMeta?.name || `Retail Item ${stockCode}`;
-    const rate = parseFloat(directRate) || selectedProductMeta?.sellingPrice || 999.00;
+    const known = catalog[stockCode];
+    if (!selectedProductMeta && !known) {
+      onNotification?.("Product Not Found", `No product found for "${stockCode}". Pick it from the search list.`, "error");
+      directStockNoRef.current?.focus();
+      return;
+    }
+    const desc = directDescription.trim() || selectedProductMeta?.name || known?.name || stockCode;
+    const rate = parseFloat(directRate) || selectedProductMeta?.sellingPrice || known?.price || 0;
     const qty = parseFloat(directQty) || 1.00;
     const effDiscQ = getEffectiveDiscQty(directDiscQty, directQty);
     const discPct = parseFloat(directDiscPct) || 0.00;
     const discAmt = parseFloat(directDiscAmtInput) || ((rate * effDiscQ * discPct) / 100);
     const staff = directStaff || salesStaff;
-    const gstRate = selectedProductMeta?.gstPercentage || 5.00;
+    const gstRate = selectedProductMeta?.gstPercentage ?? known?.gst ?? 18;
 
     const gstCalc = calculateGST({
       unitPrice: rate,
@@ -526,7 +515,8 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
             it.unitPrice === rate &&
             Math.abs((it.discQty || 0) - effDiscQ) < 0.01 &&
             Math.abs(it.discountPct - discPct) < 0.01 &&
-            it.salesStaff === staff
+            it.salesStaff === staff &&
+            !it.sqftRequested && !directSqft
     );
 
     if (existingIndex >= 0) {
@@ -564,17 +554,18 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       const newItem: ProPosCartItem = {
         id: `item-${Date.now()}`,
         itemNo: cartItems.length + 1,
+        sqftRequested: parseFloat(directSqft) > 0 ? parseFloat(directSqft) : undefined,
         sku: stockCode,
         barcode: barcodeCode,
         name: desc,
-        size: selectedProductMeta?.size || "32",
-        color: selectedProductMeta?.color || "Beige",
-        brand: selectedProductMeta?.brand || "SMRITI",
+        size: selectedProductMeta?.size || "",
+        color: selectedProductMeta?.color || "",
+        brand: selectedProductMeta?.brand || "",
         salesStaff: staff,
         qty: qty,
         mrp: selectedProductMeta?.mrp || rate,
         unitPrice: rate,
-        discCode: directDiscCode || "ILD",
+        discCode: directDiscCode || "",
         discQty: effDiscQ,
         discountPct: discPct,
         discountAmt: discAmt,
@@ -590,13 +581,14 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
 
       setCartItems(prev => [...prev, newItem]);
       setSelectedRowIndex(cartItems.length);
-      onNotification?.("Item Accepted", `${desc} (${stockCode}) accepted (${effDiscQ.toFixed(2)} Disc Qty, â‚¹${discAmt.toFixed(2)} Disc Amt).`, "success");
+      onNotification?.("Item Accepted", `${desc} (${stockCode}) accepted (${effDiscQ.toFixed(2)} Disc Qty, ₹${discAmt.toFixed(2)} Disc Amt).`, "success");
     }
 
     setDirectStockNo("");
     setDirectBarcode("");
     setDirectDescription("");
     setDirectQty("1.00");
+    setDirectSqft("");
     setDirectDiscQty("1.00");
     setDirectDiscPct("0.00");
     setDirectDiscAmtInput("0.00");
@@ -612,27 +604,48 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
 
   // Import PDT Items callback
   const handlePdtImportSuccess = (imported: Partial<ProPosCartItem>[]) => {
-    const converted: ProPosCartItem[] = imported.map((it, idx) => ({
-      id: `pdt-${Date.now()}-${idx}`,
-      itemNo: cartItems.length + idx + 1,
-      sku: it.sku || `SKU-${idx + 1}`,
-      barcode: it.barcode || it.sku || `SKU-${idx + 1}`,
-      name: it.name || `Imported Item ${it.sku}`,
-      size: it.size || "M",
-      color: it.color || "Standard",
-      brand: it.brand || "SMRITI",
-      salesStaff: salesStaff,
-      qty: it.qty || 1.00,
-      mrp: it.mrp || 999.00,
-      unitPrice: it.unitPrice || 999.00,
-      discCode: "ILD",
-      discQty: it.qty || 1.00,
-      discountPct: it.discountPct || 10.00,
-      discountAmt: it.discountAmt || 99.90,
-      taxPct: it.taxPct || 5.00,
-      taxAmt: it.taxAmt || 42.81,
-      lineTotal: it.lineTotal || 899.10
-    }));
+    // Imported lines are priced exactly like typed ones: no invented discounts, tax or totals.
+    const converted: ProPosCartItem[] = imported.map((it, idx) => {
+      const qty = it.qty || 1.00;
+      const unitPrice = it.unitPrice || 0;
+      const discountPct = it.discountPct ?? 0;
+      const discountAmt = it.discountAmt ?? (unitPrice * qty * discountPct) / 100;
+      const taxPct = it.taxPct ?? 18;
+      const gst = calculateGST({
+        unitPrice,
+        quantity: qty,
+        discountAmount: discountAmt,
+        gstRate: taxPct,
+        isTaxInclusive: !isB2B,
+        isInterstate: isInterstate,
+      });
+      return {
+        id: `pdt-${Date.now()}-${idx}`,
+        itemNo: cartItems.length + idx + 1,
+        sku: it.sku || `SKU-${idx + 1}`,
+        barcode: it.barcode || it.sku || `SKU-${idx + 1}`,
+        name: it.name || `Imported Item ${it.sku}`,
+        size: it.size || "",
+        color: it.color || "",
+        brand: it.brand || "",
+        salesStaff: salesStaff,
+        qty,
+        mrp: it.mrp || unitPrice,
+        unitPrice,
+        discCode: "",
+        discQty: qty,
+        discountPct,
+        discountAmt,
+        taxPct,
+        taxAmt: gst.taxAmount,
+        taxableValue: gst.taxableValue,
+        cgstAmount: gst.cgstAmount,
+        sgstAmount: gst.sgstAmount,
+        igstAmount: gst.igstAmount,
+        isTaxInclusive: !isB2B,
+        lineTotal: gst.totalAmount,
+      };
+    });
 
     setCartItems(prev => [...prev, ...converted]);
     onNotification?.("PDT Loaded", `Successfully imported ${converted.length} items from PDT.`, "success");
@@ -677,8 +690,80 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
   };
 
   // Settlement Success
-  const handleSettlementSuccess = (tenders: ProPosTenderSplit, changeDue: number) => {
-    const generatedBillNo = `${billDocPrefix}-${billDocNumber}`;
+  const handleSettlementSuccess = async (tenders: ProPosTenderSplit, changeDue: number) => {
+    const creditAmount = tenders.credit || 0;
+    if (creditAmount > 0 && customer.name.includes("Walk-in")) {
+      onNotification?.("Customer Required", "Credit billing requires a registered customer account.", "error");
+      return;
+    }
+    let billNumber = billDocNumber;
+    try {
+      const next = await apiFetchV1<any>(`/sales/invoices/next-number?prefix=${encodeURIComponent(billDocPrefix)}`);
+      billNumber = String(next.next_number);
+    } catch {
+      // Keep the on-screen number; the save below reports any real failure.
+    }
+    const generatedBillNo = `${billDocPrefix}-${billNumber}`;
+    let saved: any;
+    try {
+      saved = await apiFetchV1<any>("/sales/invoices", {
+        method: "POST",
+        body: JSON.stringify({
+          invoice_no: generatedBillNo,
+          date: new Date().toISOString().slice(0, 10),
+          customer_id: customer.name.includes("Walk-in") ? null : customer.id,
+          customer_name: customer.name,
+          customer_gstin: customer.gstin || null,
+          status: "Completed",
+          warehouse_id: dispatchFrom || undefined,
+          payment_mode: "SPLIT",
+          paid_amount: netPayableAmount - creditAmount,
+          balance_amount: creditAmount,
+          net_amount: netPayableAmount,
+          grand_total: netPayableAmount,
+          salesperson_name: salesStaff,
+          items: cartItems.map((item, index) => ({
+            code: item.sku,
+            product_id: item.sku,
+            name: item.name,
+            quantity: item.qty,
+            price: item.unitPrice,
+            gst_rate: item.taxPct,
+            disc_pct: item.discountPct,
+            sqft_requested: item.sqftRequested,
+            line_no: index + 1
+          }))
+        })
+      });
+    } catch (err: any) {
+      onNotification?.("Bill Not Saved", err.message || "This bill could not be saved.", "error");
+      return;
+    }
+
+    const tenderRows = [
+      { tender_type: "CASH", amount: tenders.cash - changeDue },
+      { tender_type: "CARD", amount: tenders.card, auth_code: tenders.cardAuthCode, card_last4: tenders.cardLast4 },
+      { tender_type: "UPI", amount: tenders.upi, gateway_reference: tenders.upiRef },
+      { tender_type: "CHEQUE", amount: tenders.cheque || 0, cheque_no: tenders.chequeNo, gateway_reference: tenders.chequeNo, bank_name: tenders.chequeBank },
+      { tender_type: "CREDIT_NOTE", amount: tenders.creditNote, gateway_reference: tenders.creditNoteNo }
+    ].filter(row => row.amount > 0);
+    if (tenderRows.length > 0) {
+      try {
+        await apiFetchV1("/payments/process", {
+          method: "POST",
+          body: JSON.stringify({
+            reference_doc_type: "POS_BILL",
+            reference_doc_id: saved.id,
+            tenders: tenderRows,
+            idempotency_key: `POS-${saved.id}`,
+            branch_id: saved.branch_id || "MAIN"
+          })
+        });
+      } catch (paymentError: any) {
+        onNotification?.("Payment Not Recorded", paymentError.message || "The bill was saved but its payment details were not.", "error");
+      }
+    }
+
     const billRecord = {
       billNo: generatedBillNo,
       billDate: new Date().toISOString().slice(0, 10),
@@ -697,7 +782,7 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
     setShowSettlementModal(false);
     setShowReceiptModal(true);
     setCartItems([]);
-    setBillDocNumber((prev) => (parseInt(prev) + 1).toString());
+    setBillDocNumber(String(parseInt(billNumber) + 1));
     onNotification?.("Invoice Finalized", `Invoice ${generatedBillNo} generated successfully!`, "success");
   };
 
@@ -799,236 +884,135 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
     return () => window.removeEventListener("keydown", handleGlobalShortcuts);
   }, [cartItems, netPayableAmount, customer, salesStaff, billDocPrefix, billDocNumber]);
 
-  const emptyRowsCount = Math.max(0, 10 - cartItems.length);
+
+  // --- Presentation-only helpers (no effect on billing logic) ---
+  const fieldLabel = "block text-xs font-medium text-neutral-500 dark:text-neutral-400 mb-1";
+  const fieldInput =
+    "h-9 w-full rounded-[18px] border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 px-3 text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 outline-none focus:border-[#171717] dark:focus:border-neutral-300 transition";
+  const fieldReadonly =
+    "h-9 w-full rounded-[18px] border border-transparent bg-neutral-100 dark:bg-neutral-800 px-3 text-sm text-neutral-700 dark:text-neutral-300 outline-none tabular-nums";
+  const quietBtn =
+    "h-8 px-3 rounded-[18px] text-[13px] font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-800 flex items-center gap-1.5 transition disabled:opacity-40 disabled:hover:bg-transparent";
+  const menuItem =
+    "w-full flex items-center justify-between gap-6 px-3 py-2 text-[13px] text-left text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 rounded-lg";
+  const kbdHint = "text-[11px] text-neutral-400";
+  const money = (n: number) => `₹${n.toFixed(2)}`;
+  const anyTaxInclusive = cartItems.some(it => it.isTaxInclusive ?? !isB2B);
+  const taxableValue = Math.max(0, exactBillAmount - totalTaxAmount);
+  const lineSqft = (item: ProPosCartItem): number | null => {
+    if (item.sqftRequested && item.sqftRequested > 0) return item.sqftRequested;
+    const perBox = catalog[item.sku]?.sqftPerBox;
+    return perBox && perBox > 0 ? item.qty * perBox : null;
+  };
+  const closeMenu = () => setShowMoreMenu(false);
 
   return (
-    <div className="h-full flex flex-col bg-[#f8f9fa] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] overflow-hidden font-sans select-none">
-      
-      {/* ========================================================================= */}
-      {/* 0. POS ACTIVITIES TOOLBAR RIBBON (Alt+1, Alt+2, Alt+3, Alt+5, Alt+6, etc.) */}
-      {/* ========================================================================= */}
-      <div className="bg-[#edeae1] dark:bg-[#131b2e] px-4 py-1.5 border-b border-[#c4c5d5] dark:border-[#444653] flex flex-wrap items-center justify-between gap-2 shrink-0">
-        
-        {/* Left: Standard POS Activities Buttons */}
-        <div className="flex items-center gap-1.5">
-          
-          {/* Alt+1: New Bill */}
-          <button
-            type="button"
-            onClick={handleNewBill}
-            className={`px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-2xs border ${
-              activeActivity === "BILLING"
-                ? "bg-[#00288e] text-white border-[#00288e]"
-                : "bg-white dark:bg-[#2d3133] border-[#c4c5d5] text-[#191c1d] dark:text-white hover:bg-[#f3f4f5]"
-            }`}
-            title="Create a new bill [Alt+1]"
-          >
-            <FilePlus size={13} />
-            <span>New Bill</span>
-            <kbd className="text-[10px] opacity-80 font-mono">[Alt+1]</kbd>
-          </button>
+    <div className="h-full flex flex-col bg-neutral-50 dark:bg-[#141414] text-neutral-900 dark:text-neutral-100 overflow-hidden font-sans">
 
-          {/* Alt+2: Void / Cancel */}
-          <button
-            type="button"
-            onClick={() => setShowCancelModal(true)}
-            className="px-2.5 py-1 bg-white dark:bg-[#2d3133] border border-[#ba1a1a]/40 text-[#ba1a1a] hover:bg-[#ffdad6]/50 rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            title="Void / cancel a bill [Alt+2]"
-          >
-            <ShieldAlert size={13} />
-            <span>Cancel Bill</span>
-            <kbd className="text-[10px] opacity-80 font-mono">[Alt+2]</kbd>
-          </button>
-
-          {/* Alt+3: Sales Return with Ref */}
-          <button
-            type="button"
-            onClick={() => {
-              setActiveActivity("RETURN");
-              setShowReturnModal(true);
-            }}
-            className="px-2.5 py-1 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] hover:bg-[#f3f4f5] rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            title="Record sales return with reference [Alt+3]"
-          >
-            <RotateCcw size={13} />
-            <span>Return (Ref)</span>
-            <kbd className="text-[10px] opacity-80 font-mono text-[#00288e]">[Alt+3]</kbd>
-          </button>
-
-          {/* Alt+5: Return without Ref */}
-          <button
-            type="button"
-            onClick={() => {
-              setActiveActivity("RETURN_BLIND");
-              setShowReturnModal(true);
-            }}
-            className="px-2.5 py-1 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] hover:bg-[#f3f4f5] rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            title="Record sales return without reference [Alt+5]"
-          >
-            <RotateCcw size={13} />
-            <span>Return w/o Ref</span>
-            <kbd className="text-[10px] opacity-80 font-mono text-[#00288e]">[Alt+5]</kbd>
-          </button>
-
-          {/* Alt+6: Reprint Document */}
-          <button
-            type="button"
-            onClick={() => setShowReprintModal(true)}
-            className="px-2.5 py-1 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] hover:bg-[#f3f4f5] rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            title="Reprint a bill or sales return document [Alt+6]"
-          >
-            <Printer size={13} />
-            <span>Reprint</span>
-            <kbd className="text-[10px] opacity-80 font-mono text-[#00288e]">[Alt+6]</kbd>
-          </button>
-
-          {/* Alt+D: Cash Movements (Safe Drop & Till Expense) */}
-          <button
-            type="button"
-            onClick={() => setShowCashMovementsModal(true)}
-            className="px-2.5 py-1 bg-[#f0fdf4] dark:bg-[#14532d]/40 border border-[#86efac] text-[#166534] dark:text-[#86efac] hover:bg-[#dcfce7] rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            title="Mid-shift Cash Drop to Safe or Petty Till Expense Disbursal [Alt+D]"
-          >
-            <Vault size={13} />
-            <span>Cash Movements</span>
-            <kbd className="text-[10px] opacity-80 font-mono text-[#166534] dark:text-[#86efac]">[Alt+D]</kbd>
-          </button>
-
-          {/* Alt+Z: Shift Close & Z-Report Reconciliation */}
-          <button
-            type="button"
-            onClick={() => setShowShiftCloseModal(true)}
-            className="px-2.5 py-1 bg-[#fef2f2] dark:bg-[#7f1d1d]/40 border border-[#fca5a5] text-[#991b1b] dark:text-[#fca5a5] hover:bg-[#fee2e2] rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-2xs"
-            title="Perform Physical Denomination Count & Finalize Shift Closeout [Alt+Z]"
-          >
-            <Lock size={13} />
-            <span>Shift Close</span>
-            <kbd className="text-[10px] opacity-80 font-mono text-[#991b1b] dark:text-[#fca5a5]">[Alt+Z]</kbd>
-          </button>
-
-        </div>
-
-        {/* Right: Totals Toggle (F9) and Hotkeys Reference (Alt+H) */}
-        <div className="flex items-center gap-1.5">
-          
-          <button
-            type="button"
-            onClick={() => setShowTotalsPanel(!showTotalsPanel)}
-            className={`px-2.5 py-1 rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-2xs border ${
-              showTotalsPanel
-                ? "bg-[#dde1ff] text-[#00288e] border-[#00288e]"
-                : "bg-white dark:bg-[#2d3133] border-[#c4c5d5] text-[#565e74]"
-            }`}
-            title="Display total values in bill [F9]"
-          >
-            <Calculator size={13} />
-            <span>Bill Totals</span>
-            <kbd className="text-[10px] font-mono">[F9]</kbd>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setShowHotkeysModal(true)}
-            className="px-2.5 py-1 bg-[#00288e] text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-2xs hover:bg-[#1e40af]"
-            title="Display list of hot keys [Alt+H]"
-          >
-            <HelpCircle size={13} />
-            <span>Hot Keys</span>
-            <kbd className="text-[10px] font-mono opacity-80">[Alt+H]</kbd>
-          </button>
-
-        </div>
-
-      </div>
-
-      {/* ========================================================================= */}
-      {/* 1. HEADER GROUP: Bill Type, Tx Type, Doc Prefix, Customer, Staff, PDT    */}
-      {/* ========================================================================= */}
-      <section className="bg-white dark:bg-[#131b2e] px-5 py-2.5 border-b border-[#c4c5d5] dark:border-[#444653] shrink-0 flex flex-wrap gap-3 items-end shadow-xs">
-        
-        {/* Bill Type (Product / Service) */}
-        <div className="flex flex-col gap-1 w-28">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-            Bill Type
-          </label>
-          <select
-            value={billType}
-            onChange={e => setBillType(e.target.value as any)}
-            className="border border-[#c4c5d5] dark:border-[#444653] rounded-lg px-2 h-8 text-xs font-semibold bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-white outline-none focus:border-[#00288e]"
-          >
-            <option value="Product">Product</option>
-            <option value="Service">Service</option>
-          </select>
-        </div>
-
-        {/* Transaction Type (Cash / Credit) */}
-        <div className="flex flex-col gap-1 w-24">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-            Tx Type
-          </label>
-          <select
-            value={transactionType}
-            onChange={e => setTransactionType(e.target.value as any)}
-            className={`border rounded-lg px-2 h-8 text-xs font-bold outline-none ${
-              transactionType === "Credit"
-                ? "bg-[#dde1ff] text-[#00288e] border-[#00288e]"
-                : "bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-white border-[#c4c5d5]"
-            }`}
-          >
-            <option value="Cash">Cash</option>
-            <option value="Credit">Credit</option>
-          </select>
-        </div>
-
-        {/* Bill Doc Prefix & Number */}
-        <div className="flex flex-col gap-1 w-32">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-            Doc Prefix / No
-          </label>
-          <div className="flex gap-1">
+      {/* ===================== 1. Bill header: number, date, quick actions ===================== */}
+      <div className="flex items-center justify-between gap-3 px-5 pt-3 pb-2 shrink-0">
+        <div className="flex items-center gap-3 min-w-0">
+          <h2 className="text-[15px] font-semibold tracking-tight">
+            {activeActivity === "BILLING" ? "Counter bill" : "Sales return"}
+          </h2>
+          <div className="flex items-center gap-1.5 text-[13px] text-neutral-500 dark:text-neutral-400">
+            <span>Bill No.</span>
             <input
               type="text"
+              aria-label="Bill prefix"
               value={billDocPrefix}
               onChange={e => setBillDocPrefix(e.target.value)}
-              className="w-12 border border-[#c4c5d5] dark:border-[#444653] rounded-lg px-1 h-8 text-xs font-mono font-bold bg-[#f3f4f5] dark:bg-[#2d3133] text-center outline-none"
+              className="w-12 h-7 rounded-[14px] border border-transparent hover:border-neutral-300 focus:border-[#171717] bg-transparent text-center text-[13px] font-medium text-neutral-800 dark:text-neutral-200 outline-none"
+              title="Bill number prefix"
             />
-            <input
-              type="text"
-              readOnly
-              value={billDocNumber}
-              className="flex-1 border border-[#c4c5d5] dark:border-[#444653] rounded-lg px-2 h-8 text-xs font-mono font-bold bg-[#f3f4f5] dark:bg-[#2d3133] text-[#00288e] dark:text-[#a8b8ff] outline-none"
-            />
+            <span className="font-medium text-neutral-800 dark:text-neutral-200 tabular-nums">{billDocNumber}</span>
+            <span className="mx-1 text-neutral-300">·</span>
+            <span className="tabular-nums">{currentDateTime}</span>
           </div>
         </div>
 
-        {/* Current Date & Time (Readonly) */}
-        <div className="flex flex-col gap-1 w-36">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-            Bill Date &amp; Time
-          </label>
-          <input
-            type="text"
-            readOnly
-            value={currentDateTime}
-            className="border border-[#c4c5d5] dark:border-[#444653] rounded-lg px-2 h-8 text-[11px] font-mono bg-[#f3f4f5] dark:bg-[#2d3133] text-[#565e74] dark:text-[#bec6e0] outline-none"
-          />
-        </div>
+        <div className="flex items-center gap-1">
+          <button type="button" onClick={handleNewBill} className={quietBtn} title="Start a new bill [Alt+1]">
+            <FilePlus size={14} />
+            <span>New bill</span>
+          </button>
+          <button type="button" onClick={handleHoldBill} disabled={cartItems.length === 0} className={quietBtn} title="Hold this bill [Alt+S]">
+            <Pause size={14} />
+            <span>Hold</span>
+          </button>
+          <button type="button" onClick={() => setShowRecallModal(true)} className={quietBtn} title="Recall a held bill [Alt+R]">
+            <History size={14} />
+            <span>Recall{suspendedBills.length > 0 ? ` (${suspendedBills.length})` : ""}</span>
+          </button>
 
-        {/* Customer Code & Name (with F2 Browse Window) */}
-        <div className="flex flex-col gap-1 flex-1 min-w-[240px]">
-          <div className="flex justify-between items-center">
-            <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-              Customer Code &amp; Name
-            </label>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setShowMoreMenu(v => !v)}
+              className={`${quietBtn} ${showMoreMenu ? "bg-neutral-100 dark:bg-neutral-800" : ""}`}
+              aria-haspopup="menu"
+              aria-expanded={showMoreMenu}
+            >
+              <span>More</span>
+              <ChevronDown size={14} />
+            </button>
+            {showMoreMenu && (
+              <>
+                <div className="fixed inset-0 z-30" onClick={closeMenu} />
+                <div role="menu" className="absolute right-0 top-9 z-40 w-72 p-1.5 rounded-xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow-lg">
+                  <button type="button" role="menuitem" className={menuItem} onClick={() => { closeMenu(); setActiveActivity("RETURN"); setShowReturnModal(true); }}>
+                    <span>Sales return (with bill)</span><span className={kbdHint}>Alt+3</span>
+                  </button>
+                  <button type="button" role="menuitem" className={menuItem} onClick={() => { closeMenu(); setActiveActivity("RETURN_BLIND"); setShowReturnModal(true); }}>
+                    <span>Sales return (no bill)</span><span className={kbdHint}>Alt+5</span>
+                  </button>
+                  <button type="button" role="menuitem" className={menuItem} onClick={() => { closeMenu(); setShowReprintModal(true); }}>
+                    <span>Reprint a bill</span><span className={kbdHint}>Alt+6</span>
+                  </button>
+                  <button type="button" role="menuitem" className={menuItem} onClick={() => { closeMenu(); setShowPdtImportModal(true); }}>
+                    <span>Import items from file</span><span className={kbdHint}>Alt+I</span>
+                  </button>
+                  <div className="my-1 border-t border-neutral-100 dark:border-neutral-800" />
+                  <button type="button" role="menuitem" className={menuItem} onClick={() => { closeMenu(); setShowCashMovementsModal(true); }}>
+                    <span>Cash in / out of drawer</span><span className={kbdHint}>Alt+D</span>
+                  </button>
+                  <button type="button" role="menuitem" className={menuItem} onClick={() => { closeMenu(); setShowShiftCloseModal(true); }}>
+                    <span>Close shift</span><span className={kbdHint}>Alt+Z</span>
+                  </button>
+                  <div className="my-1 border-t border-neutral-100 dark:border-neutral-800" />
+                  <button type="button" role="menuitem" className={menuItem} onClick={() => { closeMenu(); setShowTotalsPanel(!showTotalsPanel); }}>
+                    <span>{showTotalsPanel ? "Hide" : "Show"} tax breakup</span><span className={kbdHint}>F9</span>
+                  </button>
+                  <button type="button" role="menuitem" className={menuItem} onClick={() => { closeMenu(); setShowHotkeysModal(true); }}>
+                    <span>Keyboard shortcuts</span><span className={kbdHint}>Alt+H</span>
+                  </button>
+                  <div className="my-1 border-t border-neutral-100 dark:border-neutral-800" />
+                  <button type="button" role="menuitem" className={`${menuItem} !text-red-700 dark:!text-red-400`} onClick={() => { closeMenu(); setShowCancelModal(true); }}>
+                    <span>Cancel a bill</span><span className={kbdHint}>Alt+2</span>
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ===================== 2. Customer & bill details ===================== */}
+      <section className="mx-5 mb-3 px-4 py-3 bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl shrink-0 flex flex-wrap items-end gap-3">
+
+        {/* Customer code & name (F2 browse) */}
+        <div className="flex-1 min-w-[300px]">
+          <div className="flex items-center justify-between mb-1">
+            <label className="text-xs font-medium text-neutral-500 dark:text-neutral-400">Customer</label>
             <button
               type="button"
               onClick={() => setShowCustomerBrowseModal(true)}
-              className="text-[10px] font-bold text-[#00288e] dark:text-[#a8b8ff] hover:underline flex items-center gap-0.5"
+              className="text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:text-[#171717] hover:underline"
             >
               <span>[F2] Browse</span>
             </button>
           </div>
-          <div className="flex gap-1.5">
+          <div className="flex gap-2">
             <input
               type="text"
               name="posCustomerCode"
@@ -1043,7 +1027,7 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
                 }
               }}
               placeholder="Code..."
-              className="w-20 border border-[#c4c5d5] dark:border-[#444653] rounded-lg px-2 h-8 text-xs font-mono font-bold bg-white dark:bg-[#191c1e] outline-none focus:border-[#00288e]"
+              className={`${fieldInput} !w-24`}
             />
             <input
               type="text"
@@ -1059,250 +1043,87 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
                 }
               }}
               placeholder="Customer Name..."
-              className="flex-1 border border-[#c4c5d5] dark:border-[#444653] rounded-lg px-2.5 h-8 text-xs font-semibold bg-white dark:bg-[#191c1e] outline-none focus:border-[#00288e]"
+              className={`${fieldInput} flex-1 font-medium`}
             />
           </div>
         </div>
 
-        {/* Live Tax Classification Badge */}
-        <div className="flex flex-col gap-1 w-44">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-            Tax Jurisdiction
-          </label>
-          <div className={`h-8 px-2 rounded-lg border flex items-center justify-between text-[11px] font-bold ${
-            isB2B
-              ? "bg-[#dde1ff] border-[#00288e] text-[#00288e] dark:bg-[#1e293b] dark:border-[#3b82f6] dark:text-[#93c5fd]"
-              : "bg-[#dcfce7] border-[#16a34a] text-[#15803d] dark:bg-[#064e3b] dark:border-[#10b981] dark:text-[#6ee7b7]"
-          }`}>
-            <span className="flex items-center gap-1">
-              <span className={`w-1.5 h-1.5 rounded-full ${isB2B ? "bg-[#00288e] dark:bg-[#60a5fa]" : "bg-[#16a34a] dark:bg-[#34d399]"}`} />
-              {isB2B ? "B2B" : "B2C"}
-            </span>
-            <span className="font-mono text-[10px]">
-              {isInterstate ? `IGST (${posStateCode})` : `CGST+SGST (${posStateCode})`}
-            </span>
+        {/* GST type (read-only, follows the customer) */}
+        <div className="shrink-0">
+          <span className={fieldLabel}>GST type</span>
+          <div className="h-9 px-3 rounded-[18px] bg-neutral-100 dark:bg-neutral-800 flex items-center gap-2 text-[13px] text-neutral-700 dark:text-neutral-300 whitespace-nowrap">
+            <span className="font-medium text-neutral-900 dark:text-neutral-100">{isB2B ? "B2B" : "B2C"}</span>
+            <span className="text-neutral-400">·</span>
+            <span>{isInterstate ? `IGST (${posStateCode})` : `CGST+SGST (${posStateCode})`}</span>
           </div>
         </div>
 
-        {/* Sales Staff ID */}
-        <div className="flex flex-col gap-1 w-28">
-          <label className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-            Sales Staff
-          </label>
+        {/* Bill type */}
+        <div className="w-28">
+          <label className={fieldLabel}>Bill type</label>
+          <select value={billType} onChange={e => setBillType(e.target.value as any)} className={fieldInput}>
+            <option value="Product">Product</option>
+            <option value="Service">Service</option>
+          </select>
+        </div>
+
+        {/* Cash / credit */}
+        <div className="w-28">
+          <label className={fieldLabel}>Sale type</label>
+          <select value={transactionType} onChange={e => setTransactionType(e.target.value as any)} className={fieldInput}>
+            <option value="Cash">Cash</option>
+            <option value="Credit">Credit</option>
+          </select>
+        </div>
+
+        {/* Dispatch location */}
+        <div className="w-44">
+          <label className={fieldLabel}>Dispatch From</label>
+          <select
+            aria-label="Dispatch From"
+            value={dispatchFrom}
+            onChange={e => setDispatchFrom(e.target.value)}
+            className={fieldInput}
+          >
+            <option value="">Default location</option>
+            {locations.map(l => (
+              <option key={l.id} value={l.id}>{l.name}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Salesperson */}
+        <div className="w-36">
+          <label className={fieldLabel}>Salesperson</label>
           <select
             value={salesStaff}
             onChange={e => {
               setSalesStaff(e.target.value);
               setDirectStaff(e.target.value);
             }}
-            className="border border-[#c4c5d5] dark:border-[#444653] rounded-lg px-2 h-8 text-xs font-semibold bg-white dark:bg-[#191c1e] outline-none focus:border-[#00288e]"
+            className={fieldInput}
           >
-            <option value="SM1">SM1</option>
-            <option value="SM2">SM2</option>
-            <option value="SM3">SM3</option>
+            <option value="">Select staff...</option>
+            {salesPeople.map(person => (
+              <option key={person} value={person}>{person}</option>
+            ))}
           </select>
         </div>
-
-        {/* Header Action Buttons (PDT Import, Recall, Hold) */}
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => setShowPdtImportModal(true)}
-            className="h-8 px-2.5 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-white dark:bg-[#2d3133] hover:bg-[#f3f4f5] transition text-xs font-bold flex items-center gap-1 shadow-2xs"
-            title="Import PDT File or Transaction"
-          >
-            <UploadCloud size={13} />
-            <span>Import</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={() => setShowRecallModal(true)}
-            className="h-8 px-2.5 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-[#dde1ff] dark:bg-[#1e40af] text-[#00288e] dark:text-white hover:brightness-105 transition text-xs font-bold flex items-center gap-1 shadow-2xs"
-          >
-            <History size={13} />
-            <span>Recall ({suspendedBills.length})</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={handleHoldBill}
-            disabled={cartItems.length === 0}
-            className="h-8 px-2.5 border border-[#c4c5d5] dark:border-[#444653] rounded-lg bg-white dark:bg-[#2d3133] hover:bg-[#f3f4f5] transition text-xs font-bold flex items-center gap-1 shadow-2xs disabled:opacity-40"
-          >
-            <Pause size={13} />
-            <span>Hold</span>
-          </button>
-
-        </div>
-
       </section>
 
-      {/* ========================================================================= */}
-      {/* 2. DETAIL GROUP: Item Details Grid (Top) + Direct Entry Grid (Bottom)     */}
-      {/* ========================================================================= */}
-      <main className="flex-1 flex flex-col md:flex-row overflow-hidden p-3 gap-3">
-        
-        {/* Left Side: Dual-Grid Workspace (Item Details + Direct Entry) */}
-        <div className="flex-1 bg-white dark:bg-[#131b2e] border border-[#c4c5d5] dark:border-[#444653] rounded-xl overflow-hidden flex flex-col shadow-xs">
-          
-          {/* Top: Item Details Grid (Accepted Items) */}
-          <div className="overflow-auto flex-1 bg-white dark:bg-[#131b2e]">
-            <table className="w-full text-left border-collapse text-xs whitespace-nowrap min-w-[1020px]">
-              <thead className="bg-[#edeae1] dark:bg-[#252836] sticky top-0 z-10 border-b border-[#c4c5d5] dark:border-[#444653] text-[11px] font-bold text-[#444653] dark:text-[#bec6e0]">
-                <tr className="h-8">
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] w-36">Stock No</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653]">Item Description</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right w-24">Rate</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right w-20">Qty</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right w-24">Value</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-center w-24">Disc Code</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right w-20">Disc Qty</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right w-20">Disc. %</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right w-24">Disc.Amt</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right w-24 font-bold text-[#191c1d] dark:text-white">Total</th>
-                  <th className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-center w-24">SalesStaff</th>
-                  <th className="px-2 text-center w-10">Del</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133] font-mono text-[11px]">
-                {cartItems.map((item, idx) => {
-                  const isSelected = selectedRowIndex === idx;
-                  return (
-                    <tr
-                      key={item.id}
-                      onClick={() => setSelectedRowIndex(idx)}
-                      className={`h-7 cursor-pointer transition ${
-                        isSelected
-                          ? "bg-[#ffffcc] dark:bg-[#3a3a1a] text-black dark:text-yellow-200 font-semibold"
-                          : "hover:bg-[#f8f9fa] dark:hover:bg-[#1d222e]"
-                      }`}
-                    >
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] font-bold">
-                        {item.sku}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] font-sans font-medium truncate max-w-[280px]">
-                        {item.name}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right">
-                        {item.unitPrice.toFixed(2)}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right font-bold">
-                        {item.qty.toFixed(2)}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right">
-                        {(item.unitPrice * item.qty).toFixed(2)}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-center">
-                        <span className="font-bold text-[10px]">{item.discCode || "ILD"}</span>
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right font-bold text-[#00288e] dark:text-[#a8b8ff]">
-                        {(item.discQty !== undefined ? item.discQty : item.qty).toFixed(2)}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right">
-                        {item.discountPct.toFixed(2)}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right font-bold text-[#ba1a1a]">
-                        {item.discountAmt.toFixed(2)}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-right font-bold">
-                        {item.lineTotal.toFixed(2)}
-                      </td>
-                      <td className="px-3 border-r border-[#c4c5d5] dark:border-[#444653] text-center">
-                        {item.salesStaff}
-                      </td>
-                      <td className="px-2 text-center">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleRemoveItem(item.id);
-                          }}
-                          className="text-[#ba1a1a] hover:bg-[#ffdad6] p-0.5 rounded transition"
-                          title="Remove Row"
-                        >
-                          <Trash2 size={11} />
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
+      {/* ===================== 3. Item entry + bill lines | Totals & pay ===================== */}
+      <main className="flex-1 min-h-0 flex gap-3 px-5 pb-3">
 
-                {/* Empty Filler Rows */}
-                {Array.from({ length: emptyRowsCount }).map((_, i) => (
-                  <tr key={`empty-${i}`} className="h-7 border-b border-[#eceef0] dark:border-[#2d3133]">
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td className="border-r border-[#c4c5d5] dark:border-[#444653]"></td>
-                    <td></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {/* Left: add item + bill lines */}
+        <div className="flex-1 min-w-0 flex flex-col bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl overflow-hidden">
 
-          {/* Bottom: Direct Entry Grid Header & Input Strip */}
-          <div className="border-t-2 border-[#a4a5b5] dark:border-[#5c5d6c] bg-[#edeae1] dark:bg-[#252836] shrink-0 shadow-sm relative">
-            
-            {/* Live Selected Item Multi-Attribute Inspection Ribbon */}
-            {selectedProductMeta && (
-              <div className="bg-[#e8edff] dark:bg-[#1a233b] border-b border-[#c4c5d5] dark:border-[#3b4252] px-3 py-1 flex items-center justify-between text-[11px] font-sans">
-                <div className="flex items-center gap-3 overflow-x-auto text-[#00288e] dark:text-[#93c5fd]">
-                  <span className="font-bold flex items-center gap-1">
-                    <Barcode size={13} /> {selectedProductMeta.barcode}
-                  </span>
-                  <span>â€¢</span>
-                  <span><strong>Stock/SKU:</strong> {selectedProductMeta.stockNo || selectedProductMeta.sku}</span>
-                  <span>â€¢</span>
-                  <span><strong>Stock:</strong> <span className="font-bold font-mono">{selectedProductMeta.stockQty} {selectedProductMeta.uom}</span></span>
-                  <span>â€¢</span>
-                  <span><strong>MRP:</strong> â‚¹{selectedProductMeta.mrp.toFixed(2)}</span>
-                  <span>â€¢</span>
-                  <span><strong>Cost:</strong> â‚¹{selectedProductMeta.costPrice.toFixed(2)}</span>
-                  <span>â€¢</span>
-                  <span><strong>Size/Color:</strong> {selectedProductMeta.size}/{selectedProductMeta.color}</span>
-                  <span>â€¢</span>
-                  <span><strong>Brand:</strong> {selectedProductMeta.brand}</span>
-                  <span>â€¢</span>
-                  <span><strong>HSN:</strong> {selectedProductMeta.hsnCode} ({selectedProductMeta.gstPercentage}%)</span>
-                </div>
-                <button 
-                  type="button" 
-                  onClick={() => setSelectedProductMeta(null)}
-                  className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 text-xs px-1"
-                  title="Dismiss inspector"
-                >
-                  âœ•
-                </button>
-              </div>
-            )}
+          {/* Add item row */}
+          <div className="px-4 pt-3 pb-3 border-b border-neutral-200 dark:border-neutral-800 shrink-0">
+            <div className="flex flex-wrap items-end gap-2">
 
-            {/* Direct Entry Header Row (Exact Column Headers) */}
-            <div className="grid grid-cols-12 text-[11px] font-bold text-[#444653] dark:text-[#bec6e0] border-b border-[#c4c5d5] dark:border-[#444653] py-1 px-1 bg-[#e4e1d7] dark:bg-[#1d202d] min-w-[1020px]">
-              <div className="col-span-2 px-2 border-r border-[#c4c5d5] dark:border-[#444653]">Barcode / Scan</div>
-              <div className="col-span-2 px-2 border-r border-[#c4c5d5] dark:border-[#444653]">Stock No / SKU</div>
-              <div className="col-span-2 px-2 border-r border-[#c4c5d5] dark:border-[#444653]">Item Description</div>
-              <div className="col-span-1 px-2 border-r border-[#c4c5d5] dark:border-[#444653] text-right">Rate</div>
-              <div className="col-span-1 px-2 border-r border-[#c4c5d5] dark:border-[#444653] text-right">Qty</div>
-              <div className="col-span-1 px-2 border-r border-[#c4c5d5] dark:border-[#444653] text-right">Value</div>
-              <div className="col-span-1 px-2 border-r border-[#c4c5d5] dark:border-[#444653] text-center">Disc Code</div>
-              <div className="col-span-1 px-2 border-r border-[#c4c5d5] dark:border-[#444653] text-right text-[#00288e] dark:text-[#a8b8ff]">Disc Qty</div>
-              <div className="col-span-1 px-2 border-r border-[#c4c5d5] dark:border-[#444653] text-right">Disc. %</div>
-            </div>
-
-            {/* Direct Entry Interactive Inputs */}
-            <div className="grid grid-cols-12 p-1.5 gap-1.5 items-center bg-[#edeae1] dark:bg-[#252836] min-w-[1020px]">
-              
-              {/* Barcode No Input with Live Typeahead */}
-              <div className="col-span-2 relative">
+              {/* Barcode with live typeahead */}
+              <div className="relative w-32">
+                <label className={fieldLabel}>Barcode</label>
                 <input
                   ref={directBarcodeRef}
                   type="text"
@@ -1312,11 +1133,11 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
                     handleItemLiveSearch(e.target.value, "barcode");
                   }}
                   onKeyDown={e => handleItemInputKeyDown(e, "barcode")}
-                  placeholder="Scan Barcode No..."
-                  className="w-full h-8 px-2 bg-white dark:bg-[#131b2e] border-2 border-blue-600/60 dark:border-blue-500/60 rounded text-xs font-mono font-bold outline-none focus:border-[#00288e] focus:ring-1 focus:ring-[#00288e]"
+                  placeholder="Scan..."
+                  className={fieldInput}
                 />
                 {activeSearchField === "barcode" && (
-                  <SmritiItemTypeaheadDropdown
+                  <TileFlowItemTypeaheadDropdown
                     isOpen={isProductSearchOpen}
                     items={productSuggestions}
                     selectedIndex={selectedSuggestionIdx}
@@ -1329,8 +1150,9 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
                 )}
               </div>
 
-              {/* Stock No / SKU Input with Live Typeahead */}
-              <div className="col-span-2 relative">
+              {/* Item code (Stock No / SKU) with live typeahead */}
+              <div className="relative w-40">
+                <label className={fieldLabel}>Item code</label>
                 <input
                   ref={directStockNoRef}
                   type="text"
@@ -1341,10 +1163,10 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
                   }}
                   onKeyDown={e => handleItemInputKeyDown(e, "stockNo")}
                   placeholder="Stock No / SKU..."
-                  className="w-full h-8 px-2 bg-white dark:bg-[#131b2e] border border-[#a4a5b5] dark:border-[#5c5d6c] rounded text-xs font-mono font-bold outline-none focus:border-[#00288e] focus:ring-1 focus:ring-[#00288e]"
+                  className={`${fieldInput} font-medium`}
                 />
                 {activeSearchField === "stockNo" && (
-                  <SmritiItemTypeaheadDropdown
+                  <TileFlowItemTypeaheadDropdown
                     isOpen={isProductSearchOpen}
                     items={productSuggestions}
                     selectedIndex={selectedSuggestionIdx}
@@ -1357,306 +1179,391 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
                 )}
               </div>
 
-              {/* Item Description Input */}
-              <div className="col-span-2">
+              {/* Item name */}
+              <div className="flex-1 min-w-[140px]">
+                <label className={fieldLabel}>Item name</label>
                 <input
                   type="text"
                   value={directDescription}
                   onChange={e => setDirectDescription(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
                   placeholder="Item Description..."
-                  className="w-full h-8 px-2 bg-white dark:bg-[#131b2e] border border-[#a4a5b5] dark:border-[#5c5d6c] rounded text-xs font-sans outline-none focus:border-[#00288e]"
+                  className={fieldInput}
                 />
               </div>
 
-              {/* Rate Input */}
-              <div className="col-span-1">
-                <input
-                  type="text"
-                  value={directRate}
-                  onChange={e => handleRateOrQtyChange(e.target.value, directQty)}
-                  onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
-                  className="w-full h-8 px-1.5 bg-white dark:bg-[#131b2e] border border-[#a4a5b5] dark:border-[#5c5d6c] rounded text-xs font-mono font-bold text-right outline-none focus:border-[#00288e]"
-                />
-              </div>
-
-              {/* Qty Input */}
-              <div className="col-span-1">
+              {/* Qty (boxes) */}
+              <div className="w-[72px]">
+                <label className={fieldLabel}>Qty (boxes)</label>
                 <input
                   type="text"
                   value={directQty}
                   onChange={e => handleRateOrQtyChange(directRate, e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
-                  className="w-full h-8 px-1.5 bg-white dark:bg-[#131b2e] border border-[#a4a5b5] dark:border-[#5c5d6c] rounded text-xs font-mono font-bold text-right outline-none focus:border-[#00288e]"
+                  className={`${fieldInput} text-right tabular-nums`}
                 />
               </div>
 
-              {/* Computed Value (Readonly) */}
-              <div className="col-span-1">
+              {/* Sq.Ft. converts to whole boxes */}
+              <div className="w-20">
+                <label className={fieldLabel}>Sq.Ft</label>
                 <input
-                  type="text"
-                  readOnly
-                  value={directValue.toFixed(2)}
-                  className="w-full h-8 px-1.5 bg-[#e4e1d7] dark:bg-[#1d202d] border border-[#a4a5b5] dark:border-[#5c5d6c] rounded text-xs font-mono text-right text-gray-700 dark:text-gray-300 outline-none"
-                />
-              </div>
-
-              {/* Disc Code Select */}
-              <div className="col-span-1">
-                <select
-                  value={directDiscCode}
-                  onChange={e => setDirectDiscCode(e.target.value)}
-                  className="w-full h-8 px-1 bg-white dark:bg-[#131b2e] border border-[#a4a5b5] dark:border-[#5c5d6c] rounded text-[11px] font-bold outline-none focus:border-[#00288e]"
-                >
-                  <option value="ILD">ILD</option>
-                  <option value="B2G1">B2G1</option>
-                  <option value="SCHEME">SCHEME</option>
-                  <option value="NONE">NONE</option>
-                </select>
-              </div>
-
-              {/* Disc Qty Input (Drives Discount Eligible Units!) */}
-              <div className="col-span-1">
-                <input
-                  type="text"
-                  value={directDiscQty}
-                  onChange={e => handleDiscQtyChange(e.target.value)}
+                  type="number"
+                  min="0"
+                  step="any"
+                  value={directSqft}
+                  onChange={e => {
+                    const value = e.target.value;
+                    setDirectSqft(value);
+                    const known = catalog[directStockNo.trim()];
+                    const sqft = parseFloat(value);
+                    if (known?.sqftPerBox > 0 && sqft > 0) {
+                      handleRateOrQtyChange(
+                        directRate || known.price.toFixed(2),
+                        String(Math.ceil(sqft / known.sqftPerBox))
+                      );
+                    }
+                  }}
                   onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
-                  placeholder="Disc Qty"
-                  className="w-full h-8 px-1.5 bg-white dark:bg-[#131b2e] border-2 border-[#00288e] rounded text-xs font-mono font-bold text-right text-[#00288e] dark:text-[#a8b8ff] outline-none"
-                  title="Quantity eligible for discount"
+                  placeholder="Sq.Ft"
+                  className={`${fieldInput} text-right tabular-nums [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none`}
                 />
               </div>
 
-              {/* Disc % Input (Updates Disc.Amt) */}
-              <div className="col-span-1">
+              {/* Rate */}
+              <div className="w-24">
+                <label className={fieldLabel}>Rate</label>
+                <input
+                  type="text"
+                  value={directRate}
+                  onChange={e => handleRateOrQtyChange(e.target.value, directQty)}
+                  onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
+                  className={`${fieldInput} text-right tabular-nums`}
+                />
+              </div>
+
+              {/* Disc % */}
+              <div className="w-[68px]">
+                <label className={fieldLabel}>Disc %</label>
                 <input
                   type="text"
                   value={directDiscPct}
                   onChange={e => handleDiscPctChange(e.target.value)}
                   onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
                   placeholder="%"
-                  className="w-full h-8 px-1.5 bg-white dark:bg-[#131b2e] border border-[#a4a5b5] dark:border-[#5c5d6c] rounded text-xs font-mono font-bold text-right outline-none focus:border-[#00288e]"
+                  className={`${fieldInput} text-right tabular-nums`}
                 />
               </div>
 
-              {/* Disc.Amt Input (Updates Disc. %) */}
-              <div className="col-span-1">
-                <input
-                  type="text"
-                  value={directDiscAmtInput}
-                  onChange={e => handleDiscAmtChange(e.target.value)}
-                  onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
-                  placeholder="â‚¹ Amt"
-                  className="w-full h-8 px-1.5 bg-white dark:bg-[#131b2e] border border-[#00288e] rounded text-xs font-mono font-bold text-right text-[#ba1a1a] outline-none focus:ring-1 focus:ring-[#00288e]"
-                />
+              {/* Rarely used discount fields (More columns) */}
+              {showMoreColumns && (
+                <>
+                  <div className="w-24">
+                    <label className={fieldLabel}>Disc code</label>
+                    <select
+                      value={directDiscCode}
+                      onChange={e => setDirectDiscCode(e.target.value)}
+                      className={fieldInput}
+                    >
+                      <option value="ILD">ILD</option>
+                      <option value="B2G1">B2G1</option>
+                      <option value="SCHEME">SCHEME</option>
+                      <option value="NONE">NONE</option>
+                    </select>
+                  </div>
+                  <div className="w-20">
+                    <label className={fieldLabel}>Disc qty</label>
+                    <input
+                      type="text"
+                      value={directDiscQty}
+                      onChange={e => handleDiscQtyChange(e.target.value)}
+                      onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
+                      placeholder="Disc Qty"
+                      className={`${fieldInput} text-right tabular-nums`}
+                      title="Quantity eligible for discount"
+                    />
+                  </div>
+                  <div className="w-24">
+                    <label className={fieldLabel}>Disc amt</label>
+                    <input
+                      type="text"
+                      value={directDiscAmtInput}
+                      onChange={e => handleDiscAmtChange(e.target.value)}
+                      onKeyDown={e => e.key === "Enter" && handleAcceptDirectEntryItem()}
+                      placeholder="₹ Amt"
+                      className={`${fieldInput} text-right tabular-nums`}
+                    />
+                  </div>
+                  <div className="w-24">
+                    <span className={fieldLabel}>Value</span>
+                    <input type="text" readOnly tabIndex={-1} value={directValue.toFixed(2)} className={`${fieldReadonly} text-right`} />
+                  </div>
+                </>
+              )}
+
+              {/* Line amount (read-only) */}
+              <div className="w-24">
+                <span className={fieldLabel}>Amount</span>
+                <input type="text" readOnly tabIndex={-1} value={directTotal.toFixed(2)} className={`${fieldReadonly} text-right font-medium`} />
               </div>
 
-              {/* Computed Net Total (Readonly) */}
-              <div className="col-span-1">
-                <input
-                  type="text"
-                  readOnly
-                  value={directTotal.toFixed(2)}
-                  className="w-full h-8 px-1.5 bg-[#e4e1d7] dark:bg-[#1d202d] border border-[#a4a5b5] dark:border-[#5c5d6c] rounded text-xs font-mono font-bold text-right text-[#191c1d] dark:text-white outline-none"
-                />
-              </div>
+              {/* Accept item */}
+              <button
+                type="button"
+                onClick={handleAcceptDirectEntryItem}
+                className="h-9 px-4 rounded-[18px] bg-[#171717] hover:bg-neutral-700 text-white text-sm font-medium flex items-center gap-1.5 transition active:scale-95"
+                title="Add this item to the bill [Enter]"
+              >
+                <CornerDownLeft size={14} />
+                <span>Accept</span>
+              </button>
+            </div>
 
-              {/* Action: Accept Item */}
-              <div className="col-span-1 flex items-center gap-1">
+            {/* Selected item details */}
+            {selectedProductMeta && (
+              <div className="mt-2 flex items-center justify-between gap-3 text-xs text-neutral-500 dark:text-neutral-400">
+                <div className="flex items-center gap-x-3 gap-y-0.5 flex-wrap min-w-0">
+                  <span className="flex items-center gap-1 text-neutral-700 dark:text-neutral-300">
+                    <Barcode size={12} /> {selectedProductMeta.barcode}
+                  </span>
+                  <span>In stock: <span className="text-neutral-800 dark:text-neutral-200 font-medium">{selectedProductMeta.stockQty} {selectedProductMeta.uom}</span></span>
+                  <span>MRP {money(selectedProductMeta.mrp)}</span>
+                  <span>Cost {money(selectedProductMeta.costPrice)}</span>
+                  <span>{selectedProductMeta.size} / {selectedProductMeta.color}</span>
+                  <span>{selectedProductMeta.brand}</span>
+                  <span>HSN {selectedProductMeta.hsnCode} ({selectedProductMeta.gstPercentage}%)</span>
+                </div>
                 <button
                   type="button"
-                  onClick={handleAcceptDirectEntryItem}
-                  className="w-full h-8 bg-[#00288e] hover:bg-[#1e40af] text-white text-xs font-bold rounded flex items-center justify-center gap-1 shadow-xs transition active:scale-95"
-                  title="Accept into Item Details Grid [Enter]"
+                  onClick={() => setSelectedProductMeta(null)}
+                  className="p-1 rounded-full text-neutral-400 hover:text-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800"
+                  title="Hide item details"
                 >
-                  <CornerDownLeft size={13} />
-                  <span>Accept</span>
+                  <X size={12} />
                 </button>
               </div>
-
-            </div>
-
+            )}
           </div>
 
+          {/* Bill lines */}
+          <div className="flex-1 min-h-0 overflow-auto">
+            <table className="w-full text-left border-collapse text-sm whitespace-nowrap">
+              <thead className="sticky top-0 z-10 bg-white dark:bg-neutral-900 text-xs font-medium text-neutral-500 dark:text-neutral-400">
+                <tr className="h-9 border-b border-neutral-200 dark:border-neutral-800">
+                  <th className="pl-4 pr-2 font-medium w-10">#</th>
+                  <th className="px-2 font-medium">Item code</th>
+                  <th className="px-2 font-medium w-full">Item name</th>
+                  <th className="px-2 font-medium text-right">Qty (boxes)</th>
+                  <th className="px-2 font-medium text-right">Sq.Ft</th>
+                  <th className="px-2 font-medium text-right">Rate</th>
+                  {showMoreColumns && (
+                    <>
+                      <th className="px-2 font-medium text-right">Value</th>
+                      <th className="px-2 font-medium text-center">Disc code</th>
+                      <th className="px-2 font-medium text-right">Disc qty</th>
+                    </>
+                  )}
+                  <th className="px-2 font-medium text-right">Disc %</th>
+                  {showMoreColumns && <th className="px-2 font-medium text-right">Disc amt</th>}
+                  <th className="px-2 font-medium text-right">GST %</th>
+                  <th className="px-2 font-medium text-right">Amount</th>
+                  {showMoreColumns && <th className="px-2 font-medium">Salesperson</th>}
+                  <th className="pl-1 pr-3 text-right">
+                    <button
+                      type="button"
+                      onClick={() => setShowMoreColumns(v => !v)}
+                      className="text-xs font-medium text-neutral-500 hover:text-[#171717] dark:hover:text-white"
+                      title="Show or hide discount code, discount qty, discount amount and salesperson columns"
+                    >
+                      {showMoreColumns ? "Fewer columns" : "More columns"}
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="tabular-nums">
+                {cartItems.map((item, idx) => {
+                  const isSelected = selectedRowIndex === idx;
+                  const sqft = lineSqft(item);
+                  return (
+                    <tr
+                      key={item.id}
+                      onClick={() => setSelectedRowIndex(idx)}
+                      className={`h-10 border-b border-neutral-100 dark:border-neutral-800 cursor-pointer transition ${
+                        isSelected
+                          ? "bg-neutral-100 dark:bg-neutral-800"
+                          : "hover:bg-neutral-50 dark:hover:bg-neutral-800/60"
+                      }`}
+                    >
+                      <td className="pl-4 pr-2 text-neutral-400">{idx + 1}</td>
+                      <td className="px-2 font-medium">{item.sku}</td>
+                      <td className="px-2 truncate max-w-[260px]" title={item.name}>{item.name}</td>
+                      <td className="px-2 text-right font-medium">{item.qty.toFixed(2)}</td>
+                      <td className="px-2 text-right text-neutral-600 dark:text-neutral-400">{sqft !== null ? sqft.toFixed(2) : "—"}</td>
+                      <td className="px-2 text-right">{item.unitPrice.toFixed(2)}</td>
+                      {showMoreColumns && (
+                        <>
+                          <td className="px-2 text-right">{(item.unitPrice * item.qty).toFixed(2)}</td>
+                          <td className="px-2 text-center text-xs">{item.discCode || "—"}</td>
+                          <td className="px-2 text-right">{(item.discQty !== undefined ? item.discQty : item.qty).toFixed(2)}</td>
+                        </>
+                      )}
+                      <td className="px-2 text-right">{item.discountPct > 0 ? item.discountPct.toFixed(2) : "—"}</td>
+                      {showMoreColumns && <td className="px-2 text-right">{item.discountAmt.toFixed(2)}</td>}
+                      <td className="px-2 text-right text-neutral-600 dark:text-neutral-400">{(item.taxPct ?? 18)}%</td>
+                      <td className="px-2 text-right font-semibold">{item.lineTotal.toFixed(2)}</td>
+                      {showMoreColumns && <td className="px-2 text-neutral-600 dark:text-neutral-400">{item.salesStaff}</td>}
+                      <td className="pl-1 pr-3 text-right">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleRemoveItem(item.id);
+                          }}
+                          className="p-1.5 rounded-full text-neutral-400 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-950/40 transition"
+                          title="Remove line"
+                          aria-label={`Remove ${item.sku}`}
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            {cartItems.length === 0 && (
+              <div className="h-[calc(100%-36px)] min-h-[120px] flex flex-col items-center justify-center gap-1 text-neutral-400">
+                <Barcode size={22} strokeWidth={1.5} />
+                <p className="text-sm">Scan a barcode or type an item code to start the bill</p>
+              </div>
+            )}
+          </div>
+
+          {/* Shortcut hint */}
+          <div className="px-4 py-2 border-t border-neutral-100 dark:border-neutral-800 text-xs text-neutral-400 shrink-0 truncate">
+            Shortcuts: F2 customer · F7 exact cash · F8 settle · F9 tax breakup · F10 print &amp; pay · Alt+1 new bill · Alt+S hold · Alt+R recall · Alt+H all shortcuts
+          </div>
         </div>
 
-        {/* Right Side: Exclusive Net Values Summary Panel (Shoper 9 Specification, Toggle with F9) */}
-        {showTotalsPanel && (
-          <div className="w-full md:w-64 bg-white dark:bg-[#131b2e] border border-[#c4c5d5] dark:border-[#444653] rounded-xl p-3 flex flex-col gap-2 shrink-0 shadow-xs">
-            <div className="flex justify-between items-center pb-2 border-b border-[#c4c5d5] dark:border-[#444653]">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-                Description
-              </span>
-              <span className="text-[11px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
-                Net Values
-              </span>
+        {/* Right: totals & payment */}
+        <aside className="w-80 shrink-0 flex flex-col bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 rounded-xl">
+          <div className="px-4 pt-3 pb-2 flex items-baseline justify-between border-b border-neutral-100 dark:border-neutral-800">
+            <span className="text-sm font-semibold">Bill summary</span>
+            <span className="text-xs text-neutral-500 tabular-nums">
+              {totalItemsCount} {totalItemsCount === 1 ? "item" : "items"} · {totalQuantity.toFixed(2)} boxes
+            </span>
+          </div>
+
+          <div className="flex-1 min-h-0 overflow-auto px-4 py-3 space-y-2 text-[13px] tabular-nums">
+            <div className="flex justify-between">
+              <span className="text-neutral-500 dark:text-neutral-400">Sub-total</span>
+              <span>{money(grossSalesValue)}</span>
             </div>
-
-            <div className="space-y-1.5 font-mono text-xs">
-              <div className="flex justify-between items-center">
-                <span className="bg-[#f3f4f5] dark:bg-[#2d3133] px-2 py-0.5 rounded text-[10px] font-bold text-[#565e74]">
-                  Sales
-                </span>
-                <span className="font-bold text-[#191c1d] dark:text-white">
-                  â‚¹{grossSalesValue.toFixed(2)}
-                </span>
+            {itemDiscountsTotal > 0 && (
+              <div className="flex justify-between">
+                <span className="text-neutral-500 dark:text-neutral-400">Discount</span>
+                <span className="text-red-600 dark:text-red-400">-{money(itemDiscountsTotal)}</span>
               </div>
+            )}
+            {showTotalsPanel && (
+              <>
+                <div className="flex justify-between pt-2 border-t border-neutral-100 dark:border-neutral-800">
+                  <span className="text-neutral-500 dark:text-neutral-400">Taxable value</span>
+                  <span>{money(taxableValue)}</span>
+                </div>
+                {isInterstate ? (
+                  <div className="flex justify-between">
+                    <span className="text-neutral-500 dark:text-neutral-400">IGST</span>
+                    <span>{money(totalTaxAmount)}</span>
+                  </div>
+                ) : (
+                  <>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-500 dark:text-neutral-400">CGST</span>
+                      <span>{money(totalTaxAmount / 2)}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-neutral-500 dark:text-neutral-400">SGST</span>
+                      <span>{money(totalTaxAmount / 2)}</span>
+                    </div>
+                  </>
+                )}
+                {anyTaxInclusive && cartItems.length > 0 && (
+                  <p className="text-[11px] text-neutral-400">Rates include GST</p>
+                )}
+              </>
+            )}
+          </div>
 
-              <div className="flex justify-between items-center">
-                <span className="bg-[#f3f4f5] dark:bg-[#2d3133] px-2 py-0.5 rounded text-[10px] font-bold text-[#ba1a1a]">
-                  Discounts
-                </span>
-                <span className="font-bold text-[#ba1a1a]">
-                  -â‚¹{itemDiscountsTotal.toFixed(2)}
-                </span>
+          <div className="px-4 pt-3 pb-4 border-t border-neutral-200 dark:border-neutral-800 space-y-3">
+            {roundOffAmount !== 0 && (
+              <div className="flex justify-between text-[13px] tabular-nums">
+                <span className="text-neutral-500 dark:text-neutral-400">Round-off</span>
+                <span>{roundOffAmount > 0 ? "+" : "-"}{money(Math.abs(roundOffAmount))}</span>
               </div>
-
-              <div className="flex justify-between items-center">
-                <span className="bg-[#f3f4f5] dark:bg-[#2d3133] px-2 py-0.5 rounded text-[10px] font-bold text-[#565e74]">
-                  Sales Tax
-                </span>
-                <span className="font-bold text-[#191c1d] dark:text-white">
-                  â‚¹{totalTaxAmount.toFixed(2)}
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span className="bg-[#f3f4f5] dark:bg-[#2d3133] px-2 py-0.5 rounded text-[10px] font-bold text-[#565e74]">
-                  Addon-Gen
-                </span>
-                <span className="font-bold text-[#191c1d] dark:text-white">
-                  â‚¹0.00
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center pb-2 border-b border-[#eceef0] dark:border-[#444653]">
-                <span className="bg-[#f3f4f5] dark:bg-[#2d3133] px-2 py-0.5 rounded text-[10px] font-bold text-[#ba1a1a]">
-                  Dedns-Gen
-                </span>
-                <span className="font-bold text-[#ba1a1a]">
-                  -â‚¹0.00
-                </span>
-              </div>
-
-              <div className="flex justify-between items-center pt-1 text-sm font-bold text-[#00288e] dark:text-[#a8b8ff]">
-                <span>Net Payable</span>
-                <span className="text-base font-bold">â‚¹{netPayableAmount.toFixed(2)}</span>
-              </div>
+            )}
+            <div className="flex items-end justify-between">
+              <span className="text-[15px] font-semibold text-neutral-700 dark:text-neutral-200">Net Amount</span>
+              <span className="text-[28px] leading-none font-semibold tracking-tight tabular-nums">{money(netPayableAmount)}</span>
             </div>
-          </div>
-        )}
-
-      </main>
-
-      {/* ========================================================================= */}
-      {/* 3. FOOTER GROUP: Totals Dashboard Ribbon + Shortcuts & Fast Tenders      */}
-      {/* ========================================================================= */}
-      <footer className="bg-white dark:bg-[#131b2e] border-t border-[#c4c5d5] dark:border-[#444653] shadow-lg flex flex-col p-3 w-full shrink-0 gap-2.5">
-        
-        {/* Totals KPI Dashboard Ribbon */}
-        <div className="grid grid-cols-2 md:grid-cols-9 gap-1 bg-[#f8f9fa] dark:bg-[#1d222e] border border-[#c4c5d5] dark:border-[#444653] rounded-xl overflow-hidden divide-x divide-[#c4c5d5] dark:divide-[#444653] text-center">
-          
-          <div className="flex flex-col p-1.5 bg-[#f3f4f5] dark:bg-[#191c1e]">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Total Items</span>
-            <span className="text-base font-mono font-bold text-[#191c1d] dark:text-white">{totalItemsCount}</span>
-          </div>
-
-          <div className="flex flex-col p-1.5 bg-[#f3f4f5] dark:bg-[#191c1e]">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Total Qty.</span>
-            <span className="text-base font-mono font-bold text-[#191c1d] dark:text-white">{totalQuantity.toFixed(2)}</span>
-          </div>
-
-          <div className="flex flex-col p-1.5 bg-white dark:bg-[#2d3133] col-span-2 text-right px-4 justify-center">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Sales Value</span>
-            <span className="text-lg font-mono font-bold text-[#191c1d] dark:text-white">â‚¹{grossSalesValue.toFixed(2)}</span>
-          </div>
-
-          <div className="flex flex-col p-1.5 bg-[#f3f4f5] dark:bg-[#191c1e] text-right px-3 justify-center">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#ba1a1a]">Item Disc</span>
-            <span className="text-sm font-mono font-bold text-[#ba1a1a]">-â‚¹{itemDiscountsTotal.toFixed(2)}</span>
-          </div>
-
-          <div className="flex flex-col p-1.5 bg-[#f3f4f5] dark:bg-[#191c1e] text-right px-3 justify-center">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Total Tax</span>
-            <span className="text-sm font-mono font-bold text-[#191c1d] dark:text-white">â‚¹{totalTaxAmount.toFixed(2)}</span>
-          </div>
-
-          <div className="flex flex-col p-1.5 bg-[#f3f4f5] dark:bg-[#191c1e] text-right px-3 justify-center">
-            <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">Addons</span>
-            <span className="text-sm font-mono font-bold text-[#191c1d] dark:text-white">â‚¹0.00</span>
-          </div>
-
-          <div className="flex flex-col p-1.5 bg-[#00288e] text-white col-span-2 text-right px-5 justify-center border-l-4 border-[#1e40af] shadow-inner">
-            <span className="text-[10px] font-bold uppercase tracking-wider opacity-80">Net Amount</span>
-            <span className="text-2xl font-mono font-bold tracking-tight">â‚¹{netPayableAmount.toFixed(2)}</span>
-          </div>
-
-        </div>
-
-        {/* Shortcuts & Action Triggers */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-3">
-          <span className="text-[11px] font-bold text-[#565e74] dark:text-[#bec6e0]">
-            ProPOS Activities: [Alt+1: New Bill, Alt+2: Void, Alt+3: Return, Alt+5: Return w/o Ref, Alt+6: Reprint, Alt+H: Hotkeys, F7: Cash, F8: Settle].
-          </span>
-
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              disabled={cartItems.length === 0}
-              onClick={() => {
-                handleSettlementSuccess({
-                  cash: netPayableAmount,
-                  card: 0,
-                  upi: 0,
-                  giftVoucher: 0,
-                  loyaltyPointsRedeemed: 0,
-                  loyaltyAmount: 0,
-                  creditNote: 0
-                }, 0);
-              }}
-              className="bg-[#e7e8e9] dark:bg-[#2d3133] hover:bg-[#d9dadb] dark:hover:bg-[#3f465c] text-xs font-bold px-4 py-2 rounded-xl transition flex items-center gap-1.5 disabled:opacity-40 active:scale-95"
-            >
-              <span className="text-[#00288e] dark:text-[#a8b8ff] font-mono">[F7]</span>
-              <span>Exact Cash</span>
-            </button>
 
             <button
               type="button"
               disabled={cartItems.length === 0}
               onClick={() => setShowSettlementModal(true)}
-              className="bg-[#dde1ff] dark:bg-[#1e40af] text-[#00288e] dark:text-white hover:brightness-105 text-xs font-bold px-5 py-2 rounded-xl transition flex items-center gap-1.5 disabled:opacity-40 active:scale-95 shadow-xs"
+              className="w-full h-12 rounded-[18px] bg-[#171717] hover:bg-neutral-700 text-white text-[15px] font-semibold flex items-center justify-center gap-2 transition active:scale-[0.98] disabled:opacity-40 disabled:active:scale-100"
             >
-              <span className="font-mono">[F8]</span>
-              <span>Settlement</span>
-            </button>
-
-            <button
-              type="button"
-              disabled={cartItems.length === 0}
-              onClick={() => setShowSettlementModal(true)}
-              className="bg-[#00288e] hover:bg-[#1e40af] text-white text-xs font-bold px-6 py-2 rounded-xl transition flex items-center gap-2 shadow-md disabled:opacity-40 active:scale-95"
-            >
-              <Printer size={15} />
-              <span className="opacity-80 font-mono">[F10]</span>
+              <Printer size={16} />
               <span>Print &amp; Pay</span>
+              <span className="text-xs font-normal opacity-60">F10</span>
             </button>
-          </div>
-        </div>
 
-      </footer>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                type="button"
+                disabled={cartItems.length === 0}
+                onClick={() => {
+                  handleSettlementSuccess({
+                    cash: netPayableAmount,
+                    card: 0,
+                    upi: 0,
+                    giftVoucher: 0,
+                    loyaltyPointsRedeemed: 0,
+                    loyaltyAmount: 0,
+                    creditNote: 0
+                  }, 0);
+                }}
+                className="h-10 rounded-[18px] border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-[13px] font-medium flex items-center justify-center gap-1.5 transition active:scale-[0.98] disabled:opacity-40"
+              >
+                <span>Exact Cash</span>
+                <span className="text-[11px] text-neutral-400">F7</span>
+              </button>
+
+              <button
+                type="button"
+                disabled={cartItems.length === 0}
+                onClick={() => setShowSettlementModal(true)}
+                className="h-10 rounded-[18px] border border-neutral-300 dark:border-neutral-700 hover:bg-neutral-50 dark:hover:bg-neutral-800 text-[13px] font-medium flex items-center justify-center gap-1.5 transition active:scale-[0.98] disabled:opacity-40"
+              >
+                <span>Settlement</span>
+                <span className="text-[11px] text-neutral-400">F8</span>
+              </button>
+            </div>
+          </div>
+        </aside>
+      </main>
 
       {/* ========================================================================= */}
       {/* 4. MODALS & POPUPS (Customer Browse, PDT Import, Recall, Void, Settle)    */}
       {/* ========================================================================= */}
       {showHotkeysModal && (
-        <SmritiProPosHotkeysDlg
+        <TileFlowProPosHotkeysDlg
           onClose={() => setShowHotkeysModal(false)}
         />
       )}
 
       {showReprintModal && (
-        <SmritiProPosReprintDlg
+        <TileFlowProPosReprintDlg
           onReprintBill={(docType, docNo) => {
             onNotification?.("Document Reprinted", `${docType} #${docNo} sent to thermal printer.`, "success");
           }}
@@ -1665,7 +1572,7 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       )}
 
       {showCustomerBrowseModal && (
-        <SmritiCustomerBrowseModal
+        <TileFlowCustomerBrowseModal
           onSelectCustomer={(c) => {
             setCustomer(c);
             onNotification?.("Customer Selected", `${c.name} (${c.code}) loaded.`, "success");
@@ -1675,14 +1582,14 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       )}
 
       {showPdtImportModal && (
-        <SmritiPdtImportDlg
+        <TileFlowPdtImportDlg
           onImportItems={handlePdtImportSuccess}
           onClose={() => setShowPdtImportModal(false)}
         />
       )}
 
       {showSettlementModal && (
-        <SmritiPosSettlement
+        <TileFlowPosSettlement
           netAmount={netPayableAmount}
           customer={customer}
           onSettle={handleSettlementSuccess}
@@ -1691,7 +1598,7 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       )}
 
       {showRecallModal && (
-        <SmritiProPosRecallDlg
+        <TileFlowProPosRecallDlg
           suspendedBills={suspendedBills}
           onRecallBill={handleRecallBill}
           onDeleteSuspendedBill={(id) => setSuspendedBills(prev => prev.filter(b => b.id !== id))}
@@ -1700,7 +1607,7 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       )}
 
       {showCancelModal && (
-        <SmritiProPosCancelDlg
+        <TileFlowProPosCancelDlg
           onCancelBill={(rec) => {
             onNotification?.("Invoice Cancelled", `Bill ${rec.billNo} voided successfully.`, "info");
           }}
@@ -1709,27 +1616,27 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       )}
 
       {showLoyaltyModal && (
-        <SmritiLoyaltyLookupDlgpModal
+        <TileFlowLoyaltyLookupDlgpModal
           currentCustomer={customer}
           onSelectCustomer={(c) => setCustomer(c)}
           onApplyLoyaltyPoints={(pts, amt) => {
-            onNotification?.("Loyalty Redeemed", `${pts} points (â‚¹${amt}) applied to transaction.`, "success");
+            onNotification?.("Loyalty Redeemed", `${pts} points (₹${amt}) applied to transaction.`, "success");
           }}
           onClose={() => setShowLoyaltyModal(false)}
         />
       )}
 
       {showReturnModal && (
-        <SmritiProPosSalesReturnModal
+        <TileFlowProPosSalesReturnModal
           onProcessReturn={(ret) => {
-            onNotification?.("Return Processed", `Credit Note for â‚¹${ret.totalRefund.toFixed(2)} generated.`, "success");
+            onNotification?.("Return Processed", `Credit Note for ₹${ret.totalRefund.toFixed(2)} generated.`, "success");
           }}
           onClose={() => setShowReturnModal(false)}
         />
       )}
 
       {showReceiptModal && lastCompletedBill && (
-        <SmritiProPosTaxInvoiceReceipt
+        <TileFlowProPosTaxInvoiceReceipt
           billNo={lastCompletedBill.billNo}
           billDate={lastCompletedBill.billDate}
           customer={lastCompletedBill.customer}
@@ -1746,12 +1653,12 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       )}
 
       {showCashMovementsModal && (
-        <SmritiProPosCashMovementsModal
+        <TileFlowProPosCashMovementsModal
           shiftId={activeShiftId}
           onSuccess={(mov) => {
             onNotification?.(
               "Movement Recorded",
-              `${mov.type === "CASH_DROP" ? "Cash Drop" : "Till Expense"} of â‚¹${mov.amount.toFixed(2)} posted.`,
+              `${mov.type === "CASH_DROP" ? "Cash Drop" : "Till Expense"} of ₹${mov.amount.toFixed(2)} posted.`,
               "success"
             );
           }}
@@ -1761,7 +1668,7 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
       )}
 
       {showShiftCloseModal && (
-        <SmritiProPosShiftCloseModal
+        <TileFlowProPosShiftCloseModal
           shiftId={activeShiftId}
           onShiftClosed={(zRep) => {
             onNotification?.(
@@ -1779,5 +1686,5 @@ export const SmritiProPosBillinginal: React.FC<SmritiProPosBillinginalProps> = (
   );
 };
 
-export default SmritiProPosBillinginal;
+export default TileFlowProPosBillinginal;
 

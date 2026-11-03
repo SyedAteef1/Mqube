@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-08-24
- * Modified     : 2026-08-24
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   GlobalExportService,
@@ -77,7 +63,7 @@ describe("GlobalExportService & Export Engine Test Suite", () => {
 
   const sampleMetadata: ExportMetadata = {
     moduleTitle: "Item Master Matrix",
-    companyName: "SMRITI Retail Ltd",
+    companyName: "MQube Retail Ltd",
     branchName: "Flagship Store",
     exportedBy: "System Architect",
     searchTerm: "Shoes",
@@ -134,9 +120,9 @@ describe("GlobalExportService & Export Engine Test Suite", () => {
       expect(csv.startsWith("\uFEFF")).toBe(true);
 
       // Verify metadata header
-      expect(csv).toContain("# SMRITI Retail OS - Export Center");
+      expect(csv).toContain("# MQube - Export Center");
       expect(csv).toContain("# Module: Item Master Matrix");
-      expect(csv).toContain("# Company: SMRITI Retail Ltd");
+      expect(csv).toContain("# Company: MQube Retail Ltd");
       expect(csv).toContain("# Search Term: Shoes");
 
       // Verify column header
@@ -187,8 +173,8 @@ describe("GlobalExportService & Export Engine Test Suite", () => {
     it("generates monospaced aligned ASCII table with borders and metadata banner", () => {
       const txt = serializeToAlignedTextTable(sampleColumns, sampleData, sampleMetadata);
 
-      expect(txt).toContain("SMRITI RETAIL OS — EXPORT REPORT: Item Master Matrix");
-      expect(txt).toContain("Company  : SMRITI Retail Ltd");
+      expect(txt).toContain("MQube — EXPORT REPORT: Item Master Matrix");
+      expect(txt).toContain("Company  : MQube Retail Ltd");
       expect(txt).toContain("SKU Code");
       expect(txt).toContain("Product Title");
       expect(txt).toContain("SKU-SHOE-01");
@@ -199,10 +185,10 @@ describe("GlobalExportService & Export Engine Test Suite", () => {
   describe("6. Safe Filename Generation", () => {
     it("generates clean, timestamped filenames without invalid characters", () => {
       const filenameXlsx = generateSafeExportFilename("Item Master / Matrix", "all", "xlsx");
-      expect(filenameXlsx).toMatch(/^SMRITI_Item_Master_Matrix_All_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}\.xlsx$/);
+      expect(filenameXlsx).toMatch(/^TILEFLOW_Item_Master_Matrix_All_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}\.xlsx$/);
 
       const filenameCsv = generateSafeExportFilename("Sales & Tax Invoices", "filtered", "csv");
-      expect(filenameCsv).toMatch(/^SMRITI_Sales_Tax_Invoices_Filtered_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}\.csv$/);
+      expect(filenameCsv).toMatch(/^TILEFLOW_Sales_Tax_Invoices_Filtered_\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}\.csv$/);
 
       const customName = generateSafeExportFilename("Module", "selected", "txt", "My_Custom_Report:2026");
       expect(customName).toBe("My_Custom_Report_2026.txt");
@@ -323,7 +309,7 @@ describe("GlobalExportService & Export Engine Test Suite", () => {
 
     it("serializes dataset into Tab-Separated Values (TSV) for Google Sheets", () => {
       const tsv = serializeToTSV(sampleColumns, sampleData, sampleMetadata);
-      expect(tsv).toContain("SMRITI Retail OS — Item Master Matrix");
+      expect(tsv).toContain("MQube — Item Master Matrix");
       expect(tsv).toContain("SKU Code\tProduct Title\tCategory");
       expect(tsv).toContain("SKU-SHOE-01\tRunning \"Pro\" Shoes, Blue\tFootwear");
       expect(tsv).toContain("TOTAL / SUMMARY");

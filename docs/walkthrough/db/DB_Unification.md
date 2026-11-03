@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.15.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # DB Unification and Security Hotfix Walkthrough — Phase 2 & Phase 0
 
 ## 1. Purpose
-This document details the implementation of Phase 0 (CORS Security Hotfix), Phase 1b (Characterization Test Suite Setup), and Phase 2 (Database Unification) in the SMRITIRetailNX codebase.
+This document details the implementation of Phase 0 (CORS Security Hotfix), Phase 1b (Characterization Test Suite Setup), and Phase 2 (Database Unification) in the TILEFLOWRetailNX codebase.
 
 ## 2. Scope
 The scope includes securing FastAPI CORS headers, setting up the Vitest testing suite, writing unit and integration tests for password hashing, GST calculations, terms text resolution, and authentication routes, unifying the database interface layer (PAL) to postgres, and refactoring six route modules to utilize these repositories.

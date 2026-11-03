@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.2
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { 
@@ -35,16 +10,16 @@ import {
 import QRCode from "qrcode";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { prepareForCanvas } from "../lib/canvasSafeColors.ts";
 import { usePrintEngine } from "../print_engine/print_store.tsx";
-import { SmritiScrollArea } from "./SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.tsx";
 import { getAvailableBankAccounts, DEFAULT_SBI_BANK_ACCOUNT } from "../services/bankStore.ts";
 import { APP_VERSION } from "../config/version.ts";
 
 // Mock datasets corresponding to various tabs
 const MOCK_TAB_DATA: Record<string, any> = {
   pos: {
-    storeName: "SMRITI HyperMarket",
-    storeAddress: "AITDL Plaza, Suite 400, Electronic City",
+    storeName: "MQube HyperMarket",
     gstin: "29AITDL2026C1ZS",
     phone: "+91 800-721-2026",
     receiptNo: "RCPT-2026-99042",
@@ -53,7 +28,7 @@ const MOCK_TAB_DATA: Record<string, any> = {
     customerName: "Siddharth Mallah",
     items: [
       { name: "Organic Roasted Almonds 500g", qty: 2, rate: 12.50 },
-      { name: "SMRITI Premium Basmati Rice 5kg", qty: 1, rate: 24.99 },
+      { name: "MQube Premium Basmati Rice 5kg", qty: 1, rate: 24.99 },
       { name: "Cold Drip Coffee Espresso Blend", qty: 3, rate: 4.50 },
       { name: "Himalayan Pink Rock Salt 1kg", qty: 1, rate: 3.25 }
     ],
@@ -65,7 +40,6 @@ const MOCK_TAB_DATA: Record<string, any> = {
     paymentMethod: "CASH"
   },
   sales: {
-    companyName: "AITDL NETWORKS PVT LTD",
     companyAddress: "Sector 5, HSR Layout, Bengaluru, KA 560102",
     companyGst: "29AABCA2026B1ZX",
     invoiceNo: "SINV-2026-00412",
@@ -87,7 +61,7 @@ const MOCK_TAB_DATA: Record<string, any> = {
     paid: 1298.00
   },
   purchase: {
-    companyName: "SMRITI Retail Distribution Hub",
+    companyName: "MQube Retail Distribution Hub",
     supplierName: "Direct Foods Wholesale Ltd.",
     poNumber: "SPO-2026-0811",
     supplierInvoice: "DF-2026-1192",
@@ -105,13 +79,13 @@ const MOCK_TAB_DATA: Record<string, any> = {
     total: 2391.86
   },
   barcode: {
-    companyName: "SMRITI Retail",
+    companyName: "MQube Retail",
     items: [
-      { name: "SMRITI Premium Blend Tea 250g", rate: 6.99, barcode: "8901058002315" }
+      { name: "MQube Premium Blend Tea 250g", rate: 6.99, barcode: "8901058002315" }
     ]
   },
   default: {
-    companyName: "SMRITI Enterprise Co.",
+    companyName: "MQube Enterprise Co.",
     companyAddress: "101 Main Commercial Block, Suite 12",
     companyGst: "29XXXXX0000X1Z5",
     invoiceNo: "INV-2026-0001",
@@ -254,7 +228,7 @@ const TEMPLATE_METADATA: Record<string, {
     illustration: (
       <div className="w-full h-16 bg-slate-950/80 rounded-lg p-2 border border-slate-800/80 flex flex-col justify-between text-[6px] font-mono select-none relative overflow-hidden">
         <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent"></div>
-        <div className="text-center font-bold text-amber-400 tracking-wider">SMRITI HYPER</div>
+        <div className="text-center font-bold text-amber-400 tracking-wider">MQube HYPER</div>
         <div className="border-t border-dashed border-slate-800 my-0.5"></div>
         <div className="space-y-0.5 text-slate-400">
           <div className="flex justify-between">
@@ -319,17 +293,11 @@ const generateDocHash = (data: any, templateId: string) => {
 };
 
 const SIGNATURE_AUTHORITIES = {
-  smriti: {
-    name: "SMRITI OS Cryptographic Authority v2.1",
-    keyId: "ECDSA_P256_SMRITI_ROOT_CA01",
-    policy: "SMRITI-TRUST-POLICY-2026",
-    stamp: "SMRITI CERTIFIED"
-  },
-  aitdl: {
-    name: "AITDL Net Security Security Layer",
-    keyId: "RSA_4096_AITDL_SECURE_SERVER_04",
-    policy: "AITDL-NET-VERIFY-2.0",
-    stamp: "AITDL SECURE"
+  tileflow: {
+    name: "MQube OS Cryptographic Authority v2.1",
+    keyId: "ECDSA_P256_TILEFLOW_ROOT_CA01",
+    policy: "TILEFLOW-TRUST-POLICY-2026",
+    stamp: "MQube CERTIFIED"
   },
   admin: {
     name: "Local Administrator (Jawahar M.)",
@@ -400,8 +368,8 @@ const WATERMARK_PRESETS = [
     url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='150' viewBox='0 0 400 150'><rect x='20' y='20' width='360' height='110' rx='12' fill='none' stroke='%23d97706' stroke-width='8' opacity='0.8'/><text x='50%' y='50%' font-family='sans-serif' font-weight='900' font-size='56' fill='%23d97706' opacity='0.8' text-anchor='middle' dominant-baseline='middle'>ORIGINAL</text></svg>"
   },
   {
-    id: "smriti",
-    name: "SMRITI OS Logo",
+    id: "tileflow",
+    name: "MQube OS Logo",
     url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'><path d='M100,15 L175,150 L25,150 Z' fill='none' stroke='%233b82f6' stroke-width='12' stroke-linejoin='round' opacity='0.8'/><circle cx='100' cy='95' r='24' fill='%233b82f6' opacity='0.8'/></svg>"
   }
 ];
@@ -426,6 +394,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
 
   const initialTemplateId = getInitialTemplateId(activeTabId);
   const [selectedTemplateId, setSelectedTemplateId] = useState<string>(initialTemplateId);
+  const [verificationAuthority, setVerificationAuthority] = useState<keyof typeof SIGNATURE_AUTHORITIES>("tileflow");
   const [documentData, setDocumentData] = useState<any>(null);
 
   // Sidebar Tab Switch: "layout" | "content"
@@ -459,7 +428,6 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
   // Digital Cryptographic Signature states
   const [isDigitallySigned, setIsDigitallySigned] = useState<boolean>(true);
   const [isExportingPdf, setIsExportingPdf] = useState<boolean>(false);
-  const [verificationAuthority, setVerificationAuthority] = useState<"smriti" | "aitdl" | "admin">("smriti");
   const [sealTheme, setSealTheme] = useState<"emerald" | "indigo" | "amber" | "rose">("emerald");
 
   // React Ref targeting the exact unscaled physical document element for pixel-perfect PDF export
@@ -484,7 +452,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
     const printContent = printPreviewRef.current.innerHTML;
     const popoutWin = window.open("", "_blank", "width=960,height=1020,menubar=no,toolbar=no,location=no,status=no");
     if (!popoutWin) {
-      alert("Pop-up window blocked. Please allow pop-ups for SMRITI Retail OS to view detached preview.");
+      alert("Pop-up window blocked. Please allow pop-ups for MQube to view detached preview.");
       return;
     }
     
@@ -493,7 +461,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
       <!DOCTYPE html>
       <html>
         <head>
-          <title>${activeTemplate?.name || "Tax Invoice"} - SMRITI Detached Print Preview</title>
+          <title>${activeTemplate?.name || "Tax Invoice"} - MQube Detached Print Preview</title>
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
@@ -555,7 +523,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
         </head>
         <body>
           <div class="popout-toolbar no-print">
-            <span style="font-size: 13px; font-weight: bold; margin-right: 8px; color: #93c5fd;">SMRITI Popout Document Studio</span>
+            <span style="font-size: 13px; font-weight: bold; margin-right: 8px; color: #93c5fd;">MQube Popout Document Studio</span>
             <button class="popout-btn" onclick="window.print()">Print Document</button>
             <button class="popout-btn popout-btn-secondary" onclick="window.close()">Close Window</button>
           </div>
@@ -912,63 +880,49 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
     onClose();
   };
 
-  // Export high-fidelity PDF with embedded cryptographic metadata properties
+  // Export the document as a PDF file
   const handleExportPDF = async () => {
     if (!printPreviewRef.current) return;
+    // Invoices go through the print layout, so the browser's Save as PDF matches the paper copy exactly.
+    if (printPreviewRef.current.querySelector(".invoice-print-container")) {
+      print({ templateId: selectedTemplateId, data: documentData });
+      return;
+    }
     setIsExportingPdf(true);
     
     try {
       const element = printPreviewRef.current;
-      
-      // Store actual current inline margin or size properties
-      const widthPx = element.offsetWidth;
-      const heightPx = element.offsetHeight;
-      
-      // Calculate physical millimeter equivalents assuming standard 96 DPI
-      // 1 inch = 25.4 millimeters, 1 pixel = 25.4 / 96 millimeters
-      const mmWidth = Math.round(widthPx * 25.4 / 96);
-      const mmHeight = Math.round(heightPx * 25.4 / 96);
-      
-      // Stagger slight reflow allowance
+      const mmWidth = Math.round(element.offsetWidth * 25.4 / 96);
+      const mmHeight = Math.round(element.offsetHeight * 25.4 / 96);
+
       await new Promise((resolve) => setTimeout(resolve, 250));
-      
+
       const canvas = await html2canvas(element, {
-        scale: 2.5, // Retina display-level crisp text rendering
+        scale: 2.5,
         useCORS: true,
         logging: false,
         backgroundColor: "#ffffff",
-        allowTaint: true
+        allowTaint: true,
+        onclone: (clonedDocument) => prepareForCanvas(clonedDocument),
       });
-      
-      const imgData = canvas.toDataURL("image/jpeg", 1.0);
-      
-      // Initialize jsPDF with the exact physical sheet dimensions calculated dynamically
       const doc = new jsPDF({
         orientation: mmWidth > mmHeight ? "landscape" : "portrait",
         unit: "mm",
-        format: [mmWidth, mmHeight]
+        format: [mmWidth, mmHeight],
       });
-      
-      // Fill entire physical viewport with captured element screenshot
-      doc.addImage(imgData, "JPEG", 0, 0, mmWidth, mmHeight, undefined, "FAST");
-      
-      // Embedded cryptographic signature and authority records within the PDF metadata header itself
-      const hashStr = generateDocHash(documentData, selectedTemplateId);
-      const activeAuth = SIGNATURE_AUTHORITIES[verificationAuthority];
-      
+      doc.addImage(canvas.toDataURL("image/jpeg", 1.0), "JPEG", 0, 0, mmWidth, mmHeight, undefined, "FAST");
+
       doc.setProperties({
-        title: `${activeTemplate?.name || "Retail Document"} - Cryptographically Signed`,
-        subject: `Security Verification Hash: ${hashStr}`,
-        author: activeAuth.name,
-        creator: `Smriti Retail OS v${APP_VERSION}`,
-        keywords: `smriti, retail-os, signed-pdf, ${hashStr}, ${activeAuth.keyId}`
+        title: `${activeTemplate?.name || "Document"} ${documentData?.invoiceNo || ""}`.trim(),
+        creator: `MQube v${APP_VERSION}`,
       });
-      
+
       // Save and export file with unique identifier and timestamp
       const fileTimestamp = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
-      doc.save(`Certified-${activeTemplate?.id || "document"}-${fileTimestamp}.pdf`);
+      doc.save(`${activeTemplate?.id || "document"}-${documentData?.invoiceNo || fileTimestamp}.pdf`);
     } catch (err) {
       console.error("High-fidelity PDF Export failed:", err);
+      alert("The PDF could not be created. Please try again or use the print button.");
     } finally {
       setIsExportingPdf(false);
     }
@@ -1005,7 +959,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
   return (
     <div 
       ref={modalContainerRef}
-      className={`fixed inset-0 z-50 overflow-hidden flex justify-center items-center select-none font-sans bg-[#0c1224] ${
+      className={`fixed inset-0 z-50 overflow-hidden flex justify-center items-center select-none font-sans bg-[#121212] ${
         isFullscreen ? "p-0" : "p-3 md:p-6 bg-opacity-75 backdrop-blur-sm"
       }`}
     >
@@ -1039,7 +993,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
             </div>
             <div>
               <h2 className="text-sm md:text-base font-bold font-display text-theme-primary tracking-wide">
-                SMRITI Interactive Print & Preview Engine
+                MQube Interactive Print & Preview Engine
               </h2>
               <p className="text-[10px] md:text-xs text-theme-muted">
                 Designated active tab context: <span className="font-semibold text-blue-400 uppercase font-mono">{activeTabId}</span>
@@ -1107,7 +1061,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
               </button>
             </div>
 
-            <SmritiScrollArea className="flex-1">
+            <TileFlowScrollArea className="flex-1">
               <div className="p-5 space-y-6">
                 
                 {sidebarTab === "layout" ? (
@@ -1766,8 +1720,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
                                 onChange={(e) => setVerificationAuthority(e.target.value as any)}
                                 className="w-full bg-theme-surface-2 border border-theme-divider rounded-lg px-2 py-1 text-xs text-theme-primary focus:outline-none"
                               >
-                                <option value="smriti">SMRITI OS Root CA v2.1</option>
-                                <option value="aitdl">AITDL Net Security Layer</option>
+                                <option value="tileflow">MQube OS Root CA v2.1</option>
                                 <option value="admin">Local Administrator (Self-Signed)</option>
                               </select>
                             </div>
@@ -2173,7 +2126,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
                 )}
 
               </div>
-            </SmritiScrollArea>
+            </TileFlowScrollArea>
           </div>
 
           {/* Right Panel: Immersive physical canvas preview */}
@@ -2324,7 +2277,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
                   {/* Top preview metadata header */}
                   {showHeader && ["A4", "A5", "Letter", "Legal"].includes(paperSize) && (
                     <div className="text-[9px] font-mono tracking-widest text-gray-400 border-b border-gray-150 pb-1.5 mb-4 flex justify-between uppercase select-none shrink-0">
-                      <span>SMRITI Retail OS • Active Preview Mode</span>
+                      <span>MQube • Active Preview Mode</span>
                       <span>ISO 2026 Print Standards</span>
                     </div>
                   )}
@@ -2407,7 +2360,7 @@ export const PrintPreviewModal: React.FC<PrintPreviewModalProps> = ({ isOpen, on
               ) : (
                 <>
                   <Download size={13} />
-                  Export Signed PDF
+                  Export PDF
                 </>
               )}
             </button>

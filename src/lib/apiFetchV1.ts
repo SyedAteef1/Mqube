@@ -1,17 +1,4 @@
 /**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.22.0
- * Created      : 2026-07-12
- * Modified     : 2026-08-25
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
-/**
  * Universal client fetch helper for FastAPI Core API (/api/v1/*)
  * Automatically attaches Authorization Bearer JWT and X-Company-Code & X-Branch-Code multi-tenant routing headers.
  * Includes one-shot silent token refresh on 401 to prevent session disruption during retail shifts.
@@ -22,15 +9,15 @@ let _refreshingToken = false;
 let _refreshWaiters: Array<(newToken: string | null) => void> = [];
 
 const AUTH_STORAGE_KEYS = [
-  "smriti_jwt_token",
-  "smriti_session_token",
-  "smriti_refresh_token",
-  "smriti_company_id",
-  "smriti_company_code",
-  "smriti_branch_id",
-  "smriti_branch_code",
-  "smriti_company_name",
-  "smriti_branch_name",
+  "tileflow_jwt_token",
+  "tileflow_session_token",
+  "tileflow_refresh_token",
+  "tileflow_company_id",
+  "tileflow_company_code",
+  "tileflow_branch_id",
+  "tileflow_branch_code",
+  "tileflow_company_name",
+  "tileflow_branch_name",
 ];
 
 export function normalizeCompanyId(raw: string | null | undefined): string {
@@ -66,13 +53,13 @@ export function persistTenantContext(params: {
   const companyCode = params.companyCode ? String(params.companyCode).trim() : normalizedCompanyId.replace(/^COMP-/i, "") || "001";
   const branchCode = params.branchCode ? String(params.branchCode).trim() : normalizedBranchId;
 
-  localStorage.setItem("smriti_company_id", normalizedCompanyId);
-  localStorage.setItem("smriti_company_code", companyCode);
-  localStorage.setItem("smriti_branch_id", normalizedBranchId);
-  localStorage.setItem("smriti_branch_code", branchCode);
+  localStorage.setItem("tileflow_company_id", normalizedCompanyId);
+  localStorage.setItem("tileflow_company_code", companyCode);
+  localStorage.setItem("tileflow_branch_id", normalizedBranchId);
+  localStorage.setItem("tileflow_branch_code", branchCode);
 
-  if (params.companyName) localStorage.setItem("smriti_company_name", params.companyName);
-  if (params.branchName) localStorage.setItem("smriti_branch_name", params.branchName);
+  if (params.companyName) localStorage.setItem("tileflow_company_name", params.companyName);
+  if (params.branchName) localStorage.setItem("tileflow_branch_name", params.branchName);
 }
 
 export function clearAuthSession(reason?: string): void {
@@ -80,7 +67,7 @@ export function clearAuthSession(reason?: string): void {
     for (const key of AUTH_STORAGE_KEYS) {
       localStorage.removeItem(key);
     }
-    window.dispatchEvent(new CustomEvent("smriti_auth_session_cleared", { detail: { reason } }));
+    window.dispatchEvent(new CustomEvent("tileflow_auth_session_cleared", { detail: { reason } }));
   } else {
     for (const key of AUTH_STORAGE_KEYS) {
       try {
@@ -92,6 +79,8 @@ export function clearAuthSession(reason?: string): void {
   }
 }
 
+class ApiRetryError extends Error {}
+
 async function _attemptSilentRefresh(): Promise<string | null> {
   // If a refresh is already in-flight, queue up and wait for it
   if (_refreshingToken) {
@@ -99,7 +88,7 @@ async function _attemptSilentRefresh(): Promise<string | null> {
   }
 
   _refreshingToken = true;
-  const refreshToken = localStorage.getItem("smriti_refresh_token");
+  const refreshToken = localStorage.getItem("tileflow_refresh_token");
   if (!refreshToken) {
     _refreshingToken = false;
     _refreshWaiters.forEach(r => r(null));
@@ -116,9 +105,9 @@ async function _attemptSilentRefresh(): Promise<string | null> {
     if (refreshRes.ok) {
       const refreshData = await refreshRes.json();
       if (refreshData.access_token) {
-        localStorage.setItem("smriti_jwt_token", refreshData.access_token);
+        localStorage.setItem("tileflow_jwt_token", refreshData.access_token);
         if (refreshData.refresh_token) {
-          localStorage.setItem("smriti_refresh_token", refreshData.refresh_token);
+          localStorage.setItem("tileflow_refresh_token", refreshData.refresh_token);
         }
         _refreshWaiters.forEach(r => r(refreshData.access_token));
         _refreshWaiters = [];
@@ -143,7 +132,7 @@ function _buildHeaders(token: string | null, companyCode: string, companyId: str
   if (token) headers.set("Authorization", `Bearer ${token}`);
   if (companyCode && !headers.has("X-Company-Code")) headers.set("X-Company-Code", companyCode);
   if (companyId && !headers.has("X-Company-ID")) headers.set("X-Company-ID", companyId);
-  const branchId = localStorage.getItem("smriti_branch_id") || "MAIN";
+  const branchId = localStorage.getItem("tileflow_branch_id") || "MAIN";
   if (branchId && !headers.has("X-Branch-ID")) headers.set("X-Branch-ID", branchId);
   if (branchId && !headers.has("X-Branch-Code")) headers.set("X-Branch-Code", branchId);
   if (!headers.has("Content-Type") && !(options.body instanceof FormData)) {
@@ -181,9 +170,9 @@ function applyQueryParams(url: string, params?: Record<string, unknown> | URLSea
 }
 
 export async function apiFetchV1<T = any>(endpoint: string, options: ApiRequestOptions = {}): Promise<T> {
-  const token = localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token");
-  const companyCode = localStorage.getItem("smriti_company_code") || "001";
-  const companyId = localStorage.getItem("smriti_company_id") || "COMP-001";
+  const token = localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token");
+  const companyCode = localStorage.getItem("tileflow_company_code") || "001";
+  const companyId = localStorage.getItem("tileflow_company_id") || "COMP-001";
 
   const requestInit: RequestInit = {
     ...options,
@@ -207,7 +196,7 @@ export async function apiFetchV1<T = any>(endpoint: string, options: ApiRequestO
   // Sanitize endpoint string — remove any embedded docker hostname prefixes
   let cleanEndpoint = endpoint
     .replace(/https?:\/\/python-core(:[0-9]+)?/gi, "")
-    .replace(/https?:\/\/smriti-api(:[0-9]+)?/gi, "")
+    .replace(/https?:\/\/tileflow-api(:[0-9]+)?/gi, "")
     .replace(/https?:\/\/localhost(:[0-9]+)?/gi, "")
     .replace(/https?:\/\/127\.0\.0\.1(:[0-9]+)?/gi, "");
 
@@ -231,7 +220,7 @@ export async function apiFetchV1<T = any>(endpoint: string, options: ApiRequestO
     });
   } catch (networkError: any) {
     console.error(`[apiFetchV1 Network Error] Target URL "${url}" unreachable:`, networkError);
-    throw new Error("SMRITI Backend API Server is unreachable. Please ensure the FastAPI service (python-core:8000 / localhost:8000) is running.");
+    throw new Error("MQube Backend API Server is unreachable. Please ensure the FastAPI service (python-core:8000 / localhost:8000) is running.");
   }
 
   // ── Silent Token Refresh on 401 ──────────────────────────────────────────────
@@ -253,10 +242,15 @@ export async function apiFetchV1<T = any>(endpoint: string, options: ApiRequestO
           if (ct.includes("application/pdf") || ct.includes("application/octet-stream")) return (await retryResponse.blob()) as unknown as T;
           return (await retryResponse.json()) as unknown as T;
         }
-        // Retry failed after refresh — fall through to throw
-      } catch { /* fall through */ }
+        if (retryResponse.status !== 401) {
+          // The session is fine; this request failed for another reason.
+          throw new ApiRetryError(`API request failed with status ${retryResponse.status}`);
+        }
+      } catch (retryError) {
+        if (retryError instanceof ApiRetryError) throw retryError;
+      }
     }
-    // Refresh unavailable or retry failed
+    // Refresh unavailable or the fresh token was also rejected
     clearAuthSession("token_expired");
     throw new Error("Token is invalid or has expired. Please log in again.");
   }
@@ -292,6 +286,6 @@ export async function apiFetchV1<T = any>(endpoint: string, options: ApiRequestO
 }
 
 export function isLocalMockToken(): boolean {
-  const token = localStorage.getItem("smriti_jwt_token") || localStorage.getItem("smriti_session_token");
+  const token = localStorage.getItem("tileflow_jwt_token") || localStorage.getItem("tileflow_session_token");
   return !token || token.startsWith("MOCK_");
 }

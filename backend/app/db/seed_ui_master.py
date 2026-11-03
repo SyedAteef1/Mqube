@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.42.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 import psycopg2
 from psycopg2.extras import execute_values
@@ -32,21 +18,21 @@ def seed_ui_master_data():
     ]
 
     profiles = [
-        ("prof_sysadmin", "PROF_SYSADMIN", "System Administrator Profile", "SYSADMIN", "WS_ADMIN", '{"density": "COMPACT"}', "theme-smriti-default", '[{"key": "F1", "label": "POS Billing", "route": "/pos/terminal"}, {"key": "F2", "label": "Item Master", "route": "/inventory/items"}]', True, True, False),
-        ("prof_manager", "PROF_STORE_MANAGER", "Store Manager Profile", "STORE_MANAGER", "WS_MANAGER", '{"density": "NORMAL"}', "theme-smriti-default", '[{"key": "F1", "label": "Shift Close", "route": "/pos/shift"}, {"key": "F2", "label": "Stock Audit", "route": "/inventory/audit"}]', False, True, False),
-        ("prof_cashier", "PROF_CASHIER", "Cashier Billing Profile", "CASHIER", "WS_CASHIER", '{"density": "HIGH_DENSITY"}', "theme-smriti-default", '[{"key": "F1", "label": "New Bill", "route": "/pos/terminal"}, {"key": "F2", "label": "Return Bill", "route": "/pos/returns"}]', False, True, False),
-        ("prof_accountant", "PROF_ACCOUNTANT", "Chief Accountant Profile", "ACCOUNTANT", "WS_FINANCE", '{"density": "NORMAL"}', "theme-smriti-default", '[{"key": "F1", "label": "Tax Register", "route": "/finance/tax"}, {"key": "F2", "label": "Day Book", "route": "/finance/daybook"}]', False, True, False),
+        ("prof_sysadmin", "PROF_SYSADMIN", "System Administrator Profile", "SYSADMIN", "WS_ADMIN", '{"density": "COMPACT"}', "theme-tileflow-default", '[{"key": "F1", "label": "POS Billing", "route": "/pos/terminal"}, {"key": "F2", "label": "Item Master", "route": "/inventory/items"}]', True, True, False),
+        ("prof_manager", "PROF_STORE_MANAGER", "Store Manager Profile", "STORE_MANAGER", "WS_MANAGER", '{"density": "NORMAL"}', "theme-tileflow-default", '[{"key": "F1", "label": "Shift Close", "route": "/pos/shift"}, {"key": "F2", "label": "Stock Audit", "route": "/inventory/audit"}]', False, True, False),
+        ("prof_cashier", "PROF_CASHIER", "Cashier Billing Profile", "CASHIER", "WS_CASHIER", '{"density": "HIGH_DENSITY"}', "theme-tileflow-default", '[{"key": "F1", "label": "New Bill", "route": "/pos/terminal"}, {"key": "F2", "label": "Return Bill", "route": "/pos/returns"}]', False, True, False),
+        ("prof_accountant", "PROF_ACCOUNTANT", "Chief Accountant Profile", "ACCOUNTANT", "WS_FINANCE", '{"density": "NORMAL"}', "theme-tileflow-default", '[{"key": "F1", "label": "Tax Register", "route": "/finance/tax"}, {"key": "F2", "label": "Day Book", "route": "/finance/daybook"}]', False, True, False),
     ]
 
     themes = [
-        ("theme-smriti-default", "COMP-001", "SMRITI Enterprise Horizon", "Material Symbols Outlined", "default", "Space Grotesk", "Inter", 6, True),
+        ("theme-tileflow-default", "COMP-001", "TILEFLOW Enterprise Horizon", "Material Symbols Outlined", "default", "Space Grotesk", "Inter", 6, True),
         ("theme-fiori-dark", "COMP-001", "SAP Fiori Horizon Dark", "SAP-icons", "fiori", "72, sans-serif", "72, sans-serif", 8, True),
         ("theme-oled-contrast", "COMP-001", "High Contrast OLED Retro", "Material Symbols Outlined", "contrast", "JetBrains Mono", "JetBrains Mono", 4, True),
     ]
 
     variants = [
-        ("var_def_dark", "theme-smriti-default", "dark", "#3B82F6", "#6366F1", "#F59E0B", "#0F172A", "#1E293B", "#F8FAFC", "#94A3B8", "#334155", "#EF4444", "#10B981", "#F59E0B", True),
-        ("var_def_light", "theme-smriti-default", "light", "#2563EB", "#4F46E5", "#D97706", "#F8FAFC", "#FFFFFF", "#0F172A", "#64748B", "#E2E8F0", "#DC2626", "#059669", "#D97706", False),
+        ("var_def_dark", "theme-tileflow-default", "dark", "#3B82F6", "#6366F1", "#F59E0B", "#0F172A", "#1E293B", "#F8FAFC", "#94A3B8", "#334155", "#EF4444", "#10B981", "#F59E0B", True),
+        ("var_def_light", "theme-tileflow-default", "light", "#2563EB", "#4F46E5", "#D97706", "#F8FAFC", "#FFFFFF", "#0F172A", "#64748B", "#E2E8F0", "#DC2626", "#059669", "#D97706", False),
         ("var_fiori_dark", "theme-fiori-dark", "fiori_dark", "#0A6ED1", "#3B82F6", "#E9730C", "#1C222B", "#29313D", "#FFFFFF", "#B2B8C2", "#3E4957", "#BB0000", "#107E3E", "#E9730C", True),
         ("var_oled_high", "theme-oled-contrast", "high_contrast", "#00FF66", "#00E5FF", "#FFE600", "#000000", "#0D0D0D", "#FFFFFF", "#A0A0A0", "#333333", "#FF0055", "#00FF66", "#FFE600", True),
     ]
@@ -64,9 +50,9 @@ def seed_ui_master_data():
         ("act_pos_cancel", "uuid_act_pos_cancel", "ACT_POS_CANCEL", "Void / Cancel Shift Bill", "pos.action.cancel", "DANGER_BUTTON", "SCR_POS_BILLING", "FOOTER_BAR", "delete", "danger", 3, "POS", True, None, "/api/v1/pos/void", "POST", "VOID_BILL", "ACTIVE", True, False),
     ]
 
-    print("\n--- Seeding Workspace & UI Experience Master Data into [smritisys] ---")
+    print("\n--- Seeding Workspace & UI Experience Master Data into [tileflowsys] ---")
     try:
-        conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+        conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
         cur = conn.cursor()
 
         # 1. Workspace Templates
@@ -92,7 +78,7 @@ def seed_ui_master_data():
         execute_values(
             cur,
             """
-            INSERT INTO smriti_workspace_profiles (
+            INSERT INTO tileflow_workspace_profiles (
                 id, code, name, persona, default_workspace_id, layout_json, theme, shortcuts_json, is_default, is_active, is_deleted
             ) VALUES %s
             ON CONFLICT (code) DO UPDATE SET
@@ -110,7 +96,7 @@ def seed_ui_master_data():
         execute_values(
             cur,
             """
-            INSERT INTO smriti_themes (
+            INSERT INTO tileflow_themes (
                 id, company_id, theme_name, icon_pack, illustration_set, font_heading, font_body, border_radius_px, is_active
             ) VALUES %s
             ON CONFLICT (id) DO UPDATE SET
@@ -127,7 +113,7 @@ def seed_ui_master_data():
         execute_values(
             cur,
             """
-            INSERT INTO smriti_theme_variants (
+            INSERT INTO tileflow_theme_variants (
                 id, theme_id, variant, primary_color, secondary_color, accent_color, background_color, surface_color, text_primary, text_secondary, border_color, danger_color, success_color, warning_color, is_default
             ) VALUES %s
             ON CONFLICT (id) DO UPDATE SET
@@ -184,9 +170,9 @@ def seed_ui_master_data():
 
         conn.commit()
         conn.close()
-        print("Successfully seeded Workspace & UI Experience Master Data into [smritisys].")
+        print("Successfully seeded Workspace & UI Experience Master Data into [tileflowsys].")
     except Exception as e:
-        print(f"Error seeding [smritisys]: {e}")
+        print(f"Error seeding [tileflowsys]: {e}")
 
 
 if __name__ == "__main__":

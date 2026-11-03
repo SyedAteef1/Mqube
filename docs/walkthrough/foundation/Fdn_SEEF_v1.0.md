@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Error Experience Framework (SEEF) v1.0 — Walkthrough
+# TILEFLOW Error Experience Framework (SEEF) v1.0 — Walkthrough
 
 ## 1. Purpose
-This document provides a walkthrough of the implementation of the **SMRITI Error Experience Framework (SEEF) v1.0**. It replaces default FastAPI/Starlette plain JSON error responses with a branded user interface.
+This document provides a walkthrough of the implementation of the **TILEFLOW Error Experience Framework (SEEF) v1.0**. It replaces default FastAPI/Starlette plain JSON error responses with a branded user interface.
 
 ## 2. Scope
 * Centralized handling of HTTP status codes: 400, 401, 403, 404, 405, 409, 422, 429, 500, and 503.
@@ -47,7 +46,7 @@ This document provides a walkthrough of the implementation of the **SMRITI Error
 
 ## 7. Implementation Summary
 * Added `jinja2` dependency.
-* Updated standard dictionary codes to match error families (SMRITI-VAL, SMRITI-AUTH, etc.).
+* Updated standard dictionary codes to match error families (TILEFLOW-VAL, TILEFLOW-AUTH, etc.).
 * Implemented content negotiation in `validation_exception_handler`, `http_exception_handler`, `db_exception_handler`, and `generic_exception_handler`.
 * Registered new `GET /` router endpoint with diagnostic metrics (uptime, database connection, loaded routes).
 

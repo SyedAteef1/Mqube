@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.8.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import json
@@ -144,7 +130,7 @@ CANONICAL_LAYOUT_CONFIG = {
     "footer_configuration": {
         "disclaimer_line1": "This is a computer-generated tax invoice and does not require a physical signature.",
         "disclaimer_line2": "SUBJECT TO MUMBAI JURISDICTION.",
-        "powered_by": "SMRITI OS Retail Suite - Powered by SMRITI SYSTEMS"
+        "powered_by": "TILEFLOW OS Retail Suite - Powered by TILEFLOW SYSTEMS"
     }
 }
 
@@ -158,7 +144,7 @@ def compute_sha256_file(filepath: str) -> str:
     return h.hexdigest()
 
 
-def seed_canonical_tax_invoice_template(company_db_name: str = "smriti001"):
+def seed_canonical_tax_invoice_template(company_db_name: str = "tileflow001"):
     """
     Seeds the canonical Tax Invoice template, version V1, and links all generated
     batch invoice PDF artifacts in the specified company database.
@@ -274,4 +260,4 @@ def seed_canonical_tax_invoice_template(company_db_name: str = "smriti001"):
 
 
 if __name__ == "__main__":
-    seed_canonical_tax_invoice_template("smriti001")
+    seed_canonical_tax_invoice_template("tileflow001")

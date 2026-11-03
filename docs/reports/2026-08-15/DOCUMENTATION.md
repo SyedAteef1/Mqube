@@ -5,7 +5,7 @@
 | Module | Doc Completed | Walkthrough Files |
 | :--- | :---: | :--- |
 | Executive Hub | ✅ Yes | Registered Walkthrough v3.4.0 |
-| SMRITI Gyan Kendra | ✅ Yes | Registered Walkthrough v3.4.0 |
+| TILEFLOW Gyan Kendra | ✅ Yes | Registered Walkthrough v3.4.0 |
 | Billing Desk | ✅ Yes | Registered Walkthrough v3.4.0 |
 | Sales Studio | ✅ Yes | Registered Walkthrough v3.4.0 |
 | Customer Master | ✅ Yes | Registered Walkthrough v3.4.0 |
@@ -33,6 +33,6 @@
 | Terms & Conditions | ❌ Missing | None |
 | Data Exchange Hub | ✅ Yes | Registered Walkthrough v3.4.0 |
 | Company Setup Wizard | ✅ Yes | Registered Walkthrough v3.4.0 |
-| About SMRITI | ✅ Yes | Registered Walkthrough v3.4.0 |
+| About TILEFLOW | ✅ Yes | Registered Walkthrough v3.4.0 |
 | Dev Intelligence Center | ✅ Yes | Registered Walkthrough v3.4.0 |
 | Audit Logs | ✅ Yes | Registered Walkthrough v3.4.0 |

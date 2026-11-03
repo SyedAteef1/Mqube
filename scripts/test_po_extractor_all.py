@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.28.0
-Created      : 2026-08-26
-Modified     : 2026-08-26
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import re
 import sys
@@ -19,7 +5,7 @@ import time
 import pymupdf
 from decimal import Decimal
 
-PDF_DIR = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\Tattly Threads"
+PDF_DIR = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\Tattly Threads"
 
 def parse_all_pos(pdf_dir=PDF_DIR):
     pdf_files = sorted([f for f in os.listdir(pdf_dir) if f.endswith(".pdf")])

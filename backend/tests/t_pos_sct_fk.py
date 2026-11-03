@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.24.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 import pytest
 from decimal import Decimal
@@ -29,7 +15,7 @@ def test_pos_sct_fk_constraints_and_zero_orphans():
     P0.1 Certification: Verify shift_cash_transactions Foreign Key constraints
     and zero orphan records across all tenant databases.
     """
-    for db_name in ["smriti001", "smriti002", "smritisys"]:
+    for db_name in ["tileflow001", "tileflow002", "tileflowsys"]:
         try:
             conn = psycopg2.connect(f"postgresql://postgres:postgres@localhost:5432/{db_name}")
             cur = conn.cursor()
@@ -96,7 +82,7 @@ async def test_pos_sct_fk_rejection_on_invalid_account_id():
     """
     Verify database enforces foreign key constraint when inserting invalid account_id.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         # Fetch a valid shift ID
         res = await session.execute(text("SELECT id FROM shifts LIMIT 1;"))
@@ -135,7 +121,7 @@ async def test_pos_sct_fk_rejection_on_invalid_gl_voucher_id():
     """
     Verify database enforces foreign key constraint when inserting invalid gl_voucher_id.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         res = await session.execute(text("SELECT id FROM shifts LIMIT 1;"))
         shift_id = res.scalar() or "SH-TEST-001"

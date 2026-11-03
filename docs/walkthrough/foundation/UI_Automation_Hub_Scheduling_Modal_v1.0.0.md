@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.77.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: UI Automation Hub & Report Scheduling Modal (v1.0.0-GA)
 
 ## 1. Purpose
-Documents the implementation and verification of the SMRITI Report Automation Hub Modal, providing enterprise users with an interactive dialog to configure unattended cron schedules, multi-channel distribution rules, and on-demand report dispatches.
+Documents the implementation and verification of the TILEFLOW Report Automation Hub Modal, providing enterprise users with an interactive dialog to configure unattended cron schedules, multi-channel distribution rules, and on-demand report dispatches.
 
 ## 2. Scope
 - Automated Report Distribution Hub Modal (`ScheduleReportModal.tsx`).

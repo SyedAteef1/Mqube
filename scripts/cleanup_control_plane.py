@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """
 Control Plane Cleanup Script
-Remove all operational data from smritisys (control plane database)
+Remove all operational data from tileflowsys (control plane database)
 Backup all data before deletion for safety and auditability
 
 Usage: python scripts/cleanup_control_plane.py
@@ -22,7 +22,7 @@ def main():
     print("CONTROL PLANE CLEANUP - PRE-DELETION AUDIT & BACKUP")
     print("=" * 70)
 
-    conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smritisys')
+    conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflowsys')
     cur = conn.cursor()
 
     # 1. Backup products before deletion
@@ -60,7 +60,7 @@ def main():
     audit_report = {
         "timestamp": timestamp,
         "action": "CONTROL_PLANE_CLEANUP",
-        "database": "smritisys",
+        "database": "tileflowsys",
         "before": {
             "products": prod_count,
             "sales_orders": so_count,
@@ -83,7 +83,7 @@ def main():
 
     # 5. DESTRUCTIVE PHASE - Delete operational data from control plane
     print("\n" + "=" * 70)
-    print("DELETING OPERATIONAL DATA FROM CONTROL PLANE (smritisys)")
+    print("DELETING OPERATIONAL DATA FROM CONTROL PLANE (tileflowsys)")
     print("=" * 70)
 
     try:
@@ -190,19 +190,19 @@ def main():
 
         # 7. Verify company database
         print("\n" + "=" * 70)
-        print("VERIFICATION - COMPANY DATABASE (smriti001)")
+        print("VERIFICATION - COMPANY DATABASE (tileflow001)")
         print("=" * 70)
 
-        conn2 = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+        conn2 = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
         cur2 = conn2.cursor()
 
         cur2.execute("SELECT COUNT(*) FROM products")
         company_prod = cur2.fetchone()[0]
-        print(f"\n✓ Products in smriti001: {company_prod}")
+        print(f"\n✓ Products in tileflow001: {company_prod}")
 
         cur2.execute("SELECT COUNT(*) FROM sales_orders")
         company_so = cur2.fetchone()[0]
-        print(f"✓ Sales orders in smriti001: {company_so}")
+        print(f"✓ Sales orders in tileflow001: {company_so}")
 
         cur2.close()
         conn2.close()
@@ -212,7 +212,7 @@ def main():
             "timestamp": timestamp,
             "action": "CLEANUP_COMPLETE",
             "status": "SUCCESS",
-            "database": "smritisys",
+            "database": "tileflowsys",
             "deleted": {
                 "total_deleted": total_deleted,
                 "note": "All operational data (products, orders, quotations, invoices, returns, etc)"
@@ -232,8 +232,8 @@ def main():
         print(f"\nSummary:")
         print(f"  Total Deleted: {total_deleted} operational rows")
         print(f"  Backups: {backup_dir}/")
-        print(f"  Control Plane (smritisys): Now clean (0 operational rows)")
-        print(f"  Company Database (smriti001): Operational data intact ({company_prod} products)")
+        print(f"  Control Plane (tileflowsys): Now clean (0 operational rows)")
+        print(f"  Company Database (tileflow001): Operational data intact ({company_prod} products)")
         print(f"\n✅ Architecture compliance restored!")
 
     except Exception as e:

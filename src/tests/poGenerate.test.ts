@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect } from "vitest";
 import {
   PurchaseOrderLineItem,
@@ -19,7 +5,7 @@ import {
   PurchaseOrderSummaryTotals
 } from "../components/purchase/types.ts";
 
-describe("SMRITI 9 Purchase Order Generation Logic Suite", () => {
+describe("MQube 9 Purchase Order Generation Logic Suite", () => {
   it("1. should accurately calculate standard line item values, taxes, and add-ons", () => {
     const line: PurchaseOrderLineItem = {
       id: "l-1",

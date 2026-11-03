@@ -1,22 +1,8 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useMemo } from "react";
 import { ProPosCustomer } from "./types.ts";
 import { X, Search, Award, Star, CheckCircle, Info } from "lucide-react";
 
-interface SmritiLoyaltyLookupDlgpModalProps {
+interface TileFlowLoyaltyLookupDlgpModalProps {
   currentCustomer?: ProPosCustomer;
   onApplyLoyaltyPoints: (points: number, amountDiscount: number) => void;
   onSelectCustomer: (customer: ProPosCustomer) => void;
@@ -59,7 +45,7 @@ const MOCK_LOYALTY_CUSTOMERS: ProPosCustomer[] = [
   }
 ];
 
-export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModalProps> = ({
+export const TileFlowLoyaltyLookupDlgpModal: React.FC<TileFlowLoyaltyLookupDlgpModalProps> = ({
   currentCustomer,
   onApplyLoyaltyPoints,
   onSelectCustomer,
@@ -104,23 +90,23 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#c4c5d5] dark:border-[#444653]">
+      <div className="bg-white dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#c6c6c6] dark:border-[#474747]">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b]">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 bg-[#dde1ff] dark:bg-[#1e40af] text-[#00288e] dark:text-white rounded-lg">
+            <div className="p-1.5 bg-[#e2e2e2] dark:bg-[#414141] text-[#272727] dark:text-white rounded-lg">
               <Award size={20} />
             </div>
             <div>
-              <h2 className="text-base font-bold text-[#191c1d] dark:text-white">Customer Loyalty &amp; Rewards Lookup</h2>
-              <p className="text-xs text-[#565e74] dark:text-[#bec6e0]">Search shopper rewards profile and redeem accumulated points.</p>
+              <h2 className="text-base font-bold text-[#1b1b1b] dark:text-white">Customer Loyalty &amp; Rewards Lookup</h2>
+              <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">Search shopper rewards profile and redeem accumulated points.</p>
             </div>
           </div>
           <button 
             type="button"
             onClick={onClose}
-            className="text-[#565e74] hover:bg-[#f3f4f5] p-1.5 rounded-lg transition"
+            className="text-[#5e5e5e] hover:bg-[#f4f4f4] p-1.5 rounded-lg transition"
           >
             <X size={18} />
           </button>
@@ -131,24 +117,24 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
           
           {/* Search Bar */}
           <div>
-            <label className="block text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] mb-1.5">
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] mb-1.5">
               Search Registered Shopper
             </label>
             <div className="relative">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#757684]" size={16} />
+              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#777777]" size={16} />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Search by Mobile, Customer Name, or Code..."
-                className="w-full pl-10 pr-3 py-2.5 border border-[#c4c5d5] dark:border-[#444653] rounded-xl bg-[#f8f9fa] dark:bg-[#131b2e] text-xs outline-none focus:border-[#00288e]"
+                className="w-full pl-10 pr-3 py-2.5 border border-[#c6c6c6] dark:border-[#474747] rounded-xl bg-[#f9f9f9] dark:bg-[#1b1b1b] text-xs outline-none focus:border-[#272727]"
               />
             </div>
           </div>
 
           {/* Matching Customers dropdown/list if searching */}
           {searchQuery.trim() && (
-            <div className="border border-[#c4c5d5] dark:border-[#444653] rounded-xl max-h-32 overflow-y-auto divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+            <div className="border border-[#c6c6c6] dark:border-[#474747] rounded-xl max-h-32 overflow-y-auto divide-y divide-[#eeeeee] dark:divide-[#303030]">
               {filteredCustomers.map(c => (
                 <div
                   key={c.id}
@@ -156,13 +142,13 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
                     setSelectedCust(c);
                     setSearchQuery("");
                   }}
-                  className="p-2.5 hover:bg-[#f3f4f5] dark:hover:bg-[#2d3133] cursor-pointer text-xs flex justify-between items-center"
+                  className="p-2.5 hover:bg-[#f4f4f4] dark:hover:bg-[#303030] cursor-pointer text-xs flex justify-between items-center"
                 >
                   <div>
                     <span className="font-bold">{c.name}</span>
-                    <span className="text-[#565e74] ml-2 font-mono text-[11px]">{c.phone}</span>
+                    <span className="text-[#5e5e5e] ml-2 font-mono text-[11px]">{c.phone}</span>
                   </div>
-                  <span className="px-2 py-0.5 bg-[#dde1ff] text-[#00288e] rounded text-[10px] font-bold">
+                  <span className="px-2 py-0.5 bg-[#e2e2e2] text-[#272727] rounded text-[10px] font-bold">
                     {c.loyaltyPoints} pts
                   </span>
                 </div>
@@ -172,30 +158,30 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
 
           {/* Active Customer Profile Card */}
           {selectedCust && (
-            <div className="bg-[#f8f9fa] dark:bg-[#131b2e] border border-[#c4c5d5] dark:border-[#444653] rounded-xl p-4 flex flex-col gap-3">
+            <div className="bg-[#f9f9f9] dark:bg-[#1b1b1b] border border-[#c6c6c6] dark:border-[#474747] rounded-xl p-4 flex flex-col gap-3">
               <div className="flex items-start justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-full bg-[#dde1ff] text-[#00288e] font-bold text-sm flex items-center justify-center">
+                  <div className="w-12 h-12 rounded-full bg-[#e2e2e2] text-[#272727] font-bold text-sm flex items-center justify-center">
                     {selectedCust.name.slice(0, 2).toUpperCase()}
                   </div>
                   <div>
-                    <h3 className="text-sm font-bold text-[#191c1d] dark:text-white">{selectedCust.name}</h3>
+                    <h3 className="text-sm font-bold text-[#1b1b1b] dark:text-white">{selectedCust.name}</h3>
                     <div className="flex items-center gap-1.5 mt-0.5">
                       <Star size={13} className="text-[#d97706] fill-amber-500" />
                       <span className="text-xs font-bold text-[#d97706]">{selectedCust.loyaltyTier || "Silver Member"}</span>
-                      <span className="text-xs text-[#565e74] dark:text-[#bec6e0] ml-1">({selectedCust.phone})</span>
+                      <span className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6] ml-1">({selectedCust.phone})</span>
                     </div>
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+                  <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
                     Available Rewards
                   </span>
-                  <div className="text-xl font-bold font-mono text-[#00288e] dark:text-[#a8b8ff]">
+                  <div className="text-xl font-bold font-mono text-[#272727] dark:text-[#bababa]">
                     {selectedCust.loyaltyPoints?.toLocaleString()} pts
                   </div>
-                  <div className="text-xs font-mono text-[#0c9488] font-semibold">
+                  <div className="text-xs font-mono text-[#767676] font-semibold">
                     Worth ₹{((selectedCust.loyaltyPoints || 0) * POINT_CONVERSION_RATE).toFixed(2)}
                   </div>
                 </div>
@@ -204,10 +190,10 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
           )}
 
           {/* Redemption Input Box */}
-          <div className="bg-white dark:bg-[#131b2e] p-4 rounded-xl border border-[#c4c5d5] dark:border-[#444653]">
+          <div className="bg-white dark:bg-[#1b1b1b] p-4 rounded-xl border border-[#c6c6c6] dark:border-[#474747]">
             <div className="flex justify-between items-end gap-4">
               <div className="flex-1">
-                <label className="block text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0] mb-1.5">
+                <label className="block text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] mb-1.5">
                   Points to Redeem in this Transaction
                 </label>
                 <div className="flex items-center">
@@ -217,12 +203,12 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
                     max={maxPointsAvailable}
                     value={pointsToRedeem}
                     onChange={e => setPointsToRedeem(Math.min(maxPointsAvailable, Math.max(0, parseInt(e.target.value) || 0)))}
-                    className="flex-1 px-3 py-2 border border-[#c4c5d5] dark:border-[#444653] rounded-l-xl bg-[#f8f9fa] dark:bg-[#191c1e] text-xs font-mono font-bold text-right outline-none focus:border-[#00288e]"
+                    className="flex-1 px-3 py-2 border border-[#c6c6c6] dark:border-[#474747] rounded-l-xl bg-[#f9f9f9] dark:bg-[#1c1c1c] text-xs font-mono font-bold text-right outline-none focus:border-[#272727]"
                   />
                   <button
                     type="button"
                     onClick={handleMaxPoints}
-                    className="px-4 py-2 bg-[#edeeef] dark:bg-[#3f465c] border-y border-r border-[#c4c5d5] dark:border-[#444653] rounded-r-xl text-xs font-bold hover:bg-[#d9dadb] transition"
+                    className="px-4 py-2 bg-[#eeeeee] dark:bg-[#464646] border-y border-r border-[#c6c6c6] dark:border-[#474747] rounded-r-xl text-xs font-bold hover:bg-[#d9dadb] transition"
                   >
                     Max
                   </button>
@@ -230,7 +216,7 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
               </div>
 
               <div className="flex flex-col items-end pb-1 min-w-[120px]">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#565e74] dark:text-[#bec6e0]">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6]">
                   Bill Discount Value
                 </span>
                 <span className="text-xl font-bold font-mono text-[#16a34a] mt-0.5">
@@ -239,7 +225,7 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
               </div>
             </div>
 
-            <div className="mt-3 text-xs text-[#565e74] dark:text-[#bec6e0] flex items-center gap-1">
+            <div className="mt-3 text-xs text-[#5e5e5e] dark:text-[#c6c6c6] flex items-center gap-1">
               <Info size={13} />
               <span>Remaining balance after redemption: <strong>{remainingPoints.toLocaleString()} pts</strong></span>
             </div>
@@ -248,11 +234,11 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-4 border-t border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e] flex justify-end gap-3">
+        <div className="px-6 py-4 border-t border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex justify-end gap-3">
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-2 border border-[#c4c5d5] dark:border-[#444653] bg-white dark:bg-[#2d3133] rounded-xl text-xs font-bold hover:bg-[#f3f4f5] transition"
+            className="px-5 py-2 border border-[#c6c6c6] dark:border-[#474747] bg-white dark:bg-[#303030] rounded-xl text-xs font-bold hover:bg-[#f4f4f4] transition"
           >
             Cancel
           </button>
@@ -260,7 +246,7 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
             type="button"
             disabled={pointsToRedeem <= 0}
             onClick={handleApply}
-            className="px-6 py-2 bg-[#00288e] text-white rounded-xl text-xs font-bold hover:bg-[#1e40af] transition flex items-center gap-1.5 shadow-sm disabled:opacity-40"
+            className="px-6 py-2 bg-[#272727] text-white rounded-xl text-xs font-bold hover:bg-[#414141] transition flex items-center gap-1.5 shadow-sm disabled:opacity-40"
           >
             <CheckCircle size={15} />
             <span>Apply Loyalty Discount</span>
@@ -272,4 +258,4 @@ export const SmritiLoyaltyLookupDlgpModal: React.FC<SmritiLoyaltyLookupDlgpModal
   );
 };
 
-export default SmritiLoyaltyLookupDlgpModal;
+export default TileFlowLoyaltyLookupDlgpModal;

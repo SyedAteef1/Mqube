@@ -16,7 +16,7 @@ POSTGRES_CREDS = {
     'port': 5432
 }
 
-PROD_SOURCES = [('smritisys', 'smritisys_stage'), ('smriti001', 'smriti001_stage')]
+PROD_SOURCES = [('tileflowsys', 'tileflowsys_stage'), ('tileflow001', 'tileflow001_stage')]
 
 def aggressive_terminate():
     """Use subprocess to terminate all sessions in a clean process."""
@@ -39,7 +39,7 @@ cur = conn.cursor()
 for attempt in range(5):
     cur.execute(
         "SELECT COUNT(*) FROM pg_stat_activity "
-        "WHERE datname IN ('smritisys', 'smriti001') "
+        "WHERE datname IN ('tileflowsys', 'tileflow001') "
         "AND pid <> pg_backend_pid() "
         "AND usename <> 'postgres'"
     )
@@ -54,7 +54,7 @@ for attempt in range(5):
     
     cur.execute(
         "SELECT pg_terminate_backend(pid) FROM pg_stat_activity "
-        "WHERE datname IN ('smritisys', 'smriti001') "
+        "WHERE datname IN ('tileflowsys', 'tileflow001') "
         "AND pid <> pg_backend_pid() "
         "AND usename <> 'postgres'"
     )

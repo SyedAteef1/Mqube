@@ -1,6 +1,3 @@
-"""
-Comprehensive Audit of Authorization, Roles, Permissions, Groups, and Departments
-"""
 import psycopg2, json
 
 def audit_db(db_name):
@@ -28,17 +25,17 @@ def audit_db(db_name):
         for r in roles:
             print(f"  ID: {r[0]:<25} | Name: {r[1]:<20} | System: {r[3]} | Desc: {r[2]}")
 
-    # 3. Check smriti_permissions table
-    if 'smriti_permissions' in all_tables:
-        cur.execute("SELECT COUNT(*) FROM smriti_permissions;")
+    # 3. Check tileflow_permissions table
+    if 'tileflow_permissions' in all_tables:
+        cur.execute("SELECT COUNT(*) FROM tileflow_permissions;")
         cnt = cur.fetchone()[0]
-        print(f"\n--- SMRITI_PERMISSIONS TABLE ({cnt} rows) ---")
-        cur.execute("SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'smriti_permissions' ORDER BY ordinal_position;")
+        print(f"\n--- TILEFLOW_PERMISSIONS TABLE ({cnt} rows) ---")
+        cur.execute("SELECT column_name, data_type FROM information_schema.columns WHERE table_name = 'tileflow_permissions' ORDER BY ordinal_position;")
         cols = cur.fetchall()
         for c in cols:
             print(f"   Col: {c[0]} ({c[1]})")
         if cnt > 0:
-            cur.execute("SELECT * FROM smriti_permissions LIMIT 10;")
+            cur.execute("SELECT * FROM tileflow_permissions LIMIT 10;")
             for row in cur.fetchall():
                 print(f"   Sample: {row}")
 
@@ -82,5 +79,5 @@ def audit_db(db_name):
 
     conn.close()
 
-audit_db('smritisys')
-audit_db('smriti001')
+audit_db('tileflowsys')
+audit_db('tileflow001')

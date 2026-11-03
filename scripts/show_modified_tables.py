@@ -4,7 +4,7 @@ Show which tables were modified during barcode integration
 """
 import psycopg2
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 print("=" * 80)
@@ -32,7 +32,7 @@ cur.execute('''
 deleted = cur.fetchone()[0]
 
 print(f"""
-TABLE: products (in smriti001 database)
+TABLE: products (in tileflow001 database)
 {"━" * 80}
   Active products:                {active}
   With real EAN/Barcodes:         {real_ean}

@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, time
 import psycopg2
 from playwright.sync_api import sync_playwright
@@ -22,7 +9,7 @@ def test_headless_supplier_creation_e2e():
     End-to-End Headless Verification for Blocker #1 — Supplier Master Creation.
     Executes: Create Supplier Master via FastAPI → Verify Database Record.
     """
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
 
     test_code = "SUP-E2E-999"
@@ -37,7 +24,7 @@ def test_headless_supplier_creation_e2e():
     cur.execute("""
         INSERT INTO suppliers (id, uuid, tenant_id, code, name, gst_number, mobile, email, city, state, is_active)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, true);
-    """, (test_code, "uuid-e2e-supplier-999", "smritibus_default", test_code, test_name, test_gstin, "+91 9820098200", "e2e@supplier.com", "Mumbai", "Maharashtra"))
+    """, (test_code, "uuid-e2e-supplier-999", "tileflowbus_default", test_code, test_name, test_gstin, "+91 9820098200", "e2e@supplier.com", "Mumbai", "Maharashtra"))
     conn.commit()
 
     # Verify Database insertion

@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Sprint 36: Section 7 Shared Business Engines: Fulfillment Engine Completion
 
 ## 1. Purpose
-This sprint delivers the authoritative **SMRITI Fulfillment Engine** fulfilling **Blueprint Section 7: Shared Business Engines**. It establishes end-to-end logistics and delivery capabilities including pick & pack slip generation, dispatch manifesting with courier partner integration and AWB tracking, live delivery milestone progression, automated driver/participant commission settlement, reverse logistics return processing, and full fulfillment lifecycle timeline auditing.
+This sprint delivers the authoritative **TILEFLOW Fulfillment Engine** fulfilling **Blueprint Section 7: Shared Business Engines**. It establishes end-to-end logistics and delivery capabilities including pick & pack slip generation, dispatch manifesting with courier partner integration and AWB tracking, live delivery milestone progression, automated driver/participant commission settlement, reverse logistics return processing, and full fulfillment lifecycle timeline auditing.
 
 ---
 
@@ -93,8 +92,8 @@ tests/t_fulfillment.py::test_api_fulfillment_endpoints_and_timeline PASSED [100%
 
 ## 9. Verification Results
 - `6/6 tests green` in `t_fulfillment.py`.
-- `99/99 full platform regression tests green` across all SMRITI modules.
-- SMRITI Naming Guard verified: `0 violations`.
+- `99/99 full platform regression tests green` across all TILEFLOW modules.
+- TILEFLOW Naming Guard verified: `0 violations`.
 - Evidence Level: `A` (Full Automated Suite + Concurrency-Safe DB Test).
 
 ---
@@ -116,4 +115,4 @@ tests/t_fulfillment.py::test_api_fulfillment_endpoints_and_timeline PASSED [100%
 ---
 
 ## 13. Related RFCs
-- `RFC-FUL-001`: SMRITI End-to-End Fulfillment and Delivery Specification.
+- `RFC-FUL-001`: TILEFLOW End-to-End Fulfillment and Delivery Specification.

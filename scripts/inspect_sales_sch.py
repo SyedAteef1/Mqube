@@ -1,6 +1,6 @@
 import psycopg2
 
-for db_name in ['smriti001', 'smriti002', 'smritisys']:
+for db_name in ['tileflow001', 'tileflow002', 'tileflowsys']:
     try:
         conn = psycopg2.connect(f'postgresql://postgres:postgres@localhost:5432/{db_name}')
         cur = conn.cursor()

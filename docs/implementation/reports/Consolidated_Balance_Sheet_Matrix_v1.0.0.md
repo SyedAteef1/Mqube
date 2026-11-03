@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.83.0
   Created      : 2026-08-28
   Modified     : 2026-08-28
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Enterprise Multi-Store Consolidated Financial Balance Sheet Matrix (v1.0.0-GA)
 
 ## 1. Objective
-Establish an Enterprise Multi-Store Consolidated Financial Balance Sheet Matrix modal (`ConsolidatedBalanceSheetModal.tsx`) in SMRITI Retail OS, delivering cross-branch financial statement consolidation with automated inter-company eliminations, live accounting equation verification (`Assets == Liabilities + Equity`), and statutory financial exports.
+Establish an Enterprise Multi-Store Consolidated Financial Balance Sheet Matrix modal (`ConsolidatedBalanceSheetModal.tsx`) in TILEFLOW Retail OS, delivering cross-branch financial statement consolidation with automated inter-company eliminations, live accounting equation verification (`Assets == Liabilities + Equity`), and statutory financial exports.
 
 ## 2. Business Motivation
 Multi-store retail enterprises operate across several retail branches and centralized warehouses. Generating a unified group financial balance sheet requires eliminating inter-branch transfers and receivables to determine true group net worth and gearing ratios.
@@ -80,7 +79,7 @@ Non-destructive standalone modal component with dedicated test suite.
 - Run `npm test`.
 
 ## 15. Documentation Impact
-- Update SMRITI Financial Accounting & Group Consolidation Manual.
+- Update TILEFLOW Financial Accounting & Group Consolidation Manual.
 
 ## 16. Deployment Plan
 - Build and bundle with frontend client package.

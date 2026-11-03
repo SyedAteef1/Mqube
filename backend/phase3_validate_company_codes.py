@@ -56,18 +56,18 @@ print("Standard: 3 alphanumeric [A-Z0-9], range 001-999")
 print("Reserved: 000, SYS")
 print("="*70)
 
-smritisys_result = check_company_codes(
-    'smritisys',
-    'postgresql://postgres:postgres@localhost:5432/smritisys'
+tileflowsys_result = check_company_codes(
+    'tileflowsys',
+    'postgresql://postgres:postgres@localhost:5432/tileflowsys'
 )
 
-smriti001_result = check_company_codes(
-    'smriti001',
-    'postgresql://postgres:postgres@localhost:5432/smriti001'
+tileflow001_result = check_company_codes(
+    'tileflow001',
+    'postgresql://postgres:postgres@localhost:5432/tileflow001'
 )
 
 # Display results
-for result in [smritisys_result, smriti001_result]:
+for result in [tileflowsys_result, tileflow001_result]:
     print(f"\n{result['db'].upper()}:")
     print(f"  Valid codes: {result['valid_count']}")
     print(f"  NULL codes: {result['null_count']}")
@@ -83,7 +83,7 @@ print("\n" + "="*70)
 print("PHASE 3 VERDICT:")
 print("="*70)
 
-total_violations = len(smritisys_result['violations']) + len(smriti001_result['violations'])
+total_violations = len(tileflowsys_result['violations']) + len(tileflow001_result['violations'])
 
 if total_violations == 0:
     print("\n✓ CONSTRAINT VALIDATION PASSED")

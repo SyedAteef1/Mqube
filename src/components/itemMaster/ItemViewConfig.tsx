@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 5.5.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect, useMemo } from "react";
 import { 
   saveGlobalColumnOrder, 
@@ -46,7 +32,7 @@ export interface ItemViewConfigState {
   frozenColumns: number;
 }
 
-interface SmritiItemViewConfigurationProps {
+interface TileFlowItemViewConfigurationProps {
   availableFields?: { key: string; label: string }[];
   currentConfig: ItemViewConfigState;
   onSaveConfig: (config: ItemViewConfigState) => void;
@@ -62,7 +48,7 @@ const PRESET_STANDARD = [
   "category", "subCategory", "mrp", "price", "costPrice", "gst_percentage", "hsn_code"
 ];
 
-export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
+export const ItemViewConfig: React.FC<TileFlowItemViewConfigurationProps> = ({
   availableFields: propAvailableFields,
   currentConfig,
   onSaveConfig,
@@ -244,30 +230,30 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
   };
 
   return (
-    <div className="h-full flex flex-col bg-[#f7f9fb] dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] font-sans p-6 overflow-y-auto">
+    <div className="h-full flex flex-col bg-[#f9f9f9] dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] font-sans p-6 overflow-y-auto">
       <div className="max-w-5xl mx-auto w-full space-y-6">
         
         {/* Page Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c6c6cd] dark:border-[#45464d]">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-[#c7c7c7] dark:border-[#464646]">
           <div>
-            <h1 className="text-xl font-bold text-[#003d9b] dark:text-[#b2c5ff] flex items-center gap-2">
+            <h1 className="text-xl font-bold text-[#373737] dark:text-[#c5c5c5] flex items-center gap-2">
               <Settings2 size={22} />
               View Configuration &amp; Global Column Arrangement
             </h1>
-            <p className="text-xs text-[#515f74] dark:text-[#bec6e0] mt-0.5">
+            <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6] mt-0.5">
               Control global field visibility, sequence order, and default entry presentation modes across all screens.
             </p>
           </div>
 
           {/* View Toggle */}
-          <div className="flex items-center bg-[#e9edff] dark:bg-[#1d3054] p-1 rounded-lg border border-[#c4d2ff] dark:border-[#434654]">
+          <div className="flex items-center bg-[#ededed] dark:bg-[#2f2f2f] p-1 rounded-lg border border-[#d2d2d2] dark:border-[#464646]">
             <button
               type="button"
               onClick={() => setViewMode("grid")}
               className={`px-4 py-1.5 rounded text-xs font-bold transition flex items-center gap-1.5 ${
                 viewMode === "grid"
-                  ? "bg-white dark:bg-[#131b2e] text-[#0052cc] dark:text-[#dae2ff] shadow-xs"
-                  : "text-[#515f74] dark:text-[#bec6e0] hover:text-[#0052cc]"
+                  ? "bg-white dark:bg-[#1b1b1b] text-[#494949] dark:text-[#e2e2e2] shadow-xs"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:text-[#494949]"
               }`}
             >
               <LayoutGrid size={14} />
@@ -278,8 +264,8 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
               onClick={() => setViewMode("classic")}
               className={`px-4 py-1.5 rounded text-xs font-bold transition flex items-center gap-1.5 ${
                 viewMode === "classic"
-                  ? "bg-white dark:bg-[#131b2e] text-[#0052cc] dark:text-[#dae2ff] shadow-xs"
-                  : "text-[#515f74] dark:text-[#bec6e0] hover:text-[#0052cc]"
+                  ? "bg-white dark:bg-[#1b1b1b] text-[#494949] dark:text-[#e2e2e2] shadow-xs"
+                  : "text-[#5e5e5e] dark:text-[#c6c6c6] hover:text-[#494949]"
               }`}
             >
               <FileText size={14} />
@@ -292,10 +278,10 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           
           {/* Quick Presets */}
-          <div className="bg-white dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded-xl p-4 shadow-xs flex flex-col justify-between space-y-2">
+          <div className="bg-white dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded-xl p-4 shadow-xs flex flex-col justify-between space-y-2">
             <div>
-              <h3 className="text-xs font-bold text-[#191c1e] dark:text-white uppercase tracking-wider flex items-center gap-1.5">
-                <Sparkles size={13} className="text-[#0052cc] dark:text-[#b2c5ff]" />
+              <h3 className="text-xs font-bold text-[#1c1c1c] dark:text-white uppercase tracking-wider flex items-center gap-1.5">
+                <Sparkles size={13} className="text-[#494949] dark:text-[#c5c5c5]" />
                 Layout Presets
               </h3>
               <p className="text-[11px] text-[#76777d]">One-click configurations for common retail and inventory roles.</p>
@@ -305,21 +291,21 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
               <button
                 type="button"
                 onClick={() => handleApplyPreset(PRESET_ESSENTIAL, "Essential Retail (8 Cols)")}
-                className="px-2.5 py-1 bg-[#f2f4f6] dark:bg-[#191c1e] hover:bg-[#d5e3fd] text-xs font-bold rounded border border-[#c6c6cd] transition"
+                className="px-2.5 py-1 bg-[#f4f4f4] dark:bg-[#1c1c1c] hover:bg-[#e2e2e2] text-xs font-bold rounded border border-[#c7c7c7] transition"
               >
                 Essential (8)
               </button>
               <button
                 type="button"
                 onClick={() => handleApplyPreset(PRESET_STANDARD, "Standard Merchandising (14 Cols)")}
-                className="px-2.5 py-1 bg-[#f2f4f6] dark:bg-[#191c1e] hover:bg-[#d5e3fd] text-xs font-bold rounded border border-[#c6c6cd] transition"
+                className="px-2.5 py-1 bg-[#f4f4f4] dark:bg-[#1c1c1c] hover:bg-[#e2e2e2] text-xs font-bold rounded border border-[#c7c7c7] transition"
               >
                 Standard (14)
               </button>
               <button
                 type="button"
                 onClick={() => handleApplyPreset(allSystemFields.map(f => f.key), "Full Catalog (All Columns)")}
-                className="px-2.5 py-1 bg-[#f2f4f6] dark:bg-[#191c1e] hover:bg-[#d5e3fd] text-xs font-bold rounded border border-[#c6c6cd] transition"
+                className="px-2.5 py-1 bg-[#f4f4f4] dark:bg-[#1c1c1c] hover:bg-[#e2e2e2] text-xs font-bold rounded border border-[#c7c7c7] transition"
               >
                 All Fields ({allSystemFields.length})
               </button>
@@ -327,9 +313,9 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
           </div>
 
           {/* Frozen Columns Setting */}
-          <div className="bg-white dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded-xl p-4 shadow-xs flex items-center justify-between">
+          <div className="bg-white dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded-xl p-4 shadow-xs flex items-center justify-between">
             <div>
-              <h3 className="text-xs font-bold text-[#191c1e] dark:text-white uppercase tracking-wider">Frozen Columns (Left Pinned)</h3>
+              <h3 className="text-xs font-bold text-[#1c1c1c] dark:text-white uppercase tracking-wider">Frozen Columns (Left Pinned)</h3>
               <p className="text-[11px] text-[#76777d]">Lock left-side identifier columns when scrolling horizontally.</p>
             </div>
             <div className="flex items-center gap-2">
@@ -339,28 +325,28 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                 max={5}
                 value={frozenColumns}
                 onChange={e => setFrozenColumns(Math.max(0, Math.min(5, Number(e.target.value) || 0)))}
-                className="w-16 h-8 px-2 border border-[#c6c6cd] dark:border-[#45464d] rounded text-center font-mono font-bold text-xs bg-[#f2f4f6] dark:bg-[#191c1e]"
+                className="w-16 h-8 px-2 border border-[#c7c7c7] dark:border-[#464646] rounded text-center font-mono font-bold text-xs bg-[#f4f4f4] dark:bg-[#1c1c1c]"
               />
-              <span className="text-xs text-[#515f74] dark:text-[#bec6e0] font-semibold">Columns</span>
+              <span className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6] font-semibold">Columns</span>
             </div>
           </div>
 
         </div>
 
         {/* Dual List Selector */}
-        <div className="bg-white dark:bg-[#2d3133] rounded-xl border border-[#c6c6cd] dark:border-[#45464d] p-6 shadow-xs space-y-4">
+        <div className="bg-white dark:bg-[#303030] rounded-xl border border-[#c7c7c7] dark:border-[#464646] p-6 shadow-xs space-y-4">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-sm font-bold text-[#191c1e] dark:text-white">Fields to Display &amp; Column Order</h3>
+              <h3 className="text-sm font-bold text-[#1c1c1c] dark:text-white">Fields to Display &amp; Column Order</h3>
               <p className="text-xs text-[#76777d]">
                 Double-click or use arrows to move fields. Rearrange the order on the right to set global column positions.
               </p>
             </div>
             <div className="flex items-center gap-2 text-xs font-bold font-mono">
-              <span className="text-[#0c9488] bg-[#dcfce7] dark:bg-[#166534]/40 px-2 py-0.5 rounded">
+              <span className="text-[#767676] bg-[#dcfce7] dark:bg-[#166534]/40 px-2 py-0.5 rounded">
                 {selectedColumns.length} Visible
               </span>
-              <span className="text-[#76777d] bg-[#f2f4f6] dark:bg-[#191c1e] px-2 py-0.5 rounded">
+              <span className="text-[#76777d] bg-[#f4f4f4] dark:bg-[#1c1c1c] px-2 py-0.5 rounded">
                 {unselectedFields.length} Hidden
               </span>
             </div>
@@ -369,14 +355,14 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-11 gap-4 items-center h-[420px]">
             
             {/* Left: Available Fields (Hidden/Unselected) */}
-            <div className="md:col-span-5 h-full flex flex-col border border-[#c6c6cd] dark:border-[#45464d] rounded-lg bg-[#f7f9fb] dark:bg-[#191c1e] overflow-hidden">
-              <div className="px-3 py-2 bg-[#f2f4f6] dark:bg-[#131b2e] border-b border-[#c6c6cd] dark:border-[#45464d] flex justify-between items-center text-xs font-bold">
+            <div className="md:col-span-5 h-full flex flex-col border border-[#c7c7c7] dark:border-[#464646] rounded-lg bg-[#f9f9f9] dark:bg-[#1c1c1c] overflow-hidden">
+              <div className="px-3 py-2 bg-[#f4f4f4] dark:bg-[#1b1b1b] border-b border-[#c7c7c7] dark:border-[#464646] flex justify-between items-center text-xs font-bold">
                 <span>Available Fields (Hidden)</span>
-                <span className="font-mono bg-white dark:bg-[#2d3133] px-2 py-0.5 rounded text-[10px]">
+                <span className="font-mono bg-white dark:bg-[#303030] px-2 py-0.5 rounded text-[10px]">
                   {filteredAvailable.length}
                 </span>
               </div>
-              <div className="p-2 border-b border-[#c6c6cd] dark:border-[#45464d]">
+              <div className="p-2 border-b border-[#c7c7c7] dark:border-[#464646]">
                 <div className="relative">
                   <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-[#76777d]" />
                   <input
@@ -384,11 +370,11 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                     value={searchAvailable}
                     onChange={e => setSearchAvailable(e.target.value)}
                     placeholder="Search available..."
-                    className="w-full pl-7 pr-2 py-1 bg-white dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded text-xs outline-none"
+                    className="w-full pl-7 pr-2 py-1 bg-white dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded text-xs outline-none"
                   />
                 </div>
               </div>
-              <ul className="flex-1 overflow-y-auto p-1 divide-y divide-[#eceef0] dark:divide-[#2d3133] text-xs">
+              <ul className="flex-1 overflow-y-auto p-1 divide-y divide-[#eeeeee] dark:divide-[#303030] text-xs">
                 {filteredAvailable.length === 0 ? (
                   <li className="p-4 text-center text-[#76777d] italic">No available fields.</li>
                 ) : (
@@ -399,8 +385,8 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                       onDoubleClick={() => handleAddColumn(f.key)}
                       className={`px-3 py-2 cursor-pointer rounded transition flex items-center justify-between ${
                         activeAvailableKey === f.key
-                          ? "bg-[#d5e3fd] text-[#0d1c2f] font-bold"
-                          : "hover:bg-[#f2f4f6] dark:hover:bg-[#2d3133]"
+                          ? "bg-[#e2e2e2] text-[#1a1a1a] font-bold"
+                          : "hover:bg-[#f4f4f4] dark:hover:bg-[#303030]"
                       }`}
                     >
                       <div className="flex items-center gap-2">
@@ -419,7 +405,7 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                 type="button"
                 onClick={handleMoveRight}
                 disabled={!activeAvailableKey}
-                className="w-8 h-8 rounded bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#0052cc] hover:text-white flex items-center justify-center transition disabled:opacity-30 shadow-xs"
+                className="w-8 h-8 rounded bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#494949] hover:text-white flex items-center justify-center transition disabled:opacity-30 shadow-xs"
                 title="Add Selected Column"
               >
                 <ChevronRight size={16} />
@@ -427,7 +413,7 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
               <button
                 type="button"
                 onClick={handleMoveAllRight}
-                className="w-8 h-8 rounded bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#0052cc] hover:text-white flex items-center justify-center transition shadow-xs"
+                className="w-8 h-8 rounded bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#494949] hover:text-white flex items-center justify-center transition shadow-xs"
                 title="Add All Columns"
               >
                 <ChevronsRight size={16} />
@@ -436,7 +422,7 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                 type="button"
                 onClick={handleMoveLeft}
                 disabled={!activeSelectedKey}
-                className="w-8 h-8 rounded bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#0052cc] hover:text-white flex items-center justify-center transition disabled:opacity-30 shadow-xs"
+                className="w-8 h-8 rounded bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#494949] hover:text-white flex items-center justify-center transition disabled:opacity-30 shadow-xs"
                 title="Remove Selected Column"
               >
                 <ChevronLeft size={16} />
@@ -444,7 +430,7 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
               <button
                 type="button"
                 onClick={handleMoveAllLeft}
-                className="w-8 h-8 rounded bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#0052cc] hover:text-white flex items-center justify-center transition shadow-xs"
+                className="w-8 h-8 rounded bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] hover:bg-[#494949] hover:text-white flex items-center justify-center transition shadow-xs"
                 title="Reset to Minimum"
               >
                 <ChevronsLeft size={16} />
@@ -452,15 +438,15 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
             </div>
 
             {/* Right: Selected Columns (Visible & Ordered) */}
-            <div className="md:col-span-5 h-full flex flex-col border border-[#c6c6cd] dark:border-[#45464d] rounded-lg bg-[#f7f9fb] dark:bg-[#191c1e] overflow-hidden">
-              <div className="px-3 py-2 bg-[#f2f4f6] dark:bg-[#131b2e] border-b border-[#c6c6cd] dark:border-[#45464d] flex justify-between items-center text-xs font-bold">
+            <div className="md:col-span-5 h-full flex flex-col border border-[#c7c7c7] dark:border-[#464646] rounded-lg bg-[#f9f9f9] dark:bg-[#1c1c1c] overflow-hidden">
+              <div className="px-3 py-2 bg-[#f4f4f4] dark:bg-[#1b1b1b] border-b border-[#c7c7c7] dark:border-[#464646] flex justify-between items-center text-xs font-bold">
                 <span>Selected Fields to Display ({selectedColumns.length})</span>
                 <div className="flex items-center gap-1">
                   <button
                     type="button"
                     onClick={handleMoveToTop}
                     disabled={!activeSelectedKey}
-                    className="p-1 hover:bg-[#eceef0] dark:hover:bg-[#2d3133] rounded disabled:opacity-30"
+                    className="p-1 hover:bg-[#eeeeee] dark:hover:bg-[#303030] rounded disabled:opacity-30"
                     title="Move to Top"
                   >
                     <ArrowUpToLine size={13} />
@@ -469,7 +455,7 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                     type="button"
                     onClick={handleMoveUp}
                     disabled={!activeSelectedKey}
-                    className="p-1 hover:bg-[#eceef0] dark:hover:bg-[#2d3133] rounded disabled:opacity-30"
+                    className="p-1 hover:bg-[#eeeeee] dark:hover:bg-[#303030] rounded disabled:opacity-30"
                     title="Move Column Up"
                   >
                     <ArrowUp size={13} />
@@ -478,7 +464,7 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                     type="button"
                     onClick={handleMoveDown}
                     disabled={!activeSelectedKey}
-                    className="p-1 hover:bg-[#eceef0] dark:hover:bg-[#2d3133] rounded disabled:opacity-30"
+                    className="p-1 hover:bg-[#eeeeee] dark:hover:bg-[#303030] rounded disabled:opacity-30"
                     title="Move Column Down"
                   >
                     <ArrowDown size={13} />
@@ -487,14 +473,14 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                     type="button"
                     onClick={handleMoveToBottom}
                     disabled={!activeSelectedKey}
-                    className="p-1 hover:bg-[#eceef0] dark:hover:bg-[#2d3133] rounded disabled:opacity-30"
+                    className="p-1 hover:bg-[#eeeeee] dark:hover:bg-[#303030] rounded disabled:opacity-30"
                     title="Move to Bottom"
                   >
                     <ArrowDownToLine size={13} />
                   </button>
                 </div>
               </div>
-              <div className="p-2 border-b border-[#c6c6cd] dark:border-[#45464d]">
+              <div className="p-2 border-b border-[#c7c7c7] dark:border-[#464646]">
                 <div className="relative">
                   <Search size={12} className="absolute left-2 top-1/2 -translate-y-1/2 text-[#76777d]" />
                   <input
@@ -502,11 +488,11 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                     value={searchSelected}
                     onChange={e => setSearchSelected(e.target.value)}
                     placeholder="Search selected..."
-                    className="w-full pl-7 pr-2 py-1 bg-white dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded text-xs outline-none"
+                    className="w-full pl-7 pr-2 py-1 bg-white dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded text-xs outline-none"
                   />
                 </div>
               </div>
-              <ul className="flex-1 overflow-y-auto p-1 divide-y divide-[#eceef0] dark:divide-[#2d3133] text-xs">
+              <ul className="flex-1 overflow-y-auto p-1 divide-y divide-[#eeeeee] dark:divide-[#303030] text-xs">
                 {filteredSelected.map((f, idx) => (
                   <li
                     key={f.key}
@@ -514,8 +500,8 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
                     onDoubleClick={() => handleRemoveColumn(f.key)}
                     className={`px-3 py-2 cursor-pointer rounded transition flex items-center justify-between ${
                       activeSelectedKey === f.key
-                        ? "bg-[#d5e3fd] text-[#0d1c2f] font-bold"
-                        : "hover:bg-[#f2f4f6] dark:hover:bg-[#2d3133]"
+                        ? "bg-[#e2e2e2] text-[#1a1a1a] font-bold"
+                        : "hover:bg-[#f4f4f4] dark:hover:bg-[#303030]"
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -531,14 +517,14 @@ export const ItemViewConfig: React.FC<SmritiItemViewConfigurationProps> = ({
           </div>
 
           {/* Action Footer */}
-          <div className="pt-4 border-t border-[#eceef0] dark:border-[#45464d] flex justify-between items-center">
-            <span className="text-[11px] text-[#515f74] dark:text-[#bec6e0]">
+          <div className="pt-4 border-t border-[#eeeeee] dark:border-[#464646] flex justify-between items-center">
+            <span className="text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6]">
               Changes will instantly synchronize all grids, catalogs, and operational reports.
             </span>
             <button
               type="button"
               onClick={handleSave}
-              className="px-6 py-2.5 bg-[#00355f] dark:bg-[#8ebdf9] text-white dark:text-[#001c37] hover:bg-[#0f4c81] dark:hover:bg-white rounded-xl font-bold text-xs transition flex items-center gap-2 shadow-xs"
+              className="px-6 py-2.5 bg-[#2d2d2d] dark:bg-[#b7b7b7] text-white dark:text-[#181818] hover:bg-[#434343] dark:hover:bg-white rounded-xl font-bold text-xs transition flex items-center gap-2 shadow-xs"
             >
               <Save size={15} />
               Save View Configuration

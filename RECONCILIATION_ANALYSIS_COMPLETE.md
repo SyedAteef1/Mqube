@@ -1,5 +1,5 @@
 ================================================================================
-SMRITI STAGING VALIDATION - COMPREHENSIVE RECONCILIATION ANALYSIS
+TILEFLOW STAGING VALIDATION - COMPREHENSIVE RECONCILIATION ANALYSIS
 Date: 2026-08-30
 ================================================================================
 
@@ -32,13 +32,13 @@ Detailed Failure Analysis:
 1. Sales Return Contracts (FAIL)
    File: backend/app/tests/test_sales_return_contracts.py
    Error Type: MISSING_TABLE
-   Root Cause: smriti_permissions table does not exist
+   Root Cause: tileflow_permissions table does not exist
    Details:
      - All test cases (24 tests within suite) trigger permission lookup
      - First permission query fails with UndefinedTableError
      - Error occurs during auth scope validation
    Impact: HIGH - Cannot proceed with any sales return contract tests
-   Action: CREATE smriti_permissions table (v1384 pre-canonical)
+   Action: CREATE tileflow_permissions table (v1384 pre-canonical)
 
 2. Sales Return (filtered) (FAIL)
    File: backend/app/tests/test_sales.py::test_sales_return
@@ -53,12 +53,12 @@ Detailed Failure Analysis:
 3. Inventory Management (FAIL)
    File: backend/app/tests/test_inventory.py
    Error Type: MISSING_TABLE
-   Root Cause: smriti_permissions table does not exist
+   Root Cause: tileflow_permissions table does not exist
    Details:
      - Permission check on item_master DELETE action
      - Same as #1 - auth schema table missing
    Impact: HIGH - Cannot run inventory tests
-   Action: CREATE smriti_permissions table (v1384 pre-canonical)
+   Action: CREATE tileflow_permissions table (v1384 pre-canonical)
 
 4. Stock Movement Ledger (FAIL)
    File: backend/tests/test_stock_movement_ledger.py
@@ -98,12 +98,12 @@ Detailed Failure Analysis:
 7. Permission Schema (FAIL)
    File: backend/app/tests/test_permission_schema.py
    Error Type: MISSING_TABLE
-   Root Cause: smriti_permissions table does not exist
+   Root Cause: tileflow_permissions table does not exist
    Details:
-     - Direct schema assertion: "SELECT to_regclass('public.smriti_permissions')"
+     - Direct schema assertion: "SELECT to_regclass('public.tileflow_permissions')"
      - Table must exist for permission-based access control
    Impact: CRITICAL - Blocks all permission validation
-   Action: CREATE smriti_permissions table (v1384 pre-canonical)
+   Action: CREATE tileflow_permissions table (v1384 pre-canonical)
 
 8. Bootstrap Company (FAIL)
    File: backend/app/tests/test_bootstrap_company_registration.py
@@ -120,7 +120,7 @@ Detailed Failure Analysis:
 PART 2: EXACT SCHEMA DIFFERENCE ANALYSIS
 ================================================================================
 
-Database: smriti001_stage
+Database: tileflow001_stage
 Total Tables: 210
 Alembic Version: v1384_company_code_constraint
 
@@ -130,7 +130,7 @@ CANONICAL TABLE INVENTORY (v1385-v1388):
   Missing: 6 (15%)
 
 CRITICAL MISSING TABLES (Pre-canonical, v1384 or earlier):
-  1. smriti_permissions - Required by 4/8 tests
+  1. tileflow_permissions - Required by 4/8 tests
   2. company_database_registries - Required by 1/8 tests
 
 MISSING CANONICAL TABLES (v1385-v1388):
@@ -215,7 +215,7 @@ Rationale: Staging contains minimal data (3 rows total across all canonical tabl
 
 Detailed Risk Analysis:
 
-1. Missing Critical Tables (smriti_permissions, company_database_registries):
+1. Missing Critical Tables (tileflow_permissions, company_database_registries):
    - Currently missing from schema entirely
    - Cannot cause data conflicts when created
    - No rows exist to preserve
@@ -254,7 +254,7 @@ PART 4: RECONCILIATION CLASSIFICATION
 Every affected table classified by action required:
 
 A. CRITICAL: CREATE (Required to unblock tests)
-   1. smriti_permissions [v1384 or earlier - PRE-CANONICAL]
+   1. tileflow_permissions [v1384 or earlier - PRE-CANONICAL]
    2. company_database_registries [v1384 or earlier - PRE-CANONICAL]
 
 B. CREATE_MISSING_TABLE (6 canonical v1388 tables)
@@ -297,7 +297,7 @@ The reconciliation should be implemented as MULTIPLE migrations grouped by:
 
 PHASE 1: CRITICAL BLOCKERS (Unblock regression tests immediately)
   Migration: v1390_critical_auth_and_registry
-  Tables: smriti_permissions, company_database_registries
+  Tables: tileflow_permissions, company_database_registries
   Risk: NONE (schema-only creates)
   Impact: Unblocks 5/7 failing tests (permission_schema, bootstrap, 
           sales_return_contracts, inventory, others)
@@ -350,7 +350,7 @@ PART 6: MIGRATION DESIGN PROPOSAL (Design Only)
 CRITICAL MIGRATION: v1390_critical_auth_and_registry
 Purpose: Unblock regression tests by creating missing critical tables
 
-Table 1: smriti_permissions
+Table 1: tileflow_permissions
   Source: v1384 or earlier production schema
   Status: REQUIRED for all auth/permission checks
   DDL Needed: Full table definition with columns, PK, UKs, FKs, CHECKs, INDEXes
@@ -400,16 +400,16 @@ PART 7: ROLLBACK STRATEGY (Design Only)
 Each migration includes rollback capability.
 
 v1390 ROLLBACK:
-  Operation: DROP TABLE smriti_permissions, company_database_registries
+  Operation: DROP TABLE tileflow_permissions, company_database_registries
   Risk: LOW (these tables empty in staging)
   Impact: Regression tests fail again (expected, tables re-deleted)
   Downtime: None (DELETE operation only)
   Data Loss: None (tables were empty)
-  Verification: SELECT * FROM pg_tables WHERE tablename IN ('smriti_permissions', ...)
+  Verification: SELECT * FROM pg_tables WHERE tablename IN ('tileflow_permissions', ...)
   
   Downgrade Code:
     def downgrade():
-        op.drop_table('smriti_permissions', schema='public')
+        op.drop_table('tileflow_permissions', schema='public')
         op.drop_table('company_database_registries', schema='public')
 
 v1391 ROLLBACK:
@@ -454,7 +454,7 @@ PART 8: PRODUCTION READINESS ASSESSMENT
 
 BLOCKING ISSUES (Must resolve before production):
 
-1. smriti_permissions table definition unclear
+1. tileflow_permissions table definition unclear
    Status: REQUIRE EXACT DDL from v1384+ production
    Action: Extract from production database or historical migration
    Dependency: v1390 migration blocked until this is obtained
@@ -478,12 +478,12 @@ BLOCKING ISSUES (Must resolve before production):
 
 UNBLOCKING ACTIONS (Before Production Deployment):
 
-[ ] Action 1: Extract smriti_permissions DDL from production
-              Use: psql -c "\d+ smriti_permissions" on smritisys
+[ ] Action 1: Extract tileflow_permissions DDL from production
+              Use: psql -c "\d+ tileflow_permissions" on tileflowsys
               Verify: All columns, constraints, indexes
 
 [ ] Action 2: Extract company_database_registries DDL from production
-              Use: psql -c "\d+ company_database_registries" on smritisys
+              Use: psql -c "\d+ company_database_registries" on tileflowsys
               Verify: All columns, constraints, indexes
 
 [ ] Action 3: Run detailed schema drift analysis on v1385-v1388 tables
@@ -534,7 +534,7 @@ PART 9: FINAL SUMMARY & DECISION MATRIX
 REGRESSION TEST RESULTS: 1/8 PASS (12.5%)
   ✓ PASS: 1 test (Distribution Center E2E)
   ✗ FAIL: 7 tests (root causes identified)
-    - 5 failures due to missing critical tables (smriti_permissions, company_database_registries)
+    - 5 failures due to missing critical tables (tileflow_permissions, company_database_registries)
     - 2 failures due to test infrastructure/import issues (not schema)
 
 SCHEMA ANALYSIS RESULTS:
@@ -560,7 +560,7 @@ Question: Is production ready for reconciliation?
 Answer: BLOCKED
 
 Rationale:
-  ✗ smriti_permissions DDL not extracted from production
+  ✗ tileflow_permissions DDL not extracted from production
   ✗ company_database_registries DDL not extracted from production
   ✗ Schema drift analysis incomplete (preliminary only)
   ✗ 7/8 regression tests still failing
@@ -577,7 +577,7 @@ Decision: PROCEED WITH CAUTION
 
 FINAL RECOMMENDATION:
 
-1. ✓ DO: Create v1390 migration (critical tables: smriti_permissions, company_database_registries)
+1. ✓ DO: Create v1390 migration (critical tables: tileflow_permissions, company_database_registries)
 2. ✓ DO: Create v1391 migration (v1388 tables: module_audit_logs, module_states, etc.)
 3. ✓ DO: Run detailed schema drift analysis for v1392
 4. ✓ DO: Fix test infrastructure issues (import paths, test names)

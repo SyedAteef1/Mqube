@@ -1,25 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — Phase 1 Governance & Data Contracts Test Suite.
-Verifies Invariants 1–10:
-- Single Source of Truth Registry
-- Governed Metric Dictionary Formulas
-- Decoupled Shoper 9 Legacy Alias Resolution
-- Server-Side RBAC Validation
-- Forensic 5-Vector Execution Envelope
-"""
-
 import pytest
 from decimal import Decimal
 from datetime import datetime, timezone

@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.29.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Retail OS — Commercial Pilot Smoke Test Results
+# TILEFLOW Retail OS — Commercial Pilot Smoke Test Results
 
 **Date:** 2026-08-20  
 **Version:** v3.29.0  
-**Branch:** `smritiNX`  
+**Branch:** `tileflowNX`  
 **Overall Verdict:** **GO** (All critical pre-flight, Tier A operational paths, and RBAC negative checks PASSED)
 
 ---

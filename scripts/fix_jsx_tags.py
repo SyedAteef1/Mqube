@@ -11,8 +11,8 @@ repo_root = Path(".").resolve()
 # These are ONLY JSX tag replacements - no import path changes
 JSX_ONLY_FIXES = [
     # BillingTerm.tsx
-    ("src/components/billing/BillingTerm.tsx", "ItemTypeaheadDrop", "SmritiItemTypeaheadDropdown"),
-    ("src/components/billing/BillingTerm.tsx", "InvoiceSettlementD", "SmritiInvoiceSettlementModal"),
+    ("src/components/billing/BillingTerm.tsx", "ItemTypeaheadDrop", "TileFlowItemTypeaheadDropdown"),
+    ("src/components/billing/BillingTerm.tsx", "InvoiceSettlementD", "TileFlowInvoiceSettlementModal"),
     ("src/components/billing/BillingTerm.tsx", "ProductSearchBrows", "ProductSearchBrowserModal"),
     # CustMasterWs.tsx - searchTerm issue - just remove searchTerm prop
     # (handled separately below)

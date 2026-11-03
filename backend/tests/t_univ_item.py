@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -27,7 +13,7 @@ from app.models.item_master import Item, ItemVariant, ItemBarcode
 async def cleanup_test_items():
     """Clean up test items before and after each test."""
     test_codes = ["SKU-POLO-NAVY", "SKU-TSHIRT-BLK", "SKU-JEANS-SLIM", "SKU-ISO-TEST-01", "SKU-SCAN-ITEM-01"]
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             # Delete child variants and barcodes
@@ -37,7 +23,7 @@ async def cleanup_test_items():
             await session.execute(delete(Item).where(Item.item_code.in_(test_codes)))
             await session.commit()
     yield
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             subquery = select(Item.id).where(Item.item_code.in_(test_codes))
@@ -50,7 +36,7 @@ async def cleanup_test_items():
 @pytest.mark.asyncio
 async def test_create_and_fetch_universal_item_with_variants():
     """Verify creating a canonical Item with variants and unique barcodes."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         item = await UniversalItemMasterService.create_item(
             session=session,
@@ -58,7 +44,7 @@ async def test_create_and_fetch_universal_item_with_variants():
             item_code="SKU-POLO-NAVY",
             item_name="Premium Pique Polo Shirt",
             category="Apparel",
-            brand="SMRITI Luxe",
+            brand="TILEFLOW Luxe",
             hsn_code="61051000",
             tax_rate=12.00,
             mrp=1499.00,
@@ -96,7 +82,7 @@ async def test_create_and_fetch_universal_item_with_variants():
 @pytest.mark.asyncio
 async def test_lookup_by_barcode_canonical_item():
     """Verify fast scanner resolution via canonical ItemBarcode registry."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UniversalItemMasterService.create_item(
             session=session,
@@ -129,9 +115,9 @@ async def test_lookup_by_barcode_canonical_item():
 
 @pytest.mark.asyncio
 async def test_item_tenant_isolation():
-    """Verify item created in smriti001 does not leak into smriti002."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    """Verify item created in tileflow001 does not leak into tileflow002."""
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     async with session_001() as s1:
         await UniversalItemMasterService.create_item(
@@ -146,4 +132,4 @@ async def test_item_tenant_isolation():
 
     async with session_002() as s2:
         i2 = await UniversalItemMasterService.get_item_by_code(s2, "SKU-ISO-TEST-01")
-        assert i2 is None, "Expected item from smriti001 not to exist in smriti002!"
+        assert i2 is None, "Expected item from tileflow001 not to exist in tileflow002!"

@@ -4,7 +4,7 @@ Compare items vs products table to see where barcodes should be
 """
 import psycopg2
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 print("=" * 80)

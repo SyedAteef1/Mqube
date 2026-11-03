@@ -3,7 +3,7 @@ import psycopg2
 import uuid
 from datetime import datetime
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smritisys')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflowsys')
 cur = conn.cursor()
 
 print('=== SALES_ORDERS COLUMNS ===')

@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine — Server-Side RBAC & Data Masking Engine.
-Enforces Invariant 4: No authorization or masking is trusted to the frontend.
-Enforces Invariant 9: All report consumers (Grid, BI, XLSX, CSV, PDF, Print) receive identical security masking.
-"""
-
 from typing import Dict, Any, List, Set, Optional, Union
 from pydantic import BaseModel
 

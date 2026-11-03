@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah
-  * Founder & Chairperson
-  * Phone: +91 9324117007
-  * Email: founder@aitdl.com
-
-* Jawahar Ramkripal Mallah
-  * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-  * Email: founder@aitdl.com
-
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.9.0
-* Created    : 2026-07-11
-* Modified   : 2026-07-11
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-"""
-
 import uuid
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -78,7 +53,7 @@ async def _make_tenant(db_session, suffix: str):
     db_reg = CompanyDatabaseRegistry(
         company_id=company.id,
         database_id=f"db-auth-{suffix}",
-        database_name=f"smriti{valid_code}",
+        database_name=f"tileflow_auth_{suffix}",
         status="READY",
     )
     db_session.add_all([company, branch, db_reg])
@@ -91,7 +66,7 @@ async def _make_user(db_session, suffix: str, role: UserRole,
     user = User(
         id=f"usr-{suffix}",
         username=f"user_{suffix}",
-        email=f"user_{suffix}@smriti.test",
+        email=f"user_{suffix}@tileflow.test",
         hashed_password=hash_password("Password@123"),
         role=role,
         is_active=True,
@@ -114,7 +89,7 @@ async def test_bootstrap_creates_sysadmin(db_session):
         res = await client.post("/api/v1/auth/bootstrap", json={
             "username": f"admin_{uuid.uuid4().hex[:6]}",
             "password": "Admin@123",
-            "email": f"admin_{uuid.uuid4().hex[:4]}@smriti.test",
+            "email": f"admin_{uuid.uuid4().hex[:4]}@tileflow.test",
         })
     assert res.status_code == 201
     data = res.json()
@@ -130,7 +105,7 @@ async def test_login_returns_password_reset_required_for_bootstrap_user(db_sessi
         res = await client.post("/api/v1/auth/bootstrap", json={
             "username": f"super_{suffix}",
             "password": "TempPass@123",
-            "email": f"admin_{suffix}@smriti.test",
+            "email": f"admin_{suffix}@tileflow.test",
         })
         assert res.status_code == 201
 
@@ -149,7 +124,7 @@ async def test_password_change_clears_pending_status(db_session):
         bootstrap_res = await client.post("/api/v1/auth/bootstrap", json={
             "username": f"super_{suffix}",
             "password": "TempPass@123",
-            "email": f"admin_{suffix}@smriti.test",
+            "email": f"admin_{suffix}@tileflow.test",
         })
         assert bootstrap_res.status_code == 201
 
@@ -186,7 +161,7 @@ async def test_pending_password_change_blocks_protected_routes(db_session):
         bootstrap_res = await client.post("/api/v1/auth/bootstrap", json={
             "username": f"pending_{suffix}",
             "password": "TempPass@123",
-            "email": f"pending_{suffix}@smriti.test",
+            "email": f"pending_{suffix}@tileflow.test",
         })
         assert bootstrap_res.status_code == 201
 
@@ -565,7 +540,7 @@ async def test_role_guard_cashier_cannot_create_product(db_session):
             headers={"Authorization": f"Bearer {token}"},
         )
     assert res.status_code == 403
-    assert "SMRITI-AUTH-001" in res.json()["detail"] or "CASHIER" in res.json()["detail"]
+    assert "TILEFLOW-AUTH-001" in res.json()["detail"] or "CASHIER" in res.json()["detail"]
 
 
 async def test_role_guard_manager_can_create_product(db_session):
@@ -590,7 +565,7 @@ async def test_role_guard_manager_can_create_product(db_session):
                 "id": f"prod-mgr-{suffix}",
                 "code": f"MGR{suffix}",
                 "name": "Manager Created Product",
-                "category": "General",
+                "category": "Floor Tiles",
                 "barcode": f"BCMGR{suffix}",
                 "price": 75.0,
                 "mrp": 100.0,
@@ -600,7 +575,7 @@ async def test_role_guard_manager_can_create_product(db_session):
             },
             headers={"Authorization": f"Bearer {token}"},
         )
-    assert res.status_code == 201
+    assert res.status_code == 201, res.text
     data = res.json()
     assert data["company_id"] == comp.id
     assert data["branch_id"] == br.id

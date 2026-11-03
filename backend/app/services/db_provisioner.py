@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 from typing import Dict, Any, Optional
 from datetime import datetime, timezone
 
@@ -29,7 +16,7 @@ except ImportError:
 
 class CompanyDatabaseProvisioner:
     """
-    Authoritative SMRITI Company Database Provisioning Engine.
+    Authoritative TILEFLOW Company Database Provisioning Engine.
     Executes in DRY_RUN mode only (ZERO database mutations).
     """
 
@@ -57,12 +44,12 @@ class CompanyDatabaseProvisioner:
             if code == "000":
                 raise ValueError("Company code '000' is permanently reserved.")
             if code == "SYS":
-                raise ValueError("Company code 'SYS' is permanently reserved for SMRITI Control Plane.")
+                raise ValueError("Company code 'SYS' is permanently reserved for TILEFLOW Control Plane.")
             return code
         return CompanyCodeAllocator.allocate_next_available_code()
 
     def generate_database_name(self, company_code: str) -> str:
-        """Step 3: Server-side database name generation: smriti<4-character-code>."""
+        """Step 3: Server-side database name generation: tileflow<4-character-code>."""
         return generate_company_database_name(company_code)
 
     def check_database_exists(self, database_name: str) -> bool:
@@ -108,7 +95,7 @@ class CompanyDatabaseProvisioner:
         }
 
     def register_database_plan(self, company_id: str, company_code: str, database_name: str) -> Dict[str, Any]:
-        """Step 8: Register database in smritisys.company_database_registries."""
+        """Step 8: Register database in tileflowsys.company_database_registries."""
         return {
             "step": 8,
             "operation": "register_database_plan",

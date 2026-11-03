@@ -5,7 +5,7 @@
 | Component Module | UI Designed | Frontend Complete | Accessibility | Localization | Mobile (Responsive) |
 | :--- | :---: | :---: | :---: | :---: | :---: |
 | Executive Hub | 💚 | ✓ | ✓ | ✓ | ✓ |
-| SMRITI Gyan Kendra | 💚 | ✓ | ✓ | ✕ | ✕ |
+| TILEFLOW Gyan Kendra | 💚 | ✓ | ✓ | ✕ | ✕ |
 | Billing Desk | 💚 | ✓ | ✕ | ✕ | ✓ |
 | Sales Studio | 💚 | ✓ | ✓ | ✓ | ✓ |
 | Customer Master | 💚 | ✓ | ✕ | ✓ | ✓ |
@@ -33,6 +33,6 @@
 | Terms & Conditions | 💚 | ✓ | ✓ | ✕ | ✓ |
 | Data Exchange Hub | 💚 | ✓ | ✓ | ✕ | ✓ |
 | Company Setup Wizard | 💔 | ✕ | ✕ | ✕ | ✕ |
-| About SMRITI | 💚 | ✓ | ✓ | ✕ | ✓ |
+| About TILEFLOW | 💚 | ✓ | ✓ | ✕ | ✓ |
 | Dev Intelligence Center | 💚 | ✓ | ✕ | ✕ | ✓ |
 | Audit Logs | 💚 | ✓ | ✕ | ✕ | ✕ |

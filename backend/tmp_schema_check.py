@@ -1,5 +1,5 @@
 import psycopg2
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 for tbl in ('sales_invoices', 'sales_invoice_items'):

@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.62.0
   Created      : 2026-08-23
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Enterprise Blueprint
+# TILEFLOW Enterprise Blueprint
 ## Pending-Work Roadmap v1.0 [STATUS: COMPLETED & CERTIFIED]
 
-**Baseline:** SMRITI Enterprise Business Operating Platform Architecture v1.0  
+**Baseline:** TILEFLOW Enterprise Business Operating Platform Architecture v1.0  
 **Baseline status:** Frozen & Certified Complete  
 **Roadmap status:** 100% Completed / Verified  
 **Date:** 2026-08-25  
@@ -26,8 +25,8 @@ This roadmap converts the frozen blueprint into dependency-ordered delivery work
 
 The repository has a strong operational foundation:
 
-- `smritisys` control-plane routing, identity, menus, roles, audit foundations, and company registry exist.
-- `smritiXXX` transactional databases, physical isolation, POS, Sales, Purchase, Inventory, WMS, Accounting, PSV, reporting, and outbox foundations exist.
+- `tileflowsys` control-plane routing, identity, menus, roles, audit foundations, and company registry exist.
+- `tileflowXXX` transactional databases, physical isolation, POS, Sales, Purchase, Inventory, WMS, Accounting, PSV, reporting, and outbox foundations exist.
 - Universal Party and Item model foundations, pricing/payment/numbering, approval/workflow, communicator, and workspace capability foundations exist.
 - The current tracker still classifies the complete platform as **incremental migration in progress**.
 
@@ -47,7 +46,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Status:** `Done`
 - **Quantitative Metrics:**
   - `4/4 tests green` in `backend/tests/t_pos_sct_fk.py` (execution time: 2.37s).
-  - `0 orphan accounts` across tenant databases (`smriti001`, `smriti002`, `smritisys`).
+  - `0 orphan accounts` across tenant databases (`tileflow001`, `tileflow002`, `tileflowsys`).
   - `0 orphan journal vouchers` across tenant databases.
 - **Named Architectural Mechanisms:**
   - `DEFERRABLE INITIALLY DEFERRED` Foreign Key constraints on `shift_cash_transactions` (`fk_sct_account_id` → `accounts.id`, `fk_sct_gl_voucher_id` → `journal_vouchers.id`) checking integrity at transaction commit.
@@ -105,7 +104,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Named Architectural Mechanisms:**
   - `ReportsService Async Query Aggregator`: Multi-table joins across `SalesInvoice`, `SalesInvoiceItem`, `SalesReturn`, `SalesReturnItem`, and `Product` with tenant company isolation filters (`_tenant_filter`) and date-range constraints (`_date_filter`).
   - `Eager Relationship Loading`: `selectinload(SalesInvoice.items)` preventing greenlet I/O collisions in async SQLAlchemy.
-  - `Alembic Schema Convergence`: Migrations `v1371` through `v1375_backfill_sales_return_cust` executed across `smriti001`, `smriti002`, and `smritisys` providing denormalized `customer_id` on `sales_returns` and extended `sales_invoices` audit attributes (`salesperson_id`, `terminal_id`, `discount_amount`, `net_amount`).
+  - `Alembic Schema Convergence`: Migrations `v1371` through `v1375_backfill_sales_return_cust` executed across `tileflow001`, `tileflow002`, and `tileflowsys` providing denormalized `customer_id` on `sales_returns` and extended `sales_invoices` audit attributes (`salesperson_id`, `terminal_id`, `discount_amount`, `net_amount`).
   - `Universal Report Designer Viewer`: Responsive React data table renderers with KPI stat banners and dynamic dataset export pipelines (`GlobalExportService`) for CSV/XLSX/TXT.
 - **Verifiable Evidence Citation:**
   - Test Suite: [`backend/tests/t_reports_parity.py`](file:///F:/SMRITRretailNX/backend/tests/t_reports_parity.py)
@@ -127,11 +126,11 @@ The remaining work is primarily convergence and governance: turning module-level
   - `3 supported UI/print dictionary languages` (English baseline, Hindi `hi`, Marathi `mr`) with automated English fallback.
   - `100% precision in locale-aware formatting`: Indian numbering system (Lakh/Crore: `₹ 12,34,567.89`) vs International system (`$ 1,234,567.89`).
 - **Named Architectural Mechanisms:**
-  - `GlobalReferenceService`: Control-plane lookup engine querying `smritisys` for authoritative country, state, currency, UOM, and GST tax reference masters.
+  - `GlobalReferenceService`: Control-plane lookup engine querying `tileflowsys` for authoritative country, state, currency, UOM, and GST tax reference masters.
   - `LocalizationDictionaryService with Fallback Engine`: Translation dictionary loader resolving approved strings from `translations_ref` with automatic fallback to `translation_keys_ref.default_text` for missing or unapproved keys.
   - `Statutory GST State Code Tax Resolver`: `GET /states/by-gst-code/{code}` routing logic determining intra-state (CGST+SGST) vs inter-state (IGST) taxation boundaries.
   - `UOM Mathematical Conversion Engine`: Direct and reciprocal ratio calculator with validation guard against incompatible measurement categories.
-  - `Idempotent Database Seeder`: `seed_control_reference_data()` synchronizing `smritisys`, `smriti001`, and `smriti002` via PostgreSQL `ON CONFLICT` statements.
+  - `Idempotent Database Seeder`: `seed_control_reference_data()` synchronizing `tileflowsys`, `tileflow001`, and `tileflow002` via PostgreSQL `ON CONFLICT` statements.
 - **Verifiable Evidence Citation:**
   - Test Suite: [`backend/tests/t_ctrl_ref.py`](file:///F:/SMRITRretailNX/backend/tests/t_ctrl_ref.py)
   - Backend Service: [`backend/app/services/localization_svc.py`](file:///F:/SMRITRretailNX/backend/app/services/localization_svc.py)
@@ -145,7 +144,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `8/8 tests green` in `backend/tests/t_cap_registry.py` (execution time: 9.43s).
   - `27/27 tests green` across full control plane and reports regression suite.
-  - `100% frozen capability map coverage`: All 32 platform capabilities (POS, Sales, Purchase, Inventory, WMS, Distribution, ECOM, PSV, PDT, CGE, CRM, Accounting, GST, Payments, Pricing, Promotions, Fulfillment, Barcode, Label Printing, Reporting, Communicator, Document, Approval, Search, Integration, Audit, Batch Expiry, Serial Tracking, Matrix Grid, Table Ordering, Delivery Challan, Stock Audit) registered with dependency DAGs in `smritisys`.
+  - `100% frozen capability map coverage`: All 32 platform capabilities (POS, Sales, Purchase, Inventory, WMS, Distribution, ECOM, PSV, PDT, CGE, CRM, Accounting, GST, Payments, Pricing, Promotions, Fulfillment, Barcode, Label Printing, Reporting, Communicator, Document, Approval, Search, Integration, Audit, Batch Expiry, Serial Tracking, Matrix Grid, Table Ordering, Delivery Challan, Stock Audit) registered with dependency DAGs in `tileflowsys`.
   - `3 subscription plan tiers` (BASIC: 8 capabilities, PROFESSIONAL: 17 capabilities, ENTERPRISE: 32 capabilities) with dynamic tenant override resolution.
   - `5 platform feature flags` with company-level override toggle.
   - `7 system module states` tracked in `module_states` registry.
@@ -154,7 +153,7 @@ The remaining work is primarily convergence and governance: turning module-level
   - `TenantCapabilityBinding Engine`: PostgreSQL-backed tenant subscription registry managing active module states per company context.
   - `Feature Flag Resolver`: Multi-tier flag evaluation resolving global default flags overlaid by tenant company overrides.
   - `Module State Registry`: Lifecycle state tracking (`ACTIVE`, `DISABLED`, `MAINTENANCE`, `UPGRADING`) for system subsystem engines.
-  - `Idempotent Capability Seeder`: `seed_capability_master_data()` in `backend/app/db/seed_cap_master.py` synchronizing `smritisys`, `smriti001`, and `smriti002`.
+  - `Idempotent Capability Seeder`: `seed_capability_master_data()` in `backend/app/db/seed_cap_master.py` synchronizing `tileflowsys`, `tileflow001`, and `tileflow002`.
 - **Verifiable Evidence Citation:**
   - Test Suite: [`backend/tests/t_cap_registry.py`](file:///F:/SMRITRretailNX/backend/tests/t_cap_registry.py)
   - Backend Service: [`backend/app/services/capability_service.py`](file:///F:/SMRITRretailNX/backend/app/services/capability_service.py)
@@ -168,9 +167,9 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `8/8 tests green` in `backend/tests/t_workspace_ui.py` (execution time: 8.78s).
   - `35/35 tests green` across full control plane and reports regression suite.
-  - `6 standard industry workspace templates` (RETAIL_SUPERMARKET, APPAREL_FASHION, DISTRIBUTION_HUB, PHARMACY_HEALTHCARE, RESTAURANT_DINEIN, ENTERPRISE_HQ) registered in `smritisys.workspace_templates`.
-  - `4 persona workspace profiles` (PROF_SYSADMIN, PROF_STORE_MANAGER, PROF_CASHIER, PROF_ACCOUNTANT) configured in `smritisys.smriti_workspace_profiles`.
-  - `3 standard themes` (SMRITI Horizon, SAP Fiori Horizon Dark, High Contrast OLED Retro) with multi-variant token maps in `smritisys.smriti_themes`.
+  - `6 standard industry workspace templates` (RETAIL_SUPERMARKET, APPAREL_FASHION, DISTRIBUTION_HUB, PHARMACY_HEALTHCARE, RESTAURANT_DINEIN, ENTERPRISE_HQ) registered in `tileflowsys.workspace_templates`.
+  - `4 persona workspace profiles` (PROF_SYSADMIN, PROF_STORE_MANAGER, PROF_CASHIER, PROF_ACCOUNTANT) configured in `tileflowsys.tileflow_workspace_profiles`.
+  - `3 standard themes` (TILEFLOW Horizon, SAP Fiori Horizon Dark, High Contrast OLED Retro) with multi-variant token maps in `tileflowsys.tileflow_themes`.
   - `4 complete screen packages` (SCR_POS_BILLING, SCR_INV_MASTER, SCR_PURCH_ORDER, SCR_SALES_INVOICE) with nested field metadata and action button registries.
 - **Named Architectural Mechanisms:**
   - `WorkspaceUIRegistryService`: Core layout resolution engine merging persona profiles, active tenant capabilities, and workspace templates.
@@ -202,7 +201,7 @@ The remaining work is primarily convergence and governance: turning module-level
   - `GovernedRuleEngine.evaluate_condition_tree`: Multi-clause boolean evaluator supporting `all`, `any`, `not`, and typed predicate operators (`==`, `!=`, `>`, `>=`, `<`, `<=`, `in`, `not_in`).
   - `GovernedRuleEngine.evaluate_gst_tax_policy`: Multi-line statutory GST place of supply calculator with Intrastate (CGST+SGST) vs Interstate (IGST) split.
   - `GovernedRuleEngine.evaluate_workflow_transition`: Deterministic state transition gate enforcing declared valid states and caller RBAC roles.
-  - `Governed Logic Seeder`: `seed_governed_logic_data()` in `backend/app/db/seed_gov_logic.py` synchronizing `smritisys` definitions.
+  - `Governed Logic Seeder`: `seed_governed_logic_data()` in `backend/app/db/seed_gov_logic.py` synchronizing `tileflowsys` definitions.
 - **Verifiable Evidence Citation:**
   - Test Suite: [`backend/tests/t_gov_logic.py`](file:///F:/SMRITRretailNX/backend/tests/t_gov_logic.py)
   - Backend Service: [`backend/app/services/governed_rules.py`](file:///F:/SMRITRretailNX/backend/app/services/governed_rules.py)
@@ -280,7 +279,6 @@ The remaining work is primarily convergence and governance: turning module-level
   - Schemas: [`backend/app/schemas/item_master.py`](file:///F:/SMRITRretailNX/backend/app/schemas/item_master.py)
   - Migration Engine: [`backend/app/db/migr_item_ext.py`](file:///F:/SMRITRretailNX/backend/app/db/migr_item_ext.py)
 
-### P1.3 Authoritative Stock and Accounting Boundaries [STATUS: DONE / VERIFIED]
 
 - **Status:** `Done`
 - **Quantitative Metrics:**
@@ -379,7 +377,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `6/6 tests green` in `backend/tests/t_documents.py`.
   - `93/93 full platform regression tests green`.
-  - `0 naming violations` verified by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified by `scripts/tileflow_naming_guard.py`.
   - 100% gapless locked sequential numbering with `with_for_update()`.
   - 100% template integrity with 64-character SHA256 configuration & artifact hashing.
   - Complete document lifecycle state machine validation (`DRAFT` -> `ISSUED` -> `PRINTED` -> `AMENDED` -> `CANCELLED` / `VOIDED`).
@@ -401,7 +399,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `6/6 tests green` in `backend/tests/t_fulfillment.py`.
   - `99/99 full platform regression tests green`.
-  - `0 naming violations` verified by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified by `scripts/tileflow_naming_guard.py`.
   - 100% item line quantity reconciliation across pick, pack, dispatch, and return manifests.
   - Automatic driver commission settlement (`₹50.00`) ledger creation upon `DELIVERED` milestone.
   - Complete chronological timeline aggregation covering all fulfillment lifecycle events.
@@ -424,7 +422,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `6/6 tests green` in `backend/tests/t_barcodes.py`.
   - `105/105 full platform regression tests green`.
-  - `0 naming violations` verified by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified by `scripts/tileflow_naming_guard.py`.
   - 100% Modulo 10 check digit accuracy for GS1 EAN-13 and UPC-A symbologies.
   - Multi-DPI dot scaling (203, 300, 600 DPI) across Zebra ZPL-II, TSC TSPL, and ESC/POS printer byte streams.
   - 100% audit logging in PostgreSQL `PrintHistory` for batch print dispatch.
@@ -446,7 +444,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `6/6 tests green` in `backend/tests/t_approval.py`.
   - `111/111 full platform regression tests green`.
-  - `0 naming violations` verified by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified by `scripts/tileflow_naming_guard.py`.
   - 100% fail-closed RBAC gate rejection on unauthorized approver role attempts.
   - Multi-tier threshold resolution (low, medium, high monetary amount bands).
   - Immutable decision and escalation action audit logging in PostgreSQL `ApprovalAction`.
@@ -468,7 +466,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `6/6 tests green` in `backend/tests/t_search.py`.
   - `117/117 full platform regression tests green`.
-  - `0 naming violations` verified by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified by `scripts/tileflow_naming_guard.py`.
   - 100% permission-aware domain gating (CASHIER restricted from sensitive transaction/party/warehouse domains, STORE_MANAGER/SYSADMIN full access).
   - 4-tier fast POS scanner resolution (< 15ms latency) across exact barcodes, SKUs, and item codes.
   - Multi-domain omni-search aggregation across Items, Parties, Barcodes, Documents, Warehouses, and Transactions.
@@ -487,7 +485,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `6/6 tests green` in `backend/tests/t_communicator.py`.
   - `123/123 full platform regression tests green`.
-  - `0 naming violations` verified by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified by `scripts/tileflow_naming_guard.py`.
   - 100% compliance with TRAI quiet hours policy (promotional messages strictly blocked between 21:00 and 09:00 IST).
   - 4-channel unified provider adapters (WhatsApp, SMS, Email, Push) with automatic fallback cascading (WhatsApp -> SMS).
   - Zero placeholder bleed variable template engine with DLT validation.
@@ -508,7 +506,7 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Quantitative Metrics:**
   - `6/6 tests green` in `backend/tests/t_crm_cge.py`.
   - `129/129 full platform regression tests green`.
-  - `0 naming violations` verified by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified by `scripts/tileflow_naming_guard.py`.
   - 100% fail-closed non-negative loyalty points redemption guard (rejects burn requests exceeding current balance).
   - 5 customer RFM segmentation classes (`VIP`, `FREQUENT`, `NEW`, `AT_RISK`, `DORMANT`) with recency/frequency/monetary evaluation.
   - Multi-tier commission calculation engine supporting percentage sales incentives (2%), fixed delivery driver payouts (₹50), and agent slabs.
@@ -538,7 +536,7 @@ The remaining work is primarily convergence and governance: turning module-level
   - `7/7 tests green` in `backend/tests/t_distribution.py`.
   - `4/4 tests green` in `backend/tests/t_dist_pricing.py`.
   - `23/23 tests green` across complete Section 8 distribution and eCommerce suite.
-  - `0 naming violations` verified by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified by `scripts/tileflow_naming_guard.py`.
   - `100% Primary vs Secondary sales distinction` with territory, dealer, salesman, and delivery route linkages.
   - `100% vehicle loading sheet consolidation` with route stop sequence ordering and driver load manifest status progression (`DRAFT` -> `LOADED` -> `DISPATCHED`).
   - `100% dealer claims validation` with review/approval workflow and automated Credit Note generation (`CN-YYYYMMDD-HEX`).
@@ -573,9 +571,9 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Named Architectural Mechanisms:**
   - `EcomGrowthEngine.process_inbound_order`: Multi-channel order ingress router handling signature validation, SKU resolution, deduplication, and atomic stock reservation.
   - `EcomInventoryReservationService.reserve_stock_for_ecom_order`: Atomically increments `Product.reserved_stock` using row locks (`with_for_update()`) and writes transactional outbox event.
-  - `EcomGrowthEngine.converge_order`: Converts imported eCommerce orders into authoritative SMRITI `SalesInvoice` records and posts outward `StockMovement` (trigger-managed stock reduction).
+  - `EcomGrowthEngine.converge_order`: Converts imported eCommerce orders into authoritative TILEFLOW `SalesInvoice` records and posts outward `StockMovement` (trigger-managed stock reduction).
   - `EcomGrowthEngine.retry_failed_imports`: Dead Letter Queue processor re-evaluating stock availability and retrying pending orders up to max retry ceiling.
-  - `EcomGrowthEngine.reconcile_channel_period`: Compares channel reported GMV against converged SMRITI invoice net revenue to pinpoint fee and commission discrepancies.
+  - `EcomGrowthEngine.reconcile_channel_period`: Compares channel reported GMV against converged TILEFLOW invoice net revenue to pinpoint fee and commission discrepancies.
   - `ShopifyAdapter`, `WooCommerceAdapter`, `AmazonAdapter`, `FlipkartAdapter`, `InternalStoreAdapter`, `CustomerPortalAdapter`: Pluggable marketplace connector adapters.
   - `EcomChannel`, `EcomSkuMapping`, `EcomOrderImport`, `EcomStockSyncLog`, `EcomReconciliation`: Authoritative PostgreSQL eCommerce models.
 - **Verifiable Evidence Citation:**
@@ -688,7 +686,7 @@ The remaining work is primarily convergence and governance: turning module-level
   - `9/9 tests green` in `backend/tests/t_outbox_stats.py` (execution time: 9.06s).
   - `19/19 tests green` across complete Section 10 offline sync and outbox test suite.
   - `100% transactional atomicity` verified for domain operations and outbox event recording (zero dual-write hazard).
-  - Multi-tenant worker polling cycle across `smriti001` and `smriti002`.
+  - Multi-tenant worker polling cycle across `tileflow001` and `tileflow002`.
   - Exponential retry backoff and Dead-Letter Queue (`DLQ`) transition after max retries (5).
   - Fail-closed validation enforcing non-empty dispatch callbacks before claiming events.
 - **Named Architectural Mechanisms:**
@@ -709,10 +707,10 @@ The remaining work is primarily convergence and governance: turning module-level
 - **Status:** `Done`
 - **Quantitative Metrics:**
   - `10/10 tests green` across `backend/tests/t_analytics_hub.py` (6/6) and `backend/tests/t_daemon_rollup.py` (4/4) (execution time: 12.47s).
-  - `100% tenant-isolated daily sales fact materialization` (`AnalyticsDailySalesFact` table in `smriti001`, `smriti002`).
+  - `100% tenant-isolated daily sales fact materialization` (`AnalyticsDailySalesFact` table in `tileflow001`, `tileflow002`).
   - `PostgreSQL Advisory Lock Concurrency Guard` (`ADVISORY_LOCK_KEY = 918273645`) verified with concurrent worker exclusion and zero race hazard.
   - `Zero write-back to operational ledgers`: read-only extraction from `SalesInvoice`, `SalesInvoiceItem`, and `PaymentTransaction`, writing exclusively downstream to `analytics_daily_sales_facts`.
-  - Multi-tenant orchestrator verified across `smriti001` and `smriti002` clusters with automated retry, backoff, and date-range rollups.
+  - Multi-tenant orchestrator verified across `tileflow001` and `tileflow002` clusters with automated retry, backoff, and date-range rollups.
 - **Named Architectural Mechanisms:**
   - `AnalyticalIntelligenceService`: Aggregates confirmed transactions, tax totals, tender mode breakdowns, COGS, and category-level gross margin profitability metrics.
   - `AnalyticsDaemonService`: Distributed multi-tenant aggregation daemon utilizing PostgreSQL session-level advisory locks for fail-closed concurrency control.
@@ -760,14 +758,14 @@ The remaining work is primarily convergence and governance: turning module-level
   - `7/7 tests green` in `backend/tests/t_tenant_sec.py` (execution time: 14.75s).
   - `226/226 tests green (100% PASSING)` across all 13 Blueprint Sections in master platform regression suite.
   - `0 TypeScript errors` verified by `npx tsc --noEmit`.
-  - `0 naming violations` verified across `src/`, `backend/`, `scripts/` by `scripts/smriti_naming_guard.py`.
+  - `0 naming violations` verified across `src/`, `backend/`, `scripts/` by `scripts/tileflow_naming_guard.py`.
   - Ephemeral clean-slate tenant provisioning verified from scratch up to canonical Alembic head `v1375_backfill_sales_return_cust`.
   - Strict forward-only migration locking guard verified (preventing downgrade/destructive schema drift).
   - 100% tenant header isolation (`X-Company-ID`, `X-Database-ID`) with fail-closed 403 blocks for unauthorized/tampered requests.
   - Session-level LRU pool eviction and thread-safe dynamic connection routing across tenant databases.
   - Zero dual-write hazard verified via transactional outbox atomicity and dead-letter queue backoff.
 - **Named Architectural Mechanisms:**
-  - `EphemeralTenantHarness`: Programmatic clean-slate database provisioning engine creating temporary PostgreSQL instances (`smritiXXX`), running complete Alembic migration chain, validating schema tables, and tearing down safely.
+  - `EphemeralTenantHarness`: Programmatic clean-slate database provisioning engine creating temporary PostgreSQL instances (`tileflowXXX`), running complete Alembic migration chain, validating schema tables, and tearing down safely.
   - `MultiTenantDatabaseRoutingMiddleware` & `TenantHeaderGuard`: Cryptographically authenticates and binds tenant database connections dynamically from `company_database_registries`.
   - `ProductionReadinessCertificationSuite`: 29-check automated certification harness verifying schema integrity, registry resolution, tenant isolation, LRU eviction, outbox atomicity, crash recovery, DLQ retries, replay idempotency, eCom reservation concurrency, PSV toggles, blue/green workflow, reconciliation parity, GST gateways, and transactional audit trails.
   - `ForwardMigrationIntegrityGuard`: Protects production schema against unordered, backward, or uncommitted migrations.
@@ -783,28 +781,28 @@ The remaining work is primarily convergence and governance: turning module-level
 
 | Layer | Database | Table / Entity Names | Authoritative Writer / Service | Read Consumers |
 |---|---|---|---|---|
-| **Control Plane** | `smritisys` | `companies`, `branches`, `company_database_registries` | `TenantProvisioningService` | Dynamic DB Router, Auth Middleware |
-| **Control Plane** | `smritisys` | `countries_ref`, `states_ref`, `districts_ref`, `postal_codes_ref`, `languages_ref`, `locales_ref`, `currencies_ref`, `uoms_ref`, `tax_references_ref`, `hsn_sac_codes_ref` | Platform Admin / DB Migrations | All Tenant Services, POS, Billing, Tax Engine |
-| **Control Plane** | `smritisys` | `capability_catalog`, `plan_bundles`, `plan_capability_bindings`, `feature_flags`, `tenant_capability_bindings`, `module_state_registries` | `CapabilityRegistryService` | UI Navigation Router, Permission Guards |
-| **Control Plane** | `smritisys` | `workspace_templates`, `smriti_workspace_profiles`, `smriti_themes`, `screen_definitions`, `action_definitions`, `layout_definitions`, `icon_registry` | `WorkspaceStudioService` | Frontend Layout Engine, Screen Renderer |
-| **Control Plane** | `smritisys` | `formula_definitions`, `business_rule_definitions`, `policy_definitions`, `workflow_definitions` | `GovernedLogicService` | Pricing Engine, Tax Policies, Workflow State Machine |
-| **Control Plane** | `smritisys` | `provider_registry`, `connector_registry`, `integration_registry`, `compliance_connector_vault` | Compliance Admin / Vault Manager | `CommunicatorEngine`, `EcomGrowthEngine`, `GstGatewayService` |
-| **Tenant Data Plane** | `smritiXXX` | `users`, `roles`, `permissions` | User Management Service | Auth Router, Role Guards |
-| **Tenant Data Plane** | `smritiXXX` | `parties`, `party_roles`, `party_identifiers`, `party_addresses`, `party_contacts`, `customer_profiles`, `supplier_profiles` | `UniversalPartyService` | POS Billing, Purchase Orders, Sales, CRM |
-| **Tenant Data Plane** | `smritiXXX` | `products`, `product_variants`, `product_barcodes`, `product_attributes`, `product_batches`, `product_serial_numbers` | `UniversalItemService` | Barcode Scanner, POS, Inventory, WMS, eCommerce |
-| **Tenant Data Plane** | `smritiXXX` | `stock_movements`, `product_batch_stocks`, `warehouse_locations`, `stock_adjustments`, `stock_transfers` | `InventoryService`, `UnifiedSalesLedgerService` | WMS Reports, Reorder Twin, PSV Projection |
-| **Tenant Data Plane** | `smritiXXX` | `sales_invoices`, `sales_invoice_items`, `purchase_orders`, `purchase_bills`, `debit_notes`, `credit_notes` | `UnifiedSalesLedgerService`, `PurchaseService` | Accounts Ledger, Tally Export, Tax Reporting |
-| **Tenant Data Plane** | `smritiXXX` | `accounts`, `journal_vouchers`, `general_ledger_entries`, `account_balance_snapshots` | `GeneralLedgerService` | Financial Reports, Trial Balance, Balance Sheet |
-| **Tenant Data Plane** | `smritiXXX` | `cash_registers`, `shifts`, `shift_cash_transactions`, `pos_offline_sync_queue` | `POSShiftService`, `OfflineConflictResolutionEngine` | Shift Reports, Cashier Audits, Sync Replay |
-| **Tenant Data Plane** | `smritiXXX` | `price_books`, `price_book_entries`, `promotions_campaigns`, `coupons`, `document_series`, `approval_policies`, `communicator_logs` | `UnifiedPricingPaymentService`, `CommercialGrowthEngine` | POS Billing, eCommerce Checkout, Notifications |
-| **Tenant Data Plane** | `smritiXXX` | `distribution_territories`, `dealer_assignments`, `distribution_orders`, `loading_sheets`, `distribution_claims` | `DistributionService` | Route Trip Settlement, Dealer Portal |
-| **Tenant Data Plane** | `smritiXXX` | `ecom_channels`, `ecom_sku_mappings`, `ecom_order_imports`, `ecom_stock_sync_logs`, `ecom_reconciliations` | `EcomGrowthEngine`, `EcomInventoryReservationService` | Channel Reconciler, Outward Dispatch |
-| **Tenant Data Plane** | `smritiXXX` | `psv_visibility_policies`, `psv_party_scopes`, `psv_stock_events`, `psv_stock_balances` | `PSVProjectionService` (Non-authoritative) | Scoped Distributor Stock Query API |
-| **Tenant Data Plane** | `smritiXXX` | `cge_unified_policies`, `loyalty_members`, `loyalty_points_ledger`, `commission_ledger`, `referral_rewards` | `CGEUnifiedPolicyEngine`, `CrmGrowthEngine` | Loyalty UI, Sales Incentives, Refund Reversals |
-| **Tenant Data Plane** | `smritiXXX` | `pdt_model_registry`, `pdt_sku_twin_cache`, `pdt_demand_signals`, `pdt_distribution_predictions` | `PDTIntelligenceEngine` (Read-only simulation) | Reorder Dashboard, Distribution Analytics |
-| **Tenant Data Plane** | `smritiXXX` | `integration_outbox_events` | `OutboxService` (Atomic Transactional Outbox) | `OutboxQueueWorker` Multi-tenant Poller |
-| **Tenant Data Plane** | `smritiXXX` | `analytics_daily_sales_facts` | `AnalyticsDaemonService` (Advisory Lock Aggregator) | Business Intelligence Summary API |
-| **Tenant Data Plane** | `smritiXXX` | `compliance_immutable_audit_logs` | `ComplianceAuditService` (SHA-256 Digest Engine) | Statutory Compliance Audit Trail API |
+| **Control Plane** | `tileflowsys` | `companies`, `branches`, `company_database_registries` | `TenantProvisioningService` | Dynamic DB Router, Auth Middleware |
+| **Control Plane** | `tileflowsys` | `countries_ref`, `states_ref`, `districts_ref`, `postal_codes_ref`, `languages_ref`, `locales_ref`, `currencies_ref`, `uoms_ref`, `tax_references_ref`, `hsn_sac_codes_ref` | Platform Admin / DB Migrations | All Tenant Services, POS, Billing, Tax Engine |
+| **Control Plane** | `tileflowsys` | `capability_catalog`, `plan_bundles`, `plan_capability_bindings`, `feature_flags`, `tenant_capability_bindings`, `module_state_registries` | `CapabilityRegistryService` | UI Navigation Router, Permission Guards |
+| **Control Plane** | `tileflowsys` | `workspace_templates`, `tileflow_workspace_profiles`, `tileflow_themes`, `screen_definitions`, `action_definitions`, `layout_definitions`, `icon_registry` | `WorkspaceStudioService` | Frontend Layout Engine, Screen Renderer |
+| **Control Plane** | `tileflowsys` | `formula_definitions`, `business_rule_definitions`, `policy_definitions`, `workflow_definitions` | `GovernedLogicService` | Pricing Engine, Tax Policies, Workflow State Machine |
+| **Control Plane** | `tileflowsys` | `provider_registry`, `connector_registry`, `integration_registry`, `compliance_connector_vault` | Compliance Admin / Vault Manager | `CommunicatorEngine`, `EcomGrowthEngine`, `GstGatewayService` |
+| **Tenant Data Plane** | `tileflowXXX` | `users`, `roles`, `permissions` | User Management Service | Auth Router, Role Guards |
+| **Tenant Data Plane** | `tileflowXXX` | `parties`, `party_roles`, `party_identifiers`, `party_addresses`, `party_contacts`, `customer_profiles`, `supplier_profiles` | `UniversalPartyService` | POS Billing, Purchase Orders, Sales, CRM |
+| **Tenant Data Plane** | `tileflowXXX` | `products`, `product_variants`, `product_barcodes`, `product_attributes`, `product_batches`, `product_serial_numbers` | `UniversalItemService` | Barcode Scanner, POS, Inventory, WMS, eCommerce |
+| **Tenant Data Plane** | `tileflowXXX` | `stock_movements`, `product_batch_stocks`, `warehouse_locations`, `stock_adjustments`, `stock_transfers` | `InventoryService`, `UnifiedSalesLedgerService` | WMS Reports, Reorder Twin, PSV Projection |
+| **Tenant Data Plane** | `tileflowXXX` | `sales_invoices`, `sales_invoice_items`, `purchase_orders`, `purchase_bills`, `debit_notes`, `credit_notes` | `UnifiedSalesLedgerService`, `PurchaseService` | Accounts Ledger, Tally Export, Tax Reporting |
+| **Tenant Data Plane** | `tileflowXXX` | `accounts`, `journal_vouchers`, `general_ledger_entries`, `account_balance_snapshots` | `GeneralLedgerService` | Financial Reports, Trial Balance, Balance Sheet |
+| **Tenant Data Plane** | `tileflowXXX` | `cash_registers`, `shifts`, `shift_cash_transactions`, `pos_offline_sync_queue` | `POSShiftService`, `OfflineConflictResolutionEngine` | Shift Reports, Cashier Audits, Sync Replay |
+| **Tenant Data Plane** | `tileflowXXX` | `price_books`, `price_book_entries`, `promotions_campaigns`, `coupons`, `document_series`, `approval_policies`, `communicator_logs` | `UnifiedPricingPaymentService`, `CommercialGrowthEngine` | POS Billing, eCommerce Checkout, Notifications |
+| **Tenant Data Plane** | `tileflowXXX` | `distribution_territories`, `dealer_assignments`, `distribution_orders`, `loading_sheets`, `distribution_claims` | `DistributionService` | Route Trip Settlement, Dealer Portal |
+| **Tenant Data Plane** | `tileflowXXX` | `ecom_channels`, `ecom_sku_mappings`, `ecom_order_imports`, `ecom_stock_sync_logs`, `ecom_reconciliations` | `EcomGrowthEngine`, `EcomInventoryReservationService` | Channel Reconciler, Outward Dispatch |
+| **Tenant Data Plane** | `tileflowXXX` | `psv_visibility_policies`, `psv_party_scopes`, `psv_stock_events`, `psv_stock_balances` | `PSVProjectionService` (Non-authoritative) | Scoped Distributor Stock Query API |
+| **Tenant Data Plane** | `tileflowXXX` | `cge_unified_policies`, `loyalty_members`, `loyalty_points_ledger`, `commission_ledger`, `referral_rewards` | `CGEUnifiedPolicyEngine`, `CrmGrowthEngine` | Loyalty UI, Sales Incentives, Refund Reversals |
+| **Tenant Data Plane** | `tileflowXXX` | `pdt_model_registry`, `pdt_sku_twin_cache`, `pdt_demand_signals`, `pdt_distribution_predictions` | `PDTIntelligenceEngine` (Read-only simulation) | Reorder Dashboard, Distribution Analytics |
+| **Tenant Data Plane** | `tileflowXXX` | `integration_outbox_events` | `OutboxService` (Atomic Transactional Outbox) | `OutboxQueueWorker` Multi-tenant Poller |
+| **Tenant Data Plane** | `tileflowXXX` | `analytics_daily_sales_facts` | `AnalyticsDaemonService` (Advisory Lock Aggregator) | Business Intelligence Summary API |
+| **Tenant Data Plane** | `tileflowXXX` | `compliance_immutable_audit_logs` | `ComplianceAuditService` (SHA-256 Digest Engine) | Statutory Compliance Audit Trail API |
 
 ---
 
@@ -813,19 +811,19 @@ The remaining work is primarily convergence and governance: turning module-level
 **Status:** `Completed / Verified`  
 **Date:** 2026-08-25  
 **Version:** `v3.62.0`  
-**Certification Authority:** SMRITI Architecture Governance Board  
+**Certification Authority:** TILEFLOW Architecture Governance Board  
 
-Every requirement, section, registry, shared engine, domain model, transactional outbox guarantee, compliance gateway, analytics fact materializer, and clean-slate migration chain specified in the **SMRITI Enterprise Business Operating Platform Architecture Frozen Blueprint v1.0** has been fully implemented, verified with reproducible automated test suites, and certified production-ready.
+Every requirement, section, registry, shared engine, domain model, transactional outbox guarantee, compliance gateway, analytics fact materializer, and clean-slate migration chain specified in the **TILEFLOW Enterprise Business Operating Platform Architecture Frozen Blueprint v1.0** has been fully implemented, verified with reproducible automated test suites, and certified production-ready.
 
 ### Final Verification Evidence Summary:
 - **Total Platform Tests Executed:** `226 / 226 PASSED (100% GREEN)`
 - **TypeScript Static Verification:** `0 errors` (`npx tsc --noEmit`)
-- **Naming Policy Verification:** `0 violations` (`scripts/smriti_naming_guard.py`)
+- **Naming Policy Verification:** `0 violations` (`scripts/tileflow_naming_guard.py`)
 - **Alembic Canonical Head Revision:** `v1375_backfill_sales_return_cust`
 - **Backend System-of-Record:** 100% FastAPI + PostgreSQL (`backend/app/`)
 - **Express / Legacy Routes:** 100% Decommissioned and Deleted
 
-> **SMRITI Enterprise Platform: 100% Frozen Blueprint Architecture Completed, Verified, and Certified.**
+> **TILEFLOW Enterprise Platform: 100% Frozen Blueprint Architecture Completed, Verified, and Certified.**
 
 ---
 

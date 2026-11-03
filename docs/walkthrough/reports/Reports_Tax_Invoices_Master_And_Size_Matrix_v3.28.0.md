@@ -1,33 +1,29 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.28.0
   * Created    : 2026-08-25
   * Modified   : 2026-08-25
-  * Copyright  : © SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
-  * Classification: Internal
+  * Copyright  :  tileflow.in. Open Source - Permissive Use
+  * License    : MIT Open Source License
+  * Classification: Open Source
 -->
 
 # Walkthrough: Statutory GST Tax Invoices Master Register & Size Matrix Reports (v3.28.0)
 
 ## 1. Purpose
-To integrate statutory GST Tax Invoice master registers, cross-tabulated footwear variant size curves (Sizes 36–42), store-wise SIS distribution metrics, and multi-sheet streaming Excel exports as standard, first-class built-in reports in SMRITI Retail OS (`RPT-TAX-006`, `RPT-MRC-005`, `RPT-OPS-006`).
+To integrate statutory GST Tax Invoice master registers, cross-tabulated footwear variant size curves (Sizes 36–42), store-wise SIS distribution metrics, and multi-sheet streaming Excel exports as standard, first-class built-in reports in TILEFLOW Retail OS (`RPT-TAX-006`, `RPT-MRC-005`, `RPT-OPS-006`).
 
 ## 2. Scope
 - **Statutory Audit Master Register (`RPT-TAX-006`)**: All 120 tax invoices (Bills 18 to 137, including active and cancelled), with 31 GST columns (Supplier & Buyer GSTINs, Place of Supply, Reverse Charge, PO/E-Way references, billing/shipping addresses, round-offs, and Amount in Words).
@@ -43,7 +39,7 @@ To integrate statutory GST Tax Invoice master registers, cross-tabulated footwea
 ## 4. Files Modified
 1. `backend/app/schemas/reports.py`: Added Pydantic schemas for `TaxInvoiceMasterRegisterReport`, `ArticleColorSizeMatrixReport`, and `StoreWiseSummaryReport`.
 2. `backend/app/services/reports.py`: Implemented reporting services, variant parsing, number-to-words engine, and dynamic OpenPyXL streaming workbook builder.
-3. `backend/app/api/v1/reports.py`: Registered `RPT-TAX-006`, `RPT-MRC-005`, `RPT-OPS-006` in `SMRITI_STUDIOS` and added REST endpoints.
+3. `backend/app/api/v1/reports.py`: Registered `RPT-TAX-006`, `RPT-MRC-005`, `RPT-OPS-006` in `TILEFLOW_STUDIOS` and added REST endpoints.
 4. `src/components/ReportDesignerTab.tsx`: Added frontend fetch handlers and dedicated UI viewers with Fiori-compliant styling.
 5. `backend/app/tests/test_reports.py`: Added comprehensive unit test coverage for all standard reports and streaming Excel endpoints.
 6. `docs/walkthrough/README.md`: Appended new walkthrough entry to the master index.
@@ -85,7 +81,7 @@ backend\app\tests\test_reports.py::test_export_tax_invoices_excel PASSED [100%]
 ```
 
 ## 10. Known Limitations
-- SMRITI auto-detects footwear size binning for sizes 36–42. Non-standard or apparel-specific sizes (S, M, L, XL) fall back to generic attribute reports.
+- TILEFLOW auto-detects footwear size binning for sizes 36–42. Non-standard or apparel-specific sizes (S, M, L, XL) fall back to generic attribute reports.
 
 ## 11. Future Work
 - Add automated scheduled emailing of the statutory tax register directly to accounting and auditor emails at month-end.

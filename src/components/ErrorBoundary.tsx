@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.3
- * * Created    : 2026-07-11
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React from "react";
 
 interface ErrorBoundaryState {
@@ -38,10 +13,10 @@ interface ErrorBoundaryProps {
 }
 
 /**
- * SMRITI Error Boundary — wraps each workspace tab.
+ * MQube Error Boundary — wraps each workspace tab.
  * Prevents a crash in one module from unmounting the entire application shell.
  */
-export class SmritiErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class TileFlowErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null, tabId: props.tabId };
@@ -53,7 +28,7 @@ export class SmritiErrorBoundary extends React.Component<ErrorBoundaryProps, Err
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
     // Log to console only — never expose to user (per HREP Rule 1)
-    console.error("[SMRITI ErrorBoundary]", error, info);
+    console.error("[MQube ErrorBoundary]", error, info);
     if (this.props.onNotification) {
       this.props.onNotification(
         "Module Temporarily Unavailable",
@@ -89,7 +64,7 @@ export class SmritiErrorBoundary extends React.Component<ErrorBoundaryProps, Err
           <div className="flex gap-3">
             <button
               onClick={this.handleRetry}
-              className="bg-[#2563EB] hover:bg-opacity-90 text-white text-xs font-semibold uppercase px-4 py-2 rounded transition-all"
+              className="bg-[#606060] hover:bg-opacity-90 text-white text-xs font-semibold uppercase px-4 py-2 rounded transition-all"
             >
               Retry Module
             </button>
@@ -101,7 +76,7 @@ export class SmritiErrorBoundary extends React.Component<ErrorBoundaryProps, Err
             </button>
           </div>
           <p className="mt-6 text-[10px] text-theme-muted font-mono">
-            Reference: SMRITI-SYS-{new Date().toISOString().split("T")[0].replace(/-/g, "")}
+            Reference: TILEFLOW-SYS-{new Date().toISOString().split("T")[0].replace(/-/g, "")}
           </p>
         </div>
       );

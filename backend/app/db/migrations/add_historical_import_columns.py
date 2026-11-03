@@ -1,19 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.18.1
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : (C) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Migration: Add historical import audit columns to sales_invoices,
-           sales_invoice_items, and ensure invoice_document_artifacts table.
-ADDITIVE ONLY. Idempotent. No DROP/TRUNCATE/DELETE.
-"""
 MIGRATION_SQL = """
 ALTER TABLE sales_invoices ADD COLUMN IF NOT EXISTS
     source_type VARCHAR(50) DEFAULT 'LIVE';
@@ -125,7 +109,7 @@ if __name__ == "__main__":
     db_port = os.getenv("POSTGRES_PORT") or 5432
     db_user = os.getenv("POSTGRES_USER") or "postgres"
     db_pwd = os.getenv("POSTGRES_PASSWORD") or "postgres"
-    target_dbs = ['smriti001']
+    target_dbs = ['tileflow001']
     for dbname in target_dbs:
         print(f"Applying to {dbname}...")
         try:

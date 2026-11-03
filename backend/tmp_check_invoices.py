@@ -1,5 +1,5 @@
 import psycopg2
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 cur.execute("SELECT COUNT(*) FROM sales_invoices WHERE is_deleted=false;")
 print("invoices:", cur.fetchone()[0])

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.9.5
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import json
@@ -30,14 +16,14 @@ EXPORTS_DIR = REPO_ROOT / "exports"
 CANONICAL_PDF_DIR = EXPORTS_DIR / "canonical_tax_invoices"
 EXPORTS_DIR.mkdir(parents=True, exist_ok=True)
 
-CSV_OUTPUT = EXPORTS_DIR / "SMRITI_All_Tax_Invoices_Master.csv"
-JSON_OUTPUT = EXPORTS_DIR / "SMRITI_All_Tax_Invoices_Master.json"
-HTML_OUTPUT = EXPORTS_DIR / "SMRITI_All_Tax_Invoices_Master.html"
-ZIP_OUTPUT = EXPORTS_DIR / "SMRITI_Canonical_Tax_Invoices_90_PDF_Package.zip"
+CSV_OUTPUT = EXPORTS_DIR / "TILEFLOW_All_Tax_Invoices_Master.csv"
+JSON_OUTPUT = EXPORTS_DIR / "TILEFLOW_All_Tax_Invoices_Master.json"
+HTML_OUTPUT = EXPORTS_DIR / "TILEFLOW_All_Tax_Invoices_Master.html"
+ZIP_OUTPUT = EXPORTS_DIR / "TILEFLOW_Canonical_Tax_Invoices_90_PDF_Package.zip"
 
 def export_comprehensive_pack():
-    print("=== SMRITI RETAIL OS MASTER EXPORT SUITE ===")
-    conn = psycopg2.connect(host="localhost", port=5432, user="postgres", password="postgres", dbname="smriti001")
+    print("=== TILEFLOW RETAIL OS MASTER EXPORT SUITE ===")
+    conn = psycopg2.connect(host="localhost", port=5432, user="postgres", password="postgres", dbname="tileflow001")
     cur = conn.cursor()
 
     cur.execute("""
@@ -70,7 +56,7 @@ def export_comprehensive_pack():
     """)
 
     rows = cur.fetchall()
-    print(f"Fetched {len(rows)} invoices from PostgreSQL (smriti001).")
+    print(f"Fetched {len(rows)} invoices from PostgreSQL (tileflow001).")
 
     records = []
     total_subtotal = Decimal("0")
@@ -155,7 +141,7 @@ def export_comprehensive_pack():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>SMRITI Retail OS — Master Tax Invoices Export Report</title>
+    <title>TILEFLOW Retail OS — Master Tax Invoices Export Report</title>
     <style>
         body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f8fafc; color: #0f172a; margin: 20px; }}
         .header {{ background: #0f172a; color: white; padding: 20px 24px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }}
@@ -174,7 +160,7 @@ def export_comprehensive_pack():
 <body>
     <div class="header">
         <div>
-            <h1>SMRITI Retail OS — Complete Master Tax Invoices</h1>
+            <h1>TILEFLOW Retail OS — Complete Master Tax Invoices</h1>
             <p>Statutory GST Tax Invoice Portfolio for Tattly Threads • Single Source of Truth</p>
         </div>
         <div style="text-align: right; font-family: monospace; font-size: 12px; color: #cbd5e1;">
@@ -224,7 +210,7 @@ def export_comprehensive_pack():
     print(f"✓ ZIP Package Export: {ZIP_OUTPUT} ({len(pdf_files)} PDF files, {os.path.getsize(ZIP_OUTPUT):,} bytes)")
 
     print("\n==========================================================")
-    print("ALL SMRITI TAX INVOICE MASTER ARTIFACTS EXPORTED SUCCESSFULLY")
+    print("ALL TILEFLOW TAX INVOICE MASTER ARTIFACTS EXPORTED SUCCESSFULLY")
     print("==========================================================")
 
 if __name__ == "__main__":

@@ -1,30 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.118.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Inter-Branch Stock Transfer Engine
- *
- * Manages stock movement between branches with full audit trail:
- *   Creation    : `createTransfer()` — source branch, destination branch, line items
- *   Dispatch    : `dispatch()` — sets IN_TRANSIT, locks source qty
- *   Receipt     : `receive()` — records received qty per line, detects variance
- *   Variance    : line-level variance = dispatchedQty - receivedQty
- *   Completion  : `complete()` — settles after partial/full receipt
- *   Cancellation: `cancel()` — only from DRAFT or APPROVED
- *   Status flow : DRAFT → APPROVED → IN_TRANSIT → RECEIVED → COMPLETED / CANCELLED
- */
-
 export type TransferStatus =
   | "DRAFT"
   | "APPROVED"

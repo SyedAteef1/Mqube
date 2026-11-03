@@ -1,33 +1,28 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.1
   * Created    : 2026-07-10
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS - Existing System Audit Report
+# TILEFLOW Retail OS - Existing System Audit Report
 
 **Date:** 2026-07-10
 **Role:** CTO & Senior ERP Solution Architect
-**Objective:** Audit the existing implementation of SMRITI Retail OS against production-readiness standards, strictly enforcing the Inventory-First and Tally-for-Accounting policies.
+**Objective:** Audit the existing implementation of TILEFLOW Retail OS against production-readiness standards, strictly enforcing the Inventory-First and Tally-for-Accounting policies.
 
 ---
 
@@ -105,7 +100,7 @@ When a POS transaction is marked as "Credit" or "Udhaar", the `Customer` record 
 The UI (`AccountingSyncTab`) allows viewing a `syncQueue` and generating mock XML. `tallyExportQueue` captures events in `server.ts`.
 
 ### Observation
-The queue lacks critical production safeguards: no duplicate export prevention mechanism (e.g., locking exported voucher IDs), no retry limits for failed syncs, and no mapping validation (checking if the SMRITI ledger name exists in Tally).
+The queue lacks critical production safeguards: no duplicate export prevention mechanism (e.g., locking exported voucher IDs), no retry limits for failed syncs, and no mapping validation (checking if the TILEFLOW ledger name exists in Tally).
 
 ### Keep / Improve / Remove / Merge / Add
 **Improve**

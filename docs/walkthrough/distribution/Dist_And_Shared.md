@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.22.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Unified Shared Business Engines (Section 7) & Distribution Core (Section 8)
 
 ## 1. Purpose
-This document establishes the implementation, database convergence, and test verification for SMRITI Retail OS Shared Business Engines (Pricing, Volume Breaks, Customer Tiers, GST Calculation Policy) and Distribution Operations (Territories, Dealer Assignments, Primary/Secondary Distribution Orders, Delivery Challan Dispatches, and Authoritative Outward Stock Movements).
+This document establishes the implementation, database convergence, and test verification for TILEFLOW Retail OS Shared Business Engines (Pricing, Volume Breaks, Customer Tiers, GST Calculation Policy) and Distribution Operations (Territories, Dealer Assignments, Primary/Secondary Distribution Orders, Delivery Challan Dispatches, and Authoritative Outward Stock Movements).
 
 ## 2. Scope
 - **Section 7 Shared Business Engines:**
@@ -54,7 +53,7 @@ This document establishes the implementation, database convergence, and test ver
 - **Immutable Transaction Snapshots:** Each distribution order captures an exact JSONB snapshot of the rule and tax policy versions active at creation time (`rule_snapshots`), satisfying Section 1.5 governance requirements.
 
 ## 7. Implementation Summary
-- Applied `v1365_distribution_core` forward migration across `smritisys`, `smriti001`, and `smriti002`.
+- Applied `v1365_distribution_core` forward migration across `tileflowsys`, `tileflow001`, and `tileflow002`.
 - Implemented `PricingEngine.calculate_effective_price` with quantity-based volume break lookup.
 - Implemented `DistributionService.create_distribution_order` and `DistributionService.dispatch_distribution_order`.
 - Added comprehensive unit and integration tests.

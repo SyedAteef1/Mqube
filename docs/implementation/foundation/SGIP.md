@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 1.1.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Government Integration Platform (SGIP) — Implementation Plan v1.1
+# TILEFLOW Government Integration Platform (SGIP) — Implementation Plan v1.1
 
 > **Status: Phase 0 — Constitution Only, entering Milestone 1.**
 > No code under `backend/app/compliance/` exists yet as of this plan's
@@ -41,7 +40,7 @@
 ---
 
 ## 1. Objective
-Design and implement the SMRITI Government Integration Platform (SGIP) compliance framework inside the FastAPI + PostgreSQL backend using a 5-milestone phased plan, keeping compliance-specific artifacts contained under `backend/app/compliance/`.
+Design and implement the TILEFLOW Government Integration Platform (SGIP) compliance framework inside the FastAPI + PostgreSQL backend using a 5-milestone phased plan, keeping compliance-specific artifacts contained under `backend/app/compliance/`.
 
 ## 2. Scope & Roadmap
 

@@ -1,7 +1,3 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Designation  : Chief Systems Architect & Creator
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
 
 Write-Host "`n==================================================" -ForegroundColor Cyan
 Write-Host " 1. CHECKING NATIVE WINDOWS SQL SERVICES" -ForegroundColor Cyan
@@ -39,7 +35,7 @@ docker ps --format "table {{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}"
 Write-Host "`n==================================================" -ForegroundColor Cyan
 Write-Host " 5. TESTING DOCKER SQL SERVER LIVE CONNECTIVITY" -ForegroundColor Cyan
 Write-Host "==================================================" -ForegroundColor Cyan
-docker exec smriti-mssql /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "netmanthan@123" -C -Q "
+docker exec tileflow-mssql /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "netmanthan@123" -C -Q "
 SELECT 
     @@SERVERNAME AS [Server_Name],
     SERVERPROPERTY('ProductVersion') AS [Version],

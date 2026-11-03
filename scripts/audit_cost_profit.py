@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,15 +8,15 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smriti001"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+TARGET_DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\COST.md"
 DIST_DIR = r"F:\SMRITRretailNX\dist"
 
 def audit_cost_profitability():
     print("============================================================")
-    print("SMRITI COST & PROFITABILITY INTELLIGENCE AUDIT")
+    print("TILEFLOW COST & PROFITABILITY INTELLIGENCE AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -38,20 +25,20 @@ def audit_cost_profitability():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     # 2. Reconcile Cost & Profitability Tables
     cost_tables = [
-        ("product_cost_valuations", "Multi-Valuation Cost Price Engine", "smriti001", "IMPLEMENTED"),
-        ("transaction_cost_snapshots", "Immutable COGS & Cost Snapshot", "smriti001", "IMPLEMENTED"),
-        ("invoice_profitability_ledgers", "Transaction Net Contribution Waterfall Ledger", "smriti001", "IMPLEMENTED")
+        ("product_cost_valuations", "Multi-Valuation Cost Price Engine", "tileflow001", "IMPLEMENTED"),
+        ("transaction_cost_snapshots", "Immutable COGS & Cost Snapshot", "tileflow001", "IMPLEMENTED"),
+        ("invoice_profitability_ledgers", "Transaction Net Contribution Waterfall Ledger", "tileflow001", "IMPLEMENTED")
     ]
 
     df_arch = pd.DataFrame([
@@ -59,15 +46,15 @@ def audit_cost_profitability():
     ])
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
-        {"Metric": "Company Business Database", "Value": "smriti001 (ACTIVE for COMP-001)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Company Business Database", "Value": "tileflow001 (ACTIVE for COMP-001)"},
         {"Metric": "Cost Valuation Engine", "Value": "Purchase Cost, WAC, Last Purchase, FIFO, Landed Cost, Standard Cost"},
         {"Metric": "Net Contribution Waterfall", "Value": "Gross Sales - COGS - Commissions - Discounts - Loyalty - Referral - Delivery"},
-        {"Metric": "Single Company DB Principle", "Value": "All cost & profitability tables co-located in smriti001 (0 Extra DBs)"},
+        {"Metric": "Single Company DB Principle", "Value": "All cost & profitability tables co-located in tileflow001 (0 Extra DBs)"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Database Mutations Executed", "Value": "0 Mutations"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
         {"Metric": "Final Status", "Value": "COST_PROFITABILITY_INTELLIGENCE_VERIFIED"}
     ])
 
@@ -112,24 +99,23 @@ def audit_cost_profitability():
     # 4. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Cost & Profitability Intelligence Specification v1.0
+# TILEFLOW Cost & Profitability Intelligence Specification v1.0
 
 **Status: COST_PROFITABILITY_INTELLIGENCE_VERIFIED**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
@@ -153,11 +139,10 @@ Invoice Gross Sales
    └───────────┼───────────► Net Contribution
 ```
 
-- **Single Business DB Principle**: Multi-valuation cost prices, COGS snapshots, and Net Contribution waterfall ledgers reside inside `smriti001`. **Zero extra databases created**.
+- **Single Business DB Principle**: Multi-valuation cost prices, COGS snapshots, and Net Contribution waterfall ledgers reside inside `tileflow001`. **Zero extra databases created**.
 
 ---
 
-## 2. Final Classification
 
 ```text
 FINAL STATUS: COST_PROFITABILITY_INTELLIGENCE_VERIFIED
@@ -165,10 +150,10 @@ FINAL STATUS: COST_PROFITABILITY_INTELLIGENCE_VERIFIED
 """)
 
     # 5. Post-Audit Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -177,8 +162,8 @@ FINAL STATUS: COST_PROFITABILITY_INTELLIGENCE_VERIFIED
 
     print("\nCOST & PROFITABILITY INTELLIGENCE AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")

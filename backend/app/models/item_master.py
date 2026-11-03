@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from sqlalchemy import Column, String, Numeric, Boolean, Integer, BigInteger, ForeignKey, Text, text, Date, UniqueConstraint
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
@@ -20,7 +6,7 @@ from ..db.base import BaseEntity
 
 class Item(BaseEntity):
     """
-    Universal Item Master in SMRITI Tenant Data Plane (smritiXXX).
+    Universal Item Master in TILEFLOW Tenant Data Plane (tileflowXXX).
     Canonical catalog entity across POS, B2B Sales, Procurement, WMS, and Distribution.
     """
     __tablename__ = "items"

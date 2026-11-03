@@ -3,7 +3,7 @@ Inspect All Roles, Permissions, Groups, and Departments in Database
 """
 import psycopg2, json
 
-for db in ['smritisys', 'smriti001']:
+for db in ['tileflowsys', 'tileflow001']:
     conn = psycopg2.connect(f'postgresql://postgres:postgres@localhost:5432/{db}')
     cur = conn.cursor()
     print(f"\n========================================================")

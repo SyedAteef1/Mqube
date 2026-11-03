@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
@@ -18,7 +5,7 @@ from openpyxl.utils import get_column_letter
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-FILE_PATH = r"F:\SMRITRretailNX\SMRITI_Menu_Management_Database_Review.xlsx"
+FILE_PATH = r"F:\SMRITRretailNX\TILEFLOW_Menu_Management_Database_Review.xlsx"
 
 # Refined Target Navigation Model v1.0 across 8 Clean Groups
 TARGET_MODEL = [
@@ -56,7 +43,7 @@ TARGET_MODEL = [
     {
         "id": "menu-wiki",
         "action": "KEEP",
-        "proposed_title": "SMRITI Gyan Kendra",
+        "proposed_title": "TILEFLOW Gyan Kendra",
         "proposed_route": "/wiki",
         "proposed_group": "System & Knowledge Base",
         "proposed_scope": "GLOBAL",
@@ -68,10 +55,10 @@ TARGET_MODEL = [
         "arch_notes": "Available to all internal employees."
     },
     {
-        "id": "menu-about-smriti",
+        "id": "menu-about-tileflow",
         "action": "KEEP",
-        "proposed_title": "About SMRITI Retail OS",
-        "proposed_route": "/about-smriti",
+        "proposed_title": "About TILEFLOW Retail OS",
+        "proposed_route": "/about-tileflow",
         "proposed_group": "System & Knowledge Base",
         "proposed_scope": "GLOBAL",
         "proposed_parent": "ROOT",
@@ -600,7 +587,7 @@ def populate_decision_matrix():
     wb.close()
 
     print("============================================================")
-    print("SMRITI MENU GOVERNANCE TARGET MODEL v1.0 GENERATED")
+    print("TILEFLOW MENU GOVERNANCE TARGET MODEL v1.0 GENERATED")
     print("============================================================")
     print(f"Excel Workbook Updated : {FILE_PATH}")
     print(f"Worksheet Created      : {sheet_name} (34 Target Model Specifications)")

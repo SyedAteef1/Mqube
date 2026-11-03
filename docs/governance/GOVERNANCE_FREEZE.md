@@ -6,7 +6,7 @@ This checklist formally freezes the current ADR and evidence documents as the ar
 
 ## Frozen documents
 - `docs/governance/METADATA.md`
-- `docs/architecture/decisions/ADR-002-SMRITI-MET.md`
+- `docs/architecture/decisions/ADR-002-TILEFLOW-MET.md`
 - `docs/governance/ADR_002.md`
 
 ## Governance Baseline

@@ -10,4 +10,4 @@
 | Sales Studio | ✅ | Write automated unit tests. |
 | Billing Desk | ✅ | Write automated unit tests. |
 | CRM & Loyalty | ✅ | Documentation is up to date |
-| About SMRITI | ✅ | Documentation is up to date |
+| About TILEFLOW | ✅ | Documentation is up to date |

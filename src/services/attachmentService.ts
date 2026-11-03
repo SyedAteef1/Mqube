@@ -1,21 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-09-01
- * Modified     : 2026-09-01
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Shared Attachment Service
- * 
- * Purpose: Centralized service for validating, uploading, and managing
- * transaction attachments across all SMRITI modules.
- */
-
 import type {
   TransactionAttachment,
   AttachmentValidation,
@@ -27,9 +9,6 @@ import {
   ALLOWED_EXTENSIONS
 } from "../domain/attachment";
 
-/**
- * Configuration for attachment handling
- */
 export interface AttachmentServiceConfig {
   maxFileSizeBytes: number; // default: 25MB
   maxFilesPerTransaction: number; // default: 10
@@ -52,7 +31,7 @@ const DEFAULT_CONFIG: AttachmentServiceConfig = {
  */
 export class AttachmentService {
   private config: AttachmentServiceConfig;
-  private localStorageKey = "smriti_attachments";
+  private localStorageKey = "tileflow_attachments";
 
   constructor(config: Partial<AttachmentServiceConfig> = {}) {
     this.config = { ...DEFAULT_CONFIG, ...config };

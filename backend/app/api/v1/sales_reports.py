@@ -1,20 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-24
-Modified     : 2026-08-26
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Shoper9 MnuNo 410 Sales Reports Integration (SR209600/SR209500/SR210000/SR221600/SR210200/SR231900/SR202000/SR236300/SR214100).
-Canonical FastAPI + SQLAlchemy ORM backend implementation.
-"""
-
 from datetime import date, datetime, timezone, timedelta
 from decimal import Decimal
 from typing import Any, Dict, List, Optional

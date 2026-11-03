@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 4.0.0
- * Created      : 2026-07-13
- * Modified     : 2026-07-13
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { Settings, ShieldCheck, X } from "lucide-react";
 
@@ -50,7 +37,7 @@ export const ImageDisplayPolicyModal: React.FC<ImageDisplayPolicyModalProps> = (
   const [policy, setPolicy] = useState<DisplayPolicy>(DEFAULT_DISPLAY_POLICY);
 
   useEffect(() => {
-    const saved = localStorage.getItem("smriti_spif_display_policy");
+    const saved = localStorage.getItem("tileflow_spif_display_policy");
     if (saved) {
       try {
         setPolicy({ ...DEFAULT_DISPLAY_POLICY, ...JSON.parse(saved) });
@@ -69,7 +56,7 @@ export const ImageDisplayPolicyModal: React.FC<ImageDisplayPolicyModalProps> = (
   };
 
   const handleSave = () => {
-    localStorage.setItem("smriti_spif_display_policy", JSON.stringify(policy));
+    localStorage.setItem("tileflow_spif_display_policy", JSON.stringify(policy));
     onSave(policy);
     onClose();
   };

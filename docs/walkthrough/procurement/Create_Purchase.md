@@ -1,23 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.28.0
   Created      : 2026-08-16
   Modified     : 2026-08-19
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Enterprise UI Refactor Walkthrough
 -->
 
 # Walkthrough: Create Purchase Order (B2B Purchase) Visual Refactor v3.28.0
 
 ## 1. Purpose
-This walkthrough documents the visual refactor of the **Create Purchase Order (B2B Purchase)** screen inside SMRITI Purchase Studio (`src/components/PurchaseStudioTab.tsx`). The objective was to align the B2B purchase creation workflow with the modern, enterprise light theme visual standards (Fiori Horizon Inspired) of the SMRITI Design System.
+This walkthrough documents the visual refactor of the **Create Purchase Order (B2B Purchase)** screen inside TILEFLOW Purchase Studio (`src/components/PurchaseStudioTab.tsx`). The objective was to align the B2B purchase creation workflow with the modern, enterprise light theme visual standards (Fiori Horizon Inspired) of the TILEFLOW Design System.
 
 ## 2. Scope
 - **Target Workspace**: Purchase Studio (`id: "purchase"`) &gt; `Create Purchase Order` (`activeSubTab === "create"`).
@@ -68,7 +66,7 @@ This walkthrough documents the visual refactor of the **Create Purchase Order (B
 ## 9. Verification Results
 - **TypeScript**: 0 errors.
 - **Vitest Unit Tests**: 64/64 passed.
-- **Vite Build**: Success (`dist/assets/smriti-purchase-studio-*.js` 166.23 kB).
+- **Vite Build**: Success (`dist/assets/tileflow-purchase-studio-*.js` 166.23 kB).
 
 ## 10. Known Limitations
 - Draft saving currently updates local React component state; backend persistence to Postgres `/api/v1/purchase-orders` requires active backend session token.

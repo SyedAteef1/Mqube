@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Tier 4 Backend Migration, Form Standardization & Tier 8 Roadmap Plan
@@ -72,7 +71,6 @@ Establish complete PostgreSQL transactional compliance for Tier 4 entities (user
    - `pinCode`: "273209"
    - `state`: "Uttar Pradesh"
 2. Update the demo/default company values loaded in `setWelcomeMode("demo")`:
-   - `businessName`: "AITDL NETWORKS"
    - `gstin`: "09AAACS1234A1Z1" (using state code "09" for Uttar Pradesh) so that the auto-detect GSTIN logic automatically resolves state to "Uttar Pradesh".
 
 ---

@@ -51,7 +51,7 @@ python -c "from app.db import engine; print('DB connected')"
 **Current State:**
 ```env
 JWT_SECRET_KEY=9a12c418-5a48-43d9-90b5-555a6d71b87a          # ❌ HARDCODED
-INTERNAL_SERVICE_KEY=smriti_secret_fallback_key               # ❌ HARDCODED
+INTERNAL_SERVICE_KEY=tileflow_secret_fallback_key               # ❌ HARDCODED
 SGIP_VAULT_MASTER_KEY=sgip_vault_master_secret_key_12345      # ❌ HARDCODED
 ```
 
@@ -79,7 +79,7 @@ export SGIP_VAULT_MASTER_KEY="<generate-new-secret>"
 ```yaml
 # Update docker-compose.yml
 services:
-  smriti-api:
+  tileflow-api:
     secrets:
       - jwt_secret
       - service_key
@@ -253,7 +253,7 @@ export default defineConfig({
           'vendor-core': ['react', 'react-dom'],
           'vendor-ui': ['lucide-react', 'recharts'],
           'vendor-forms': ['ajv'],
-          'smriti-reports': ['./src/components/reports'],
+          'tileflow-reports': ['./src/components/reports'],
         }
       }
     },
@@ -282,7 +282,7 @@ const ReportDesigner = lazy(() => import('./components/ReportDesigner'));
 
 Create `DEPLOYMENT.md`:
 ```markdown
-# SMRITI Retail OS - Production Deployment Guide
+# TILEFLOW Retail OS - Production Deployment Guide
 
 ## Pre-Deployment Checklist
 - [ ] All 2 tests passing
@@ -382,8 +382,8 @@ git log -p --follow -S "9a12c418-5a48-43d9-90b5-555a6d71b87a" --
 npm run build
 
 # Docker
-docker build -t smriti-retail:3.30.0 .
-docker build -f backend/Dockerfile -t smriti-api:3.30.0 .
+docker build -t tileflow-retail:3.30.0 .
+docker build -f backend/Dockerfile -t tileflow-api:3.30.0 .
 ```
 
 ---

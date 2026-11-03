@@ -1,36 +1,23 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json, hashlib, argparse
 from datetime import datetime, timezone
 import psycopg2
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 DEFAULT_THEMES = [
     {
-        "id": "theme-smriti-default",
+        "id": "theme-tileflow-default",
         "company_id": "GLOBAL",
-        "theme_name": "SMRITI Classic Slate & Navy",
+        "theme_name": "TILEFLOW Classic Slate & Navy",
         "icon_pack": "Material Symbols Outlined",
         "font_heading": "Space Grotesk",
         "font_body": "Inter",
         "border_radius_px": 6,
         "variants": [
             {
-                "id": "var-smriti-light",
+                "id": "var-tileflow-light",
                 "variant": "light",
                 "primary_color": "#0f172a",
                 "secondary_color": "#475569",
@@ -46,7 +33,7 @@ DEFAULT_THEMES = [
                 "is_default": True
             },
             {
-                "id": "var-smriti-dark",
+                "id": "var-tileflow-dark",
                 "variant": "dark",
                 "primary_color": "#e2e8f0",
                 "secondary_color": "#94a3b8",
@@ -72,7 +59,7 @@ DEFAULT_PROFILES = [
         "name": "System Administrator Workspace Profile",
         "persona": "SYSADMIN",
         "default_workspace_id": "menu-dashboard",
-        "theme": "theme-smriti-default",
+        "theme": "theme-tileflow-default",
         "is_default": True
     },
     {
@@ -81,7 +68,7 @@ DEFAULT_PROFILES = [
         "name": "Universal POS Billing Cashier Profile",
         "persona": "CASHIER",
         "default_workspace_id": "menu-pos",
-        "theme": "theme-smriti-default",
+        "theme": "theme-tileflow-default",
         "is_default": False
     },
     {
@@ -90,7 +77,7 @@ DEFAULT_PROFILES = [
         "name": "Store & Inventory Manager Profile",
         "persona": "STORE_MANAGER",
         "default_workspace_id": "menu-inventory",
-        "theme": "theme-smriti-default",
+        "theme": "theme-tileflow-default",
         "is_default": False
     },
     {
@@ -99,7 +86,7 @@ DEFAULT_PROFILES = [
         "name": "Financial Ledger & Accounting Profile",
         "persona": "ACCOUNTANT",
         "default_workspace_id": "menu-business-ledger",
-        "theme": "theme-smriti-default",
+        "theme": "theme-tileflow-default",
         "is_default": False
     }
 ]
@@ -107,20 +94,20 @@ DEFAULT_PROFILES = [
 def run_seeding(dry_run=True):
     mode_str = "DRY-RUN (READ-ONLY)" if dry_run else "APPLY (TRANSACTIONAL MUTATION)"
     print("============================================================")
-    print(f"SMRITI UI/UX CONTROL PLANE SEEDING — MODE: {mode_str}")
+    print(f"TILEFLOW UI/UX CONTROL PLANE SEEDING — MODE: {mode_str}")
     print("============================================================")
 
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_themes;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_themes;")
     theme_cnt = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_workspace_profiles;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_workspace_profiles;")
     profile_cnt = cur.fetchone()[0]
 
-    print(f"Current smriti_themes count            : {theme_cnt}")
-    print(f"Current smriti_workspace_profiles count: {profile_cnt}")
+    print(f"Current tileflow_themes count            : {theme_cnt}")
+    print(f"Current tileflow_workspace_profiles count: {profile_cnt}")
 
     print("\n--- PROPOSED SYSTEM THEMES ---")
     for t in DEFAULT_THEMES:
@@ -144,21 +131,21 @@ def run_seeding(dry_run=True):
         cur.execute("BEGIN;")
         ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
 
-        cur.execute("SELECT sha256_hash FROM smriti_audit_log WHERE sha256_hash IS NOT NULL ORDER BY changed_at DESC LIMIT 1;")
+        cur.execute("SELECT sha256_hash FROM tileflow_audit_log WHERE sha256_hash IS NOT NULL ORDER BY changed_at DESC LIMIT 1;")
         last_hash_row = cur.fetchone()
         prev_h = last_hash_row[0] if last_hash_row else "00000000000000000000000000000000"
 
         # 1. Seed Themes & Variants
         for t in DEFAULT_THEMES:
             cur.execute("""
-                INSERT INTO smriti_themes (id, company_id, theme_name, icon_pack, font_heading, font_body, border_radius_px, is_active, created_at, modified_at)
+                INSERT INTO tileflow_themes (id, company_id, theme_name, icon_pack, font_heading, font_body, border_radius_px, is_active, created_at, modified_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, true, NOW(), NOW())
                 ON CONFLICT (id) DO UPDATE SET theme_name = EXCLUDED.theme_name, modified_at = NOW();
             """, (t["id"], t["company_id"], t["theme_name"], t["icon_pack"], t["font_heading"], t["font_body"], t["border_radius_px"]))
 
             for v in t["variants"]:
                 cur.execute("""
-                    INSERT INTO smriti_theme_variants (
+                    INSERT INTO tileflow_theme_variants (
                         id, theme_id, variant, primary_color, secondary_color, accent_color,
                         background_color, surface_color, text_primary, text_secondary,
                         border_color, danger_color, success_color, warning_color, is_default, created_at
@@ -176,19 +163,19 @@ def run_seeding(dry_run=True):
             new_hash_input = f"{audit_id}:{t['id']}:INSERT:{prev_h}"
             cur_h = hashlib.sha256(new_hash_input.encode('utf-8')).hexdigest()
             cur.execute("""
-                INSERT INTO smriti_audit_log (
+                INSERT INTO tileflow_audit_log (
                     id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                     old_value, new_value, change_type, change_reason, change_source,
                     changed_by, changed_by_name, changed_at, sha256_hash, prev_hash
                 )
-                VALUES (%s, 'smritibus_default', %s, 'smriti_themes', %s, 'theme_seed', 'NONE', %s, 'INSERT', 'Seed default system theme', 'ThemeSeedEngine_v1', 'usr-super', 'System Admin', NOW(), %s, %s);
+                VALUES (%s, 'tileflowbus_default', %s, 'tileflow_themes', %s, 'theme_seed', 'NONE', %s, 'INSERT', 'Seed default system theme', 'ThemeSeedEngine_v1', 'usr-super', 'System Admin', NOW(), %s, %s);
             """, (audit_id, t["id"], t["id"], t["theme_name"], cur_h, prev_h))
             prev_h = cur_h
 
         # 2. Seed Workspace Profiles
         for p in DEFAULT_PROFILES:
             cur.execute("""
-                INSERT INTO smriti_workspace_profiles (
+                INSERT INTO tileflow_workspace_profiles (
                     id, code, name, persona, default_workspace_id, theme, is_default, is_active, is_deleted, created_at, modified_at
                 )
                 VALUES (%s, %s, %s, %s, %s, %s, %s, true, false, NOW(), NOW())
@@ -200,12 +187,12 @@ def run_seeding(dry_run=True):
             new_hash_input = f"{audit_id}:{p['id']}:INSERT:{prev_h}"
             cur_h = hashlib.sha256(new_hash_input.encode('utf-8')).hexdigest()
             cur.execute("""
-                INSERT INTO smriti_audit_log (
+                INSERT INTO tileflow_audit_log (
                     id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                     old_value, new_value, change_type, change_reason, change_source,
                     changed_by, changed_by_name, changed_at, sha256_hash, prev_hash
                 )
-                VALUES (%s, 'smritibus_default', %s, 'smriti_workspace_profiles', %s, 'profile_seed', 'NONE', %s, 'INSERT', 'Seed AWE workspace profile', 'ProfileSeedEngine_v1', 'usr-super', 'System Admin', NOW(), %s, %s);
+                VALUES (%s, 'tileflowbus_default', %s, 'tileflow_workspace_profiles', %s, 'profile_seed', 'NONE', %s, 'INSERT', 'Seed AWE workspace profile', 'ProfileSeedEngine_v1', 'usr-super', 'System Admin', NOW(), %s, %s);
             """, (audit_id, p["id"], p["id"], p["code"], cur_h, prev_h))
             prev_h = cur_h
 
@@ -220,7 +207,7 @@ def run_seeding(dry_run=True):
         conn.close()
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="SMRITI UI/UX Control Plane Seeding Engine")
+    parser = argparse.ArgumentParser(description="TILEFLOW UI/UX Control Plane Seeding Engine")
     parser.add_argument("--apply", action="store_true", help="Execute transactional apply mode. Default is dry-run.")
     args = parser.parse_args()
 

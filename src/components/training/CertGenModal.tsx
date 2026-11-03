@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-14
- * Modified     : 2026-08-14
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from 'react';
 import { Award, CheckCircle2, ShieldCheck, X, Download, QrCode } from 'lucide-react';
 import { apiFetchV1 } from '../../lib/apiFetch';
@@ -51,7 +38,7 @@ export const CertGenModal: React.FC<CertificateModalProps> = ({
         // Mock fallback for standalone development
         setCertData({
           valid: true,
-          certificate_id: `SMRITI-CERT-A981B2`,
+          certificate_id: `TILEFLOW-CERT-A981B2`,
           trainee_name: traineeName,
           certification_level: 'Level 1 — Retail Operator',
           score_percentage: 96.0,
@@ -81,7 +68,7 @@ export const CertGenModal: React.FC<CertificateModalProps> = ({
           <div className="w-12 h-12 bg-amber-500/20 text-amber-400 rounded-full flex items-center justify-center mx-auto border border-amber-500/30">
             <Award className="w-6 h-6" />
           </div>
-          <h2 className="text-xl font-bold text-white">SMRITI Certified Retail Operator</h2>
+          <h2 className="text-xl font-bold text-white">MQube Certified Retail Operator</h2>
           <p className="text-xs text-slate-400">Server-Signed Competency Certification</p>
         </div>
 

@@ -1,31 +1,30 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.4.0
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: Complete "About SMRITI Retail OS" Module — v3.4.0
+# Walkthrough: Complete "About TILEFLOW Retail OS" Module — v3.4.0
 
-This walkthrough documents the design, implementation, and verification of the complete **About SMRITI Retail OS** reference desk module.
+This walkthrough documents the design, implementation, and verification of the complete **About TILEFLOW Retail OS** reference desk module.
 
 ---
 
 ## 1. Purpose
-Design and implement a complete **About SMRITI Retail OS** reference desk module to act as the single source of truth for product information, founding team leadership, system architectures, licenses, legal policies, contact channels, and system diagnostics.
+Design and implement a complete **About TILEFLOW Retail OS** reference desk module to act as the single source of truth for product information, founding team leadership, system architectures, licenses, legal policies, contact channels, and system diagnostics.
 
 ---
 
 ## 2. Scope
 - **Backend API:** Implementation of dynamic GET `/api/changelog` Express router to serve the `CHANGELOG.md` file contents.
-- **Frontend Tab Redesign:** Redesign of `AboutSmritiTab.tsx` with a responsive split pane structure featuring 20 submenus, search functionality, visual timelines, dynamic system diagnostics, and print stylesheets.
+- **Frontend Tab Redesign:** Redesign of `AboutTileFlowTab.tsx` with a responsive split pane structure featuring 20 submenus, search functionality, visual timelines, dynamic system diagnostics, and print stylesheets.
 - **Unit Testing:** Implement a regression test script `src/tests/about.test.ts` verifying metadata configuration and changelog structures.
 - **Project Configuration:** Register test commands in `package.json`.
 
@@ -37,7 +36,7 @@ Design and implement a complete **About SMRITI Retail OS** reference desk module
 ---
 
 ## 4. Files Modified
-- `src/components/AboutSmritiTab.tsx` (Complete redesign of internal submenus navigation and display panels)
+- `src/components/AboutTileFlowTab.tsx` (Complete redesign of internal submenus navigation and display panels)
 - `server.ts` (Register GET `/api/changelog` endpoint router)
 - `package.json` (Register test automation script runner)
 
@@ -58,7 +57,7 @@ Design and implement a complete **About SMRITI Retail OS** reference desk module
 
 ## 7. Implementation Summary
 - Added Express endpoint `/api/changelog` resolving the absolute path to `CHANGELOG.md` and caching/returning text responses.
-- Implemented `AboutSmritiTab.tsx` layout with categories, search state filters, SVG logo graphics, story and product flow timelines, and feedback contact forms.
+- Implemented `AboutTileFlowTab.tsx` layout with categories, search state filters, SVG logo graphics, story and product flow timelines, and feedback contact forms.
 - Programmed print stylesheet media queries to cleanly print only the active reference sheet in high-contrast monochrome.
 
 ---
@@ -74,14 +73,14 @@ Design and implement a complete **About SMRITI Retail OS** reference desk module
 ### Automated Test Logs
 Executing `npm run test` returned the following output:
 ```
-> smriti-retail-os@2.1.1 test
+> tileflow-retail-os@2.1.1 test
 > tsx src/tests/about.test.ts
 
 [TEST] Beginning About Module source file validations...
 [TEST] Checking package.json at: D:\IMP\GitHub\SMRITRretailNX\package.json
 [TEST] package.json version verified: 2.1.1
-[TEST] Checking smriti-config.json at: D:\IMP\GitHub\SMRITRretailNX\smriti-config.json
-[TEST] smriti-config.json schema layout verified successfully.
+[TEST] Checking tileflow-config.json at: D:\IMP\GitHub\SMRITRretailNX\tileflow-config.json
+[TEST] tileflow-config.json schema layout verified successfully.
 [TEST] Checking CHANGELOG.md at: D:\IMP\GitHub\SMRITRretailNX\CHANGELOG.md
 [TEST] CHANGELOG.md verified successfully.
 
@@ -90,7 +89,7 @@ Executing `npm run test` returned the following output:
 
 Executing `npm run lint` returned the following output:
 ```
-> smriti-retail-os@2.1.1 lint
+> tileflow-retail-os@2.1.1 lint
 > tsc --noEmit
 ```
 
@@ -102,7 +101,7 @@ Executing `npm run lint` returned the following output:
 ---
 
 ## 11. Future Work
-- Integrate the SMRITI Wiki Copilot database with the system information metrics panels.
+- Integrate the TILEFLOW Wiki Copilot database with the system information metrics panels.
 
 ---
 

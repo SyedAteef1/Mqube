@@ -1,16 +1,7 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
-# Version      : 3.16.0
-# Created      : 2026-07-13
-# Modified     : 2026-07-13
-# Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
-# Classification: Internal
+
 
 Write-Host "=====================================================================" -ForegroundColor Green
-Write-Host " SMRITI Retail OS - PowerShell One-Command Installer" -ForegroundColor Green
+Write-Host " TILEFLOW Retail OS - PowerShell One-Command Installer" -ForegroundColor Green
 Write-Host "=====================================================================" -ForegroundColor Green
 
 # 1. Check Prerequisites
@@ -49,7 +40,7 @@ if (-not (Test-Path ".env")) {
         Write-Host "  [OK] Created .env file from .env.example template." -ForegroundColor Green
     } else {
         Write-Host "  [FAIL] .env.example template not found. Creating a default .env file..." -ForegroundColor Red
-        $envContent = "PORT=3000`r`nBACKEND_API_PORT=8000`r`nPOSTGRES_USER=postgres`r`nPOSTGRES_PASSWORD=postgres`r`nPOSTGRES_DB=smritisys`r`nDATABASE_PROVIDER=postgres"
+        $envContent = "PORT=3000`r`nBACKEND_API_PORT=8000`r`nPOSTGRES_USER=postgres`r`nPOSTGRES_PASSWORD=postgres`r`nPOSTGRES_DB=tileflowsys`r`nDATABASE_PROVIDER=postgres"
         Set-Content -Path ".env" -Value $envContent
         Write-Host "  [OK] Created default .env file." -ForegroundColor Green
     }
@@ -168,15 +159,15 @@ try {
     # Set directory attribute to Read-Only so Windows loads desktop.ini
     attrib +r (Get-Location)
     
-    Write-Host "  [OK] Configured folder icon to SMRITI visual green indicator (GREEN)." -ForegroundColor Green
+    Write-Host "  [OK] Configured folder icon to TILEFLOW visual green indicator (GREEN)." -ForegroundColor Green
 } catch {
     Write-Host "  [FAIL] Failed to configure Explorer folder icon." -ForegroundColor Red
 }
 
 Write-Host "=====================================================================" -ForegroundColor Green
-Write-Host " SMRITI Retail OS installation complete!" -ForegroundColor Green
+Write-Host " TILEFLOW Retail OS installation complete!" -ForegroundColor Green
 Write-Host "=====================================================================" -ForegroundColor Green
-Write-Host "To launch SMRITI Retail OS:" -ForegroundColor Yellow
+Write-Host "To launch TILEFLOW Retail OS:" -ForegroundColor Yellow
 Write-Host "  Run: .\startup.bat (or docker compose up -d)" -ForegroundColor Gray
 Write-Host "  Access Frontend : http://localhost:3000" -ForegroundColor Gray
 Write-Host "  Access Backend  : http://localhost:8000" -ForegroundColor Gray

@@ -1,6 +1,6 @@
 {
-  "name": "SMRITI Retail OS",
-  "description": "SMRITI Retail OS",
+  "name": "TILEFLOW Retail OS",
+  "description": "TILEFLOW Retail OS",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

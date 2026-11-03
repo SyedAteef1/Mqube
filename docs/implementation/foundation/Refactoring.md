@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.15.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: Public
 -->
 
@@ -18,7 +17,7 @@
 Refactor the Express backend monolith (`server.ts`) by splitting route definitions into modular route files, moving global state arrays into a dedicated store, centralizing common utilities/helpers, integrating database-level operations through the DI container (eliminating the `db_store.json` file database), and resolving security gaps and setting up automated testing suites.
 
 ## 2. Business Motivation
-SMRITI Retail OS currently uses a ~3500-line server entry point (`server.ts`) which complicates readability and maintainability. In addition, the flat-file JSON serialization fallback (`db_store.json`) is prone to file locks, database corruption under concurrent requests, and data desyncs with the live PostgreSQL instance. Unifying database operations through the DI container eliminates flat files, enforces multi-tenant schema isolation, and establishes a enterprise-grade clean architecture.
+TILEFLOW Retail OS currently uses a ~3500-line server entry point (`server.ts`) which complicates readability and maintainability. In addition, the flat-file JSON serialization fallback (`db_store.json`) is prone to file locks, database corruption under concurrent requests, and data desyncs with the live PostgreSQL instance. Unifying database operations through the DI container eliminates flat files, enforces multi-tenant schema isolation, and establishes a enterprise-grade clean architecture.
 
 ## 3. Scope
 - **Phase 1 — Monolith Separation:** Extract shared mutable state arrays into `src/state/store.ts`. Extract helper/utility functions into `src/lib/helpers.ts`. Split route endpoints into 17 distinct module router files under `src/routes/`. Rewrite `server.ts` to under 150 lines.
@@ -41,7 +40,7 @@ SMRITI Retail OS currently uses a ~3500-line server entry point (`server.ts`) wh
 
 ## 6. Architecture Impact
 - **Decoupled Router Layout:** Express routes will be isolated by domain boundaries under `src/routes/`.
-- **Single Source of Truth:** Direct array mutations are replaced by async queries via the SMRITI Platform Abstraction Layer (PAL) repositories.
+- **Single Source of Truth:** Direct array mutations are replaced by async queries via the TILEFLOW Platform Abstraction Layer (PAL) repositories.
 - **Modular Bootloader:** `server.ts` acts exclusively as the HTTP application orchestrator and port binder.
 
 ## 7. Proposed Design
@@ -115,7 +114,7 @@ Revert files to the pre-refactoring commit using `git reset --hard HEAD` and cle
 - Run automated tests for all GST splits, token auths, HSN configurations, and password hashing utility functions.
 
 ## 15. Documentation Impact
-Update Dev Tracker statuses, SMRITI Wiki endpoints catalog, and write Walkthrough document.
+Update Dev Tracker statuses, TILEFLOW Wiki endpoints catalog, and write Walkthrough document.
 
 ## 16. Deployment Plan
 Scaffold plans, implement code locally, test in staging sandbox via git, and merge to main branch.

@@ -1,21 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah — Founder & Chairperson
-* Jawahar Ramkripal Mallah  — Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.28.0
-* Created    : 2026-07-11
-* Modified   : 2026-08-24
-* Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-"""
-
 from datetime import date
 from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, Query, HTTPException, status, Response
@@ -59,7 +41,7 @@ router = APIRouter(prefix="/reports")
 # Studios Catalog — System metadata; stored as Python dict per approved design.
 # ─────────────────────────────────────────────────────────────────────────────
 
-SMRITI_STUDIOS = {
+TILEFLOW_STUDIOS = {
     "sales_studio": {
         "name": "Sales Report Studio",
         "description": "Gross revenue, ticket size, payment modes, sales returns & salesperson indices.",
@@ -178,7 +160,7 @@ async def get_report_studios(
     current_user=Depends(get_current_user),
 ):
     """List all report studios with their registered report catalog."""
-    return {"studios": SMRITI_STUDIOS}
+    return {"studios": TILEFLOW_STUDIOS}
 
 @router.get("/stock-valuation", response_model=StockValuationReport)
 async def stock_valuation_report(
@@ -217,10 +199,10 @@ async def list_studios(
     current_user=Depends(get_current_user),
 ):
     return {
-        "studios": SMRITI_STUDIOS,
-        "total_studios": len(SMRITI_STUDIOS),
-        "total_reports": sum(len(s["reports"]) for s in SMRITI_STUDIOS.values()),
-        "policyEnforcement": "SMRITI Rule 10 Non-Repudiation Schema Active",
+        "studios": TILEFLOW_STUDIOS,
+        "total_studios": len(TILEFLOW_STUDIOS),
+        "total_reports": sum(len(s["reports"]) for s in TILEFLOW_STUDIOS.values()),
+        "policyEnforcement": "TILEFLOW Rule 10 Non-Repudiation Schema Active",
     }
 
 # ─────────────────────────────────────────────────────────────────────────────

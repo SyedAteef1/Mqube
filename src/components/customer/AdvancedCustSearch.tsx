@@ -1,22 +1,8 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 5.5.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useMemo } from "react";
 import { X, Search, RotateCcw, Check, Users, ArrowRight, UserCheck } from "lucide-react";
 import { RetailCustomerRecord, CustomerSearchFilterState } from "./types.ts";
 
-interface SmritiAdvancedCustomerSearchModalProps {
+interface TileFlowAdvancedCustomerSearchModalProps {
   isOpen: boolean;
   onClose: () => void;
   customers: RetailCustomerRecord[];
@@ -40,7 +26,7 @@ const initialFilters: CustomerSearchFilterState = {
   email: ""
 };
 
-export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerSearchModalProps> = ({
+export const TileFlowAdvancedCustomerSearchModal: React.FC<TileFlowAdvancedCustomerSearchModalProps> = ({
   isOpen,
   onClose,
   customers = [],
@@ -99,19 +85,19 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 animate-in fade-in duration-150">
-      <div className="bg-white dark:bg-[#191c1e] w-full max-w-6xl rounded-2xl shadow-2xl border border-[#c6c6cd] dark:border-[#45464d] flex flex-col max-h-[92vh] overflow-hidden">
+      <div className="bg-white dark:bg-[#1c1c1c] w-full max-w-6xl rounded-2xl shadow-2xl border border-[#c7c7c7] dark:border-[#464646] flex flex-col max-h-[92vh] overflow-hidden">
         
         {/* Header */}
-        <header className="px-6 py-4 bg-[#f2f4f6] dark:bg-[#131b2e] border-b border-[#c6c6cd] dark:border-[#45464d] flex items-center justify-between shrink-0">
+        <header className="px-6 py-4 bg-[#f4f4f4] dark:bg-[#1b1b1b] border-b border-[#c7c7c7] dark:border-[#464646] flex items-center justify-between shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 bg-[#d0e1fb] dark:bg-[#0f4c81] text-[#00355f] dark:text-[#8ebdf9] rounded-xl">
+            <div className="p-2 bg-[#dfdfdf] dark:bg-[#434343] text-[#2d2d2d] dark:text-[#b7b7b7] rounded-xl">
               <Search size={18} />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-[#191c1e] dark:text-white uppercase tracking-wider">
+              <h3 className="text-sm font-bold text-[#1c1c1c] dark:text-white uppercase tracking-wider">
                 Advanced Customer Search Utility
               </h3>
-              <p className="text-[11px] text-[#515f74] dark:text-[#bec6e0]">
+              <p className="text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Multivariate demographic selection, price group filtering, and catalogue loading.
               </p>
             </div>
@@ -120,7 +106,7 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 text-[#515f74] hover:text-[#191c1e] dark:text-[#bec6e0] dark:hover:text-white rounded-lg transition"
+            className="p-1.5 text-[#5e5e5e] hover:text-[#1c1c1c] dark:text-[#c6c6c6] dark:hover:text-white rounded-lg transition"
           >
             <X size={18} />
           </button>
@@ -130,16 +116,16 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
         <div className="flex-1 grid grid-cols-12 overflow-hidden min-h-0">
           
           {/* Left Filter Panel */}
-          <div className="col-span-12 md:col-span-4 bg-[#f7f9fb] dark:bg-[#131b2e]/60 border-r border-[#c6c6cd] dark:border-[#45464d] p-4 overflow-y-auto space-y-4 text-xs">
+          <div className="col-span-12 md:col-span-4 bg-[#f9f9f9] dark:bg-[#1b1b1b]/60 border-r border-[#c7c7c7] dark:border-[#464646] p-4 overflow-y-auto space-y-4 text-xs">
             
-            <div className="flex items-center justify-between border-b border-[#c6c6cd] dark:border-[#45464d] pb-2">
-              <span className="font-bold uppercase tracking-wider text-[#00355f] dark:text-[#8ebdf9] text-[11px]">
+            <div className="flex items-center justify-between border-b border-[#c7c7c7] dark:border-[#464646] pb-2">
+              <span className="font-bold uppercase tracking-wider text-[#2d2d2d] dark:text-[#b7b7b7] text-[11px]">
                 Search Filters
               </span>
               <button
                 type="button"
                 onClick={handleResetFilters}
-                className="text-[11px] text-[#515f74] dark:text-[#bec6e0] hover:text-[#00355f] flex items-center gap-1 font-semibold"
+                className="text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6] hover:text-[#2d2d2d] flex items-center gap-1 font-semibold"
               >
                 <RotateCcw size={11} /> Reset
               </button>
@@ -147,35 +133,35 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
 
             {/* General Selection */}
             <div className="space-y-2.5">
-              <h4 className="font-bold text-[10px] uppercase text-[#515f74] dark:text-[#bec6e0] tracking-wider">
+              <h4 className="font-bold text-[10px] uppercase text-[#5e5e5e] dark:text-[#c6c6c6] tracking-wider">
                 1. General Selection
               </h4>
               <div>
-                <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Customer Code</label>
+                <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Customer Code</label>
                 <input
                   type="text"
                   value={filters.code}
                   onChange={e => handleFilterChange("code", e.target.value)}
                   placeholder="e.g. CUST-001"
-                  className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded font-mono text-xs"
+                  className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded font-mono text-xs"
                 />
               </div>
               <div>
-                <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Customer Name</label>
+                <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Customer Name</label>
                 <input
                   type="text"
                   value={filters.name}
                   onChange={e => handleFilterChange("name", e.target.value)}
                   placeholder="e.g. Farida Jameel"
-                  className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded text-xs"
+                  className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded text-xs"
                 />
               </div>
               <div>
-                <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Price Group</label>
+                <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Price Group</label>
                 <select
                   value={filters.priceGroup}
                   onChange={e => handleFilterChange("priceGroup", e.target.value)}
-                  className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded text-xs font-semibold"
+                  className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded text-xs font-semibold"
                 >
                   <option value="All">All Price Groups</option>
                   <option value="TI#Tech Infotech Ltd">TI#Tech Infotech Ltd</option>
@@ -184,38 +170,38 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
                 </select>
               </div>
               <div>
-                <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Loyalty Pgm ID</label>
+                <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Loyalty Pgm ID</label>
                 <input
                   type="text"
                   value={filters.loyaltyPgmId}
                   onChange={e => handleFilterChange("loyaltyPgmId", e.target.value)}
                   placeholder="e.g. 024"
-                  className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded font-mono text-xs"
+                  className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded font-mono text-xs"
                 />
               </div>
               <div>
-                <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Date of Birth</label>
+                <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Date of Birth</label>
                 <input
                   type="date"
                   value={filters.dateOfBirth}
                   onChange={e => handleFilterChange("dateOfBirth", e.target.value)}
-                  className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded text-xs"
+                  className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded text-xs"
                 />
               </div>
             </div>
 
             {/* Advanced Demographic Selection */}
-            <div className="space-y-2.5 pt-2 border-t border-[#c6c6cd] dark:border-[#45464d]">
-              <h4 className="font-bold text-[10px] uppercase text-[#515f74] dark:text-[#bec6e0] tracking-wider">
+            <div className="space-y-2.5 pt-2 border-t border-[#c7c7c7] dark:border-[#464646]">
+              <h4 className="font-bold text-[10px] uppercase text-[#5e5e5e] dark:text-[#c6c6c6] tracking-wider">
                 2. Demographic &amp; Geographic Selection
               </h4>
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Religion</label>
+                  <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Religion</label>
                   <select
                     value={filters.religion}
                     onChange={e => handleFilterChange("religion", e.target.value)}
-                    className="w-full p-1.5 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] rounded text-xs"
+                    className="w-full p-1.5 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] rounded text-xs"
                   >
                     <option value="All">All</option>
                     <option value="Muslim">Muslim</option>
@@ -226,11 +212,11 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
                   </select>
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Ethnicity</label>
+                  <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Ethnicity</label>
                   <select
                     value={filters.ethnicity}
                     onChange={e => handleFilterChange("ethnicity", e.target.value)}
-                    className="w-full p-1.5 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] rounded text-xs"
+                    className="w-full p-1.5 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] rounded text-xs"
                   >
                     <option value="All">All</option>
                     <option value="Asian">Asian</option>
@@ -243,11 +229,11 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
               </div>
 
               <div>
-                <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Age Group</label>
+                <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Age Group</label>
                 <select
                   value={filters.ageGroup}
                   onChange={e => handleFilterChange("ageGroup", e.target.value)}
-                  className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] rounded text-xs"
+                  className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] rounded text-xs"
                 >
                   <option value="All">All Age Groups</option>
                   <option value="<20">&lt;20</option>
@@ -260,23 +246,23 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
 
               <div className="grid grid-cols-2 gap-2">
                 <div>
-                  <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Town / City</label>
+                  <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Town / City</label>
                   <input
                     type="text"
                     value={filters.city}
                     onChange={e => handleFilterChange("city", e.target.value)}
                     placeholder="e.g. Bangalore"
-                    className="w-full p-1.5 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] rounded text-xs"
+                    className="w-full p-1.5 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] rounded text-xs"
                   />
                 </div>
                 <div>
-                  <label className="text-[10px] font-bold block mb-1 text-[#515f74]">Phone</label>
+                  <label className="text-[10px] font-bold block mb-1 text-[#5e5e5e]">Phone</label>
                   <input
                     type="text"
                     value={filters.phone}
                     onChange={e => handleFilterChange("phone", e.target.value)}
                     placeholder="e.g. 9876"
-                    className="w-full p-1.5 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] rounded text-xs"
+                    className="w-full p-1.5 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] rounded text-xs"
                   />
                 </div>
               </div>
@@ -285,19 +271,19 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
           </div>
 
           {/* Right Results Grid */}
-          <div className="col-span-12 md:col-span-8 flex flex-col bg-white dark:bg-[#191c1e] overflow-hidden">
-            <div className="p-3 bg-[#f2f4f6] dark:bg-[#131b2e] border-b border-[#c6c6cd] dark:border-[#45464d] flex items-center justify-between shrink-0 text-xs">
-              <span className="font-bold text-[#191c1e] dark:text-white font-mono">
+          <div className="col-span-12 md:col-span-8 flex flex-col bg-white dark:bg-[#1c1c1c] overflow-hidden">
+            <div className="p-3 bg-[#f4f4f4] dark:bg-[#1b1b1b] border-b border-[#c7c7c7] dark:border-[#464646] flex items-center justify-between shrink-0 text-xs">
+              <span className="font-bold text-[#1c1c1c] dark:text-white font-mono">
                 {filteredCustomers.length} Matching Customers Found
               </span>
-              <span className="text-[11px] text-[#515f74] dark:text-[#bec6e0]">
+              <span className="text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6]">
                 Double-click row or press Enter to load into Catalogue
               </span>
             </div>
 
             <div className="flex-1 overflow-auto">
               <table className="w-full text-left text-xs border-collapse min-w-[700px]">
-                <thead className="sticky top-0 bg-[#f7f9fb] dark:bg-[#131b2e] border-b border-[#c6c6cd] dark:border-[#45464d] font-bold text-[10px] uppercase text-[#515f74] dark:text-[#bec6e0]">
+                <thead className="sticky top-0 bg-[#f9f9f9] dark:bg-[#1b1b1b] border-b border-[#c7c7c7] dark:border-[#464646] font-bold text-[10px] uppercase text-[#5e5e5e] dark:text-[#c6c6c6]">
                   <tr>
                     <th className="p-2.5">Code</th>
                     <th className="p-2.5">Customer Name</th>
@@ -311,7 +297,7 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
                     <th className="p-2.5">Status</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-[#eceef0] dark:divide-[#2d3133]">
+                <tbody className="divide-y divide-[#eeeeee] dark:divide-[#303030]">
                   {filteredCustomers.length === 0 ? (
                     <tr>
                       <td colSpan={10} className="p-8 text-center text-[#76777d]">
@@ -335,8 +321,8 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
                           }}
                           className={`cursor-pointer transition ${
                             isSelected
-                              ? "bg-[#d0e1fb] dark:bg-[#0f4c81]/50 text-[#00355f] dark:text-white font-bold"
-                              : "hover:bg-[#f7f9fb] dark:hover:bg-[#2d3133]"
+                              ? "bg-[#dfdfdf] dark:bg-[#434343]/50 text-[#2d2d2d] dark:text-white font-bold"
+                              : "hover:bg-[#f9f9f9] dark:hover:bg-[#303030]"
                           }`}
                         >
                           <td className="p-2.5 font-mono font-bold">{c.code}</td>
@@ -347,7 +333,7 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
                           <td className="p-2.5">{c.religion}</td>
                           <td className="p-2.5">{c.ethnicity}</td>
                           <td className="p-2.5">{c.ageGroup}</td>
-                          <td className="p-2.5 font-mono text-[11px] text-[#00355f] dark:text-[#8ebdf9]">
+                          <td className="p-2.5 font-mono text-[11px] text-[#2d2d2d] dark:text-[#b7b7b7]">
                             {c.loyaltyPgmId || "—"}
                           </td>
                           <td className="p-2.5">
@@ -367,10 +353,10 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
         </div>
 
         {/* Footer */}
-        <footer className="px-6 py-3.5 bg-[#f2f4f6] dark:bg-[#131b2e] border-t border-[#c6c6cd] dark:border-[#45464d] flex items-center justify-between shrink-0 text-xs">
-          <div className="text-[#515f74] dark:text-[#bec6e0] font-medium">
+        <footer className="px-6 py-3.5 bg-[#f4f4f4] dark:bg-[#1b1b1b] border-t border-[#c7c7c7] dark:border-[#464646] flex items-center justify-between shrink-0 text-xs">
+          <div className="text-[#5e5e5e] dark:text-[#c6c6c6] font-medium">
             {selectedCustomerId ? (
-              <span>Selected Account: <strong className="text-[#00355f] dark:text-[#8ebdf9]">{selectedCustomerId}</strong></span>
+              <span>Selected Account: <strong className="text-[#2d2d2d] dark:text-[#b7b7b7]">{selectedCustomerId}</strong></span>
             ) : (
               <span>Click a row to select an account</span>
             )}
@@ -380,7 +366,7 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 border border-[#76777d] text-[#191c1e] dark:text-[#eff1f3] bg-white dark:bg-[#2d3133] hover:bg-[#eceef0] rounded-xl text-xs font-semibold transition"
+              className="px-4 py-2 border border-[#76777d] text-[#1c1c1c] dark:text-[#f1f1f1] bg-white dark:bg-[#303030] hover:bg-[#eeeeee] rounded-xl text-xs font-semibold transition"
             >
               Cancel
             </button>
@@ -388,7 +374,7 @@ export const SmritiAdvancedCustomerSearchModal: React.FC<SmritiAdvancedCustomerS
               type="button"
               onClick={handleConfirmSelection}
               disabled={!selectedCustomerId}
-              className="px-5 py-2 bg-[#00355f] dark:bg-[#8ebdf9] text-white dark:text-[#001c37] hover:bg-[#0f4c81] dark:hover:bg-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs disabled:opacity-40"
+              className="px-5 py-2 bg-[#2d2d2d] dark:bg-[#b7b7b7] text-white dark:text-[#181818] hover:bg-[#434343] dark:hover:bg-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs disabled:opacity-40"
             >
               <UserCheck size={14} />
               Load Customer into Catalogue

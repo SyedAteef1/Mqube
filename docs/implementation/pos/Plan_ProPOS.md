@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.0.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan — ProPOS Unified Enterprise Billing Suite v6.0.0
 
 ## 1. Objective
-Replace legacy, fragmented Billing (`BillingTerm.tsx`), Tax Invoice, and older POS dialogs with the modern, high-speed, enterprise **ProPOS Billing Suite** adhering to the designs in `F:\SMRITI\Smriti_billing_Plus_More\stitch_shoper9_billing_configuration_guide`.
+Replace legacy, fragmented Billing (`BillingTerm.tsx`), Tax Invoice, and older POS dialogs with the modern, high-speed, enterprise **ProPOS Billing Suite** adhering to the designs in `F:\TILEFLOW\TileFlow_billing_Plus_More\stitch_shoper9_billing_configuration_guide`.
 
 ## 2. Business Motivation
 Provide cashiers, store operators, and managers with an ultra-responsive, keyboard-driven retail checkout terminal supporting split multi-tenders, suspended bill queues, customer loyalty redemptions, sales returns, EOD Z-reports, and promotion schemes.

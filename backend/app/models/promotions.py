@@ -1,23 +1,10 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 from datetime import datetime
 from sqlalchemy import Column, String, Numeric, Boolean, Integer, ForeignKey, DateTime, Text, text
 from sqlalchemy.dialects.postgresql import JSONB
 from ..db.base import BaseEntity
 
 class PromotionCampaign(BaseEntity):
-    """SMRITI Commercial Growth Engine - Promotion & Campaign Master."""
+    """TILEFLOW Commercial Growth Engine - Promotion & Campaign Master."""
     __tablename__ = "promotion_campaigns"
 
     name = Column(String(100), nullable=False, unique=True)

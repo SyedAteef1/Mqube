@@ -1,29 +1,28 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Version      : 3.18.0
   Created      : 2026-07-17
   Modified     : 2026-07-17
-  Copyright    : © SMRITIBooks.com and SMRITI Retail OS. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in and TILEFLOW Retail OS. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
-# SMRITI Platform Microservices Roadmap
+# TILEFLOW Platform Microservices Roadmap
 
-**Status:** Target architecture for a long-lived, cross-domain SMRITI Platform.
+**Status:** Target architecture for a long-lived, cross-domain TILEFLOW Platform.
 
 > See also: [Architecture Docs README](./README.md) and [Product Identity Engine](./PRODUCT_IDENTITY_13.md) — governance-grade product identity, barcode assignment, and master data rule management for the modular platform.
 
 ## Vision
 
-SMRITI Retail OS is evolving into a modular platform capable of supporting Retail, Pharma, Restaurant, Manufacturing, Distribution, School, Hospital, and other verticals. The long-term architecture should be service-oriented, not a single monolith, but also not dozens of tiny services from day one.
+TILEFLOW Retail OS is evolving into a modular platform capable of supporting Retail, Pharma, Restaurant, Manufacturing, Distribution, School, Hospital, and other verticals. The long-term architecture should be service-oriented, not a single monolith, but also not dozens of tiny services from day one.
 
 ## Target Architecture
 
 ```
-                 SMRITI API Gateway
+                 TILEFLOW API Gateway
                         │
  ───────────────────────────────────────────────────────
                         │
@@ -321,7 +320,7 @@ Focus the first phase on the services that deliver the most business value and e
 - Add vertical-specific services only where required
 - Keep identity, audit, reporting, and integration shared platform services
 
-## Why This Fits SMRITI
+## Why This Fits TILEFLOW
 
 - Deploy only the services you need
 - Scale inventory independently from reporting

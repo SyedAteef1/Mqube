@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from 'react';
 import { GlobalHeader } from './GlobalHeader';
 import { NavRail, NavRailState } from './NavRail';
@@ -48,7 +36,7 @@ const mapModuleToContext = (moduleId: string): BusinessContext => {
   if (['report-designer', 'business-ledger', 'audit-logs', 'accounting-sync', 'data-exchange'].includes(moduleId)) {
     return 'reports';
   }
-  if (['staff-management', 'dev-tracker', 'wiki', 'about-smriti', 'legacy-migration'].includes(moduleId)) {
+  if (['staff-management', 'dev-tracker', 'wiki', 'about-tileflow', 'legacy-migration'].includes(moduleId)) {
     return 'system';
   }
 
@@ -71,7 +59,7 @@ export const AppShell: React.FC<AppShellProps> = ({
   children,
 }) => {
   const [railState, setRailState] = useState<NavRailState>(() => {
-    const saved = localStorage.getItem('smriti_nav_rail_state');
+    const saved = localStorage.getItem('tileflow_nav_rail_state');
     return (saved === 'EXPANDED' || saved === 'COMPACT') ? saved : 'EXPANDED';
   });
   const [savedRailState, setSavedRailState] = useState<NavRailState>('EXPANDED');
@@ -79,7 +67,7 @@ export const AppShell: React.FC<AppShellProps> = ({
 
   useEffect(() => {
     if (railState !== 'HIDDEN') {
-      localStorage.setItem('smriti_nav_rail_state', railState);
+      localStorage.setItem('tileflow_nav_rail_state', railState);
     }
   }, [railState]);
 
@@ -91,7 +79,7 @@ export const AppShell: React.FC<AppShellProps> = ({
     }
     setRailState((prev) => {
       const next = prev === 'EXPANDED' ? 'COMPACT' : 'EXPANDED';
-      localStorage.setItem('smriti_nav_rail_state', next);
+      localStorage.setItem('tileflow_nav_rail_state', next);
       return next;
     });
   };
@@ -113,7 +101,7 @@ export const AppShell: React.FC<AppShellProps> = ({
   const canNavigateBack = navigationHistory.length > 1;
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#f8f9ff] text-[#0b1c30] font-sans antialiased">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#f9f9f9] text-[#1a1a1a] font-sans antialiased">
       {/* Global Header */}
       {!isFocusMode ? (
         <GlobalHeader
@@ -133,7 +121,7 @@ export const AppShell: React.FC<AppShellProps> = ({
         />
       ) : (
         /* Focus Mode Compact Header Bar */
-        <div className="bg-[#24389c] text-white h-9 px-3 flex items-center justify-between border-b border-[#3f51b5] text-xs font-medium z-30 select-none">
+        <div className="bg-[#3b3b3b] text-white h-9 px-3 flex items-center justify-between border-b border-[#545454] text-xs font-medium z-30 select-none">
           <div className="flex items-center gap-2">
             <span className="bg-[#abf4ac] text-[#002107] text-[10px] font-bold px-2 py-0.5 rounded-md">
               FOCUS MODE
@@ -151,7 +139,7 @@ export const AppShell: React.FC<AppShellProps> = ({
             <button
               type="button"
               onClick={handleToggleFocusMode}
-              className="bg-[#3f51b5] hover:bg-indigo-600 text-white text-xs px-2.5 py-0.5 rounded-md flex items-center gap-1 font-semibold cursor-pointer"
+              className="bg-[#545454] hover:bg-indigo-600 text-white text-xs px-2.5 py-0.5 rounded-md flex items-center gap-1 font-semibold cursor-pointer"
             >
               <span className="material-symbols-outlined text-[16px]">fullscreen_exit</span> Exit Focus
             </button>
@@ -174,7 +162,7 @@ export const AppShell: React.FC<AppShellProps> = ({
         />
 
         {/* Workspace Canvas Area */}
-        <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#f8f9ff] relative">
+        <main className="flex-1 flex flex-col min-w-0 overflow-hidden bg-[#f9f9f9] relative">
           {children}
         </main>
       </div>

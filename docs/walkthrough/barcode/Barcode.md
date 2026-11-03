@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.31.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI 9 Tag & Barcode Label Printing Module Replacement
+# Walkthrough: TILEFLOW 9 Tag & Barcode Label Printing Module Replacement
 
 ## 1. Purpose
-This walkthrough documents the complete replacement of legacy barcode studio interfaces with the official **SMRITI 9 Tag & Barcode Label Printing** high-throughput terminal package (`F:\SMRITI\Label Printing`).
+This walkthrough documents the complete replacement of legacy barcode studio interfaces with the official **TILEFLOW 9 Tag & Barcode Label Printing** high-throughput terminal package (`F:\TILEFLOW\Label Printing`).
 
 ## 2. Scope
 - Barcode Label Designer & Tag Printing workspace (`src/components/barcode/TagLabelPrintingTa.tsx`).
@@ -42,7 +41,7 @@ This walkthrough documents the complete replacement of legacy barcode studio int
 4. **Thermal Printer Port Dispatch**: Provides configuration for COM, USB, and TCP/IP network label printers along with browser print fallbacks.
 
 ## 6. Design Rationale
-Implements the exact UI design and layout from `F:\SMRITI\Label Printing\code.html` and `DESIGN.md`, preserving the signature SMRITI 9 blue header accents, dense desktop data-entry spacing, fieldsets, and keyboard navigation shortcuts (`F2`, `F3`, `Arrow keys`).
+Implements the exact UI design and layout from `F:\TILEFLOW\Label Printing\code.html` and `DESIGN.md`, preserving the signature TILEFLOW 9 blue header accents, dense desktop data-entry spacing, fieldsets, and keyboard navigation shortcuts (`F2`, `F3`, `Arrow keys`).
 
 ## 7. Implementation Summary
 - Mounted `TagLabelPrintingTab` at route `"barcode"`.
@@ -70,4 +69,4 @@ Implements the exact UI design and layout from `F:\SMRITI\Label Printing\code.ht
 - `ADR-0045`: Thermal Label Printing Abstraction & Hardware Bridge.
 
 ## 13. Related RFCs
-- `RFC-0089`: SMRITI 9 Tag & Label Designer Migration.
+- `RFC-0089`: TILEFLOW 9 Tag & Label Designer Migration.

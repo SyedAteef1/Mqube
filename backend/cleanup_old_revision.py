@@ -1,5 +1,5 @@
 import psycopg2
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smritisys')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflowsys')
 cur = conn.cursor()
 
 # Check if old revision exists

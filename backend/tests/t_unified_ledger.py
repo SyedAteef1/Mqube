@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -39,7 +25,7 @@ from app.services.unified_ledger import UnifiedAccountingLedgerService
 @pytest.mark.asyncio
 async def test_chart_of_accounts_idempotent_seeding():
     """Verify that seed_default_chart_of_accounts seeds standard COA and is fully idempotent."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         # First seeding
         accounts1 = await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(
@@ -74,7 +60,7 @@ async def test_chart_of_accounts_idempotent_seeding():
 @pytest.mark.asyncio
 async def test_manual_journal_voucher_posting_balance_invariant():
     """Verify posting a balanced manual journal voucher (Debit == Credit) and outbox streaming."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
 
@@ -130,8 +116,8 @@ async def test_manual_journal_voucher_posting_balance_invariant():
 
 @pytest.mark.asyncio
 async def test_unbalanced_journal_voucher_rejection_400():
-    """Verify that posting an unbalanced journal voucher is rejected with SMRITI-GL-001."""
-    session_factory = get_company_sessionmaker("smriti001")
+    """Verify that posting an unbalanced journal voucher is rejected with TILEFLOW-GL-001."""
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(session, "COMP-001")
 
@@ -163,13 +149,13 @@ async def test_unbalanced_journal_voucher_rejection_400():
             )
 
         assert exc_info.value.status_code == 400
-        assert "SMRITI-GL-001" in exc_info.value.detail
+        assert "TILEFLOW-GL-001" in exc_info.value.detail
 
 
 @pytest.mark.asyncio
 async def test_sales_invoice_automated_gl_posting():
     """Verify automated translation of SalesInvoice into balanced multi-tier double-entry GL voucher."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         unique_suffix = uuid.uuid4().hex[:6]
         inv_id = f"inv_gl_{unique_suffix}"
@@ -252,7 +238,7 @@ async def test_sales_invoice_automated_gl_posting():
 @pytest.mark.asyncio
 async def test_purchase_receipt_automated_gl_posting():
     """Verify automated translation of PurchaseReceipt into balanced double-entry GL voucher."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         unique_suffix = uuid.uuid4().hex[:6]
         pr_id = f"pr_gl_{unique_suffix}"
@@ -293,7 +279,7 @@ async def test_purchase_receipt_automated_gl_posting():
 @pytest.mark.asyncio
 async def test_trial_balance_equality_guarantee():
     """Verify that get_trial_balance aggregates all postings and strictly enforces Total Debits == Total Credits."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         tb = await UnifiedAccountingLedgerService.get_trial_balance(
             session=session,
@@ -310,7 +296,7 @@ async def test_trial_balance_equality_guarantee():
 @pytest.mark.asyncio
 async def test_profit_and_loss_calculation():
     """Verify that get_profit_and_loss accurately computes Revenue, Expenses, and Net Profit."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         pnl = await UnifiedAccountingLedgerService.get_profit_and_loss(
             session=session,
@@ -327,11 +313,11 @@ async def test_profit_and_loss_calculation():
 
 @pytest.mark.asyncio
 async def test_accounting_tenant_isolation():
-    """Verify that accounts, vouchers, and GL entries in smriti001 are strictly isolated from smriti002."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    """Verify that accounts, vouchers, and GL entries in tileflow001 are strictly isolated from tileflow002."""
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
-    # 1. Post a distinctive voucher in smriti001
+    # 1. Post a distinctive voucher in tileflow001
     async with session_001() as s1:
         await UnifiedAccountingLedgerService.seed_default_chart_of_accounts(s1, "COMP-001")
         acc_bank = await UnifiedAccountingLedgerService.get_account_by_code(s1, "COMP-001", "1020")
@@ -352,21 +338,21 @@ async def test_accounting_tenant_isolation():
         await s1.commit()
         voucher_id = v1.id
 
-    # 2. Assert smriti002 cannot find this voucher or its GL entries
+    # 2. Assert tileflow002 cannot find this voucher or its GL entries
     async with session_002() as s2:
         stmt_v = select(JournalVoucher).where(JournalVoucher.id == voucher_id)
         leaked_voucher = (await s2.execute(stmt_v)).scalar_one_or_none()
-        assert leaked_voucher is None, "JournalVoucher from smriti001 must not leak into smriti002!"
+        assert leaked_voucher is None, "JournalVoucher from tileflow001 must not leak into tileflow002!"
 
         stmt_gle = select(GeneralLedgerEntry).where(GeneralLedgerEntry.voucher_id == voucher_id)
         leaked_entries = (await s2.execute(stmt_gle)).scalars().all()
-        assert len(leaked_entries) == 0, "GeneralLedgerEntry from smriti001 must not leak into smriti002!"
+        assert len(leaked_entries) == 0, "GeneralLedgerEntry from tileflow001 must not leak into tileflow002!"
 
 
 @pytest.mark.asyncio
 async def test_payment_transaction_cash_automated_gl_posting():
     """Verify automated translation of Cash PaymentTransaction into balanced GL voucher."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         unique_suffix = uuid.uuid4().hex[:6]
         pay_id = f"pay_cash_{unique_suffix}"
@@ -413,7 +399,7 @@ async def test_payment_transaction_cash_automated_gl_posting():
 @pytest.mark.asyncio
 async def test_payment_transaction_upi_bank_automated_gl_posting():
     """Verify automated translation of UPI PaymentTransaction into Bank Debit GL voucher."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         unique_suffix = uuid.uuid4().hex[:6]
         pay_id = f"pay_upi_{unique_suffix}"
@@ -453,7 +439,7 @@ async def test_payment_transaction_upi_bank_automated_gl_posting():
 @pytest.mark.asyncio
 async def test_stock_audit_deficit_gl_posting():
     """Verify that physical stock deficit (OUTWARD_LOSS) debits Inventory Loss (5040) and credits Inventory Asset (1040)."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         unique_suffix = uuid.uuid4().hex[:6]
         audit_id = f"audit_def_{unique_suffix}"
@@ -518,7 +504,7 @@ async def test_stock_audit_deficit_gl_posting():
 @pytest.mark.asyncio
 async def test_stock_audit_surplus_gl_posting():
     """Verify that physical stock surplus (INWARD_SURPLUS) debits Inventory Asset (1040) and credits Other Income (4020)."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         unique_suffix = uuid.uuid4().hex[:6]
         audit_id = f"audit_sur_{unique_suffix}"
@@ -577,7 +563,7 @@ async def test_stock_audit_surplus_gl_posting():
 @pytest.mark.asyncio
 async def test_account_period_balance_snapshotting():
     """Verify generate_period_balance_snapshot calculates closing balances for all active accounts."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         snapshots = await UnifiedAccountingLedgerService.generate_period_balance_snapshot(
             session=session,

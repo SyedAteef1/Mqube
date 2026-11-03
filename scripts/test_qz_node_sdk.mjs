@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.30.0
- * Created      : 2026-08-23
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import crypto from "crypto";
 
 // Polyfill browser globals for QZ Tray in Node.js
@@ -33,7 +19,7 @@ import qz from "qz-tray";
 const BACKEND_URL = "http://localhost:8000";
 
 console.log("================================================================================");
-console.log("  SMRITI Retail OS — Full QZ Tray End-to-End Test (CLI Node SDK)");
+console.log("  TILEFLOW Retail OS — Full QZ Tray End-to-End Test (CLI Node SDK)");
 console.log("================================================================================");
 
 async function run() {
@@ -98,7 +84,7 @@ async function run() {
           stockNo: "SKU-CLI-001",
           barcode: "8901234567890",
           product: "Cotton Formal Shirt",
-          brand: "Smriti Executive",
+          brand: "TileFlow Executive",
           style: "Classic Fit",
           colour: "White",
           size: "40",

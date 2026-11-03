@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan: Vertical Slice 3 — Sales, POS, and Inventory Lifecycle & Ledger Unification
 
 ## 1. Objective
-Unify B2B Sales Invoicing, POS Checkout Sessions, and Inventory Lifecycle posting against the canonical `stock_movements` operational ledger in the tenant data plane (`smritiXXX`), enforcing immutable tax/pricing snapshots and guaranteed reversal idempotency.
+Unify B2B Sales Invoicing, POS Checkout Sessions, and Inventory Lifecycle posting against the canonical `stock_movements` operational ledger in the tenant data plane (`tileflowXXX`), enforcing immutable tax/pricing snapshots and guaranteed reversal idempotency.
 
 ---
 
@@ -36,7 +35,7 @@ In retail and distributor operations, stock balances and sales records must neve
 3. **Idempotent Reversal & Cancellation**:
    - Cancellation lifecycle restoring stock with audit reference tracking.
 4. **Tenant Isolation**:
-   - Strict physical isolation of all sales, POS, and stock ledger entries inside `smritiXXX`.
+   - Strict physical isolation of all sales, POS, and stock ledger entries inside `tileflowXXX`.
 
 ### Out-of-Scope (Deferred)
 - External government gateway e-invoice API submissions (handled in separate integration layer).
@@ -57,7 +56,7 @@ In retail and distributor operations, stock balances and sales records must neve
 | **Stock Ledger Binding** | Inconsistent across legacy sales paths | 100% atomic posting to `stock_movements` for every confirmed invoice and POS checkout |
 | **Tax & Pricing Snapshot** | Partially calculated on-the-fly | Immutable line-item snapshotting (`taxable_value`, `gst_rate`, `cgst_amount`, `sgst_amount`, `igst_amount`, `mrp`, `disc_pct`) |
 | **Cancellation Reversal** | Manual stock adjustments | Automated, audited `RETURN_INWARD` movement posting with original invoice linkage |
-| **Data Plane Boundary** | Tenant DB | Strictly tenant data plane (`smritiXXX`) |
+| **Data Plane Boundary** | Tenant DB | Strictly tenant data plane (`tileflowXXX`) |
 
 ---
 
@@ -99,7 +98,7 @@ In retail and distributor operations, stock balances and sales records must neve
 
 ## 10. Dependencies
 - Vertical Slice 2: Universal Party and Item Master foundations.
-- PostgreSQL tenant databases (`smriti001`, `smriti002`).
+- PostgreSQL tenant databases (`tileflow001`, `tileflow002`).
 
 ---
 
@@ -121,7 +120,7 @@ Database transactions operate within explicit unit-of-work boundaries (`session.
 2. Verify corresponding `stock_movements` rows are generated with matching `invoice_id`, quantities, and batch numbers.
 3. Verify line-level GST amounts (`cgst_amount`, `sgst_amount`, `igst_amount`) match exact mathematical statutory formulas.
 4. Execute invoice cancellation and verify stock reversal movements.
-5. Verify tenant isolation between `smriti001` and `smriti002`.
+5. Verify tenant isolation between `tileflow001` and `tileflow002`.
 
 ---
 

@@ -1,21 +1,8 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.32.0
- * Created      : 2026-08-26
- * Modified     : 2026-08-26
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import { describe, it, expect } from "vitest";
 import { formatCurrency, formatNumber, safeNumber, safeDivision, formatDate, formatDateTime } from "../utils/formatters";
 import { normalizeSalesOrder, normalizeSalesOrders, normalizeSalesOrderItem, normalizeQuotation, normalizeQuotations } from "../utils/normalizeSales";
 
-describe("SMRITI Safe Number & Currency Formatters Audit", () => {
+describe("MQube Safe Number & Currency Formatters Audit", () => {
   it("should safely format standard numbers into INR currency", () => {
     const formatted = formatCurrency(150000);
     expect(formatted).toContain("1,50,000.00");
@@ -81,7 +68,7 @@ describe("SMRITI Safe Number & Currency Formatters Audit", () => {
   });
 });
 
-describe("SMRITI Sales Order Normalization & Case Resilience Audit", () => {
+describe("MQube Sales Order Normalization & Case Resilience Audit", () => {
   it("should normalize backend snake_case SalesOrder response to dual camelCase/snake_case structure", () => {
     const rawBackendOrder = {
       id: "so-tt-5182778151",

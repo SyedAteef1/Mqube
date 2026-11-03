@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 5.0.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import io
@@ -37,14 +23,14 @@ sys.path.insert(0, r"F:\SMRITRretailNX\backend")
 from app.services.invoice_pdf_service import InvoicePdfService, number_to_indian_words
 
 # Paths
-DISPATCH_PATH = r"F:\Smriti-Clients Data\Tattly Threads\24_08_26\RIL_Dispatch_09-08-2026-2.xlsx"
-PO_PATH = r"F:\Smriti-Clients Data\Tattly Threads\All Stores Po.xlsx"
-CUST_LIST_PATH = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\RIL FINAL LIST.xlsx"
+DISPATCH_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\24_08_26\RIL_Dispatch_09-08-2026-2.xlsx"
+PO_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\All Stores Po.xlsx"
+CUST_LIST_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\RIL FINAL LIST.xlsx"
 
-OUTPUT_CLIENT_DIR = r"F:\Smriti-Clients Data\Tattly Threads\24_08_26\Invoices"
+OUTPUT_CLIENT_DIR = r"F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Invoices"
 OUTPUT_EXPORTS_DIR = r"F:\SMRITRretailNX\exports\tt_batch_129_137"
 OUTPUT_TT_DIR = r"F:\SMRITRretailNX\TT"
-CONFIRMATION_EXCEL_PATH = r"F:\Smriti-Clients Data\Tattly Threads\24_08_26\Tax_Invoice_Store_PO_Address_Confirmation_Batch2_2026-08-25.xlsx"
+CONFIRMATION_EXCEL_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\24_08_26\Tax_Invoice_Store_PO_Address_Confirmation_Batch2_2026-08-25.xlsx"
 
 os.makedirs(OUTPUT_CLIENT_DIR, exist_ok=True)
 os.makedirs(OUTPUT_EXPORTS_DIR, exist_ok=True)
@@ -53,7 +39,7 @@ os.makedirs(OUTPUT_TT_DIR, exist_ok=True)
 INVOICE_DATE_DB = datetime.date(2026, 8, 24)
 INVOICE_DATE_STR = "24-08-2026"
 START_INVOICE_NUM = 129
-DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 
 class InvoiceItemMock:
@@ -128,7 +114,7 @@ def generate_confirmation_workbook(store_groups, po_lookup, cust_lookup, state_g
         bottom=Side(style='thin', color='D1D5DB')
     )
 
-    ws_out1['A1'] = "SMRITI RETAIL OS — TATTLY THREADS TAX INVOICE PRE-GENERATION CONFIRMATION REGISTER (BATCH 2)"
+    ws_out1['A1'] = "TILEFLOW RETAIL OS — TATTLY THREADS TAX INVOICE PRE-GENERATION CONFIRMATION REGISTER (BATCH 2)"
     ws_out1['A1'].font = title_font
     ws_out1['A2'] = f"Invoice Date: 24-Aug-2026 | Total Stores to Invoice: {len(store_groups)} | Source: RIL_Dispatch_09-08-2026-2.xlsx (Sheet2)"
     ws_out1['A2'].font = sub_font
@@ -286,7 +272,7 @@ def generate_confirmation_workbook(store_groups, po_lookup, cust_lookup, state_g
 
 async def main():
     print("=" * 80)
-    print("SMRITI RETAIL OS — BATCH 2 TAX INVOICE GENERATOR (INVOICES 129 TO 137)")
+    print("TILEFLOW RETAIL OS — BATCH 2 TAX INVOICE GENERATOR (INVOICES 129 TO 137)")
     print("=" * 80)
 
     # 1. Connect to DB
@@ -561,7 +547,7 @@ async def main():
             with open(path_tt, "wb") as f:
                 f.write(pdf_bytes)
 
-            # Update Database smriti001
+            # Update Database tileflow001
             cur.execute("""
                 DELETE FROM sales_invoice_items WHERE invoice_id = %s;
                 DELETE FROM invoice_document_artifacts WHERE invoice_id = %s;

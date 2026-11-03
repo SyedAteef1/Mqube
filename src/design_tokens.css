@@ -1,0 +1,190 @@
+/* MQube design tokens: monochrome surfaces, pill controls, quiet elevation. Loaded after Tailwind. */
+@theme {
+	--font-sans: "Geist", "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+	--font-display: "Geist", "Inter", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "Geist Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+	/* Brand hues become neutrals. Green, amber and red stay for status and errors. */
+	--color-blue-50: #fafafa;
+	--color-blue-100: #f5f5f5;
+	--color-blue-200: #e5e5e5;
+	--color-blue-300: #d4d4d4;
+	--color-blue-400: #a3a3a3;
+	--color-blue-500: #525252;
+	--color-blue-600: #171717;
+	--color-blue-700: #0a0a0a;
+	--color-blue-800: #171717;
+	--color-blue-900: #0a0a0a;
+	--color-blue-950: #0a0a0a;
+	--color-indigo-50: #fafafa;
+	--color-indigo-100: #f5f5f5;
+	--color-indigo-200: #e5e5e5;
+	--color-indigo-300: #d4d4d4;
+	--color-indigo-400: #a3a3a3;
+	--color-indigo-500: #525252;
+	--color-indigo-600: #171717;
+	--color-indigo-700: #0a0a0a;
+	--color-indigo-800: #171717;
+	--color-indigo-900: #0a0a0a;
+	--color-indigo-950: #0a0a0a;
+	--color-violet-50: #fafafa;
+	--color-violet-100: #f5f5f5;
+	--color-violet-200: #e5e5e5;
+	--color-violet-300: #d4d4d4;
+	--color-violet-400: #a3a3a3;
+	--color-violet-500: #525252;
+	--color-violet-600: #171717;
+	--color-violet-700: #0a0a0a;
+	--color-violet-800: #171717;
+	--color-violet-900: #0a0a0a;
+	--color-violet-950: #0a0a0a;
+	--color-purple-50: #fafafa;
+	--color-purple-100: #f5f5f5;
+	--color-purple-200: #e5e5e5;
+	--color-purple-300: #d4d4d4;
+	--color-purple-400: #a3a3a3;
+	--color-purple-500: #525252;
+	--color-purple-600: #171717;
+	--color-purple-700: #0a0a0a;
+	--color-purple-800: #171717;
+	--color-purple-900: #0a0a0a;
+	--color-purple-950: #0a0a0a;
+	--color-sky-50: #fafafa;
+	--color-sky-100: #f5f5f5;
+	--color-sky-200: #e5e5e5;
+	--color-sky-300: #d4d4d4;
+	--color-sky-400: #a3a3a3;
+	--color-sky-500: #525252;
+	--color-sky-600: #171717;
+	--color-sky-700: #0a0a0a;
+	--color-sky-800: #171717;
+	--color-sky-900: #0a0a0a;
+	--color-sky-950: #0a0a0a;
+	--color-teal-50: #fafafa;
+	--color-teal-100: #f5f5f5;
+	--color-teal-200: #e5e5e5;
+	--color-teal-300: #d4d4d4;
+	--color-teal-400: #a3a3a3;
+	--color-teal-500: #525252;
+	--color-teal-600: #171717;
+	--color-teal-700: #0a0a0a;
+	--color-teal-800: #171717;
+	--color-teal-900: #0a0a0a;
+	--color-teal-950: #0a0a0a;
+	--color-cyan-50: #fafafa;
+	--color-cyan-100: #f5f5f5;
+	--color-cyan-200: #e5e5e5;
+	--color-cyan-300: #d4d4d4;
+	--color-cyan-400: #a3a3a3;
+	--color-cyan-500: #525252;
+	--color-cyan-600: #171717;
+	--color-cyan-700: #0a0a0a;
+	--color-cyan-800: #171717;
+	--color-cyan-900: #0a0a0a;
+	--color-cyan-950: #0a0a0a;
+	--color-fuchsia-50: #fafafa;
+	--color-fuchsia-100: #f5f5f5;
+	--color-fuchsia-200: #e5e5e5;
+	--color-fuchsia-300: #d4d4d4;
+	--color-fuchsia-400: #a3a3a3;
+	--color-fuchsia-500: #525252;
+	--color-fuchsia-600: #171717;
+	--color-fuchsia-700: #0a0a0a;
+	--color-fuchsia-800: #171717;
+	--color-fuchsia-900: #0a0a0a;
+	--color-fuchsia-950: #0a0a0a;
+	--color-slate-50: #fafafa;
+	--color-slate-100: #f5f5f5;
+	--color-slate-200: #e5e5e5;
+	--color-slate-300: #d4d4d4;
+	--color-slate-400: #a3a3a3;
+	--color-slate-500: #737373;
+	--color-slate-600: #525252;
+	--color-slate-700: #404040;
+	--color-slate-800: #262626;
+	--color-slate-900: #171717;
+	--color-slate-950: #0a0a0a;
+	--color-gray-50: #fafafa;
+	--color-gray-100: #f5f5f5;
+	--color-gray-200: #e5e5e5;
+	--color-gray-300: #d4d4d4;
+	--color-gray-400: #a3a3a3;
+	--color-gray-500: #737373;
+	--color-gray-600: #525252;
+	--color-gray-700: #404040;
+	--color-gray-800: #262626;
+	--color-gray-900: #171717;
+	--color-gray-950: #0a0a0a;
+	--color-zinc-50: #fafafa;
+	--color-zinc-100: #f5f5f5;
+	--color-zinc-200: #e5e5e5;
+	--color-zinc-300: #d4d4d4;
+	--color-zinc-400: #a3a3a3;
+	--color-zinc-500: #737373;
+	--color-zinc-600: #525252;
+	--color-zinc-700: #404040;
+	--color-zinc-800: #262626;
+	--color-zinc-900: #171717;
+	--color-zinc-950: #0a0a0a;
+
+	--radius-sm: 6px;
+	--radius-md: 6px;
+	--radius-lg: 10px;
+	--radius-xl: 24px;
+	--radius-2xl: 24px;
+	--radius-3xl: 24px;
+
+	--shadow-sm: 0 0 0 1px rgba(23, 23, 23, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+	--shadow: var(--shadow-sm);
+	--shadow-md: var(--shadow-sm);
+	--shadow-lg: var(--shadow-sm);
+}
+
+:root,
+[data-theme="light"] {
+	--c-theme-base: #f5f5f5;
+	--c-theme-surface-1: #ffffff;
+	--c-theme-surface-2: #fafafa;
+	--c-theme-surface-3: #f5f5f5;
+	--c-theme-surface-4: #e5e5e5;
+	--c-theme-surface-hover: #f5f5f5;
+	--c-theme-surface-selected: #f5f5f5;
+	--c-theme-surface-disabled: #f5f5f5;
+	--c-theme-body: #0a0a0a;
+	--c-theme-text-primary: #0a0a0a;
+	--c-theme-text-secondary: #737373;
+	--c-theme-muted: #737373;
+	--c-theme-placeholder: #737373;
+	--c-theme-disabled: #a3a3a3;
+	--c-theme-primary: #171717;
+	--c-theme-primary-hover: #0a0a0a;
+	--c-theme-primary-active: #0a0a0a;
+	--c-theme-primary-disabled: #a3a3a3;
+	--c-theme-focus: #0a0a0a;
+	--c-theme-border: #e5e5e5;
+	--c-theme-border-strong: #d4d4d4;
+	--c-theme-divider: #e5e5e5;
+	--c-theme-error: #e7000b;
+	--c-theme-info: #0a0a0a;
+	--c-theme-info-bg: #f5f5f5;
+	--c-theme-selection: #f5f5f5;
+	--c-theme-chart-indigo: #171717;
+	--c-theme-chart-axis: #737373;
+	--color-primary: #171717;
+	--color-primary-container: #0a0a0a;
+	--color-on-primary: #fafafa;
+	--color-on-primary-container: #fafafa;
+	--color-secondary: #525252;
+}
+
+body {
+	font-feature-settings: "ss01" on, "cv11" on;
+}
+
+/* Pill controls. Tables, grids and printed documents keep their own compact shapes. */
+button:not(.rounded-none, table *, [role="grid"] *, .print-only-container *),
+select:not(.rounded-none, table *, [role="grid"] *),
+textarea:not(.rounded-none, table *, [role="grid"] *),
+input:not([type="checkbox"], [type="radio"], [type="range"], .rounded-none, table *, [role="grid"] *) {
+	border-radius: 18px;
+}

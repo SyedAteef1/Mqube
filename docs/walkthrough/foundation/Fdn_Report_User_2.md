@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Report User Role & Auditing Expansion (v3.16.0)
 
 ## 1. Purpose
-This walkthrough documents the visual warnings, input locking, and telemetry action audit logging implemented across all remaining master and transaction components of SMRITI Retail OS for operators in the read-only **Report User** role.
+This walkthrough documents the visual warnings, input locking, and telemetry action audit logging implemented across all remaining master and transaction components of TILEFLOW Retail OS for operators in the read-only **Report User** role.
 
 ## 2. Scope
 - Visual alert warning banners at the top of Ledger, CRM, Purchase, Barcode print, and Staff tabs.

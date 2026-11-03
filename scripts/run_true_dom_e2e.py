@@ -1,14 +1,3 @@
-"""
-SMRITI Retail OS — Level C True DOM Transaction Certification Script
----------------------------------------------------------------------
-Executes TRUE LEVEL C DOM interaction testing for J-01, J-02, J-03, J-04:
-  Real DOM Clicks -> DOM Input Typing -> UI State Assertion -> UI-Generated Network Request Capture -> PostgreSQL Exact Record Verification
-
-Author: Jawahar Ramkripal Mallah
-Version: 3.17.0
-Copyright: © SMRITIBooks.com. All Rights Reserved.
-"""
-
 import asyncio
 import json
 import os
@@ -20,14 +9,14 @@ from playwright.async_api import async_playwright
 
 BASE_URL = "http://localhost:3000"
 FASTAPI_URL = "http://localhost:8000"
-DB_DSN = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_DSN = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 SCREENSHOT_DIR = os.path.join(os.getcwd(), "scratch", "level_c_screenshots")
 
 os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 
 async def run_level_c_certification():
     print("=" * 80)
-    print("SMRITI RETAIL OS — LEVEL C TRUE DOM TRANSACTION CERTIFICATION")
+    print("TILEFLOW RETAIL OS — LEVEL C TRUE DOM TRANSACTION CERTIFICATION")
     print("=" * 80)
     print(f"Base App URL : {BASE_URL}")
     print(f"FastAPI URL  : {FASTAPI_URL}")
@@ -117,7 +106,7 @@ async def run_level_c_certification():
             await page.wait_for_timeout(1500)
 
         await page.screenshot(path=os.path.join(SCREENSHOT_DIR, "02_dom_dashboard_loaded.png"))
-        jwt_token = await page.evaluate("localStorage.getItem('smriti_jwt_token')")
+        jwt_token = await page.evaluate("localStorage.getItem('tileflow_jwt_token')")
         print(f"[DOM Auth] Logged in cleanly via UI form submit in {round((time.time()-t0)*1000, 2)}ms. JWT: {jwt_token[:25]}...")
 
         # ----------------------------------------------------------------------
@@ -329,7 +318,7 @@ async def run_level_c_certification():
             fetch('/api/v1/customers', {{
                 method: 'POST',
                 headers: {{ 'Content-Type': 'application/json', 'Authorization': 'Bearer {jwt_token}', 'X-Company-ID': 'COMP-001' }},
-                body: JSON.stringify({{ id: '{e2e_cust_id}', code: '{e2e_cust_code}', customer_group_id: 'cg-default', name: 'Level C Enterprise Customer', email: 'levelc@smriti.org', mobile: '{e2e_cust_mobile}', gst_number: '27BBBCC0000D1Z2' }})
+                body: JSON.stringify({{ id: '{e2e_cust_id}', code: '{e2e_cust_code}', customer_group_id: 'cg-default', name: 'Level C Enterprise Customer', email: 'levelc@tileflow.org', mobile: '{e2e_cust_mobile}', gst_number: '27BBBCC0000D1Z2' }})
             }}).then(r => r.json())
             """
             cust_res = await page.evaluate(cust_js)

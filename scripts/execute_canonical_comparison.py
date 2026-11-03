@@ -1,18 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.25.0
-Created      : 2026-08-30
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI CANONICAL SCHEMA -- EXACT METADATA COMPARATOR (READ-ONLY)
-"""
-
 import sys, os, re, json
 import importlib.util
 import psycopg2
@@ -410,11 +395,11 @@ def get_production_metadata(db_name):
     conn.close()
     return meta
 
-print("Reading metadata from smritisys...")
-smritisys_meta = get_production_metadata("smritisys")
+print("Reading metadata from tileflowsys...")
+tileflowsys_meta = get_production_metadata("tileflowsys")
 
-print("Reading metadata from smriti001...")
-smriti001_meta = get_production_metadata("smriti001")
+print("Reading metadata from tileflow001...")
+tileflow001_meta = get_production_metadata("tileflow001")
 
 # ----------------------------------------------------------------------
 # 3. COMPARE METADATA & CLASSIFY
@@ -528,7 +513,7 @@ def compare_table(canon, prod):
 
 matrix_80 = []
 
-for db_name, db_meta in [("smritisys", smritisys_meta), ("smriti001", smriti001_meta)]:
+for db_name, db_meta in [("tileflowsys", tileflowsys_meta), ("tileflow001", tileflow001_meta)]:
     for tname in sorted(canonical_defs.keys()):
         canon = canonical_defs[tname]
         prod = db_meta[tname]
@@ -559,17 +544,17 @@ sys_counts = {'IDENTICAL': 0, 'COMPATIBLE': 0, 'DRIFTED': 0, 'CRITICAL_DRIFT': 0
 s001_counts = {'IDENTICAL': 0, 'COMPATIBLE': 0, 'DRIFTED': 0, 'CRITICAL_DRIFT': 0, 'MISSING': 0}
 
 for r in matrix_80:
-    if r['DATABASE'] == 'smritisys':
+    if r['DATABASE'] == 'tileflowsys':
         sys_counts[r['SCHEMA_CLASS']] += 1
     else:
         s001_counts[r['SCHEMA_CLASS']] += 1
 
-print("\n--- smritisys Classification ---")
+print("\n--- tileflowsys Classification ---")
 for k, v in sys_counts.items():
     print(f" {k}: {v}")
 print(f" TOTAL: {sum(sys_counts.values())}")
 
-print("\n--- smriti001 Classification ---")
+print("\n--- tileflow001 Classification ---")
 for k, v in s001_counts.items():
     print(f" {k}: {v}")
 print(f" TOTAL: {sum(s001_counts.values())}")

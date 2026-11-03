@@ -1,25 +1,24 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.5.0
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI Development Intelligence Center (SDIC) — v3.5.0
+# Walkthrough: TILEFLOW Development Intelligence Center (SDIC) — v3.5.0
 
 This walkthrough details the design, implementation, and verification of the codebase-wide automated diagnostics, DHI calculations, and reports scanner system.
 
 ---
 
 ## 1. Purpose
-Evolve the codebase status tracker into a built-in development intelligence dashboard for SMRITI Retail OS, providing automated diagnostics of 18 tracking dimensions (UI, Logic, API, tests, docs, security) and producing 15 live markdown status sheets in the repository workspace.
+Evolve the codebase status tracker into a built-in development intelligence dashboard for TILEFLOW Retail OS, providing automated diagnostics of 18 tracking dimensions (UI, Logic, API, tests, docs, security) and producing 15 live markdown status sheets in the repository workspace.
 
 ---
 
@@ -82,7 +81,7 @@ Ran `npm run test` executing `src/modules/dev_tracker/tests/devTracker.test.ts`.
 
 ## 9. Verification Results
 ```
-[TEST] Beginning SMRITI Development Intelligence Center (SDIC) unit tests...
+[TEST] Beginning TILEFLOW Development Intelligence Center (SDIC) unit tests...
 [TEST] Executing codebase parser...
 [TEST] Parser checks passed. Scanned 165 files.
 [TEST] Calculating development health metrics...

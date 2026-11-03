@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.91.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -55,7 +54,7 @@ function makeSampleRMAs(): RMARequest[] {
     ],
     reason: "DEFECTIVE_PRODUCT", resolution: "REFUND", initiatedBy: "COUNTER-OPR-01",
   });
-  let r1a = RMAEngine.transition(r1, "APPROVED", "MGR-001", "Defect verified â€” approved");
+  let r1a = RMAEngine.transition(r1, "APPROVED", "MGR-001", "Defect verified — approved");
   r1a = RMAEngine.transition(r1a, "IN_TRANSIT", "LOGISTICS-01", "Return pickup scheduled");
   r1a = RMAEngine.transition(r1a, "RECEIVED_AT_WAREHOUSE", "WH-OPR-01", "Parcel received and logged");
   r1a = RMAEngine.transition(r1a, "CREDIT_NOTE_ISSUED", "ACCOUNTS-01", "Credit note CN-2026-0001 issued", { creditNoteNumber: "CN-2026-0001", refundAmount: 3199 });
@@ -168,9 +167,9 @@ export const RMAManagementModal: React.FC<RMAManagementModalProps> = ({ isOpen, 
                   return (
                     <div className="grid grid-cols-3 gap-3">
                       {[
-                        { label: "Gross Return Value", value: `â‚¹${grossReturnValue.toLocaleString("en-IN")}`, color: "text-slate-300" },
-                        { label: "Restocking Fee (10%)", value: restockingFeeAmt > 0 ? `-â‚¹${restockingFeeAmt.toLocaleString("en-IN")}` : "â€”", color: "text-rose-400" },
-                        { label: "Net Refund / Credit", value: `â‚¹${netRefundAmount.toLocaleString("en-IN")}`, color: "text-emerald-400" },
+                        { label: "Gross Return Value", value: `₹${grossReturnValue.toLocaleString("en-IN")}`, color: "text-slate-300" },
+                        { label: "Restocking Fee (10%)", value: restockingFeeAmt > 0 ? `-₹${restockingFeeAmt.toLocaleString("en-IN")}` : "—", color: "text-rose-400" },
+                        { label: "Net Refund / Credit", value: `₹${netRefundAmount.toLocaleString("en-IN")}`, color: "text-emerald-400" },
                       ].map((m) => (
                         <div key={m.label} className="bg-slate-800/40 border border-slate-700/60 rounded-xl p-4 text-center">
                           <div className={`text-lg font-black font-mono ${m.color}`}>{m.value}</div>
@@ -194,8 +193,8 @@ export const RMAManagementModal: React.FC<RMAManagementModalProps> = ({ isOpen, 
                           <tr key={item.lineId}>
                             <td className="py-2 px-3"><div className="text-slate-200 font-sans font-medium">{item.productName}</div><div className="text-[10px] text-slate-500">{item.sku}</div></td>
                             <td className="py-2 px-3 text-right text-slate-300">{item.returnQty}</td>
-                            <td className="py-2 px-3 text-right text-slate-300">â‚¹{item.originalUnitPrice}</td>
-                            <td className="py-2 px-3 text-right text-amber-400 font-bold">â‚¹{item.returnValue}</td>
+                            <td className="py-2 px-3 text-right text-slate-300">₹{item.originalUnitPrice}</td>
+                            <td className="py-2 px-3 text-right text-amber-400 font-bold">₹{item.returnValue}</td>
                             <td className="py-2 px-3 text-center"><span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full border border-slate-700/40 bg-slate-800/40 text-slate-300">{item.condition}</span></td>
                             <td className="py-2 px-3 text-center"><span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${item.restockAction === "RESTOCK" ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/30" : "bg-rose-500/20 text-rose-300 border-rose-500/30"}`}>{item.restockAction}</span></td>
                           </tr>
@@ -219,7 +218,7 @@ export const RMAManagementModal: React.FC<RMAManagementModalProps> = ({ isOpen, 
                             <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded-full border ${STATUS_COLOR[entry.toStatus]}`}>{entry.toStatus}</span>
                             <span className="text-slate-500 text-[10px] ml-auto font-mono">{new Date(entry.timestamp).toLocaleTimeString("en-IN")}</span>
                           </div>
-                          <p className="text-slate-400 mt-1">{entry.remarks} <span className="text-slate-600">â€” {entry.performedBy}</span></p>
+                          <p className="text-slate-400 mt-1">{entry.remarks} <span className="text-slate-600">— {entry.performedBy}</span></p>
                         </div>
                       </div>
                     ))}
@@ -257,8 +256,8 @@ export const RMAManagementModal: React.FC<RMAManagementModalProps> = ({ isOpen, 
               <div className="bg-slate-800/30 border border-slate-700/60 rounded-xl p-4">
                 <p className="text-xs font-bold uppercase text-slate-400 mb-3">Financial Summary</p>
                 {[
-                  { label: "Total Return Value", value: `â‚¹${metrics.totalReturnValue.toLocaleString("en-IN")}` },
-                  { label: "Credit Notes Value", value: `â‚¹${metrics.totalCreditNoteValue.toLocaleString("en-IN")}` },
+                  { label: "Total Return Value", value: `₹${metrics.totalReturnValue.toLocaleString("en-IN")}` },
+                  { label: "Credit Notes Value", value: `₹${metrics.totalCreditNoteValue.toLocaleString("en-IN")}` },
                   { label: "Avg Resolution", value: `${metrics.avgResolutionDays} days` },
                 ].map((m) => (
                   <div key={m.label} className="flex justify-between text-xs text-slate-300 py-1.5 border-b border-slate-800/40 last:border-0">

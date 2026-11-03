@@ -31,7 +31,7 @@ async def check_db(db_name):
         await engine.dispose()
 
 async def main():
-    dbs = ['smritisys', 'smriti001', 'smriti_diag_fresh', 'smriti_diag_fresh_test']
+    dbs = ['tileflowsys', 'tileflow001', 'tileflow_diag_fresh', 'tileflow_diag_fresh_test']
     print("DATABASE VERSIONS AND SCHEMA STATUS:")
     print("=" * 70)
     for db_name in dbs:

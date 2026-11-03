@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Foundation FastAPI v13 to v14 Migration Walkthrough
@@ -61,7 +60,7 @@ Leveraged a unified state wrapper repository to isolate legacy JSON file writing
   - `npm test`
 
 ## 9. Verification Results
-- All 2 integration test suites passed in `smriti-python-core`.
+- All 2 integration test suites passed in `tileflow-python-core`.
 - All 41 Vitest specs passed on the frontend client (including Indian formatters and HSN lookup tests).
 
 ## 10. Known Limitations

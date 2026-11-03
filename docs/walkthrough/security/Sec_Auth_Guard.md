@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.13.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Public Data Exposure Hardening, Contextual HUD Auth Guard & Bottom Taskbar Removal
@@ -19,7 +18,7 @@ Address security vulnerabilities where unauthenticated users could trigger the C
 
 ## 2. Scope
 - Move `ContextRenderer`, `GlobalSearch`, `GlobalF2BrowseModal`, `ContextualInspectorHUD`, `DrillDownSidePanel`, and `ShortcutPalette` inside `<AppShell>` inside the authenticated `AppContent` session block.
-- Add direct authentication token checks (`smriti_jwt_token` / `smriti_session_token`) across:
+- Add direct authentication token checks (`tileflow_jwt_token` / `tileflow_session_token`) across:
   - `CtxInspectorHUD.tsx` (returns `null` if unauthenticated)
   - `GlobalSearch.tsx` (blocks search trigger, prewarm, and modal display without auth)
   - `GlobalF2BrowseDlg.tsx` (blocks load and display without auth)
@@ -51,7 +50,7 @@ None.
 2. Injected token checks into `ContextualInspectorHUD`, `GlobalSearch`, `GlobalF2BrowseModal`, and `ActiveFieldContext`.
 3. Removed `WorkspaceTaskbar` and its bottom padding.
 4. Executed full test suite (37 test files, 277 tests passed) and built production bundle.
-5. Rebuilt Docker container `smriti-web` and verified health.
+5. Rebuilt Docker container `tileflow-web` and verified health.
 
 ## 8. Tests Executed
 - Vitest suite: `npx vitest run` (37 files, 277 tests passed).

@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.7.0
   Created      : 2026-07-11
   Modified     : 2026-07-11
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Implementation Plan: SMRITI Database Models & Repositories — v3.7.0
+# Implementation Plan: TILEFLOW Database Models & Repositories — v3.7.0
 
-This plan details the integration and standardization of database models and repository patterns for the SMRITI FastAPI Core Backend.
+This plan details the integration and standardization of database models and repository patterns for the TILEFLOW FastAPI Core Backend.
 
 ---
 
@@ -24,7 +23,7 @@ Integrate CRM, Inventory, and Sales models into the FastAPI core framework, stan
 ---
 
 ## 2. Business Motivation
-Formalizing database model definitions in Python unlocks advanced SQL constraints, async database operations, and data analytics. Standardizing headers preserves SMRITI licensing and copyright integrity.
+Formalizing database model definitions in Python unlocks advanced SQL constraints, async database operations, and data analytics. Standardizing headers preserves TILEFLOW licensing and copyright integrity.
 
 ---
 
@@ -55,7 +54,7 @@ Formalizing database model definitions in Python unlocks advanced SQL constraint
 ---
 
 ## 7. Proposed Design
-* **Header Updates:** Insert the triple-quoted block at line 1 of each Python file, declaring Jawahar Ramkripal Mallah as the author and version `3.7.0`.
+* **Header Updates:** Insert the triple-quoted block at line 1 of each Python file, declaring Syed Ateef as the author and version `3.7.0`.
 * **Version Bump:** Set `"version": "3.7.0"` in `package.json`.
 
 ---

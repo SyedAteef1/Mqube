@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import pytest
 import psycopg2
 from decimal import Decimal
@@ -23,7 +10,7 @@ def test_debit_note_creation_and_history_protection():
     - Transaction history protection: Original PO (50 units) and GRN (48 units) remain immutable
     - Debit Note state persistence in supplier_debit_notes table
     """
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
 
     sup_code = "SUP-DN-TEST-001"
@@ -45,7 +32,7 @@ def test_debit_note_creation_and_history_protection():
     cur.execute("""
         INSERT INTO suppliers (id, uuid, tenant_id, code, name, gst_number, city, state, is_active)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, true);
-    """, (sup_code, "uuid-sup-dn-test", "smritibus_default", sup_code, "Debit Note Supplier Pvt Ltd", "27AAACD1234F1Z1", "Mumbai", "Maharashtra"))
+    """, (sup_code, "uuid-sup-dn-test", "tileflowbus_default", sup_code, "Debit Note Supplier Pvt Ltd", "27AAACD1234F1Z1", "Mumbai", "Maharashtra"))
     
     grn_test_id = "GRN-2026-TEST-DN"
     cur.execute("DELETE FROM purchase_receipts WHERE id = %s;", (grn_test_id,))
@@ -55,7 +42,7 @@ def test_debit_note_creation_and_history_protection():
             status, subtotal, tax_total, grand_total, is_active
         )
         VALUES (%s, %s, %s, %s, %s, %s, 'RECEIVED', 4800.00, 240.00, 5040.00, true);
-    """, (grn_test_id, "uuid-grn-dn-test", "smritibus_default", grn_test_id, grn_test_id, sup_code))
+    """, (grn_test_id, "uuid-grn-dn-test", "tileflowbus_default", grn_test_id, grn_test_id, sup_code))
     conn.commit()
 
     # 2. Insert Debit Note (Claim Rs 200.00 base + Rs 10.00 tax = Rs 210.00)
@@ -66,7 +53,7 @@ def test_debit_note_creation_and_history_protection():
             created_at, modified_at, version
         )
         VALUES (%s, %s, %s, %s, %s, %s, %s, 200.00, 10.00, 210.00, 'ISSUED', 'GRN Shortage 2 Units', true, false, NOW(), NOW(), 1);
-    """, (dn_id, "uuid-dn-test-001", "smritibus_default", "smritibus_default", dn_no, sup_code, grn_test_id))
+    """, (dn_id, "uuid-dn-test-001", "tileflowbus_default", "tileflowbus_default", dn_no, sup_code, grn_test_id))
     conn.commit()
 
     # 3. Verify Debit Note Persistence

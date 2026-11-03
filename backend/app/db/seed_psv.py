@@ -1,18 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.9.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-Source Module: PSV (Party Stock Visibility) Canonical Database Seeding
-"""
-
 import asyncio
 from decimal import Decimal
 from sqlalchemy import select, text
@@ -134,14 +119,14 @@ async def seed_session(session: AsyncSession, db_name: str):
     print(f"[PSV Seed] Canonical Party Stock Visibility seeding complete for {db_name}.")
 
 async def seed_psv_database():
-    # 1. Seed smritisys
+    # 1. Seed tileflowsys
     async with async_session() as session:
-        await seed_session(session, "smritisys")
+        await seed_session(session, "tileflowsys")
     
-    # 2. Seed smriti001
-    engine001 = get_company_async_engine("smriti001")
+    # 2. Seed tileflow001
+    engine001 = get_company_async_engine("tileflow001")
     async with AsyncSession(engine001) as session001:
-        await seed_session(session001, "smriti001")
+        await seed_session(session001, "tileflow001")
 
 if __name__ == "__main__":
     asyncio.run(seed_psv_database())

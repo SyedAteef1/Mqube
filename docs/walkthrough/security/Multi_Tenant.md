@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.25.0
   Created      : 2026-08-20
   Modified     : 2026-08-20
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Multi-Tenant Database Routing Hardening, Barcode Subsystem Isolation & Secret Sanitization Walkthrough v1.0
+# TILEFLOW Multi-Tenant Database Routing Hardening, Barcode Subsystem Isolation & Secret Sanitization Walkthrough v1.0
 
 ## 1. Purpose
 Document the comprehensive security hardening of the multi-tenant database routing resolver (`get_company_db`), 100% operational router wiring across `sales.py`, `inventory.py`, `purchase.py`, and `barcode.py`, complete tenant isolation for the thermal barcode label printing subsystem, repository-wide financial credential sanitization, automated CI reachability guard, and retroactive sales invoice auditing.
@@ -50,8 +49,8 @@ Document the comprehensive security hardening of the multi-tenant database routi
 - `db_store.json`
 
 ## 5. Architecture Decisions
-1. **Cryptographic Identity Derivation Only**: `get_company_db` strictly composes with `get_tenant_context(get_current_user)`, deriving the tenant database identifier exclusively from authenticated JWT session claims and verified `UserCompanyAssignment` database records in `smritisys`. Unvalidated client HTTP headers (`X-Company-Id`) and query parameters are never trusted.
-2. **Zero `get_db` in Operational Routes**: All transactional routes in `sales.py`, `inventory.py`, `purchase.py`, and `barcode.py` must use `get_company_db` to ensure all operational reads and writes execute against the tenant-specific PostgreSQL database (`smriti001`).
+1. **Cryptographic Identity Derivation Only**: `get_company_db` strictly composes with `get_tenant_context(get_current_user)`, deriving the tenant database identifier exclusively from authenticated JWT session claims and verified `UserCompanyAssignment` database records in `tileflowsys`. Unvalidated client HTTP headers (`X-Company-Id`) and query parameters are never trusted.
+2. **Zero `get_db` in Operational Routes**: All transactional routes in `sales.py`, `inventory.py`, `purchase.py`, and `barcode.py` must use `get_company_db` to ensure all operational reads and writes execute against the tenant-specific PostgreSQL database (`tileflow001`).
 3. **Barcode Printing Tenant Isolation**: `BarcodeLayout` CRUD, thermal printer connection configurations (`SystemConfig` with key `printer_connection_{company_id}`), diagnostics, test prints, and `PrintHistory` audit logs are tenant-isolated by `company_id` and `branch_id`.
 4. **Dynamic Credential Hierarchy**: Financial bank details and statutory metadata follow a strict fallback chain (`invoice.bank_name` -> `meta["bank_name"]` -> `DEFAULT_BANK_*` environment variables -> empty string). No hardcoded bank accounts or credentials exist in source code or template files.
 5. **Unified Invoice Exporter**: Consolidated 5 legacy ad-hoc export scripts into a single canonical CLI tool `scripts/export_canonical.py` supporting `--db`, `--invoice`, `--last`, `--format`, and `--out-dir`.
@@ -65,7 +64,7 @@ In a multi-tenant enterprise ERP, cross-tenant data leaks and unauthorized routi
 - Added tenant parameters to `PrinterService` methods (`dispatch_payload`, `get_configured_printer`, `run_diagnostics`) and populated `company_id` / `branch_id` on `PrintHistory`.
 - Sanitized `db_store.json`, legacy scratch scripts, and test files to eliminate real bank account numbers and IFSC codes.
 - Created `scripts/ci_secret_guard.py` which scans for credentials and verifies 100% route wiring.
-- Executed retroactive audit of all 93 invoices in `smriti001` with 0 discrepancies.
+- Executed retroactive audit of all 93 invoices in `tileflow001` with 0 discrepancies.
 
 ## 8. Tests Executed
 - `pytest backend/tests/t_tenant_sec.py backend/tests/t_comp_db_route.py backend/tests/t_comp_db_wire.py backend/tests/t_item_gap.py` (20/20 passed in 10.30s)
@@ -76,7 +75,7 @@ In a multi-tenant enterprise ERP, cross-tenant data leaks and unauthorized routi
 
 ## 9. Verification Results
 - **Unauthenticated Requests**: Blocked with `401 Unauthorized`.
-- **Authorized Tenant Routing**: Authenticated `COMP-001` user connects to `smriti001` and returns `200 OK`.
+- **Authorized Tenant Routing**: Authenticated `COMP-001` user connects to `tileflow001` and returns `200 OK`.
 - **Header Tampering Attack**: `COMP-001` user sending `X-Company-Id: COMP-002` blocked with `403 Forbidden` (`Header Tampering Forbidden`).
 - **Barcode Layouts & History**: Saved with `company_id = 'COMP-001'` and isolated from unauthorized tenants.
 - **CI Guard**: Zero hardcoded secrets, zero legacy `get_db` usages in operational routes.

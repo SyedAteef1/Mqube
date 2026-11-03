@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.9.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Test Suite   : Universal Backend Auto-Populate & Typeahead Verification
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   searchBackendCustomers,
@@ -62,7 +47,7 @@ describe("Universal Backend Auto-Populate & Typeahead Service", () => {
         costPrice: 400,
         gstPercentage: 12,
         hsnCode: "6109",
-        brand: "Smriti Classics",
+        brand: "MQube Classics",
         size: "M",
         color: "Black",
         uom: "Pcs",
@@ -79,7 +64,7 @@ describe("Universal Backend Auto-Populate & Typeahead Service", () => {
         costPrice: 1100,
         gstPercentage: 12,
         hsnCode: "6203",
-        brand: "Smriti Denim",
+        brand: "MQube Denim",
         size: "32",
         color: "Indigo",
         uom: "Pcs",
@@ -116,7 +101,7 @@ describe("Universal Backend Auto-Populate & Typeahead Service", () => {
         costPrice: 750,
         gstPercentage: 5,
         hsnCode: "6205",
-        brand: "SMRITI Heritage",
+        brand: "MQube Heritage",
         size: "40",
         color: "Sky Blue",
         uom: "Pcs",
@@ -124,7 +109,7 @@ describe("Universal Backend Auto-Populate & Typeahead Service", () => {
         pricingMode: "Fixed",
         trackingMode: "Standard",
         weightGrams: 280,
-        primaryImageUrl: "https://assets.smriti.com/shirt.jpg"
+        primaryImageUrl: "https://assets.tileflow.com/shirt.jpg"
       }
     ];
 
@@ -144,7 +129,7 @@ describe("Universal Backend Auto-Populate & Typeahead Service", () => {
     expect(item1.size).toBe("40");
     expect(item1.color).toBe("Sky Blue");
     expect(item1.gstPercentage).toBe(5);
-    expect(item1.brand).toBe("SMRITI Heritage");
+    expect(item1.brand).toBe("MQube Heritage");
     expect(item1.category).toBe("Formal Wear");
     expect(item1.hsnCode).toBe("6205");
     expect(item1.pricingMode).toBe("Fixed");

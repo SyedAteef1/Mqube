@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
@@ -114,7 +100,7 @@ def downgrade():
     and denomination snapshots). Dropping this table or its tracking columns on
     `shifts` would destroy irreversible financial history.
 
-    Policy (SMRITI Financial Data Governance — v1.0):
+    Policy (TILEFLOW Financial Data Governance — v1.0):
         Migrations that touch financial transaction history are classified as
         FORWARD-ONLY. The `downgrade()` path must never be executed in staging
         or production environments.

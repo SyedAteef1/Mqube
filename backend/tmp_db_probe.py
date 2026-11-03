@@ -1,6 +1,6 @@
 import psycopg2
 
-DBS = ['smritisys', 'smriti001']
+DBS = ['tileflowsys', 'tileflow001']
 TARGETS = ['companies', 'company_database_registries', 'products', 'control_psv_configs', 'sales_returns']
 
 for dbname in DBS:

@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 4.8.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI Tax Invoice Canonical Renderer & Layout Freeze (v1.0)
+# Walkthrough: TILEFLOW Tax Invoice Canonical Renderer & Layout Freeze (v1.0)
 
 ## 1. Purpose
-Freeze the definitive canonical Tax Invoice rendering engine (`InvoicePdfService` / `TaxInvoiceRenderer`) and its visual specification (`TAX_INVOICE_TATTLY_THREADS_CANONICAL_V1`) as the single source of truth for Preview, Browser Print, PDF Streaming, Download, and Reprint across SMRITI Retail OS.
+Freeze the definitive canonical Tax Invoice rendering engine (`InvoicePdfService` / `TaxInvoiceRenderer`) and its visual specification (`TAX_INVOICE_TATTLY_THREADS_CANONICAL_V1`) as the single source of truth for Preview, Browser Print, PDF Streaming, Download, and Reprint across TILEFLOW Retail OS.
 
 ## 2. Scope
 - Single Canonical Renderer architecture in FastAPI (`backend/app/services/invoice_pdf_service.py`).
@@ -24,7 +23,7 @@ Freeze the definitive canonical Tax Invoice rendering engine (`InvoicePdfService
 - GST Column Engine: dynamic conditional column rendering with explicit separate TAX % and Tax Amount columns for Interstate (10 columns: `#`, `ITEM DESCRIPTION`, `HSN/SAC`, `QTY`, `MRP`, `DISC %`, `TAXABLE VALUE`, `TAX %`, `IGST`, `AMOUNT`) and Intrastate (12 columns: `#`, `ITEM DESCRIPTION`, `HSN/SAC`, `QTY`, `MRP`, `DISC %`, `TAXABLE VALUE`, `CGST %`, `CGST`, `SGST %`, `SGST`, `AMOUNT`).
 - Frontend UI action wiring in `SalesStudioTab.tsx` and `TaxInvoicePrintPag.tsx` for Print Tax Invoice, Preview, Export PDF, Download, and Reprint.
 - Exact statutory financial calculation reconciliation on TT batch invoices (`TT2026-2027/74` through `TT2026-2027/103`) and intra-state fixtures.
-- Company Database persistence (`tax_invoice_templates`, `tax_invoice_template_versions`, `invoice_document_artifacts`) in `smriti001`.
+- Company Database persistence (`tax_invoice_templates`, `tax_invoice_template_versions`, `invoice_document_artifacts`) in `tileflow001`.
 - Cryptographic SHA256 integrity verification and immutable historical document reprint protection.
 - Automated test suite verification with 375/375 PASS baseline.
 
@@ -49,7 +48,7 @@ Freeze the definitive canonical Tax Invoice rendering engine (`InvoicePdfService
 - **Presentation-Only Renderer**: PDF rendering engine strictly displays backend-calculated statutory financial values without independent recalculation.
 - **Explicit Separate Tax Rate and Amount Columns**: Tax percentage (e.g. `5%` or `2.5%`) and statutory tax amounts (e.g. `₹44.96` or `₹22.48`) are rendered as distinct table columns, with the final column strictly designated as `AMOUNT`.
 - **GST Supply Type Exclusivity**: Inter-state invoices show IGST only; Intra-state invoices show CGST and SGST only. Mutual exclusivity prevents duplicate or mixed statutory tax lines on standard domestic supplies.
-- **Control Plane Isolation**: All operational invoice transactions belong to Company Databases (`smriti001`), while `smritisys` maintains strictly 0 operational invoices and 0 operational templates.
+- **Control Plane Isolation**: All operational invoice transactions belong to Company Databases (`tileflow001`), while `tileflowsys` maintains strictly 0 operational invoices and 0 operational templates.
 - **Immutable Historical Artifact Reprint**: Reprints check for valid historical artifacts with cryptographic SHA256 integrity on disk before attempting regeneration.
 
 ## 6. Design Rationale
@@ -59,7 +58,7 @@ Freeze the definitive canonical Tax Invoice rendering engine (`InvoicePdfService
 
 ## 7. Implementation Summary
 - Configuration identifier `TAX_INVOICE_TATTLY_THREADS` registered as frozen version V1 in `tax_invoice_templates` and `tax_invoice_template_versions`.
-- All 30 batch invoices (`TT2026-2027/74` to `TT2026-2027/103`) generated with explicit rate and tax amount columns, persisted in `smriti001`, and indexed in `invoice_document_artifacts` with SHA256 checksums.
+- All 30 batch invoices (`TT2026-2027/74` to `TT2026-2027/103`) generated with explicit rate and tax amount columns, persisted in `tileflow001`, and indexed in `invoice_document_artifacts` with SHA256 checksums.
 - Intra-state test invoice (`TT-INTRA-2026/01`) generated and verified with 12-column layout and exact tax split.
 
 ## 8. Tests Executed
@@ -76,7 +75,7 @@ pytest app/tests/ -q
 - Combined Total: 375/375 PASS (0 Failures)
 - `ITEM_GRID_TEXT_WRAP_COUNT = 0`
 - `MISSING_ITEM_ROW_BORDER_COUNT = 0`
-- `smritisys` operational invoices count = 0
+- `tileflowsys` operational invoices count = 0
 
 ## 10. Known Limitations
 None. All 30 invoices generated and validated.

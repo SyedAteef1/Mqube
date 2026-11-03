@@ -1,29 +1,7 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-probe_db_sync.py
-=======================================
-Development probe: inserts one product row and one sales_invoice row from
-smriti001 into smritisys using the common column intersection, in order to
-diagnose schema or constraint mismatches preventing cross-database sync.
-
-Usage:
-    python scripts/dev/probe_db_sync.py
-"""
-
 import psycopg2
 
-CONN_SRC_DSN = "postgresql://postgres:postgres@localhost:5432/smriti001"
-CONN_DST_DSN = "postgresql://postgres:postgres@localhost:5432/smritisys"
+CONN_SRC_DSN = "postgresql://postgres:postgres@localhost:5432/tileflow001"
+CONN_DST_DSN = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 
 
 def _common_columns(cur_src, cur_dst, table: str) -> list:

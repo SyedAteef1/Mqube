@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.17.0
- * * Created    : 2026-07-10
- * * Modified   : 2026-08-26
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -42,7 +17,7 @@ export default defineConfig({
     proxy: {
       "/api/v1": {
         target: pythonCoreTarget,
-        changeOrigin: true,
+        changeOrigin: false,
         secure: false
       }
     }
@@ -54,7 +29,7 @@ export default defineConfig({
     proxy: {
       "/api/v1": {
         target: pythonCoreTarget,
-        changeOrigin: true,
+        changeOrigin: false,
         secure: false
       }
     }
@@ -83,13 +58,13 @@ export default defineConfig({
           }
 
           if (id.includes("/src/components/")) {
-            if (id.includes("SalesStudioTab")) return "smriti-sales-studio";
-            if (id.includes("PurchaseStudioTab")) return "smriti-purchase-studio";
-            if (id.includes("ReportDesignerTab")) return "smriti-report-designer";
-            if (id.includes("TermsEngineTab")) return "smriti-terms-engine";
-            if (id.includes("BarcodeStudioTab")) return "smriti-barcode-studio";
-            if (id.includes("PrintPreviewModal")) return "smriti-print-preview";
-            if (id.includes("DashboardTab")) return "smriti-dashboard";
+            if (id.includes("SalesStudioTab")) return "tileflow-sales-studio";
+            if (id.includes("PurchaseStudioTab")) return "tileflow-purchase-studio";
+            if (id.includes("ReportDesignerTab")) return "tileflow-report-designer";
+            if (id.includes("TermsEngineTab")) return "tileflow-terms-engine";
+            if (id.includes("BarcodeStudioTab")) return "tileflow-barcode-studio";
+            if (id.includes("PrintPreviewModal")) return "tileflow-print-preview";
+            if (id.includes("DashboardTab")) return "tileflow-dashboard";
           }
 
           if (id.includes("/src/lib/")) return "app-lib";

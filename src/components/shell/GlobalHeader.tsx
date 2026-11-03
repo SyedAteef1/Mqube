@@ -1,15 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState } from 'react';
 import { useActiveField } from '../../context/ActiveFieldContext.tsx';
 import { useDrillDown } from '../drilldown/drilldown_store.tsx';
@@ -53,23 +41,25 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   const [searchQuery, setSearchQuery] = useState('');
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
-  const [unreadNotifications] = useState(3);
-
-  const notifications = [
-    { id: '1', title: 'Low Stock Alert', desc: 'Basmati Rice 5kg below min threshold (2 units left)', time: '10m ago', type: 'warning' },
-    { id: '2', title: 'Pending Approval', desc: 'PO-2026-0891 awaits manager sign-off', time: '45m ago', type: 'info' },
-    { id: '3', title: 'Shift Reconciled', desc: 'Shift #412 closed cleanly by Operator 04', time: '2h ago', type: 'success' },
-  ];
+  // No live notification feed is wired up yet, so show none rather than sample messages.
+  const notifications: { id: string; title: string; desc: string; time: string; type: string }[] = [];
+  const unreadNotifications = notifications.length;
+  const breadcrumbTitle =
+    activeModuleId === 'dashboard' || activeModuleId === 'launchpad'
+      ? 'Home'
+      : activeModuleTitle && activeModuleTitle === activeModuleTitle.toUpperCase()
+      ? activeModuleTitle.charAt(0) + activeModuleTitle.slice(1).toLowerCase()
+      : activeModuleTitle;
 
   return (
-    <header className="bg-[#24389c] text-white h-13 px-3 flex items-center justify-between border-b border-[#3f51b5] select-none shadow-sm z-30 relative">
+    <header className="bg-white text-[#0a0a0a] h-13 px-3 flex items-center justify-between border-b border-[#e5e5e5] select-none shadow-sm z-30 relative">
       {/* Left Navigation & Brand Controls */}
       <div className="flex items-center gap-2">
         <button
           type="button"
           onClick={onToggleNavRail}
           title={isNavRailCollapsed ? 'Expand Navigation Rail' : 'Collapse Navigation Rail'}
-          className="p-1.5 hover:bg-[#3f51b5] rounded-md transition-colors text-white"
+          className="p-1.5 hover:bg-[#f5f5f5] rounded-md transition-colors text-[#0a0a0a]"
         >
           <span className="material-symbols-outlined text-[20px]">
             {isNavRailCollapsed ? 'side_navigation' : 'menu_open'}
@@ -80,27 +70,26 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
         <button
           type="button"
           onClick={onNavigateHome}
-          className="flex items-center gap-2 px-2 py-1 hover:bg-[#3f51b5] rounded-md transition-colors text-left"
+          className="flex items-center gap-2 px-2 py-1 hover:bg-[#f5f5f5] rounded-md transition-colors text-left"
         >
-          <div className="w-7 h-7 bg-white text-[#24389c] font-black text-xs flex items-center justify-center rounded-md tracking-tighter shadow-xs">
-            S
+          <div className="w-7 h-7 bg-[#171717] text-white font-black text-xs flex items-center justify-center rounded-md tracking-tighter shadow-xs">
+            M
           </div>
           <div className="hidden sm:block leading-none">
-            <span className="font-bold text-sm tracking-wide block">SMRITI</span>
-            <span className="text-[9px] text-indigo-200 tracking-wider font-mono">RETAIL OS</span>
+            <span className="font-bold text-sm tracking-wide block">MQube</span>
           </div>
         </button>
 
         {/* Separator */}
-        <div className="h-4 w-px bg-indigo-400/40 mx-1" />
+        <div className="h-4 w-px bg-[#e5e5e5] mx-1" />
 
         {/* Internal Shell Stack Navigation */}
         <div className="flex items-center gap-1">
           <button
             type="button"
             onClick={onNavigateHome}
-            title="Go to Fiori Launchpad Home"
-            className="p-1.5 hover:bg-[#3f51b5] rounded-md transition-colors text-indigo-100 hover:text-white"
+            title="Home"
+            className="p-1.5 hover:bg-[#f5f5f5] rounded-md transition-colors text-[#737373] hover:text-[#0a0a0a]"
           >
             <span className="material-symbols-outlined text-[18px]">home</span>
           </button>
@@ -108,9 +97,9 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
             <button
               type="button"
               onClick={() => onSelectModule('dashboard')}
-              title="Open Advanced Business Dashboard"
-              aria-label="Open Advanced Business Dashboard"
-              className="p-1.5 hover:bg-[#3f51b5] rounded-md transition-colors text-indigo-100 hover:text-white"
+              title="Dashboard"
+              aria-label="Dashboard"
+              className="p-1.5 hover:bg-[#f5f5f5] rounded-md transition-colors text-[#737373] hover:text-[#0a0a0a]"
             >
               <span className="material-symbols-outlined text-[18px]">account_circle</span>
             </button>
@@ -120,7 +109,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
               type="button"
               onClick={onNavigateBack}
               title="Go Back"
-              className="p-1.5 hover:bg-[#3f51b5] rounded-md transition-colors text-indigo-100 hover:text-white"
+              className="p-1.5 hover:bg-[#f5f5f5] rounded-md transition-colors text-[#737373] hover:text-[#0a0a0a]"
             >
               <span className="material-symbols-outlined text-[18px]">arrow_back</span>
             </button>
@@ -128,37 +117,35 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
         </div>
 
         {/* Context & Breadcrumb Display */}
-        <div className="hidden md:flex items-center text-xs text-indigo-200 gap-1.5 ml-2 font-medium">
-          <span className="text-indigo-300">{storeName}</span>
-          <span>/</span>
-          <span className="text-white font-semibold">{activeModuleTitle}</span>
+        <div className="hidden md:flex items-center text-[13px] ml-1 font-medium">
+          <span className="text-[#0a0a0a] font-semibold truncate max-w-[220px]" title={storeName}>{breadcrumbTitle}</span>
         </div>
       </div>
 
-      {/* Center Omni-Search Bar with Active Field Context Badge */}
+      {/* Center search bar */}
       <div className="flex-1 max-w-md mx-4 relative hidden sm:block">
         <button
           type="button"
           onClick={() => setSearchOpen(true)}
-          className="w-full bg-[#3f51b5]/60 hover:bg-[#3f51b5] text-white text-xs rounded-md pl-8 pr-16 py-1.5 border border-indigo-400/30 hover:border-white transition-all flex items-center justify-between text-left group"
+          className="w-full bg-[#f5f5f5] hover:bg-[#efefef] text-[#0a0a0a] text-[13px] rounded-full pl-9 pr-2 py-1.5 border border-transparent hover:border-[#e5e5e5] transition-all flex items-center justify-between gap-2 text-left group"
         >
-          <span className="material-symbols-outlined absolute left-2.5 text-indigo-300 group-hover:text-white text-[18px]">
+          <span className="material-symbols-outlined absolute left-3 text-[#737373] group-hover:text-[#0a0a0a] text-[18px]">
             search
           </span>
-          <span className="truncate text-indigo-100 group-hover:text-white">
+          <span className="truncate text-[#737373] group-hover:text-[#0a0a0a]">
             {activeCategory === "product" ? `Search Products / Barcode (${fieldLabel})...` :
              activeCategory === "customer" ? `Search Customers / Mobile (${fieldLabel})...` :
              activeCategory === "supplier" ? `Search Suppliers (${fieldLabel})...` :
              activeCategory === "invoice" ? `Search Invoices (${fieldLabel})...` :
-             "Omni-Search (Item, Barcode, PO, Invoice, Customer)..."}
+             "Search items, bills, customers…"}
           </span>
-          <span className="text-[10px] font-mono bg-white/10 px-1.5 py-0.5 rounded border border-white/20 text-indigo-200">
+          <span className="text-[11px] bg-white px-1.5 py-0.5 rounded-md border border-[#e5e5e5] text-[#737373] shrink-0">
             Ctrl+K
           </span>
         </button>
       </div>
 
-      {/* Right Controls (Focus Mode, Notifications, User Menu) */}
+      {/* Right Controls (Full screen, Notifications, User Menu) */}
       <div className="flex items-center gap-1.5">
         <CompanySelector />
 
@@ -166,16 +153,14 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
         <button
           type="button"
           onClick={onToggleFocusMode}
-          title={isFocusMode ? 'Exit Full Screen Focus Mode' : 'Enter Focus Mode (Full Screen Data Entry)'}
+          title={isFocusMode ? 'Exit full screen (F11)' : 'Full screen (F11)'}
+          aria-label={isFocusMode ? 'Exit full screen' : 'Full screen'}
           className={`p-1.5 rounded-md transition-colors flex items-center gap-1 text-xs ${
-            isFocusMode ? 'bg-[#abf4ac] text-[#002107] font-semibold' : 'hover:bg-[#3f51b5] text-indigo-100'
+            isFocusMode ? 'bg-[#abf4ac] text-[#002107] font-semibold' : 'hover:bg-[#f5f5f5] text-[#0a0a0a]'
           }`}
         >
           <span className="material-symbols-outlined text-[18px]">
             {isFocusMode ? 'fullscreen_exit' : 'fullscreen'}
-          </span>
-          <span className="hidden lg:inline text-[11px]">
-            {isFocusMode ? 'Focus Active' : 'Focus Mode'}
           </span>
         </button>
 
@@ -187,12 +172,13 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
               setIsNotificationsOpen(!isNotificationsOpen);
               setIsUserMenuOpen(false);
             }}
-            title="System Notifications"
-            className="p-1.5 hover:bg-[#3f51b5] rounded-md transition-colors text-indigo-100 hover:text-white relative"
+            title="Notifications"
+            aria-label="Notifications"
+            className="p-1.5 hover:bg-[#f5f5f5] rounded-md transition-colors text-[#737373] hover:text-[#0a0a0a] relative"
           >
             <span className="material-symbols-outlined text-[20px]">notifications</span>
             {unreadNotifications > 0 && (
-              <span className="absolute top-1 right-1 bg-[#ba1a1a] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-[#24389c]">
+              <span className="absolute top-1 right-1 bg-[#ba1a1a] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-[#3b3b3b]">
                 {unreadNotifications}
               </span>
             )}
@@ -200,29 +186,34 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
 
           {/* Notifications Dropdown */}
           {isNotificationsOpen && (
-            <div className="absolute right-0 mt-2 w-80 bg-white text-[#0b1c30] rounded-xl shadow-xl border border-[#c5c5d4] py-2 z-50 overflow-hidden">
-              <div className="px-4 py-2 border-b border-[#c5c5d4] flex items-center justify-between bg-[#f8f9ff]">
-                <span className="font-semibold text-xs text-[#24389c]">System Notifications</span>
-                <span className="text-[10px] bg-[#3f51b5] text-white px-2 py-0.5 rounded-full font-bold">
-                  {unreadNotifications} New
-                </span>
+            <div className="absolute right-0 mt-2 w-80 bg-white text-[#1a1a1a] rounded-xl shadow-xl border border-[#c6c6c6] py-2 z-50 overflow-hidden">
+              <div className="px-4 py-2 border-b border-[#c6c6c6] flex items-center justify-between bg-[#f9f9f9]">
+                <span className="font-semibold text-xs text-[#3b3b3b]">Notifications</span>
+                {unreadNotifications > 0 && (
+                  <span className="text-[10px] bg-[#f5f5f5] text-[#0a0a0a] px-2 py-0.5 rounded-full font-bold">
+                    {unreadNotifications} new
+                  </span>
+                )}
               </div>
               <div className="max-h-64 overflow-y-auto">
+                {notifications.length === 0 && (
+                  <div className="px-4 py-6 text-center text-xs text-[#737373]">No new notifications</div>
+                )}
                 {notifications.map((n) => (
-                  <div key={n.id} className="px-4 py-2.5 hover:bg-[#eff4ff] border-b border-[#c5c5d4]/40 transition-colors">
-                    <div className="flex items-center justify-between text-xs font-semibold text-[#0b1c30]">
+                  <div key={n.id} className="px-4 py-2.5 hover:bg-[#f4f4f4] border-b border-[#c6c6c6]/40 transition-colors">
+                    <div className="flex items-center justify-between text-xs font-semibold text-[#1a1a1a]">
                       <span>{n.title}</span>
-                      <span className="text-[10px] font-normal text-[#757684]">{n.time}</span>
+                      <span className="text-[10px] font-normal text-[#777777]">{n.time}</span>
                     </div>
-                    <p className="text-[11px] text-[#454652] mt-0.5 leading-snug">{n.desc}</p>
+                    <p className="text-[11px] text-[#474747] mt-0.5 leading-snug">{n.desc}</p>
                   </div>
                 ))}
               </div>
-              <div className="px-4 py-1.5 bg-[#f8f9ff] text-center border-t border-[#c5c5d4]">
+              <div className="px-4 py-1.5 bg-[#f9f9f9] text-center border-t border-[#c6c6c6]">
                 <button
                   type="button"
                   onClick={() => setIsNotificationsOpen(false)}
-                  className="text-xs font-medium text-[#24389c] hover:underline"
+                  className="text-xs font-medium text-[#3b3b3b] hover:underline"
                 >
                   Mark all as read
                 </button>
@@ -239,27 +230,24 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
               setIsUserMenuOpen(!isUserMenuOpen);
               setIsNotificationsOpen(false);
             }}
-            className="flex items-center gap-1.5 p-1 hover:bg-[#3f51b5] rounded-md transition-colors text-left"
+            className="flex items-center gap-1.5 p-1 hover:bg-[#f5f5f5] rounded-md transition-colors text-left"
           >
-            <div className="w-7 h-7 rounded-full bg-[#abf4ac] text-[#002107] font-bold text-xs flex items-center justify-center shadow-xs">
+            <div className="w-7 h-7 rounded-full bg-[#e5e5e5] text-[#171717] font-semibold text-xs flex items-center justify-center shadow-xs">
               {userName.substring(0, 2).toUpperCase()}
             </div>
             <div className="hidden md:block leading-none pr-1">
               <span className="text-xs font-semibold block">{userName}</span>
-              <span className="text-[9px] text-indigo-200">{userRole}</span>
+              <span className="text-[9px] text-[#737373]">{userRole}</span>
             </div>
-            <span className="material-symbols-outlined text-[16px] text-indigo-200">arrow_drop_down</span>
+            <span className="material-symbols-outlined text-[16px] text-[#737373]">arrow_drop_down</span>
           </button>
 
           {/* User Menu Dropdown */}
           {isUserMenuOpen && (
-            <div className="absolute right-0 mt-2 w-64 bg-white text-[#0b1c30] rounded-xl shadow-xl border border-[#c5c5d4] py-2 z-50 overflow-hidden">
-              <div className="px-4 py-3 bg-[#f8f9ff] border-b border-[#c5c5d4]">
-                <div className="font-semibold text-sm text-[#24389c]">{userName}</div>
-                <div className="text-xs text-[#454652]">{userRole}</div>
-                <div className="mt-2 inline-flex items-center gap-1 text-[10px] font-semibold bg-[#286b33]/10 text-[#286b33] px-2 py-0.5 rounded-md border border-[#286b33]/20">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#286b33]" /> Active Shift #412
-                </div>
+            <div className="absolute right-0 mt-2 w-64 bg-white text-[#1a1a1a] rounded-xl shadow-xl border border-[#c6c6c6] py-2 z-50 overflow-hidden">
+              <div className="px-4 py-3 bg-[#f9f9f9] border-b border-[#c6c6c6]">
+                <div className="font-semibold text-sm text-[#3b3b3b]">{userName}</div>
+                <div className="text-xs text-[#474747]">{userRole}</div>
               </div>
 
               <div className="py-1">
@@ -269,9 +257,9 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
                     if (onSelectModule) onSelectModule('user-profile');
                     setIsUserMenuOpen(false);
                   }}
-                  className="w-full px-4 py-2 text-left text-xs text-[#0b1c30] hover:bg-[#eff4ff] flex items-center gap-2 cursor-pointer transition-colors"
+                  className="w-full px-4 py-2 text-left text-xs text-[#1a1a1a] hover:bg-[#f4f4f4] flex items-center gap-2 cursor-pointer transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[18px] text-[#3d425f]">account_circle</span> My Profile Dashboard
+                  <span className="material-symbols-outlined text-[18px] text-[#434343]">account_circle</span> My profile
                 </button>
                 <button
                   type="button"
@@ -279,9 +267,9 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
                     if (onSelectModule) onSelectModule('menu-manager');
                     setIsUserMenuOpen(false);
                   }}
-                  className="w-full px-4 py-2 text-left text-xs text-[#0b1c30] hover:bg-[#eff4ff] flex items-center gap-2 cursor-pointer transition-colors"
+                  className="w-full px-4 py-2 text-left text-xs text-[#1a1a1a] hover:bg-[#f4f4f4] flex items-center gap-2 cursor-pointer transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[18px] text-[#1e40af]">compass_calibration</span> Menu Navigation Studio
+                  <span className="material-symbols-outlined text-[18px] text-[#414141]">compass_calibration</span> Menu settings
                 </button>
                 <button
                   type="button"
@@ -289,23 +277,23 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
                     if (onSelectModule) onSelectModule('profiles');
                     setIsUserMenuOpen(false);
                   }}
-                  className="w-full px-4 py-2 text-left text-xs text-[#0b1c30] hover:bg-[#eff4ff] flex items-center gap-2 cursor-pointer transition-colors"
+                  className="w-full px-4 py-2 text-left text-xs text-[#1a1a1a] hover:bg-[#f4f4f4] flex items-center gap-2 cursor-pointer transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[18px] text-[#3d425f]">settings</span> System Settings
+                  <span className="material-symbols-outlined text-[18px] text-[#434343]">settings</span> Settings
                 </button>
                 <button
                   type="button"
                   onClick={() => {
-                    if (onSelectModule) onSelectModule('about-smriti');
+                    if (onSelectModule) onSelectModule('about-tileflow');
                     setIsUserMenuOpen(false);
                   }}
-                  className="w-full px-4 py-2 text-left text-xs text-[#0b1c30] hover:bg-[#eff4ff] flex items-center gap-2 cursor-pointer transition-colors"
+                  className="w-full px-4 py-2 text-left text-xs text-[#1a1a1a] hover:bg-[#f4f4f4] flex items-center gap-2 cursor-pointer transition-colors"
                 >
-                  <span className="material-symbols-outlined text-[18px] text-[#3d425f]">info</span> About SMRITI OS
+                  <span className="material-symbols-outlined text-[18px] text-[#434343]">info</span> About MQube
                 </button>
 
                 {onLogout && (
-                  <div className="pt-1 mt-1 border-t border-[#c5c5d4]/50">
+                  <div className="pt-1 mt-1 border-t border-[#c6c6c6]/50">
                     <button
                       type="button"
                       onClick={() => {
@@ -314,7 +302,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
                       }}
                       className="w-full px-4 py-2 text-left text-xs font-semibold text-[#ba1a1a] hover:bg-[#ffdad6]/40 flex items-center gap-2 cursor-pointer transition-colors"
                     >
-                      <span className="material-symbols-outlined text-[18px] text-[#ba1a1a]">logout</span> Log Out Session
+                      <span className="material-symbols-outlined text-[18px] text-[#ba1a1a]">logout</span> Log out
                     </button>
                   </div>
                 )}
@@ -328,8 +316,9 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
           <button
             type="button"
             onClick={onLogout}
-            title="Logout Session"
-            className="p-1.5 hover:bg-[#ba1a1a] rounded-md transition-colors text-indigo-100 hover:text-white cursor-pointer ml-0.5"
+            title="Log out"
+            aria-label="Log out"
+            className="p-1.5 hover:bg-[#f5f5f5] rounded-md transition-colors text-[#0a0a0a] hover:text-[#e7000b] cursor-pointer ml-0.5"
           >
             <span className="material-symbols-outlined text-[18px]">logout</span>
           </button>

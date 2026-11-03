@@ -1,6 +1,6 @@
-# SMRITI Retail OS Implementation Roadmap
+# TILEFLOW Retail OS Implementation Roadmap
 
-This document defines the controlled implementation sequence for SMRITI Retail OS under the frozen governance baseline.
+This document defines the controlled implementation sequence for TILEFLOW Retail OS under the frozen governance baseline.
 
 ## Purpose
 - Provide a clear, repeatable execution roadmap.
@@ -12,7 +12,7 @@ This document defines the controlled implementation sequence for SMRITI Retail O
 Implementation work must obey the following hierarchy:
 1. `docs/governance/IMPLEMENTATION_GATE.md`
 2. `docs/governance/GOVERNANCE_FREEZE.md`
-3. `docs/architecture/decisions/ADR-002-SMRITI-MET.md`
+3. `docs/architecture/decisions/ADR-002-TILEFLOW-MET.md`
 4. `docs/governance/METADATA.md`
 5. `docs/developer_guide/AI_IMPLEMENTATION.md`
 
@@ -130,7 +130,7 @@ Every implementation should follow this sequence:
 
 ## Implementation Start Check
 - [ ] `docs/governance/IMPLEMENTATION_GATE.md` reviewed
-- [ ] `docs/architecture/decisions/ADR-002-SMRITI-MET.md` reviewed
+- [ ] `docs/architecture/decisions/ADR-002-TILEFLOW-MET.md` reviewed
 - [ ] Module dependencies satisfied
 - [ ] Scope limited to one module
 - [ ] No architectural changes planned

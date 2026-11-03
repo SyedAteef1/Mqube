@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 from datetime import datetime, timedelta
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -67,7 +54,7 @@ def test_coupon_validation_and_usage_tracking():
     assert coupon.usage_count < coupon.usage_limit
 
 def test_customer_360_growth_ecosystem_co_location():
-    """Verify CRM + Loyalty + Promotions + SICE unified co-location in smriti001."""
+    """Verify CRM + Loyalty + Promotions + SICE unified co-location in tileflow001."""
     # Entitlement policy definition
     assert PromotionCampaign.__tablename__ == "promotion_campaigns"
     assert PromotionRule.__tablename__ == "promotion_rules"

@@ -1,32 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.3.0
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# Walkthrough: Project Header Standardization — v3.3.0
 
 ## 1. Purpose
-This walkthrough documents the standardized repository-wide header update applying AITDL NETWORKS and founding leadership details to all source files.
 
 ---
 
@@ -53,7 +46,6 @@ This walkthrough documents the standardized repository-wide header update applyi
 ---
 
 ## 6. Design Rationale
-Attributing founding details and AITDL ownership uniformly across all source assets is critical for governance, brand compliance, and copyright registry.
 
 ---
 
@@ -68,7 +60,7 @@ Attributing founding details and AITDL ownership uniformly across all source ass
 ```
 Command: npm run lint
 Output:
-> smriti-retail-os@2.1.1 lint
+> tileflow-retail-os@2.1.1 lint
 > tsc --noEmit
 
 (Exit code 0 — zero errors)
@@ -98,4 +90,4 @@ Output:
 ---
 
 ## 13. Related RFCs
-- SMRITI Project Header Standardization Implementation Plan (`Project_Header.md`).
+- TILEFLOW Project Header Standardization Implementation Plan (`Project_Header.md`).

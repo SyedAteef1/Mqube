@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.29.0
-Created      : 2026-08-20
-Modified     : 2026-08-20
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 from httpx import ASGITransport, AsyncClient
 
@@ -58,7 +44,7 @@ async def _make_user(db_session, username_prefix, role):
     u = User(
         id=f"user-{suffix}",
         username=username,
-        email=f"{username}@smritibooks.com",
+        email=f"{username}@tileflow.in",
         hashed_password=hash_password("admin123"),
         role=role,
         is_active=True,
@@ -94,7 +80,7 @@ async def test_list_databases_sysadmin(db_session):
     assert isinstance(data, list)
     assert len(data) >= 1
     db_names = [d["name"] for d in data]
-    assert "postgres" in db_names or "smritisys" in db_names or "smriti001" in db_names
+    assert "postgres" in db_names or "tileflowsys" in db_names or "tileflow001" in db_names
 
 
 @pytest.mark.asyncio
@@ -104,7 +90,7 @@ async def test_list_tables_and_schema(db_session):
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         # Tables
         res = await ac.get(
-            "/api/v1/database-manager/tables?database=smritisys",
+            "/api/v1/database-manager/tables?database=tileflowsys",
             headers={"Authorization": f"Bearer {token}"}
         )
         assert res.status_code == 200, res.text
@@ -115,7 +101,7 @@ async def test_list_tables_and_schema(db_session):
 
         # Schema
         schema_res = await ac.get(
-            "/api/v1/database-manager/tables/users/schema?database=smritisys",
+            "/api/v1/database-manager/tables/users/schema?database=tileflowsys",
             headers={"Authorization": f"Bearer {token}"}
         )
         assert schema_res.status_code == 200, schema_res.text
@@ -133,7 +119,7 @@ async def test_table_data_pagination(db_session):
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as ac:
         res = await ac.get(
-            "/api/v1/database-manager/tables/users/data?database=smritisys&page=1&limit=10",
+            "/api/v1/database-manager/tables/users/data?database=tileflowsys&page=1&limit=10",
             headers={"Authorization": f"Bearer {token}"}
         )
         assert res.status_code == 200, res.text
@@ -153,7 +139,7 @@ async def test_safe_sql_query_runner(db_session):
         # Valid SELECT query
         res = await ac.post(
             "/api/v1/database-manager/query",
-            json={"query": "SELECT count(*) as total_users FROM users;", "database": "smritisys"},
+            json={"query": "SELECT count(*) as total_users FROM users;", "database": "tileflowsys"},
             headers={"Authorization": f"Bearer {token}"}
         )
         assert res.status_code == 200, res.text
@@ -165,7 +151,7 @@ async def test_safe_sql_query_runner(db_session):
         # Blocked destructive query (DELETE)
         res_del = await ac.post(
             "/api/v1/database-manager/query",
-            json={"query": "DELETE FROM users WHERE 1=1;", "database": "smritisys"},
+            json={"query": "DELETE FROM users WHERE 1=1;", "database": "tileflowsys"},
             headers={"Authorization": f"Bearer {token}"}
         )
         assert res_del.status_code == 400

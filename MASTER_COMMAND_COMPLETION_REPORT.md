@@ -1,5 +1,5 @@
 # MASTER COMMAND: SCHEMA MIGRATION COMPLETION REPORT
-## SMRITI Retail NX v3.25.0 - Final Deliverable
+## TILEFLOW Retail NX v3.25.0 - Final Deliverable
 
 **Report Date:** 2026-08-27  
 **Status:** ✅ COMPLETE - All 40 canonical tables migrated and verified  
@@ -23,13 +23,12 @@ The investigation into the 70-table gap between production and fresh database de
 
 ---
 
-## PHASE 1: TABLE CLASSIFICATION (✅ COMPLETE)
 
 ### Methodology
 Scanned 45 unique tables missing from fresh database against:
 1. **ORM Models**: All 45 tables confirmed to have corresponding model definitions in `backend/app/models/`
 2. **ARCHITECTURE_DECISIONS.md**: Classified 5 tables as PARKED_EXPERIMENTAL (Section 4)
-3. **Production Schema**: Verified live data in smriti001 and smritisys
+3. **Production Schema**: Verified live data in tileflow001 and tileflowsys
 
 ### Classification Results
 
@@ -123,7 +122,7 @@ EXPERIMENTAL_ARCHITECTURE (PARKED - origin/feat/physically-isolated-company-dbs)
 ## PHASE 3: FRESH DATABASE VALIDATION (✅ COMPLETE)
 
 ### Test Environment
-- **Fresh Database**: smriti_diag_fresh_v2 (created via psycopg2, not psycopg)
+- **Fresh Database**: tileflow_diag_fresh_v2 (created via psycopg2, not psycopg)
 - **Migration Chain**: v1384_company_code_constraint → ... → v1389_park (single HEAD)
 - **Test Command**: `python phase3_fresh_db_test.py` (backend/phase3_fresh_db_test.py)
 
@@ -193,7 +192,7 @@ KEY CONSTRAINT VALIDATIONS:
 ```
 
 ### Schema Reconciliation
-| Metric | Fresh DB | Production smritisys | Production smriti001 | Delta |
+| Metric | Fresh DB | Production tileflowsys | Production tileflow001 | Delta |
 |--------|----------|---------------------|---------------------|-------|
 | **Baseline Tables** | 181 | 213 | 210 | 32-70 (experimental tables) |
 | **+ Canonical Migrations** | +40 | — | — | — |
@@ -253,14 +252,14 @@ v1389_park (parked experimental architecture - documentation only)
 ✅ PASSED: Continuous chain, no orphaned or broken revisions
 
 ### Gate 3: Current Database Revision
-**Production smritisys**:
+**Production tileflowsys**:
 ```
 $ alembic current
 v1384_company_code_constraint
 ```
 ✓ Note: Production already has canonical tables (DuplicateTableError on v1385_crm upgrade = expected)
 
-**Fresh Test DB smriti_diag_fresh_v2**:
+**Fresh Test DB tileflow_diag_fresh_v2**:
 ```
 Latest applied: v1389_park
 Status: ALL 40 canonical tables created successfully
@@ -401,7 +400,7 @@ Status: ALL 40 canonical tables created successfully
 **Sample Check (9 tables)**:
 ```
 $ python verify_canonical_tables.py
-✓ Production smritisys ALREADY HAS 8/9 canonical tables:
+✓ Production tileflowsys ALREADY HAS 8/9 canonical tables:
   ✓ approval_policies
   ✓ crm_leads
   ✓ crm_opportunities
@@ -419,7 +418,7 @@ $ python verify_canonical_tables.py
 | Scenario | Action | Status |
 |----------|--------|--------|
 | **Fresh deployment** | Apply v1385→v1389 migrations | ✅ Creates all 40 canonical tables |
-| **Existing production** | Run v1385_crm upgrade on smritisys | ⚠️ Will fail with DuplicateTableError (tables exist) - expected |
+| **Existing production** | Run v1385_crm upgrade on tileflowsys | ⚠️ Will fail with DuplicateTableError (tables exist) - expected |
 | **Idempotency** | Use Alembic stamp on production | ⏸️ Not recommended - migrations serve as canonical source |
 | **Fallback** | Manual table creation via existing SQL import | ✅ Already done in production |
 
@@ -542,17 +541,17 @@ $ python verify_canonical_tables.py
 
 ### A. Production Database Inventory (at time of report)
 ```
-smritisys (control-plane):
+tileflowsys (control-plane):
   - Total tables: 213
   - Baseline canonical (v1384 and earlier): ~173 tables
   - New canonical from v1385-v1388: 40 tables (most already present via manual SQL)
   - Experimental (NOT migrated): 5 tables (control_*, psv_stock_*)
   
-smriti001 (tenant):
+tileflow001 (tenant):
   - Total tables: 210
-  - Matches smritisys schema (multi-tenant architecture)
+  - Matches tileflowsys schema (multi-tenant architecture)
 
-smriti_diag_fresh_v2 (test/fresh):
+tileflow_diag_fresh_v2 (test/fresh):
   - Created via psycopg2 (clean slate)
   - Migrated via `alembic upgrade head`
   - Total tables: 221 (baseline + 40 new)

@@ -1,17 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.16.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import uuid
 import json
 import hashlib
@@ -24,7 +10,7 @@ from sqlalchemy import text
 
 from ...api.deps import get_db, get_current_user, get_tenant_context, require_role, TenantContext
 from ...models.auth import User, UserRole
-from ...models.security import SmritiPermission, SmritiAuditLog
+from ...models.security import TileFlowPermission, TileFlowAuditLog
 from ...models.system import SystemConfig
 from ...schemas.security import (
     MenuPermissionAction,
@@ -49,16 +35,16 @@ async def get_subject_menu_access(
     current_user: User = Depends(get_current_user),
 ):
     """
-    Fetch granular action-level menu access permissions for a User, Group, or Node from smriti_permissions.
+    Fetch granular action-level menu access permissions for a User, Group, or Node from tileflow_permissions.
     """
     target_scope = f"{subject_type}:{subject_id}"
-    q = select(SmritiPermission).where(
-        SmritiPermission.scope == target_scope,
-        SmritiPermission.is_deleted == False,
+    q = select(TileFlowPermission).where(
+        TileFlowPermission.scope == target_scope,
+        TileFlowPermission.is_deleted == False,
     )
     if company_code and company_code != "All":
         q = q.where(
-            (SmritiPermission.company_id == company_code) | (SmritiPermission.company_id.is_(None))
+            (TileFlowPermission.company_id == company_code) | (TileFlowPermission.company_id.is_(None))
         )
     
     res = await db.execute(q)
@@ -89,15 +75,15 @@ async def save_subject_menu_access(
     current_user: User = Depends(require_role(UserRole.SYSADMIN, UserRole.MANAGER)),
 ):
     """
-    Save granular action-level menu access restrictions to smriti_permissions.
-    Audits changes into smriti_audit_log with SHA-256 signature.
+    Save granular action-level menu access restrictions to tileflow_permissions.
+    Audits changes into tileflow_audit_log with SHA-256 signature.
     """
     target_scope = f"{req.subject_type}:{req.subject_id}"
 
     # Query existing rows for this subject scope
-    existing_q = select(SmritiPermission).where(
-        SmritiPermission.scope == target_scope,
-        SmritiPermission.is_deleted == False,
+    existing_q = select(TileFlowPermission).where(
+        TileFlowPermission.scope == target_scope,
+        TileFlowPermission.is_deleted == False,
     )
     res = await db.execute(existing_q)
     existing_items = {f"{r.resource}:{r.action}": r for r in res.scalars().all()}
@@ -115,7 +101,7 @@ async def save_subject_menu_access(
             updated_count += 1
         else:
             new_id = f"perm-{uuid.uuid4().hex[:12]}"
-            new_perm = SmritiPermission(
+            new_perm = TileFlowPermission(
                 id=new_id,
                 uuid=str(uuid.uuid4()),
                 code=f"{req.subject_type}:{req.subject_id}:{perm.resource}:{perm.action}",
@@ -132,7 +118,7 @@ async def save_subject_menu_access(
             db.add(new_perm)
             created_count += 1
 
-    # Record tamper-evident audit journal entry in smriti_audit_log
+    # Record tamper-evident audit journal entry in tileflow_audit_log
     audit_id = f"aud-{uuid.uuid4().hex[:12]}"
     audit_payload = {
         "subject_type": req.subject_type,
@@ -145,13 +131,13 @@ async def save_subject_menu_access(
 
     await db.execute(
         text("""
-            INSERT INTO smriti_audit_log (
+            INSERT INTO tileflow_audit_log (
                 id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                 old_value, new_value, change_type, change_reason, change_source,
                 changed_by, changed_by_name, changed_at, sha256_hash
             )
             VALUES (
-                :id, :tenant_id, :entity_id, 'smriti_permissions', :record_id, 'menu_access_matrix',
+                :id, :tenant_id, :entity_id, 'tileflow_permissions', :record_id, 'menu_access_matrix',
                 :old_val, :new_val, 'UPDATE', 'Security Menu Access Control Policy Update', 'SecurityStudio',
                 :changed_by, :changed_by_name, :changed_at, :sha256_hash
             )
@@ -213,7 +199,7 @@ async def update_security_configuration(
 ):
     """
     Save Password & Housekeeping security policies to system_configs table.
-    Audited into smriti_audit_log.
+    Audited into tileflow_audit_log.
     """
     # 1. Update Password Config
     q_pass = select(SystemConfig).where(SystemConfig.key == CONFIG_KEY_PASS, SystemConfig.is_deleted == False)
@@ -262,7 +248,7 @@ async def update_security_configuration(
     sha_hash = hashlib.sha256(f"{audit_id}:SECURITY_CONFIG:{pass_json}:{hk_json}".encode()).hexdigest()
     await db.execute(
         text("""
-            INSERT INTO smriti_audit_log (
+            INSERT INTO tileflow_audit_log (
                 id, tenant_id, entity_id, changed_table, changed_record_id, field_name,
                 old_value, new_value, change_type, change_reason, change_source,
                 changed_by, changed_by_name, changed_at, sha256_hash

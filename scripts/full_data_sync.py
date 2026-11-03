@@ -1,23 +1,23 @@
 """
-Complete Sync Script from smriti001 to smritisys with ARRAY and JSON adaptation.
+Complete Sync Script from tileflow001 to tileflowsys with ARRAY and JSON adaptation.
 """
 import psycopg2
 import json
 import uuid
 
 def run_sync():
-    conn_src = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
-    conn_dst = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn_src = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
+    conn_dst = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     conn_dst.autocommit = True
     cur_src = conn_src.cursor()
     cur_dst = conn_dst.cursor()
 
-    # 1. Ensure required companies and branches exist in smritisys
+    # 1. Ensure required companies and branches exist in tileflowsys
     cur_dst.execute("""
         INSERT INTO companies (id, uuid, name, is_active, is_deleted)
         VALUES 
             ('comp-default', %s, 'Default Company', true, false),
-            ('comp-smriti-retail', %s, 'SMRITI Retail Ltd', true, false)
+            ('comp-tileflow-retail', %s, 'TILEFLOW Retail Ltd', true, false)
         ON CONFLICT (id) DO NOTHING;
     """, (str(uuid.uuid4()), str(uuid.uuid4())))
 
@@ -97,7 +97,7 @@ def run_sync():
         print(f"  -> Inserted {inserted} / {len(rows)} (Errors: {errors})")
 
     # Verify counts
-    print("\n=== FINAL VERIFICATION IN smritisys ===")
+    print("\n=== FINAL VERIFICATION IN tileflowsys ===")
     for t in tables:
         cur_dst.execute(f"SELECT count(*) FROM {t};")
         print(f"  {t}: {cur_dst.fetchone()[0]} rows")

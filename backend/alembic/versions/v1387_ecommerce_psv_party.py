@@ -1,13 +1,3 @@
-"""v1387 -- eCommerce integration and PSV visibility tables.
-
-Revision ID: v1387_ecommerce_psv_party
-Revises: v1386_distribution_warehousing
-Create Date: 2026-08-30 00:00:02.000000
-
-Project      : SMRITI Retail OS
-Author       : Migration Integrity Protocol
-Description  : Add eCommerce channels, order imports, SKU mappings, stock sync logs, reconciliations, and PSV visibility/party management for v3.25.0 canonical schema.
-"""
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
@@ -56,7 +46,7 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_ecom_channels_channel_code'), 'ecom_channels', ['channel_code'], unique=False, schema='public')
 
-    # 2. ecom_sku_mappings - External to SMRITI SKU mapping
+    # 2. ecom_sku_mappings - External to TILEFLOW SKU mapping
     op.create_table(
         'ecom_sku_mappings',
         sa.Column('id', sa.String(50), nullable=False),
@@ -66,7 +56,7 @@ def upgrade() -> None:
         sa.Column('channel_code', sa.String(50), nullable=False),
         sa.Column('external_sku', sa.String(100), nullable=False),
         sa.Column('external_product_id', sa.String(100), nullable=True),
-        sa.Column('smriti_sku', sa.String(100), nullable=False),
+        sa.Column('tileflow_sku', sa.String(100), nullable=False),
         sa.Column('item_id', sa.String(50), nullable=False),
         sa.Column('variant_id', sa.String(50), nullable=True),
         sa.Column('is_active', sa.Boolean(), server_default='true', nullable=True),
@@ -89,7 +79,7 @@ def upgrade() -> None:
     )
     op.create_index(op.f('ix_ecom_sku_mappings_channel'), 'ecom_sku_mappings', ['channel_code'], unique=False, schema='public')
     op.create_index(op.f('ix_ecom_sku_mappings_external_sku'), 'ecom_sku_mappings', ['external_sku'], unique=False, schema='public')
-    op.create_index(op.f('ix_ecom_sku_mappings_smriti_sku'), 'ecom_sku_mappings', ['smriti_sku'], unique=False, schema='public')
+    op.create_index(op.f('ix_ecom_sku_mappings_tileflow_sku'), 'ecom_sku_mappings', ['tileflow_sku'], unique=False, schema='public')
 
     # 3. ecom_order_imports - Order deduplication and convergence
     op.create_table(
@@ -149,7 +139,7 @@ def upgrade() -> None:
         sa.Column('branch_id', sa.String(50), nullable=True),
         sa.Column('channel_code', sa.String(50), nullable=False),
         sa.Column('external_sku', sa.String(100), nullable=False),
-        sa.Column('smriti_sku', sa.String(100), nullable=False),
+        sa.Column('tileflow_sku', sa.String(100), nullable=False),
         sa.Column('quantity_synced', sa.Numeric(12, 4), nullable=False, server_default='0.0000'),
         sa.Column('status', sa.String(30), nullable=False, server_default='SUCCESS'),
         sa.Column('response_payload', postgresql.JSONB(astext_type=sa.Text()), nullable=True),
@@ -183,8 +173,8 @@ def upgrade() -> None:
         sa.Column('period_end', sa.Date(), nullable=False),
         sa.Column('channel_order_count', sa.Integer(), nullable=False, server_default='0'),
         sa.Column('channel_gross_revenue', sa.Numeric(15, 2), nullable=False, server_default='0.00'),
-        sa.Column('smriti_order_count', sa.Integer(), nullable=False, server_default='0'),
-        sa.Column('smriti_gross_revenue', sa.Numeric(15, 2), nullable=False, server_default='0.00'),
+        sa.Column('tileflow_order_count', sa.Integer(), nullable=False, server_default='0'),
+        sa.Column('tileflow_gross_revenue', sa.Numeric(15, 2), nullable=False, server_default='0.00'),
         sa.Column('variance_amount', sa.Numeric(15, 2), nullable=False, server_default='0.00'),
         sa.Column('status', sa.String(30), nullable=False, server_default='RECONCILED'),
         sa.Column('discrepancy_details', postgresql.JSONB(astext_type=sa.Text()), nullable=True),

@@ -1,23 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.29.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: Item Master Entry Tactical Grid Refactor (Smriti Prime Specification)
+# Walkthrough: Item Master Entry Tactical Grid Refactor (TileFlow Prime Specification)
 
 ## 1. Purpose
-Refactor and modernize the **Item Master Entry** workflow in SMRITI Retail OS based on the enterprise design specification from `stitch_invoice_management_system` (`smriti_prime/DESIGN.md`, `item_master_entry_view_smriti_prime`, `item_master_entry_common_fields_smriti_prime`, `item_master_entry_item_details_smriti_prime`, `item_master_entry_save_warning_modal`).
+Refactor and modernize the **Item Master Entry** workflow in TILEFLOW Retail OS based on the enterprise design specification from `stitch_invoice_management_system` (`tileflow_prime/DESIGN.md`, `item_master_entry_view_tileflow_prime`, `item_master_entry_common_fields_tileflow_prime`, `item_master_entry_item_details_tileflow_prime`, `item_master_entry_save_warning_modal`).
 
 ## 2. Scope
 - Implementation of the high-velocity three-tab catalog entry workflow:
@@ -43,8 +41,8 @@ Refactor and modernize the **Item Master Entry** workflow in SMRITI Retail OS ba
 - `docs/walkthrough/README.md`: Master walkthrough index updated.
 
 ## 5. Architecture Decisions
-1. **Smriti Prime Design System Compliance**: Adopted Deep Corporate Blues (`#001642`, `#0052cc`, `#003d9b`), Tactical Slates (`#4f5f7b`), and 4px baseline tactical grid density.
-2. **Persistent Field Customization**: Field selections and common field defaults are persisted to `localStorage` (`smriti_item_master_selected_fields_v1`, `smriti_item_master_common_fields_v1`) so operators retain their preferred layout across sessions.
+1. **TileFlow Prime Design System Compliance**: Adopted Deep Corporate Blues (`#001642`, `#0052cc`, `#003d9b`), Tactical Slates (`#4f5f7b`), and 4px baseline tactical grid density.
+2. **Persistent Field Customization**: Field selections and common field defaults are persisted to `localStorage` (`tileflow_item_master_selected_fields_v1`, `tileflow_item_master_common_fields_v1`) so operators retain their preferred layout across sessions.
 3. **Sticky Frozen Columns**: Dynamic sticky horizontal offset calculation allows operators to freeze 0 to 6 columns for rapid horizontal panning during high-density barcode/pricing entry.
 4. **FastAPI System-of-Record Integration**: Batch commits save directly to FastAPI `/api/v1/products/` via `apiFetchV1` adhering to the Backend System-of-Record Policy.
 
@@ -92,14 +90,14 @@ Terminal execution of `npm test`:
 
 Terminal execution of `npm run lint`:
 ```text
-> smriti-retail-os@3.29.0 lint
+> tileflow-retail-os@3.29.0 lint
 > tsc --noEmit
 ```
 (Exit code 0 — Clean typecheck across all source files).
 
 Terminal execution of `npm run build`:
 ```text
-> smriti-retail-os@3.29.0 build
+> tileflow-retail-os@3.29.0 build
 > vite build
 
 vite v5.4.21 building for production...
@@ -125,4 +123,4 @@ vite v5.4.21 building for production...
 - `docs/adr/ADR-0018-Platform-Abstraction-Layer.md`
 
 ## 13. Related RFCs
-- `docs/rfc/RFC-0024-Smriti-Prime-Tactical-Item-Master.md`
+- `docs/rfc/RFC-0024-TileFlow-Prime-Tactical-Item-Master.md`

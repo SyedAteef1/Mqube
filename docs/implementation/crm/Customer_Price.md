@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.9.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan — Customer Price Group Master & Database Flow Integrity (v6.9.0)
@@ -73,7 +72,7 @@ Previously, frontend stores fell back to hardcoded `initialCustomers` and `DEFAU
 * React 18, Tailwind CSS, Lucide React icons, FastAPI, SQLAlchemy, PostgreSQL 15, Vitest.
 
 ## 11. Risks
-* Network outages during customer creation: Mitigated by offline queue in `smriti_pending_customers` and auto-sync on reconnect.
+* Network outages during customer creation: Mitigated by offline queue in `tileflow_pending_customers` and auto-sync on reconnect.
 
 ## 12. Rollback Strategy
 * Revert git commits; PostgreSQL schema remains backwards compatible.

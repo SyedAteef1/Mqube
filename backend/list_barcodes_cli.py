@@ -3,7 +3,7 @@ from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine
 
 async def main():
-    engine = create_async_engine('postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001')
+    engine = create_async_engine('postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001')
     async with engine.connect() as conn:
         res = await conn.execute(text('''
             SELECT barcode, code, name, category, brand, style_code, color, size, mrp, price, stock, hsn_code

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 import pytest
@@ -47,8 +33,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -62,7 +48,7 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
 @pytest.mark.asyncio
 async def test_packing_slip_creation_and_item_lines():
     """Verify pick & pack slip generation with multiple item lines and package weight."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     inv_id = f"inv_ful_{unique_suffix}"
 
@@ -101,7 +87,7 @@ async def test_packing_slip_creation_and_item_lines():
 @pytest.mark.asyncio
 async def test_dispatch_creation_with_courier_and_awb():
     """Verify dispatch manifest creation with courier assignment, AWB, and line item replication."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     inv_id = f"inv_dsp_{unique_suffix}"
 
@@ -143,7 +129,7 @@ async def test_dispatch_creation_with_courier_and_awb():
 @pytest.mark.asyncio
 async def test_delivery_status_progression_and_commission_settlement():
     """Verify delivery status transition to DELIVERED and automatic driver commission settlement."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -198,7 +184,7 @@ async def test_delivery_status_progression_and_commission_settlement():
 @pytest.mark.asyncio
 async def test_tracking_query_by_awb():
     """Verify live tracking query using tracking number."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     awb = f"AWB-TRACK-{unique_suffix.upper()}"
 
@@ -231,7 +217,7 @@ async def test_tracking_query_by_awb():
 @pytest.mark.asyncio
 async def test_reverse_logistics_and_commission_reversal():
     """Verify return manifest creation and commission reversal flag."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 import pytest
@@ -42,8 +28,8 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -57,7 +43,7 @@ def _get_auth_headers(role: str = "SYSADMIN") -> dict:
 @pytest.mark.asyncio
 async def test_sequential_gapless_numbering_allocation():
     """Verify atomic locked sequence allocation guarantees strict gapless numbering."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     doc_type = f"CUSTOM_DC_{unique_suffix.upper()}"
 
@@ -107,7 +93,7 @@ async def test_sequential_gapless_numbering_allocation():
 @pytest.mark.asyncio
 async def test_document_template_creation_and_hash_binding():
     """Verify template creation with cryptographic configuration hash."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     tpl_code = f"TPL_{unique_suffix.upper()}"
 
@@ -132,7 +118,7 @@ async def test_document_template_creation_and_hash_binding():
 @pytest.mark.asyncio
 async def test_document_rendering_and_artifact_integrity():
     """Verify document rendering, SHA256 integrity hashing, and artifact persistence."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     doc_id = f"doc_{unique_suffix}"
     doc_no = f"INV-2026-{unique_suffix.upper()}"
@@ -144,7 +130,7 @@ async def test_document_rendering_and_artifact_integrity():
             document_id=doc_id,
             document_no=doc_no,
             data_context={
-                "seller_name": "SMRITI RETAIL MUMBAI",
+                "seller_name": "TILEFLOW RETAIL MUMBAI",
                 "buyer_name": f"Customer {unique_suffix}",
                 "items": [
                     {"name": "Silk Shirt", "quantity": 2, "unit_price": 1200.0, "amount": 2400.0},
@@ -164,7 +150,7 @@ async def test_document_rendering_and_artifact_integrity():
 @pytest.mark.asyncio
 async def test_print_job_dispatch_and_reprint_watermark():
     """Verify print job execution, reprint counter increments, and duplicate watermark stamping."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     doc_id = f"doc_prn_{unique_suffix}"
     doc_no = f"INV-PRN-{unique_suffix.upper()}"
@@ -179,7 +165,7 @@ async def test_print_job_dispatch_and_reprint_watermark():
                 document_type="TAX_INVOICE",
                 document_id=doc_id,
                 document_no=doc_no,
-                data_context={"seller_name": "SMRITI", "items": [], "grand_total": 500.0},
+                data_context={"seller_name": "TILEFLOW", "items": [], "grand_total": 500.0},
             ),
         )
 
@@ -213,7 +199,7 @@ async def test_print_job_dispatch_and_reprint_watermark():
 @pytest.mark.asyncio
 async def test_document_lifecycle_state_machine():
     """Verify document lifecycle state transitions and rejection of illegal transitions."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     doc_id = f"doc_lc_{unique_suffix}"
 
@@ -295,7 +281,7 @@ async def test_api_documents_endpoints():
                 "document_type": doc_type,
                 "document_id": f"doc_{unique_suffix}",
                 "document_no": f"DOC-{unique_suffix.upper()}-001",
-                "data_context": {"seller_name": "SMRITI API", "grand_total": 100.0},
+                "data_context": {"seller_name": "TILEFLOW API", "grand_total": 100.0},
             },
             headers=_get_auth_headers(),
         )

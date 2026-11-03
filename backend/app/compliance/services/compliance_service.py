@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -25,7 +11,7 @@ from app.compliance.services.policy_service import PolicyService
 
 class ComplianceService:
     """
-    Primary orchestrator for SMRITI compliance operations and transactional outbox.
+    Primary orchestrator for TILEFLOW compliance operations and transactional outbox.
     Coordinates database, policy check, and outbox state.
     """
     def __init__(

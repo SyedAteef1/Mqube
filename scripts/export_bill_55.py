@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import asyncio
 from decimal import Decimal
@@ -18,7 +5,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 
-DB_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys"
+DB_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys"
 EXPORT_DIR = r"F:\SMRITRretailNX\exports"
 
 
@@ -110,7 +97,7 @@ async def export_bill_55():
     </tr>
     <tr>
       <td><strong>Status:</strong> <span style="color: #2b6cb0; font-weight: bold;">{row['status']}</span></td>
-      <td align="right"><strong>Source Database:</strong> smritisys</td>
+      <td align="right"><strong>Source Database:</strong> tileflowsys</td>
     </tr>
   </table>
 
@@ -148,7 +135,7 @@ async def export_bill_55():
   <div style="clear: both;"></div>
 
   <div class="footer">
-    SMRITI Retail OS v3.21 — System of Record Export | Author: Jawahar Ramkripal Mallah | SMRITIBooks.com
+    TILEFLOW Retail OS v3.21 — System of Record Export | Author: Syed Ateef | tileflow.in
   </div>
 </body>
 </html>

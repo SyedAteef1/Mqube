@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-17
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import base64
 import hashlib
 import hmac
@@ -188,7 +174,7 @@ async def get_ecom_webhook_session(
 async def get_ecom_channels_status():
     """
     Fetch authoritative connectivity status of external eCommerce connectors.
-    Truthfully reports connector readiness per SMRITI Governance.
+    Truthfully reports connector readiness per TILEFLOW Governance.
     """
     return {
         "status": "OPERATIONAL",
@@ -545,7 +531,7 @@ async def configure_channel(
     )
 
 
-@router.post("/sku-mappings", response_model=SkuMappingResponse, summary="Map external marketplace SKU to SMRITI SKU")
+@router.post("/sku-mappings", response_model=SkuMappingResponse, summary="Map external marketplace SKU to TILEFLOW SKU")
 async def map_ecom_sku(
     req: SkuMappingReq,
     session: AsyncSession = Depends(get_company_db),
@@ -564,7 +550,7 @@ async def map_ecom_sku(
         channel_code=mapping.channel_code,
         external_sku=mapping.external_sku,
         external_product_id=mapping.external_product_id,
-        smriti_sku=mapping.smriti_sku,
+        tileflow_sku=mapping.tileflow_sku,
         item_id=mapping.item_id,
         variant_id=mapping.variant_id,
         is_active=mapping.is_active,
@@ -654,8 +640,8 @@ async def run_channel_reconciliation(
         period_end=rec.period_end,
         channel_order_count=rec.channel_order_count,
         channel_gross_revenue=rec.channel_gross_revenue,
-        smriti_order_count=rec.smriti_order_count,
-        smriti_gross_revenue=rec.smriti_gross_revenue,
+        tileflow_order_count=rec.tileflow_order_count,
+        tileflow_gross_revenue=rec.tileflow_gross_revenue,
         variance_amount=rec.variance_amount,
         status=rec.status,
     )

@@ -1,11 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Version      : 3.22.0
-Created      : 2026-07-16
-Modified     : 2026-07-16
-"""
-
 import uuid
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -65,7 +57,7 @@ async def _create_user(db_session, role=UserRole.MANAGER):
     user = User(
         id=f"usr-psv-{s}",
         username=f"psv_user_{s}",
-        email=f"psv_{s}@smriti.test",
+        email=f"psv_{s}@tileflow.test",
         hashed_password=hash_password("P@ssword123"),
         role=role,
         is_active=True,

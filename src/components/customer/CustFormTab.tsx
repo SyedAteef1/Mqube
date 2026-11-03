@@ -1,30 +1,16 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 5.5.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from "react";
 import { User, MapPin, Store, FileText, Tag, Layers, CheckSquare, Sliders } from "lucide-react";
 import { RetailCustomerRecord, CustomerPriceGroup } from "./types.ts";
 import { getCustomerPriceGroups } from "../../services/customerStore.ts";
-import { SmritiCustomerPriceGroupModal } from "./CustPriceGroupDlg.tsx";
+import { TileFlowCustomerPriceGroupModal } from "./CustPriceGroupDlg.tsx";
 
-interface SmritiCustomerFormTabProps {
+interface TileFlowCustomerFormTabProps {
   customer: RetailCustomerRecord;
   onChange: (field: keyof RetailCustomerRecord, value: any) => void;
   onOpenMailingModal: () => void;
 }
 
-export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
+export const TileFlowCustomerFormTab: React.FC<TileFlowCustomerFormTabProps> = ({
   customer,
   onChange,
   onOpenMailingModal
@@ -37,8 +23,8 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
     const handleUpdate = () => {
       setPriceGroups(getCustomerPriceGroups());
     };
-    window.addEventListener("smriti_customer_price_groups_updated", handleUpdate);
-    return () => window.removeEventListener("smriti_customer_price_groups_updated", handleUpdate);
+    window.addEventListener("tileflow_customer_price_groups_updated", handleUpdate);
+    return () => window.removeEventListener("tileflow_customer_price_groups_updated", handleUpdate);
   }, []);
 
   return (
@@ -48,14 +34,14 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         
         {/* Left Card: General Details */}
-        <div className="bg-white dark:bg-[#1e2224] border border-[#c6c6cd] dark:border-[#45464d] rounded-2xl p-4 shadow-xs space-y-3.5">
-          <h3 className="text-xs font-bold text-[#00355f] dark:text-[#8ebdf9] uppercase tracking-wider flex items-center gap-2 border-b border-[#eceef0] dark:border-[#2d3133] pb-2.5">
+        <div className="bg-white dark:bg-[#212121] border border-[#c7c7c7] dark:border-[#464646] rounded-2xl p-4 shadow-xs space-y-3.5">
+          <h3 className="text-xs font-bold text-[#2d2d2d] dark:text-[#b7b7b7] uppercase tracking-wider flex items-center gap-2 border-b border-[#eeeeee] dark:border-[#303030] pb-2.5">
             <User size={15} /> General Details
           </h3>
 
           <div className="space-y-3">
             <div>
-              <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+              <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
                 Customer Code
               </label>
               <input
@@ -63,12 +49,12 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
                 readOnly
                 value={customer.code || "Generating..."}
                 data-field-key="customer_code"
-                className="w-full p-2 bg-[#f2f4f6] dark:bg-[#2d3133] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg font-mono font-bold text-xs text-[#00355f] dark:text-[#8ebdf9] cursor-not-allowed"
+                className="w-full p-2 bg-[#f4f4f4] dark:bg-[#303030] border border-[#c7c7c7] dark:border-[#464646] rounded-lg font-mono font-bold text-xs text-[#2d2d2d] dark:text-[#b7b7b7] cursor-not-allowed"
               />
             </div>
 
             <div>
-              <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+              <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
                 Customer Name*
               </label>
               <input
@@ -77,19 +63,19 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
                 data-field-key="customer_name"
                 onChange={(e) => onChange("name", e.target.value)}
                 placeholder="e.g. Farida Jameel"
-                className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg font-bold text-xs outline-none focus:border-[#00355f]"
+                className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg font-bold text-xs outline-none focus:border-[#2d2d2d]"
               />
             </div>
 
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block">
+                <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block">
                   Customer Price Group
                 </label>
                 <button
                   type="button"
                   onClick={() => setShowPriceGroupModal(true)}
-                  className="text-[10px] text-[#00355f] dark:text-[#8ebdf9] font-bold hover:underline flex items-center gap-1"
+                  className="text-[10px] text-[#2d2d2d] dark:text-[#b7b7b7] font-bold hover:underline flex items-center gap-1"
                 >
                   <Sliders size={11} /> Manage Groups
                 </button>
@@ -112,7 +98,7 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
                       onChange("allowMiscIssue", grp.allowMiscIssue);
                     }
                   }}
-                  className="flex-1 p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-xs font-semibold outline-none focus:border-[#00355f]"
+                  className="flex-1 p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-xs font-semibold outline-none focus:border-[#2d2d2d]"
                 >
                   {priceGroups.map(pg => {
                     const val = `${pg.code}#${pg.description}`;
@@ -130,7 +116,7 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
                 <button
                   type="button"
                   onClick={() => setShowPriceGroupModal(true)}
-                  className="px-2.5 py-1.5 bg-[#f2f4f6] dark:bg-[#2d3133] hover:bg-[#e1e4e8] dark:hover:bg-[#3d4246] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-[#00355f] dark:text-[#8ebdf9] font-bold text-xs shadow-2xs transition"
+                  className="px-2.5 py-1.5 bg-[#f4f4f4] dark:bg-[#303030] hover:bg-[#e4e4e4] dark:hover:bg-[#414141] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-[#2d2d2d] dark:text-[#b7b7b7] font-bold text-xs shadow-2xs transition"
                   title="Configure Customer Price Groups"
                 >
                   [...]
@@ -139,7 +125,7 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
             </div>
 
             {/* Modal instance */}
-            <SmritiCustomerPriceGroupModal
+            <TileFlowCustomerPriceGroupModal
               isOpen={showPriceGroupModal}
               onClose={() => setShowPriceGroupModal(false)}
               selectedGroupCode={customer.priceGroup?.split("#")[0] || "CPP"}
@@ -156,12 +142,12 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
             />
 
             {/* Mail List Info Box */}
-            <div className="bg-[#f7f9fb] dark:bg-[#2d3133]/40 border border-[#c6c6cd] dark:border-[#45464d] p-3 rounded-xl flex items-center justify-between">
+            <div className="bg-[#f9f9f9] dark:bg-[#303030]/40 border border-[#c7c7c7] dark:border-[#464646] p-3 rounded-xl flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#515f74] dark:text-[#bec6e0] block">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] block">
                   Mail List Info ({customer.mailingAddresses.length} Address{customer.mailingAddresses.length === 1 ? "" : "es"})
                 </span>
-                <p className="text-[11px] text-[#191c1e] dark:text-white font-medium truncate max-w-[240px] mt-0.5">
+                <p className="text-[11px] text-[#1c1c1c] dark:text-white font-medium truncate max-w-[240px] mt-0.5">
                   {primaryAddress ? `${primaryAddress.locality || primaryAddress.city || "Address Setup"} (${primaryAddress.mobilePhone || "No Mobile"})` : "No primary address"}
                 </p>
               </div>
@@ -169,7 +155,7 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
               <button
                 type="button"
                 onClick={onOpenMailingModal}
-                className="px-3 py-1.5 bg-[#00355f] dark:bg-[#8ebdf9] text-white dark:text-[#001c37] hover:bg-[#0f4c81] rounded-lg font-bold text-xs flex items-center gap-1 transition shadow-2xs"
+                className="px-3 py-1.5 bg-[#2d2d2d] dark:bg-[#b7b7b7] text-white dark:text-[#181818] hover:bg-[#434343] rounded-lg font-bold text-xs flex items-center gap-1 transition shadow-2xs"
               >
                 <MapPin size={12} /> Manage Address
               </button>
@@ -178,20 +164,20 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
         </div>
 
         {/* Classification Details Section */}
-        <div className="bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] p-5 rounded-2xl shadow-xs space-y-4">
-          <h3 className="text-xs font-bold text-[#00355f] dark:text-[#8ebdf9] uppercase tracking-wider flex items-center gap-2 border-b border-[#eceef0] dark:border-[#2d3133] pb-2.5">
+        <div className="bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] p-5 rounded-2xl shadow-xs space-y-4">
+          <h3 className="text-xs font-bold text-[#2d2d2d] dark:text-[#b7b7b7] uppercase tracking-wider flex items-center gap-2 border-b border-[#eeeeee] dark:border-[#303030] pb-2.5">
             <Tag size={15} /> Classification Details
           </h3>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+              <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
                 Religion
               </label>
               <select
                 value={customer.religion}
                 onChange={e => onChange("religion", e.target.value)}
-                className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-xs font-medium"
+                className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-xs font-medium"
               >
                 <option value="Muslim">Muslim</option>
                 <option value="Hindu">Hindu</option>
@@ -204,13 +190,13 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
             </div>
 
             <div>
-              <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+              <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
                 Ethnicity
               </label>
               <select
                 value={customer.ethnicity}
                 onChange={e => onChange("ethnicity", e.target.value)}
-                className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-xs font-medium"
+                className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-xs font-medium"
               >
                 <option value="Asian">Asian</option>
                 <option value="Arab">Arab</option>
@@ -223,13 +209,13 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
             </div>
 
             <div>
-              <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+              <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
                 Age Group
               </label>
               <select
                 value={customer.ageGroup}
                 onChange={e => onChange("ageGroup", e.target.value)}
-                className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-xs font-medium"
+                className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-xs font-medium"
               >
                 <option value="<20">&lt;20</option>
                 <option value=">=20 - <35">&gt;=20 - &lt;35</option>
@@ -240,7 +226,7 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
             </div>
 
             <div>
-              <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+              <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
                 Profession
               </label>
               <input
@@ -249,18 +235,18 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
                 data-field-key="customer_name"
                 onChange={(e) => onChange("profession", e.target.value)}
                 placeholder="e.g. Architect, Doctor, Teacher"
-                className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-xs font-medium"
+                className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-xs font-medium"
               />
             </div>
 
             <div className="col-span-2">
-              <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+              <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
                 Customer Type
               </label>
               <select
                 value={customer.customerType}
                 onChange={e => onChange("customerType", e.target.value)}
-                className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-xs font-semibold"
+                className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-xs font-semibold"
               >
                 <option value="Retail">Retail Shopper</option>
                 <option value="VIP">VIP Privilege Account</option>
@@ -275,8 +261,8 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
       </div>
 
       {/* 2. Profile Details (Notes & Preferences) */}
-      <div className="bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] p-5 rounded-2xl shadow-xs space-y-2">
-        <h3 className="text-xs font-bold text-[#00355f] dark:text-[#8ebdf9] uppercase tracking-wider flex items-center gap-2">
+      <div className="bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] p-5 rounded-2xl shadow-xs space-y-2">
+        <h3 className="text-xs font-bold text-[#2d2d2d] dark:text-[#b7b7b7] uppercase tracking-wider flex items-center gap-2">
           <FileText size={15} /> Profile Details &amp; Shopper Preferences
         </h3>
         <textarea
@@ -284,19 +270,19 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
           value={customer.profileNotes}
           onChange={e => onChange("profileNotes", e.target.value)}
           placeholder="Document customer size preferences, favorite brands, tailored styling notes, allergy alerts, or special service requests..."
-          className="w-full p-3 bg-[#f7f9fb] dark:bg-[#131b2e] border border-[#c6c6cd] dark:border-[#45464d] rounded-xl text-xs outline-none focus:bg-white dark:focus:bg-[#191c1e] focus:border-[#00355f] leading-relaxed"
+          className="w-full p-3 bg-[#f9f9f9] dark:bg-[#1b1b1b] border border-[#c7c7c7] dark:border-[#464646] rounded-xl text-xs outline-none focus:bg-white dark:focus:bg-[#1c1c1c] focus:border-[#2d2d2d] leading-relaxed"
         />
       </div>
 
       {/* 3. Details of Shoper (Environment & File Integration) */}
-      <div className="bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] p-5 rounded-2xl shadow-xs space-y-4">
-        <h3 className="text-xs font-bold text-[#00355f] dark:text-[#8ebdf9] uppercase tracking-wider flex items-center gap-2 border-b border-[#eceef0] dark:border-[#2d3133] pb-2.5">
+      <div className="bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] p-5 rounded-2xl shadow-xs space-y-4">
+        <h3 className="text-xs font-bold text-[#2d2d2d] dark:text-[#b7b7b7] uppercase tracking-wider flex items-center gap-2 border-b border-[#eeeeee] dark:border-[#303030] pb-2.5">
           <Store size={15} /> Details of Shoper
         </h3>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
               Comp Code
             </label>
             <input
@@ -304,18 +290,18 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
               value={customer.companyCode}
               data-field-key="customer_code"
               onChange={(e) => onChange("companyCode", e.target.value)}
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg font-mono text-xs font-bold"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg font-mono text-xs font-bold"
             />
           </div>
 
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
               Environment
             </label>
             <select
               value={customer.environment}
               onChange={e => onChange("environment", e.target.value)}
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-xs font-semibold"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-xs font-semibold"
             >
               <option value="Retail">Retail</option>
               <option value="Distribution">Distribution</option>
@@ -324,13 +310,13 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
           </div>
 
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
               Flat File Format
             </label>
             <select
               value={customer.flatFileFormat}
               onChange={e => onChange("flatFileFormat", e.target.value)}
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg text-xs font-medium"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg text-xs font-medium"
             >
               <option value="GUI with Delimiter Format">GUI with Delimiter Format</option>
               <option value="Fixed Length Format">Fixed Length Format</option>
@@ -340,7 +326,7 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
           </div>
 
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
               Delimiter
             </label>
             <input
@@ -348,12 +334,12 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
               value={customer.delimiter}
               data-field-key="reference_no"
               onChange={(e) => onChange("delimiter", e.target.value)}
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg font-mono text-xs text-center font-bold"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg font-mono text-xs text-center font-bold"
             />
           </div>
 
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
               Buying Factor
             </label>
             <input
@@ -362,12 +348,12 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
               value={customer.buyingFactor}
               data-field-key="cost_price"
               onChange={(e) => onChange("buyingFactor", parseFloat(e.target.value) || 1)}
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg font-mono text-xs"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg font-mono text-xs"
             />
           </div>
 
           <div>
-            <label className="text-[#515f74] dark:text-[#bec6e0] font-bold text-[10px] uppercase block mb-1">
+            <label className="text-[#5e5e5e] dark:text-[#c6c6c6] font-bold text-[10px] uppercase block mb-1">
               Selling Factor
             </label>
             <input
@@ -376,7 +362,7 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
               value={customer.sellingFactor}
               data-field-key="selling_price"
               onChange={(e) => onChange("sellingFactor", parseFloat(e.target.value) || 1)}
-              className="w-full p-2 bg-white dark:bg-[#191c1e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg font-mono text-xs"
+              className="w-full p-2 bg-white dark:bg-[#1c1c1c] border border-[#c7c7c7] dark:border-[#464646] rounded-lg font-mono text-xs"
             />
           </div>
 
@@ -386,9 +372,9 @@ export const SmritiCustomerFormTab: React.FC<SmritiCustomerFormTabProps> = ({
                 type="checkbox"
                 checked={customer.isTaxInclusive}
                 onChange={(e) => onChange("isTaxInclusive", e.target.checked)}
-                className="rounded text-[#00355f] focus:ring-[#00355f]"
+                className="rounded text-[#2d2d2d] focus:ring-[#2d2d2d]"
               />
-              <span className="font-bold text-xs text-[#00355f] dark:text-[#8ebdf9]">
+              <span className="font-bold text-xs text-[#2d2d2d] dark:text-[#b7b7b7]">
                 Tax Inclusive Pricing Applicable
               </span>
             </label>

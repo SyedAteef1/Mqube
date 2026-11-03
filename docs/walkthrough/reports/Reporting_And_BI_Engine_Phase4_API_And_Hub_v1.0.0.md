@@ -2,18 +2,18 @@
 title: "Reporting & BI Engine: Phase 4 (REST API Endpoints & Hub Router)"
 version: "1.0.0"
 date: "2026-08-28"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
 # Walkthrough: Reporting & BI Engine — Phase 4 (REST API Endpoints & Hub Router)
 
 ## 1. Purpose
-Implement Phase 4 (Steps 07, 08, 09, and 10 of the 12-stage roadmap) for the SMRITI Retail OS Reporting & BI Engine v1.0.0-GA:
+Implement Phase 4 (Steps 07, 08, 09, and 10 of the 12-stage roadmap) for the TILEFLOW Retail OS Reporting & BI Engine v1.0.0-GA:
 1. Expose canonical REST API endpoints under `/api/v1/reporting/*` for catalog listing, single report contract fetching, Shoper 9 legacy alias resolution, governed metric definitions, and forensic execution envelope construction.
 2. Complete end-to-end certification across all 24 automated governance tests.
 

@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.30.0
- * Created      : 2026-08-26
- * Modified     : 2026-08-26
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Control Plane Menu Manager & Dynamic Navigation Studio (Light Theme)
- */
-
 import React, { useState, useEffect, useMemo } from "react";
 import {
   Layers,
@@ -347,26 +332,26 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
   }, [menus, simulatedRole]);
 
   return (
-    <div className="w-full h-full flex flex-col bg-[#f8fafc] text-[#0f172a] font-sans select-none overflow-hidden">
+    <div className="w-full h-full flex flex-col bg-[#fafafa] text-[#171717] font-sans select-none overflow-hidden">
       {/* 1. Global Studio Header */}
-      <header className="bg-white border-b border-[#e2e8f0] px-5 py-3 flex items-center justify-between shrink-0 shadow-xs z-10">
+      <header className="bg-white border-b border-[#e7e7e7] px-5 py-3 flex items-center justify-between shrink-0 shadow-xs z-10">
         <div className="flex items-center gap-3">
-          <div className="w-9 h-9 bg-[#1e40af]/10 text-[#1e40af] rounded-lg flex items-center justify-center border border-[#1e40af]/20">
+          <div className="w-9 h-9 bg-[#414141]/10 text-[#414141] rounded-lg flex items-center justify-center border border-[#414141]/20">
             <Compass className="w-5 h-5" />
           </div>
           <div>
-            <div className="flex items-center gap-2 text-[11px] font-mono text-[#64748b] leading-tight">
-              <span>SMRITI Control Plane</span>
+            <div className="flex items-center gap-2 text-[11px] font-mono text-[#727272] leading-tight">
+              <span>MQube Control Plane</span>
               <span>/</span>
               <span>Security & Governance</span>
               <span>/</span>
-              <span className="text-[#1e40af] font-semibold">Menu Navigation Registry</span>
+              <span className="text-[#414141] font-semibold">Menu Navigation Registry</span>
             </div>
             <div className="flex items-center gap-2.5 mt-0.5">
-              <h1 className="text-base font-bold font-display text-[#0f172a] tracking-tight">
+              <h1 className="text-base font-bold font-display text-[#171717] tracking-tight">
                 Menu Manager & Dynamic Navigation Studio
               </h1>
-              <span className="px-2 py-0.5 bg-[#eff6ff] text-[#1e40af] text-[10px] font-mono font-bold border border-[#bfdbfe] rounded">
+              <span className="px-2 py-0.5 bg-[#f5f5f5] text-[#414141] text-[10px] font-mono font-bold border border-[#d8d8d8] rounded">
                 system.menu.manage
               </span>
             </div>
@@ -376,13 +361,13 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
         {/* Action Controls & Role Simulator */}
         <div className="flex items-center gap-3">
           {/* Role Simulator Dropdown */}
-          <div className="flex items-center gap-2 bg-[#f1f5f9] px-3 py-1.5 rounded-lg border border-[#cbd5e1] text-xs">
-            <Sliders className="w-3.5 h-3.5 text-[#1e40af]" />
-            <span className="text-[#475569] font-medium">Preview As:</span>
+          <div className="flex items-center gap-2 bg-[#f4f4f4] px-3 py-1.5 rounded-lg border border-[#d4d4d4] text-xs">
+            <Sliders className="w-3.5 h-3.5 text-[#414141]" />
+            <span className="text-[#535353] font-medium">Preview As:</span>
             <select
               value={simulatedRole}
               onChange={(e) => setSimulatedRole(e.target.value)}
-              className="bg-transparent font-bold text-[#0f172a] focus:outline-none cursor-pointer text-xs"
+              className="bg-transparent font-bold text-[#171717] focus:outline-none cursor-pointer text-xs"
             >
               <option value="SYSADMIN">System Admin (Full Access)</option>
               <option value="MANAGER">Store Manager</option>
@@ -394,17 +379,17 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
           <button
             onClick={loadData}
             disabled={loading}
-            className="px-3 py-2 bg-white hover:bg-[#f1f5f9] text-[#334155] border border-[#cbd5e1] rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer"
+            className="px-3 py-2 bg-white hover:bg-[#f4f4f4] text-[#3f3f3f] border border-[#d4d4d4] rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-2xs cursor-pointer"
             title="Refresh Registry"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-[#1e40af]" : ""}`} />
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? "animate-spin text-[#414141]" : ""}`} />
             Refresh
           </button>
 
           <button
             onClick={handleDeployTree}
             disabled={isDeploying}
-            className="px-4 py-2 bg-[#1e40af] hover:bg-[#1d4ed8] text-white rounded-lg text-xs font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow active:scale-98 cursor-pointer"
+            className="px-4 py-2 bg-[#414141] hover:bg-[#4e4e4e] text-white rounded-lg text-xs font-bold flex items-center gap-2 transition-all shadow-sm hover:shadow active:scale-98 cursor-pointer"
           >
             <Sparkles className="w-3.5 h-3.5" />
             {isDeploying ? "Deploying Tree..." : "Deploy Navigation Tree"}
@@ -441,17 +426,17 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
         {/* ============================================================ */}
         {/* COLUMN 1: Hierarchical Menu Tree Explorer (340px) */}
         {/* ============================================================ */}
-        <aside className="w-88 border-r border-[#e2e8f0] bg-white flex flex-col shrink-0">
+        <aside className="w-88 border-r border-[#e7e7e7] bg-white flex flex-col shrink-0">
           {/* Search & Category Filter */}
-          <div className="p-3 border-b border-[#e2e8f0] space-y-2.5 bg-[#f8fafc]">
+          <div className="p-3 border-b border-[#e7e7e7] space-y-2.5 bg-[#fafafa]">
             <div className="relative">
-              <Search className="w-4 h-4 text-[#94a3b8] absolute left-3 top-2.5" />
+              <Search className="w-4 h-4 text-[#a1a1a1] absolute left-3 top-2.5" />
               <input
                 type="text"
                 placeholder="Search menus by ID, label, route..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white border border-[#cbd5e1] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#0f172a] focus:outline-none focus:border-[#1e40af] focus:ring-1 focus:ring-[#1e40af] font-sans"
+                className="w-full bg-white border border-[#d4d4d4] rounded-lg pl-9 pr-3 py-1.5 text-xs text-[#171717] focus:outline-none focus:border-[#414141] focus:ring-1 focus:ring-[#414141] font-sans"
               />
             </div>
 
@@ -463,8 +448,8 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                   onClick={() => setCategoryFilter(cat)}
                   className={`px-2.5 py-1 rounded-md whitespace-nowrap transition-colors cursor-pointer ${
                     categoryFilter === cat
-                      ? "bg-[#1e40af] text-white font-bold"
-                      : "bg-white border border-[#cbd5e1] text-[#64748b] hover:text-[#0f172a] hover:bg-[#f1f5f9]"
+                      ? "bg-[#414141] text-white font-bold"
+                      : "bg-white border border-[#d4d4d4] text-[#727272] hover:text-[#171717] hover:bg-[#f4f4f4]"
                   }`}
                 >
                   {cat === "ALL" ? `All (${menus.length})` : cat}
@@ -476,7 +461,7 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
           {/* Menu Items List */}
           <div className="flex-1 overflow-y-auto p-2 space-y-1.5 divide-y divide-transparent">
             {filteredMenus.length === 0 ? (
-              <div className="p-8 text-center text-[#94a3b8] text-xs">
+              <div className="p-8 text-center text-[#a1a1a1] text-xs">
                 No menus matching search criteria.
               </div>
             ) : (
@@ -492,29 +477,29 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                     onClick={() => selectNode(m)}
                     className={`group px-3 py-2.5 rounded-lg border transition-all cursor-grab active:cursor-grabbing flex items-center justify-between ${
                       isSelected
-                        ? "bg-[#eff6ff] border-[#3b82f6] shadow-xs"
+                        ? "bg-[#f5f5f5] border-[#7b7b7b] shadow-xs"
                         : draggedMenuId === m.id
-                        ? "opacity-50 border-dashed border-[#1e40af] bg-[#f8fafc]"
-                        : "bg-white border-[#e2e8f0] hover:border-[#cbd5e1] hover:bg-[#f8fafc]"
+                        ? "opacity-50 border-dashed border-[#414141] bg-[#fafafa]"
+                        : "bg-white border-[#e7e7e7] hover:border-[#d4d4d4] hover:bg-[#fafafa]"
                     }`}
                   >
                     <div className="flex items-center gap-2.5 min-w-0">
-                      <div className="text-[#94a3b8] group-hover:text-[#64748b]">
+                      <div className="text-[#a1a1a1] group-hover:text-[#727272]">
                         <GripVertical className="w-3.5 h-3.5" />
                       </div>
-                      <span className="material-symbols-outlined text-[18px] text-[#1e40af]">
+                      <span className="material-symbols-outlined text-[18px] text-[#414141]">
                         {m.icon || "grid_view"}
                       </span>
                       <div className="min-w-0 leading-tight">
                         <div className="flex items-center gap-1.5">
-                          <span className="font-semibold text-xs text-[#0f172a] truncate">
+                          <span className="font-semibold text-xs text-[#171717] truncate">
                             {m.title}
                           </span>
-                          <span className="text-[9px] font-mono px-1.5 py-0.2 bg-[#f1f5f9] text-[#64748b] border border-[#e2e8f0] rounded">
+                          <span className="text-[9px] font-mono px-1.5 py-0.2 bg-[#f4f4f4] text-[#727272] border border-[#e7e7e7] rounded">
                             #{m.sequence}
                           </span>
                         </div>
-                        <p className="text-[10px] font-mono text-[#64748b] truncate mt-0.5">
+                        <p className="text-[10px] font-mono text-[#727272] truncate mt-0.5">
                           {m.route || m.id}
                         </p>
                       </div>
@@ -537,7 +522,7 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                       >
                         {m.is_active ? <Eye className="w-3.5 h-3.5" /> : <EyeOff className="w-3.5 h-3.5" />}
                       </button>
-                      <ChevronRight className={`w-4 h-4 ${isSelected ? "text-[#1e40af]" : "text-[#cbd5e1]"}`} />
+                      <ChevronRight className={`w-4 h-4 ${isSelected ? "text-[#414141]" : "text-[#d4d4d4]"}`} />
                     </div>
                   </div>
                 );
@@ -546,7 +531,7 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
           </div>
 
           {/* Bottom Explorer Stats */}
-          <div className="p-3 border-t border-[#e2e8f0] bg-[#f8fafc] flex items-center justify-between text-[11px] font-mono text-[#64748b]">
+          <div className="p-3 border-t border-[#e7e7e7] bg-[#fafafa] flex items-center justify-between text-[11px] font-mono text-[#727272]">
             <span>Active: {menus.filter((m) => m.is_active).length} / {menus.length}</span>
             <span className="text-emerald-700 font-bold">100% Postgres Sync</span>
           </div>
@@ -555,18 +540,18 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
         {/* ============================================================ */}
         {/* COLUMN 2: Node Configurator & Security Matrix (Flex 1) */}
         {/* ============================================================ */}
-        <main className="flex-1 bg-[#f8fafc] overflow-y-auto p-6 space-y-5">
+        <main className="flex-1 bg-[#fafafa] overflow-y-auto p-6 space-y-5">
           {/* Header Card */}
-          <div className="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-xs flex items-center justify-between">
+          <div className="bg-white border border-[#e7e7e7] rounded-xl p-5 shadow-xs flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 bg-[#eff6ff] text-[#1e40af] rounded-xl flex items-center justify-center border border-[#bfdbfe]">
+              <div className="w-11 h-11 bg-[#f5f5f5] text-[#414141] rounded-xl flex items-center justify-center border border-[#d8d8d8]">
                 <span className="material-symbols-outlined text-2xl">
                   {formState.icon || "grid_view"}
                 </span>
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <h2 className="text-base font-bold text-[#0f172a] font-display">
+                  <h2 className="text-base font-bold text-[#171717] font-display">
                     Editing Node: {formState.title}
                   </h2>
                   <span
@@ -579,8 +564,8 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                     {formState.is_active ? "Active in Registry" : "Disabled"}
                   </span>
                 </div>
-                <p className="text-xs text-[#64748b] font-mono mt-0.5">
-                  ID: <strong className="text-[#0f172a]">{formState.id}</strong> | Sequence: #{formState.sequence}
+                <p className="text-xs text-[#727272] font-mono mt-0.5">
+                  ID: <strong className="text-[#171717]">{formState.id}</strong> | Sequence: #{formState.sequence}
                 </p>
               </div>
             </div>
@@ -590,7 +575,7 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                 type="button"
                 onClick={handleSaveNode}
                 disabled={savingId === selectedMenuId}
-                className="px-4 py-2 bg-[#1e40af] hover:bg-[#1d4ed8] text-white font-bold rounded-lg text-xs flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+                className="px-4 py-2 bg-[#414141] hover:bg-[#4e4e4e] text-white font-bold rounded-lg text-xs flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
               >
                 <Save className="w-4 h-4" />
                 {savingId === selectedMenuId ? "Saving..." : "Save Changes"}
@@ -601,84 +586,84 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
           {/* Form Configuration Grid */}
           <form onSubmit={handleSaveNode} className="space-y-5">
             {/* Card 1: Basic Node Metadata */}
-            <div className="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-xs space-y-4">
-              <div className="flex items-center gap-2 border-b border-[#f1f5f9] pb-3">
-                <Settings className="w-4 h-4 text-[#1e40af]" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#0f172a] font-mono">
+            <div className="bg-white border border-[#e7e7e7] rounded-xl p-5 shadow-xs space-y-4">
+              <div className="flex items-center gap-2 border-b border-[#f4f4f4] pb-3">
+                <Settings className="w-4 h-4 text-[#414141]" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-[#171717] font-mono">
                   1. Canonical Menu Properties & Route
                 </h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
                 <div>
-                  <label className="block text-[#475569] font-medium mb-1">Display Label</label>
+                  <label className="block text-[#535353] font-medium mb-1">Display Label</label>
                   <input
                     type="text"
                     value={formState.title}
                     onChange={(e) => setFormState({ ...formState, title: e.target.value })}
-                    className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg px-3 py-2 text-[#0f172a] font-semibold focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                    className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg px-3 py-2 text-[#171717] font-semibold focus:bg-white focus:outline-none focus:border-[#414141]"
                     placeholder="e.g. POS Billing Desk"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#475569] font-medium mb-1">Material Symbol Icon</label>
+                  <label className="block text-[#535353] font-medium mb-1">Material Symbol Icon</label>
                   <div className="relative">
                     <input
                       type="text"
                       value={formState.icon}
                       onChange={(e) => setFormState({ ...formState, icon: e.target.value })}
-                      className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg pl-9 pr-3 py-2 text-[#0f172a] font-mono focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                      className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg pl-9 pr-3 py-2 text-[#171717] font-mono focus:bg-white focus:outline-none focus:border-[#414141]"
                       placeholder="e.g. point_of_sale"
                     />
-                    <span className="material-symbols-outlined text-[18px] text-[#1e40af] absolute left-2.5 top-2.5">
+                    <span className="material-symbols-outlined text-[18px] text-[#414141] absolute left-2.5 top-2.5">
                       {formState.icon || "grid_view"}
                     </span>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-[#475569] font-medium mb-1">Category / Module Group</label>
+                  <label className="block text-[#535353] font-medium mb-1">Category / Module Group</label>
                   <input
                     type="text"
                     value={formState.module}
                     onChange={(e) => setFormState({ ...formState, module: e.target.value })}
-                    className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg px-3 py-2 text-[#0f172a] focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                    className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg px-3 py-2 text-[#171717] focus:bg-white focus:outline-none focus:border-[#414141]"
                     placeholder="e.g. Retail Operations"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#475569] font-medium mb-1">Sequence Sort Order</label>
+                  <label className="block text-[#535353] font-medium mb-1">Sequence Sort Order</label>
                   <input
                     type="number"
                     value={formState.sequence}
                     onChange={(e) => setFormState({ ...formState, sequence: Number(e.target.value) })}
-                    className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg px-3 py-2 text-[#0f172a] font-mono focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                    className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg px-3 py-2 text-[#171717] font-mono focus:bg-white focus:outline-none focus:border-[#414141]"
                     min={1}
                     max={999}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#475569] font-medium mb-1">Frontend Route Path</label>
+                  <label className="block text-[#535353] font-medium mb-1">Frontend Route Path</label>
                   <input
                     type="text"
                     value={formState.route}
                     onChange={(e) => setFormState({ ...formState, route: e.target.value })}
-                    className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg px-3 py-2 text-[#1e40af] font-mono focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                    className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg px-3 py-2 text-[#414141] font-mono focus:bg-white focus:outline-none focus:border-[#414141]"
                     placeholder="/pos/billing"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-[#475569] font-medium mb-1">Parent Menu ID (Optional)</label>
+                  <label className="block text-[#535353] font-medium mb-1">Parent Menu ID (Optional)</label>
                   <input
                     type="text"
                     value={formState.parent_id}
                     onChange={(e) => setFormState({ ...formState, parent_id: e.target.value })}
-                    className="w-full bg-[#f8fafc] border border-[#cbd5e1] rounded-lg px-3 py-2 text-[#64748b] font-mono focus:bg-white focus:outline-none focus:border-[#1e40af]"
+                    className="w-full bg-[#fafafa] border border-[#d4d4d4] rounded-lg px-3 py-2 text-[#727272] font-mono focus:bg-white focus:outline-none focus:border-[#414141]"
                     placeholder="Leave empty for root item"
                   />
                 </div>
@@ -686,23 +671,23 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
             </div>
 
             {/* Card 2: Security & Operations RBAC Matrix */}
-            <div className="bg-white border border-[#e2e8f0] rounded-xl p-5 shadow-xs space-y-4">
-              <div className="flex items-center justify-between border-b border-[#f1f5f9] pb-3">
+            <div className="bg-white border border-[#e7e7e7] rounded-xl p-5 shadow-xs space-y-4">
+              <div className="flex items-center justify-between border-b border-[#f4f4f4] pb-3">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#0f172a] font-mono">
+                  <h3 className="text-xs font-bold uppercase tracking-wider text-[#171717] font-mono">
                     2. Security & Granular Operations Matrix
                   </h3>
                 </div>
-                <span className="text-[11px] font-mono text-[#64748b]">
-                  Policy: smriti_permissions (Two-Pass Cascade Pruning)
+                <span className="text-[11px] font-mono text-[#727272]">
+                  Policy: tileflow_permissions (Two-Pass Cascade Pruning)
                 </span>
               </div>
 
-              <div className="border border-[#e2e8f0] rounded-lg overflow-hidden text-xs">
+              <div className="border border-[#e7e7e7] rounded-lg overflow-hidden text-xs">
                 <table className="w-full text-left border-collapse">
                   <thead>
-                    <tr className="bg-[#f8fafc] border-b border-[#e2e8f0] font-mono text-[11px] text-[#475569]">
+                    <tr className="bg-[#fafafa] border-b border-[#e7e7e7] font-mono text-[11px] text-[#535353]">
                       <th className="px-4 py-2.5">User Role</th>
                       <th className="px-3 py-2.5 text-center">View</th>
                       <th className="px-3 py-2.5 text-center">Create</th>
@@ -713,9 +698,9 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                       <th className="px-3 py-2.5 text-center">Export CSV</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-[#f1f5f9]">
-                    <tr className="hover:bg-[#f8fafc]">
-                      <td className="px-4 py-2.5 font-bold text-[#0f172a]">System Administrator (SYSADMIN)</td>
+                  <tbody className="divide-y divide-[#f4f4f4]">
+                    <tr className="hover:bg-[#fafafa]">
+                      <td className="px-4 py-2.5 font-bold text-[#171717]">System Administrator (SYSADMIN)</td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
@@ -724,8 +709,8 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                     </tr>
-                    <tr className="hover:bg-[#f8fafc]">
-                      <td className="px-4 py-2.5 font-semibold text-[#1e40af]">Store Manager (MANAGER)</td>
+                    <tr className="hover:bg-[#fafafa]">
+                      <td className="px-4 py-2.5 font-semibold text-[#414141]">Store Manager (MANAGER)</td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
@@ -734,15 +719,15 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                     </tr>
-                    <tr className="hover:bg-[#f8fafc]">
-                      <td className="px-4 py-2.5 text-[#334155]">Billing Cashier (CASHIER)</td>
+                    <tr className="hover:bg-[#fafafa]">
+                      <td className="px-4 py-2.5 text-[#3f3f3f]">Billing Cashier (CASHIER)</td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
-                      <td className="px-3 py-2.5 text-center"><Lock className="w-3.5 h-3.5 text-[#94a3b8] mx-auto" /></td>
-                      <td className="px-3 py-2.5 text-center"><Lock className="w-3.5 h-3.5 text-[#94a3b8] mx-auto" /></td>
+                      <td className="px-3 py-2.5 text-center"><Lock className="w-3.5 h-3.5 text-[#a1a1a1] mx-auto" /></td>
+                      <td className="px-3 py-2.5 text-center"><Lock className="w-3.5 h-3.5 text-[#a1a1a1] mx-auto" /></td>
                       <td className="px-3 py-2.5 text-center"><Check className="w-4 h-4 text-emerald-600 mx-auto" /></td>
-                      <td className="px-3 py-2.5 text-center"><Lock className="w-3.5 h-3.5 text-[#94a3b8] mx-auto" /></td>
+                      <td className="px-3 py-2.5 text-center"><Lock className="w-3.5 h-3.5 text-[#a1a1a1] mx-auto" /></td>
                     </tr>
                   </tbody>
                 </table>
@@ -754,15 +739,15 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
         {/* ============================================================ */}
         {/* COLUMN 3: Live NavRail Simulator & Audit Journal (380px) */}
         {/* ============================================================ */}
-        <aside className="w-96 border-l border-[#e2e8f0] bg-white flex flex-col shrink-0">
+        <aside className="w-96 border-l border-[#e7e7e7] bg-white flex flex-col shrink-0">
           {/* Sub Tab Switcher */}
-          <div className="p-3 border-b border-[#e2e8f0] bg-[#f8fafc] flex items-center gap-2 text-xs font-mono font-bold">
+          <div className="p-3 border-b border-[#e7e7e7] bg-[#fafafa] flex items-center gap-2 text-xs font-mono font-bold">
             <button
               onClick={() => setActiveRightTab("simulator")}
               className={`flex-1 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
                 activeRightTab === "simulator"
-                  ? "bg-[#1e40af] text-white shadow-xs"
-                  : "bg-white border border-[#cbd5e1] text-[#64748b] hover:text-[#0f172a]"
+                  ? "bg-[#414141] text-white shadow-xs"
+                  : "bg-white border border-[#d4d4d4] text-[#727272] hover:text-[#171717]"
               }`}
             >
               <Compass className="w-3.5 h-3.5" /> Live NavRail
@@ -771,8 +756,8 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
               onClick={() => setActiveRightTab("audit")}
               className={`flex-1 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
                 activeRightTab === "audit"
-                  ? "bg-[#1e40af] text-white shadow-xs"
-                  : "bg-white border border-[#cbd5e1] text-[#64748b] hover:text-[#0f172a]"
+                  ? "bg-[#414141] text-white shadow-xs"
+                  : "bg-white border border-[#d4d4d4] text-[#727272] hover:text-[#171717]"
               }`}
             >
               <History className="w-3.5 h-3.5" /> Audit Log ({auditLogs.length})
@@ -783,12 +768,12 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
           <div className="flex-1 overflow-y-auto p-4 space-y-4 text-xs">
             {activeRightTab === "simulator" && (
               <div className="space-y-4">
-                <div className="p-3 bg-[#eff6ff] border border-[#bfdbfe] rounded-xl text-[11px] text-[#1e40af] leading-relaxed">
+                <div className="p-3 bg-[#f5f5f5] border border-[#d8d8d8] rounded-xl text-[11px] text-[#414141] leading-relaxed">
                   <strong>Simulating:</strong> {simulatedRole} view. Below is how the sidebar and menu registry resolves for this operator role.
                 </div>
 
                 {/* Simulated Vertical NavRail */}
-                <div className="bg-[#24389c] text-white rounded-xl p-2.5 shadow-md space-y-1">
+                <div className="bg-[#3b3b3b] text-white rounded-xl p-2.5 shadow-md space-y-1">
                   <div className="text-[10px] font-mono text-indigo-200 uppercase tracking-widest px-2 py-1">
                     Sidebar Navigation
                   </div>
@@ -797,8 +782,8 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
                       key={item.id}
                       className={`px-3 py-2 rounded-lg flex items-center justify-between text-xs transition-colors ${
                         item.id === selectedMenuId
-                          ? "bg-white text-[#24389c] font-bold shadow-xs"
-                          : "text-indigo-100 hover:bg-[#3f51b5]"
+                          ? "bg-white text-[#3b3b3b] font-bold shadow-xs"
+                          : "text-indigo-100 hover:bg-[#545454]"
                       }`}
                     >
                       <div className="flex items-center gap-2">
@@ -819,29 +804,29 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
             {activeRightTab === "audit" && (
               <div className="space-y-3 font-mono text-[11px]">
                 {auditLogs.length === 0 ? (
-                  <div className="p-6 text-center text-[#94a3b8]">
-                    No changes recorded in smriti_audit_log.
+                  <div className="p-6 text-center text-[#a1a1a1]">
+                    No changes recorded in tileflow_audit_log.
                   </div>
                 ) : (
                   auditLogs.slice(0, 15).map((log) => (
                     <div
                       key={log.id}
-                      className="p-3 bg-[#f8fafc] border border-[#e2e8f0] rounded-xl space-y-1.5 hover:border-[#cbd5e1] transition-colors"
+                      className="p-3 bg-[#fafafa] border border-[#e7e7e7] rounded-xl space-y-1.5 hover:border-[#d4d4d4] transition-colors"
                     >
-                      <div className="flex items-center justify-between text-[#64748b] text-[10px]">
-                        <span className="font-bold text-[#1e40af]">{log.changed_record_id || log.entity_id}</span>
+                      <div className="flex items-center justify-between text-[#727272] text-[10px]">
+                        <span className="font-bold text-[#414141]">{log.changed_record_id || log.entity_id}</span>
                         <span>{log.changed_at ? new Date(log.changed_at).toLocaleTimeString() : "Just now"}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="px-1.5 py-0.2 bg-amber-100 text-amber-800 rounded font-bold text-[9px]">
                           {log.change_type}
                         </span>
-                        <span className="text-[#0f172a] font-semibold truncate">
+                        <span className="text-[#171717] font-semibold truncate">
                           by {log.changed_by_name || log.changed_by || "System Admin"}
                         </span>
                       </div>
                       {log.new_value && (
-                        <div className="bg-white p-1.5 rounded border border-[#e2e8f0] text-[10px] text-[#475569] truncate">
+                        <div className="bg-white p-1.5 rounded border border-[#e7e7e7] text-[10px] text-[#535353] truncate">
                           {log.new_value}
                         </div>
                       )}
@@ -853,9 +838,9 @@ export const MenuManagerStudioTab: React.FC<MenuManagerStudioTabProps> = ({
           </div>
 
           {/* Bottom Security Badge */}
-          <div className="p-3 border-t border-[#e2e8f0] bg-[#f8fafc] flex items-center gap-1.5 text-[11px] text-[#1e40af] font-mono">
+          <div className="p-3 border-t border-[#e7e7e7] bg-[#fafafa] flex items-center gap-1.5 text-[11px] text-[#414141] font-mono">
             <ShieldCheck className="w-4 h-4 text-emerald-600" />
-            <span>Immutable Audit: smriti_audit_log</span>
+            <span>Immutable Audit: tileflow_audit_log</span>
           </div>
         </aside>
       </div>

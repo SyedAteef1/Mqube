@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, glob, re
 import psycopg2
 import pandas as pd
@@ -20,23 +7,23 @@ from openpyxl.utils import get_column_letter
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_ROUTING = r"F:\SMRITRretailNX\docs\architecture\DATABASE_ROUTING.md"
 
 def audit_business_endpoint_routing():
     print("============================================================")
-    print("SMRITI BACKEND ENDPOINT DATABASE ROUTING AUDIT")
+    print("TILEFLOW BACKEND ENDPOINT DATABASE ROUTING AUDIT")
     print("============================================================")
 
     # 1. Connect & Initial Row Counts
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
     # 2. Scan backend API endpoints in backend/app/api/
@@ -55,7 +42,7 @@ def audit_business_endpoint_routing():
             # Classify endpoint
             if any(kw in path for kw in ["menus", "ui", "system", "auth", "masters", "themes"]):
                 category = "CONTROL_PLANE"
-                target_db = "smritisys (Control Plane)"
+                target_db = "tileflowsys (Control Plane)"
                 dep_helper = "get_control_plane_db"
             elif any(kw in path for kw in ["sales", "purchase", "grn", "debit-notes", "suppliers", "inventory", "stock", "pos"]):
                 category = "COMPANY_BUSINESS"
@@ -141,10 +128,10 @@ def audit_business_endpoint_routing():
     wb.close()
 
     # 4. Database Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -156,8 +143,8 @@ def audit_business_endpoint_routing():
     print(f"  Control Plane Endpoints : {len(df_cp)}")
     print(f"  Company Business DB     : {len(df_cb)}")
     print(f"  Mixed Boundary          : {len(df_mixed)}")
-    print(f"  smriti_menus Count      : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count  : Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count      : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count  : Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO MUTATIONS VERIFIED")

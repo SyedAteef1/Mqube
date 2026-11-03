@@ -1,32 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.2
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 import { Landmark, TrendingUp, Users, ShieldAlert, FileText, Landmark as BankIcon } from "lucide-react";
-import { SmritiScrollArea } from "./SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.tsx";
 import { DrillableLink } from "./drilldown/DrillableLink.tsx";
 import { useDrillDown } from "./drilldown/drilldown_store.tsx";
 import { apiFetchV1 } from "../lib/apiFetchV1.ts";
@@ -165,7 +140,7 @@ export const BusinessLedgerTab: React.FC<BusinessLedgerTabProps> = ({ currentUse
         </div>
       </div>
 
-      <SmritiScrollArea className="flex-1 p-6">
+      <TileFlowScrollArea className="flex-1 p-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
           {/* Receivables Table List (Col Span 7) */}
           <div className="lg:col-span-7 space-y-4">
@@ -266,21 +241,21 @@ export const BusinessLedgerTab: React.FC<BusinessLedgerTabProps> = ({ currentUse
                   <div className="h-64 bg-slate-50/50 dark:bg-slate-900/30 p-4 rounded-xl border border-slate-200 dark:border-slate-800">
                     <ResponsiveContainer width="100%" height="100%">
                       <LineChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 5 }}>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" className="dark:stroke-slate-800" />
-                        <XAxis dataKey="month" stroke="#94a3b8" fontSize={11} tickLine={false} />
-                        <YAxis stroke="#94a3b8" fontSize={11} tickLine={false} />
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e7e7e7" className="dark:stroke-slate-800" />
+                        <XAxis dataKey="month" stroke="#171717" fontSize={11} tickLine={false} />
+                        <YAxis stroke="#171717" fontSize={11} tickLine={false} />
                         <Tooltip 
-                          contentStyle={{ backgroundColor: "#0f172a", borderColor: "#1e293b", borderRadius: 8 }}
-                          labelStyle={{ color: "#94a3b8", fontWeight: "bold", fontSize: 11 }}
+                          contentStyle={{ backgroundColor: "#171717", borderColor: "#1e293b", borderRadius: 8 }}
+                          labelStyle={{ color: "#171717", fontWeight: "bold", fontSize: 11 }}
                           itemStyle={{ color: "#ffffff", fontSize: 12 }}
                           formatter={(value) => [`₹${Number(value).toLocaleString("en-IN")}`, "Balance"]}
                         />
                         <Line 
                           type="monotone" 
                           dataKey="Balance" 
-                          stroke="#2563eb" 
+                          stroke="#606060" 
                           strokeWidth={2.5} 
-                          dot={{ r: 4, stroke: "#2563eb", strokeWidth: 1, fill: "#ffffff" }}
+                          dot={{ r: 4, stroke: "#606060", strokeWidth: 1, fill: "#ffffff" }}
                           activeDot={{ r: 6 }} 
                         />
                       </LineChart>
@@ -334,7 +309,7 @@ export const BusinessLedgerTab: React.FC<BusinessLedgerTabProps> = ({ currentUse
             )}
           </div>
         </div>
-      </SmritiScrollArea>
+      </TileFlowScrollArea>
     </div>
   );
 };

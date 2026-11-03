@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import re
 import json
 import uuid
@@ -539,7 +526,7 @@ async def company_setup(
     org_structure = payload.orgStructure
     users_payload = payload.users
 
-    company_name = business_info.name or "SMRITI Retail Company"
+    company_name = business_info.name or "TILEFLOW Retail Company"
     company_gstin = business_info.gstin or None
     branch_entries = org_structure.stores or []
 

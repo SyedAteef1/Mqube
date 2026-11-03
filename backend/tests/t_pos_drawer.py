@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -49,7 +35,7 @@ async def ensure_test_cashier(session: AsyncSession, cashier_id: str = "usr-cash
             id=cashier_id,
             uuid=str(uuid.uuid4()),
             username=f"cashier_{cashier_id}_{uuid.uuid4().hex[:4]}",
-            email=f"{cashier_id}_{uuid.uuid4().hex[:4]}@smritibooks.com",
+            email=f"{cashier_id}_{uuid.uuid4().hex[:4]}@tileflow.in",
             hashed_password="hashed_test_password",
             role=UserRole.CASHIER,
             is_active=True,
@@ -66,7 +52,7 @@ async def test_physical_cash_denominations_calculation_and_closing():
     Verify that physical denomination counts calculate exact closing balance,
     persist denominations JSONB on shift, and verify zero variance closing.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -149,7 +135,7 @@ async def test_mid_shift_cash_drop_to_bank_safe():
     Verify that mid-shift cash drop records ShiftCashTransaction and posts
     an automated double-entry GL voucher (Debit Bank 1020, Credit Cash 1010).
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -224,7 +210,7 @@ async def test_mid_shift_till_expense_payout():
     Verify that mid-shift petty expense records ShiftCashTransaction and posts
     an automated double-entry GL voucher (Debit Expenses 5000, Credit Cash 1010).
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -298,7 +284,7 @@ async def test_combined_cash_movements_and_closing_shortage_gl_balancing():
     Verify that net expected cash factors in Opening + Cash Sales - Drops - Expenses,
     and reconciles remaining physical count variance via GL shortage voucher (5070).
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -418,7 +404,7 @@ async def test_api_pos_cash_drop_and_till_expense_endpoints():
         id=user_id,
         uuid=str(uuid.uuid4()),
         username=f"manager_api_{unique_suffix}",
-        email=f"api_{unique_suffix}@smritibooks.com",
+        email=f"api_{unique_suffix}@tileflow.in",
         hashed_password="hashed_test_password",
         role=UserRole.MANAGER,
         company_id=company_id,
@@ -428,7 +414,7 @@ async def test_api_pos_cash_drop_and_till_expense_endpoints():
     )
 
 
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as s:
         s.add(mock_user)
         await s.commit()
@@ -606,7 +592,7 @@ async def test_cash_in_movement_end_to_end_and_gl_posting():
     posts a balanced GL journal voucher (Debit 1010, Credit 1020), and correctly factors
     into expected cash calculations upon closing.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -667,7 +653,7 @@ async def test_cash_drop_and_till_expense_insufficient_cash_rejection():
     Verify that cash drop and till expense payouts exceeding available cash in drawer
     are rejected with HTTP 400 Insufficient Cash.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -722,7 +708,7 @@ async def test_cash_movement_and_close_idempotency_deduplication():
     3. Till Expense with idempotency_key replayed returns existing transaction without duplicate GL posting.
     4. Shift Close with idempotency_key replayed returns already closed shift without 400 error.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -815,7 +801,7 @@ async def test_invalid_source_and_expense_account_rejection():
     2. Cash Drop with non-asset account -> HTTP 400
     3. Till Expense with non-expense account -> HTTP 400
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -882,7 +868,7 @@ async def test_api_pos_company_db_and_permissions_enforcement():
     branch_id = "BR-001"
     unique_suffix = uuid.uuid4().hex[:6]
 
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     tenant_ctx = TenantContext(company_id=company_id, branch_id=branch_id)
 
     async def get_test_db():
@@ -913,7 +899,7 @@ async def test_database_level_one_open_shift_unique_constraint_rejection():
     Verify that the PostgreSQL partial unique index `uq_shifts_active_per_register`
     strictly prevents two OPEN shifts from existing simultaneously on the same register.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -954,7 +940,7 @@ async def test_database_level_idempotency_unique_constraint_enforcement():
     Verify PostgreSQL unique index `uq_sct_idempotency` physically rejects
     duplicate raw insert attempts with identical (company_id, shift_id, idempotency_key).
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -995,7 +981,7 @@ async def test_pos_checkout_versus_closed_shift_concurrency_lock():
     """
     Verify POS checkout enforces row-level locking on shift and rejects sales on CLOSED shift.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -1045,7 +1031,7 @@ async def test_idempotency_key_collision_with_different_amount_raises_409():
     Verify that reusing an idempotency key with a conflicting payload/amount
     is rejected with HTTP 409 Conflict.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -1096,7 +1082,7 @@ async def test_cashier_closing_another_cashier_shift_forbidden_403():
     Verify that a cashier is strictly forbidden from closing another cashier's shift (HTTP 403),
     while a manager or administrator is permitted.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -1148,7 +1134,7 @@ async def test_cashier_account_override_forbidden_403():
     """
     Verify that standard cashiers are forbidden from specifying custom GL account overrides (HTTP 403).
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)

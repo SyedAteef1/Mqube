@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -39,7 +25,7 @@ async def test_grn_inward_batch_stock_creation():
     Test that creating a PurchaseReceipt (GRN) automatically inwards stock
     into ProductBatchStock with the exact batch number and expiry date.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     unique_suffix = uuid.uuid4().hex[:8]
     prod_id = f"prod-grn-{unique_suffix}"
@@ -129,7 +115,7 @@ async def test_sales_invoice_fefo_auto_deduction_and_cancellation():
     Test that creating a SalesInvoice automatically selects batches via FEFO,
     deducts quantity atomically from ProductBatchStock, and restores stock on invoice cancellation.
     """
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     unique_suffix = uuid.uuid4().hex[:8]
     prod_id = f"prod-test-{unique_suffix}"
@@ -251,7 +237,7 @@ async def test_retailer_credit_limit_enforcement():
     Test that B2B Sales Billing blocks invoices when a customer exceeds their Group Credit Limit.
     """
     from fastapi import HTTPException
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     unique_suffix = uuid.uuid4().hex[:6]
     group_id = f"cg-test-{unique_suffix}"
@@ -349,7 +335,7 @@ async def test_retailer_credit_limit_enforcement():
             with pytest.raises(HTTPException) as exc_info:
                 await sales_service.create_sales_invoice(inv_in)
             assert exc_info.value.status_code == 400
-            assert "SMRITI-CREDIT-001" in exc_info.value.detail
+            assert "TILEFLOW-CREDIT-001" in exc_info.value.detail
 
         finally:
             await session.execute(text("DELETE FROM customers WHERE id = :cid"), {"cid": cust_id})

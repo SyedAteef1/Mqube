@@ -1,31 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.112.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Product Bundling & Combo Pricing Engine
- *
- * Creates and prices product bundles with flexible combo rules:
- *   Bundle Types   : FIXED_BUNDLE (set SKUs, one price), COMBO_DISCOUNT
- *                    (% or flat off individual items), BUY_X_GET_Y (free qty)
- *   Price Calc     : bundlePrice = sum(componentMRP) × (1 − discountPct/100)
- *   Inventory      : Each component's qty is deducted on bundle sale
- *   Eligibility    : `checkEligibility()` validates that all components are
- *                    available in the requested quantity before pricing
- *   Cart Apply     : `applyBundleToCart()` reduces cart item prices and
- *                    returns a detailed line-item breakdown
- */
-
 export type BundleType   = "FIXED_BUNDLE" | "COMBO_DISCOUNT" | "BUY_X_GET_Y";
 export type BundleStatus = "ACTIVE" | "INACTIVE" | "EXPIRED";
 

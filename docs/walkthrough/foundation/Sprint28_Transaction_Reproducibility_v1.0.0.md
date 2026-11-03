@@ -2,11 +2,11 @@
 title: "Sprint 28: P1.5 Transaction Reproducibility & Historical Replay Engine (Governed Logic)"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
@@ -17,7 +17,7 @@ This sprint fulfills **Blueprint Section 5: P1 Governed Logic and Reproducibilit
 
 ## 2. Scope
 - **6-Part Governance Snapshot**: Immutable anchoring of version states for formulas, rules, policies, pricing, accounting rules, and document templates.
-- **Historical Replay Engine**: Recalculates historical invoices using snapshot-bound definitions from `smritisys` rather than mutable ambient configurations.
+- **Historical Replay Engine**: Recalculates historical invoices using snapshot-bound definitions from `tileflowsys` rather than mutable ambient configurations.
 - **Mathematical Zero Drift Guarantee**: Proof that publishing a newer rule version (e.g. 20% discount) leaves historical invoices created under Rule v1 (10% discount) 100% mathematically unchanged upon recalculation.
 - **Balanced Ledger Postings Replay**: Automatically constructs double-entry journal postings matching recalculated net and tax totals (Debit Cash/Debtors == Credit Revenue + Output GST).
 - **Automated Calculation Drift Detector**: Automated discrepancy comparator flagging any deviation between historical recorded totals and replayed values.

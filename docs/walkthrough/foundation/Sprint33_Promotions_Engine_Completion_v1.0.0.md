@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Sprint 33 — Section 7 Shared Business Engines: Promotions Engine Completion
@@ -17,7 +16,7 @@
 **Document ID:** `WGP-FOUNDATION-SPRINT33-V1.0.0`  
 **Version:** `1.0.0`  
 **Date:** `2026-08-25`  
-**Author:** Jawahar Ramkripal Mallah, Chief Systems Architect & Creator  
+**Author:** Syed Ateef, Chief Systems Architect & Creator  
 **Status:** `Completed / Verified`
 
 ---

@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-08-18
- * Modified     : 2026-08-18
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, beforeEach, vi } from "vitest";
 
 // Mock localStorage for node environment
@@ -23,16 +9,16 @@ const mockLocalStorage = {
   clear: () => { Object.keys(store).forEach(k => delete store[k]); },
 };
 
-describe("SMRITI Company Selector Hardening & Context Flow", () => {
+describe("MQube Company Selector Hardening & Context Flow", () => {
   beforeEach(() => {
     mockLocalStorage.clear();
     vi.restoreAllMocks();
   });
 
   it("should preserve original localStorage context when switch-context fails", async () => {
-    mockLocalStorage.setItem("smriti_jwt_token", "valid-initial-token");
-    mockLocalStorage.setItem("smriti_company_id", "COMP-001");
-    mockLocalStorage.setItem("smriti_company_code", "001");
+    mockLocalStorage.setItem("tileflow_jwt_token", "valid-initial-token");
+    mockLocalStorage.setItem("tileflow_company_id", "COMP-001");
+    mockLocalStorage.setItem("tileflow_company_code", "001");
 
     // Mock a failed switch context API response
     const mockApiFetchV1 = vi.fn().mockRejectedValue(new Error("Access denied: You are not assigned to the specified target company."));
@@ -49,14 +35,14 @@ describe("SMRITI Company Selector Hardening & Context Flow", () => {
 
     // Assert that error was captured and NO localStorage mutations occurred
     expect(switchError).toContain("Access denied");
-    expect(mockLocalStorage.getItem("smriti_jwt_token")).toBe("valid-initial-token");
-    expect(mockLocalStorage.getItem("smriti_company_id")).toBe("COMP-001");
-    expect(mockLocalStorage.getItem("smriti_company_code")).toBe("001");
+    expect(mockLocalStorage.getItem("tileflow_jwt_token")).toBe("valid-initial-token");
+    expect(mockLocalStorage.getItem("tileflow_company_id")).toBe("COMP-001");
+    expect(mockLocalStorage.getItem("tileflow_company_code")).toBe("001");
   });
 
   it("should commit new company context and JWT token only on successful switch-context", async () => {
-    mockLocalStorage.setItem("smriti_jwt_token", "old-token");
-    mockLocalStorage.setItem("smriti_company_id", "COMP-001");
+    mockLocalStorage.setItem("tileflow_jwt_token", "old-token");
+    mockLocalStorage.setItem("tileflow_company_id", "COMP-001");
 
     const mockApiFetchV1 = vi.fn().mockResolvedValue({
       access_token: "new-scoped-jwt-token-comp-002",
@@ -70,15 +56,15 @@ describe("SMRITI Company Selector Hardening & Context Flow", () => {
     });
 
     if (res && res.access_token) {
-      mockLocalStorage.setItem("smriti_jwt_token", res.access_token);
-      mockLocalStorage.setItem("smriti_company_id", "COMP-002");
-      mockLocalStorage.setItem("smriti_company_code", "002");
+      mockLocalStorage.setItem("tileflow_jwt_token", res.access_token);
+      mockLocalStorage.setItem("tileflow_company_id", "COMP-002");
+      mockLocalStorage.setItem("tileflow_company_code", "002");
     }
 
-    expect(mockLocalStorage.getItem("smriti_jwt_token")).toBe("new-scoped-jwt-token-comp-002");
-    expect(mockLocalStorage.getItem("smriti_company_id")).toBe("COMP-002");
-    expect(mockLocalStorage.getItem("smriti_company_code")).toBe("002");
-    expect(mockLocalStorage.getItem("smriti_database_name")).toBeNull();
+    expect(mockLocalStorage.getItem("tileflow_jwt_token")).toBe("new-scoped-jwt-token-comp-002");
+    expect(mockLocalStorage.getItem("tileflow_company_id")).toBe("COMP-002");
+    expect(mockLocalStorage.getItem("tileflow_company_code")).toBe("002");
+    expect(mockLocalStorage.getItem("tileflow_database_name")).toBeNull();
   });
 
   it("should resolve company branch strictly from /auth/tenants response without guessing MAIN", () => {

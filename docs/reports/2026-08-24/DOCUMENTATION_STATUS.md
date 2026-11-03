@@ -5,7 +5,7 @@
 | Module | Docs Present | Recommendation |
 | :--- | :---: | :--- |
 | Executive Hub | ✅ | Documentation is up to date |
-| SMRITI Gyan Kendra | ✅ | Write automated unit tests. |
+| TILEFLOW Gyan Kendra | ✅ | Write automated unit tests. |
 | Billing Desk | ✅ | Documentation is up to date |
 | Sales Studio | ✅ | Documentation is up to date |
 | Create Tax Invoice (B2B) | ✅ | Write automated unit tests. |
@@ -36,6 +36,6 @@
 | Terms & Conditions | ❌ | Write automated unit tests. |
 | Data Exchange Hub | ✅ | Documentation is up to date |
 | Company Setup Wizard | ✅ | Documentation is up to date |
-| About SMRITI | ✅ | Documentation is up to date |
+| About TILEFLOW | ✅ | Documentation is up to date |
 | Dev Intelligence Center | ✅ | Documentation is up to date |
 | Audit Logs | ✅ | Documentation is up to date |

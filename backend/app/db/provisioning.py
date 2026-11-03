@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import re
 import asyncio
 from typing import Optional, Dict, Any
@@ -21,12 +8,12 @@ import asyncpg
 def sanitize_company_db_name(company_code: str) -> str:
     """
     Sanitizes company code into a collision-safe immutable PostgreSQL database identifier.
-    Example: 'TATTLY' -> 'Smritibus_TATTLY', 'ABC-01' -> 'Smritibus_ABC01'
+    Example: 'TATTLY' -> 'TileFlowbus_TATTLY', 'ABC-01' -> 'TileFlowbus_ABC01'
     """
     clean_code = re.sub(r'[^A-Za-z0-9]', '', company_code).upper()
     if not clean_code:
         clean_code = "DEFAULT"
-    return f"Smritibus_{clean_code}"
+    return f"TileFlowbus_{clean_code}"
 
 
 async def provision_postgresql_database(

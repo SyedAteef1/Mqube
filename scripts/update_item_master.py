@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import uuid
 import asyncio
@@ -20,8 +7,8 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 
-DB_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys"
-EXCEL_PATH = r"F:\Smriti-Clients Data\Tattly Threads\Invoice\RIL_Dispatch_09-08-2026.xlsx"
+DB_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_PATH = r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\RIL_Dispatch_09-08-2026.xlsx"
 
 
 async def process_dispatch_and_item_master():

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.23.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import json
 import uuid
 import hashlib
@@ -25,7 +11,7 @@ from ..models.audit import ComplianceImmutableAuditLog
 
 class ComplianceAuditService:
     """
-    SMRITI Compliance & Immutable Regulatory Audit Service (Section 12).
+    TILEFLOW Compliance & Immutable Regulatory Audit Service (Section 12).
     Records cryptographic, tamper-evident audit trails with SHA-256 integrity verification.
     """
 

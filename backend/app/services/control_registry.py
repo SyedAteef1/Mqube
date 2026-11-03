@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import uuid, os
 from datetime import datetime, timezone
 from typing import Optional, Dict, Any
@@ -23,7 +10,7 @@ from ..db.provisioning import sanitize_company_db_name
 
 class ControlDatabaseRegistryService:
     """
-    Authoritative Database Registry Service in SmritiSys Control Plane.
+    Authoritative Database Registry Service in TileFlowSys Control Plane.
     Resolves company business database connection metadata, verifies permissions,
     and enforces immutable, collision-safe database connection mapping using canonical CompanyDatabaseRegistry.
     """
@@ -48,7 +35,7 @@ class ControlDatabaseRegistryService:
         company_code_or_id: str
     ) -> Optional[CompanyDatabaseRegistry]:
         """
-        Fetches active/ready database registration for a company code or id from SmritiSys.
+        Fetches active/ready database registration for a company code or id from TileFlowSys.
         """
         clean_code = company_code_or_id.strip()
         stmt = select(CompanyDatabaseRegistry).where(
@@ -73,7 +60,7 @@ class ControlDatabaseRegistryService:
         db_user: str = "postgres"
     ) -> CompanyDatabaseRegistry:
         """
-        Registers a newly provisioned company database in SmritiSys.
+        Registers a newly provisioned company database in TileFlowSys.
         Enforces collision-safe naming and uniqueness on canonical CompanyDatabaseRegistry.
         """
         clean_code = company_code.strip().upper()

@@ -1,32 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.35.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-SMRITI Reporting & BI Engine v1.0.0-GA — Master Integration & Certification Suite.
-Executes the 12-Stage Formal Architectural Certification:
-01. Registry <-> API Reconciliation
-02. Governed Metric <-> Pure Formula Reconciliation
-03. UI <-> API Payload Reconciliation
-04. Multi-Surface Horizontal Metric Reconciliation (Grid, BI, XLSX, CSV)
-05. Server-Side RBAC & Field Masking Penetration Tests
-06. Legacy Jump-Code Compatibility & Zero Domain Contamination
-07. 5-Level Universal Drill-Down & Cryptographic Audit Lineage
-08. Temporal Snapshot (data_as_of) Reproducibility
-09. 4-Tier Query Performance Router Certification
-10. Shoper 9 Operational Equivalence & Zero Formula Drift
-11. End-to-End Multi-Tenant Isolation & 5-Vector Envelope Certification
-12. Release Candidate Certification Gate
-"""
-
 from decimal import Decimal
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -78,7 +49,7 @@ async def mock_cert_admin():
 
 async def mock_cert_tenant():
     return TenantContext(
-        company_id="COMP-SMRITI-HQ",
+        company_id="COMP-TILEFLOW-HQ",
         branch_id="BR-FLAGSHIP-01",
     )
 
@@ -121,7 +92,7 @@ async def test_01_registry_api_reconciliation():
 # 02. Governed Metric <-> Pure Formula Reconciliation
 # ============================================================================
 def test_02_metric_formula_reconciliation():
-    """Verify pure mathematical formulas adhere to SMRITI accounting standards."""
+    """Verify pure mathematical formulas adhere to TILEFLOW accounting standards."""
     # Net Sales: Gross - Line Discounts - Header Concessions - Sales Returns + Taxable Adjustments
     net = calculate_net_sales(
         gross_sales=Decimal("168330.00"),
@@ -320,7 +291,7 @@ def test_08_temporal_snapshot_reproducibility():
     """Verify point-in-time inventory balances reproduce without genesis replay."""
     frozen_base = InventorySnapshotRecord(
         snapshot_id="SNAP-2026-07",
-        company_id="COMP-SMRITI-HQ",
+        company_id="COMP-TILEFLOW-HQ",
         branch_id="BR-FLAGSHIP-01",
         item_code="SKU-POLO-NAVY-M",
         period_end_date=date(2026, 7, 31),
@@ -444,7 +415,7 @@ async def test_11_tenant_isolation_and_envelope_certification():
         env = res.json()
 
         # 5-Vector Envelope Invariants
-        assert env["company_id"] == "COMP-SMRITI-HQ"
+        assert env["company_id"] == "COMP-TILEFLOW-HQ"
         assert env["branch_id"] == "BR-FLAGSHIP-01"
         assert env["report_id"] == "RPT-SAL-001"
         assert env["contract_version"] == "v1.0"
@@ -474,4 +445,4 @@ def test_12_release_candidate_readiness_gate():
         for measure in report.measures:
             assert measure in valid_metric_ids, f"Measure {measure} not found in Governed Metric Dictionary"
 
-    print("\n[CERTIFICATION PASSED] SMRITI Reporting & BI Engine v1.0.0-GA Release Candidate Certified!")
+    print("\n[CERTIFICATION PASSED] TILEFLOW Reporting & BI Engine v1.0.0-GA Release Candidate Certified!")

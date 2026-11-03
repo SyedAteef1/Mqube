@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.34.0
-Created      : 2026-08-27
-Modified     : 2026-08-27
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import json
 import pytest
@@ -28,7 +14,7 @@ def test_dry_run_historical_stock_reconciliation(tmp_path):
     output_file = str(tmp_path / "test_reconciliation.json")
 
     result = run_historical_stock_reconciliation(
-        database="smriti001",
+        database="tileflow001",
         mode="dry-run",
         output_file=output_file,
         company_id="COMP-001",

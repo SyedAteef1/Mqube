@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.72.8
-Created      : 2026-10-30
-Modified     : 2026-10-30
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 """Strict resolution of Item Master taxonomy values against control-plane lookups."""
 
 from fastapi import HTTPException
@@ -138,3 +124,24 @@ async def resolve_product_attribute_lookup_values(
             db, dimension, str(value)
         )
     return resolved_attributes
+
+
+async def ensure_lookup_value(db: AsyncSession, lookup_code: str, label: str, value: str) -> None:
+    """Adds a value to a Master Registry lookup, creating the lookup if needed."""
+    master_type = (
+        await db.execute(select(MasterType).where(MasterType.code == lookup_code))
+    ).scalar_one_or_none()
+    if master_type is None:
+        master_type = MasterType(code=lookup_code, label=label, field_schema={})
+        db.add(master_type)
+        await db.flush()
+
+    normalized = value.strip()
+    exists = await db.execute(
+        select(MasterValue.id).where(
+            MasterValue.master_type_id == master_type.id,
+            func.lower(func.trim(MasterValue.name)) == normalized.lower(),
+        )
+    )
+    if exists.first() is None:
+        db.add(MasterValue(master_type_id=master_type.id, code=normalized[:50], name=normalized))

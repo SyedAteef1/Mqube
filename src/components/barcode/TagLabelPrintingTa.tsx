@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.8.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: SMRITI Enterprise Barcode Label Studio & Printer Engine
- */
-
 import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Product } from "../../types.ts";
 import { apiFetchV1 } from "../../lib/apiFetch.ts";
@@ -1035,12 +1020,12 @@ export const TagLabelPrintingTab: React.FC<TagLabelPrintingTabProps> = ({
         Thermal Label Printable Container (Visible ONLY during window.print())
         Exact 50mm x 25mm thermal roll stickers
       */}
-      <div id="smriti-barcode-printable-area" className="hidden print:block bg-white text-black font-sans">
+      <div id="tileflow-barcode-printable-area" className="hidden print:block bg-white text-black font-sans">
         <style dangerouslySetInnerHTML={{ __html: `
           @media print {
             body * { visibility: hidden !important; }
-            #smriti-barcode-printable-area, #smriti-barcode-printable-area * { visibility: visible !important; }
-            #smriti-barcode-printable-area {
+            #tileflow-barcode-printable-area, #tileflow-barcode-printable-area * { visibility: visible !important; }
+            #tileflow-barcode-printable-area {
               display: block !important;
               position: fixed !important;
               left: 0 !important;
@@ -1077,7 +1062,7 @@ export const TagLabelPrintingTab: React.FC<TagLabelPrintingTabProps> = ({
             <div key={`${item.id}-copy-${copyIdx}`} className="thermal-label-page text-black bg-white">
               <div className="flex justify-between items-center border-b border-black/30 pb-0.5 leading-none">
                 <span className="font-extrabold text-[9px] uppercase tracking-wide truncate max-w-[28mm]">
-                  {item.brand || "SMRITI RETAIL"}
+                  {item.brand || "MQube RETAIL"}
                 </span>
                 <span className="font-mono font-bold text-[10px]">
                   ₹{item.sellingPrice || item.mrp}
@@ -2413,7 +2398,7 @@ export const TagLabelPrintingTab: React.FC<TagLabelPrintingTabProps> = ({
                     />
                   </div>
                   <div className="flex justify-between items-center text-[7px] font-mono leading-none border-t border-black/30 pt-0.5">
-                    <span>SMRITI 9 CALIBRATION</span>
+                    <span>MQube 9 CALIBRATION</span>
                     <span>300 DPI</span>
                   </div>
                 </div>
@@ -2621,7 +2606,7 @@ export const TagLabelPrintingTab: React.FC<TagLabelPrintingTabProps> = ({
                     <div className="w-[50mm] h-[25mm] bg-white text-black p-1.5 rounded shadow-md border border-gray-300 flex flex-col justify-between select-none">
                       <div className="flex justify-between items-center border-b border-black/30 pb-0.5 leading-none">
                         <span className="font-extrabold text-[8.5px] uppercase tracking-wide truncate max-w-[28mm]">
-                          {activePrintItems[0].brand || "SMRITI RETAIL"}
+                          {activePrintItems[0].brand || "MQube RETAIL"}
                         </span>
                         <span className="font-mono font-bold text-[9.5px]">
                           ₹{activePrintItems[0].sellingPrice || activePrintItems[0].mrp}

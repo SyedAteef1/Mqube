@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.42.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -84,7 +70,7 @@ async def get_theme_design_tokens(
     current_user: User = Depends(get_current_user),
 ):
     """
-    Resolve CSS design tokens (colors, typography, radii, shadows) from smritisys control plane.
+    Resolve CSS design tokens (colors, typography, radii, shadows) from tileflowsys control plane.
     """
     return await WorkspaceUIRegistryService.get_design_tokens(
         db=db,

@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.12.0
   Created      : 2026-08-22
   Modified     : 2026-08-22
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Removal & Decommissioning of "Common Fields Setup" Module
@@ -18,7 +17,7 @@
 Permanently remove the "Common Fields Setup" module and all associated tab references, navigation items, state bindings, and shortcuts from the **Item Master Management System** workspace.
 
 ## 2. Scope
-- Deletion of `SmritiCommonFieldsSetup.tsx` and `tabs/CommonFieldsTab.tsx`.
+- Deletion of `TileFlowCommonFieldsSetup.tsx` and `tabs/CommonFieldsTab.tsx`.
 - Refactoring `ItemMasterWs.tsx` navigation sidebar to remove the Common Fields tab.
 - Removal of `CommonFieldsData` interface and props from `ItemDetGrid.tsx` and `ItemMasterEntryVie.tsx`.
 - Updating keyboard shortcut mappings in `KeyboardKeysDlg.tsx` and global shortcut event handlers.
@@ -37,7 +36,7 @@ None.
 - `CHANGELOG.md`: Logged release notes for version `6.12.0`.
 
 ## 5. Files Deleted
-- `src/components/itemMaster/SmritiCommonFieldsSetup.tsx`
+- `src/components/itemMaster/TileFlowCommonFieldsSetup.tsx`
 - `src/components/itemMaster/tabs/CommonFieldsTab.tsx`
 
 ## 6. Architecture Decisions
@@ -45,7 +44,7 @@ None.
 - **Clean Dependency Graph**: Eliminates dead exports, unused component files, and unnecessary session storage hooks.
 
 ## 7. Implementation Summary
-1. Removed `SmritiCommonFieldsSetup.tsx` and `CommonFieldsTab.tsx` from the codebase.
+1. Removed `TileFlowCommonFieldsSetup.tsx` and `CommonFieldsTab.tsx` from the codebase.
 2. Updated `ItemMasterWs.tsx` to streamline the left sidebar navigation into:
    - `Item Details`
    - `View Configuration`

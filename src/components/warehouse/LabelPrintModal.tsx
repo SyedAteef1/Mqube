@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.116.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -68,7 +67,7 @@ export const LabelPrintModal: React.FC<LabelPrintModalProps> = ({ isOpen, onClos
 
   const handleStart = () => {
     if (!selected) return;
-    try { update(LabelPrintEngine.startPrint(selected, "OP-001")); onNotification?.("Printing", `${selected.jobNo} â€” ${selected.totalLabels} labels`, "info"); }
+    try { update(LabelPrintEngine.startPrint(selected, "OP-001")); onNotification?.("Printing", `${selected.jobNo} — ${selected.totalLabels} labels`, "info"); }
     catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
@@ -89,7 +88,7 @@ export const LabelPrintModal: React.FC<LabelPrintModalProps> = ({ isOpen, onClos
     const rp = LabelPrintEngine.reprint(selected, DEFAULT_TEMPLATE, "MGR-001");
     setJobs((prev) => [rp, ...prev]);
     setSelectedId(rp.jobId);
-    onNotification?.("Reprint Queued", `${rp.jobNo} â€” ${rp.totalLabels} labels`, "info");
+    onNotification?.("Reprint Queued", `${rp.jobNo} — ${rp.totalLabels} labels`, "info");
   };
 
   return (
@@ -158,14 +157,14 @@ export const LabelPrintModal: React.FC<LabelPrintModalProps> = ({ isOpen, onClos
                 <div>
                   <p className="text-lg font-bold font-mono text-slate-100">{selected.jobNo}</p>
                   <p className="text-xs text-slate-400">{selected.branchCode} Â· {selected.templateName} Â· {FORMAT_STYLE[DEFAULT_TEMPLATE.barcodeFormat] ? <span className={FORMAT_STYLE[DEFAULT_TEMPLATE.barcodeFormat]}>{DEFAULT_TEMPLATE.barcodeFormat}</span> : DEFAULT_TEMPLATE.barcodeFormat}</p>
-                  {selected.isReprint && <p className="text-[10px] text-amber-400">â†© Reprint of {selected.originalJobId}</p>}
+                  {selected.isReprint && <p className="text-[10px] text-amber-400">â† Reprint of {selected.originalJobId}</p>}
                 </div>
                 <div className="flex items-center gap-2 flex-wrap">
                   <span className={`text-xs font-bold px-2 py-1 rounded-full border ${STATUS_STYLE[selected.status]}`}>{selected.status}</span>
                   {selected.status === "QUEUED"   && <button onClick={handleStart}    className="px-3 py-1.5 text-xs font-bold text-white bg-sky-700 hover:bg-sky-600 rounded-xl">Start Print</button>}
                   {selected.status === "PRINTING" && <button onClick={handleComplete} className="px-3 py-1.5 text-xs font-bold text-white bg-emerald-700 hover:bg-emerald-600 rounded-xl">Mark Printed</button>}
                   {selected.status === "PRINTING" && <button onClick={handleFail}     className="px-3 py-1.5 text-xs font-bold text-rose-300 border border-rose-500/30 rounded-xl">Fail</button>}
-                  {selected.status === "PRINTED"  && <button onClick={handleReprint}  className="px-3 py-1.5 text-xs font-bold text-teal-300 border border-teal-500/30 hover:bg-teal-950/30 rounded-xl">â†© Reprint</button>}
+                  {selected.status === "PRINTED"  && <button onClick={handleReprint}  className="px-3 py-1.5 text-xs font-bold text-teal-300 border border-teal-500/30 hover:bg-teal-950/30 rounded-xl">â† Reprint</button>}
                 </div>
               </div>
 
@@ -175,7 +174,7 @@ export const LabelPrintModal: React.FC<LabelPrintModalProps> = ({ isOpen, onClos
                   { label: "SKUs",         value: selected.items.length,    color: "text-slate-300" },
                   { label: "Total Labels", value: selected.totalLabels,     color: "text-teal-400 font-black" },
                   { label: "Status",       value: selected.status,          color: STATUS_STYLE[selected.status].split(" ")[0] },
-                  { label: "Printed At",   value: selected.printedAt ? new Date(selected.printedAt).toLocaleTimeString("en-IN") : "â€”", color: "text-slate-400" },
+                  { label: "Printed At",   value: selected.printedAt ? new Date(selected.printedAt).toLocaleTimeString("en-IN") : "—", color: "text-slate-400" },
                 ].map((m) => (
                   <div key={m.label} className="bg-slate-800/30 border border-slate-700/60 rounded-xl p-3 text-center">
                     <div className={`font-bold font-mono text-sm ${m.color}`}>{m.value}</div>
@@ -200,7 +199,7 @@ export const LabelPrintModal: React.FC<LabelPrintModalProps> = ({ isOpen, onClos
                         <tr key={i.itemId}>
                           <td className="py-2 px-3 font-sans"><p className="text-xs text-slate-200">{i.productName}</p><p className="text-[10px] text-slate-500">{i.sku}{i.hsnCode ? ` Â· HSN ${i.hsnCode}` : ""}</p></td>
                           <td className="py-2 px-3 text-[10px] text-slate-400">{i.barcode}</td>
-                          <td className="py-2 px-3 text-right text-slate-300">â‚¹{i.mrp}</td>
+                          <td className="py-2 px-3 text-right text-slate-300">₹{i.mrp}</td>
                           <td className="py-2 px-3 text-right text-slate-400">{i.qty}</td>
                           <td className="py-2 px-3 text-right text-slate-400">{i.copies}</td>
                           <td className="py-2 px-3 text-right text-teal-400 font-bold">{i.qty * i.copies}</td>

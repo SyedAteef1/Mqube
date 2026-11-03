@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import pandas as pd
 import psycopg2
@@ -20,8 +7,8 @@ target_sis = ['TW07', 'TUK5', 'TYAC']
 known_files = [
     r"F:\SMRITRretailNX\TT\RIL FINAL LIST.xlsx",
     r"F:\SMRITRretailNX\TT\RIL_Dispatch_09-08-2026-2.xlsx",
-    r"F:\Smriti-Clients Data\Tattly Threads\Invoice\RIL FINAL LIST.xlsx",
-    r"F:\Smriti-Clients Data\Tattly Threads\Invoice\RIL_Dispatch_09-08-2026-2.xlsx"
+    r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\RIL FINAL LIST.xlsx",
+    r"F:\TileFlow-Clients Data\Tattly Threads\Invoice\RIL_Dispatch_09-08-2026-2.xlsx"
 ]
 
 print("=== CHECKING KNOWN EXCEL FILES ===")
@@ -43,18 +30,18 @@ for kf in known_files:
     else:
         print(f"File NOT found: {kf}")
 
-print("\n=== CHECKING SMRITI001 DATABASE FOR EXISTING PO AND ADDRESSES ===")
-conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+print("\n=== CHECKING TILEFLOW001 DATABASE FOR EXISTING PO AND ADDRESSES ===")
+conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
 cur = conn.cursor()
 
-# Check all invoices in smriti001
+# Check all invoices in tileflow001
 cur.execute("""
     SELECT invoice_no, sis_code, po_reference, customer_name, customer_gstin, pos_state, billing_address, shipping_address, site_name
     FROM sales_invoices
     ORDER BY invoice_no;
 """)
 all_invs = cur.fetchall()
-print(f"Total invoices in smriti001: {len(all_invs)}")
+print(f"Total invoices in tileflow001: {len(all_invs)}")
 
 for s in target_sis:
     found = [r for r in all_invs if s in str(r[1]) or s in str(r[7]) or s in str(r[8])]

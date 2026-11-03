@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
-# Walkthrough: SMRITI Master Framework — Phase F.1 (Stores & Warehouses Postgres Migration)
+# Walkthrough: TILEFLOW Master Framework — Phase F.1 (Stores & Warehouses Postgres Migration)
 
 ## 1. Purpose
 Migrate the `stores` and `warehouses` master entities from the in-memory arrays in the Express/local file-based state (`src/state/store.ts`) to proper, standalone relational database tables in PostgreSQL via Alembic.
@@ -38,7 +37,7 @@ Migrate the `stores` and `warehouses` master entities from the in-memory arrays 
 Keep `stores` and `warehouses` separated into dedicated database tables referencing the `branches` and `companies` tables, adhering to relational normalization instead of nesting them in generic unstructured lookup tables. Use Postgres SQL routing in Express to strangel-fig these Tier-2 masters.
 
 ## 6. Design Rationale
-Moving configuration files and organization topology nodes to Postgres prevents issues like state loss or synchronization drift across distributed servers and nodes, aligning with the SMRITI System-of-Record Policy.
+Moving configuration files and organization topology nodes to Postgres prevents issues like state loss or synchronization drift across distributed servers and nodes, aligning with the TILEFLOW System-of-Record Policy.
 
 ## 7. Implementation Summary
 - **SQLAlchemy Models:** Created `Store` and `Warehouse` models subclassing `BaseEntity` with `code`, `name`, `address` and model-specific properties (e.g. `store_type`, `is_transit`).

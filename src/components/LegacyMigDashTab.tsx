@@ -1,25 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 1.0.0
- * Created      : 2026-08-24
- * Modified     : 2026-08-24
- * Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- *
- * Sprint 4 — Legacy Migration Dashboard
- *
- * Calls: GET /api/v1/legacy-menu-map/stats
- *        GET /api/v1/legacy-menu-map/?status=PENDING (list view)
- *        GET /api/v1/legacy-menu-map/by-workspace/{id} (workspace drill)
- *
- * Auth: MANAGER role required (enforced by backend).
- */
-
 import React, { useState, useEffect, useCallback } from "react";
 import { apiFetchV1 } from "../lib/apiFetchV1.ts";
 import type { LucideIcon } from "lucide-react";
@@ -66,9 +44,9 @@ interface MigEntry {
   sh9_menu_opt: number;
   sh9_mnu_cap: string | null;
   sh9_exe_name: string | null;
-  smriti_menu_id: string | null;
-  smriti_workspace: string | null;
-  smriti_action: string | null;
+  tileflow_menu_id: string | null;
+  tileflow_workspace: string | null;
+  tileflow_action: string | null;
   migration_status: string;
 }
 
@@ -84,10 +62,10 @@ interface PagedList {
 
 const STATUS_META: Record<string, { label: string; color: string; bg: string; border: string; Icon: LucideIcon }> = {
   MAPPED:     { label: "Mapped",     color: "#22c55e", bg: "rgba(34,197,94,0.12)",  border: "rgba(34,197,94,0.30)",  Icon: CheckCircle2 },
-  MERGED:     { label: "Merged",     color: "#3b82f6", bg: "rgba(59,130,246,0.12)", border: "rgba(59,130,246,0.30)", Icon: Merge },
-  REPLACED:   { label: "Replaced",   color: "#8b5cf6", bg: "rgba(139,92,246,0.12)", border: "rgba(139,92,246,0.30)", Icon: Replace },
+  MERGED:     { label: "Merged",     color: "#171717", bg: "rgba(59,130,246,0.12)", border: "rgba(59,130,246,0.30)", Icon: Merge },
+  REPLACED:   { label: "Replaced",   color: "#171717", bg: "rgba(139,92,246,0.12)", border: "rgba(139,92,246,0.30)", Icon: Replace },
   DEPRECATED: { label: "Deprecated", color: "#f59e0b", bg: "rgba(245,158,11,0.12)", border: "rgba(245,158,11,0.30)", Icon: Archive },
-  NOT_APPLIC: { label: "N/A",        color: "#6b7280", bg: "rgba(107,114,128,0.10)",border: "rgba(107,114,128,0.25)",Icon: Minus },
+  NOT_APPLIC: { label: "N/A",        color: "#171717", bg: "rgba(107,114,128,0.10)",border: "rgba(107,114,128,0.25)",Icon: Minus },
   PENDING:    { label: "Pending",    color: "#ef4444", bg: "rgba(239,68,68,0.12)",  border: "rgba(239,68,68,0.30)",  Icon: Clock },
 };
 
@@ -192,12 +170,12 @@ function EntryRow({ entry }: { entry: MigEntry }) {
       <span style={{ color: "rgba(255,255,255,0.4)", fontFamily: "JetBrains Mono, monospace", fontSize: 11 }}>
         {entry.sh9_menu_opt}
       </span>
-      <span style={{ fontWeight: 500, color: "#e5e7eb" }}>{entry.sh9_mnu_cap ?? "—"}</span>
+      <span style={{ fontWeight: 500, color: "#e7e7e7" }}>{entry.sh9_mnu_cap ?? "—"}</span>
       <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 11, fontFamily: "JetBrains Mono, monospace" }}>
         {entry.sh9_exe_name ?? "—"}
       </span>
       <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>
-        {entry.smriti_workspace ?? <em style={{ color: "rgba(255,255,255,0.25)" }}>unassigned</em>}
+        {entry.tileflow_workspace ?? <em style={{ color: "rgba(255,255,255,0.25)" }}>unassigned</em>}
       </span>
       <span style={{
         display: "inline-flex", alignItems: "center", gap: 5,
@@ -339,8 +317,8 @@ export const LegacyMigDashTab: React.FC = () => {
             <GitBranch size={18} color="#fff" />
           </div>
           <div>
-            <h2 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: "#f1f5f9", fontFamily: "Space Grotesk, sans-serif" }}>
-              Shoper9 → SMRITI Migration
+            <h2 style={{ margin: 0, fontSize: 17, fontWeight: 700, color: "#f4f4f4", fontFamily: "Space Grotesk, sans-serif" }}>
+              Shoper9 → MQube Migration
             </h2>
             <p style={{ margin: 0, fontSize: 11, color: "rgba(255,255,255,0.4)" }}>
               Legacy vaMenu lineage registry · {stats.total} entries · Sprint 1–3
@@ -433,8 +411,8 @@ export const LegacyMigDashTab: React.FC = () => {
                 borderRadius: 12, padding: "12px 14px",
               }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 6 }}>
-                  <Database size={13} style={{ color: "#6366f1" }} />
-                  <span style={{ color: "#6366f1", fontSize: 10, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+                  <Database size={13} style={{ color: "#171717" }} />
+                  <span style={{ color: "#171717", fontSize: 10, fontWeight: 600, letterSpacing: "0.05em", textTransform: "uppercase" }}>
                     Source
                   </span>
                 </div>
@@ -455,9 +433,9 @@ export const LegacyMigDashTab: React.FC = () => {
               borderRadius: 14, padding: "18px 20px", marginBottom: 20,
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-                <Layers size={14} style={{ color: "#6366f1" }} />
+                <Layers size={14} style={{ color: "#171717" }} />
                 <span style={{ color: "rgba(255,255,255,0.7)", fontSize: 12, fontWeight: 600 }}>
-                  SMRITI Module Coverage (MAPPED entries)
+                  MQube Module Coverage (MAPPED entries)
                 </span>
               </div>
               <ModuleBar modules={stats.modules} />
@@ -470,13 +448,13 @@ export const LegacyMigDashTab: React.FC = () => {
             borderRadius: 12, padding: "12px 16px",
             display: "flex", gap: 10, alignItems: "flex-start",
           }}>
-            <Info size={14} style={{ color: "#06b6d4", flexShrink: 0, marginTop: 1 }} />
+            <Info size={14} style={{ color: "#171717", flexShrink: 0, marginTop: 1 }} />
             <div>
               <p style={{ margin: 0, color: "rgba(255,255,255,0.6)", fontSize: 11, lineHeight: 1.6 }}>
-                <strong style={{ color: "#06b6d4" }}>8 pending entries</strong> require multi-company/replication assessment
+                <strong style={{ color: "#171717" }}>8 pending entries</strong> require multi-company/replication assessment
                 (AST Replication, Secondary DB imports, Stock across Chain, HO Chain config).
                 These are non-transactional and do not block Sprint 4 functional parity.
-                The 9 SMRITI-new capabilities (Wiki, Loyalty, PSV, UFE, Formulas, Terms Engine,
+                The 9 TILEFLOW-new capabilities (Wiki, Loyalty, PSV, UFE, Formulas, Terms Engine,
                 Approval Matrix, Dev Tracker, About) have no Shoper predecessor and require no migration.
               </p>
             </div>
@@ -508,7 +486,7 @@ export const LegacyMigDashTab: React.FC = () => {
                 placeholder="Search caption or group…"
                 style={{
                   background: "none", border: "none", outline: "none",
-                  color: "#e5e7eb", fontSize: 12, width: "100%",
+                  color: "#e7e7e7", fontSize: 12, width: "100%",
                 }}
               />
               {search && (
@@ -557,7 +535,7 @@ export const LegacyMigDashTab: React.FC = () => {
           }}>
             <span>MnuNo</span><span>MenuOpt</span>
             <span>Caption</span><span>ExeName</span>
-            <span>SMRITI Workspace</span><span>Status</span>
+            <span>MQube Workspace</span><span>Status</span>
           </div>
 
           {/* Rows */}

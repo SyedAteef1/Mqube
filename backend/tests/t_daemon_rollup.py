@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.24.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 import uuid
 import pytest
@@ -37,8 +23,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": UserRole.SYSADMIN.value,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -51,7 +37,7 @@ async def test_analytics_daemon_advisory_lock_concurrency_guard():
     Verifies that PostgreSQL advisory locks prevent concurrent daemon executions
     across multiple worker replicas on the same tenant database.
     """
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session_a:
         # 1. Session A acquires lock
         locked_a = await AnalyticsDaemonService.try_acquire_advisory_lock(session_a)
@@ -82,7 +68,7 @@ async def test_analytics_daemon_tenant_daily_rollup_execution():
     yesterday = today - timedelta(days=1)
 
     res = await AnalyticsDaemonService.run_tenant_rollup_cycle(
-        db_name="smriti001",
+        db_name="tileflow001",
         company_id="COMP-001",
         target_dates=[yesterday, today]
     )
@@ -92,7 +78,7 @@ async def test_analytics_daemon_tenant_daily_rollup_execution():
     assert len(res["processed_facts"]) == 2
 
     # Verify fact stored in PostgreSQL table
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as db:
         stmt = select(AnalyticsDailySalesFact).where(
             AnalyticsDailySalesFact.company_id == "COMP-001",
@@ -110,8 +96,8 @@ async def test_analytics_daemon_multi_tenant_cycle():
     """
     res = await AnalyticsDaemonService.run_multi_tenant_analytics_daemon_cycle(
         tenants=[
-            {"db_name": "smriti001", "company_id": "COMP-001"},
-            {"db_name": "smriti002", "company_id": "COMP-002"}
+            {"db_name": "tileflow001", "company_id": "COMP-001"},
+            {"db_name": "tileflow002", "company_id": "COMP-002"}
         ]
     )
 

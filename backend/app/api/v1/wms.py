@@ -1,32 +1,23 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from typing import List, Optional, Any
 from decimal import Decimal
 from fastapi import APIRouter, Depends, HTTPException, Query, Header
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import func
+from sqlalchemy.exc import IntegrityError
 from sqlalchemy.future import select
 from sqlalchemy.orm import selectinload
 
 from ...api.deps import (
+    get_db,
     get_company_db, get_tenant_context, TenantContext,
     require_role, require_permission
 )
 from ...models.auth import UserRole
-from ...models.inventory import Warehouse, ProductBatchStock, StockTransfer, StockTransferItem, StockAudit, StockAuditItem
+from ...models.inventory import Product, TileGroup, Warehouse, ProductBatchStock, StockTransfer, StockTransferItem, StockAudit, StockAuditItem
 from ...schemas.wms import (
+    TileGroupCreate,
+    TileGroupSummary,
     WarehouseCreate, WarehouseUpdate, WarehouseResponse,
     ProductBatchStockResponse, BatchAllocationRequest, BatchAllocationItem,
     StockTransferCreate, StockTransferResponse, StockTransferReceiptRequest,
@@ -34,6 +25,7 @@ from ...schemas.wms import (
     StockAuditCountItemRequest, StockAuditBulkCountRequest, StockAuditBarcodeScanRequest
 )
 from ...services.inventory_wms import InventoryWmsService
+from ...services.item_taxonomy import ensure_lookup_value
 from ...services.eway_bill_service import EWayBillService
 from ...services.stock_audit_service import StockAuditService
 
@@ -41,6 +33,73 @@ router = APIRouter()
 
 
 # ─────────────────────────── Warehouse Masters ───────────────────────────
+
+@router.get("/groups", response_model=List[TileGroupSummary])
+async def list_tile_groups(
+    tenant_ctx: TenantContext = Depends(get_tenant_context),
+    db: AsyncSession = Depends(get_company_db),
+):
+    """Lists each stock group with its product count and on-hand boxes and Sq.Ft."""
+    groups = (await db.execute(
+        select(TileGroup).where(
+            TileGroup.company_id == tenant_ctx.company_id,
+            TileGroup.is_deleted == False,
+        )
+    )).scalars().all()
+
+    totals = (await db.execute(
+        select(
+            Product.category,
+            func.count(func.distinct(Product.id)),
+            func.coalesce(func.sum(ProductBatchStock.quantity), 0),
+            func.coalesce(func.sum(ProductBatchStock.quantity * func.coalesce(Product.sqft_per_box, 0)), 0),
+        )
+        .outerjoin(
+            ProductBatchStock,
+            (ProductBatchStock.product_id == Product.id) & (ProductBatchStock.is_deleted == False),
+        )
+        .where(Product.company_id == tenant_ctx.company_id, Product.is_deleted == False)
+        .group_by(Product.category)
+    )).all()
+
+    summary = {
+        category.lower(): TileGroupSummary(name=category, products=products, boxes=boxes, sqft=sqft)
+        for category, products, boxes, sqft in totals
+    }
+    for group in groups:
+        row = summary.setdefault(group.name.lower(), TileGroupSummary(name=group.name))
+        row.description = group.description
+    return sorted(summary.values(), key=lambda row: row.name.lower())
+
+
+@router.post("/groups", response_model=TileGroupSummary, status_code=201)
+async def create_tile_group(
+    req: TileGroupCreate,
+    tenant_ctx: TenantContext = Depends(get_tenant_context),
+    db: AsyncSession = Depends(get_company_db),
+    control_db: AsyncSession = Depends(get_db),
+):
+    name = req.name.strip()
+    if not name:
+        raise HTTPException(status_code=422, detail="Group name is required.")
+    db.add(TileGroup(
+        id=f"grp-{uuid.uuid4().hex[:12]}",
+        uuid=str(uuid.uuid4()),
+        company_id=tenant_ctx.company_id,
+        branch_id=tenant_ctx.branch_id,
+        name=name,
+        description=req.description,
+    ))
+    try:
+        await db.commit()
+    except IntegrityError:
+        await db.rollback()
+        raise HTTPException(status_code=409, detail=f"Group '{name}' already exists.")
+    # A group is a product category, so products must be able to select it.
+    await ensure_lookup_value(control_db, "category", "Category", name)
+    await control_db.commit()
+    return TileGroupSummary(name=name, description=req.description)
+
 
 @router.get("/warehouses", response_model=List[WarehouseResponse])
 async def list_warehouses(
@@ -83,6 +142,7 @@ async def create_warehouse(
         name=req.name,
         is_transit=req.is_transit,
         is_central_godown=req.is_central_godown,
+        location_type=req.location_type,
         address=req.address,
         city=req.city,
         state=req.state,

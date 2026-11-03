@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.72.0
-Created      : 2026-08-28
-Modified     : 2026-08-28
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 import csv
 import hashlib
@@ -90,7 +76,7 @@ class EmailDispatcher:
         
         # Simulate / Prepare SMTP Multipart delivery payload
         attachment_name = f"{report_code}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.{export_format.lower()}"
-        subject = f"[SMRITI REPORT] {report_code} - {schedule_name}"
+        subject = f"[TILEFLOW REPORT] {report_code} - {schedule_name}"
         
         # Artificial async I/O simulation
         await asyncio.sleep(0.01)
@@ -105,7 +91,7 @@ class EmailDispatcher:
             "size_bytes": len(payload_bytes),
             "latency_ms": max(latency_ms, 1),
             "envelope_hash": envelope_hash,
-            "message_id": f"msg-{uuid.uuid4().hex[:12]}@smritibooks.com",
+            "message_id": f"msg-{uuid.uuid4().hex[:12]}@tileflow.in",
         }
 
 
@@ -125,7 +111,7 @@ class WhatsAppDispatcher:
         
         # Formulate statutory executive summary text
         summary_msg = (
-            f"📊 *SMRITI Retail OS — Scheduled Report*\n"
+            f"📊 *MQube — Scheduled Report*\n"
             f"• *Report:* {report_code} ({schedule_name})\n"
             f"• *Format:* {export_format}\n"
             f"• *Size:* {len(payload_bytes):,} bytes\n"
@@ -299,7 +285,7 @@ class ReportDistributionEngine:
             }, indent=2).encode("utf-8")
         elif export_format == "PDF":
             # PDF byte stream simulation with standard PDF header
-            pdf_content = f"%PDF-1.4\n1 0 obj\n<< /Title ({report_code}) /Producer (SMRITI Engine) >>\nendobj\n"
+            pdf_content = f"%PDF-1.4\n1 0 obj\n<< /Title ({report_code}) /Producer (TILEFLOW Engine) >>\nendobj\n"
             pdf_content += f"2 0 obj\n<< /Length {len(json.dumps(sample_dataset))} >>\nstream\n{json.dumps(sample_dataset)}\nendstream\nendobj\nxref\n0 3\ntrailer\n<< /Root 1 0 R >>\n%%EOF"
             return pdf_content.encode("latin-1")
         else: # Default XLSX / Excel binary

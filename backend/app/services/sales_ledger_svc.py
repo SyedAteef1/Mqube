@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import datetime, timezone, date
@@ -33,7 +19,7 @@ def _quantize_currency(val: float | Decimal) -> Decimal:
 
 class UnifiedSalesLedgerService:
     """
-    Authoritative Sales Invoicing & Operational Stock Ledger Service for SMRITI Tenant Data Plane.
+    Authoritative Sales Invoicing & Operational Stock Ledger Service for TILEFLOW Tenant Data Plane.
     Guarantees atomic invoice generation, line-item tax snapshotting, deterministic StockMovement posting,
     and audited reversal idempotency.
     """

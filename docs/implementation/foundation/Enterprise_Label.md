@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-13
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Retail OS Implementation Plan: Enterprise Label Printing Framework - ELPF (v3.16.0)
+# TILEFLOW Retail OS Implementation Plan: Enterprise Label Printing Framework - ELPF (v3.16.0)
 
 ## 1. Objective
 Build a centralized, metadata-driven Label Printing Framework (ELPF) that enables barcode and price labels to be printed from the Item Master catalog. 

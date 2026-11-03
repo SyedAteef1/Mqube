@@ -1,19 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : ? SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    : ? tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
   Classification: 179 NON-COMPANYDB PRESERVED & RESIDUAL TABLES CLASSIFICATION REPORT
 -->
 
-# SMRITI RETAIL OS ? 179 NON-COMPANYDB PRESERVED / RESIDUAL TABLES CLASSIFICATION
 
-**Audit Scope:** 179 Non-CompanyDB Physical Base Tables Preserved in `smritisys`  
+**Audit Scope:** 179 Non-CompanyDB Physical Base Tables Preserved in `tileflowsys`  
 **Governance Directive:** [`docs/AI_AGENT.md`](file:///F:/SMRITRretailNX/docs/AI_AGENT.md) (Rule 1, Rule 9, Rule 10)  
 **Safety Protocol:** NO DROP, NO TRUNCATE, NO DESTRUCTIVE MIGRATION  
 **Date:** 2026-08-17  
@@ -23,7 +21,7 @@
 
 ## 1. Executive Summary & Granular Taxonomy
 
-The 179 non-CompanyDB tables in `smritisys` are classified into rigorous governance categories:
+The 179 non-CompanyDB tables in `tileflowsys` are classified into rigorous governance categories:
 
 ```text
 ================================================================================
@@ -147,41 +145,41 @@ ACTIVE RUNTIME WRITES       : EXACTLY 0 (Verified by live runtime audit)
 | 100 | `size_conversions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
 | 101 | `size_scales` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
 | 102 | `size_values` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 103 | `smriti_addresses` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 104 | `smriti_api_key_logs` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 105 | `smriti_api_key_permission_sets` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 106 | `smriti_api_keys` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 107 | `smriti_approval_actions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 108 | `smriti_approval_assignments` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 109 | `smriti_approval_comments` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 110 | `smriti_approval_conditions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 111 | `smriti_approval_delegations` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 112 | `smriti_approval_escalations` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 113 | `smriti_approval_histories` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 114 | `smriti_approval_matrices` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 115 | `smriti_approval_outbox` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 116 | `smriti_approval_policies` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 117 | `smriti_approval_requests` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 118 | `smriti_approval_steps` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 119 | `smriti_bank_accounts` | 0 | `src\services\bankStore.ts` | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`LEGACY`** | Legacy prototype model; superseded by Company DB operational tables. |
-| 120 | `smriti_branding` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 121 | `smriti_comm_channels` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 122 | `smriti_contacts` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 123 | `smriti_entity_registry` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 124 | `smriti_field_security_masks` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 125 | `smriti_permission_set_permissions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 126 | `smriti_permission_sets` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 127 | `smriti_permissions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 128 | `smriti_report_templates` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 129 | `smriti_role_permission_sets` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 130 | `smriti_roles` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 131 | `smriti_security_audits` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 132 | `smriti_security_policies` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 133 | `smriti_service_accounts` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 134 | `smriti_settings` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 135 | `smriti_social_profiles` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 136 | `smriti_user_assignments` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
-| 137 | `smriti_user_roles` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 103 | `tileflow_addresses` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 104 | `tileflow_api_key_logs` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 105 | `tileflow_api_key_permission_sets` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 106 | `tileflow_api_keys` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 107 | `tileflow_approval_actions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 108 | `tileflow_approval_assignments` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 109 | `tileflow_approval_comments` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 110 | `tileflow_approval_conditions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 111 | `tileflow_approval_delegations` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 112 | `tileflow_approval_escalations` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 113 | `tileflow_approval_histories` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 114 | `tileflow_approval_matrices` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 115 | `tileflow_approval_outbox` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 116 | `tileflow_approval_policies` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 117 | `tileflow_approval_requests` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 118 | `tileflow_approval_steps` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 119 | `tileflow_bank_accounts` | 0 | `src\services\bankStore.ts` | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`LEGACY`** | Legacy prototype model; superseded by Company DB operational tables. |
+| 120 | `tileflow_branding` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 121 | `tileflow_comm_channels` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 122 | `tileflow_contacts` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 123 | `tileflow_entity_registry` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 124 | `tileflow_field_security_masks` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 125 | `tileflow_permission_set_permissions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 126 | `tileflow_permission_sets` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 127 | `tileflow_permissions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 128 | `tileflow_report_templates` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 129 | `tileflow_role_permission_sets` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 130 | `tileflow_roles` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 131 | `tileflow_security_audits` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 132 | `tileflow_security_policies` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 133 | `tileflow_service_accounts` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 134 | `tileflow_settings` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 135 | `tileflow_social_profiles` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 136 | `tileflow_user_assignments` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
+| 137 | `tileflow_user_roles` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
 | 138 | `sre_compliance_decisions` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
 | 139 | `sre_rule_engine` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
 | 140 | `sre_statutory_ledger` | 0 | 0 code refs | None | RUNTIME ACTIVITY NOT DIRECTLY OBSERVED | 0 RUNTIME WRITES | **`SCAFFOLDING`** | Empty scaffolding preserved from initial architecture. |
@@ -229,6 +227,6 @@ ACTIVE RUNTIME WRITES       : EXACTLY 0 (Verified by live runtime audit)
 
 ## 3. Governance Policy
 
-1. **Preservation:** All 179 tables remain safely preserved in `smritisys` without modification.
+1. **Preservation:** All 179 tables remain safely preserved in `tileflowsys` without modification.
 2. **Zero Runtime Side Effects:** No active operational business endpoints route reads or writes to these tables.
 3. **Controlled Deprecation:** Formal deprecation cycles will only occur in scheduled future releases.

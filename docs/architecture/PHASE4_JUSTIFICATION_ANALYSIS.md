@@ -76,19 +76,19 @@
 - **Status:** Reference to PLATFORM.md future roadmap
 
 #### 2.4 CONTROL_PLANE.md
-- **Topic:** Control plane (`smritisys`) database architecture audit (248 tables classified)
+- **Topic:** Control plane (`tileflowsys`) database architecture audit (248 tables classified)
 - **Unique Purpose:** Comprehensive audit classifying all control-plane tables, identifying zero new requirements
 - **Why Distinct:** Database-specific audit; different from logical architecture documents
 - **Current Baseline:** Verifies existing state (248 tables), zero mutations required
-- **Separation from SMRITISYS.md:** 
+- **Separation from TILEFLOWSYS.md:** 
   - CONTROL_PLANE.md = database audit (table classification, registry audit)
-  - SMRITISYS.md = identity finalization (verifying name is `smritisys`, not `smriti_retail_db`)
+  - TILEFLOWSYS.md = identity finalization (verifying name is `tileflowsys`, not `tileflow_retail_db`)
 - **Critical Facts:** Complete table inventory, audit timestamp, zero mutations verified
 - **Status:** ✅ DISTINCT (operational audit artifact)
 
-#### 2.5 SMRITISYS.md
-- **Topic:** Control plane database identity finalization (name = `smritisys`, not legacy `smriti_retail_db`)
-- **Unique Purpose:** Ensures all subsystems (Docker, ORM, scripts, tests) consistently target `smritisys`
+#### 2.5 TILEFLOWSYS.md
+- **Topic:** Control plane database identity finalization (name = `tileflowsys`, not legacy `tileflow_retail_db`)
+- **Unique Purpose:** Ensures all subsystems (Docker, ORM, scripts, tests) consistently target `tileflowsys`
 - **Why Distinct:** Identity audit; separate from table-level audit in CONTROL_PLANE.md
 - **Critical Facts:** Database name verification, legacy name elimination, subsystem audit matrix
 - **Separation from CONTROL_PLANE.md:** Identity verification (naming) vs. table classification (content)
@@ -100,7 +100,7 @@
 
 #### 3.1 COMPANY.md
 - **Topic:** Company database provisioning pipeline (10-step process)
-- **Unique Purpose:** Specifies the procedural pipeline for creating new `smriti<CODE>` company databases
+- **Unique Purpose:** Specifies the procedural pipeline for creating new `tileflow<CODE>` company databases
 - **Why Distinct:** Process/workflow document; separate from architectural topology
 - **Current Baseline:** Dry-run execution for company code 001
 - **Separation from MULTI_COMPANY.md:** 
@@ -195,7 +195,7 @@
 - **Status:** REPORTING_DASHBOARD_ENGINE_VERIFIED
 - **Unique Purpose:** Unified reporting architecture covering grid, chart, pivot, dashboard widgets
 - **Domain:** Business analytics and reporting
-- **Critical Facts:** Report definition → dataset engine → company resolver → smriti001 → output (Excel/PDF/CSV/Print)
+- **Critical Facts:** Report definition → dataset engine → company resolver → tileflow001 → output (Excel/PDF/CSV/Print)
 - **Separation from other domains:**
   - FULFILLMENT.md = fulfillment operations (different concern)
   - CUSTOMER_360.md = customer data (source of reports, not report engine itself)
@@ -304,7 +304,7 @@ These are systematically documented variants of a complex subsystem, each coveri
 - **Status:** FRONTEND_VITE_REACT = READY
 - **Unique Purpose:** Verifies zero database knowledge leakage, zero direct DB connections, zero credential exposure in bundle
 - **Domain:** Frontend security architecture
-- **Critical Principle:** "React/Vite knows the Company Context (`company_id`). React/Vite NEVER knows the Company Database (`smriti001`)."
+- **Critical Principle:** "React/Vite knows the Company Context (`company_id`). React/Vite NEVER knows the Company Database (`tileflow001`)."
 - **Verification:** 0 direct DB calls, 0 database name references, 0 secrets exposed
 - **Separation from DEVELOPMENT.md:**
   - FRONTEND_VITE.md = security audit of frontend build
@@ -396,7 +396,6 @@ These are systematically documented variants of a complex subsystem, each coveri
 
 ---
 
-### CATEGORY 7: Project-Specific Strategy (3 files)
 
 #### 7.1 BLUEPRINT_PENDING.md
 - **Topic:** Enterprise blueprint and pending-work roadmap v1.0
@@ -417,7 +416,7 @@ These are systematically documented variants of a complex subsystem, each coveri
 - **Scale:** Targets tens of thousands of existing Shoper 9 stores
 - **Separation from other files:**
   - No other file addresses legacy migration strategy
-  - Specific to Shoper 9 → SMRITI transformation
+  - Specific to Shoper 9 → TILEFLOW transformation
 - **Status:** ✅ DISTINCT (legacy migration domain)
 
 #### 7.3 CUSTOMER_360.md
@@ -425,7 +424,7 @@ These are systematically documented variants of a complex subsystem, each coveri
 - **Status:** CUSTOMER_360_GROWTH_ECOSYSTEM_VERIFIED
 - **Unique Purpose:** Unambiguous database ownership architecture for customer-facing features (CRM, Loyalty, Promotions, SICE, Referrals)
 - **Domain:** Customer data and growth capabilities
-- **Ownership Architecture:** Capability entitlements in `smritisys`, transaction records in `smriti001`
+- **Ownership Architecture:** Capability entitlements in `tileflowsys`, transaction records in `tileflow001`
 - **Separation from CRM_LOYALTY_SICE.md:**
   - CUSTOMER_360.md = 360-degree view and growth ecosystem
   - CRM_LOYALTY_SICE.md = detailed commission engine architecture
@@ -525,7 +524,7 @@ These are systematically documented variants of a complex subsystem, each coveri
 | Company code standard (3 alphanumeric, not 000/SYS) | DATABASE_ROUTING.md + v1384 migration | Naming collision risk |
 | Zero database credentials in frontend bundle | FRONTEND_VITE.md | Security vulnerability risk |
 | 248 control-plane table inventory | CONTROL_PLANE.md | Regression risk on migrations |
-| 34-row frozen menu registry | UI_UX_CONTROL.md + SMRITISYS.md | UI consistency risk |
+| 34-row frozen menu registry | UI_UX_CONTROL.md + TILEFLOWSYS.md | UI consistency risk |
 
 ---
 
@@ -533,7 +532,7 @@ These are systematically documented variants of a complex subsystem, each coveri
 
 **Certification Statement:**
 
-All 33 architecture documentation files are DISTINCT, NON-REDUNDANT, and ESSENTIAL to the SMRITI Retail OS canonical architecture specification.
+All 33 architecture documentation files are DISTINCT, NON-REDUNDANT, and ESSENTIAL to the TILEFLOW Retail OS canonical architecture specification.
 
 Each file covers a unique domain, decision, or verification concern:
 - ✅ No consolidated file would capture all necessary detail

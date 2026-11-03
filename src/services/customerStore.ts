@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.2
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import { apiFetchV1 } from "../lib/apiFetchV1";
 import { Customer, CustomerGroup, CustomerPriceGroup, SalesInvoice, SalesReturn } from "../types";
 
@@ -254,7 +229,7 @@ export const initialCustomers: Customer[] = [
     customerGroupId: "CG-Retail",
     name: "Walk-In / Cash Customer",
     mobile: "9999999999",
-    email: "cash@smritiretail.com",
+    email: "cash@tileflowretail.com",
     outstanding: 0,
     status: "Active",
     createdDate: "2026-07-10",
@@ -288,7 +263,7 @@ export const initialCustomers: Customer[] = [
     customerGroupId: "CG-Branches",
     name: "Branch - South Delhi",
     mobile: "9911223344",
-    email: "southdelhi@smriti.com",
+    email: "southdelhi@tileflow.com",
     outstanding: 0,
     status: "Active",
     createdDate: "2026-07-10",
@@ -299,7 +274,7 @@ export const initialCustomers: Customer[] = [
     customerGroupId: "CG-Franchises",
     name: "Franchise - Mumbai Central",
     mobile: "9922334455",
-    email: "mumbaifranchise@smriti.com",
+    email: "mumbaifranchise@tileflow.com",
     outstanding: 120000,
     status: "Active",
     createdDate: "2026-07-10",
@@ -579,35 +554,35 @@ export const initialSalesReturns: SalesReturn[] = [
 
 export function getSalesInvoices(): SalesInvoice[] {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    const saved = localStorage.getItem("smriti_sales_invoices");
+    const saved = localStorage.getItem("tileflow_sales_invoices");
     if (saved) {
       return JSON.parse(saved);
     }
-    localStorage.setItem("smriti_sales_invoices", JSON.stringify(initialSalesInvoices));
+    localStorage.setItem("tileflow_sales_invoices", JSON.stringify(initialSalesInvoices));
   }
   return initialSalesInvoices;
 }
 
 export function saveSalesInvoices(invoices: SalesInvoice[]) {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    localStorage.setItem("smriti_sales_invoices", JSON.stringify(invoices));
+    localStorage.setItem("tileflow_sales_invoices", JSON.stringify(invoices));
   }
 }
 
 export function getSalesReturns(): SalesReturn[] {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    const saved = localStorage.getItem("smriti_sales_returns");
+    const saved = localStorage.getItem("tileflow_sales_returns");
     if (saved) {
       return JSON.parse(saved);
     }
-    localStorage.setItem("smriti_sales_returns", JSON.stringify(initialSalesReturns));
+    localStorage.setItem("tileflow_sales_returns", JSON.stringify(initialSalesReturns));
   }
   return initialSalesReturns;
 }
 
 export function saveSalesReturns(returns: SalesReturn[]) {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    localStorage.setItem("smriti_sales_returns", JSON.stringify(returns));
+    localStorage.setItem("tileflow_sales_returns", JSON.stringify(returns));
   }
 }
 
@@ -625,11 +600,11 @@ export function addSalesReturn(ret: SalesReturn) {
 
 export function getCustomerGroups(): CustomerGroup[] {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    const saved = localStorage.getItem("smriti_customer_groups");
+    const saved = localStorage.getItem("tileflow_customer_groups");
     if (saved) {
       return JSON.parse(saved);
     }
-    localStorage.setItem("smriti_customer_groups", JSON.stringify(initialCustomerGroups));
+    localStorage.setItem("tileflow_customer_groups", JSON.stringify(initialCustomerGroups));
   }
   return initialCustomerGroups;
 }
@@ -637,11 +612,11 @@ export function getCustomerGroups(): CustomerGroup[] {
 export function getCustomers(): Customer[] {
   let customersList: Customer[] = initialCustomers;
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    const saved = localStorage.getItem("smriti_customers");
+    const saved = localStorage.getItem("tileflow_customers");
     if (saved) {
       customersList = JSON.parse(saved);
     } else {
-      localStorage.setItem("smriti_customers", JSON.stringify(initialCustomers));
+      localStorage.setItem("tileflow_customers", JSON.stringify(initialCustomers));
       customersList = initialCustomers;
     }
   }
@@ -670,11 +645,11 @@ export function getCustomers(): Customer[] {
 
 export function saveCustomers(customers: Customer[]) {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    localStorage.setItem("smriti_customers", JSON.stringify(customers));
+    localStorage.setItem("tileflow_customers", JSON.stringify(customers));
     try {
-      window.dispatchEvent(new CustomEvent("smriti_customer_updated"));
+      window.dispatchEvent(new CustomEvent("tileflow_customer_updated"));
     } catch (e) {
-      console.error("Failed to dispatch smriti_customer_updated event:", e);
+      console.error("Failed to dispatch tileflow_customer_updated event:", e);
     }
   }
   // Persist to server asynchronously
@@ -683,13 +658,13 @@ export function saveCustomers(customers: Customer[]) {
 
 export function saveCustomerGroups(groups: CustomerGroup[]) {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    localStorage.setItem("smriti_customer_groups", JSON.stringify(groups));
+    localStorage.setItem("tileflow_customer_groups", JSON.stringify(groups));
   }
 }
 
 export function getCustomerPriceGroups(): CustomerPriceGroup[] {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    const saved = localStorage.getItem("smriti_customer_price_groups");
+    const saved = localStorage.getItem("tileflow_customer_price_groups");
     if (saved) {
       try {
         const parsed = JSON.parse(saved);
@@ -698,18 +673,18 @@ export function getCustomerPriceGroups(): CustomerPriceGroup[] {
         // Fallback
       }
     }
-    localStorage.setItem("smriti_customer_price_groups", JSON.stringify(initialCustomerPriceGroups));
+    localStorage.setItem("tileflow_customer_price_groups", JSON.stringify(initialCustomerPriceGroups));
   }
   return initialCustomerPriceGroups;
 }
 
 export function saveCustomerPriceGroups(groups: CustomerPriceGroup[]) {
   if (typeof window !== "undefined" && typeof localStorage !== "undefined") {
-    localStorage.setItem("smriti_customer_price_groups", JSON.stringify(groups));
+    localStorage.setItem("tileflow_customer_price_groups", JSON.stringify(groups));
     try {
-      window.dispatchEvent(new CustomEvent("smriti_customer_price_groups_updated"));
+      window.dispatchEvent(new CustomEvent("tileflow_customer_price_groups_updated"));
     } catch (e) {
-      console.error("Failed to dispatch smriti_customer_price_groups_updated event:", e);
+      console.error("Failed to dispatch tileflow_customer_price_groups_updated event:", e);
     }
   }
 }
@@ -799,10 +774,10 @@ export async function persistCustomerChange(customer: Customer) {
     });
   } catch (e) {
     try {
-      const pending = JSON.parse(localStorage.getItem("smriti_pending_customers") || "[]");
+      const pending = JSON.parse(localStorage.getItem("tileflow_pending_customers") || "[]");
       if (!pending.some((c: any) => c.id === customer.id)) {
         pending.push(customer);
-        localStorage.setItem("smriti_pending_customers", JSON.stringify(pending));
+        localStorage.setItem("tileflow_pending_customers", JSON.stringify(pending));
       }
     } catch (err) {
       console.error("[CRM Sync] Failed to update pending queue:", err);
@@ -813,7 +788,7 @@ export async function persistCustomerChange(customer: Customer) {
 export async function syncPendingCustomers() {
   let pending: Customer[] = [];
   try {
-    pending = JSON.parse(localStorage.getItem("smriti_pending_customers") || "[]");
+    pending = JSON.parse(localStorage.getItem("tileflow_pending_customers") || "[]");
   } catch (e) {
     return;
   }
@@ -831,7 +806,7 @@ export async function syncPendingCustomers() {
       remaining.push(cust);
     }
   }
-  localStorage.setItem("smriti_pending_customers", JSON.stringify(remaining));
+  localStorage.setItem("tileflow_pending_customers", JSON.stringify(remaining));
 }
 
 export async function syncCustomersWithBackend() {
@@ -841,8 +816,8 @@ export async function syncCustomersWithBackend() {
   try {
     const serverCustomers = await apiFetchV1("/customers");
     if (Array.isArray(serverCustomers) && serverCustomers.length > 0) {
-      localStorage.setItem("smriti_customers", JSON.stringify(serverCustomers));
-      window.dispatchEvent(new CustomEvent("smriti_customer_updated"));
+      localStorage.setItem("tileflow_customers", JSON.stringify(serverCustomers));
+      window.dispatchEvent(new CustomEvent("tileflow_customer_updated"));
     }
   } catch (e) {
     console.warn("[CRM Sync] Failed to sync customers from backend, using local cache:", e);
@@ -851,7 +826,7 @@ export async function syncCustomersWithBackend() {
   try {
     const serverGroups = await apiFetchV1("/customer-groups");
     if (Array.isArray(serverGroups) && serverGroups.length > 0) {
-      localStorage.setItem("smriti_customer_groups", JSON.stringify(serverGroups));
+      localStorage.setItem("tileflow_customer_groups", JSON.stringify(serverGroups));
     }
   } catch (e) {
     console.warn("[CRM Sync] Failed to sync customer groups from backend:", e);

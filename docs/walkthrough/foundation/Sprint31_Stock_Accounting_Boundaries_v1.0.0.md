@@ -2,15 +2,14 @@
 title: "Sprint 31: P1.3 Authoritative Stock and Accounting Boundaries (Data Plane Convergence)"
 version: "1.0.0"
 date: "2026-08-25"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
-# Walkthrough: Sprint 31 — P1.3 Authoritative Stock and Accounting Boundaries (Data Plane Convergence)
 
 ## 1. Purpose
 This sprint fulfills **Blueprint Section 6: P1 Transactional Data-Plane Convergence (P1.3 Authoritative Stock and Accounting Boundaries)**. It establishes strict transactional boundaries guaranteeing that every stock-changing operation writes an immutable `stock_movements` ledger entry, that materialized on-hand balances are dynamically rebuildable from movement history with zero drift, that financial vouchers enforce strict double-entry equality (`Total Debits == Total Credits`), and that automated reconciliation jobs audit stock, general ledger, payment, and tax accounts.

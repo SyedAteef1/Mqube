@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.96.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Dynamic Loyalty Points Burn & Earn Ledger
- *
- * Implements a double-entry loyalty ledger:
- *   - EARN events: purchases, sign-up bonus, referral, birthday, manual credit
- *   - BURN events: redemption at POS, voucher conversion, expiry write-off
- *   - Expiry scheduling: points expire after configurable TTL days
- *   - Redemption caps: max redeemable % of invoice value + min balance guard
- *   - Real-time balance with expiry-aware available balance
- */
-
 export type LedgerEventType =
   | "EARN_PURCHASE"
   | "EARN_SIGNUP_BONUS"

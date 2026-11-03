@@ -1,16 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.29.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { 
   ItemMasterActiveSubTab, 
@@ -29,8 +16,8 @@ import { ItemSaveWarnDlg } from "./modals/ItemSaveWarnDlg.tsx";
 import { apiFetchV1 } from "../../lib/apiFetchV1.ts";
 import { Product, AttributeDefinition } from "../../types.ts";
 
-const STORAGE_KEY_SELECTED_FIELDS = "smriti_item_master_selected_fields_v1";
-const STORAGE_KEY_COMMON_FIELDS = "smriti_item_master_common_fields_v1";
+const STORAGE_KEY_SELECTED_FIELDS = "tileflow_item_master_selected_fields_v1";
+const STORAGE_KEY_COMMON_FIELDS = "tileflow_item_master_common_fields_v1";
 
 interface ItemEntryViewwProps {
   onRefreshProducts?: () => Promise<void>;
@@ -318,7 +305,7 @@ export const ItemEntryView: React.FC<ItemEntryViewwProps> = ({
             Item Master Entry
           </h1>
           <p className="text-xs text-slate-500">
-            Smriti Prime Tactical Catalog Grid & Master Data Application
+            MQube Prime Tactical Catalog Grid & Master Data Application
           </p>
         </div>
 

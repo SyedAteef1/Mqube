@@ -1,15 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import asyncio
 import uuid
 import json
@@ -47,13 +35,13 @@ def get_db_table_counts(db_name):
 
 async def run_authenticated_training_e2e():
     print("================================================================================")
-    print("SMRITI USER TRAINING READINESS — AUTHENTICATED APPLICATION-LEVEL E2E SUITE")
+    print("TILEFLOW USER TRAINING READINESS — AUTHENTICATED APPLICATION-LEVEL E2E SUITE")
     print("================================================================================")
     
     # 0. Initial Physical Row Count Snapshot
-    init_sys = get_db_table_counts("smritisys")
-    init_001 = get_db_table_counts("smriti001")
-    init_002 = get_db_table_counts("smriti002")
+    init_sys = get_db_table_counts("tileflowsys")
+    init_001 = get_db_table_counts("tileflow001")
+    init_002 = get_db_table_counts("tileflow002")
     
     tag = f"TRN-{uuid.uuid4().hex[:6]}"
     now = datetime.now(timezone.utc)
@@ -77,18 +65,18 @@ async def run_authenticated_training_e2e():
     ret_id = f"ret-{tag}"
     ret_no = f"RET-{tag}"
     
-    # 1. Setup Authenticated SYSADMIN in Control Plane (smritisys)
+    # 1. Setup Authenticated SYSADMIN in Control Plane (tileflowsys)
     print("\n--- [STEP 1] AUTHENTICATION & CONTROL PLANE SETUP ---")
-    conn_sys = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn_sys = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur_sys = conn_sys.cursor()
     cur_sys.execute("""
         INSERT INTO companies (id, uuid, name, company_code, is_active, is_deleted, created_at, modified_at)
-        VALUES ('COMP-001', %s, 'SMRITI Company 001', '001', true, false, %s, %s)
+        VALUES ('COMP-001', %s, 'TILEFLOW Company 001', '001', true, false, %s, %s)
         ON CONFLICT (id) DO NOTHING;
     """, (str(uuid.uuid4()), now, now))
     cur_sys.execute("""
         INSERT INTO companies (id, uuid, name, company_code, is_active, is_deleted, created_at, modified_at)
-        VALUES ('COMP-002', %s, 'SMRITI Company 002', '002', true, false, %s, %s)
+        VALUES ('COMP-002', %s, 'TILEFLOW Company 002', '002', true, false, %s, %s)
         ON CONFLICT (id) DO NOTHING;
     """, (str(uuid.uuid4()), now, now))
     cur_sys.execute("""
@@ -111,7 +99,7 @@ async def run_authenticated_training_e2e():
             'India', 'FullTime', %s, %s,
             'COMP-001', 'BR-001', true, false
         );
-    """, (admin_user_id, str(uuid.uuid4()), admin_username, f"{admin_username}@smriti.test", hash_password("ValidPassword123!"), now, now))
+    """, (admin_user_id, str(uuid.uuid4()), admin_username, f"{admin_username}@tileflow.test", hash_password("ValidPassword123!"), now, now))
     conn_sys.commit()
     conn_sys.close()
     
@@ -148,7 +136,7 @@ async def run_authenticated_training_e2e():
         id=admin_user_id,
         uuid=str(uuid.uuid4()),
         username=admin_username,
-        email=f"{admin_username}@smriti.test",
+        email=f"{admin_username}@tileflow.test",
         full_name="Training Sysadmin",
         role=UserRole.SYSADMIN,
         status="Active",
@@ -187,7 +175,7 @@ async def run_authenticated_training_e2e():
             "city": "Mumbai",
             "state": "Maharashtra",
             "mobile": unique_mobile_sup,
-            "email": f"supplier_{tag}@smriti.test"
+            "email": f"supplier_{tag}@tileflow.test"
         }
         sup_res = await ac.post("/api/v1/purchase/suppliers/", json=sup_payload, headers=auth_headers_001)
         print(f"  [PASS] POST /api/v1/purchase/suppliers/ -> Status {sup_res.status_code} ({sup_res.json().get('name') if sup_res.status_code in (200, 201) else sup_res.text})")
@@ -230,7 +218,7 @@ async def run_authenticated_training_e2e():
             "code": f"CUST-{tag}",
             "name": f"Training Customer {tag}",
             "mobile": unique_mobile_cust,
-            "email": f"cust_{tag}@smriti.test",
+            "email": f"cust_{tag}@tileflow.test",
             "customer_group_id": grp_id
         }
         cust_res = await ac.post("/api/v1/customers", json=cust_payload, headers=auth_headers_001)
@@ -287,7 +275,7 @@ async def run_authenticated_training_e2e():
         assert grn_res.status_code in (200, 201)
         
         # PostgreSQL Post-Verification of Inventory Engine Stock Increment
-        conn_001 = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+        conn_001 = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
         cur_001 = conn_001.cursor()
         cur_001.execute("SELECT stock FROM products WHERE id = %s;", (prod_id,))
         stk_after_grn = cur_001.fetchone()[0]
@@ -426,7 +414,7 @@ async def run_authenticated_training_e2e():
         # STEP 8: PSV SHADOW LAYER COMPANY AUDIT
         # ──────────────────────────────────────────────────────────────────────
         print("\n--- [STEP 8] PSV SHADOW LAYER MULTI-COMPANY AUDIT ---")
-        conn_sys = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+        conn_sys = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
         cur_sys = conn_sys.cursor()
         cur_sys.execute("SELECT company_id, database_name FROM company_database_registries WHERE status = 'READY';")
         ready_comps = cur_sys.fetchall()
@@ -449,8 +437,8 @@ async def run_authenticated_training_e2e():
     # ──────────────────────────────────────────────────────────────────────────
     print("\n--- [STEP 9] CLEANING UP TEST ARTIFACTS ---")
     
-    # 9.1 Clean smriti001
-    conn_001 = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    # 9.1 Clean tileflow001
+    conn_001 = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur_001 = conn_001.cursor()
     cur_001.execute("DELETE FROM integration_outbox_events WHERE payload_json::text LIKE %s;", (f"%{tag}%",))
     cur_001.execute("DELETE FROM sales_return_items WHERE return_id = %s;", (ret_id,))
@@ -469,15 +457,15 @@ async def run_authenticated_training_e2e():
     conn_001.commit()
     conn_001.close()
     
-    # 9.2 Clean smriti002
-    conn_002 = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti002")
+    # 9.2 Clean tileflow002
+    conn_002 = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow002")
     cur_002 = conn_002.cursor()
     cur_002.execute("DELETE FROM integration_outbox_events WHERE payload_json::text LIKE %s;", (f"%{tag}%",))
     conn_002.commit()
     conn_002.close()
     
-    # 9.3 Clean smritisys
-    conn_sys = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    # 9.3 Clean tileflowsys
+    conn_sys = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur_sys = conn_sys.cursor()
     cur_sys.execute("DELETE FROM users WHERE id = %s;", (admin_user_id,))
     cur_sys.execute("DELETE FROM branches WHERE id IN ('BR-001', 'BR-002');")
@@ -491,18 +479,18 @@ async def run_authenticated_training_e2e():
     # ──────────────────────────────────────────────────────────────────────────
     # STEP 10: PHYSICAL ROW COUNT RECONCILIATION
     # ──────────────────────────────────────────────────────────────────────────
-    post_sys = get_db_table_counts("smritisys")
-    post_001 = get_db_table_counts("smriti001")
-    post_002 = get_db_table_counts("smriti002")
+    post_sys = get_db_table_counts("tileflowsys")
+    post_001 = get_db_table_counts("tileflow001")
+    post_002 = get_db_table_counts("tileflow002")
     
     diff_s = {t: post_sys[t] - init_sys[t] for t in init_sys if post_sys[t] != init_sys[t]}
     diff_1 = {t: post_001[t] - init_001[t] for t in init_001 if post_001[t] != init_001[t]}
     diff_2 = {t: post_002[t] - init_002[t] for t in init_002 if post_002[t] != init_002[t]}
 
     print("\n--- FINAL PHYSICAL ROW AUDIT POST TEST RUN ---")
-    print(f"smritisys diff: {diff_s}")
-    print(f"smriti001 diff: {diff_1}")
-    print(f"smriti002 diff: {diff_2}")
+    print(f"tileflowsys diff: {diff_s}")
+    print(f"tileflow001 diff: {diff_1}")
+    print(f"tileflow002 diff: {diff_2}")
     assert len(diff_s) == 0 and len(diff_1) == 0 and len(diff_2) == 0, "FAIL: Residual cleanup variance!"
     
     print("\n================================================================================")

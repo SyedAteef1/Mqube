@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.106.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -191,7 +190,7 @@ export const MarkdownPlanningModal: React.FC<MarkdownPlanningModalProps> = ({ is
                         <div key={s.stepNo} onClick={() => applyStep(s.stepNo)}
                           className={`cursor-pointer rounded-xl border p-3 text-center transition-all hover:border-orange-500/40 ${s.isActive ? "bg-orange-950/20 border-orange-500/40" : "bg-slate-800/30 border-slate-700/50"}`}>
                           <div className="text-lg font-black text-orange-400">{s.discountPct}% OFF</div>
-                          <div className="text-[10px] text-slate-500 mt-0.5">Step {s.stepNo} â€” {s.activateOn}</div>
+                          <div className="text-[10px] text-slate-500 mt-0.5">Step {s.stepNo} — {s.activateOn}</div>
                           {s.isActive && <div className="text-[9px] text-emerald-400 font-bold mt-1">â— ACTIVE</div>}
                           {s.activatedAt && <div className="text-[9px] text-slate-600 mt-0.5">{new Date(s.activatedAt).toLocaleDateString("en-IN")}</div>}
                         </div>
@@ -225,8 +224,8 @@ export const MarkdownPlanningModal: React.FC<MarkdownPlanningModalProps> = ({ is
                               </span>
                             </td>
                             <td className="py-2 px-3 text-right font-mono">
-                              <span className="text-orange-400">â‚¹{l.currentEffectivePrice}</span>
-                              <span className="text-slate-600 ml-1 text-[10px]">(was â‚¹{l.basePrice})</span>
+                              <span className="text-orange-400">₹{l.currentEffectivePrice}</span>
+                              <span className="text-slate-600 ml-1 text-[10px]">(was ₹{l.basePrice})</span>
                             </td>
                             <td className="py-2 px-3 text-right font-mono text-slate-400">{l.currentMarkdownStep > 0 ? `Step ${l.currentMarkdownStep}` : "Base"}</td>
                           </tr>
@@ -268,7 +267,7 @@ export const MarkdownPlanningModal: React.FC<MarkdownPlanningModalProps> = ({ is
                           <div className="flex items-center justify-between mb-1.5">
                             <span className="text-xs text-slate-300">{l.productName}</span>
                             <div className="flex items-center gap-3">
-                              <span className="text-[10px] font-mono text-orange-400">â‚¹{l.currentEffectivePrice}</span>
+                              <span className="text-[10px] font-mono text-orange-400">₹{l.currentEffectivePrice}</span>
                               <span className={`text-sm font-black font-mono ${l.sellThroughPct >= selected.targetSellThroughPct ? "text-emerald-400" : l.sellThroughPct >= 50 ? "text-amber-400" : "text-rose-400"}`}>{l.sellThroughPct}%</span>
                             </div>
                           </div>

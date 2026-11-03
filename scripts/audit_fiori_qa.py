@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,13 +8,13 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\FIORI_LIGHT.md"
 
 def audit_fiori_visual_qa():
     print("============================================================")
-    print("SMRITI FIORI LIGHT ENTERPRISE VISUAL QA GATE AUDIT")
+    print("TILEFLOW FIORI LIGHT ENTERPRISE VISUAL QA GATE AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -36,13 +23,13 @@ def audit_fiori_visual_qa():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     conn.close()
@@ -66,16 +53,16 @@ def audit_fiori_visual_qa():
     ])
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
-        {"Metric": "Company Business Database", "Value": "smriti001 (ACTIVE for COMP-001)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Company Business Database", "Value": "tileflow001 (ACTIVE for COMP-001)"},
         {"Metric": "Visual QA Verification Score", "Value": "10 / 10 Visual Screens Verified (100%)"},
         {"Metric": "Theme Baseline", "Value": "LIGHT MODE ONLY (#f8f9fa base, #ffffff surface, #0070f2 primary)"},
         {"Metric": "Single Authoritative Dataset Rule", "Value": "Grid Total = Chart Total = Pivot Total = Dashboard KPI = Export"},
-        {"Metric": "Single Company DB Principle", "Value": "All reporting & business tables co-located in smriti001 (0 Extra DBs)"},
+        {"Metric": "Single Company DB Principle", "Value": "All reporting & business tables co-located in tileflow001 (0 Extra DBs)"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Database Mutations Executed", "Value": "0 Mutations"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT & SIGNED)"},
         {"Metric": "Final Status", "Value": "FIORI_LIGHT_VISUAL_QA_VERIFIED"}
     ])
 
@@ -120,24 +107,23 @@ def audit_fiori_visual_qa():
     # 4. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Fiori Light Visual QA Specification v1.0
+# TILEFLOW Fiori Light Visual QA Specification v1.0
 
 **Status: FIORI_LIGHT_VISUAL_QA_VERIFIED**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
@@ -153,7 +139,6 @@ Light Mode Only -> Fiori Shell -> Context Filter Bar -> High-Density Grid / Char
 
 ---
 
-## 2. Final Classification
 
 ```text
 FINAL STATUS: FIORI_LIGHT_VISUAL_QA_VERIFIED
@@ -162,8 +147,8 @@ FINAL STATUS: FIORI_LIGHT_VISUAL_QA_VERIFIED
 
     print("\nFIORI LIGHT VISUAL QA AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={initial_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={initial_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={initial_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={initial_audit}")
     print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")
     print(f"Excel Workbook Updated : {EXCEL_OUTPUT}")
     print(f"Doc Specification      : {DOC_OUTPUT}")

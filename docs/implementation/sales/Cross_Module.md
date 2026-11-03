@@ -1,4 +1,4 @@
-Document      : SMRITI Cross-Module Validation & Integration Audit — Standing Directive
+Document      : TILEFLOW Cross-Module Validation & Integration Audit — Standing Directive
 Version       : 1.1 — read-only audit process, evidence ledger seeded from live repository,
                 Section 10 adds import-linter/dependency-cruiser as continuous enforcement
 Status        : DRAFT — pending architect review and lock, same as every prior Master Command
@@ -11,7 +11,7 @@ Relationship to other directives : This is NOT "Master Command 3" — that name 
                 code changes. Anything it finds that needs fixing gets its own scoped Master
                 Command, written after a human reads the findings — same discipline as every
                 directive so far.
-Supersedes    : the "SMRITI Retail OS — Cross Module Validation & Integration Audit" prompt
+Supersedes    : the "TILEFLOW Retail OS — Cross Module Validation & Integration Audit" prompt
                 draft (structure and checklist categories retained; the auto-create, auto-merge,
                 and unbounded-fix rules are removed and replaced — see Section 0)
 
@@ -126,7 +126,7 @@ each module — add rows/columns for anything this ledger missed, but cite the a
 ## 2. Objective
 
 Produce an accurate, evidence-backed picture of what exists, what's missing, what's duplicated,
-and what's disconnected across every real SMRITI module — as a report a human reads and acts on,
+and what's disconnected across every real TILEFLOW module — as a report a human reads and acts on,
 not as an agent-executed fix pass. Preserve everything Master Command 1 and 2 already
 established: no speculative architecture, no self-certification, evidence over inference.
 

@@ -1,20 +1,19 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Training Academy Phases 3–5 Full Completion Walkthrough — v1.0
+# TILEFLOW Training Academy Phases 3–5 Full Completion Walkthrough — v1.0
 
 ## 1. Purpose
-This walkthrough documents the full completion of **Phases 3–5** for the **SMRITI Training Academy** (`src/components/training/TrainingAcademyTab.tsx`), incorporating the **Day 5 Signature Competency Engine**, **Server-Authoritative PDF Certification Engine**, and **Store Manager Staff Analytics Console**.
+This walkthrough documents the full completion of **Phases 3–5** for the **TILEFLOW Training Academy** (`src/components/training/TrainingAcademyTab.tsx`), incorporating the **Day 5 Signature Competency Engine**, **Server-Authoritative PDF Certification Engine**, and **Store Manager Staff Analytics Console**.
 
 ## 2. Scope
 - Authoring `Day5LifecycleTestE.tsx` for deterministic verification of the complete transaction lifecycle (`Master → PO 50 → GRN 48 → Short 2 → Stock +48 → POS Sale 5 → Expected Stock 43`).
@@ -42,7 +41,7 @@ This walkthrough documents the full completion of **Phases 3–5** for the **SMR
 Enforcing deterministic state verification guarantees that trainees understand the end-to-end business consequences of every operational transaction (PO, GRN, Short receipt, POS Billing) before operating live store terminals.
 
 ## 7. Implementation Summary
-- Completed all 5 phases of the SMRITI Training Academy implementation plan.
+- Completed all 5 phases of the TILEFLOW Training Academy implementation plan.
 - Verified backend production isolation test suite (4/4 passed).
 - Built frontend distribution bundle with Vite (20.02s).
 

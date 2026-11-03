@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -100,8 +87,8 @@ def test_invoice_net_contribution_calculation():
     assert ledger.net_contribution == 3000.00
     assert ledger.net_margin_percent == 30.00
 
-def test_cost_profitability_co_location_in_smriti001():
-    """Verify profitability tables reside in smriti001 without separate databases."""
+def test_cost_profitability_co_location_in_tileflow001():
+    """Verify profitability tables reside in tileflow001 without separate databases."""
     profitability_tables = [
         ProductCostValuation.__tablename__,
         TransactionCostSnapshot.__tablename__,

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 from decimal import Decimal, ROUND_HALF_UP
@@ -44,7 +30,7 @@ def _to_naive_utc(dt: Optional[datetime]) -> Optional[datetime]:
 
 class PromotionsEngine:
     """
-    Authoritative SMRITI Promotions & Offers Engine (Section 7).
+    Authoritative TILEFLOW Promotions & Offers Engine (Section 7).
     Evaluates complex discount mechanics (Percentage, Fixed, BXGY, Bundles, Coupons)
     with strict conflict resolution and stacking policies.
     """

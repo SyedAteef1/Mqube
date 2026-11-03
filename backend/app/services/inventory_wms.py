@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-22
-Modified     : 2026-08-22
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 from typing import List, Dict, Any, Optional
@@ -93,7 +79,7 @@ class InventoryWmsService:
         if remaining > 0:
             raise HTTPException(
                 status_code=400,
-                detail=f"SMRITI-STOCK-001: Insufficient available stock for product {product_id} in warehouse {warehouse_id}. Short by {remaining} units."
+                detail=f"TILEFLOW-STOCK-001: Insufficient available stock for product {product_id} in warehouse {warehouse_id}. Short by {remaining} units."
             )
 
         return allocations
@@ -195,7 +181,7 @@ class InventoryWmsService:
                 else:
                     raise HTTPException(
                         status_code=400,
-                        detail=f"SMRITI-STOCK-001: Cannot deduct from non-existent batch {batch_no} in warehouse {warehouse_id}."
+                        detail=f"TILEFLOW-STOCK-001: Cannot deduct from non-existent batch {batch_no} in warehouse {warehouse_id}."
                     )
             else:
                 batch_stock = ProductBatchStock(
@@ -224,7 +210,7 @@ class InventoryWmsService:
                 if available < abs(qty_delta_dec):
                     raise HTTPException(
                         status_code=400,
-                        detail=f"SMRITI-STOCK-001: Insufficient available stock in batch {batch_no}. Available: {available}, Requested: {abs(qty_delta_dec)}."
+                        detail=f"TILEFLOW-STOCK-001: Insufficient available stock in batch {batch_no}. Available: {available}, Requested: {abs(qty_delta_dec)}."
                     )
             batch_stock.quantity = Decimal(str(batch_stock.quantity)) + qty_delta_dec
             if mfg_date:

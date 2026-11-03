@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-07-16
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 from datetime import datetime, timezone
 from sqlalchemy import Column, DateTime, ForeignKey, Integer, Numeric, String, Index, Boolean
 from sqlalchemy.dialects.postgresql import ARRAY
@@ -52,7 +38,7 @@ class PSVPartySkuTracking(Base):
 
 class PSVStockEvent(Base):
     """
-    PSVStockEvent — Production Observability Immutable Event Ledger in SmritiPSV.
+    PSVStockEvent — Production Observability Immutable Event Ledger in TileFlowPSV.
     """
     __tablename__ = "psv_stock_events"
 
@@ -85,7 +71,7 @@ class PSVStockEvent(Base):
 
 class PSVStockBalance(Base):
     """
-    PSVStockBalance — Stock Visibility Projection Balance in SmritiPSV.
+    PSVStockBalance — Stock Visibility Projection Balance in TileFlowPSV.
     """
     __tablename__ = "psv_stock_balances"
 

@@ -1,19 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah — Founder & Chairperson
-  * Jawahar Ramkripal Mallah  — Founder, CEO & Chief Software Architect
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
+  * Syed Ateef  — Founder, CEO & Chief Software Architect
 
   * Version    : 3.14.0
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
 # Foundation — Database Backfill — Walkthrough v3.14.0

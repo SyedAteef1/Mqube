@@ -1,7 +1,7 @@
 $baseUrl = "http://localhost:8000"
 
 Write-Host "================================================================================"
-Write-Host "  SMRITI Retail OS - QZ Tray and Thermal Printing Pipeline Verification"
+Write-Host "  TILEFLOW Retail OS - QZ Tray and Thermal Printing Pipeline Verification"
 Write-Host "================================================================================"
 
 # 1. Certificate Test
@@ -16,7 +16,7 @@ Write-Host "  + Header:" $firstLine
 Write-Host ""
 Write-Host "[Step 2] Testing Server-Side RSA SHA512 Challenge Signing..."
 $nowMs = [DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
-$challenge = "SMRITI_PRINT_CHALLENGE_" + $nowMs
+$challenge = "TILEFLOW_PRINT_CHALLENGE_" + $nowMs
 $signBody = "{`"request`": `"$challenge`"}"
 $sig = Invoke-RestMethod -Uri "$baseUrl/api/v1/barcode/qz/sign" -Method Post -Body $signBody -ContentType "application/json"
 Write-Host "  + Challenge:" $challenge
@@ -49,7 +49,7 @@ $printBody = @'
       "stockNo": "SKU-9901-XL",
       "barcode": "8901234567890",
       "product": "Executive Linen Shirt",
-      "brand": "Smriti Signature",
+      "brand": "TileFlow Signature",
       "style": "Slim Fit",
       "colour": "Sky Blue",
       "size": "42",

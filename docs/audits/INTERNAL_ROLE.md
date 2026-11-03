@@ -1,39 +1,34 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.1
   * Created    : 2026-07-10
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS - Internal Role-Based Dashboards Audit Report
+# TILEFLOW Retail OS - Internal Role-Based Dashboards Audit Report
 
 **Date:** 2026-07-10  
 **Authors:** Chief Technology Officer, Retail Operations Consultant, Product Manager, UX Expert & ERP Solution Architect  
-**Objective:** Perform a complete business operations and technical audit of internal role-based dashboards within SMRITI Retail OS to ensure high-velocity retail operations, inventory-first precision, and zero statutory accounting duplication.
+**Objective:** Perform a complete business operations and technical audit of internal role-based dashboards within TILEFLOW Retail OS to ensure high-velocity retail operations, inventory-first precision, and zero statutory accounting duplication.
 
 ---
 
 ## Executive Summary & Product Guardrails
 
-SMRITI Retail OS is designed as an **Inventory-First Retail Operations Platform**. In alignment with our product philosophy, SMRITI acts as the absolute operational source of truth, while **TallyPrime** remains the statutory financial book of record. 
+TILEFLOW Retail OS is designed as an **Inventory-First Retail Operations Platform**. In alignment with our product philosophy, TILEFLOW acts as the absolute operational source of truth, while **TallyPrime** remains the statutory financial book of record. 
 
 This audit evaluates the system's dashboard layer strictly through a **business-first lens**, examining how different internal store and head-office personas consume data, perform tasks, and resolve daily operational bottlenecks. We have evaluated each internal role against the **"Dumb User Test"**, retail speed (reducing click counts), and tactical automation opportunities.
 
@@ -314,7 +309,7 @@ Every recommendation has been challenged with three questions:
 
 ## Action Plan to Achieve 100% Production Readiness
 
-To push our overall SMRITI Retail OS dashboard layer to 100% production-readiness, we must execute the following targeted, low-risk refinements:
+To push our overall TILEFLOW Retail OS dashboard layer to 100% production-readiness, we must execute the following targeted, low-risk refinements:
 
 ### Phase 1: Navigation Cleanup & Role Isolation (Quick Win)
 - **Action:** Move "Document Series", "Print Studio", "Approval Matrix", and "Formula Registry" under a single nested dropdown category named **"Admin Settings"**.
@@ -346,4 +341,4 @@ To push our overall SMRITI Retail OS dashboard layer to 100% production-readines
 | **HR / Back-office** | 60% | Needs serial-level warranty search and active cashier shift rosters. | Low |
 | **Production / Bundles** | 20% | Lacks Bill of Material (BOM) triggers for assembled gift items. | Low |
 
-**Audit Recommendation:** Focus development resources first on **POS Speed**, **Warehouse Bin Picking**, and **Accounts Verification**. By isolating configurations from the retail floor and prioritizing scanner interactions over keyboards, SMRITI Retail OS will deliver unmatched operational speed and inventory fidelity.
+**Audit Recommendation:** Focus development resources first on **POS Speed**, **Warehouse Bin Picking**, and **Accounts Verification**. By isolating configurations from the retail floor and prioritizing scanner interactions over keyboards, TILEFLOW Retail OS will deliver unmatched operational speed and inventory fidelity.

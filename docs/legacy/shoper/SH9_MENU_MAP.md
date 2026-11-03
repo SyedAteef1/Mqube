@@ -1,6 +1,6 @@
-# SH9 Legacy Menu -> SMRITI Workspace Mapping
+# SH9 Legacy Menu -> TILEFLOW Workspace Mapping
 
-**Author:** Jawahar Ramkripal Mallah
+**Author:** Syed Ateef
 **Date:** 2026-08-27
 **Sprint:** 1 — ID Registry & Mapping Matrix
 **Status:** Sprint 1 COMPLETE
@@ -18,19 +18,19 @@
 
 | Status | Count | Meaning |
 |---|---|---|
-| MAPPED | 201 | Direct 1:1 equivalent exists in SMRITI |
-| MERGED | 27 | Consolidated into a broader SMRITI workspace |
-| REPLACED | 10 | SMRITI has a superior/different implementation |
-| DEPRECATED | 14 | Legacy-only (Tally, flat files) -- no SMRITI equivalent needed |
+| MAPPED | 201 | Direct 1:1 equivalent exists in TILEFLOW |
+| MERGED | 27 | Consolidated into a broader TILEFLOW workspace |
+| REPLACED | 10 | TILEFLOW has a superior/different implementation |
+| DEPRECATED | 14 | Legacy-only (Tally, flat files) -- no TILEFLOW equivalent needed |
 | NOT_APPLIC | 5 | Internal Shoper infrastructure, not a business action |
 | PENDING | 8 | Requires further analysis |
 
 ## CANONICAL_34_MENU_MATRIX Reconciliation
 
-The SMRITI codebase contains a hardcoded 34-item matrix.
+The TILEFLOW codebase contains a hardcoded 34-item matrix.
 This sprint confirms the following coverage against 265 real Shoper entries:
 
-| SMRITI Menu ID | Workspace | Shoper MnuNos Covered |
+| TILEFLOW Menu ID | Workspace | Shoper MnuNos Covered |
 |---|---|---|
 | `menu-accounting-sync` | Accounting Sync | 720, 740 |
 | `menu-approval-matrix` | Approval Matrix | 750 |
@@ -55,14 +55,14 @@ This sprint confirms the following coverage against 265 real Shoper entries:
 | `menu-stock-ledger` | Stock Ledger | 300, 350, 430, 450 |
 | `menu-supplier-mgmt` | Supplier Management | 600 |
 
-## GAP: SMRITI Menu Items With No Shoper Equivalent
+## GAP: TILEFLOW Menu Items With No Shoper Equivalent
 
-The following SMRITI menu items are NEW capabilities (not present in Shoper):
+The following TILEFLOW menu items are NEW capabilities (not present in Shoper):
 
-| SMRITI Menu ID | Purpose |
+| TILEFLOW Menu ID | Purpose |
 |---|---|
 | `menu-wiki` | Integrated documentation/knowledge base |
-| `menu-about-smriti` | SMRITI platform info |
+| `menu-about-tileflow` | TILEFLOW platform info |
 | `menu-dev-tracker` | Engineering task tracker |
 | `menu-psv` | Product-Service-Variant visibility rules |
 | `menu-ufe` | Universal Field Explorer |
@@ -71,7 +71,7 @@ The following SMRITI menu items are NEW capabilities (not present in Shoper):
 | `menu-loyalty` | Loyalty/Rewards workspace |
 | `menu-approval-matrix` | Multi-level approval workflows |
 
-These are genuine SMRITI innovations with no Shoper predecessor.
+These are genuine TILEFLOW innovations with no Shoper predecessor.
 They do NOT need legacy compatibility entries.
 
 ## Unclassified Entries (PENDING)
@@ -80,10 +80,10 @@ None. All entries classified.
 
 ## MultiInstance Flag Summary
 
-Shoper entries with `MultiInstance=1` require SMRITI to support
+Shoper entries with `MultiInstance=1` require TILEFLOW to support
 concurrent multi-session or multi-tab operation for those document types:
 
-| MnuNo | MenuOpt | MnuCap | SMRITI Action |
+| MnuNo | MenuOpt | MnuCap | TILEFLOW Action |
 |---|---|---|---|
 | 100 | 101 | Billing | NEW_TRANSACTION |
 | 500 | 581 | Activity Log | VIEW |

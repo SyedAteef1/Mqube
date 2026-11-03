@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Connectivity Trace Audit
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Connectivity Trace Audit
 -->
 
-# SMRITI RETAIL OS — UI → CODE CONNECTIVITY AUDIT
+# TILEFLOW RETAIL OS — UI → CODE CONNECTIVITY AUDIT
 
 ## 1. Tracing Methodology
 Every interactive element was traced through the complete execution chain:
@@ -43,7 +42,6 @@ USER ACTION ➔ COMPONENT ➔ EVENT HANDLER ➔ FRONTEND SERVICE ➔ API ➔ BAC
 
 ---
 
-## 3. Connectivity Classification Breakdown
 - **`CONNECTED`**: **100%** of core transactional workflows (POS, Sales, Purchase, Item Master, Customer, Reports, Audit).
 - **`PARTIAL`**: 0.
 - **`DISCONNECTED`**: 0.

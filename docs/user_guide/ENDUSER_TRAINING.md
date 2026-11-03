@@ -1,26 +1,21 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.2
   * Created    : 2026-07-18
   * Modified   : 2026-07-18
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
 # End-User Training — Company & Demo Details
@@ -39,14 +34,14 @@
 - Branch Code: **BR-01** (auto-generated during setup)
 
 ## Provisioned Staff Users
-- **SMRITI Owner** — Role: **Owner**
+- **TILEFLOW Owner** — Role: **Owner**
 - **Kishore Kumar** — Role: **Cashier**
 
 ## Demo Login Credentials
 - First SYSADMIN username: **admin**
 - First SYSADMIN password (temporary): **Admin@123**
 - Updated SYSADMIN password after the first login: **Admin@Secure2**
-- Email: **admin@smriti.local**
+- Email: **admin@tileflow.local**
 
 > Note: The initial password is only valid for the first login. The system requires the admin to change the password during first login.
 
@@ -69,6 +64,6 @@
 - The demo company and users shown here are the current local provisioned state.
 
 ## Common Troubleshooting
-- If login fails, clear `localStorage` keys `smriti_jwt_token` and `smriti_session_token` and reload.
+- If login fails, clear `localStorage` keys `tileflow_jwt_token` and `tileflow_session_token` and reload.
 - If backend startup fails, verify Python 3.11 and required packages are installed.
 - If bootstrap fails due to schema issues, ensure the database column `users.status` is at least `varchar(50)`.

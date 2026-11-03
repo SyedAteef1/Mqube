@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Sprint 35: Section 7 Shared Business Engines: Documents Engine Completion
 
 ## 1. Purpose
-This sprint delivers the authoritative **SMRITI Documents Engine** fulfilling **Blueprint Section 7: Shared Business Engines**. It establishes gapless sequential document numbering series with row-level locks, versioned layout configuration templates with cryptographic configuration hashes, dynamic rendering and immutable artifact persistence with SHA256 integrity verification, print job dispatching with reprint tracking and statutory watermarking, and governed document lifecycle state machine management.
+This sprint delivers the authoritative **TILEFLOW Documents Engine** fulfilling **Blueprint Section 7: Shared Business Engines**. It establishes gapless sequential document numbering series with row-level locks, versioned layout configuration templates with cryptographic configuration hashes, dynamic rendering and immutable artifact persistence with SHA256 integrity verification, print job dispatching with reprint tracking and statutory watermarking, and governed document lifecycle state machine management.
 
 ---
 
@@ -93,8 +92,8 @@ tests/t_documents.py::test_api_documents_endpoints PASSED                [100%]
 
 ## 9. Verification Results
 - `6/6 tests green` in `t_documents.py`.
-- `93/93 full platform regression tests green` across all SMRITI modules.
-- SMRITI Naming Guard verified: `0 violations`.
+- `93/93 full platform regression tests green` across all TILEFLOW modules.
+- TILEFLOW Naming Guard verified: `0 violations`.
 - Evidence Level: `A` (Full Automated Suite + Concurrency-Safe DB Test).
 
 ---
@@ -116,4 +115,4 @@ tests/t_documents.py::test_api_documents_endpoints PASSED                [100%]
 ---
 
 ## 13. Related RFCs
-- `RFC-DOC-001`: SMRITI Universal Document & Print Engine Specification.
+- `RFC-DOC-001`: TILEFLOW Universal Document & Print Engine Specification.

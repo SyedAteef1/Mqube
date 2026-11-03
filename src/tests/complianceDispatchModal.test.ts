@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.78.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import {
   ComplianceDispatchModal,
@@ -19,14 +5,14 @@ import {
 } from "../components/sales/components/ComplianceDispatchModal";
 import * as apiFetchModule from "../lib/apiFetchV1";
 
-describe("SMRITI SGIP Statutory Dispatch Gateway (E-Invoice & E-Way Bill UI)", () => {
+describe("MQube SGIP Statutory Dispatch Gateway (E-Invoice & E-Way Bill UI)", () => {
   beforeEach(() => {
     vi.restoreAllMocks();
   });
 
   const sampleInvoice: InvoiceComplianceData = {
     invoice_id: "INV-2026-001",
-    doc_no: "SMRITI/2026/001",
+    doc_no: "MQube/2026/001",
     doc_type: "INV",
     doc_date: "2026-08-28",
     supplier_gstin: "27AABCU9603R1ZM",
@@ -47,7 +33,7 @@ describe("SMRITI SGIP Statutory Dispatch Gateway (E-Invoice & E-Way Bill UI)", (
   });
 
   it("STEP 2: should validate InvoiceComplianceData model properties", () => {
-    expect(sampleInvoice.doc_no).toBe("SMRITI/2026/001");
+    expect(sampleInvoice.doc_no).toBe("MQube/2026/001");
     expect(sampleInvoice.total_invoice_value).toBe(12320.0);
     expect(sampleInvoice.supplier_gstin).toBe("27AABCU9603R1ZM");
   });
@@ -57,7 +43,7 @@ describe("SMRITI SGIP Statutory Dispatch Gateway (E-Invoice & E-Way Bill UI)", (
       status: "SUCCESS",
       irn: "7f8b9c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b",
       ack_no: "112610998877665",
-      signed_qr_code: "SMRITI_SIGNED_QR_MOCK_PAYLOAD_v1.03",
+      signed_qr_code: "TILEFLOW_SIGNED_QR_MOCK_PAYLOAD_v1.03",
     });
 
     const res = await apiFetchModule.apiFetchV1("/compliance/einvoice/generate", {

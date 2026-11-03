@@ -15,14 +15,14 @@
 
 ## Repository fingerprint
 - Commit SHA: `617570892cd1e5f0169c4aa1429b5e8cffbe620a` [VERIFIED]
-- Branch: `smritiNX` [VERIFIED]
+- Branch: `tileflowNX` [VERIFIED]
 - Timestamp: not recorded from git command at creation time, exact fingerprint used. [SELF-REPORTED]
 
 ## Observed metadata systems
 - `src/masters_registry.ts` — static master schema definitions, global audit fields, and `MASTER_REGISTRY` data used by the master management UI. [VERIFIED via `src/masters_registry.ts` and `src/components/MasterMgmtTab.tsx` import evidence]
 - `src/services/metadataRegistry.ts` — runtime in-memory registry for modules, screens, reports, forms, APIs, databases, and print templates. [VERIFIED via `src/services/metadataRegistry.ts` definition lines]
-- `src/components/SmritiBaseModule.tsx` — active runtime registration of module metadata into `MetadataRegistry`. [VERIFIED via `src/components/SmritiBaseModule.tsx:49,67`]
-- `src/components/AboutSmritiTab.tsx` — runtime consumer of `MetadataRegistry.getModules()` and backend `/metadata` application metadata endpoint. [VERIFIED via `src/components/AboutSmritiTab.tsx:73,83`]
+- `src/components/TileFlowBaseModule.tsx` — active runtime registration of module metadata into `MetadataRegistry`. [VERIFIED via `src/components/TileFlowBaseModule.tsx:49,67`]
+- `src/components/AboutTileFlowTab.tsx` — runtime consumer of `MetadataRegistry.getModules()` and backend `/metadata` application metadata endpoint. [VERIFIED via `src/components/AboutTileFlowTab.tsx:73,83`]
 - `backend/app/api/v1/metadata.py` — backend system metadata endpoint returning product name, version, edition, and organization. [VERIFIED via `backend/app/api/v1/metadata.py:41-42`]
 - `src/print_engine/print_store.tsx` + `src/print_engine/PrintStudioTab.tsx` — separate print engine provider and template registration system. [VERIFIED via `src/print_engine/print_store.tsx` and `src/print_engine/PrintStudioTab.tsx:61-85`]
 - `src/services/numberingEngine.ts` + `src/components/DocumentSeriesTab.tsx` — document numbering engine and UI that consumes numbering metadata. [VERIFIED via `src/services/numberingEngine.ts` and `src/components/DocumentSeriesTab.tsx:57-59`]
@@ -41,7 +41,7 @@
 - Runtime getters `getModules()`, `getScreens()`, `getReports()`, `getForms()`, `getApis()`, `getDatabases()`, and `getPrintTemplates()` are all used internally by `getAllMetadata()` at `src/services/metadataRegistry.ts:186-194`. [VERIFIED]
 
 ### Active registration evidence
-- `MetadataRegistry.registerModule` is invoked in `src/components/SmritiBaseModule.tsx:49` and `src/components/SmritiBaseModule.tsx:67`. [VERIFIED]
+- `MetadataRegistry.registerModule` is invoked in `src/components/TileFlowBaseModule.tsx:49` and `src/components/TileFlowBaseModule.tsx:67`. [VERIFIED]
 - No external call sites were found for:
   - `MetadataRegistry.registerScreen` [VERIFIED via grep search output]
   - `MetadataRegistry.registerReport` [VERIFIED via grep search output]
@@ -51,9 +51,9 @@
   - `MetadataRegistry.registerPrintTemplate` [VERIFIED via grep search output]
 
 ### Runtime metadata consumption evidence
-- `MetadataRegistry.getModules()` is consumed in `src/components/AboutSmritiTab.tsx:83`. [VERIFIED]
-- `AboutSmritiTab.tsx` also fetches backend metadata from `apiFetchV1("/metadata")` at `src/components/AboutSmritiTab.tsx:73`. [VERIFIED]
-- `AboutSmritiWidget.tsx` fetches the same backend metadata endpoint at `src/components/AboutSmritiWidget.tsx`. [VERIFIED]
+- `MetadataRegistry.getModules()` is consumed in `src/components/AboutTileFlowTab.tsx:83`. [VERIFIED]
+- `AboutTileFlowTab.tsx` also fetches backend metadata from `apiFetchV1("/metadata")` at `src/components/AboutTileFlowTab.tsx:73`. [VERIFIED]
+- `AboutTileFlowWidget.tsx` fetches the same backend metadata endpoint at `src/components/AboutTileFlowWidget.tsx`. [VERIFIED]
 - No observed runtime consumers of `MetadataRegistry.getScreens()`, `getReports()`, `getForms()`, `getApis()`, `getDatabases()`, or `getPrintTemplates()` were found in the code search results. [VERIFIED]
 
 ### Backend metadata endpoint evidence
@@ -127,8 +127,8 @@
 
 ### Runtime metadata registry ownership
 - `src/services/metadataRegistry.ts` owns the runtime registry type definitions and methods. [VERIFIED]
-- The only confirmed runtime registration path is module metadata via `SmritiBaseModule`. [VERIFIED]
-- `AboutSmritiTab.tsx` is the only confirmed runtime consumer of `MetadataRegistry.getModules()`. [VERIFIED]
+- The only confirmed runtime registration path is module metadata via `TileFlowBaseModule`. [VERIFIED]
+- `AboutTileFlowTab.tsx` is the only confirmed runtime consumer of `MetadataRegistry.getModules()`. [VERIFIED]
 
 ### Print and report engine ownership
 - `src/print_engine/print_store.tsx` owns print runtime metadata and operation state. [VERIFIED]
@@ -143,6 +143,6 @@
 
 | Finding | Status | Citation | Notes |
 |---|---|---|---|
-| MetadataRegistry dead-method finding | CONFIRMED | `src/services/metadataRegistry.ts:130-154`, `src/components/SmritiBaseModule.tsx:49,67` | `registerModule` is active; other `register*` methods are defined but have no external call sites. |
+| MetadataRegistry dead-method finding | CONFIRMED | `src/services/metadataRegistry.ts:130-154`, `src/components/TileFlowBaseModule.tsx:49,67` | `registerModule` is active; other `register*` methods are defined but have no external call sites. |
 | WorkflowEngine zero-importer finding | CONFIRMED | `src/services/workflowEngine.ts:36`; grep output for `WorkflowEngine` returned no additional imports. | WorkflowEngine exists as a definition only in the current repository snapshot. |
 | `masters_registry.ts` vs. Customer bespoke-pattern finding | CONFIRMED | `src/masters_registry.ts:26-45`; `src/types.ts:411,465`; `src/services/customerValidation.ts:21-45`; `src/services/custPolicyEngine.ts:40-88` | Static master metadata schema is present in `masters_registry.ts`; concrete customer business logic and shape are present in separate runtime customer service files. |

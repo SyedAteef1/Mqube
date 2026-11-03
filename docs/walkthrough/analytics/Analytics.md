@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.23.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Analytics & Intelligence Plane + Compliance Integration Hub (Sections 11 & 12)
 
 ## 1. Purpose
-This walkthrough details the implementation of Section 11 (Analytics & Intelligence Plane) and Section 12 (Compliance, Integration Hub & Audit Completion) of the SMRITI Enterprise Blueprint. It establishes high-speed downstream analytical facts, category profitability rollups, standard TallyPrime XML export, and cryptographic SHA-256 tamper-evident compliance audit logs.
+This walkthrough details the implementation of Section 11 (Analytics & Intelligence Plane) and Section 12 (Compliance, Integration Hub & Audit Completion) of the TILEFLOW Enterprise Blueprint. It establishes high-speed downstream analytical facts, category profitability rollups, standard TallyPrime XML export, and cryptographic SHA-256 tamper-evident compliance audit logs.
 
 ## 2. Scope
 - Materialized fact persistence in `analytics_daily_sales_facts` via `v1367_analytics_and_integration`.
@@ -59,7 +58,7 @@ This walkthrough details the implementation of Section 11 (Analytics & Intellige
 - Standard Tally interchange allows retail operations to run modern POS while maintaining existing audit and compliance accounting workflows.
 
 ## 7. Implementation Summary
-- **Migration `v1367`**: Applied to `smriti001`, `smriti002`, and `smritisys` databases.
+- **Migration `v1367`**: Applied to `tileflow001`, `tileflow002`, and `tileflowsys` databases.
 - **Aggregation Engine**: Computes invoice counts, revenue, taxes, payment mode distribution, COGS, and profit margins.
 - **Tally XML Engine**: Supports B2B/B2C Sales Invoices and Double-Entry General Ledger Journal Vouchers.
 - **Audit Engine**: Records append-only audit events with integrity verification methods.

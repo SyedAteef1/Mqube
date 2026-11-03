@@ -1,17 +1,16 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : ? SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: SMRITI RUNTIME OWNERSHIP CERTIFICATION FORENSIC REPORT
+  Copyright    : ? tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: TILEFLOW RUNTIME OWNERSHIP CERTIFICATION FORENSIC REPORT
 -->
 
-# SMRITI RETAIL OS ? RUNTIME OWNERSHIP CERTIFICATION FORENSIC AUDIT
+# TILEFLOW RETAIL OS ? RUNTIME OWNERSHIP CERTIFICATION FORENSIC AUDIT
 
 **Audit Protocol:** Comprehensive Runtime Ownership & Multi-Company Architecture Enforcement Audit  
 **Canonical Specification Reference:** [`docs/architecture/MULTI_COMPANY_2.md`](file:///F:/SMRITRretailNX/docs/architecture/MULTI_COMPANY_2.md)  
@@ -19,10 +18,10 @@
 **Live PostgreSQL Engine:** PostgreSQL 15.18 on x86_64-pc-linux-musl  
 **Date:** 2026-08-17  
 **Official Verification Status:**
-- **SCHEMA RECONCILIATION:** **`VERIFIED`** (283 Base Tables + 1 View in `smritisys`; 99 Base Tables in `smriti001`/`smriti002`)
+- **SCHEMA RECONCILIATION:** **`VERIFIED`** (283 Base Tables + 1 View in `tileflowsys`; 99 Base Tables in `tileflow001`/`tileflow002`)
 - **ARCHITECTURE STATUS:** **`FROZEN`**
 - **RUNTIME ROUTING:** **`VERIFIED`** (0 Unauthorized Bypasses; `CompanyDatabaseResolver` is Sole Router)
-- **RUNTIME OWNERSHIP:** **`EVIDENCE-VERIFIED`** (0 Operational Writes in `smritisys`; 0 Cross-Company Leakage)
+- **RUNTIME OWNERSHIP:** **`EVIDENCE-VERIFIED`** (0 Operational Writes in `tileflowsys`; 0 Cross-Company Leakage)
 - **IMPLEMENTATION STATUS:** **`PARTIALLY VERIFIED`** (External Commerce Connectors & Physical Printers Pending)
 
 ---
@@ -32,12 +31,12 @@
 | Audit Area | Governance Rule | Expected Architectural Rule | Forensic Evidence Result | Status |
 |---|---|---|---|---|
 | **A. Connection Routing** | Rule 4 | `CompanyDatabaseResolver` is sole router | 14 connection sites scanned; 0 unauthorized engine bypasses | **VERIFIED** |
-| **B. Runtime Write Ownership** | Rule 1, 2 | Writes isolate to `smriti<Code>`; 0 writes to `smritisys` | Live test: 8 domain tables written in `smriti001`; 0 in `smritisys`; 0 in `smriti002` | **VERIFIED** |
+| **B. Runtime Write Ownership** | Rule 1, 2 | Writes isolate to `tileflow<Code>`; 0 writes to `tileflowsys` | Live test: 8 domain tables written in `tileflow001`; 0 in `tileflowsys`; 0 in `tileflow002` | **VERIFIED** |
 | **C. Runtime Read Ownership** | Rule 2, 4 | Read queries resolve to assigned Company DB | Context resolution via `get_company_database_session` verified | **VERIFIED** |
-| **D. smritisys Operational Tables** | Rule 1, 2 | 79 operational tables in `smritisys` are non-runtime residue | 0 operational writes recorded in `smritisys` across multi-domain transactions | **VERIFIED** |
+| **D. tileflowsys Operational Tables** | Rule 1, 2 | 79 operational tables in `tileflowsys` are non-runtime residue | 0 operational writes recorded in `tileflowsys` across multi-domain transactions | **VERIFIED** |
 | **E. 179 Retirement Tables** | Rule 1 | 179 non-001 tables are inactive scaffolding | 163 zero code refs; 16 legacy models; 0 active runtime transactional writes | **VERIFIED** |
-| **F. PSV Ownership** | Rule 6 | 100% Company-Local shadow projection; `SmritiPSV` dropped | Projections in `smriti001`; 0 writes in `smritisys`; `SmritiPSV` does not exist | **VERIFIED** |
-| **G. eCommerce Ownership** | Rule 11 | Company-local orders/reservations; `SmritiEcom` dropped | Ecom reservations route to `smriti001`; `SmritiEcom` does not exist | **VERIFIED** |
+| **F. PSV Ownership** | Rule 6 | 100% Company-Local shadow projection; `TileFlowPSV` dropped | Projections in `tileflow001`; 0 writes in `tileflowsys`; `TileFlowPSV` does not exist | **VERIFIED** |
+| **G. eCommerce Ownership** | Rule 11 | Company-local orders/reservations; `TileFlowEcom` dropped | Ecom reservations route to `tileflow001`; `TileFlowEcom` does not exist | **VERIFIED** |
 | **H. Tenant Isolation Routing** | Rule 3 | Physical DB isolation enforced; not `tenant_id` filtering | 0 logical tenant routing filter bypasses in `backend/app/api` | **VERIFIED** |
 | **I. Static Master Ownership** | Rule 7 | Central masters vs Company local cache | Central policy for banks/identities; transactional state in Company DB | **VERIFIED** |
 | **J. Regression Test Suite** | Rule 8 | Full regression test suite passing with literal evidence | `pytest tests/`: 158 passed; `pytest app/tests/`: 178 passed (336/336 PASS) | **VERIFIED** |
@@ -50,7 +49,7 @@
 - **Methodology:** Static source code AST and regex scan across `backend/app/` for `create_engine`, `create_async_engine`, `sessionmaker`, and `async_sessionmaker`.
 - **Findings:**
   - `backend/app/db/connection_manager.py` (Lines 18, 32, 39, 59, 66): Core pooling engine backing `CompanyDatabaseResolver`.
-  - `backend/app/db/session.py` (Lines 26, 30, 39): Default session factory for Control Plane `smritisys`.
+  - `backend/app/db/session.py` (Lines 26, 30, 39): Default session factory for Control Plane `tileflowsys`.
   - `backend/app/tests/conftest.py` & `t_tenant_isolate.py`: Isolated test harness factories.
   - **Unauthorized Business Module Engine Creation Sites:** **`0`**.
   - **Unauthorized API Router Engine Creation Sites:** **`0`**.
@@ -63,47 +62,47 @@
   ================================================================================
   STARTING CONTROLLED MULTI-DOMAIN TRANSACTIONAL RUNTIME WRITE PROOF
   ================================================================================
-  ? Successfully executed full-domain operations on smriti001 (Sales, Purchase, Stock, Ecom, PSV, Payment, Customer, Supplier).
+  ? Successfully executed full-domain operations on tileflow001 (Sales, Purchase, Stock, Ecom, PSV, Payment, Customer, Supplier).
 
   --- RUNTIME WRITE PROOF VERIFICATION RESULTS ---
-  1. smritisys operational mutations : {} (Count: 0)
-  2. smriti001 operational mutations : {'customers': 1, 'integration_outbox_events': 1, 'psv_stock_events': 1, 'purchase_orders': 1, 'sales_orders': 1, 'stock_movements': 1, 'supplier_payments': 1, 'suppliers': 1} (Count: 8)
-  3. smriti002 cross-company leakage : {} (Count: 0)
+  1. tileflowsys operational mutations : {} (Count: 0)
+  2. tileflow001 operational mutations : {'customers': 1, 'integration_outbox_events': 1, 'psv_stock_events': 1, 'purchase_orders': 1, 'sales_orders': 1, 'stock_movements': 1, 'supplier_payments': 1, 'suppliers': 1} (Count: 8)
+  3. tileflow002 cross-company leakage : {} (Count: 0)
 
-  ? ZERO MUTATIONS in smritisys (Control Plane non-mutation verified).
-  ? 8 DOMAIN TABLES MUTATED in smriti001 as expected (Authoritative write verified).
-  ? ZERO CROSS-COMPANY LEAKAGE in smriti002 (Physical multi-company isolation verified).
+  ? ZERO MUTATIONS in tileflowsys (Control Plane non-mutation verified).
+  ? 8 DOMAIN TABLES MUTATED in tileflow001 as expected (Authoritative write verified).
+  ? ZERO CROSS-COMPANY LEAKAGE in tileflow002 (Physical multi-company isolation verified).
   ================================================================================
   ```
 
 ### C. Runtime Read Ownership Audit
 - Every operational query in FastAPI endpoints (`backend/app/api/v1/`) depends on `get_company_database_session(company_id)`, which invokes `CompanyDatabaseResolver.get_session_factory_by_code(company_id)`.
-- Physical PostgreSQL DSN is dynamically looked up in `smritisys.company_database_registries` and pooled in `ConnectionManager`.
-- Reads execute directly on `smriti<Code>` and never query `smritisys` for operational business records.
+- Physical PostgreSQL DSN is dynamically looked up in `tileflowsys.company_database_registries` and pooled in `ConnectionManager`.
+- Reads execute directly on `tileflow<Code>` and never query `tileflowsys` for operational business records.
 
-### D. `smritisys` Operational Table Audit (79 Operational Tables in `smritisys`)
-- In `smritisys`, the 79 tables cloned to Company DB (`customers`, `products`, `sales_invoices`, `sales_orders`, `purchase_orders`, `stock_movements`, etc.) have **0 runtime writes** from production business endpoints.
-- They serve strictly as **historical schema residue / prototype scaffolding** in `smritisys`.
-- **Classification in `smritisys`:** `RETIRED_IN_SMRITISYS` / `SCHEMA_RESIDUE_NON_OPERATIONAL`.
-- Total non-operational / scaffolding tables in `smritisys` = `79 + 179 = 258 tables`.
+### D. `tileflowsys` Operational Table Audit (79 Operational Tables in `tileflowsys`)
+- In `tileflowsys`, the 79 tables cloned to Company DB (`customers`, `products`, `sales_invoices`, `sales_orders`, `purchase_orders`, `stock_movements`, etc.) have **0 runtime writes** from production business endpoints.
+- They serve strictly as **historical schema residue / prototype scaffolding** in `tileflowsys`.
+- **Classification in `tileflowsys`:** `RETIRED_IN_TILEFLOWSYS` / `SCHEMA_RESIDUE_NON_OPERATIONAL`.
+- Total non-operational / scaffolding tables in `tileflowsys` = `79 + 179 = 258 tables`.
 
 ### E. 179 Retirement Candidate Tables Audit
 - **Static Code Scan across 469 files:**
   - **16 tables** referenced in legacy models/migrations/scanners (e.g. `crm_leads`, `financial_year`, `tenants`, `audit_logs`, `pos_transactions`, `company_tax_profiles`, `sync_queue`).
   - **163 tables** with **zero code references** (pure prototype schema residue).
 - **Runtime Activity:** `READ ACTIVITY NOT DIRECTLY OBSERVED` (0 active runtime transactional writes).
-- **Safe in `smritisys`:** `YES` (Preserved scaffolding without side effects).
+- **Safe in `tileflowsys`:** `YES` (Preserved scaffolding without side effects).
 
 ### F. Party Stock Visibility (PSV) Architecture Audit
-- **Physical Databases:** `smriti001` has active `psv_parties`, `psv_sku_tracking`, `psv_stock_balances`, `psv_stock_events`.
-- **Control Plane:** `smritisys` contains only `control_psv_configs` (toggle flag) and inactive schema residue (0 writes).
-- **Shared DB:** `SmritiPSV` is **DROPPED and PROHIBITED**.
+- **Physical Databases:** `tileflow001` has active `psv_parties`, `psv_sku_tracking`, `psv_stock_balances`, `psv_stock_events`.
+- **Control Plane:** `tileflowsys` contains only `control_psv_configs` (toggle flag) and inactive schema residue (0 writes).
+- **Shared DB:** `TileFlowPSV` is **DROPPED and PROHIBITED**.
 - **Authority:** PSV is a **shadow projection layer** and cannot mutate the core inventory authority (`stock_movements`).
 
 ### G. eCommerce / Omnichannel Architecture Audit
-- **Resolution Flow:** Webhook Ingress ? `CompanyDatabaseResolver` ? `smriti<Code>` (`sales_orders`, `stock_movements`, `integration_outbox_events`).
-- **Control Plane Writes:** Exactly **0 writes to `smritisys`**.
-- **Shared DB:** `SmritiEcom` is **DROPPED and PROHIBITED**.
+- **Resolution Flow:** Webhook Ingress ? `CompanyDatabaseResolver` ? `tileflow<Code>` (`sales_orders`, `stock_movements`, `integration_outbox_events`).
+- **Control Plane Writes:** Exactly **0 writes to `tileflowsys`**.
+- **Shared DB:** `TileFlowEcom` is **DROPPED and PROHIBITED**.
 - **External Connectors:**
   - `Shopify`: `NOT IMPLEMENTED / UNVERIFIED`
   - `WooCommerce`: `NOT IMPLEMENTED / UNVERIFIED`
@@ -115,7 +114,7 @@
 - **Results:** **`0 bypasses found`**. Multi-company isolation is enforced at the physical database layer.
 
 ### I. Static Master Ownership Audit
-- **Central Masters (4 tables):** `barcode_providers`, `identity_rules`, `product_identities`, `smriti_banks` (20 bank IFSC entries). Control plane is the **Authoritative Master**; company DB copies act as **Local Snapshots / Caches**.
+- **Central Masters (4 tables):** `barcode_providers`, `identity_rules`, `product_identities`, `tileflow_banks` (20 bank IFSC entries). Control plane is the **Authoritative Master**; company DB copies act as **Local Snapshots / Caches**.
 - Central identity generation never becomes company transactional authority.
 
 ### J. Literal Regression Test Suite Execution Output
@@ -133,30 +132,30 @@
 
 ```text
 ================================================================================
-SMRITI RETAIL OS ? RUNTIME OWNERSHIP CERTIFICATION VERDICT
+TILEFLOW RETAIL OS ? RUNTIME OWNERSHIP CERTIFICATION VERDICT
 ================================================================================
 
 SCHEMA RECONCILIATION    : VERIFIED
-  - smritisys            : 283 Base Tables + 1 SQL View = 284 Relations
-  - smriti001            : 99 Base Tables
-  - smriti002            : 99 Base Tables
+  - tileflowsys            : 283 Base Tables + 1 SQL View = 284 Relations
+  - tileflow001            : 99 Base Tables
+  - tileflow002            : 99 Base Tables
 
 ARCHITECTURE STATUS      : FROZEN
-  - smritisys            : Control Plane Only (13 Core Tables + 4 Central + 4 Report)
-  - smriti<Code>         : Dedicated Company Operational Database (99 Tables)
+  - tileflowsys            : Control Plane Only (13 Core Tables + 4 Central + 4 Report)
+  - tileflow<Code>         : Dedicated Company Operational Database (99 Tables)
   - PSV                  : Company-Local Shadow Visibility Layer
   - eCommerce            : Company-Local Core Sales Channel
   - Router               : CompanyDatabaseResolver (Exclusive Authoritative Router)
-  - Shared DBs           : SmritiPSV & SmritiEcom PROHIBITED / DROPPED
+  - Shared DBs           : TileFlowPSV & TileFlowEcom PROHIBITED / DROPPED
 
 RUNTIME ROUTING          : VERIFIED
   - Engine Creation Sites: 14 Validated Sites (0 Unauthorized Bypasses)
   - Tenant ID Routing    : 0 Logical Filter Bypasses
 
 RUNTIME OWNERSHIP        : EVIDENCE-VERIFIED
-  - smritisys Writes     : EXACTLY 0 Operational Mutations (Verified via live test)
-  - smriti001 Writes     : 8 Domain Tables Mutated as Expected (Verified)
-  - smriti002 Leakage    : EXACTLY 0 Cross-Company Mutations (Verified)
+  - tileflowsys Writes     : EXACTLY 0 Operational Mutations (Verified via live test)
+  - tileflow001 Writes     : 8 Domain Tables Mutated as Expected (Verified)
+  - tileflow002 Leakage    : EXACTLY 0 Cross-Company Mutations (Verified)
 
 IMPLEMENTATION STATUS    : PARTIALLY VERIFIED
   - External Connectors  : Shopify, WooCommerce, Marketplaces = NOT IMPLEMENTED

@@ -1,26 +1,25 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-23
   Modified     : 2026-08-23
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Vertical Slice 3 — Sales, POS, and Inventory Lifecycle & Ledger Unification
 
 ## 1. Purpose
-Unify B2B Sales Invoicing, POS Checkout, and Inventory Lifecycle posting against the canonical `stock_movements` operational ledger in the SMRITI tenant data plane (`smritiXXX`). This guarantees that every confirmed invoice and POS transaction atomically posts debit entries to `stock_movements`, decrements batch stocks, immutably snapshots statutory tax/pricing calculations, and enables audited reversal idempotency upon cancellation.
+Unify B2B Sales Invoicing, POS Checkout, and Inventory Lifecycle posting against the canonical `stock_movements` operational ledger in the TILEFLOW tenant data plane (`tileflowXXX`). This guarantees that every confirmed invoice and POS transaction atomically posts debit entries to `stock_movements`, decrements batch stocks, immutably snapshots statutory tax/pricing calculations, and enables audited reversal idempotency upon cancellation.
 
 ---
 
 ## 2. Scope
-- **Tenant Data Plane (`smritiXXX`) Only**: All invoice headers, line items, and stock movements reside strictly in tenant databases.
+- **Tenant Data Plane (`tileflowXXX`) Only**: All invoice headers, line items, and stock movements reside strictly in tenant databases.
 - **Inviolable Stock Truth**: `stock_movements` remains the sole operational source of truth.
 - **Immutable Transaction Snapshotting**: Permanent line-item capture of `taxable_value`, `gst_rate`, `cgst_amount`, `sgst_amount`, `igst_amount`, `price`, `mrp`, and `disc_pct`.
 - **Audited Idempotent Reversals**: Invoice cancellation generates matching `RETURN_INWARD` movements and restores batch/product inventory.

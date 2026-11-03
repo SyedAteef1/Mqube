@@ -1,43 +1,38 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.1
   * Created    : 2026-07-10
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS - Product Measurement & Variant Management Audit
+# TILEFLOW Retail OS - Product Measurement & Variant Management Audit
 
 **Date:** 2026-07-10  
 **Auditors:** Chief Technology Officer, Senior Retail ERP Product Architect & Inventory Domain Expert  
-**Objective:** Audit the product measurement, size, unit conversion, and variant configuration frameworks across SMRITI Retail OS to ensure robust support for diverse retail verticals (garments, footwear, tiles, electricals, hardware, grocery, paint, jewelry) while maintaining absolute inventory-first operational speed and zero statutory accounting duplication.
+**Objective:** Audit the product measurement, size, unit conversion, and variant configuration frameworks across TILEFLOW Retail OS to ensure robust support for diverse retail verticals (garments, footwear, tiles, electricals, hardware, grocery, paint, jewelry) while maintaining absolute inventory-first operational speed and zero statutory accounting duplication.
 
 ---
 
 ## Executive Summary & Design Philosophy
 
-In modern retail, a single-item catalog model (e.g., individual item master entries for every color/size combination) causes catastrophic administrative bloat and inaccurate stock reports. SMRITI Retail OS currently implements a highly advanced, **data-driven dynamic extensible attribute architecture**. 
+In modern retail, a single-item catalog model (e.g., individual item master entries for every color/size combination) causes catastrophic administrative bloat and inaccurate stock reports. TILEFLOW Retail OS currently implements a highly advanced, **data-driven dynamic extensible attribute architecture**. 
 
-Instead of hardcoding standard variant selectors (like size and color) into database schemas, SMRITI leverages **Attribute Definitions**, **Attribute Groups**, and **Variant Templates** to auto-generate style code matrices and register SKU variants.
+Instead of hardcoding standard variant selectors (like size and color) into database schemas, TILEFLOW leverages **Attribute Definitions**, **Attribute Groups**, and **Variant Templates** to auto-generate style code matrices and register SKU variants.
 
-However, to support complex retail industries beyond simple apparel, SMRITI must scale this dynamic structure into a unified **Product Measurements & Variants System**. This audit assesses current capabilities, flags gaps, and outlines a practical production-grade roadmap to support dimensional inventory, alternate units of measure (UOM), and variant-level tracking rules.
+However, to support complex retail industries beyond simple apparel, TILEFLOW must scale this dynamic structure into a unified **Product Measurements & Variants System**. This audit assesses current capabilities, flags gaps, and outlines a practical production-grade roadmap to support dimensional inventory, alternate units of measure (UOM), and variant-level tracking rules.
 
 ---
 
@@ -48,7 +43,7 @@ However, to support complex retail industries beyond simple apparel, SMRITI must
 
 * **Current Implementation:** 
   - Products have a static `category` mapping and high-level attributes.
-  - SMRITI supports a basic `weightGrams` attribute and a `pricingMode` of `"Weight-based"`, primarily configured to support precious metals (rate/g) or simple weighted items.
+  - TILEFLOW supports a basic `weightGrams` attribute and a `pricingMode` of `"Weight-based"`, primarily configured to support precious metals (rate/g) or simple weighted items.
 * **Missing Capability:** 
   - A unified, structured **Base Unit of Measure (Base UOM)** and **Transaction UOM** framework. 
   - No out-of-the-box support for dimensional quantities (e.g., selling tiles by the square foot, paint by volume packs, or electrical wire by rolls).
@@ -74,7 +69,7 @@ However, to support complex retail industries beyond simple apparel, SMRITI must
 *Sizing is highly industry-specific. Garments require alpha-sizes (XS–XXXL); shoes require UK/US numerical shoe sizes; jewelry requires ring sizes; pipes require standard diameters, and fabric demands width/length dimensions.*
 
 * **Current Implementation:** 
-  - SMRITI handles sizes dynamically through `AttributeDefinitions` (dataType: `"select"`, isVariantDimension: `true`, with custom `validValues` arrays).
+  - TILEFLOW handles sizes dynamically through `AttributeDefinitions` (dataType: `"select"`, isVariantDimension: `true`, with custom `validValues` arrays).
   - The `VariantTemplateSection` lets the user select an attribute group, auto-pairing columns and rows (e.g., Size vs. Color) to build a spreadsheet matrix.
 * **Missing Capability:** 
   - Industry-standard **Predefined Size Sets**. Admins must currently type size options manually as comma-separated lists for every new attribute definition, which leads to transcription errors (e.g., "M, L, XL" vs. "Medium, Large, X-Large").
@@ -111,10 +106,10 @@ However, to support complex retail industries beyond simple apparel, SMRITI must
 * **Merge:** None.
 * **Add:** 
   - **Dynamic Multi-Dimensional List Builder:** If an Attribute Group has 3 or more variant-defining attributes, replace the 2D grid matrix automatically with a flat, clean tabular generator list.
-* **Business Reason:** SMRITI should remain clean and fast. While a 2D matrix (Size x Color) is perfect for 90% of retail apparel, hardware and paint distributors need a tabular list to quickly map variations across Size, Base Type, and Gloss Finish.
+* **Business Reason:** TILEFLOW should remain clean and fast. While a 2D matrix (Size x Color) is perfect for 90% of retail apparel, hardware and paint distributors need a tabular list to quickly map variations across Size, Base Type, and Gloss Finish.
 * **Priority:** Medium
 * **Estimated Effort:** Medium
-* **Acceptance Criteria:** SMRITI switches automatically between a 2D Spreadsheet Matrix (for 2 variant dimensions) and a linear list-based generator (for 3+ variant dimensions) based on the active attribute group.
+* **Acceptance Criteria:** TILEFLOW switches automatically between a 2D Spreadsheet Matrix (for 2 variant dimensions) and a linear list-based generator (for 3+ variant dimensions) based on the active attribute group.
 * **Production Readiness Score:** **78/100**
 
 ---
@@ -123,10 +118,10 @@ However, to support complex retail industries beyond simple apparel, SMRITI must
 *Each unique product variant acts as an independent SKU on the store floor with its own pricing, stock level, barcode, purchase price, serial number (IMEI), or pharmaceutical batch.*
 
 * **Current Implementation:** 
-  - SMRITI assigns unique SKU codes, individual prices, MRPs, and stock levels to generated variants.
+  - TILEFLOW assigns unique SKU codes, individual prices, MRPs, and stock levels to generated variants.
   - Supports separate tracking modes: `"Standard"`, `"Batch"`, `"Serial"`, and `"No-stock"`.
 * **Missing Capability:** 
-  - Variant-specific **Purchase Prices (Land Cost)**. SMRITI currently uses a central base template cost, which does not account for a size XL costing more to manufacture or import than a size S.
+  - Variant-specific **Purchase Prices (Land Cost)**. TILEFLOW currently uses a central base template cost, which does not account for a size XL costing more to manufacture or import than a size S.
   - Multi-barcode mapping per variant (e.g., multiple supplier barcodes mapped to one central store SKU).
 * **Keep:** 
   - Independent stock, retail price, and MRP tracking per SKU inside the product registry.
@@ -171,7 +166,7 @@ However, to support complex retail industries beyond simple apparel, SMRITI must
 *Retail managers make buying decisions based on color and size performance: "Are Size 8 shoes selling faster than Size 10?" or "Is blue inventory stagnant while red is out of stock?"*
 
 * **Current Implementation:** 
-  - The reporting engine parses basic general categories, and SMRITI includes a dynamic **Attribute Analytics Section** displaying attribute performance summaries.
+  - The reporting engine parses basic general categories, and TILEFLOW includes a dynamic **Attribute Analytics Section** displaying attribute performance summaries.
 * **Missing Capability:** 
   - Structured, filterable reports like "Low Stock by Variant" and "Variant-wise Profitability".
   - Size-vs-Color fast-moving heatmaps.
@@ -193,7 +188,7 @@ However, to support complex retail industries beyond simple apparel, SMRITI must
 
 ## Action Plan to Achieve 100% Production Readiness
 
-To scale SMRITI Retail OS into a world-class, universal retail inventory platform, we must introduce three low-risk, highly targeted additions:
+To scale TILEFLOW Retail OS into a world-class, universal retail inventory platform, we must introduce three low-risk, highly targeted additions:
 
 ### Phase 1: UOM & Packaging Conversion (Quick Win)
 - **Action:** Add `purchaseUom`, `salesUom`, and `uomConversionFactor` fields to the `Product` type definition inside `src/types.ts`.
@@ -220,4 +215,4 @@ To scale SMRITI Retail OS into a world-class, universal retail inventory platfor
 
 ---
 
-**Audit Recommendation:** SMRITI already has an elegant dynamic attributes engine. Rather than inventing distinct siloed features for Clothing vs. Tiles vs. Hardware, we can solve all requirements by simply enhancing our central Attribute and UOM system. This maintains SMRITI's signature clean, fast, and simple user interface while packing enterprise-grade catalog precision.
+**Audit Recommendation:** TILEFLOW already has an elegant dynamic attributes engine. Rather than inventing distinct siloed features for Clothing vs. Tiles vs. Hardware, we can solve all requirements by simply enhancing our central Attribute and UOM system. This maintains TILEFLOW's signature clean, fast, and simple user interface while packing enterprise-grade catalog precision.

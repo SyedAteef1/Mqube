@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.0
   Created      : 2026-07-11
   Modified     : 2026-07-13
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Security Audit & Compliance Matrix
@@ -18,7 +17,7 @@
 | Module | Authorization | Session Cryptography | Compliance Rating |
 | :--- | :---: | :---: | :--- |
 | Executive Hub | ✕ | No Auth Check | Unverified |
-| SMRITI Wiki | ✕ | No Auth Check | Unverified |
+| TILEFLOW Wiki | ✕ | No Auth Check | Unverified |
 | Billing Desk | ✕ | No Auth Check | Unverified |
 | Sales Studio | ✕ | No Auth Check | Unverified |
 | CRM & Loyalty | ✕ | No Auth Check | Unverified |
@@ -44,6 +43,6 @@
 | Terms & Conditions | ✕ | No Auth Check | Unverified |
 | Data Exchange Hub | ✕ | No Auth Check | Unverified |
 | Company Setup Wizard | ✕ | No Auth Check | Unverified |
-| About SMRITI | ✕ | No Auth Check | Unverified |
+| About TILEFLOW | ✕ | No Auth Check | Unverified |
 | Dev Intelligence Center | ✕ | No Auth Check | Unverified |
 | Audit Logs | ✕ | No Auth Check | Unverified |

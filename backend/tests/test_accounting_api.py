@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -27,8 +13,8 @@ from app.services.unified_ledger import UnifiedAccountingLedgerService
 
 @pytest.fixture
 def mock_auth_tenant():
-    """Override auth and tenant context to route to smriti001."""
-    session_factory = get_company_sessionmaker("smriti001")
+    """Override auth and tenant context to route to tileflow001."""
+    session_factory = get_company_sessionmaker("tileflow001")
 
     async def override_get_company_db():
         async with session_factory() as session:
@@ -92,7 +78,7 @@ def test_api_post_valid_journal_voucher(mock_auth_tenant):
 
 
 def test_api_post_unbalanced_voucher_rejected_400(mock_auth_tenant):
-    """Verify POST /api/v1/accounting/vouchers rejects unbalanced voucher with SMRITI-GL-001."""
+    """Verify POST /api/v1/accounting/vouchers rejects unbalanced voucher with TILEFLOW-GL-001."""
     client = TestClient(app)
     payload = {
         "voucher_type": "JOURNAL",
@@ -105,7 +91,7 @@ def test_api_post_unbalanced_voucher_rejected_400(mock_auth_tenant):
     }
     response = client.post("/api/v1/accounting/vouchers", json=payload)
     assert response.status_code == 400
-    assert "SMRITI-GL-001" in response.text
+    assert "TILEFLOW-GL-001" in response.text
 
 
 def test_api_trial_balance(mock_auth_tenant):
@@ -246,7 +232,7 @@ def test_api_exchange_rates_and_fx_revaluation(mock_auth_tenant):
 
 def test_api_accounting_rbac_unauthorized_user_403():
     """Verify that unprivileged users (e.g. VIEWER) are rejected with 403 on mutating endpoints."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
 
     async def override_get_company_db():
         async with session_factory() as session:

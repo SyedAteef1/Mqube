@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
@@ -26,13 +12,13 @@ from app.models.party import Party, PartyRole, CustomerProfile, SupplierProfile
 @pytest.fixture(autouse=True)
 async def cleanup_test_parties():
     """Clean up test parties before and after each test."""
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             await session.execute(delete(Party).where(Party.party_code.like("PTY-%")))
             await session.commit()
     yield
-    for db in ["smriti001", "smriti002"]:
+    for db in ["tileflow001", "tileflow002"]:
         session_factory = get_company_sessionmaker(db)
         async with session_factory() as session:
             await session.execute(delete(Party).where(Party.party_code.like("PTY-%")))
@@ -42,7 +28,7 @@ async def cleanup_test_parties():
 @pytest.mark.asyncio
 async def test_create_and_fetch_universal_party_customer():
     """Verify creating a party with CUSTOMER role and customer profile."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         party = await UniversalPartyService.create_party(
             session=session,
@@ -77,7 +63,7 @@ async def test_create_and_fetch_universal_party_customer():
 @pytest.mark.asyncio
 async def test_expand_party_to_dual_role_supplier():
     """Verify extending an existing party to dual role (CUSTOMER + SUPPLIER) without row duplication."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     async with session_factory() as session:
         # 1. First create party with CUSTOMER role
         party = await UniversalPartyService.create_party(
@@ -123,9 +109,9 @@ async def test_expand_party_to_dual_role_supplier():
 
 @pytest.mark.asyncio
 async def test_party_tenant_isolation():
-    """Verify party created in smriti001 is completely isolated from smriti002."""
-    session_001 = get_company_sessionmaker("smriti001")
-    session_002 = get_company_sessionmaker("smriti002")
+    """Verify party created in tileflow001 is completely isolated from tileflow002."""
+    session_001 = get_company_sessionmaker("tileflow001")
+    session_002 = get_company_sessionmaker("tileflow002")
 
     async with session_001() as s1:
         await UniversalPartyService.create_party(
@@ -140,4 +126,4 @@ async def test_party_tenant_isolation():
 
     async with session_002() as s2:
         p2 = await UniversalPartyService.get_party_by_code(s2, "PTY-ISO-03")
-        assert p2 is None, "Expected party from smriti001 not to exist in smriti002!"
+        assert p2 is None, "Expected party from tileflow001 not to exist in tileflow002!"

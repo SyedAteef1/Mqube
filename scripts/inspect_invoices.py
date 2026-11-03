@@ -8,14 +8,14 @@ import psycopg2
 from sqlalchemy.ext.asyncio import create_async_engine
 from sqlalchemy import text
 
-DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/smritisys")
+DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql://postgres:postgres@localhost:5432/tileflowsys")
 
 def check_postgres_databases():
     print("=== CHECKING POSTGRESQL DATABASES ===")
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     conn.autocommit = True
     cur = conn.cursor()
-    cur.execute("SELECT datname FROM pg_database WHERE datname LIKE 'smriti%';")
+    cur.execute("SELECT datname FROM pg_database WHERE datname LIKE 'tileflow%';")
     dbs = [row[0] for row in cur.fetchall()]
     print("Found Databases:", dbs)
     

@@ -1,36 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Sprint 3 -- Legacy Menu Map API Router
-
-READ-ONLY. No POST/PUT/DELETE/PATCH endpoints.
-Write path: scripts/sh9_seed.py (governance boundary -- admin-only).
-
-Endpoints:
-  GET /api/v1/legacy-menu-map/stats
-      Aggregate migration status summary (dashboard tile)
-  GET /api/v1/legacy-menu-map/
-      Paginated list with optional filters
-  GET /api/v1/legacy-menu-map/{id}
-      Single entry by SMRITI id
-  GET /api/v1/legacy-menu-map/sh9/{mnu_no}/{menu_opt}
-      Lookup by Shoper9 natural key (MnuNo, MenuOpt)
-  GET /api/v1/legacy-menu-map/by-workspace/{smriti_menu_id}
-      All Shoper entries that map to a given SMRITI workspace
-
-Auth: All endpoints require authenticated user. Stats requires MANAGER+.
-"""
-
 import math
 from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -87,16 +54,16 @@ async def get_legacy_stats(
 
     # Module breakdown (MAPPED entries only)
     module_q = await db.execute(
-        select(LegacyMenuMap.smriti_module, func.count().label("cnt"))
+        select(LegacyMenuMap.tileflow_module, func.count().label("cnt"))
         .where(
             LegacyMenuMap.is_deleted == False,
             LegacyMenuMap.migration_status == "MAPPED",
-            LegacyMenuMap.smriti_module.is_not(None),
+            LegacyMenuMap.tileflow_module.is_not(None),
         )
-        .group_by(LegacyMenuMap.smriti_module)
+        .group_by(LegacyMenuMap.tileflow_module)
         .order_by(func.count().desc())
     )
-    modules = {r.smriti_module: r.cnt for r in module_q.all()}
+    modules = {r.tileflow_module: r.cnt for r in module_q.all()}
 
     # MultiInstance count
     mi_q = await db.execute(
@@ -131,8 +98,8 @@ async def get_legacy_stats(
 )
 async def list_legacy_entries(
     status: Optional[str]     = Query(None, description="Filter by migration_status"),
-    module: Optional[str]     = Query(None, description="Filter by smriti_module"),
-    workspace: Optional[str]  = Query(None, description="Filter by smriti_menu_id"),
+    module: Optional[str]     = Query(None, description="Filter by tileflow_module"),
+    workspace: Optional[str]  = Query(None, description="Filter by tileflow_menu_id"),
     search: Optional[str]     = Query(None, description="Search in sh9_mnu_cap or sh9_mnu_name"),
     multi_inst: Optional[bool]= Query(None, description="Filter entries with MultiInstance=1"),
     page: int  = Query(1, ge=1, description="Page number (1-indexed)"),
@@ -151,9 +118,9 @@ async def list_legacy_entries(
     if status:
         q = q.where(LegacyMenuMap.migration_status == status)
     if module:
-        q = q.where(LegacyMenuMap.smriti_module == module.upper())
+        q = q.where(LegacyMenuMap.tileflow_module == module.upper())
     if workspace:
-        q = q.where(LegacyMenuMap.smriti_menu_id == workspace)
+        q = q.where(LegacyMenuMap.tileflow_menu_id == workspace)
     if search:
         pattern = f"%{search}%"
         q = q.where(
@@ -197,7 +164,7 @@ async def list_legacy_entries(
 @router.get(
     "/{entry_id}",
     response_model=LegacyMenuItemResponse,
-    summary="Get single legacy entry by SMRITI id",
+    summary="Get single legacy entry by TILEFLOW id",
 )
 async def get_legacy_entry(
     entry_id: str,
@@ -225,7 +192,7 @@ async def get_legacy_entry(
     response_model=LegacyMenuItemResponse,
     summary="Lookup by Shoper9 natural key (MnuNo, MenuOpt)",
     description=(
-        "Resolve a Shoper9 vaMenu entry to its SMRITI equivalent "
+        "Resolve a Shoper9 vaMenu entry to its TILEFLOW equivalent "
         "using the original MnuNo and MenuOpt keys."
     ),
 )
@@ -254,21 +221,21 @@ async def get_by_sh9_key(
     return LegacyMenuItemResponse.model_validate(row)
 
 
-# ── GET /by-workspace/{smriti_menu_id} ────────────────────────────────────────
+# ── GET /by-workspace/{tileflow_menu_id} ────────────────────────────────────────
 
 @router.get(
-    "/by-workspace/{smriti_menu_id:path}",
+    "/by-workspace/{tileflow_menu_id:path}",
     response_model=List[LegacyMenuSummary],
-    summary="All Shoper entries mapping to a given SMRITI workspace",
+    summary="All Shoper entries mapping to a given TILEFLOW workspace",
     description=(
         "Returns all legacy Shoper9 actions that map to the specified "
-        "SMRITI menu_id (e.g. 'menu-sales', 'menu-inventory'). "
+        "TILEFLOW menu_id (e.g. 'menu-sales', 'menu-inventory'). "
         "Useful for validating that every required Shoper action has a "
-        "SMRITI workspace equivalent before decommissioning."
+        "TILEFLOW workspace equivalent before decommissioning."
     ),
 )
 async def get_by_workspace(
-    smriti_menu_id: str,
+    tileflow_menu_id: str,
     include_deprecated: bool = Query(
         False, description="Include DEPRECATED and NOT_APPLIC entries"
     ),
@@ -276,7 +243,7 @@ async def get_by_workspace(
     current_user: User = Depends(get_current_user),
 ):
     q = select(LegacyMenuMap).where(
-        LegacyMenuMap.smriti_menu_id == smriti_menu_id,
+        LegacyMenuMap.tileflow_menu_id == tileflow_menu_id,
         LegacyMenuMap.is_deleted     == False,
     )
     if not include_deprecated:

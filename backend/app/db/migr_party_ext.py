@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 from sqlalchemy import text
 from app.db.session import get_company_sessionmaker
@@ -19,7 +5,7 @@ from app.db.session import get_company_sessionmaker
 
 async def migrate_party_extensions():
     """Migrates party table schema extensions and sub-entity tables across tenant databases."""
-    tenants = ["smriti001", "smriti002"]
+    tenants = ["tileflow001", "tileflow002"]
     
     ddl_statements = [
         "ALTER TABLE parties ADD COLUMN IF NOT EXISTS merged_into_party_id VARCHAR(50);",

@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.114.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -38,7 +37,7 @@ const STATUS_STYLE: Record<VoucherStatus, string> = {
   CANCELLED:            "text-slate-500 bg-slate-800/15 border-slate-700/25",
 };
 
-const fmt = (n: number) => `â‚¹${n.toLocaleString("en-IN")}`;
+const fmt = (n: number) => `₹${n.toLocaleString("en-IN")}`;
 
 function buildSampleVouchers(): GiftVoucher[] {
   const BASE = { issuedBy: "MGR-001", branchCode: "BR-MUM-01" };
@@ -111,7 +110,7 @@ export const GiftVoucherModal: React.FC<GiftVoucherModalProps> = ({ isOpen, onCl
               <button key={v.voucherId} onClick={() => { setSelectedId(v.voucherId); setActiveTab("DETAIL"); }}
                 className={`w-full text-left p-3 rounded-xl border transition-all ${selectedId === v.voucherId ? "bg-violet-950/20 border-violet-500/40" : "border-transparent hover:bg-slate-800/60"}`}>
                 <p className="text-[10px] font-mono font-bold text-slate-200">{v.voucherCode}</p>
-                <p className="text-[10px] text-slate-500 mt-0.5">{v.issuedTo ?? "â€”"}</p>
+                <p className="text-[10px] text-slate-500 mt-0.5">{v.issuedTo ?? "—"}</p>
                 <p className={`text-sm font-black font-mono mt-1 ${v.balance > 0 ? "text-violet-400" : "text-slate-500"}`}>{fmt(v.balance)}</p>
                 <div className="flex gap-1 mt-1.5 flex-wrap">
                   <span className={`text-[8px] font-bold px-1 py-0.5 rounded-full border ${TYPE_STYLE[v.type]}`}>{v.type.replace(/_/g, " ")}</span>
@@ -161,7 +160,7 @@ export const GiftVoucherModal: React.FC<GiftVoucherModalProps> = ({ isOpen, onCl
                       </button>
                     </div>
                     {redeemAmt && parseFloat(redeemAmt) > selected.balance && (
-                      <p className="text-[10px] text-amber-400">âš  Requested {fmt(parseFloat(redeemAmt))} exceeds balance â€” will clamp to {fmt(selected.balance)}</p>
+                      <p className="text-[10px] text-amber-400">âš  Requested {fmt(parseFloat(redeemAmt))} exceeds balance — will clamp to {fmt(selected.balance)}</p>
                     )}
                   </div>
                 )}
@@ -170,7 +169,7 @@ export const GiftVoucherModal: React.FC<GiftVoucherModalProps> = ({ isOpen, onCl
 
             {activeTab === "LEDGER" && selected && (
               <div className="space-y-2">
-                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Transaction Ledger â€” {selected.voucherCode}</p>
+                <p className="text-xs font-bold uppercase tracking-wider text-slate-400">Transaction Ledger — {selected.voucherCode}</p>
                 <div className="bg-slate-950/40 border border-slate-800 rounded-xl overflow-hidden text-xs">
                   <table className="w-full text-left border-collapse">
                     <thead><tr className="text-slate-500 uppercase text-[10px] border-b border-slate-800 bg-slate-950/60">

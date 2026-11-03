@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-08-19
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
 import { 
   Plus, Layers, Trash2, Edit3, Grid, CheckCircle2, 
@@ -51,7 +26,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
   // Form states for Templates
   const [styleCode, setStyleCode] = useState("");
   const [name, setName] = useState("");
-  const [brand, setBrand] = useState("SMRITI");
+  const [brand, setBrand] = useState("MQube");
   const [category, setCategory] = useState("Apparel");
   const [hsnCode, setHSNCode] = useState("61091000");
   const [basePrice, setBasePrice] = useState(0);
@@ -240,7 +215,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
         body: JSON.stringify({ variants: variantsToSubmit })
       });
 
-      onNotification("Success", `Registered ${variantsToSubmit.length} variants inside SMRITI master.`, "success");
+      onNotification("Success", `Registered ${variantsToSubmit.length} variants inside MQube master.`, "success");
       await onRefreshProducts();
     } catch (err: any) {
       onNotification("Matrix Error", err.message || "Failed to generate variants.", "error");
@@ -274,7 +249,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
                   className={`p-3 rounded-xl border cursor-pointer transition-all flex items-center justify-between ${
                     selectedTemplate?.id === t.id 
                       ? "bg-theme-surface-3 border-indigo-500 shadow-md" 
-                      : "bg-theme-surface-2 border-theme-divider/60 hover:bg-[#152347]"
+                      : "bg-theme-surface-2 border-theme-divider/60 hover:bg-[#232323]"
                   }`}
                 >
                   <div>
@@ -318,7 +293,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
                     value={styleCode}
                     onChange={(e) => setStyleCode(e.target.value)}
                     placeholder="e.g. SNE-LTH"
-                    className="w-full bg-theme-surface-2 border border-theme-divider rounded px-2 py-1 text-xs text-theme-body placeholder-[#8892a4] font-mono uppercase"
+                    className="w-full bg-theme-surface-2 border border-theme-divider rounded px-2 py-1 text-xs text-theme-body placeholder-[#919191] font-mono uppercase"
                   />
                 </div>
                 <div>
@@ -329,7 +304,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Leather Sneaker"
-                    className="w-full bg-theme-surface-2 border border-theme-divider rounded px-2 py-1 text-xs text-theme-body placeholder-[#8892a4]"
+                    className="w-full bg-theme-surface-2 border border-theme-divider rounded px-2 py-1 text-xs text-theme-body placeholder-[#919191]"
                   />
                 </div>
               </div>
@@ -471,7 +446,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
               </h3>
               {selectedTemplate && (
                 <span className="text-[11px] font-mono text-theme-muted">
-                  Active Grid: <span className="text-[#a5b4fc] font-bold">{selectedTemplate.name}</span>
+                  Active Grid: <span className="text-[#b6b6b6] font-bold">{selectedTemplate.name}</span>
                 </span>
               )}
             </div>
@@ -491,7 +466,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
                 return (
                   <div className="p-12 text-center text-theme-muted space-y-3">
                     <p className="text-xs">This template's group ("{group.name}") is not configured with matrix Column & Row attributes.</p>
-                    <p className="text-[11px] text-[#5b6576]">Go to Attribute Manager, set "Grid Matrix Column" to Size and "Grid Matrix Row" to Color for this group, then return.</p>
+                    <p className="text-[11px] text-[#646464]">Go to Attribute Manager, set "Grid Matrix Column" to Size and "Grid Matrix Row" to Color for this group, then return.</p>
                   </div>
                 );
               }
@@ -502,7 +477,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
                     <div>
                       <span className="text-theme-muted">Matrix columns represent:</span>{" "}
                       <span className="text-sky-400 font-bold font-mono uppercase">{colAttr.label}</span>
-                      <span className="mx-3 text-[#2a3a5c]">|</span>
+                      <span className="mx-3 text-[#393939]">|</span>
                       <span className="text-theme-muted">Matrix rows represent:</span>{" "}
                       <span className="text-indigo-400 font-bold font-mono uppercase">{rowAttr.label}</span>
                     </div>
@@ -644,7 +619,7 @@ export const VariantTplSec: React.FC<VariantTplSectionProps> = ({
 
                   <div className="bg-theme-surface-2 p-4 rounded-xl border border-theme-divider/60 flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] text-theme-muted block font-mono">SMRITI AUTOPILOT ITEM CODE</span>
+                      <span className="text-[10px] text-theme-muted block font-mono">MQube AUTOPILOT ITEM CODE</span>
                       <span className="text-xs text-theme-body font-mono font-semibold block mt-0.5">
                         {selectedTemplate.styleCode}-[ROW_VAL]-[COL_VAL]
                       </span>

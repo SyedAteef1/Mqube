@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-07-12
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- """
-
 from sqlalchemy import Column, String, Boolean, Text, Integer, text
 from sqlalchemy.dialects.postgresql import JSONB
 from ..db.base import BaseEntity
@@ -64,7 +51,7 @@ class VariantTemplate(BaseEntity):
 
     style_code         = Column(String(100), nullable=False, unique=True)
     name               = Column(String(200), nullable=False)
-    brand              = Column(String(100), default="SMRITI")
+    brand              = Column(String(100), default="TILEFLOW")
     category           = Column(String(100), default="General")
     hsn_code           = Column(String(20), default="61091000")
     base_price         = Column(Integer, default=0)

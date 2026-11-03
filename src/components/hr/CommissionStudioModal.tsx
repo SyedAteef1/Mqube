@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.107.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -52,7 +51,7 @@ const ENTRIES: SalesEntry[] = [
   { txnId: "T005", repId: "REP-05", branchCode: BRANCH2, txnDate: "2026-08-20", grossSales: 105000, returns: 3000,  discounts: 2000,  unitsSold: 210 },
 ];
 
-function fmt(n: number) { return `â‚¹${n.toLocaleString("en-IN")}`; }
+function fmt(n: number) { return `₹${n.toLocaleString("en-IN")}`; }
 
 export const CommissionStudioModal: React.FC<CommissionStudioModalProps> = ({ isOpen, onClose, onNotification }) => {
   const [payouts, setPayouts] = useState<CommissionPayout[]>([]);
@@ -79,7 +78,7 @@ export const CommissionStudioModal: React.FC<CommissionStudioModalProps> = ({ is
     }
     const p = CommissionEngine.raisePayout(summary);
     setPayouts((prev) => [...prev, p]);
-    onNotification?.("Payout Raised", `${p.payoutNo} â€” ${fmt(p.totalCommission)}`, "success");
+    onNotification?.("Payout Raised", `${p.payoutNo} — ${fmt(p.totalCommission)}`, "success");
   };
 
   const transition = (payoutId: string, action: "approve" | "paid" | "dispute") => {
@@ -253,7 +252,7 @@ export const CommissionStudioModal: React.FC<CommissionStudioModalProps> = ({ is
                     <div key={i} className="flex items-center gap-4 bg-slate-800/30 border border-slate-700/50 rounded-xl px-4 py-3 text-xs">
                       <div className="flex-1">
                         <span className="text-slate-400">
-                          â‚¹{at.tier.fromValue.toLocaleString("en-IN")} â€” {at.tier.toValue === Infinity ? "âˆž" : `â‚¹${at.tier.toValue.toLocaleString("en-IN")}`}
+                          ₹{at.tier.fromValue.toLocaleString("en-IN")} — {at.tier.toValue === Infinity ? "âˆž" : `₹${at.tier.toValue.toLocaleString("en-IN")}`}
                         </span>
                         <span className="text-yellow-400 font-bold ml-2">@ {at.tier.ratePct}%</span>
                       </div>

@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.92.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 export type ReorderStatus = "PENDING" | "APPROVED" | "PO_RAISED" | "CANCELLED";
 export type ReplenishmentTrigger = "MIN_STOCK_BREACH" | "REORDER_POINT_HIT" | "SAFETY_STOCK_BREACH" | "SEASONAL_PUSH" | "MANUAL_OVERRIDE";
 

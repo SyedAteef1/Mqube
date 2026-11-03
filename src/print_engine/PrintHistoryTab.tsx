@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.2
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useMemo } from "react";
 import { 
   Printer, 
@@ -45,12 +20,12 @@ import {
   RefreshCw
 } from "lucide-react";
 import { usePrintEngine, PrintHistoryItem } from "./print_store.tsx";
-import { SmritiScrollArea } from "../components/SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../components/TileFlowScrollArea.tsx";
 
 const MOCK_DATA = {
   invoiceNo: "INV-2023-0891",
   date: "2023-10-25",
-  companyName: "SMRITI Enterprise Co.",
+  companyName: "MQube Enterprise Co.",
   customerName: "Acme Corp Ltd.",
   items: [
     { name: "Wireless Keyboard", qty: 2, rate: 45.00 },
@@ -128,7 +103,6 @@ export const PrintHistoryTab: React.FC = () => {
             <h1 className="text-base font-bold font-display text-theme-primary flex items-center gap-2">
               Print Spooler & Logs
               <span className="text-[9px] uppercase bg-blue-500/10 border border-blue-500/25 text-blue-400 px-1.5 py-0.5 rounded font-mono font-bold">
-                AITDL Hardware Engine v2
               </span>
             </h1>
             <p className="text-[10px] text-theme-muted uppercase tracking-wider font-mono">
@@ -285,7 +259,7 @@ export const PrintHistoryTab: React.FC = () => {
 
       {/* Main Spool Logs List Table */}
       <div className="flex-1 overflow-hidden relative">
-        <SmritiScrollArea className="h-full">
+        <TileFlowScrollArea className="h-full">
           <div className="p-4">
             {filteredLogs.length === 0 ? (
               <div className="flex flex-col items-center justify-center text-center py-20 bg-theme-surface-1 border border-theme-divider border-dashed rounded-2xl p-8 max-w-lg mx-auto mt-10">
@@ -414,7 +388,7 @@ export const PrintHistoryTab: React.FC = () => {
               </div>
             )}
           </div>
-        </SmritiScrollArea>
+        </TileFlowScrollArea>
       </div>
 
       {/* Detailed Audit Modal Overlay */}

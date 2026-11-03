@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Stitch Distributor Invoicing & Settlement Studio
- */
-
 import { Product, Customer } from "../../types.ts";
 
 export interface BillingLineItem {
@@ -35,6 +20,7 @@ export interface BillingLineItem {
   gstPercentage?: number;
   taxAmount?: number;
   brand?: string;
+  sqftRequested?: number;
   color?: string;
   size?: string;
   attributes?: Record<string, any>;
@@ -42,7 +28,7 @@ export interface BillingLineItem {
 
 export type BillType = "Product" | "Service";
 export type TransactionType = "Credit" | "Cash";
-export type PaymentMode = "Cash" | "Credit Card" | "Debit Card" | "Cheque" | "UPI" | "Credit Note" | "Split";
+export type PaymentMode = "Cash" | "Credit Card" | "Debit Card" | "Cheque" | "UPI" | "Credit Note" | "Credit" | "Split";
 
 export interface BillingHeaderState {
   billType: BillType;

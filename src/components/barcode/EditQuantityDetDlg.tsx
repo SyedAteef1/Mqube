@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.2.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useMemo } from "react";
 import { X, Edit3, Search, Check, Trash2, Layers, Sparkles } from "lucide-react";
 import { LabelPrintRow } from "./types.ts";
@@ -78,25 +64,25 @@ export const EditQuantityDetailsModal: React.FC<EditQuantityDetailsModalProps> =
   return (
     <div className="fixed inset-0 z-[150] flex items-center justify-center bg-black/60 backdrop-blur-xs p-4 select-none animate-in fade-in duration-150">
       {/* Modal Card */}
-      <div className="bg-[#fbf8fb] text-[#1b1b1e] rounded-lg border border-[#c5c6ce] w-full max-w-4xl shadow-2xl flex flex-col max-h-[88vh] overflow-hidden">
+      <div className="bg-[#f9f9f9] text-[#1b1b1b] rounded-lg border border-[#c6c6c6] w-full max-w-4xl shadow-2xl flex flex-col max-h-[88vh] overflow-hidden">
         
         {/* Modal Header */}
-        <div className="px-6 py-3.5 border-b border-[#c5c6ce] flex justify-between items-center bg-[#efedf0]">
+        <div className="px-6 py-3.5 border-b border-[#c6c6c6] flex justify-between items-center bg-[#eeeeee]">
           <div className="flex items-center gap-2">
-            <Edit3 size={18} className="text-[#041632]" />
+            <Edit3 size={18} className="text-[#141414]" />
             <div>
-              <h2 className="font-semibold text-sm text-[#041632]">Edit Quantity Details</h2>
-              <p className="text-[11px] text-[#44474d]">Adjust required label quantities for the current batch prior to printing.</p>
+              <h2 className="font-semibold text-sm text-[#141414]">Edit Quantity Details</h2>
+              <p className="text-[11px] text-[#474747]">Adjust required label quantities for the current batch prior to printing.</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-[#eae7ea] text-[#1b1b1e] font-mono text-[11px] font-bold border border-[#c5c6ce]">
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded bg-[#e8e8e8] text-[#1b1b1b] font-mono text-[11px] font-bold border border-[#c6c6c6]">
               Batch: #{batchId}
             </span>
             <button
               type="button"
               onClick={onClose}
-              className="text-[#44474d] hover:text-[#ba1a1a] p-1 rounded transition-colors"
+              className="text-[#474747] hover:text-[#ba1a1a] p-1 rounded transition-colors"
             >
               <X size={18} />
             </button>
@@ -104,20 +90,20 @@ export const EditQuantityDetailsModal: React.FC<EditQuantityDetailsModalProps> =
         </div>
 
         {/* Toolbar with Quick Fill actions */}
-        <div className="px-6 py-2 bg-white border-b border-[#c5c6ce] flex flex-wrap justify-between items-center gap-2 shrink-0 text-xs">
+        <div className="px-6 py-2 bg-white border-b border-[#c6c6c6] flex flex-wrap justify-between items-center gap-2 shrink-0 text-xs">
           <div className="flex items-center gap-1.5">
-            <span className="font-semibold text-[#44474d] text-[11px]">Quick Fill:</span>
+            <span className="font-semibold text-[#474747] text-[11px]">Quick Fill:</span>
             <button
               type="button"
               onClick={() => handleSetAll(1)}
-              className="px-2 py-0.5 bg-[#efedf0] hover:bg-[#eae7ea] border border-[#c5c6ce] rounded text-[11px] font-semibold text-[#041632]"
+              className="px-2 py-0.5 bg-[#eeeeee] hover:bg-[#e8e8e8] border border-[#c6c6c6] rounded text-[11px] font-semibold text-[#141414]"
             >
               All = 1
             </button>
             <button
               type="button"
               onClick={handleSetAllToStock}
-              className="px-2 py-0.5 bg-[#efedf0] hover:bg-[#eae7ea] border border-[#c5c6ce] rounded text-[11px] font-semibold text-[#041632]"
+              className="px-2 py-0.5 bg-[#eeeeee] hover:bg-[#e8e8e8] border border-[#c6c6c6] rounded text-[11px] font-semibold text-[#141414]"
             >
               All = Stock
             </button>
@@ -138,10 +124,10 @@ export const EditQuantityDetailsModal: React.FC<EditQuantityDetailsModalProps> =
                 placeholder="Filter items..."
                 value={searchQuery}
                 onChange={e => setSearchQuery(e.target.value)}
-                className="pl-6 pr-2 py-1 text-xs border border-[#c5c6ce] rounded bg-[#fbf8fb] focus:bg-white outline-none focus:border-[#3e5f90] w-48 h-6"
+                className="pl-6 pr-2 py-1 text-xs border border-[#c6c6c6] rounded bg-[#f9f9f9] focus:bg-white outline-none focus:border-[#5c5c5c] w-48 h-6"
               />
             </div>
-            <span className="font-mono text-xs font-bold text-[#041632] bg-[#d7e2ff] px-2 py-0.5 rounded border border-[#8393b5]">
+            <span className="font-mono text-xs font-bold text-[#141414] bg-[#e2e2e2] px-2 py-0.5 rounded border border-[#929292]">
               Total Labels: {totalLabels}
             </span>
           </div>
@@ -149,50 +135,50 @@ export const EditQuantityDetailsModal: React.FC<EditQuantityDetailsModalProps> =
 
         {/* Modal Body (Data Grid) */}
         <div className="flex-1 overflow-y-auto p-4 bg-white">
-          <div className="border border-[#c5c6ce] rounded overflow-hidden">
+          <div className="border border-[#c6c6c6] rounded overflow-hidden">
             <table className="w-full text-left border-collapse text-xs">
-              <thead className="bg-[#efedf0] sticky top-0 z-10 border-b border-[#c5c6ce] text-[11px] font-bold text-[#041632]">
+              <thead className="bg-[#eeeeee] sticky top-0 z-10 border-b border-[#c6c6c6] text-[11px] font-bold text-[#141414]">
                 <tr>
-                  <th className="p-2 border-r border-[#c5c6ce] w-12 text-center text-[#44474d]">#</th>
-                  <th className="p-2 border-r border-[#c5c6ce]">Stock Number</th>
-                  <th className="p-2 border-r border-[#c5c6ce]">Product</th>
-                  <th className="p-2 border-r border-[#c5c6ce]">Brand</th>
-                  <th className="p-2 border-r border-[#c5c6ce]">Style</th>
-                  <th className="p-2 border-r border-[#c5c6ce]">Shade</th>
-                  <th className="p-2 border-r border-[#c5c6ce] w-16">Size</th>
-                  <th className="p-2 border-r border-[#c5c6ce] w-20 text-right">Stock</th>
-                  <th className="p-2 font-bold text-[#041632] bg-[#eae7ea] w-24 text-right"># Lbls</th>
+                  <th className="p-2 border-r border-[#c6c6c6] w-12 text-center text-[#474747]">#</th>
+                  <th className="p-2 border-r border-[#c6c6c6]">Stock Number</th>
+                  <th className="p-2 border-r border-[#c6c6c6]">Product</th>
+                  <th className="p-2 border-r border-[#c6c6c6]">Brand</th>
+                  <th className="p-2 border-r border-[#c6c6c6]">Style</th>
+                  <th className="p-2 border-r border-[#c6c6c6]">Shade</th>
+                  <th className="p-2 border-r border-[#c6c6c6] w-16">Size</th>
+                  <th className="p-2 border-r border-[#c6c6c6] w-20 text-right">Stock</th>
+                  <th className="p-2 font-bold text-[#141414] bg-[#e8e8e8] w-24 text-right"># Lbls</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#c5c6ce]/50 text-[#1b1b1e]">
+              <tbody className="divide-y divide-[#c6c6c6]/50 text-[#1b1b1b]">
                 {filteredRows.map((row, idx) => (
                   <tr
                     key={row.id}
-                    className={`hover:bg-[#f5f3f6] transition-colors ${
-                      idx % 2 === 1 ? "bg-[#fbf8fb]" : "bg-white"
+                    className={`hover:bg-[#f4f4f4] transition-colors ${
+                      idx % 2 === 1 ? "bg-[#f9f9f9]" : "bg-white"
                     }`}
                   >
-                    <td className="p-2 border-r border-[#c5c6ce] text-center text-[#44474d] font-mono text-[11px]">
+                    <td className="p-2 border-r border-[#c6c6c6] text-center text-[#474747] font-mono text-[11px]">
                       {idx + 1}
                     </td>
-                    <td className="p-2 border-r border-[#c5c6ce] font-mono font-bold text-[#041632]">
+                    <td className="p-2 border-r border-[#c6c6c6] font-mono font-bold text-[#141414]">
                       {row.stockNo}
                     </td>
-                    <td className="p-2 border-r border-[#c5c6ce]">{row.product}</td>
-                    <td className="p-2 border-r border-[#c5c6ce]">{row.brand}</td>
-                    <td className="p-2 border-r border-[#c5c6ce]">{row.style}</td>
-                    <td className="p-2 border-r border-[#c5c6ce]">{row.colour}</td>
-                    <td className="p-2 border-r border-[#c5c6ce] font-mono">{row.size}</td>
-                    <td className="p-2 border-r border-[#c5c6ce] text-right font-mono text-[#44474d]">
+                    <td className="p-2 border-r border-[#c6c6c6]">{row.product}</td>
+                    <td className="p-2 border-r border-[#c6c6c6]">{row.brand}</td>
+                    <td className="p-2 border-r border-[#c6c6c6]">{row.style}</td>
+                    <td className="p-2 border-r border-[#c6c6c6]">{row.colour}</td>
+                    <td className="p-2 border-r border-[#c6c6c6] font-mono">{row.size}</td>
+                    <td className="p-2 border-r border-[#c6c6c6] text-right font-mono text-[#474747]">
                       {row.currentStock}
                     </td>
-                    <td className="p-1 bg-[#eae7ea]/40">
+                    <td className="p-1 bg-[#e8e8e8]/40">
                       <input
                         type="number"
                         min="0"
                         value={row.labelCount}
                         onChange={e => handleUpdateQty(row.id, parseInt(e.target.value) || 0)}
-                        className="w-full px-2 py-1 border border-[#75777e] rounded focus:outline-none focus:border-[#3e5f90] focus:ring-1 focus:ring-[#3e5f90] font-mono font-bold text-xs text-right bg-white text-[#041632]"
+                        className="w-full px-2 py-1 border border-[#75777e] rounded focus:outline-none focus:border-[#5c5c5c] focus:ring-1 focus:ring-[#5c5c5c] font-mono font-bold text-xs text-right bg-white text-[#141414]"
                       />
                     </td>
                   </tr>
@@ -203,22 +189,22 @@ export const EditQuantityDetailsModal: React.FC<EditQuantityDetailsModalProps> =
         </div>
 
         {/* Modal Footer */}
-        <div className="px-6 py-3 border-t border-[#c5c6ce] bg-[#efedf0] rounded-b-lg flex justify-between items-center">
-          <div className="text-xs text-[#44474d]">
+        <div className="px-6 py-3 border-t border-[#c6c6c6] bg-[#eeeeee] rounded-b-lg flex justify-between items-center">
+          <div className="text-xs text-[#474747]">
             <span>Showing <strong>{filteredRows.length}</strong> items • <strong>{totalLabels}</strong> total labels to print</span>
           </div>
           <div className="flex gap-2">
             <button
               type="button"
               onClick={handleClearAll}
-              className="px-4 py-1.5 border border-[#75777e] rounded text-[#041632] text-xs font-semibold hover:bg-[#eae7ea] transition-colors"
+              className="px-4 py-1.5 border border-[#75777e] rounded text-[#141414] text-xs font-semibold hover:bg-[#e8e8e8] transition-colors"
             >
               Clear
             </button>
             <button
               type="button"
               onClick={handleSaveAndClose}
-              className="px-6 py-1.5 bg-[#041632] text-white rounded text-xs font-bold hover:bg-[#1b2b48] transition-colors shadow-sm flex items-center gap-1"
+              className="px-6 py-1.5 bg-[#141414] text-white rounded text-xs font-bold hover:bg-[#2a2a2a] transition-colors shadow-sm flex items-center gap-1"
             >
               <Check size={14} />
               OK

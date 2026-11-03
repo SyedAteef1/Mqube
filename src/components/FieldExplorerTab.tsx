@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState } from "react";
 import { FieldInfo } from "../types";
 
@@ -93,7 +68,7 @@ export const FieldExplorerTab: React.FC<FieldExplorerTabProps> = ({ fields }) =>
         {/* Fields list */}
         <div className="space-y-3 max-h-[420px] overflow-y-auto custom-scrollbar pr-1">
           {filteredFields.map(f => (
-            <div key={f.id} className="bg-theme-surface-3 p-3 rounded-lg border border-theme-divider flex justify-between items-start hover:border-[#2563EB] transition-colors">
+            <div key={f.id} className="bg-theme-surface-3 p-3 rounded-lg border border-theme-divider flex justify-between items-start hover:border-[#606060] transition-colors">
               <div className="space-y-1">
                 <div className="flex items-center space-x-2">
                   <span className="font-mono text-theme-body text-xs font-semibold">{f.fieldName}</span>
@@ -117,8 +92,8 @@ export const FieldExplorerTab: React.FC<FieldExplorerTabProps> = ({ fields }) =>
                   onClick={() => toggleFieldSelect(f.fieldName)}
                   className={`text-[10px] font-bold px-2 py-1 rounded transition-colors ${
                     selectedFields.includes(f.fieldName)
-                      ? "bg-[#2563EB] text-theme-body hover:bg-opacity-95"
-                      : "bg-theme-surface-1 text-theme-muted border border-theme-divider hover:border-[#2563EB] hover:text-theme-body"
+                      ? "bg-[#606060] text-theme-body hover:bg-opacity-95"
+                      : "bg-theme-surface-1 text-theme-muted border border-theme-divider hover:border-[#606060] hover:text-theme-body"
                   }`}
                 >
                   {selectedFields.includes(f.fieldName) ? "Included" : "Add to Label"}
@@ -175,7 +150,7 @@ export const FieldExplorerTab: React.FC<FieldExplorerTabProps> = ({ fields }) =>
               
               {/* Header */}
               <div className="w-full text-center border-b border-gray-300 pb-1.5">
-                <span className="text-[10px] font-mono tracking-widest font-bold">SMRITI RETAIL SYSTEM</span>
+                <span className="text-[10px] font-mono tracking-widest font-bold">MQube RETAIL SYSTEM</span>
               </div>
 
               {/* Dynamic Metadata Fields */}
@@ -213,7 +188,7 @@ export const FieldExplorerTab: React.FC<FieldExplorerTabProps> = ({ fields }) =>
                         />
                       ))}
                     </div>
-                    <span className="text-[8px] font-mono tracking-widest mt-1">SMRITI-BARCODE-302</span>
+                    <span className="text-[8px] font-mono tracking-widest mt-1">MQube-BARCODE-302</span>
                   </div>
                 )}
               </div>
@@ -225,7 +200,7 @@ export const FieldExplorerTab: React.FC<FieldExplorerTabProps> = ({ fields }) =>
         {/* Action triggers */}
         <button
           onClick={() => alert("Simulated print payload dispatched to Brother/Zebra TCP raw channel.")}
-          className="w-full bg-[#2563EB] hover:bg-opacity-95 text-theme-body font-bold uppercase py-2.5 rounded-lg transition-all flex items-center justify-center space-x-2 mt-4"
+          className="w-full bg-[#606060] hover:bg-opacity-95 text-theme-body font-bold uppercase py-2.5 rounded-lg transition-all flex items-center justify-center space-x-2 mt-4"
         >
           <span className="material-symbols-outlined text-sm">print</span>
           <span>Dispatch Print Test (.PRN)</span>

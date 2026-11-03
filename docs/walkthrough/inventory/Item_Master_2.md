@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.23.0
   Created      : 2026-08-24
   Modified     : 2026-08-24
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Item Master Pricing Fields Validation & Invariant Constraints
@@ -28,7 +27,7 @@ Enforce strict mathematical validation and integrity invariants on all pricing f
   7. Conditional Exemptions for non-stock items, services, samples, and free promotional items (`tracking_mode == "No-stock"` or `pricing_mode == "Free"`).
 - Frontend UI Components: `src/components/itemMaster/ItemDetGrid.tsx`, `src/components/itemMaster/ItemMasterEntryVie.tsx`, `src/components/itemMaster/types.ts`, `src/services/unifiedFieldCatalog.ts`.
 - Backend Schema & Service Layer: `backend/app/schemas/inventory.py`, `backend/app/models/inventory.py`, `backend/app/models/item_master.py`, `backend/app/services/item_master_service.py`.
-- Database Migration: `backend/scripts/migr_pricing.py` across `smritisys`, `smriti001`, `smriti002`.
+- Database Migration: `backend/scripts/migr_pricing.py` across `tileflowsys`, `tileflow001`, `tileflow002`.
 - Automated Test Suite: `backend/tests/t_item_val.py`.
 
 ## 3. Files Created
@@ -72,7 +71,7 @@ Enforce strict mathematical validation and integrity invariants on all pricing f
 ## 9. Verification Results
 - 43/43 tests passed green.
 - 0 TypeScript compilation errors in production build.
-- 0 database nulls or price inversions across `smritisys`, `smriti001`, `smriti002`.
+- 0 database nulls or price inversions across `tileflowsys`, `tileflow001`, `tileflow002`.
 
 ## 10. Known Limitations
 - None.

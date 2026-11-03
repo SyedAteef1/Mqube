@@ -13,7 +13,7 @@ tables = [
 ]
 
 print("=== 1. DATABASE EXISTENCE CHECK ===")
-for db in ['smritisys', 'smriti001']:
+for db in ['tileflowsys', 'tileflow001']:
     conn = psycopg2.connect(f'postgresql://postgres:postgres@localhost:5432/{db}')
     cur = conn.cursor()
     print(f"\nDatabase: {db}")

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -42,7 +28,7 @@ async def ensure_test_cashier(session: AsyncSession, cashier_id: str = "usr-cash
             id=cashier_id,
             uuid=str(uuid.uuid4()),
             username=f"cashier_{cashier_id}_{uuid.uuid4().hex[:4]}",
-            email=f"{cashier_id}_{uuid.uuid4().hex[:4]}@smritibooks.com",
+            email=f"{cashier_id}_{uuid.uuid4().hex[:4]}@tileflow.in",
             hashed_password="hashed_test_password",
             role=UserRole.CASHIER,
             is_active=True,
@@ -56,7 +42,7 @@ async def ensure_test_cashier(session: AsyncSession, cashier_id: str = "usr-cash
 @pytest.mark.asyncio
 async def test_shift_close_zero_variance_no_adjustment_needed():
     """Verify that a shift with zero cash variance closes cleanly with no shortage/overage adjustment needed."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -124,7 +110,7 @@ async def test_shift_close_zero_variance_no_adjustment_needed():
 @pytest.mark.asyncio
 async def test_shift_close_cash_shortage_gl_balancing_posting():
     """Verify that a cash shortage (variance < 0) automatically posts Debit 5070 (Shortage) / Credit 1010 (Cash)."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -208,7 +194,7 @@ async def test_shift_close_cash_shortage_gl_balancing_posting():
 @pytest.mark.asyncio
 async def test_shift_close_cash_overage_gl_balancing_posting():
     """Verify that a cash overage (variance > 0) automatically posts Debit 1010 (Cash) / Credit 4050 (Overage)."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -307,7 +293,7 @@ async def test_shift_close_cash_overage_gl_balancing_posting():
 @pytest.mark.asyncio
 async def test_shift_close_gl_posting_idempotent():
     """Verify that calling post_shift_close_to_gl repeatedly returns the existing voucher and does not duplicate."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -366,7 +352,7 @@ async def test_shift_close_gl_posting_idempotent():
 @pytest.mark.asyncio
 async def test_unclosed_shift_gl_posting_rejected():
     """Verify that attempting to post GL voucher on an OPEN shift is rejected with 400."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     company_id = "COMP-001"
     branch_id = "BR-001"
     tenant = TenantContext(company_id=company_id, branch_id=branch_id)
@@ -402,7 +388,7 @@ async def test_unclosed_shift_gl_posting_rejected():
 @pytest.mark.asyncio
 async def test_api_pos_z_report_endpoint():
     """Verify GET /api/v1/pos/shifts/{shift_id}/z-report returns comprehensive shift summary & GL voucher link."""
-    session_factory = get_company_sessionmaker("smriti001")
+    session_factory = get_company_sessionmaker("tileflow001")
     unique_suffix = uuid.uuid4().hex[:6]
     mgr_id = f"usr-mgr-{unique_suffix}"
 
@@ -476,9 +462,9 @@ async def test_api_pos_z_report_endpoint():
 
 @pytest.mark.asyncio
 async def test_pos_shift_gl_tenant_isolation():
-    """Verify that POS shifts and GL balancing vouchers are strictly isolated between smriti001 and smriti002."""
-    session_factory_1 = get_company_sessionmaker("smriti001")
-    session_factory_2 = get_company_sessionmaker("smriti002")
+    """Verify that POS shifts and GL balancing vouchers are strictly isolated between tileflow001 and tileflow002."""
+    session_factory_1 = get_company_sessionmaker("tileflow001")
+    session_factory_2 = get_company_sessionmaker("tileflow002")
 
     unique_suffix = uuid.uuid4().hex[:6]
     shift_id = f"SH-ISO-{unique_suffix}"
@@ -503,7 +489,7 @@ async def test_pos_shift_gl_tenant_isolation():
             requesting_user_id=cashier_id
         )
 
-    # In smriti002, the shift must NOT exist
+    # In tileflow002, the shift must NOT exist
     async with session_factory_2() as session2:
         stmt = select(Shift).where(Shift.id == shift_id)
         res = (await session2.execute(stmt)).scalar_one_or_none()

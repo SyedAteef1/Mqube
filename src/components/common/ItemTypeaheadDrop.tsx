@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.11.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-25
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: Universal Item Auto-Search & Multi-Attribute Inspection Dropdown
- */
-
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { AutoPopulateProductResult } from "../../services/autoPopulateService.ts";
@@ -32,7 +17,7 @@ import {
   AlertCircle
 } from "lucide-react";
 
-interface SmritiItemTypeaheadDropdownProps {
+interface TileFlowItemTypeaheadDropdownProps {
   isOpen: boolean;
   items: AutoPopulateProductResult[];
   selectedIndex: number;
@@ -45,7 +30,7 @@ interface SmritiItemTypeaheadDropdownProps {
   anchorRef?: React.RefObject<HTMLElement | null>;
 }
 
-export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownProps> = ({
+export const TileFlowItemTypeaheadDropdown: React.FC<TileFlowItemTypeaheadDropdownProps> = ({
   isOpen,
   items,
   selectedIndex,
@@ -180,10 +165,10 @@ export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownPr
         maxHeight: `${coords.maxHeight}px`,
         zIndex: 99999
       }}
-      className="overflow-y-auto bg-white dark:bg-[#131b2e] border-2 border-[#00288e] dark:border-[#3b82f6] rounded-xl shadow-2xl divide-y divide-gray-100 dark:divide-gray-800 font-sans animate-in fade-in zoom-in-95 duration-100"
+      className="overflow-y-auto bg-white dark:bg-[#1b1b1b] border-2 border-[#272727] dark:border-[#7b7b7b] rounded-xl shadow-2xl divide-y divide-gray-100 dark:divide-gray-800 font-sans animate-in fade-in zoom-in-95 duration-100"
     >
       {/* Header Inspector Ribbon */}
-      <div className="sticky top-0 z-10 px-3 py-1.5 bg-[#f0f4ff] dark:bg-[#1e293b] border-b border-[#dde1ff] dark:border-gray-700 flex justify-between items-center text-[11px] text-[#00288e] dark:text-[#a8b8ff] font-bold shadow-xs">
+      <div className="sticky top-0 z-10 px-3 py-1.5 bg-[#f4f4f4] dark:bg-[#282828] border-b border-[#e2e2e2] dark:border-gray-700 flex justify-between items-center text-[11px] text-[#272727] dark:text-[#bababa] font-bold shadow-xs">
         <span className="flex items-center gap-1.5">
           <Barcode size={13} />
           <span>Live Item Search ({searchFieldType === "barcode" ? "Barcode Field" : "Stock No / SKU Field"})</span>
@@ -195,7 +180,7 @@ export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownPr
 
       {isLoading ? (
         <div className="px-4 py-6 text-xs text-gray-500 dark:text-gray-400 flex items-center justify-center gap-2.5">
-          <div className="w-4 h-4 border-2 border-[#00288e] border-t-transparent rounded-full animate-spin" />
+          <div className="w-4 h-4 border-2 border-[#272727] border-t-transparent rounded-full animate-spin" />
           <span className="font-semibold">Searching catalog by Barcode, Stock No, Code, and SKU...</span>
         </div>
       ) : errorMessage ? (
@@ -220,7 +205,7 @@ export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownPr
               }}
               className={`p-3 cursor-pointer transition flex flex-col gap-2 ${
                 isSelected
-                  ? "bg-[#edf2ff] dark:bg-[#1e3a8a]/40 border-l-4 border-[#00288e] dark:border-[#60a5fa]"
+                  ? "bg-[#f2f2f2] dark:bg-[#3a3a3a]/40 border-l-4 border-[#272727] dark:border-[#9c9c9c]"
                   : "hover:bg-gray-50 dark:hover:bg-gray-800/60"
               }`}
             >
@@ -242,7 +227,7 @@ export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownPr
                   <div className="min-w-0">
                     <div className="font-bold text-xs text-gray-900 dark:text-white truncate flex items-center gap-2">
                       <span>{item.name}</span>
-                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/60 text-[#00288e] dark:text-[#93c5fd] font-bold">
+                      <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-blue-100 dark:bg-blue-900/60 text-[#272727] dark:text-[#bebebe] font-bold">
                         Stock No: {item.stockNo || item.code}
                       </span>
                     </div>
@@ -262,7 +247,7 @@ export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownPr
 
                 {/* Right: Key Price & MRP */}
                 <div className="text-right shrink-0">
-                  <div className="text-sm font-bold text-[#00288e] dark:text-[#93c5fd]">
+                  <div className="text-sm font-bold text-[#272727] dark:text-[#bebebe]">
                     ₹{item.sellingPrice.toFixed(2)}
                   </div>
                   <div className="text-[10px] text-gray-500 font-mono line-through">
@@ -272,7 +257,7 @@ export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownPr
               </div>
 
               {/* Row 2: Initial 5–7 Important Related Details */}
-              <div className="grid grid-cols-6 gap-1.5 bg-gray-50 dark:bg-[#191c28] p-1.5 rounded-lg border border-gray-200 dark:border-gray-800 text-[10px] font-mono">
+              <div className="grid grid-cols-6 gap-1.5 bg-gray-50 dark:bg-[#1c1c1c] p-1.5 rounded-lg border border-gray-200 dark:border-gray-800 text-[10px] font-mono">
                 <div className="flex flex-col">
                   <span className="text-gray-500 text-[9px] uppercase font-sans">Stock</span>
                   <span className={`font-bold ${item.stockQty > 0 ? "text-emerald-600 dark:text-emerald-400" : "text-amber-600"}`}>
@@ -311,7 +296,7 @@ export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownPr
               {/* Row 3: Additional 5–7 Relevant Item Details */}
               <div className="flex flex-wrap items-center gap-2 text-[10px] text-gray-600 dark:text-gray-400 pt-0.5">
                 <span className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded font-semibold">
-                  Brand: {item.brand || "SMRITI"}
+                  Brand: {item.brand || "MQube"}
                 </span>
                 <span className="px-1.5 py-0.5 bg-gray-100 dark:bg-gray-800 rounded font-semibold">
                   Category: {item.category}
@@ -346,5 +331,5 @@ export const SmritiItemTypeaheadDropdown: React.FC<SmritiItemTypeaheadDropdownPr
   );
 };
 
-export { SmritiItemTypeaheadDropdown as ItemTypeaheadDrop };
+export { TileFlowItemTypeaheadDropdown as ItemTypeaheadDrop };
 

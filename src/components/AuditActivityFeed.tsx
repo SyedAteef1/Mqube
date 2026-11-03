@@ -1,31 +1,6 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.2
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState } from "react";
 import { useNotifications, SystemNotification } from "../notifications/notification_store.tsx";
-import { SmritiScrollArea } from "./SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "./TileFlowScrollArea.tsx";
 import { motion, AnimatePresence } from "motion/react";
 
 export const AuditActivityFeed: React.FC = () => {
@@ -131,7 +106,7 @@ export const AuditActivityFeed: React.FC = () => {
       <div>
         <div className="flex justify-between items-center mb-3">
           <div className="flex items-center space-x-2">
-            <span className="material-symbols-outlined text-[#2563EB] animate-pulse">
+            <span className="material-symbols-outlined text-[#606060] animate-pulse">
               browse_activity
             </span>
             <h3 className="font-display font-semibold text-base text-theme-body">
@@ -139,7 +114,7 @@ export const AuditActivityFeed: React.FC = () => {
             </h3>
           </div>
           <div className="flex items-center space-x-2">
-            <span className="text-[10px] bg-blue-500 bg-opacity-10 text-[#2563EB] font-mono font-semibold px-2 py-0.5 rounded border border-blue-500 border-opacity-20">
+            <span className="text-[10px] bg-blue-500 bg-opacity-10 text-[#606060] font-mono font-semibold px-2 py-0.5 rounded border border-blue-500 border-opacity-20">
               LIVE
             </span>
           </div>
@@ -154,7 +129,7 @@ export const AuditActivityFeed: React.FC = () => {
                 onClick={() => setFilterType(t)}
                 className={`text-[10px] font-mono font-semibold px-2 py-1 rounded transition-colors uppercase ${
                   filterType === t
-                    ? "bg-[#2563EB] text-white"
+                    ? "bg-[#606060] text-white"
                     : "bg-theme-surface-2 text-theme-muted hover:bg-theme-surface-hover hover:text-theme-body"
                 }`}
               >
@@ -164,7 +139,7 @@ export const AuditActivityFeed: React.FC = () => {
           </div>
           <button
             onClick={markAllAsRead}
-            className="text-[10px] text-theme-muted hover:text-[#2563EB] transition-colors flex items-center font-semibold"
+            className="text-[10px] text-theme-muted hover:text-[#606060] transition-colors flex items-center font-semibold"
           >
             <span className="material-symbols-outlined text-xs mr-0.5">done_all</span>
             Clear Badge
@@ -174,7 +149,7 @@ export const AuditActivityFeed: React.FC = () => {
 
       {/* Scrollable list */}
       <div className="flex-1 min-h-0">
-        <SmritiScrollArea maxHeight="180px" className="h-full">
+        <TileFlowScrollArea maxHeight="180px" className="h-full">
           {feedItems.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-8 text-center text-theme-muted">
               <span className="material-symbols-outlined text-3xl mb-1 text-theme-divider">
@@ -223,7 +198,7 @@ export const AuditActivityFeed: React.FC = () => {
               </AnimatePresence>
             </div>
           )}
-        </SmritiScrollArea>
+        </TileFlowScrollArea>
       </div>
 
       {/* Diagnostics / Simulate Actions Footer */}

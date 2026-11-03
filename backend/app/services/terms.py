@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import uuid
 import json
 import re
@@ -294,7 +281,7 @@ class TermsService:
         return snap
 
     async def resolve_terms(self, req) -> dict:
-        company_code = req.companyCode or "SMRITI_IND"
+        company_code = req.companyCode or "TILEFLOW_IND"
         branch_code = req.branchCode
         doc_type = req.documentType
         party_id = req.partyId

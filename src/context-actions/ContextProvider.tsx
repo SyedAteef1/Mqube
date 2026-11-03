@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { createContext, useContext, useState, useEffect, useRef } from "react";
 import { ContextData, ContextAction } from "./ContextAction.ts";
 import { registry } from "./ContextRegistry.ts";
@@ -152,9 +127,9 @@ export const ContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
         trigger: triggerType
       };
       // Keep in local logs
-      const logs = JSON.parse(localStorage.getItem("smriti_acas_audit_logs") || "[]");
+      const logs = JSON.parse(localStorage.getItem("tileflow_acas_audit_logs") || "[]");
       logs.push(auditLog);
-      localStorage.setItem("smriti_acas_audit_logs", JSON.stringify(logs.slice(-100)));
+      localStorage.setItem("tileflow_acas_audit_logs", JSON.stringify(logs.slice(-100)));
     } catch (err) {}
   };
 
@@ -203,9 +178,9 @@ export const ContextProvider: React.FC<{ children: React.ReactNode }> = ({ child
           type: state.context.type,
           role: state.context.role || "Unknown"
         };
-        const logs = JSON.parse(localStorage.getItem("smriti_acas_audit_logs") || "[]");
+        const logs = JSON.parse(localStorage.getItem("tileflow_acas_audit_logs") || "[]");
         logs.push(auditLog);
-        localStorage.setItem("smriti_acas_audit_logs", JSON.stringify(logs.slice(-100)));
+        localStorage.setItem("tileflow_acas_audit_logs", JSON.stringify(logs.slice(-100)));
       } catch (err) {}
     }
     closeMenu();

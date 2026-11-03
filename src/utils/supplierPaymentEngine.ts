@@ -1,31 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.113.0
- * Created      : 2026-08-28
- * Modified     : 2026-08-28
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
-/**
- * Supplier Payment Terms & Aging Engine
- *
- * Tracks vendor invoices through their payment lifecycle:
- *   Aging Buckets  : 0–30d (CURRENT), 31–60d (OVERDUE_30),
- *                    61–90d (OVERDUE_60), 91–120d (OVERDUE_90),
- *                    >120d (CRITICAL)
- *   Payment Terms  : NET_30, NET_45, NET_60, NET_90, IMMEDIATE, CUSTOM
- *   Early-Pay      : If paid before earlyPayCutoffDays, discount % applied
- *   Due Calendar   : `buildDueCalendar()` groups invoices by due date
- *   Aging Report   : Per-vendor bucket summary + totals
- *   Invoice Status : UNPAID → PARTIALLY_PAID → PAID / OVERDUE / DISPUTED
- */
-
 export type PaymentTerms   = "NET_30" | "NET_45" | "NET_60" | "NET_90" | "IMMEDIATE" | "CUSTOM";
 export type InvoiceStatus  = "UNPAID" | "PARTIALLY_PAID" | "PAID" | "OVERDUE" | "DISPUTED";
 export type AgingBucket    = "CURRENT" | "OVERDUE_30" | "OVERDUE_60" | "OVERDUE_90" | "CRITICAL";

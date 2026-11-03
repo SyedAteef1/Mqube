@@ -14,9 +14,9 @@ def upgrade() -> None:
     inspector = sa.inspect(bind)
     existing_tables = set(inspector.get_table_names())
 
-    if "smriti_permissions" not in existing_tables:
+    if "tileflow_permissions" not in existing_tables:
         op.create_table(
-            "smriti_permissions",
+            "tileflow_permissions",
             sa.Column("id", sa.String(length=50), primary_key=True, nullable=False),
             sa.Column("uuid", sa.String(length=36), nullable=False, unique=True),
             sa.Column("company_id", sa.String(length=50), sa.ForeignKey("companies.id", ondelete="RESTRICT"), nullable=True),
@@ -40,19 +40,19 @@ def upgrade() -> None:
         )
 
         op.create_index(
-            "ix_smriti_permissions_scope_resource_action",
-            "smriti_permissions",
+            "ix_tileflow_permissions_scope_resource_action",
+            "tileflow_permissions",
             ["scope", "resource", "action"],
         )
         op.create_index(
-            "ix_smriti_permissions_company_branch",
-            "smriti_permissions",
+            "ix_tileflow_permissions_company_branch",
+            "tileflow_permissions",
             ["company_id", "branch_id"],
         )
 
-    if "smriti_audit_log" not in existing_tables:
+    if "tileflow_audit_log" not in existing_tables:
         op.create_table(
-            "smriti_audit_log",
+            "tileflow_audit_log",
             sa.Column("id", sa.String(length=50), primary_key=True, nullable=False),
             sa.Column("tenant_id", sa.String(length=50), nullable=True),
             sa.Column("entity_id", sa.String(length=100), nullable=True),
@@ -71,8 +71,8 @@ def upgrade() -> None:
         )
 
         op.create_index(
-            "ix_smriti_audit_log_changed_table",
-            "smriti_audit_log",
+            "ix_tileflow_audit_log_changed_table",
+            "tileflow_audit_log",
             ["changed_table", "changed_record_id"],
         )
 
@@ -82,7 +82,7 @@ def downgrade() -> None:
     inspector = sa.inspect(bind)
     existing_tables = set(inspector.get_table_names())
 
-    if "smriti_audit_log" in existing_tables:
-        op.drop_table("smriti_audit_log")
-    if "smriti_permissions" in existing_tables:
-        op.drop_table("smriti_permissions")
+    if "tileflow_audit_log" in existing_tables:
+        op.drop_table("tileflow_audit_log")
+    if "tileflow_permissions" in existing_tables:
+        op.drop_table("tileflow_permissions")

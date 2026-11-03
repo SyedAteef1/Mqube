@@ -1,24 +1,11 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-07-11
-Modified     : 2026-08-15
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
-# SMRITI database models init
+# TILEFLOW database models init
 from .crm import CustomerGroup, Customer
 from .inventory import Product, StockMovement
 from .sales import SalesInvoice, SalesInvoiceItem
 from .tenant import Company, Branch
 from .company_policy import CompanyBankAccount, CompanyPolicySetting, ComplianceThreshold
 from .company_registry import CompanyDatabaseRegistry
-from .menu import SmritiMenu
+from .menu import TileFlowMenu
 from .auth import User, RefreshTokenBlacklist, UserRole
 from .purchase import (
     Supplier,
@@ -132,7 +119,6 @@ from .outbox import (
     OutboxEvent,
 )
 
-# Canonical Authoritative Double-Entry Accounting Models (Slice 8, 9 & 11)
 from .accounting import (
     Account,
     JournalVoucher,

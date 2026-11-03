@@ -1,22 +1,4 @@
 #!/usr/bin/env python3
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.33.0
-Created      : 2026-08-26
-Modified     : 2026-08-26
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Shoper9 Template Blueprint Parser & Extractor
-Parses legacy Shoper9 template files into normalized SMRITI JSON blueprints
-without executing any legacy SQL or modifying source files.
-"""
-
 import os
 import csv
 import json
@@ -286,8 +268,8 @@ def analyze_and_extract_blueprints(
             "retailDefaults": r_rec,
             "distributorDefaults": d_rec,
             "hasProfileVariance": diff,
-            "smritiMapping": {
-                "targetSystem": "smritisys.system_parameters",
+            "tileflowMapping": {
+                "targetSystem": "tileflowsys.system_parameters",
                 "storageKey": f"sysparam_{code.lower()}",
                 "isConfigurable": rec.get("Fixed") != "Fixed"
             }
@@ -340,8 +322,8 @@ def analyze_and_extract_blueprints(
             if stmt["table"].lower() == "vamenu" and stmt["type"] in ("INSERT_MENU", "INSERT"):
                 d = stmt["data"]
                 caption = d.get("MnuCap") or d.get("MnuName") or ""
-                # Map to SMRITI canonical tile
-                mapping = map_menu_to_smriti_tile(caption, d.get("ExeName", ""))
+                # Map to TILEFLOW canonical tile
+                mapping = map_menu_to_tileflow_tile(caption, d.get("ExeName", ""))
                 dist_menu_entries.append({
                     "menuNo": d.get("MnuNo"),
                     "caption": caption,
@@ -349,7 +331,7 @@ def analyze_and_extract_blueprints(
                     "programOption": d.get("Pgmopt", d.get("PgmOpt")),
                     "executable": d.get("ExeName", "").strip(),
                     "helpContext": d.get("HelpContext"),
-                    "smritiMapping": mapping,
+                    "tileflowMapping": mapping,
                     "status": "MAPPED"
                 })
 
@@ -357,7 +339,7 @@ def analyze_and_extract_blueprints(
     retail_blueprint = {
         "profile": "Retail",
         "version": "18.0",
-        "description": "SMRITI Retail Profile based on Shoper9 Retail template",
+        "description": "TILEFLOW Retail Profile based on Shoper9 Retail template",
         "scope": [
             "POS billing",
             "Retail pricing & barcode lookup",
@@ -375,7 +357,7 @@ def analyze_and_extract_blueprints(
     distributor_blueprint = {
         "profile": "Distributor",
         "version": "18.0",
-        "description": "SMRITI Distributor Profile based on Shoper9 Distributor template",
+        "description": "TILEFLOW Distributor Profile based on Shoper9 Distributor template",
         "scope": [
             "Purchase order management & consolidation",
             "Sales orders & wholesale invoicing",
@@ -396,7 +378,7 @@ def analyze_and_extract_blueprints(
                 "workflowId": "WF-DC-SALES",
                 "title": "Sales Delivery Challan (Sales DC)",
                 "legacyMenu": "Sales -> DC Generation -> Sales DC (SR115500.EXE / PgmOpt 8)",
-                "smritiTarget": "/distributor-invoicing (Delivery Challan Mode)",
+                "tileflowTarget": "/distributor-invoicing (Delivery Challan Mode)",
                 "documentType": "DELIVERY_CHALLAN",
                 "status": "MAPPED"
             },
@@ -404,7 +386,7 @@ def analyze_and_extract_blueprints(
                 "workflowId": "WF-DC-APPROVAL",
                 "title": "Approval Issue Delivery Challan",
                 "legacyMenu": "Sales -> DC Generation -> Approval Issue DC (SR115500.EXE / PgmOpt 9)",
-                "smritiTarget": "/distributor-invoicing (Approval Issue Mode)",
+                "tileflowTarget": "/distributor-invoicing (Approval Issue Mode)",
                 "documentType": "APPROVAL_ISSUE_DC",
                 "status": "MAPPED"
             },
@@ -412,7 +394,7 @@ def analyze_and_extract_blueprints(
                 "workflowId": "WF-TRANSPORT-RECEIPT",
                 "title": "Transport Receipt Entry",
                 "legacyMenu": "Sales -> DC Generation -> Transport Receipt Entry (SD400800.EXE / PgmOpt 8)",
-                "smritiTarget": "/dispatch-manifests (Transport LR & Carrier Receipt)",
+                "tileflowTarget": "/dispatch-manifests (Transport LR & Carrier Receipt)",
                 "documentType": "TRANSPORT_RECEIPT",
                 "status": "MAPPED"
             },
@@ -420,7 +402,7 @@ def analyze_and_extract_blueprints(
                 "workflowId": "WF-CONV-SALES-APPROVAL",
                 "title": "Conversion of Sales DC to Approval Issue DC",
                 "legacyMenu": "Sales -> DC Generation -> Conversion of Sales DC to Approval Issue DC (SD100500.EXE)",
-                "smritiTarget": "/distributor-invoicing (Challan Type Reclassification)",
+                "tileflowTarget": "/distributor-invoicing (Challan Type Reclassification)",
                 "documentType": "DC_RECLASSIFICATION",
                 "status": "MAPPED"
             },
@@ -428,7 +410,7 @@ def analyze_and_extract_blueprints(
                 "workflowId": "WF-PO-CONSOLIDATION",
                 "title": "Purchase Order Consolidation",
                 "legacyMenu": "Purchase Order -> Consolidation (SE100900.EXE / PgmOpt 3)",
-                "smritiTarget": "/purchase-studio (PO Batch Consolidation & Multi-Store Aggregation)",
+                "tileflowTarget": "/purchase-studio (PO Batch Consolidation & Multi-Store Aggregation)",
                 "documentType": "PURCHASE_ORDER_CONSOLIDATION",
                 "status": "MAPPED"
             }
@@ -493,8 +475,8 @@ def analyze_and_extract_blueprints(
         "profile_diffs": profile_diffs
     }
 
-def map_menu_to_smriti_tile(caption: str, exe: str) -> Dict[str, str]:
-    """Map legacy menu item to SMRITI Launchpad Tile and Action."""
+def map_menu_to_tileflow_tile(caption: str, exe: str) -> Dict[str, str]:
+    """Map legacy menu item to TILEFLOW Launchpad Tile and Action."""
     c = caption.lower()
     if "sales dc" in c:
         return {"tileId": "distributor-invoicing", "action": "CREATE_SALES_DC", "workspace": "Billing Desk"}
@@ -516,17 +498,16 @@ def write_json(path: Path, data: Any):
 
 def write_readme(path: Path, manifest: List[Dict], retail_bp: Dict, dist_bp: Dict):
     content = f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.33.0
   Created      : 2026-08-26
   Modified     : 2026-08-26
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Shoper9 Legacy Template Blueprints
@@ -534,7 +515,7 @@ def write_readme(path: Path, manifest: List[Dict], retail_bp: Dict, dist_bp: Dic
 This directory contains the normalized, verified, and audited blueprints derived from legacy **Shoper9 Template files** (`D:\\Shoper9\\Templates`).
 
 > [!IMPORTANT]
-> These artifacts are business and architectural blueprints for SMRITI Retail OS. No legacy SQL is executed directly against production databases (`smritisys`, `smriti001`, `smriti002`).
+> These artifacts are business and architectural blueprints for TILEFLOW Retail OS. No legacy SQL is executed directly against production databases (`tileflowsys`, `tileflow001`, `tileflow002`).
 
 ---
 
@@ -543,7 +524,7 @@ This directory contains the normalized, verified, and audited blueprints derived
 - [`template_manifest.json`](./template_manifest.json): Full manifest of all source template files with SHA256 hashes and quarantine status.
 - [`retail_blueprint.json`](./retail_blueprint.json): Retail profile configuration and module boundaries.
 - [`distributor_blueprint.json`](./distributor_blueprint.json): Distributor profile configuration, Delivery Challans, Transport Receipts, and PO Consolidation.
-- [`menus.json`](./menus.json): Normalized menu definitions with direct SMRITI Launchpad tile and workspace mappings.
+- [`menus.json`](./menus.json): Normalized menu definitions with direct TILEFLOW Launchpad tile and workspace mappings.
 - [`parameters.json`](./parameters.json): Consolidated system parameters catalog, category hierarchies, and Retail vs Distributor variances.
 - [`general_lookups.json`](./general_lookups.json): Master lookups, search filters, and formula definitions.
 - [`display_layouts.json`](./display_layouts.json): Billing/Grid display column formatting rules (`ACCEPTDISPLAYDTLS`).
@@ -551,11 +532,10 @@ This directory contains the normalized, verified, and audited blueprints derived
 
 ---
 
-## 2. File Classifications
 
-| Legacy Extension | Description | SMRITI Canonical Concept |
+| Legacy Extension | Description | TILEFLOW Canonical Concept |
 |---|---|---|
-| `*.Sy` | System Parameters CSV | `smritisys.system_parameters` |
+| `*.Sy` | System Parameters CSV | `tileflowsys.system_parameters` |
 | `*.Gl` | General Lookups CSV | Master Data, Filters & Categories |
 | `*.Lu` | Lookup Value Choices CSV | Parameter Option Enumerations |
 | `*.Dbs` | Display Grid SQL | Screen Layouts & Table Formats |
@@ -576,7 +556,7 @@ This directory contains the normalized, verified, and audited blueprints derived
 - **Core Focus**: B2B Wholesale operations, Delivery Challans (Sales DC, Approval Issue DC), Transport LR Entry, DC Type Reclassification, Purchase Order Consolidation, and custom grid layouts.
 - **Parameters Count**: {dist_bp['parameterCount']}
 - **Display Column Formats**: {dist_bp['displayLayoutCount']} columns
-- **Workflow Mappings**: 5 core distributor workflows mapped to SMRITI Distributor Invoicing and Logistics modules.
+- **Workflow Mappings**: 5 core distributor workflows mapped to TILEFLOW Distributor Invoicing and Logistics modules.
 """
     with open(path, "w", encoding="utf-8") as f:
         f.write(content)
@@ -593,17 +573,16 @@ def write_review_report(
     audit_date: str = "2026-08-26"
 ):
     content = f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.33.0
   Created      : 2026-08-26
   Modified     : 2026-08-26
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Shoper9 Template Blueprint Review & Audit Report
@@ -611,7 +590,7 @@ def write_review_report(
 **Audit Date**: {audit_date}
 **Source Path**: `D:\\Shoper9\\Templates`
 **Total Source Files**: {len(manifest)}
-**Auditor**: SMRITI Automated Blueprint Engine
+**Auditor**: TILEFLOW Automated Blueprint Engine
 
 ---
 
@@ -653,7 +632,7 @@ The legacy SQL files contain redundant duplicate statements that have been filte
 ---
 
 ## 4. Hardcoded Legacy File Paths ({len(hardcoded_paths)})
-The legacy configuration files contain Windows-specific absolute paths that must be overridden by SMRITI environment variables or tenant storage providers:
+The legacy configuration files contain Windows-specific absolute paths that must be overridden by TILEFLOW environment variables or tenant storage providers:
 
 | Profile | Parameter Code | Description | Legacy Value |
 |---|---|---|---|
@@ -681,17 +660,17 @@ Differences in parameter values between Retail and Distributor operational profi
 
 ## 6. Distributor Workflow Mappings ({len(dist_workflows)})
 
-| Workflow ID | Business Capability | Legacy Shoper9 Menu | SMRITI Canonical Target | Status |
+| Workflow ID | Business Capability | Legacy Shoper9 Menu | TILEFLOW Canonical Target | Status |
 |---|---|---|---|---|
 """
     for w in dist_workflows:
-        content += f"| `{w['workflowId']}` | {w['title']} | {w['legacyMenu']} | `{w['smritiTarget']}` | `{w['status']}` |\n"
+        content += f"| `{w['workflowId']}` | {w['title']} | {w['legacyMenu']} | `{w['tileflowTarget']}` | `{w['status']}` |\n"
 
     content += f"""
 ---
 
 ## 7. Safety & Compliance Attestation
-- [x] Zero direct SQL execution against `smritisys`, `smriti001`, or `smriti002`.
+- [x] Zero direct SQL execution against `tileflowsys`, `tileflow001`, or `tileflow002`.
 - [x] Zero modifications, renames, or deletions in `D:\\Shoper9\\Templates`.
 - [x] All legacy character encodings preserved.
 - [x] Quarantined temporary files excluded from production schemas.
@@ -701,7 +680,7 @@ Differences in parameter values between Retail and Distributor operational profi
         f.write(content)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="SMRITI Shoper9 Template Blueprint Parser")
+    parser = argparse.ArgumentParser(description="TILEFLOW Shoper9 Template Blueprint Parser")
     parser.add_argument("--source-dir", type=Path, default=DEFAULT_SOURCE_DIR, help="Path to Shoper9 Templates folder")
     parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR, help="Output destination folder")
     parser.add_argument("--timestamp", type=str, default="2026-08-26T23:45:00+05:30", help="Deterministic timestamp string (ISO format)")

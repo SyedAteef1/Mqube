@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, timezone
 import pytest
@@ -42,8 +28,8 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -57,7 +43,7 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
 @pytest.mark.asyncio
 async def test_template_creation_update_and_variable_interpolation():
     """Verify template lifecycle (create, update, list) and mustache variable interpolation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     tpl_code = f"TPL_INV_{suffix.upper()}"
 
@@ -121,7 +107,7 @@ async def test_template_creation_update_and_variable_interpolation():
 @pytest.mark.asyncio
 async def test_single_message_dispatch_whatsapp_and_sms():
     """Verify single message dispatch across WhatsApp and SMS with audit ledger entry."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     tpl_code = f"TPL_BILL_{suffix.upper()}"
 
@@ -190,7 +176,7 @@ async def test_single_message_dispatch_whatsapp_and_sms():
 @pytest.mark.asyncio
 async def test_trai_quiet_hours_promotional_blocking_policy():
     """Verify promotional messages are blocked during TRAI quiet hours (21:00 to 09:00 IST), whereas OTP/Transactional bypass."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -224,7 +210,7 @@ async def test_trai_quiet_hours_promotional_blocking_policy():
 @pytest.mark.asyncio
 async def test_multi_channel_fallback_whatsapp_to_sms():
     """Verify fallback cascading to SMS when primary WhatsApp channel encounters formatting/routing failure."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -248,7 +234,7 @@ async def test_multi_channel_fallback_whatsapp_to_sms():
 @pytest.mark.asyncio
 async def test_batch_notification_dispatch_with_template():
     """Verify high-throughput batch notification dispatch with per-recipient template interpolation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     tpl_code = f"TPL_BATCH_{suffix.upper()}"
 

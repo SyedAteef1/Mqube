@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-11
-Modified     : 2026-07-13
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import uuid
 import pytest
 from httpx import AsyncClient, ASGITransport
@@ -67,7 +54,7 @@ async def _make_user(db_session, suffix: str, role: UserRole,
     user = User(
         id=f"usr-{suffix}",
         username=f"user_{suffix}",
-        email=f"user_{suffix}@smriti.test",
+        email=f"user_{suffix}@tileflow.test",
         hashed_password=hash_password("Password@123"),
         role=role,
         is_active=True,
@@ -114,7 +101,7 @@ async def test_sysadmin_can_create_manager(db_session):
                 "fullName": f"Manager Name {suffix}",
                 "role": "MANAGER",
                 "branchId": br.id,
-                "email": f"mgr_{suffix}@smriti.test"
+                "email": f"mgr_{suffix}@tileflow.test"
             },
             headers=_bearer(sysadmin),
         )

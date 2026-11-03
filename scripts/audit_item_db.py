@@ -1,14 +1,14 @@
 """
-SMRITI Item Master Database Audit Script
+TILEFLOW Item Master Database Audit Script
 Phase 1 - Read Only Discovery
 """
 import psycopg2
 import json
 
 DATABASES = {
-    "smriti001": "postgresql://postgres:postgres@localhost:5432/smriti001",
-    "smriti002": "postgresql://postgres:postgres@localhost:5432/smriti002",
-    "smritisys": "postgresql://postgres:postgres@localhost:5432/smritisys",
+    "tileflow001": "postgresql://postgres:postgres@localhost:5432/tileflow001",
+    "tileflow002": "postgresql://postgres:postgres@localhost:5432/tileflow002",
+    "tileflowsys": "postgresql://postgres:postgres@localhost:5432/tileflowsys",
 }
 
 ITEM_RELATED_TABLES = [

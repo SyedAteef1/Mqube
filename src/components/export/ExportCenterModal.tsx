@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-08-24
- * Modified     : 2026-08-24
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useRef } from "react";
 import {
   Download,
@@ -73,7 +59,7 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
   appliedFilters = {},
   searchTerm = "",
   dateRange,
-  companyName = "SMRITI Enterprise",
+  companyName = "MQube Enterprise",
   branchName = "Main Branch",
   onNotification,
 }) => {
@@ -240,16 +226,16 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-[#1e2329] border border-[#c6c6cd] dark:border-[#45464d] rounded-2xl shadow-2xl max-w-2xl w-full flex flex-col overflow-hidden text-[#191c1e] dark:text-[#e1e2e5]">
+      <div className="bg-white dark:bg-[#222222] border border-[#c7c7c7] dark:border-[#464646] rounded-2xl shadow-2xl max-w-2xl w-full flex flex-col overflow-hidden text-[#1c1c1c] dark:text-[#e2e2e2]">
         {/* Modal Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e1e2e5] dark:border-[#35393e] bg-[#f7f9fc] dark:bg-[#15191e]">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e2e2e2] dark:border-[#393939] bg-[#f9f9f9] dark:bg-[#191919]">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-[#003d9b]/10 dark:bg-[#003d9b]/30 text-[#003d9b] dark:text-[#b2c5ff]">
+            <div className="p-2.5 rounded-xl bg-[#373737]/10 dark:bg-[#373737]/30 text-[#373737] dark:text-[#c5c5c5]">
               <Download className="w-5 h-5" />
             </div>
             <div>
-              <h2 className="text-base font-bold tracking-tight">SMRITI Export Center</h2>
-              <p className="text-xs text-[#515f74] dark:text-[#bec6e0]">
+              <h2 className="text-base font-bold tracking-tight">MQube Export Center</h2>
+              <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">
                 {moduleTitle} • Multi-Format &amp; Multi-Scope Data Dispatch
               </p>
             </div>
@@ -257,7 +243,7 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
           <button
             onClick={onClose}
             disabled={progressState.isExporting}
-            className="p-1.5 rounded-lg text-[#515f74] hover:text-[#191c1e] dark:text-[#bec6e0] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors disabled:opacity-50"
+            className="p-1.5 rounded-lg text-[#5e5e5e] hover:text-[#1c1c1c] dark:text-[#c6c6c6] dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-colors disabled:opacity-50"
           >
             <X className="w-5 h-5" />
           </button>
@@ -267,8 +253,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
         <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
           {/* 1. Format Selection */}
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#515f74] dark:text-[#bec6e0] flex items-center gap-1.5">
-              <FileSpreadsheet className="w-4 h-4 text-[#003d9b] dark:text-[#b2c5ff]" />
+            <label className="text-xs font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] flex items-center gap-1.5">
+              <FileSpreadsheet className="w-4 h-4 text-[#373737] dark:text-[#c5c5c5]" />
               1. Select File Format
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5">
@@ -278,8 +264,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                 disabled={progressState.isExporting}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all ${
                   format === "xlsx"
-                    ? "border-[#003d9b] bg-[#003d9b]/10 dark:bg-[#003d9b]/25 text-[#003d9b] dark:text-[#b2c5ff] font-bold shadow-sm"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34] text-[#515f74] dark:text-[#bec6e0]"
+                    ? "border-[#373737] bg-[#373737]/10 dark:bg-[#373737]/25 text-[#373737] dark:text-[#c5c5c5] font-bold shadow-sm"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c] text-[#5e5e5e] dark:text-[#c6c6c6]"
                 }`}
               >
                 <FileSpreadsheet className="w-5 h-5 mb-1 text-emerald-600 dark:text-emerald-400" />
@@ -294,7 +280,7 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all ${
                   format === "gsheet"
                     ? "border-emerald-600 bg-emerald-500/10 dark:bg-emerald-500/25 text-emerald-700 dark:text-emerald-300 font-bold shadow-sm ring-1 ring-emerald-500/50"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34] text-[#515f74] dark:text-[#bec6e0]"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c] text-[#5e5e5e] dark:text-[#c6c6c6]"
                 }`}
               >
                 <FileSpreadsheet className="w-5 h-5 mb-1 text-emerald-500" />
@@ -308,8 +294,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                 disabled={progressState.isExporting}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all ${
                   format === "csv"
-                    ? "border-[#003d9b] bg-[#003d9b]/10 dark:bg-[#003d9b]/25 text-[#003d9b] dark:text-[#b2c5ff] font-bold shadow-sm"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34] text-[#515f74] dark:text-[#bec6e0]"
+                    ? "border-[#373737] bg-[#373737]/10 dark:bg-[#373737]/25 text-[#373737] dark:text-[#c5c5c5] font-bold shadow-sm"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c] text-[#5e5e5e] dark:text-[#c6c6c6]"
                 }`}
               >
                 <Table className="w-5 h-5 mb-1 text-blue-600 dark:text-blue-400" />
@@ -323,8 +309,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                 disabled={progressState.isExporting}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all ${
                   format === "json"
-                    ? "border-[#003d9b] bg-[#003d9b]/10 dark:bg-[#003d9b]/25 text-[#003d9b] dark:text-[#b2c5ff] font-bold shadow-sm"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34] text-[#515f74] dark:text-[#bec6e0]"
+                    ? "border-[#373737] bg-[#373737]/10 dark:bg-[#373737]/25 text-[#373737] dark:text-[#c5c5c5] font-bold shadow-sm"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c] text-[#5e5e5e] dark:text-[#c6c6c6]"
                 }`}
               >
                 <Table className="w-5 h-5 mb-1 text-purple-600 dark:text-purple-400" />
@@ -338,8 +324,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                 disabled={progressState.isExporting}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all ${
                   format === "txt"
-                    ? "border-[#003d9b] bg-[#003d9b]/10 dark:bg-[#003d9b]/25 text-[#003d9b] dark:text-[#b2c5ff] font-bold shadow-sm"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34] text-[#515f74] dark:text-[#bec6e0]"
+                    ? "border-[#373737] bg-[#373737]/10 dark:bg-[#373737]/25 text-[#373737] dark:text-[#c5c5c5] font-bold shadow-sm"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c] text-[#5e5e5e] dark:text-[#c6c6c6]"
                 }`}
               >
                 <FileText className="w-5 h-5 mb-1 text-amber-600 dark:text-amber-400" />
@@ -353,8 +339,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                 disabled={progressState.isExporting}
                 className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all ${
                   format === "html"
-                    ? "border-[#003d9b] bg-[#003d9b]/10 dark:bg-[#003d9b]/25 text-[#003d9b] dark:text-[#b2c5ff] font-bold shadow-sm"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34] text-[#515f74] dark:text-[#bec6e0]"
+                    ? "border-[#373737] bg-[#373737]/10 dark:bg-[#373737]/25 text-[#373737] dark:text-[#c5c5c5] font-bold shadow-sm"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c] text-[#5e5e5e] dark:text-[#c6c6c6]"
                 }`}
               >
                 <FileSpreadsheet className="w-5 h-5 mb-1 text-rose-600 dark:text-rose-400" />
@@ -375,16 +361,16 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
 
           {/* 2. Scope Selection */}
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-[#515f74] dark:text-[#bec6e0] flex items-center gap-1.5">
-              <Layers className="w-4 h-4 text-[#003d9b] dark:text-[#b2c5ff]" />
+            <label className="text-xs font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] flex items-center gap-1.5">
+              <Layers className="w-4 h-4 text-[#373737] dark:text-[#c5c5c5]" />
               2. Export Scope
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
               <label
                 className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer text-xs transition-all ${
                   scope === "currentPage"
-                    ? "border-[#003d9b] bg-[#003d9b]/5 dark:bg-[#003d9b]/20 font-bold text-[#003d9b] dark:text-[#b2c5ff]"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34]"
+                    ? "border-[#373737] bg-[#373737]/5 dark:bg-[#373737]/20 font-bold text-[#373737] dark:text-[#c5c5c5]"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c]"
                 }`}
               >
                 <input
@@ -394,11 +380,11 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                   checked={scope === "currentPage"}
                   onChange={() => setScope("currentPage")}
                   disabled={progressState.isExporting}
-                  className="accent-[#003d9b]"
+                  className="accent-[#373737]"
                 />
                 <div>
                   <span className="block font-semibold">Current Page</span>
-                  <span className="text-[10px] text-[#515f74] dark:text-[#bec6e0]">
+                  <span className="text-[10px] text-[#5e5e5e] dark:text-[#c6c6c6]">
                     ({currentPageData.length} records)
                   </span>
                 </div>
@@ -407,8 +393,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
               <label
                 className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer text-xs transition-all ${
                   scope === "all"
-                    ? "border-[#003d9b] bg-[#003d9b]/5 dark:bg-[#003d9b]/20 font-bold text-[#003d9b] dark:text-[#b2c5ff]"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34]"
+                    ? "border-[#373737] bg-[#373737]/5 dark:bg-[#373737]/20 font-bold text-[#373737] dark:text-[#c5c5c5]"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c]"
                 }`}
               >
                 <input
@@ -418,11 +404,11 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                   checked={scope === "all"}
                   onChange={() => setScope("all")}
                   disabled={progressState.isExporting}
-                  className="accent-[#003d9b]"
+                  className="accent-[#373737]"
                 />
                 <div>
                   <span className="block font-semibold">All Records</span>
-                  <span className="text-[10px] text-[#515f74] dark:text-[#bec6e0]">
+                  <span className="text-[10px] text-[#5e5e5e] dark:text-[#c6c6c6]">
                     ({totalRecordsCount || "All API Pages"})
                   </span>
                 </div>
@@ -431,8 +417,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
               <label
                 className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer text-xs transition-all ${
                   scope === "filtered"
-                    ? "border-[#003d9b] bg-[#003d9b]/5 dark:bg-[#003d9b]/20 font-bold text-[#003d9b] dark:text-[#b2c5ff]"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34]"
+                    ? "border-[#373737] bg-[#373737]/5 dark:bg-[#373737]/20 font-bold text-[#373737] dark:text-[#c5c5c5]"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c]"
                 }`}
               >
                 <input
@@ -442,11 +428,11 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                   checked={scope === "filtered"}
                   onChange={() => setScope("filtered")}
                   disabled={progressState.isExporting}
-                  className="accent-[#003d9b]"
+                  className="accent-[#373737]"
                 />
                 <div>
                   <span className="block font-semibold">Filtered Only</span>
-                  <span className="text-[10px] text-[#515f74] dark:text-[#bec6e0]">
+                  <span className="text-[10px] text-[#5e5e5e] dark:text-[#c6c6c6]">
                     ({filteredRecordsCount || "Matching Search"})
                   </span>
                 </div>
@@ -455,10 +441,10 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
               <label
                 className={`flex items-center gap-2.5 p-3 rounded-xl border cursor-pointer text-xs transition-all ${
                   selectedRows.length === 0
-                    ? "opacity-50 cursor-not-allowed border-[#c6c6cd] dark:border-[#45464d]"
+                    ? "opacity-50 cursor-not-allowed border-[#c7c7c7] dark:border-[#464646]"
                     : scope === "selected"
-                    ? "border-[#003d9b] bg-[#003d9b]/5 dark:bg-[#003d9b]/20 font-bold text-[#003d9b] dark:text-[#b2c5ff]"
-                    : "border-[#c6c6cd] dark:border-[#45464d] hover:bg-[#f7f9fc] dark:hover:bg-[#282d34]"
+                    ? "border-[#373737] bg-[#373737]/5 dark:bg-[#373737]/20 font-bold text-[#373737] dark:text-[#c5c5c5]"
+                    : "border-[#c7c7c7] dark:border-[#464646] hover:bg-[#f9f9f9] dark:hover:bg-[#2c2c2c]"
                 }`}
               >
                 <input
@@ -468,11 +454,11 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                   checked={scope === "selected"}
                   onChange={() => setScope("selected")}
                   disabled={selectedRows.length === 0 || progressState.isExporting}
-                  className="accent-[#003d9b]"
+                  className="accent-[#373737]"
                 />
                 <div>
                   <span className="block font-semibold">Selected Rows</span>
-                  <span className="text-[10px] text-[#515f74] dark:text-[#bec6e0]">
+                  <span className="text-[10px] text-[#5e5e5e] dark:text-[#c6c6c6]">
                     ({selectedRows.length} checked)
                   </span>
                 </div>
@@ -482,33 +468,33 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
 
           {/* 3. Applied Filters & Context Card */}
           {(searchTerm || Object.keys(appliedFilters).length > 0 || dateRange?.start) && (
-            <div className="p-3.5 bg-[#f0f4f9] dark:bg-[#171b20] border border-[#d8e2ee] dark:border-[#383d44] rounded-xl space-y-2 text-xs">
-              <div className="flex items-center gap-2 font-bold text-[#003d9b] dark:text-[#b2c5ff]">
+            <div className="p-3.5 bg-[#f4f4f4] dark:bg-[#1b1b1b] border border-[#e1e1e1] dark:border-[#3c3c3c] rounded-xl space-y-2 text-xs">
+              <div className="flex items-center gap-2 font-bold text-[#373737] dark:text-[#c5c5c5]">
                 <Filter className="w-3.5 h-3.5" />
                 <span>Active Context &amp; Filters applied to this export:</span>
               </div>
-              <div className="grid grid-cols-2 gap-2 text-[#515f74] dark:text-[#bec6e0] text-[11px]">
+              <div className="grid grid-cols-2 gap-2 text-[#5e5e5e] dark:text-[#c6c6c6] text-[11px]">
                 {companyName && (
                   <div className="flex items-center gap-1.5">
-                    <Building className="w-3 h-3 text-[#003d9b]" />
-                    <span>Company: <strong className="text-[#191c1e] dark:text-white">{companyName}</strong></span>
+                    <Building className="w-3 h-3 text-[#373737]" />
+                    <span>Company: <strong className="text-[#1c1c1c] dark:text-white">{companyName}</strong></span>
                   </div>
                 )}
                 {searchTerm && (
                   <div className="flex items-center gap-1.5">
-                    <Search className="w-3 h-3 text-[#003d9b]" />
-                    <span>Search: <strong className="text-[#191c1e] dark:text-white">"{searchTerm}"</strong></span>
+                    <Search className="w-3 h-3 text-[#373737]" />
+                    <span>Search: <strong className="text-[#1c1c1c] dark:text-white">"{searchTerm}"</strong></span>
                   </div>
                 )}
                 {dateRange?.start && (
                   <div className="flex items-center gap-1.5">
-                    <Calendar className="w-3 h-3 text-[#003d9b]" />
+                    <Calendar className="w-3 h-3 text-[#373737]" />
                     <span>Date: {dateRange.start} to {dateRange.end || "Now"}</span>
                   </div>
                 )}
                 {Object.entries(appliedFilters).map(([k, v]) => (
                   <div key={k} className="capitalize">
-                    {k}: <strong className="text-[#191c1e] dark:text-white">{String(v)}</strong>
+                    {k}: <strong className="text-[#1c1c1c] dark:text-white">{String(v)}</strong>
                   </div>
                 ))}
               </div>
@@ -518,8 +504,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
           {/* 4. Column Selection Checklist */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold uppercase tracking-wider text-[#515f74] dark:text-[#bec6e0] flex items-center gap-1.5">
-                <SlidersHorizontal className="w-4 h-4 text-[#003d9b] dark:text-[#b2c5ff]" />
+              <label className="text-xs font-bold uppercase tracking-wider text-[#5e5e5e] dark:text-[#c6c6c6] flex items-center gap-1.5">
+                <SlidersHorizontal className="w-4 h-4 text-[#373737] dark:text-[#c5c5c5]" />
                 3. Choose Columns ({activeColCount}/{totalColCount})
               </label>
               <div className="flex items-center gap-3 text-xs">
@@ -527,23 +513,23 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                   type="button"
                   onClick={handleSelectAllColumns}
                   disabled={progressState.isExporting}
-                  className="text-[#003d9b] dark:text-[#b2c5ff] hover:underline font-semibold"
+                  className="text-[#373737] dark:text-[#c5c5c5] hover:underline font-semibold"
                 >
                   Select All
                 </button>
-                <span className="text-[#c6c6cd]">|</span>
+                <span className="text-[#c7c7c7]">|</span>
                 <button
                   type="button"
                   onClick={handleDeselectAllColumns}
                   disabled={progressState.isExporting}
-                  className="text-[#515f74] dark:text-[#bec6e0] hover:underline"
+                  className="text-[#5e5e5e] dark:text-[#c6c6c6] hover:underline"
                 >
                   Clear
                 </button>
               </div>
             </div>
 
-            <div className="p-3 bg-[#f7f9fc] dark:bg-[#15191e] border border-[#e1e2e5] dark:border-[#35393e] rounded-xl grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-44 overflow-y-auto">
+            <div className="p-3 bg-[#f9f9f9] dark:bg-[#191919] border border-[#e2e2e2] dark:border-[#393939] rounded-xl grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-44 overflow-y-auto">
               {columns.map((col) => {
                 const isChecked = selectedColumnKeys.has(col.key);
                 return (
@@ -554,14 +540,14 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                     disabled={progressState.isExporting}
                     className={`flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-left text-xs transition-colors ${
                       isChecked
-                        ? "bg-white dark:bg-[#252a30] text-[#191c1e] dark:text-white font-medium shadow-2xs border border-[#c6c6cd] dark:border-[#45464d]"
-                        : "text-[#72777f] dark:text-[#8c9199] hover:bg-black/5 dark:hover:bg-white/5"
+                        ? "bg-white dark:bg-[#292929] text-[#1c1c1c] dark:text-white font-medium shadow-2xs border border-[#c7c7c7] dark:border-[#464646]"
+                        : "text-[#777777] dark:text-[#919191] hover:bg-black/5 dark:hover:bg-white/5"
                     }`}
                   >
                     {isChecked ? (
-                      <CheckSquare className="w-3.5 h-3.5 text-[#003d9b] dark:text-[#b2c5ff] shrink-0" />
+                      <CheckSquare className="w-3.5 h-3.5 text-[#373737] dark:text-[#c5c5c5] shrink-0" />
                     ) : (
-                      <Square className="w-3.5 h-3.5 text-[#72777f] shrink-0" />
+                      <Square className="w-3.5 h-3.5 text-[#777777] shrink-0" />
                     )}
                     <span className="truncate" title={col.label}>{col.label}</span>
                   </button>
@@ -571,7 +557,7 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
           </div>
 
           {/* 5. Additional Options */}
-          <div className="space-y-3 pt-2 border-t border-[#e1e2e5] dark:border-[#35393e]">
+          <div className="space-y-3 pt-2 border-t border-[#e2e2e2] dark:border-[#393939]">
             <div className="flex items-center justify-between text-xs">
               <label className="flex items-center gap-2 cursor-pointer font-medium">
                 <input
@@ -579,14 +565,14 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                   checked={includeMetadataHeader}
                   onChange={(e) => setIncludeMetadataHeader(e.target.checked)}
                   disabled={progressState.isExporting}
-                  className="rounded accent-[#003d9b]"
+                  className="rounded accent-[#373737]"
                 />
                 <span>Include Organization Metadata Header &amp; Filter Summary</span>
               </label>
             </div>
 
             <div>
-              <label className="text-[11px] font-bold text-[#515f74] dark:text-[#bec6e0] block mb-1">
+              <label className="text-[11px] font-bold text-[#5e5e5e] dark:text-[#c6c6c6] block mb-1">
                 Custom Filename (Optional)
               </label>
               <input
@@ -595,18 +581,18 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                 data-field-key="reference_no"
                 onChange={(e) => setCustomFilename(e.target.value)}
                 disabled={progressState.isExporting}
-                placeholder={`SMRITI_${moduleTitle}_${scope}_${new Date().toISOString().split("T")[0]}`}
-                className="w-full px-3 py-1.5 text-xs bg-white dark:bg-[#15191e] border border-[#c6c6cd] dark:border-[#45464d] rounded-lg font-mono focus:outline-none focus:border-[#003d9b]"
+                placeholder={`TILEFLOW_${moduleTitle}_${scope}_${new Date().toISOString().split("T")[0]}`}
+                className="w-full px-3 py-1.5 text-xs bg-white dark:bg-[#191919] border border-[#c7c7c7] dark:border-[#464646] rounded-lg font-mono focus:outline-none focus:border-[#373737]"
               />
             </div>
           </div>
 
           {/* Progress Bar Display */}
           {progressState.isExporting && (
-            <div className="p-4 bg-[#003d9b]/5 dark:bg-[#003d9b]/15 border border-[#003d9b]/30 rounded-xl space-y-2.5 animate-in fade-in">
-              <div className="flex items-center justify-between text-xs font-bold text-[#003d9b] dark:text-[#b2c5ff]">
+            <div className="p-4 bg-[#373737]/5 dark:bg-[#373737]/15 border border-[#373737]/30 rounded-xl space-y-2.5 animate-in fade-in">
+              <div className="flex items-center justify-between text-xs font-bold text-[#373737] dark:text-[#c5c5c5]">
                 <div className="flex items-center gap-2">
-                  <Loader2 className="w-4 h-4 animate-spin text-[#003d9b]" />
+                  <Loader2 className="w-4 h-4 animate-spin text-[#373737]" />
                   <span>
                     {progressState.currentStep === "collecting"
                       ? `Fetching Page ${progressState.currentPage} of ${progressState.totalPages}...`
@@ -618,14 +604,14 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
                 <span>{progressState.percentage}%</span>
               </div>
 
-              <div className="w-full bg-[#d8e2ee] dark:bg-[#2d333b] h-2 rounded-full overflow-hidden">
+              <div className="w-full bg-[#e1e1e1] dark:bg-[#323232] h-2 rounded-full overflow-hidden">
                 <div
-                  className="bg-[#003d9b] dark:bg-[#7ca8ff] h-full transition-all duration-300 rounded-full"
+                  className="bg-[#373737] dark:bg-[#a5a5a5] h-full transition-all duration-300 rounded-full"
                   style={{ width: `${progressState.percentage}%` }}
                 />
               </div>
 
-              <div className="flex items-center justify-between text-[11px] text-[#515f74] dark:text-[#bec6e0]">
+              <div className="flex items-center justify-between text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6]">
                 <span>Collected {progressState.fetchedCount} records</span>
                 <button
                   type="button"
@@ -640,8 +626,8 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t border-[#e1e2e5] dark:border-[#35393e] bg-[#f7f9fc] dark:bg-[#15191e]">
-          <div className="text-[11px] text-[#515f74] dark:text-[#bec6e0]">
+        <div className="flex items-center justify-between px-6 py-4 border-t border-[#e2e2e2] dark:border-[#393939] bg-[#f9f9f9] dark:bg-[#191919]">
+          <div className="text-[11px] text-[#5e5e5e] dark:text-[#c6c6c6]">
             Format: <strong className="uppercase">{format}</strong> • Columns: <strong>{activeColCount}</strong>
           </div>
 
@@ -650,7 +636,7 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
               type="button"
               onClick={onClose}
               disabled={progressState.isExporting}
-              className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#c6c6cd] dark:border-[#45464d] hover:bg-black/5 dark:hover:bg-white/5 transition-colors disabled:opacity-50"
+              className="px-4 py-2 text-xs font-semibold rounded-xl border border-[#c7c7c7] dark:border-[#464646] hover:bg-black/5 dark:hover:bg-white/5 transition-colors disabled:opacity-50"
             >
               Cancel
             </button>
@@ -661,7 +647,7 @@ export const ExportCenterModal: React.FC<ExportCenterModalProps> = ({
               className={`flex items-center gap-2 px-5 py-2 text-xs font-bold rounded-xl text-white shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed ${
                 format === "gsheet"
                   ? "bg-emerald-600 hover:bg-emerald-700 shadow-emerald-900/20"
-                  : "bg-[#003d9b] hover:bg-[#002f7a]"
+                  : "bg-[#373737] hover:bg-[#2a2a2a]"
               }`}
             >
               {progressState.isExporting ? (

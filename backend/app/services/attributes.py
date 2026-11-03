@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-13
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import uuid
 import json
 from datetime import datetime, timezone
@@ -177,7 +164,7 @@ class AttributesService:
             id=new_id,
             style_code=data.styleCode,
             name=data.name,
-            brand=data.brand or "SMRITI",
+            brand=data.brand or "TILEFLOW",
             category=data.category or "General",
             hsn_code=data.hsnCode or "61091000",
             base_price=int(data.basePrice or 0),

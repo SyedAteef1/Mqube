@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 import pytest
@@ -39,8 +25,8 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -54,7 +40,7 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
 @pytest.mark.asyncio
 async def test_quick_barcode_scan_tier1_tier2_tier3():
     """Verify 4-tier fast barcode resolver: exact barcode, variant SKU, item code, not found."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     item_code = f"ITM-BC-{suffix.upper()}"
     sku_val = f"SKU-BC-{suffix.upper()}"
@@ -151,7 +137,7 @@ async def test_quick_barcode_scan_tier1_tier2_tier3():
 @pytest.mark.asyncio
 async def test_universal_search_multi_domain_aggregation():
     """Verify omni-search returning aggregated results across multiple domains with common keyword."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     keyword = f"OMNI{suffix.upper()}"
 
@@ -218,7 +204,7 @@ async def test_universal_search_multi_domain_aggregation():
 @pytest.mark.asyncio
 async def test_role_based_domain_filtering_rbac():
     """Verify CASHIER role is restricted from sensitive domains (omits PARTIES, WAREHOUSES, TRANSACTIONS)."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
 
     async with sessionmaker() as session:
         # Cashier search
@@ -248,7 +234,7 @@ async def test_role_based_domain_filtering_rbac():
 @pytest.mark.asyncio
 async def test_document_search_invoice_po_dispatch():
     """Verify searching documents by invoice_no, po_number, and tracking_number."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     awb_val = f"AWB{suffix.upper()}"
 
@@ -295,7 +281,7 @@ async def test_document_search_invoice_po_dispatch():
 @pytest.mark.asyncio
 async def test_party_search_by_code_phone_gstin():
     """Verify searching parties by GSTIN, phone, and party code."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:4]
     gstin_val = f"27AAAAA{suffix.upper()}1Z5"
     phone_val = f"99{suffix[:4].zfill(8)}"

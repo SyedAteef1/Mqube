@@ -1,33 +1,28 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.1
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS — Walkthrough: Sales Studio Expansion
+# TILEFLOW Retail OS — Walkthrough: Sales Studio Expansion
 ## Document Version: v2.1.1 (2026-07-10)
 
 ### 1. Purpose
-This walkthrough documents the aesthetic modernization of the SMRITI Sales & Commerce Studio (`SalesStudioTab.tsx`) subview selector to bring it in line with standard SMRITI visual and UX patterns.
+This walkthrough documents the aesthetic modernization of the TILEFLOW Sales & Commerce Studio (`SalesStudioTab.tsx`) subview selector to bring it in line with standard TILEFLOW visual and UX patterns.
 
 ### 2. Scope
 - Update visual structure of `SalesStudioTab.tsx`.
@@ -45,12 +40,12 @@ None.
 - **Micro-Animations integration**: Utilized `motion.div` from `motion/react` with a light vertical slide (`y: 10` to `y: 0`) and fade-in to polish transition states.
 
 ### 6. Design Rationale
-Using localized inline buttons for top-level module views was creating interface fragmentation in SMRITI. Standardizing navigation at the module root gives the screen a high-end commercial ERP feel, maximizes viewport space for the data tables below, and provides unified, custom scrollbars.
+Using localized inline buttons for top-level module views was creating interface fragmentation in TILEFLOW. Standardizing navigation at the module root gives the screen a high-end commercial ERP feel, maximizes viewport space for the data tables below, and provides unified, custom scrollbars.
 
 ### 7. Implementation Summary
-- Imported `motion` from `"motion/react"` and `SmritiScrollArea` from `"./SmritiScrollArea.tsx"`.
+- Imported `motion` from `"motion/react"` and `TileFlowScrollArea` from `"./TileFlowScrollArea.tsx"`.
 - Shifted original pill-based navigation block from the toolbar card into a top-level header and subtab block.
-- Wrapped metrics, filters, action triggers, and active subview tables inside `<SmritiScrollArea>` and `<motion.div>`.
+- Wrapped metrics, filters, action triggers, and active subview tables inside `<TileFlowScrollArea>` and `<motion.div>`.
 - Preserved all data-fetching functions, modal dialog forms, search parameters, and context menu integrations.
 
 ### 8. Tests Executed

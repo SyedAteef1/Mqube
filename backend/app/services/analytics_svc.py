@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.23.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal, ROUND_HALF_UP
 from datetime import date, datetime, timezone, timedelta
@@ -31,7 +17,7 @@ def _quantize_currency(val: float | Decimal) -> Decimal:
 
 class AnalyticalIntelligenceService:
     """
-    SMRITI Downstream Analytical Intelligence & Aggregation Engine (Section 11).
+    TILEFLOW Downstream Analytical Intelligence & Aggregation Engine (Section 11).
     Computes materialized daily sales facts, profit margins, and trend rollups
     without mutating or locking operational transactional tables.
     """

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-27
-Modified     : 2026-08-27
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import re
 import math
@@ -500,7 +486,7 @@ class SalesOrderPdfService:
                     Page {p_idx} of {total_pages}
                   </td>
                   <td style="text-align: center; width: 40%; font-size: 6pt; color: #6b7280;">
-                    SMRITI OS Retail Suite -- Sales Order Engine
+                    TILEFLOW OS Retail Suite -- Sales Order Engine
                   </td>
                   <td style="text-align: right; width: 30%;">
                     SO: {order_no} | PO: {po_number}

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 from datetime import datetime, date, timezone
@@ -51,8 +37,8 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
             "role": role,
             "company_id": "COMP-001",
             "branch_id": "BR-001",
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -66,7 +52,7 @@ def _get_auth_headers(role: str = "STORE_MANAGER") -> dict:
 @pytest.mark.asyncio
 async def test_lead_creation_and_stage_progression():
     """Verify Lead creation, stage transitions, and Opportunity pipeline generation."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -126,7 +112,7 @@ async def test_lead_creation_and_stage_progression():
 @pytest.mark.asyncio
 async def test_customer_rfm_evaluation_and_segmentation():
     """Verify RFM recency, frequency, and monetary scoring engine categorizing VIP customer."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -173,7 +159,7 @@ async def test_customer_rfm_evaluation_and_segmentation():
 @pytest.mark.asyncio
 async def test_loyalty_member_enrollment_and_points_ledger_earn_burn():
     """Verify loyalty member enrollment, points earning, redemption, and negative balance protection."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -255,7 +241,7 @@ async def test_loyalty_member_enrollment_and_points_ledger_earn_burn():
 @pytest.mark.asyncio
 async def test_salesperson_and_driver_commission_calculation():
     """Verify incentive calculations across Salesperson percentage rules and Driver fixed payouts."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -321,7 +307,7 @@ async def test_salesperson_and_driver_commission_calculation():
 @pytest.mark.asyncio
 async def test_referral_relationship_and_reward_credit():
     """Verify Referral link attribution and minimum qualifying order reward credits."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -443,7 +429,7 @@ async def test_api_crm_cge_endpoints():
         assert Decimal(str(opp_res.json()["expected_revenue"])) == Decimal("250000.00")
 
         # 4. GET /crm-growth/customers/{id}/segmentation
-        sessionmaker = get_company_sessionmaker("smriti001")
+        sessionmaker = get_company_sessionmaker("tileflow001")
         async with sessionmaker() as session:
             cust = Customer(
                 id=f"cust_api_{suffix}",

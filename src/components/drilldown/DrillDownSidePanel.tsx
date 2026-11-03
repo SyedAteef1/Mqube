@@ -1,19 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 2.1.2
- * Created      : 2026-07-10
- * Modified     : 2026-07-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- */
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { useDrillDown } from "./drilldown_store.tsx";
-import { SmritiScrollArea } from "../SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../TileFlowScrollArea.tsx";
 import { getCustomers, getCustomerGroups, updateCustomerStatus, updateCustomerTags, getSalesInvoices, getSalesReturns } from "../../services/customerStore.ts";
 import { resolveCustomerPolicy } from "../../services/custPolicyEngine.ts";
 import { Customer, CustomerGroup, Quotation, SalesOrder } from "../../types";
@@ -84,9 +72,9 @@ export const DrillDownSidePanel: React.FC = () => {
 
     loadCustomer();
 
-    window.addEventListener("smriti_customer_updated", loadCustomer);
+    window.addEventListener("tileflow_customer_updated", loadCustomer);
     return () => {
-      window.removeEventListener("smriti_customer_updated", loadCustomer);
+      window.removeEventListener("tileflow_customer_updated", loadCustomer);
     };
   }, [activePanel]);
 
@@ -160,13 +148,13 @@ export const DrillDownSidePanel: React.FC = () => {
 
   const handleWhatsApp = () => {
     if (!customer) return;
-    const msg = `Dear ${customer.name}, your outstanding balance is ${formatCurrency(customer.outstanding)}. Please settle at your earliest convenience. - SMRITI Retail OS`;
+    const msg = `Dear ${customer.name}, your outstanding balance is ${formatCurrency(customer.outstanding)}. Please settle at your earliest convenience. - MQube`;
     window.open(`https://wa.me/${customer.mobile}?text=${encodeURIComponent(msg)}`, "_blank");
   };
 
   const handleEmail = () => {
     if (!customer?.email) return;
-    window.open(`mailto:${customer.email}?subject=Statement of Outstanding&body=${encodeURIComponent("Dear " + customer.name + ",\n\nYour current outstanding balance is " + formatCurrency(customer.outstanding) + ".\n\nWarm regards,\nSMRITI Retail OS")}`, "_blank");
+    window.open(`mailto:${customer.email}?subject=Statement of Outstanding&body=${encodeURIComponent("Dear " + customer.name + ",\n\nYour current outstanding balance is " + formatCurrency(customer.outstanding) + ".\n\nWarm regards,\nmqube")}`, "_blank");
   };
 
   interface ActivityItem {
@@ -362,7 +350,7 @@ export const DrillDownSidePanel: React.FC = () => {
             )}
 
             {/* Dynamic Content based on Entity Type */}
-            <SmritiScrollArea className="flex-1 p-5 space-y-5 bg-theme-surface-1">
+            <TileFlowScrollArea className="flex-1 p-5 space-y-5 bg-theme-surface-1">
                
                {activePanel.entityType === 'customer' && customer && group && policy ? (
                  activeTab === "profile" ? (
@@ -725,7 +713,7 @@ export const DrillDownSidePanel: React.FC = () => {
                          <button 
                             onClick={() => {
                               window.dispatchEvent(
-                                new CustomEvent("smriti_navigate_module", {
+                                new CustomEvent("tileflow_navigate_module", {
                                   detail: { moduleId: "business-ledger" },
                                 })
                               );
@@ -742,7 +730,7 @@ export const DrillDownSidePanel: React.FC = () => {
                          <button 
                             onClick={() => {
                               window.dispatchEvent(
-                                new CustomEvent("smriti_navigate_module", {
+                                new CustomEvent("tileflow_navigate_module", {
                                   detail: {
                                     moduleId: "stock-ledger",
                                     searchQuery: activePanel.entityId,
@@ -764,7 +752,7 @@ export const DrillDownSidePanel: React.FC = () => {
                  </>
                )}
 
-            </SmritiScrollArea>
+            </TileFlowScrollArea>
           </motion.div>
         </>
       )}

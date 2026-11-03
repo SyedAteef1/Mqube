@@ -1,28 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.30.0
-Created      : 2026-08-24
-Modified     : 2026-08-24
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-verify_admin_boot.py
-===================================
-Admin verification utility: exercises AuthService.bootstrap_admin() directly
-via the service layer (not HTTP) to confirm the admin user creation flow is
-operational after a fresh database migration or seeding operation.
-
-Usage:
-    python scripts/admin/verify_admin_boot.py
-
-SECURITY NOTE: Uses a test account. Never run against production without
-reviewing the target DATABASE_URL first.
-"""
-
 import asyncio
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.exc import SQLAlchemyError, IntegrityError
@@ -41,7 +16,7 @@ async def main() -> None:
         req = BootstrapRequest(
             username="admin_test",
             password="Admin@123",
-            email="admin_test@smriti.test",
+            email="admin_test@tileflow.test",
         )
         try:
             user = await service.bootstrap_admin(req)

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -41,8 +27,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": role,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -56,7 +42,7 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
 @pytest.mark.asyncio
 async def test_unified_pricing_engine_volume_breaks_and_tiers():
     """Verify PricingEngine resolves volume break discounts and customer tiers correctly."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         # Create test item
         sku = f"PRC-{uuid.uuid4().hex[:6].upper()}"
@@ -141,7 +127,7 @@ async def test_unified_pricing_engine_volume_breaks_and_tiers():
 @pytest.mark.asyncio
 async def test_distribution_order_creation_gst_and_governance_snapshots():
     """Verify DistributionOrder creation, statutory GST calculation, and governance snapshot persistence."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         # Create dealer party
         suffix = uuid.uuid4().hex[:6]
@@ -208,7 +194,7 @@ async def test_distribution_order_creation_gst_and_governance_snapshots():
 @pytest.mark.asyncio
 async def test_distribution_order_dispatch_and_authoritative_stock_movement():
     """Verify that dispatching a distribution order records an authoritative OUTWARD StockMovement."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     async with sessionmaker() as session:
         suffix = uuid.uuid4().hex[:6]
         party = Party(

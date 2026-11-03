@@ -1,11 +1,10 @@
--- Project      : SMRITI Retail OS
--- Author       : Jawahar Ramkripal Mallah
--- Email        : support@smritibooks.com
--- Websites     : smritibooks.com | erpnbook.com | aitdl.com
+-- Project      : TILEFLOW Retail OS
+-- Author       : Syed Ateef
+-- Email        : ateef@tileflow.in
 -- Version      : 3.21.0
 -- Created      : 2026-08-16
--- Copyright    : © SMRITIBooks.com. All Rights Reserved.
--- License      : Proprietary Commercial Software
+-- Copyright    :  tileflow.in. Open Source - Permissive Use
+-- License      : MIT Open Source License
 
 CREATE OR REPLACE FUNCTION fn_reconcile_inventory_state()
 RETURNS TRIGGER AS $$

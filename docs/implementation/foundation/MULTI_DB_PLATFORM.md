@@ -1,31 +1,30 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.21.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
-# SMRITI Multi-Database Platform Architecture v1.1
+# TILEFLOW Multi-Database Platform Architecture v1.1
 
 **Status**: OFFICIAL RELEASE BASELINE ✅ (2026-08-14)  
-**Author**: Jawahar Ramkripal Mallah (Chief Systems Architect & Creator)  
+**Author**: Syed Ateef (Chief Systems Architect & Creator)  
 
 ```text
-SMRITI Multi-Database Platform v1.1
+TILEFLOW Multi-Database Platform v1.1
 │
 ├── Architecture Certification       20/20 PASS (Permanent Baseline)
 ├── Extended Platform Certification  23/23 PASS (Current Suite)
 ├── Tenant Header Security           PASS (HTTP 403 Guard)
 ├── POS Transactional Outbox         PASS (Atomic Event Recording)
 ├── PSV Idempotency                  PASS (ULID + Event Replay Guard)
-├── E-commerce Reservation           PASS (Strongly Consistent in Smritibus_<CC>)
-├── Physical DB Isolation            PASS (Smritibus_<CC> Isolation)
+├── E-commerce Reservation           PASS (Strongly Consistent in TileFlowbus_<CC>)
+├── Physical DB Isolation            PASS (TileFlowbus_<CC> Isolation)
 ├── Blue/Green / Reconciliation      PASS (100% Parity)
 │
 └── Government Integrations
@@ -46,27 +45,27 @@ SMRITI Multi-Database Platform v1.1
 ## 2. Frozen Operational Boundary Model & Evolution Hierarchy
 
 ```text
-                    SmritiSys
+                    TileFlowSys
                   CONTROL AUTHORITY
                          │
                          ▼
-              Smritibus_<CompanyCode>
+              TileFlowbus_<CompanyCode>
                   BUSINESS TRUTH
                          │
               ┌──────────┴──────────┐
               ▼                     ▼
-         SmritiEcom             Outbox
+         TileFlowEcom             Outbox
            CORE                   │
                                   ▼
                               Event Queue
                                   │
                                   ▼
-                             SmritiPSV
+                             TileFlowPSV
                               OPTIONAL
 ```
 
 ```text
-                  SMRITI v1.1
+                  TILEFLOW v1.1
                        │
              ┌─────────┴─────────┐
              │                   │
@@ -86,10 +85,10 @@ SMRITI Multi-Database Platform v1.1
 
 ---
 
-## 3. The Immutable Golden Rule of SMRITI Platform Architecture
+## 3. The Immutable Golden Rule of TILEFLOW Platform Architecture
 
 > [!CAUTION]
-> **THE IMMUTABLE GOLDEN RULE OF SMRITI PLATFORM ARCHITECTURE**:
+> **THE IMMUTABLE GOLDEN RULE OF TILEFLOW PLATFORM ARCHITECTURE**:
 > **No projection, integration, cache, channel database, or secondary database may become the authoritative source of business inventory, billing, accounting, or financial truth.**
 
 > [!NOTE]
@@ -105,13 +104,13 @@ COMP_A Request
    ↓
 Authenticated User Identity Check
    ↓
-SmritiSys Access Authorization
+TileFlowSys Access Authorization
    ↓
-Authorized -> Route to Smritibus_COMPA
+Authorized -> Route to TileFlowbus_COMPA
 
 COMP_B Request
    ↓
-Authorized -> Route to Smritibus_COMPB
+Authorized -> Route to TileFlowbus_COMPB
 
 UNAUTHORIZED Header Tamper (COMP_C)
    ↓
@@ -120,13 +119,13 @@ HTTP 403 Forbidden -> NO DATABASE ACCESS
 
 ---
 
-## 5. Mandatory Agent Change Control & Stop Rule (SMRITI v1.1 Change Control)
+## 5. Mandatory Agent Change Control & Stop Rule (TILEFLOW v1.1 Change Control)
 
 > [!CAUTION]
-> **SMRITI HIGHEST-PRIORITY IMPLEMENTATION INSTRUCTION**:
+> **TILEFLOW HIGHEST-PRIORITY IMPLEMENTATION INSTRUCTION**:
 > **The AI agent may implement, optimize, refactor, test, or improve code within the v1.1 architecture, but it must not change v1.1 architectural boundaries without an approved v1.2/v2.x change proposal.**
 
 > [!WARNING]
 > **MANDATORY CONFLICT STOP RULE**:
 > **Whenever any proposed change conflicts with this baseline, the AI agent must immediately halt and state:**
-> **“STOP. This conflicts with the frozen SMRITI v1.1 architecture. Prepare a v1.2/v2.x change proposal instead of modifying the baseline.”**
+> **“STOP. This conflicts with the frozen TILEFLOW v1.1 architecture. Prepare a v1.2/v2.x change proposal instead of modifying the baseline.”**

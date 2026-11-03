@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.8.0
- * Created      : 2026-08-20
- * Modified     : 2026-08-23
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import qz from "qz-tray";
 import { apiFetchV1 } from "../lib/apiFetchV1";
 
@@ -39,10 +25,6 @@ export interface QzConnectionStatus {
 
 let isSecurityInitialized = false;
 
-/**
- * Check if the QZ Tray client integration is enabled via Vite environment variable.
- * Default is TRUE in development/production if variable is set or enabled.
- */
 export function isQzTrayEnabled(): boolean {
   const flag = (import.meta as any).env?.VITE_ENABLE_QZ_TRAY;
   if (flag === undefined) return true;
@@ -232,11 +214,11 @@ export async function testQzLabelPrint(
   try {
     let payload = "";
     if (format === "DPL") {
-      payload = `\x02L\nD11\n121100000200050SMRITI TEST (DPL)\n1a42000005000508901234567890\nQ0001\nE\n`;
+      payload = `\x02L\nD11\n121100000200050TILEFLOW TEST (DPL)\n1a42000005000508901234567890\nQ0001\nE\n`;
     } else if (format === "TSPL") {
-      payload = `SIZE 50 mm, 25 mm\nGAP 2 mm, 0 mm\nCLS\nTEXT 50,20,"3",0,1,1,"SMRITI TEST (TSPL)"\nBARCODE 50,60,"128",40,1,0,2,2,"8901234567890"\nPRINT 1,1\n`;
+      payload = `SIZE 50 mm, 25 mm\nGAP 2 mm, 0 mm\nCLS\nTEXT 50,20,"3",0,1,1,"MQube TEST (TSPL)"\nBARCODE 50,60,"128",40,1,0,2,2,"8901234567890"\nPRINT 1,1\n`;
     } else {
-      payload = `^XA\n^PW400\n^LL200\n^FO50,30^A0N,28,28^FDSMRITI TEST (ZPL)^FS\n^FO50,80^BY2^BCN,50,Y,N,N^FD8901234567890^FS\n^XZ\n`;
+      payload = `^XA\n^PW400\n^LL200\n^FO50,30^A0N,28,28^FDTILEFLOW TEST (ZPL)^FS\n^FO50,80^BY2^BCN,50,Y,N,N^FD8901234567890^FS\n^XZ\n`;
     }
 
     const config = qz.configs.create(targetPrinterName, { encoding: "UTF-8" });

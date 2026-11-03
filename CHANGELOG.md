@@ -1,38 +1,14 @@
-<!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
 
-  Founders
 
-  * Pushpa Devi Jawahar Mallah
-    * Founder & Chairperson
-    * Phone: +91 9324117007
-    * Email: founder@aitdl.com
+# TILEFLOW Retail OS — Changelog
 
-  * Jawahar Ramkripal Mallah
-    * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
-
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-  * Version    : 3.62.0
-  * Created    : 2026-07-11
-  * Modified   : 2026-08-25
-  * Copyright  : © SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
-  * Classification: Internal
--->
-
-# SMRITI Retail OS — Changelog
-
-All notable changes to SMRITI Retail OS will be documented in this file. This project adheres to Semantic Versioning.
+All notable changes to TILEFLOW Retail OS will be documented in this file. This project adheres to Semantic Versioning.
 
 ### [6.72.8] - 2026-10-30
 
 #### Item Master Controlled Taxonomy Lookup Resolution & Category Decoupling
 - **Controlled Taxonomy Ingestion**: Enforce strict server-side resolution for Brand, Category, Product Type, Gender, Department, Heel Type, Upper Material, Outsole Material, and Sub-Category against active Master Registry lookups.
-- **Fail-Closed Recommendation Guidance**: Rejects unapproved ad-hoc values with HTTP 422 (`SMRITI-VAL-002`) directing operators to onboard new entries in Master Registry first.
+- **Fail-Closed Recommendation Guidance**: Rejects unapproved ad-hoc values with HTTP 422 (`TILEFLOW-VAL-002`) directing operators to onboard new entries in Master Registry first.
 - **Category Decoupling & Explicitness**: Eliminated implicit default category assumptions (`"Footwear"` / `"General"`), requiring explicit category specification. Decoupled `category`, `productType`, `merchandiseCategory`, and `subCategory` in Header Mapping Engine.
 - **Audit Lineage**: Recorded `ITEM_TAXONOMY_ASSIGNED` and `ITEM_TAXONOMY_UPDATED` compliance events via `ComplianceAuditService`.
 
@@ -62,7 +38,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - `scripts/cleanup_duplicate_gunmetal.py`: Removes duplicate color variants
 
 #### Architecture Compliance: Control Plane Cleanup
-- **Database Cleanup**: Removed 1,730 operational rows from `smritisys` (control plane)
+- **Database Cleanup**: Removed 1,730 operational rows from `tileflowsys` (control plane)
   - Products: 1,341 rows removed
   - Sales Orders: 66 rows removed
   - Purchase Orders: 148 rows removed
@@ -71,8 +47,8 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - All dependent records cleaned (line items, reservations, etc.)
 
 - **Impact**: Restored architectural compliance per ARCHITECTURE_DECISIONS.md v3.25.0
-  - `smritisys` now contains CONTROL PLANE ONLY (metadata, users, companies, policies)
-  - `smriti001` contains ALL OPERATIONAL DATA (products, orders, transactions, stock)
+  - `tileflowsys` now contains CONTROL PLANE ONLY (metadata, users, companies, policies)
+  - `tileflow001` contains ALL OPERATIONAL DATA (products, orders, transactions, stock)
   - Multi-tenant isolation fully enforced
   - No data loss: all deleted data backed up to `backend/backups/control_plane_cleanup/`
 
@@ -90,7 +66,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 - **Import Results**:
   - Already existing: 181 SKUs + 30 variants
-  - **Newly imported: 6 products** (6,661 → 6,667 products in smriti001)
+  - **Newly imported: 6 products** (6,661 → 6,667 products in tileflow001)
   - Smart deduplication: SKU-based + Article-Color-Size variant check
   - All items mapped with full attributes: Article, Color, Size, HSN Code, MRP, GST
 
@@ -597,7 +573,6 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 ### [3.91.0] - 2026-08-28
 
-#### Enterprise Return Merchandise Authorization (RMA) & Reverse Logistics Engine (v1.0.0-GA)
 - **RMA Engine (`src/utils/rmaEngine.ts`)**:
   - Implemented 10-status lifecycle: DRAFT → SUBMITTED → APPROVED → IN_TRANSIT → RECEIVED_AT_WAREHOUSE → QUALITY_INSPECTION → CREDIT_NOTE_ISSUED → REFUND_PROCESSED → REJECTED → CLOSED.
   - Immutable audit trail with `fromStatus`/`toStatus`, operator ID, remarks, and ISO timestamp per transition.
@@ -704,7 +679,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 ### [3.82.0] - 2026-08-28
 
-#### SMRITI Real-Time Store Terminal Broadcast Hub & Alerts (v1.0.0-GA)
+#### TILEFLOW Real-Time Store Terminal Broadcast Hub & Alerts (v1.0.0-GA)
 - **Store Terminal Broadcast Hub (`src/sync/StoreTerminalBroadcastHub.ts`)**:
   - Implemented singleton edge broadcast bus with WebSocket and local event dispatch capabilities across multi-terminal store environments.
   - Added support for 5 event types: `MANAGER_OVERRIDE_REQUEST`, `PRICE_UPDATE_BROADCAST`, `STOCK_OUT_ALERT`, `SYSTEM_LOCKOUT_NOTICE`, `EMERGENCY_ANNOUNCEMENT`.
@@ -727,7 +702,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 ### [3.80.0] - 2026-08-28
 
-#### SMRITI Omnichannel Communicator & WhatsApp Gateway UI (v1.0.0-GA)
+#### TILEFLOW Omnichannel Communicator & WhatsApp Gateway UI (v1.0.0-GA)
 - **Omnichannel Communicator Studio (`src/components/communicator/CommunicatorStudioTab.tsx`)**:
   - Implemented unified multi-channel communication studio supporting WhatsApp Cloud API v19.0, DLT SMS, and Transactional Email.
   - Added live Mustache template variable interpolation with real-time handset preview.
@@ -750,7 +725,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 #### Enterprise E-Invoice & E-Way Bill Dispatcher UI (v1.0.0-GA)
 - **SGIP Statutory Dispatch Gateway Modal (`src/components/sales/components/ComplianceDispatchModal.tsx`)**:
-  - Implemented dual-tab statutory compliance modal for GSTN Schema v1.03 E-Invoicing and NIC E-Way Bill generation directly within SMRITI Sales Studio.
+  - Implemented dual-tab statutory compliance modal for GSTN Schema v1.03 E-Invoicing and NIC E-Way Bill generation directly within TILEFLOW Sales Studio.
   - Added live B2B invoice financial summary banner (Buyer GSTIN, legal name, tax breakdown, total value).
   - Implemented 1-click **"Generate E-Invoice"** with 64-character SHA-256 IRN rendering, Ack No, and signed QR code display.
   - Implemented 1-click **"Generate E-Way Bill"** with distance (KM), vehicle number tracking, and 12-digit EWB number validity monitoring.
@@ -839,7 +814,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 ### [3.71.0] - 2026-08-28
 
-#### SMRITI Government Integration Platform (SGIP) — E-Invoice & E-Way Bill Gateway (v1.0.0-GA)
+#### TILEFLOW Government Integration Platform (SGIP) — E-Invoice & E-Way Bill Gateway (v1.0.0-GA)
 - **Statutory GSTN E-Invoice Connector (`backend/app/compliance/connectors/einvoice/`)**:
   - Implemented `EInvoiceConnector` adhering to `ConnectorV1` and GSTN Schema v1.03 for B2B tax invoice regularization.
   - Added deterministic 64-character SHA-256 IRN hash calculation (`SupplierGSTIN + FinancialYear + DocType + DocNo`).
@@ -859,7 +834,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 ### [3.70.0] - 2026-08-28
 
-#### SMRITI Reporting & BI Engine v1.0.0-GA — Integration, Reconciliation & Master Certification
+#### TILEFLOW Reporting & BI Engine v1.0.0-GA — Integration, Reconciliation & Master Certification
 - **Governed Metric Layer & Pure Formula Dictionary (`backend/app/core/metric_dictionary.py`)**:
   - Implemented single source of truth for all retail mathematical KPIs (`calculate_net_sales`, `calculate_abv`, `calculate_upt`, `calculate_gross_margin_pct`, `calculate_gmroi`, `calculate_sell_through_pct`, `calculate_stock_aging_bucket`).
   - Added `list_all_metrics` and pure Decimal calculation functions enforcing Invariant 2 (No KPI defines its own formula outside the Governed Metric Layer).
@@ -912,7 +887,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Quarantined 2 temporary backup dump files (`Distributor_tmp.txt`, `Retail_tmp.txt`) and documented 8 empty 0-byte template stubs.
   - Automated detection and AST pruning of duplicate SQL statements in `Distributor.Mns`.
   - Isolated 30 hardcoded Windows file paths and 26 Retail vs Distributor profile parameter variances.
-  - Mapped 5 core Distributor delivery and procurement workflows (`Sales DC`, `Approval Issue DC`, `Transport Receipt Entry`, `DC Type Conversion`, and `PO Consolidation`) to canonical SMRITI Launchpad modules.
+  - Mapped 5 core Distributor delivery and procurement workflows (`Sales DC`, `Approval Issue DC`, `Transport Receipt Entry`, `DC Type Conversion`, and `PO Consolidation`) to canonical TILEFLOW Launchpad modules.
 - **Sales Orders Business-First Presentation Redesign (`src/components/SalesStudioTab.tsx`, `src/components/ReportDesignerTab.tsx`)**:
   - Reorganized Sales Orders ledger into a clean 10-column commercial table with Order No, PO No, Customer, Date, Items/Qty, Order Value, Billed Value, Pending Value, and Status.
   - Restructured Order Detail side pane with Customer & PO information card, order financials summary, line items table, related invoice allocations, and expandable `Technical Details` accordion.
@@ -927,7 +902,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Created 60 historical `SalesOrder` entities (`SO-5182778151` – `SO-5182778210`) preserving original PO dates and Reliance delivery sites.
   - Inserted 18,036 `SalesOrderItem` lines totaling 25,864.000 EA ordered quantity (INR 30.22M basic / INR 31.73M grand total).
 - **Item Master Product Deduplication**:
-  - Deduplicated 450 unique SKUs across PO items and populated 303 newly created `Product` records in `smriti001` with 100% line linking coverage.
+  - Deduplicated 450 unique SKUs across PO items and populated 303 newly created `Product` records in `tileflow001` with 100% line linking coverage.
 - **Immutable Legal Terms Snapshots**:
   - Archived 60 complete Terms & Conditions snapshots in `terms_snapshots` linked to historical Sales Orders.
 - **Tax Invoice Allocation & Reconciliation**:
@@ -939,7 +914,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 #### Distributor Invoicing Screen Layout & Ergonomic Refactoring (1:1 Stitch code.html Parity)
 - **Top Header Bar Parity (`src/components/billing/BillingTerm.tsx`)**:
-  - Refactored top navigation bar with `receipt_long` icon, "Smriti Distributor" title, live digital clock and date badges (`font-code-md`), quick action toolbar (`New [Ctrl+N]`, `Void [Ctrl+V]`, `Return [Ctrl+R]`, `Reprint [Ctrl+P]`), notifications, item settings, help dialogs, and user avatar.
+  - Refactored top navigation bar with `receipt_long` icon, "TileFlow Distributor" title, live digital clock and date badges (`font-code-md`), quick action toolbar (`New [Ctrl+N]`, `Void [Ctrl+V]`, `Return [Ctrl+R]`, `Reprint [Ctrl+P]`), notifications, item settings, help dialogs, and user avatar.
 - **Header Section Two-Row Card (`src/components/billing/BillingTerm.tsx`)**:
   - Standardized two-row header card with `Bill Type` (Product/Service/Both), `Transaction` (Credit/Cash/Retail), `Doc Prefix`, `Doc No.`, `Import`, `Recall`, customer search input with F2 prefix, customer display, quick customer add modal, and `Sales Staff` selector.
 - **Detail Section Data Table & Direct Entry Row (`src/components/billing/BillingTerm.tsx`)**:
@@ -985,14 +960,14 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Extracted 78 core `SysParam` records categorized across 13 functional domains into structured JSON and Markdown catalogs (`SH9_CONFIG_CATALOG.json`, `SH9_CONFIG_SUMMARY.md`).
   - Cataloged 320 legacy database DDL tables for migration mapping.
 - **Control Plane Retail Operational Policies (`backend/app/db/ctrl_seeder.py`)**:
-  - Seeded 4 battle-tested retail policies into `smritisys.policy_definitions`:
+  - Seeded 4 battle-tested retail policies into `tileflowsys.policy_definitions`:
     - `POLICY_BILLING_CONTROLS`: Scanning during suspended bill recall, quantity-only editing mode, unreferenced return rate alterations, strict stock checks.
     - `POLICY_BARCODE_COST_MASK`: Encoded cost price hang-tag masking dictionary (`{"0":"A", "1":"B", ... "9":"J"}`).
     - `POLICY_INWARDS_PROCUREMENT`: Automated purchase tax calculation and transporter verification.
     - `POLICY_CREDIT_MANAGEMENT`: Customer credit limits, stop-billing flags, and manager pin override policies.
 - **Automated Shoper 9 Tenant Database Migrator (`scripts/admin/sh9_migrator.py`)**:
   - Developed transactional ETL ingestion pipeline migrating legacy Customers/Vendors to `UniversalPartyMaster` (`Party`, `PartyRole`, `CustomerProfile`, `SupplierProfile`), Items/Classes/Barcodes to `UniversalItemMaster` (`Item`, `ItemVariant`, `ItemBarcode`, `Product`), and Opening Stock to `StockMovement`.
-  - Verified pre-flight dry-run execution against `smriti001` with `Balanced=True` ledger invariant assertion.
+  - Verified pre-flight dry-run execution against `tileflow001` with `Balanced=True` ledger invariant assertion.
 - **Architecture Blueprint & Governance**:
   - Published master migration blueprint `docs/architecture/SHOPER9_MIGRATION_BLUEPRINT.md`.
   - Generated WGP Walkthrough `docs/walkthrough/foundation/Shoper9_Migration_Architecture_And_ETL_Engine_v1.0.0.md`.
@@ -1011,10 +986,10 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Master Platform Regression Battery**:
   - Successfully executed master test battery across all 13 Blueprint Sections: `226/226 tests passed (100% green)`.
   - Validated TypeScript static analysis (`npx tsc --noEmit` passing with 0 errors).
-  - Validated naming governance (`scripts/smriti_naming_guard.py` passing with 0 violations).
+  - Validated naming governance (`scripts/tileflow_naming_guard.py` passing with 0 violations).
 - **Authoritative Table Ownership Matrix & Runtime Write Audit**:
-  - Published complete Table Ownership Matrix separating Control Plane (`smritisys`) and Tenant Data Planes (`smritiXXX`).
-  - Marked **SMRITI Enterprise Business Operating Platform Architecture Frozen Blueprint v1.0** as 100% **Completed & Verified** in `docs/architecture/BLUEPRINT_PENDING.md`.
+  - Published complete Table Ownership Matrix separating Control Plane (`tileflowsys`) and Tenant Data Planes (`tileflowXXX`).
+  - Marked **TILEFLOW Enterprise Business Operating Platform Architecture Frozen Blueprint v1.0** as 100% **Completed & Verified** in `docs/architecture/BLUEPRINT_PENDING.md`.
 - **Governance**:
   - Generated WGP Walkthrough `docs/walkthrough/foundation/Sprint46_Production_Readiness_Certification_v1.0.0.md`.
   - Updated `docs/walkthrough/README.md` master index.
@@ -1023,7 +998,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 #### Sprint 45: Section 11 & 12 Analytics Plane + Compliance Gateways & Regulatory Audit Plane
 - **Analytics & Intelligence Plane (Section 11)**:
-  - Verified and hardened tenant-isolated daily sales fact materialization (`AnalyticsDailySalesFact` table in `smriti001`, `smriti002`).
+  - Verified and hardened tenant-isolated daily sales fact materialization (`AnalyticsDailySalesFact` table in `tileflow001`, `tileflow002`).
   - Validated read-only transactional aggregation (`AnalyticalIntelligenceService`) computing net sales, tax collections, tender splits (Cash, Digital, Credit), COGS, and gross margin percentages without transactional lock contention.
   - Implemented multi-tenant aggregation daemon (`AnalyticsDaemonService`) with PostgreSQL session-level advisory lock concurrency guards (`ADVISORY_LOCK_KEY = 918273645`) preventing concurrent duplicate worker executions across multi-replica deployments.
   - Verified windowed multi-day category profitability rollups and analytics REST API endpoints (`/api/v1/analytics/*`).
@@ -1035,13 +1010,13 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Full Section 11 & 12 combined test suite (`t_analytics_hub.py`, `t_daemon_rollup.py`, `t_eway_dispatch.py`, `t_golive_audit.py`, `test_compliance_fou.py`) passing 23/23 tests green (100% green) in 17.60s.
   - Fully certified Blueprint Sections 11 and 12 in `docs/architecture/BLUEPRINT_PENDING.md` per Rule 11 with quantitative metrics and named mechanisms.
   - Created WGP Walkthrough `docs/walkthrough/foundation/Sprint45_Analytics_Compliance_Integration_v1.0.0.md` and updated `docs/walkthrough/README.md`.
-  - Passed SMRITI Naming Guard (0 violations).
+  - Passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.60.0] - 2026-08-25
 
 #### Sprint 44: Section 10 P2 Offline-First Foundation & Transactional Outbox Event Architecture
 - **Offline-First Synchronization & 5-Tier Conflict Resolution**:
-  - Validated and hardened `OfflineConflictResolutionEngine` and `OfflineSyncService` across PostgreSQL tenant databases (`smriti001`, `smriti002`) with durable edge terminal queueing (`POSOfflineSyncQueue`).
+  - Validated and hardened `OfflineConflictResolutionEngine` and `OfflineSyncService` across PostgreSQL tenant databases (`tileflow001`, `tileflow002`) with durable edge terminal queueing (`POSOfflineSyncQueue`).
   - Enforced 5-tier domain conflict resolution: inventory oversell with configurable `allow_negative_stock` warnings, customer credit limit boundary verification, price book drift with 100% price-at-sale preservation and diagnostic logging, and immutable governance rule version snapshot binding (`SalesInvoice.governance_snapshot_id`).
   - Implemented Store Manager Reconciliation Queue quarantine via `/api/v1/sync/reconciliation-queue` isolating unresolved transaction drifts (`NEEDS_REVIEW`).
   - Validated multi-terminal concurrent conflict resolution via `asyncio.gather` across 5 simultaneous sessions and 20-cycle rolling load testing (`backend/tests/t_soak_conflict.py`).
@@ -1054,7 +1029,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Full Section 10 test suite (`t_conflict_res.py`, `t_outbox_stats.py`, `t_soak_conflict.py`) passing 19/19 tests green (100% green) in 31.43s.
   - Fully certified Blueprint Section 10 in `docs/architecture/BLUEPRINT_PENDING.md` per Rule 11 with quantitative metrics and named mechanisms.
   - Created WGP Walkthrough `docs/walkthrough/foundation/Sprint44_Offline_Sync_Outbox_v1.0.0.md` and updated `docs/walkthrough/README.md`.
-  - Passed SMRITI Naming Guard (0 violations).
+  - Passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.59.0] - 2026-08-25
 
@@ -1076,20 +1051,20 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Added integration test suites `backend/tests/t_psv_scope.py` (4/4 tests green), `backend/tests/t_pdt_engine.py` (4/4 tests green), and `backend/tests/t_cge_unified.py` (3/3 tests green).
   - All 11 tests in Section 9 suite passing 100% green.
   - Certified Blueprint Section 9 (`P2 PSV, CGE, and PDT Unification`) as `Done / Verified` per Rule 11.
-  - Created WGP Walkthrough `docs/walkthrough/foundation/Sprint43_PSV_CGE_PDT_Unification_v1.0.0.md`, updated master index, and passed SMRITI Naming Guard (0 violations).
+  - Created WGP Walkthrough `docs/walkthrough/foundation/Sprint43_PSV_CGE_PDT_Unification_v1.0.0.md`, updated master index, and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.58.0] - 2026-08-25
 
 #### Sprint 42: Section 8 P2 Distribution Core & eCommerce Expansion Completion
 - **Authoritative Multi-Tier Wholesale Distribution**:
   - Implemented `backend/app/services/distribution_svc.py` and created `backend/app/schemas/distribution.py` providing end-to-end governance for dealer assignments with credit limit/days enforcement, delivery route provisioning with ordered drop sequences, primary vs secondary distribution orders with statutory GST place-of-supply calculation, vehicle loading sheet consolidation, dealer claims dispute review with automatic Credit Note generation (`CN-YYYYMMDD-HEX`), and driver route trip financial/inventory settlement.
-  - Provisioned multi-tenant database DDL across `smriti001` and `smriti002` for `distribution_routes`, `distribution_route_stops`, `loading_sheets`, `loading_sheet_items`, `distribution_claims`, and `distribution_settlements`.
+  - Provisioned multi-tenant database DDL across `tileflow001` and `tileflow002` for `distribution_routes`, `distribution_route_stops`, `loading_sheets`, `loading_sheet_items`, `distribution_claims`, and `distribution_settlements`.
 - **Omnichannel eCommerce Growth Engine**:
   - Implemented `backend/app/services/ecom_engine.py` and created `backend/app/schemas/ecom.py` featuring 6 marketplace connector adapters (`Internal Store`, `Shopify`, `WooCommerce`, `Amazon SP-API`, `Flipkart`, `Customer Portal`).
   - Added strict HMAC SHA-256 signature verification across all adapters to prevent webhook forgery.
   - Implemented deterministic order deduplication via idempotency keys (`{channel_code}_{external_order_id}`).
   - Implemented atomic stock reservation utilizing `SELECT FOR UPDATE` row locks (`with_for_update()`) on `Product.reserved_stock` ensuring zero oversell rate.
-  - Implemented order convergence transforming imported marketplace payloads into authoritative SMRITI `SalesInvoice` records and outward `StockMovement` rows with automatic trigger reconciliation.
+  - Implemented order convergence transforming imported marketplace payloads into authoritative TILEFLOW `SalesInvoice` records and outward `StockMovement` rows with automatic trigger reconciliation.
   - Implemented Dead Letter Queue (DLQ) retry cycle with exponential backoff (`max_retries = 3`) and channel revenue financial reconciliation against external GMV reports.
 - **REST Endpoints (`/api/v1/distribution/*`, `/api/v1/ecom/*`)**:
   - Mounted routes, stops, loading sheets, claims, and settlements in `backend/app/api/v1/distribution.py`.
@@ -1098,7 +1073,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Added integration test suites `backend/tests/t_distribution.py` (7/7 tests green) and `backend/tests/t_ecom_connect.py` (7/7 tests green).
   - All 23 tests in Section 8 distribution and eCommerce suite passing 100% green.
   - Certified Blueprint Section 8 (`P2 Distribution & eCommerce Expansion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.57.0] - 2026-08-25
 
@@ -1113,11 +1088,11 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **REST Endpoints (`/api/v1/crm-growth/*`)**:
   - Mounted `/leads`, `/leads/{id}`, `/opportunities`, `/customers/{id}/segmentation`, `/loyalty/enroll-member`, `/loyalty/adjust-points`, `/loyalty/members/{id}/ledger`, `/commissions/calculate`, `/referrals/enroll`, and `/referrals/credit-reward` in `backend/app/api/v1/crm_cge.py` and registered in `backend/app/main.py`.
 - **Database Layer**:
-  - Synchronized `crm_leads`, `crm_opportunities`, `crm_campaigns`, and `crm_customer_activities` schemas across tenant databases `smriti001` and `smriti002`.
+  - Synchronized `crm_leads`, `crm_opportunities`, `crm_campaigns`, and `crm_customer_activities` schemas across tenant databases `tileflow001` and `tileflow002`.
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_crm_cge.py` (6/6 tests green, 129/129 full platform regression tests green).
   - Certified Blueprint Section 7 (`CRM / CGE Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.56.0] - 2026-08-25
 
@@ -1133,7 +1108,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_communicator.py` (6/6 tests green, 123/123 full platform regression tests green).
   - Certified Blueprint Section 7 (`Communicator Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.55.0] - 2026-08-25
 
@@ -1148,7 +1123,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_search.py` (6/6 tests green, 117/117 full platform regression tests green).
   - Certified Blueprint Section 7 (`Universal Search Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.54.0] - 2026-08-25
 
@@ -1164,7 +1139,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_approval.py` (6/6 tests green, 111/111 full platform regression tests green).
   - Certified Blueprint Section 7 (`Approval Matrix Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.53.0] - 2026-08-25
 
@@ -1179,7 +1154,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_barcodes.py` (6/6 tests green, 105/105 full platform regression tests green).
   - Certified Blueprint Section 7 (`Barcode and Labels Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.52.0] - 2026-08-25
 
@@ -1196,7 +1171,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_fulfillment.py` (6/6 tests green, 99/99 full platform regression tests green).
   - Certified Blueprint Section 7 (`Fulfillment Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.51.0] - 2026-08-25
 
@@ -1213,7 +1188,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_documents.py` (6/6 tests green, 93/93 full platform regression tests green).
   - Certified Blueprint Section 7 (`Documents Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.50.0] - 2026-08-25
 
@@ -1229,7 +1204,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_payments.py` (6/6 tests green, 87/87 full platform regression tests green).
   - Certified Blueprint Section 7 (`Payments Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.49.0] - 2026-08-25
 
@@ -1244,7 +1219,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_promotions.py` (6/6 tests green, 81/81 full platform regression tests green).
   - Certified Blueprint Section 7 (`Promotions Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.48.0] - 2026-08-25
 
@@ -1258,7 +1233,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_pricing_engine.py` (6/6 tests green, 75/75 full platform regression tests green).
   - Certified Blueprint Section 7 (`Pricing Engine Completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.47.0] - 2026-08-25
 
@@ -1271,14 +1246,14 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_stock_acct.py` (6/6 tests green, 69/69 full platform regression tests green).
   - Certified Blueprint Section 6.3 (`P1.3 Authoritative Stock and Accounting Boundaries`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.46.0] - 2026-08-25
 
 #### Sprint 30: P1.2 Universal Item Master Completion (Data Plane Convergence)
 - **Universal Item Master Database Models & Sub-Entities**:
   - Extended `backend/app/models/item_master.py` with `ItemBatch` (batch/lot tracking with expiration and batch-level MRPs), `ItemSerial` (serialized unit tracking with status lifecycle), and `ItemWarehouseLocation` (warehouse-specific bins and min/max reorder levels).
-  - Executed migration script `backend/app/db/migr_item_ext.py` migrating tenant databases `smriti001` and `smriti002`.
+  - Executed migration script `backend/app/db/migr_item_ext.py` migrating tenant databases `tileflow001` and `tileflow002`.
 - **Schemas & Service Engine**:
   - Created `backend/app/schemas/item_master.py` and `backend/app/services/item_master_svc.py` providing atomic item and variant provisioning, Cartesian matrix variant generator (Size x Color dimensions with automated unique EAN-13 barcodes), fast 4-tier scanner resolver (`Barcode -> Variant SKU -> Item Code -> Serial Number`), batch/serial managers, and legacy product projection adapters.
 - **REST Endpoints (`/api/v1/universal/items`)**:
@@ -1286,14 +1261,14 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_item_master.py` (6/6 tests green, 63/63 platform regression tests green).
   - Certified Blueprint Section 6.2 (`P1.2 Universal Item Master completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.45.0] - 2026-08-25
 
 #### Sprint 29: P1.1 Universal Party Master Completion (Data Plane Convergence)
 - **Universal Party Master Database Models & DDL**:
   - Extended `Party` in `backend/app/models/party.py` with `merged_into_party_id` and sub-entity relationship models: `PartyAddress` (multi-address store), `PartyContact` (multi-contact store), `CustomerProfile`, `SupplierProfile`, and `PartyRelationship`.
-  - Executed migration script `backend/app/db/migr_party_ext.py` migrating tenant databases `smriti001` and `smriti002`.
+  - Executed migration script `backend/app/db/migr_party_ext.py` migrating tenant databases `tileflow001` and `tileflow002`.
 - **Schemas & Service Engine**:
   - Created `backend/app/schemas/party_master.py` and `backend/app/services/party_master_svc.py` providing atomic party provisioning across 7 polymorphic roles (`CUSTOMER`, `SUPPLIER`, `DEALER`, `DISTRIBUTOR`, `SALESMAN`, `TRANSPORTER`, `EMPLOYEE`), multi-tier deduplication (GSTIN -> Phone -> Email -> Code), audit-preserving merge policy, and legacy customer/supplier projection adapters.
 - **REST Endpoints (`/api/v1/universal/parties`)**:
@@ -1301,7 +1276,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_party_master.py` (6/6 tests green, 57/57 regression tests green).
   - Certified Blueprint Section 6.1 (`P1.1 Universal Party Master completion`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.44.0] - 2026-08-25
 
@@ -1309,14 +1284,14 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **Transaction Version Anchoring & Schemas**:
   - Added Pydantic schemas in `backend/app/schemas/tx_reproduce.py` for `GovernanceSnapshot`, `SnapshotCreateRequest`, `LedgerEntryReplay`, `TransactionReplayRequest`, and `TransactionReplayResponse`.
   - Enhanced `TransactionReproducibilityService` in `backend/app/services/tx_reproduce_svc.py` to capture complete 6-part version snapshots (`formula_versions`, `rule_versions`, `policy_versions`, `pricing_version`, `accounting_rule_version`, `doc_template_version`).
-  - Built historical recalculation replay engine executing exact snapshot-anchored rules from `smritisys` with balanced double-entry accounting ledger generation (Debit Cash/Debtors == Credit Revenue + Output Taxes) and automated drift detection.
+  - Built historical recalculation replay engine executing exact snapshot-anchored rules from `tileflowsys` with balanced double-entry accounting ledger generation (Debit Cash/Debtors == Credit Revenue + Output Taxes) and automated drift detection.
 - **REST Endpoints Exposed (`/api/v1/governed-logic/`)**:
   - Mounted `/snapshot/create` and `/replay` in `backend/app/api/v1/governed_logic.py`.
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_tx_reproduce.py` (7/7 tests green, 51/51 regression tests green).
   - Verified 0.00% calculation drift between historical invoices and catalog rule updates.
   - Certified Blueprint Section 5.2 (`P1.5 Transaction Reproducibility`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.43.0] - 2026-08-25
 
@@ -1327,26 +1302,26 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **REST Endpoints Exposed (`/api/v1/governed-logic/`)**:
   - Mounted `/formulas`, `/formulas/evaluate`, `/rules`, `/rules/evaluate`, `/policies`, `/policies/gst/evaluate`, `/workflows`, `/workflows/transition`, and `/validate` in `backend/app/api/v1/governed_logic.py`.
 - **Master Data Seeding**:
-  - Seeded canonical formulas (`FORM_GST_INTR_SPLIT`, `FORM_LINE_DISCOUNT_NET`, `FORM_LOYALTY_ACCRUAL`, `FORM_STAFF_COMMISSION`, `FORM_ROUNDING_NEAREST`), business rules, statutory GST policies, and purchase order/sales return workflows in `smritisys` via `backend/app/db/seed_gov_logic.py`.
+  - Seeded canonical formulas (`FORM_GST_INTR_SPLIT`, `FORM_LINE_DISCOUNT_NET`, `FORM_LOYALTY_ACCRUAL`, `FORM_STAFF_COMMISSION`, `FORM_ROUNDING_NEAREST`), business rules, statutory GST policies, and purchase order/sales return workflows in `tileflowsys` via `backend/app/db/seed_gov_logic.py`.
 - **Verification & Governance**:
   - Added integration test suite `backend/tests/t_gov_logic.py` (9/9 tests green, 44/44 regression tests green).
   - Certified Blueprint Section 5.1 (`P1.4 Formula, Rule, Policy, and Workflow Engines`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.42.0] - 2026-08-25
 
 #### Sprint 26: P1.3 Workspace, Menu, and UI Experience Registry (Control Plane)
 - **Control Plane Workspace & UI Experience Schemas**:
   - Added Pydantic schemas in `backend/app/schemas/ui_registry.py` for `WorkspaceTemplateResponse`, `WorkspaceResolutionResponse`, `ResolvedNavNode`, `DesignTokensResponse`, `FieldMetadataItem`, `ActionMetadataItem`, and `CompleteScreenPackageResponse`.
-  - Implemented `WorkspaceUIRegistryService` in `backend/app/services/workspace_ui_svc.py` providing dynamic workspace layout resolution, capability-aware and role-gated navigation tree generation from `smriti_menus` with recursive parent pruning, and CSS design token generation.
+  - Implemented `WorkspaceUIRegistryService` in `backend/app/services/workspace_ui_svc.py` providing dynamic workspace layout resolution, capability-aware and role-gated navigation tree generation from `tileflow_menus` with recursive parent pruning, and CSS design token generation.
 - **REST Endpoints Exposed (`/api/v1/ui/`)**:
   - Mounted `/templates`, `/workspaces/resolve`, `/navigation/resolved`, `/themes/tokens`, and `/screens/{screen_code}/complete` in `backend/app/api/v1/workspace_ui.py` and registered in `backend/app/main.py`.
 - **Master Data Seeding**:
-  - Seeded 6 workspace templates, 4 persona profiles, 3 standard themes with visual variants, and 4 core screen definition packages in `smritisys` via `backend/app/db/seed_ui_master.py`.
+  - Seeded 6 workspace templates, 4 persona profiles, 3 standard themes with visual variants, and 4 core screen definition packages in `tileflowsys` via `backend/app/db/seed_ui_master.py`.
 - **Verification & Governance**:
   - Added test suite `backend/tests/t_workspace_ui.py` (8/8 tests green, 35/35 regression tests green).
   - Certified Blueprint Section 4.3 (`P1.3 Workspace, Menu, and UI Experience Registry`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.41.0] - 2026-08-25
 
@@ -1358,11 +1333,11 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 - **REST Endpoints Exposed (`/api/v1/capabilities/`)**:
   - Mounted `/catalog`, `/plans`, `/validate` (POST), `/resolve` (POST), `/tenant`, `/tenant/toggle` (POST), `/feature-flags`, `/feature-flags/{key}/toggle` (POST), and `/modules`.
 - **Master Data Seeding**:
-  - Seeded all 32 platform capabilities with dependency DAGs, 3 subscription plan tiers, 5 platform feature flags, and 7 system module states across `smritisys`, `smriti001`, and `smriti002` via `backend/app/db/seed_cap_master.py`.
+  - Seeded all 32 platform capabilities with dependency DAGs, 3 subscription plan tiers, 5 platform feature flags, and 7 system module states across `tileflowsys`, `tileflow001`, and `tileflow002` via `backend/app/db/seed_cap_master.py`.
 - **Verification & Governance**:
   - Added test suite `backend/tests/t_cap_registry.py` (8/8 tests green, 27/27 regression tests passing).
   - Certified Blueprint Section 4.2 (`P1.2 Capability and Module Registry`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.40.0] - 2026-08-25
 
@@ -1376,11 +1351,11 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Mounted `/countries`, `/states`, `/states/by-gst-code/{code}`, `/currencies`, `/uoms`, `/uoms/convert` (POST), `/tax-references`, `/hsn-sac`, `/languages`, `/locales`, `/translations/{code}`, `/platform/{category}`, and `/format/currency` (POST).
 - **Master Data Seeding**:
   - Seeded all 36 Indian states and union territories with official GST 2-digit codes (`01` through `38`, `97`).
-  - Seeded 7 global currencies, 10 statutory UOMs with GST UQC codes, 4 bidirectional UOM conversion ratios, 6 statutory GST tax slabs, retail HSN codes, and initial multi-lingual translation dictionaries across `smritisys`, `smriti001`, and `smriti002`.
+  - Seeded 7 global currencies, 10 statutory UOMs with GST UQC codes, 4 bidirectional UOM conversion ratios, 6 statutory GST tax slabs, retail HSN codes, and initial multi-lingual translation dictionaries across `tileflowsys`, `tileflow001`, and `tileflow002`.
 - **Verification & Governance**:
   - Added test suite `backend/tests/t_ctrl_ref.py` (10/10 tests green).
   - Certified Blueprint Section 4.1 (`P1.1 Global Reference Data and Localization`) as `Done / Verified` per Rule 11.
-  - Updated WGP Walkthrough index and passed SMRITI Naming Guard (0 violations).
+  - Updated WGP Walkthrough index and passed TILEFLOW Naming Guard (0 violations).
 
 ### [3.39.0] - 2026-08-25
 
@@ -1391,7 +1366,7 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
   - Implemented async aggregator methods in `backend/app/services/reports.py` with multi-table joins, tenant isolation, and date-range filtering.
   - Refactored `bill_wise_sales`, `item_wise_sales`, and `tax_register` with eager loading (`selectinload`) and clean mathematical aggregations.
 - **Database Schema Migration**:
-  - Executed Alembic migrations `v1371` through `v1375_backfill_sales_return_cust` across `smriti001`, `smriti002`, and `smritisys`.
+  - Executed Alembic migrations `v1371` through `v1375_backfill_sales_return_cust` across `tileflow001`, `tileflow002`, and `tileflowsys`.
 - **Frontend BI Center UI (`ReportDesignerTab.tsx`)**:
   - Wired live `apiFetchV1` calls in `loadReportsData()` across all 9 Shoper9 sales/audit reports.
   - Built interactive, high-contrast data table components with KPI summary stat banners.
@@ -1403,9 +1378,9 @@ All notable changes to SMRITI Retail OS will be documented in this file. This pr
 
 ### [3.27.0] - 2026-08-24
 
-#### Shoper9 â†’ SMRITI Legacy Menu Migration â€” Sprints 0â€“5 Complete
+#### Shoper9 â†’ TILEFLOW Legacy Menu Migration â€” Sprints 0â€“5 Complete
 
-Full end-to-end implementation of the Shoper9 (EE) vaMenu â†’ SMRITI workspace
+Full end-to-end implementation of the Shoper9 (EE) vaMenu â†’ TILEFLOW workspace
 migration stack. Covers extraction, classification, database, API, and frontend.
 
 **Sprint 0 â€” Legacy Extraction (commits: f7384642, b7c877bc, 17e67f2b)**
@@ -1423,12 +1398,12 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 - Coverage: **265/265 (100%)** â€” MAPPED:201, MERGED:27, PENDING:8,
   DEPRECATED:14, REPLACED:10, NOT_APPLIC:5.
 - Key findings: 8 MultiInstance entries need multi-tab session support;
-  9 SMRITI-new capabilities have no Shoper predecessor.
+  9 TILEFLOW-new capabilities have no Shoper predecessor.
 
 **Sprint 2 â€” Database Schema (commit: cf0788a6)**
 - `backend/app/models/legacy_menu_map.py`: `LegacyMenuMap` SQLAlchemy model.
 - `backend/alembic/versions/v1371_legacy_menu_map.py`: Alembic migration.
-  Creates `smriti_legacy_menu_map` (29 columns, 2 CHECK constraints, 4 indexes).
+  Creates `tileflow_legacy_menu_map` (29 columns, 2 CHECK constraints, 4 indexes).
   Revision chain: v1370 â†’ v1371. Idempotent upgrade.
 - `scripts/sh9_seed.py`: idempotent INSERT-or-UPDATE seed script.
   Dry-run validated: 265 rows parsed, 0 errors.
@@ -1440,7 +1415,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
   - `GET /api/v1/legacy-menu-map/` (paginated, filterable)
   - `GET /api/v1/legacy-menu-map/{id}`
   - `GET /api/v1/legacy-menu-map/sh9/{mnu_no}/{menu_opt}`
-  - `GET /api/v1/legacy-menu-map/by-workspace/{smriti_menu_id}`
+  - `GET /api/v1/legacy-menu-map/by-workspace/{tileflow_menu_id}`
 - `backend/app/schemas/legacy_menu_map.py`: Pydantic read-only schemas.
 - Write path blocked at API level; seed-only governance.
 - OpenAPI: 5/5 endpoints confirmed.
@@ -1455,7 +1430,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 
 **Sprint 5 â€” Launchpad Tile (commit: 2589fb83)**
 - `src/components/launchpad/launchpadCatalog.ts` v4.2.0:
-  Tile `legacy-migration` added â€” title "Shoper9 â†’ SMRITI Migration",
+  Tile `legacy-migration` added â€” title "Shoper9 â†’ TILEFLOW Migration",
   group "System & Operations", roles: [MANAGER, SYSADMIN], accentColor: violet.
 
 **Sprint 7 â€” Migration Bugfix & Live DB Seed (commit: 29e6d569)**
@@ -1472,11 +1447,11 @@ migration stack. Covers extraction, classification, database, API, and frontend.
   30 columns confirmed, 265 rows total.
   Status: MAPPED=201, MERGED=27, DEPRECATED=14, REPLACED=10, PENDING=8, NOT_APPLIC=5.
   Multi-instance (`sh9_multi_inst=1`): 4 entries.
-- Pushed: `d57844b6..29e6d569 smritiNX -> smritiNX`.
+- Pushed: `d57844b6..29e6d569 tileflowNX -> tileflowNX`.
 
 **Governance:**
 - NGP naming guard: 0 violations across all 7 sprints.
-- WGP walkthrough: `docs/walkthrough/foundation/Legacy_Shoper9_SMRITI_Migration_v1.0.0.md`.
+- WGP walkthrough: `docs/walkthrough/foundation/Legacy_Shoper9_TILEFLOW_Migration_v1.0.0.md`.
 - Deployment guide: `docs/implementation/foundation/Legacy_Migration_Deploy_v1.0.0.md`.
 - DB seeded in live Postgres: **Done** â€” 265 rows, 0 errors.
 - Walkthrough index: **Done** (updated from Partially Verified).
@@ -1486,26 +1461,26 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 
 #### Blueprint v1.0 — UI/Experience Engine & Integration Hub: Migrations Applied, Seeded, Verified
 
-- **Migrations executed:** `alembic upgrade head` applied `v1368_ui_experience_engine` and `v1369_integration_hub_registry` against smritisys. `alembic current` confirms `v1369_integration_hub_registry (head)`. 11 new tables created in smritisys Control Plane database.
+- **Migrations executed:** `alembic upgrade head` applied `v1368_ui_experience_engine` and `v1369_integration_hub_registry` against tileflowsys. `alembic current` confirms `v1369_integration_hub_registry (head)`. 11 new tables created in tileflowsys Control Plane database.
 - **Seeder extended — Phase 9 (`ctrl_seeder.py`):**
   - `seed_layout_definitions()` — 6 canonical layout templates (FULL_WIDTH, SIDEBAR_LEFT, SPLIT, DETAIL, DASHBOARD, WIZARD_STEPS).
   - `seed_screen_definitions()` — 5 top business flow screens: POS Billing Terminal, Sales Invoice List, Purchase Order List, Inventory Dashboard, Party Master List. Each carries `layout_config`, `capability_code`, `route_path`, and `icon_key` linkages.
   - `seed_action_definitions()` — 18 toolbar and row actions across all 5 screens. Action types: NAVIGATE, API_CALL, DOWNLOAD, PRINT, WORKFLOW_TRANSITION. Role-gated and capability-gated per Blueprint Rule 09.
   - All seed methods are idempotent (`SELECT to_regclass()` guard + duplicate key skip).
-- **Database row counts (verified by literal terminal query output):** `icon_registry`: 36, `provider_registry`: 6, `layout_definitions`: 6, `screen_definitions`: 5, `action_definitions`: 18. Total: 71 rows seeded in 8 smritisys tables.
+- **Database row counts (verified by literal terminal query output):** `icon_registry`: 36, `provider_registry`: 6, `layout_definitions`: 6, `screen_definitions`: 5, `action_definitions`: 18. Total: 71 rows seeded in 8 tileflowsys tables.
 - **alembic `env.py` updated:** 11 new table names added to `include_object` filter; `ScreenDefinition`, `FieldDefinition`, `ActionDefinition`, `LayoutDefinition`, `IconRegistry`, `ProviderRegistry`, `ConnectorRegistry`, `IntegrationRegistry`, `IntegrationCredentialReference`, `IntegrationPolicy`, `IntegrationVersion` models registered for autogenerate correctness.
-- **Architecture tracker:** UI/Experience Engine (§11) promoted from **Partial** → **Verified**. Integration Hub Connector Registry (§45) promoted from **Partial** → **Verified**. Milestone 6 appended to `SMRITI_PLATFORM_IMPLEMENTATION_STATUS.md`.
+- **Architecture tracker:** UI/Experience Engine (§11) promoted from **Partial** → **Verified**. Integration Hub Connector Registry (§45) promoted from **Partial** → **Verified**. Milestone 6 appended to `TILEFLOW_PLATFORM_IMPLEMENTATION_STATUS.md`.
 
 ### [3.25.0] - 2026-08-24
 
 #### Blueprint v1.0 — UI/Experience Engine Schema & Integration Hub Registry
-- **Blueprint ss54 Rules Cross-Check (2026-08-24)**: All 25 architecture rules verified against source code and migration chain. 25-rule adherence table added to `SMRITI_PLATFORM_IMPLEMENTATION_STATUS.md`.
-- **UI/Experience Engine smritisys schema (`v1368_ui_experience_engine.py`)**: Created 5 smritisys-resident tables: `screen_definitions`, `field_definitions`, `action_definitions`, `layout_definitions`, `icon_registry`. Closes Blueprint ss11 named gap.
-- **Integration Hub Connector Registry smritisys schema (`v1369_integration_hub_registry.py`)**: Created 6 smritisys-resident tables: `integration_registry`, `connector_registry`, `provider_registry`, `integration_credentials_reference`, `integration_policies`, `integration_versions`. Closes Blueprint ss45 named gap.
+- **Blueprint ss54 Rules Cross-Check (2026-08-24)**: All 25 architecture rules verified against source code and migration chain. 25-rule adherence table added to `TILEFLOW_PLATFORM_IMPLEMENTATION_STATUS.md`.
+- **UI/Experience Engine tileflowsys schema (`v1368_ui_experience_engine.py`)**: Created 5 tileflowsys-resident tables: `screen_definitions`, `field_definitions`, `action_definitions`, `layout_definitions`, `icon_registry`. Closes Blueprint ss11 named gap.
+- **Integration Hub Connector Registry tileflowsys schema (`v1369_integration_hub_registry.py`)**: Created 6 tileflowsys-resident tables: `integration_registry`, `connector_registry`, `provider_registry`, `integration_credentials_reference`, `integration_policies`, `integration_versions`. Closes Blueprint ss45 named gap.
 - **SQLAlchemy models**: `ui_control_plane.py` extended with `ScreenDefinition`, `FieldDefinition`, `ActionDefinition`, `LayoutDefinition`, `IconRegistry`. New `integration_hub.py` with `ProviderRegistry`, `ConnectorRegistry`, `IntegrationRegistry`, `IntegrationCredentialReference`, `IntegrationPolicy`, `IntegrationVersion`.
 - **Control Plane Seeder**: Added `seed_icon_registry()` (35 platform icons, Material Symbols Outlined) and `seed_integration_providers()` (6 providers: GSTN, NIC E-Way Bill, TallyPrime, Shopify, WooCommerce, Twilio) to `ControlPlaneSeeder.seed_all()`.
 - **API**: `ui_control_plane.py` extended with 4 new Control Plane read endpoints (`GET /ui/screens`, `/ui/fields`, `/ui/actions`, `/ui/icons`). `integration.py` extended with 3 Integration Hub registry endpoints (`GET /integration/hub/providers`, `/hub/connectors`, `/hub/integrations`).
-- **Architecture tracker**: Added Milestone 5, Blueprint ss54 rules table (25 rows), and two new gap rows to `SMRITI_PLATFORM_IMPLEMENTATION_STATUS.md`.
+- **Architecture tracker**: Added Milestone 5, Blueprint ss54 rules table (25 rows), and two new gap rows to `TILEFLOW_PLATFORM_IMPLEMENTATION_STATUS.md`.
 
 ### [3.23.0] - 2026-08-23
 
@@ -1566,7 +1541,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 
 #### Warehouse & Logistics â€” WMS Phase 4: Physical Inventory Audit, Stock Discrepancy Reconciliation & Barcode Batch Counting
 - **Stock Audit Domain & Baseline Snapshotting Engine (`stock_audit_service.py`, `inventory.py`)**:
-  - Implemented `StockAudit` and `StockAuditItem` models in PostgreSQL (`smriti001` and `smritisys`) with scoped unique indexes.
+  - Implemented `StockAudit` and `StockAuditItem` models in PostgreSQL (`tileflow001` and `tileflowsys`) with scoped unique indexes.
   - Snapshotting engine captures baseline on-hand batch quantities (`system_qty`), ensuring mathematical variance stability during counts without locking godown operations.
 - **Rapid Barcode Scanner Batch Counting (`POST /wms/audits/{id}/scan`)**:
   - Auto-resolves scanned barcodes / SKUs to product batch lines and increments physical count (+1.0 or custom quantity) in real time.
@@ -1584,13 +1559,13 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 #### Security & Access Control â€” Security Management: Menu Access Control & Security Configuration
 - **Menu Access Control Workspace (`MenuAccessControlV.tsx`)**:
   - Unified User / Group / Node selector with browsing and company-wise scoping.
-  - Multi-level hierarchical expandable menu tree over existing `smriti_menus` PostgreSQL table.
+  - Multi-level hierarchical expandable menu tree over existing `tileflow_menus` PostgreSQL table.
   - Fine-grained action operations matrix (`NEW`, `VOID`, `RETURN`, `VOID RETURN`, `ADD`, `EDIT`, `DELETE`, `VIEW`).
 - **Security Configuration Workspace (`SecurityConfigView.tsx`)**:
   - 2-pane category inspector for Password Configuration (min/max length, uppercase, lowercase, numeric counts, history count, reset days, max invalid attempts) and Housekeeping policies (log retention days, country code, patch reminder, company-wise menu activation toggle, custom reports count, refresh interval).
 - **Backend Security Authority (`security.py`, `deps.py`)**:
-  - Endpoints `/api/v1/security/menu-access` and `/api/v1/security/config` backed by `smriti_permissions`, `system_configs`, and `smriti_audit_log`.
-  - Added action-level RBAC guard factory `require_permission(resource, action)` returning `SMRITI-AUTH-001` 403 Forbidden rejection when unauthorized.
+  - Endpoints `/api/v1/security/menu-access` and `/api/v1/security/config` backed by `tileflow_permissions`, `system_configs`, and `tileflow_audit_log`.
+  - Added action-level RBAC guard factory `require_permission(resource, action)` returning `TILEFLOW-AUTH-001` 403 Forbidden rejection when unauthorized.
   - Zero duplicate tables or engines created â€” 100% database reuse.
 - **Verification & Testing**:
   - Added unit test suite `menuAccess.test.ts` (6 tests) and backend test `t_sec_menu.py` (1 test).
@@ -1601,7 +1576,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 #### CRM & Sales â€” Customer Flow, Policy Enforcement & Database Referential Integrity Hardening
 - **Backend Credit Limit & Credit Hold Enforcement (`crm.py`, `sales.py`)**:
   - Implemented transactional credit validation in `CrmService.check_credit_limit`.
-  - Blocks invoicing and returns structured business errors `SMRITI-CREDIT-001` (credit limit exceeded) and `SMRITI-CREDIT-002` (credit hold active) when limits are breached.
+  - Blocks invoicing and returns structured business errors `TILEFLOW-CREDIT-001` (credit limit exceeded) and `TILEFLOW-CREDIT-002` (credit hold active) when limits are breached.
 - **Canonical Walk-In / Cash Customer Resolution (`seed_customers.py`, `customerStore.ts`)**:
   - Seeded canonical `CUST-WALKIN` entity ("Walk-In / Cash Customer") to ensure 100% foreign-key compliance for counter sales without unresolvable customer IDs.
 - **Automated Database Orphan Customer Reconciler (`reconcile_customers.py`)**:
@@ -1613,7 +1588,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 
 #### Security & Shell â€” Dual-Mode Contextual Inspector HUD (Zero Data on Login & Full Active Capabilities in Session)
 - **Dual-Mode HUD Architecture (`CtxInspectorHUD.tsx`)**:
-  - **Login Screen Mode**: Displays a secure "SMRITI Security Portal â€¢ Authentication Required" banner with 0 business data, 0 invoice text, and 0 credentials exposure.
+  - **Login Screen Mode**: Displays a secure "TILEFLOW Security Portal â€¢ Authentication Required" banner with 0 business data, 0 invoice text, and 0 credentials exposure.
   - **Authenticated Session Mode**: Activates all 18+ contextual master categories, live query inspections, and Ctrl+K search integration.
 - **Safe Authentication Input Tracking (`ActiveFieldContext.tsx`)**:
   - Automatically isolates login/password fields to generic security category without value tracking or data query broadcasting.
@@ -1625,7 +1600,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 #### Security & Shell â€” Public Data Exposure Hardening & Bottom Workspace Taskbar Removal
 - **Zero-Trust Auth Guards on Context Overlays**:
   - Moved `ContextRenderer`, `GlobalSearch`, `GlobalF2BrowseModal`, `ContextualInspectorHUD`, `DrillDownSidePanel`, and `ShortcutPalette` inside `<AppShell>` inside the authenticated `AppContent` session.
-  - Injected direct token authentication guards (`smriti_jwt_token` / `smriti_session_token`) across `ContextualInspectorHUD`, `GlobalSearch`, `GlobalF2BrowseModal`, and `ActiveFieldContext`.
+  - Injected direct token authentication guards (`tileflow_jwt_token` / `tileflow_session_token`) across `ContextualInspectorHUD`, `GlobalSearch`, `GlobalF2BrowseModal`, and `ActiveFieldContext`.
   - Prevented unauthenticated visitors and login screen interactions from triggering the HUD popup, Global Search (Ctrl+K), or master browsing (F2).
 - **Workspace Canvas Streamlining**:
   - Completely removed `WorkspaceTaskbar` and bottom `pb-13` padding from `src/App.tsx`.
@@ -1634,7 +1609,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 ### [6.12.0] - 2026-08-22
 
 #### Inventory & Item Master â€” Decommissioning & Removal of "Common Fields Setup" Module
-- **Module Purge**: Permanently removed `SmritiCommonFieldsSetup.tsx` and `tabs/CommonFieldsTab.tsx`.
+- **Module Purge**: Permanently removed `TileFlowCommonFieldsSetup.tsx` and `tabs/CommonFieldsTab.tsx`.
 - **Item Master Workspace Streamlining (`ItemMasterWs.tsx`)**:
   - Removed "Common Fields" from the left navigation sidebar.
   - Streamlined workflow directly to Item Details, View Configuration, Bulk Imports, Attributes Catalog, Image Path Config, and Variant Templates.
@@ -1704,14 +1679,14 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 
 #### POS & Billing â€” Distributor Invoicing, Settlement & PDT Import Integration (Stitch UX)
 - **Distributor Invoicing Terminal (`BillingTerm.tsx`)**:
-  - Implemented the authentic Stitch layout from `invoicing_smritisystems/code.html`.
+  - Implemented the authentic Stitch layout from `invoicing_tileflowsystems/code.html`.
   - Header: `Bill Type`, `Transaction`, `Doc Prefix` (`D1DS13`), `Doc No.`, `Import`, `Recall`, `Customer` with `F2` search, Name display & `Add` button, `Sales Staff`.
   - **F11 Direct Entry Row**: 11-column inline buffer (`Stock No` with F2 catalog lookup, `Description`, `Rate`, `Qty`, `Value`, `Disc Code`, `Disc Qty`, `Disc %`, `Disc Amt`, `Total`, `Staff`).
   - **Main 12-Column Table**: Real-time line item grid with alternating row striping and row deletion.
   - **Tabbed Footer**: `Transporter Details` (freight/courier breakdown), `Payment Details`, `AddOns & Deductions`, and `Document Remarks`.
   - **Right Totals & Bottom Summary Bar**: 9 summary cells with large highlighted `Net Amount` display.
 - **Multi-Tender Settlement Studio (`InvoiceSettlementD.tsx`)**:
-  - Implemented `invoice_settlement_smritisystems/code.html` split-view modal.
+  - Implemented `invoice_settlement_tileflowsystems/code.html` split-view modal.
   - Left: Invoice summary & dynamic multi-row payment entry table (`Cash`, `Credit Card`, `Debit Card`, `UPI`, `Cheque`, `Credit Note`).
   - Right: Calculation breakdown card, cash denomination counter (`2000` to `Coins`), and action bar (`Cancel Esc`, `Hold F12`, `Complete Settlement F8/Enter`).
 - **PDT Import Dialog (`PdtImportModal.tsx`)**:
@@ -1723,7 +1698,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 
 #### Barcode & Inventory â€” Stitch Barcode Label Designer & Printer Replacement
 - **Complete Module Replacement (`TagLabelPrintingTa.tsx` & `BarcodeScriptGenVi.tsx`)**:
-  - Fully replaced previous implementation with the authentic **Stitch Barcode Label Designer & Printer** module from `F:\SMRITI\barcode_label_designer_and_printer_Final\stitch_barcode_label_designer_and_printer`.
+  - Fully replaced previous implementation with the authentic **Stitch Barcode Label Designer & Printer** module from `F:\TILEFLOW\barcode_label_designer_and_printer_Final\stitch_barcode_label_designer_and_printer`.
   - Implemented the **Industrial Logic** design system tokens (Deep Navy `#041632`, Slate Blue `#3e5f90`, Soft Grey Surface `#fbf8fb`, High-Contrast Error `#ba1a1a`).
 - **Sidebar & Workflow Architecture**:
   - 280px left sidebar housing Label Printing Parameters, Option Mode Selector (7 modes), and Quantity Summaries.
@@ -1850,7 +1825,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
   - Added double-click transfers between Available (Hidden) and Selected (Visible) lists.
   - Added 4-way reordering controls (Move to Top, Move Up, Move Down, Move to Bottom).
   - Added quick layout presets: Essential (8 cols), Standard (14 cols), and Full Catalog.
-  - Universal reactive event broadcast (`smriti_field_visibility_updated`) across all grids, spreadsheets, and operational reports.
+  - Universal reactive event broadcast (`tileflow_field_visibility_updated`) across all grids, spreadsheets, and operational reports.
 
 ### [5.5.0] - 2026-08-21
 
@@ -1874,7 +1849,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 - **Global Field Visibility & Ordering Engine (`unifiedFieldCatalog.ts`)**:
   - `saveGlobalFieldVisibility` persists visible columns and sequence ordering across client state.
   - `isFieldGloballyVisible` and `getGloballyVisibleFields` dynamically filter and sort catalog definitions.
-  - Reactive `smriti_field_visibility_updated` CustomEvent broadcasts layout changes across all active components and tabs with sub-millisecond overhead.
+  - Reactive `tileflow_field_visibility_updated` CustomEvent broadcasts layout changes across all active components and tabs with sub-millisecond overhead.
 - **Application-Wide Visibility Enforcement**:
   - **Item Master Details Spreadsheet Grid (`ItemDetGrid.tsx`)**: Reflects custom column sets and sequence in real time.
   - **Item Catalog Search Browser (`ItemCatGrid.tsx`)**: Dynamically hides unselected columns and sorts active ones.
@@ -1886,20 +1861,20 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 ### [5.3.0] - 2026-08-21
 
 #### Inventory & Catalog â€” Item Master Stitch Management System Architecture & Image Resolver
-- **Item Master Management System Suite (`Itemmaster3`)**: Integrated complete suite from `F:\SMRITI\Itemmaster3\stitch_item_master_management_system`:
+- **Item Master Management System Suite (`Itemmaster3`)**: Integrated complete suite from `F:\TILEFLOW\Itemmaster3\stitch_item_master_management_system`:
   - **Item Details Master Grid (`ItemDetGrid.tsx`)**: High-density matrix grid and classic single-record view, inline Add/Duplicate/Delete row actions, `F1` keyboard shortcuts guide, and `F2` SKU/Barcode generator.
-  - **Common Fields Baseline Setup (`SmritiCommonFieldsSetup.tsx`)**: Session-level baseline presets (Category, Brand, Vendor, HSN, Tax %, UOM) that auto-fill all newly entered items.
+  - **Common Fields Baseline Setup (`TileFlowCommonFieldsSetup.tsx`)**: Session-level baseline presets (Category, Brand, Vendor, HSN, Tax %, UOM) that auto-fill all newly entered items.
   - **Dual-List View Configuration (`ViewConfig.tsx`)**: Dual-list column selector, order manager, and frozen column count selector (0â€“6).
   - **Full CRUD Lifecycle Safeguards**: Mode selector for Adding, Editing (with non-editable greyed Stock No and Data Loading confirmation modal), and Deleting (with transaction protection guard preventing hard deletion of items with sales history).
   - **Global Find & Replace Data Utility (`ReplaceDataDlg.tsx`)**: Global batch find and replace across all matrix columns and dynamic attributes.
-  - **Product Image Filename & Resolver Studio (`ImagePathConfigStu.tsx`)**: Operators only enter image filenames (`imageName`). Configured base paths for SMRITI Server (`/api/v1/products/images/`), Cloud CDN, and Local Network paths with interactive live resolution tester and hover thumbnail previews.
+  - **Product Image Filename & Resolver Studio (`ImagePathConfigStu.tsx`)**: Operators only enter image filenames (`imageName`). Configured base paths for TILEFLOW Server (`/api/v1/products/images/`), Cloud CDN, and Local Network paths with interactive live resolution tester and hover thumbnail previews.
   - **Barcode Positioned Adjacent to Stock No**: Core standard fields catalog updated to render `Barcode` directly next to `Stock No / SKU`.
   - **PostgreSQL Persistence**: Fully connected to transactional FastAPI endpoint `POST /api/v1/products/`.
 
 ### [3.29.0] - 2026-08-21
 
-#### Inventory & Catalog â€” Item Master Entry Tactical Grid Refactor (Smriti Prime Specification)
-- **Smriti Prime Three-Tab Catalog Workflow**: Refactored Item Master Entry to match the high-velocity tactical layout from `stitch_invoice_management_system` (`src/components/itemMaster/`):
+#### Inventory & Catalog â€” Item Master Entry Tactical Grid Refactor (TileFlow Prime Specification)
+- **TileFlow Prime Three-Tab Catalog Workflow**: Refactored Item Master Entry to match the high-velocity tactical layout from `stitch_invoice_management_system` (`src/components/itemMaster/`):
   - **Tab 1: View (`Alt+1`)** â€” Field Selection: Dual list (Unselected Fields â†” Selected Fields) with transfer controls (`>`, `>>`, `<`, `<<`), reordering controls (`Move Up`, `Move Down`), and mandatory lock rules for `stockNo`, `product`, and `mrp`.
   - **Tab 2: Common Fields (`Alt+2`)** â€” Batch Common Presets: Form controls for Brand, Category, Sub-Category, Tax Rate %, Supplier, Season, Department, and Status that auto-apply to item rows.
   - **Tab 3: Item Details (`Alt+3`)** â€” Tactical Spreadsheet Grid: High-speed matrix table featuring customizable sticky frozen columns (0â€“6), inline cell editing, row indicators ("Row X of Y"), Auto-SKU generator, and "Paste from Excel" multi-column TSV clipboard parsing.
@@ -1907,8 +1882,8 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 - **Persistence & Backend Integration**: Saved field layout and common defaults to `localStorage`, directly persisting rows to FastAPI backend (`/api/v1/products/`) via `apiFetchV1`.
 - **Automated Test Coverage**: Added `src/tests/itemGrid.test.ts` (10 tests) covering mandatory attributes, column reordering, common presets, TSV parsing, and payload transformation (all 23 test suites passing 100%).
 
-#### Database & Operations â€” SMRITI Database Manager & Studio (DB Studio)
-- **Multi-Tenant PostgreSQL Studio**: Introduced a dedicated, enterprise-grade Database Manager (`src/components/DatabaseManagerTab.tsx`) allowing `SYSADMIN` operators to switch between control plane and tenant databases (`smritisys`, `smriti001`, `smriti002`, `smriti_test_fresh`) with live size, table count, and row count telemetry.
+#### Database & Operations â€” TILEFLOW Database Manager & Studio (DB Studio)
+- **Multi-Tenant PostgreSQL Studio**: Introduced a dedicated, enterprise-grade Database Manager (`src/components/DatabaseManagerTab.tsx`) allowing `SYSADMIN` operators to switch between control plane and tenant databases (`tileflowsys`, `tileflow001`, `tileflow002`, `tileflow_test_fresh`) with live size, table count, and row count telemetry.
 - **Table Data Grid & Column Schema Inspector**: Built an interactive paginated table data browser with column search, dynamic sorting, JSON row detail inspector drawer, and one-click CSV export, alongside a complete column schema and foreign key constraint viewer.
 - **Alembic Migration Version Tracking**: Added real-time tracking of current `alembic_version` versus head migration revision with sync status indicators.
 - **Safe Read-Only SQL Query Console**: Implemented an administrative SQL execution console (`POST /api/v1/database-manager/query`) supporting `SELECT`, `WITH`, and `EXPLAIN` statements with automatic execution time measurement and strict rejection of destructive DDL/DML operations.
@@ -1924,7 +1899,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 #### Governance & Field Readiness â€” Commercial Pilot Origin-Gap Remediation & Hardening
 - **Origin-Truth Deliverables (D1â€“D6)**: Standardized application version SSOT (`APP_VERSION = "3.29.0"`), documented dual-run architecture for `DocumentStudioScreen`, created formal pilot smoke checklist (`docs/PILOT_SMOKE_CHECKLIST.md`), froze commercial pilot scope boundary (Section 6 of `docs/PHASE1_PILOT_SUPPORTED_MODULES.md`), and updated `CompanyDatabaseProvisioner` to require Alembic migration head â‰¥ `v1337_backfill_variant_id`.
 - **Deny-by-Default Role-Based Access Control (RBAC)**: Eliminated `(role || "SYSADMIN")` fallback elevations in `launchpadCatalog.ts`, `FioriLaunchpad.tsx`, `App.tsx`, and `navigationResolver.ts`. Users with null/blank roles are strictly restricted to public/unrestricted tiles.
-- **Multi-Tenant Database Discovery & Alembic HEAD**: Discovered and migrated all control plane and company databases (`smritisys`, `smriti001`, `smriti_test_fresh`) to Alembic HEAD (`v1338_company_isolated_barcodes`). Confirmed 0 NULL `variant_id`s across 588 products in `smriti001`. Recorded evidence in `docs/PILOT_DB_MIGRATE_RESULTS.md`.
+- **Multi-Tenant Database Discovery & Alembic HEAD**: Discovered and migrated all control plane and company databases (`tileflowsys`, `tileflow001`, `tileflow_test_fresh`) to Alembic HEAD (`v1338_company_isolated_barcodes`). Confirmed 0 NULL `variant_id`s across 588 products in `tileflow001`. Recorded evidence in `docs/PILOT_DB_MIGRATE_RESULTS.md`.
 - **Commercial Pilot Go-Live Runbook**: Authored `docs/PILOT_GO_LIVE_RUNBOOK.md` detailing environment variable prerequisites, operator provisioning, checkout happy path, non-destructive `pg_dump`/`pg_restore` backup/rollback strategy, hardware pairing, and emergency support escalation.
 - **Smoke Test Results Sign-Off**: Recorded formal `GO_SOFTWARE` sign-off in `docs/PILOT_SMOKE_RESULTS.md` with 20 Vitest files (128 tests) and 39 Pytest tests passing 100%.
 
@@ -1938,7 +1913,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 
 #### Testing & Infrastructure â€” Test Fixture Environment Dependency & Multi-Tenant Routing
 - **Deterministic 20/20 Test Suite**: Stabilized `t_tenant_sec.py`, `t_ecom_connect.py`, and `t_comp_ctr_sec.py` across full multi-suite test runs.
-- **Explicit Routing Registry Seeding (RC2)**: Seeded `company_database_registries` with `COMP-001 -> smriti001` in conftest so dynamic database resolution (`CompanyDatabaseResolver`) functions out-of-the-box on fresh database migrations.
+- **Explicit Routing Registry Seeding (RC2)**: Seeded `company_database_registries` with `COMP-001 -> tileflow001` in conftest so dynamic database resolution (`CompanyDatabaseResolver`) functions out-of-the-box on fresh database migrations.
 - **Fail-Fast Fixture Execution (RC3)**: Replaced silent `try/except` fixture warning prints with immediate `pytest.fail()` calls to surface environmental and setup failures loudly.
 - **Compound and Partial Unique Index Handling**: Fixed fixture upsert statements for `user_company_assignments` (targeting `(user_id, company_id) WHERE (is_deleted = false)`), `roles`, and `branches` (preventing `branches_code_key` unique violations and `users_branch_id_fkey` foreign key failures).
 - **Cross-Test State Isolation**: Scoped control plane test fixture seeding to `function` level to prevent per-test teardown functions (`clear_db()`) from contaminating subsequent test authorization contexts.
@@ -1946,13 +1921,13 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 ### [3.26.0] - 2026-08-20
 
 #### Security â€” Multi-Tenant Database Routing & Credential Sanitization
-- **Hardened `get_company_db` Dependency**: Removed all raw unvalidated client header (`X-Company-Id`) and query parameter parsing. Tenant resolution strictly composes with `get_tenant_context(get_current_user)`, deriving tenant database scope from cryptographic JWT verification and database assignments in `smritisys`.
+- **Hardened `get_company_db` Dependency**: Removed all raw unvalidated client header (`X-Company-Id`) and query parameter parsing. Tenant resolution strictly composes with `get_tenant_context(get_current_user)`, deriving tenant database scope from cryptographic JWT verification and database assignments in `tileflowsys`.
 - **100% Operational Router Wiring**: Replaced legacy `get_db` with `get_company_db` across all operational endpoints in `sales.py`, `inventory.py`, `purchase.py`, and `barcode.py`. Zero occurrences of `get_db` remain in operational routes.
 - **Barcode Subsystem Tenant Isolation**: Isolated `BarcodeLayout` CRUD, printer connection configuration (`printer_connection_{company_id}`), diagnostics, test-prints, and `PrintHistory` audit logging by tenant `company_id` and `branch_id`.
 - **Financial Credential Sanitization**: Sanitized `db_store.json`, legacy export scripts, test fixtures, and JSON geometry reports to eliminate real bank accounts and IFSC codes. Implemented dynamic environment-based fallback chain in `InvoicePdfService`.
 - **Automated CI Secret & Reachability Guard**: Created `scripts/ci_secret_and_reachability_guard.py` scanning for credential exposures and verifying complete router wiring.
 - **Consolidated Canonical Exporter**: Replaced 5 redundant invoice export scripts with unified CLI tool `scripts/export_tax_invoices_canonical.py` supporting PDF, HTML, JSON, and CSV exports.
-- **Retroactive Invoice Audit**: Audited all 93 active sales invoices in `smriti001` with 0 itemless invoices and 0 GST calculation discrepancies.
+- **Retroactive Invoice Audit**: Audited all 93 active sales invoices in `tileflow001` with 0 itemless invoices and 0 GST calculation discrepancies.
 
 ### [3.25.0] - 2026-08-15
 
@@ -1962,15 +1937,15 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 - **Tenant Scope Isolation**: Enforced company context validation for ordinary users attempting to access company detail or module entitlements (`company_id == current_user.company_id`).
 - **Security Regression Test Suite**: Added `t_comp_ctr_sec.py` verifying HTTP 401/403 fail-closed protection for anonymous, spoofed, or unauthorized calls.
 
-#### Added â€” SMRITI Fiori Light Enterprise UI Redesign & Visual QA Gate
+#### Added â€” TILEFLOW Fiori Light Enterprise UI Redesign & Visual QA Gate
 - **Light Mode Only Baseline**: Locked application theme to Light Enterprise Mode (`#f8f9fa` base background, `#ffffff` surface, `#0070f2` action blue, `#32363a` slate text, `#d9d9d9` crisp borders). Completely eliminated dark mode, theme toggles, `#1c222b`, and `prefers-color-scheme` overrides.
 - **Fiori Horizon Application Shell**: Refactored global App Shell with Fiori header bar, global search, company selector dropdown, notification popover, workspace navigation, breadcrumbs, and page filter bars.
 - **10 Core Visual Screens QA Verified**: Verified Application Shell, POS/Billing, Item Master, Customer/CRM, Purchase, Fulfillment, Promotions, Report Studio, Dashboard Manager, and Excel Grid.
-- **Invariants Maintained**: 82/82 backend Pytest test suites passed, Vite production build clean, zero unapproved database creations (`smriti002-smriti999` count = 0), Single Workspace Principle and Single Authoritative Dataset Rule (`Grid = Chart = Pivot = Dashboard KPI = Export`) strictly intact.
+- **Invariants Maintained**: 82/82 backend Pytest test suites passed, Vite production build clean, zero unapproved database creations (`tileflow002-tileflow999` count = 0), Single Workspace Principle and Single Authoritative Dataset Rule (`Grid = Chart = Pivot = Dashboard KPI = Export`) strictly intact.
 
 ### [3.24.0] - 2026-08-15
 
-#### Added â€” SMRITI Reporting Platform & Data Integrity Engine Architecture
+#### Added â€” TILEFLOW Reporting Platform & Data Integrity Engine Architecture
 - **Reporting Engine & Flexi Studio**: Excel-style analytical grid (filters, column drag, multi-sort, group-by, subtotals, pivot, copy/paste to Excel), Flexi report builder with Dimensions & Measures, and user saved views (`ReportSavedView`).
 - **Chart Visualizer & Dashboard Manager**: Multi-chart visual abstraction (Bar, Line, Pie, Area, Stacked, Combo, Scatter, KPI, Funnel, Ranking) and Dashboard Manager for CEO, Sales, Store Manager, CRM, and Profitability dashboards (`DashboardWidget`).
 - **Single Authoritative Dataset Rule Locked**: Guaranteed dataset metric consistency where `Grid total = Chart total = Pivot total = Dashboard KPI total = Export total`.
@@ -1979,7 +1954,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 ### [3.23.0] - 2026-08-15
 
 #### Added â€” Commercial Growth, Customer 360, Operations & Fulfillment, and Cost Profitability Engine Architecture
-- **Commercial Growth & Customer 360**: Co-located CRM, Loyalty Program (CGE), Promotions & Campaigns, Referral Engine, and Universal Incentive & Commission Engine (SICE) inside `smriti001`.
+- **Commercial Growth & Customer 360**: Co-located CRM, Loyalty Program (CGE), Promotions & Campaigns, Referral Engine, and Universal Incentive & Commission Engine (SICE) inside `tileflow001`.
 - **Promotion Conflict & Pricing Resolution Engine**: Priority ranking, exclusivity override (`is_exclusive`), stacking rules, maximum combined discount cap (50%), and evaluation audit snapshots (`evaluated_campaigns_snapshot`).
 - **Operations & Fulfillment Engine**: Order Pick & Pack (`packing_slips`), Dispatch manifests & driver assignments (`dispatches`), driver delivery commission settlement (`delivery_commission_settlements`), and reverse logistics returns with stock restock and commission reversal (`reverse_logistics_returns`).
 - **Cost & Profitability Intelligence Engine**: Multi-valuation cost prices (Purchase, WAC, Last Purchase, FIFO, Landed Cost, Standard Cost, MRP, Replacement Cost), line-item COGS snapshots, and transaction Net Contribution waterfall ledger.
@@ -2006,7 +1981,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 ### Verified & Hardened -- Sprint 22: P0 Production Blockers Stabilization
 
 #### Financial POS Foreign Key Constraints (P0.1)
-- Certified 1360_pos_sct_fk_constraints across tenant databases (smriti001, smriti002, smritisys)
+- Certified 1360_pos_sct_fk_constraints across tenant databases (tileflow001, tileflow002, tileflowsys)
 - Verified DEFERRABLE INITIALLY DEFERRED Foreign Key constraints on shift_cash_transactions (k_sct_account_id -> ccounts.id, k_sct_gl_voucher_id -> journal_vouchers.id)
 - Asserted 0 orphan account references and 0 orphan journal vouchers in all active tenant databases
 - Validated ADR-POS-002 forward-only migration governance blocking backward downgrades
@@ -2038,7 +2013,7 @@ migration stack. Covers extraction, classification, database, API, and frontend.
 - 9 Destination Stores: TVB6, TMV9, TUK5, TVP2, TW97, TXSR, TXSU, TW07, TYAC
 - Created pre-generation confirmation register: Tax_Invoice_Store_PO_Address_Confirmation_Batch2_2026-08-25.xlsx
 - Rendered 9 high-fidelity A4 PDFs with Playwright, Code128 barcodes, and VERIFY INVOICE QR codes
-- Persisted records to smriti001 (sales_invoices, sales_invoice_items, invoice_document_artifacts)
+- Persisted records to tileflow001 (sales_invoices, sales_invoice_items, invoice_document_artifacts)
 - System-wide total active TT tax invoices: 120 (TT2026-2027/18 through TT2026-2027/137)
 - Updated Dispatch Status column in Sheet2 of RIL_Dispatch_09-08-2026-2.xlsx
 ## [3.36.0] - 2026-08-25
@@ -2099,7 +2074,7 @@ TSC: exit code 0 (0 errors). NGP: 0 violations.
 
 #### Sprint 19 -- PHY-007 Complete Endpoint + Loyalty Adjustments (commit 65a4950f)
 - backend/app/api/v1/physical_stock.py: PHY-007 PATCH /physical-stock/sessions/{id}/complete
-    Guards: OPEN or IN_PROGRESS + at least 1 counted_qty set (SMRITI-VAL-002)
+    Guards: OPEN or IN_PROGRESS + at least 1 counted_qty set (TILEFLOW-VAL-002)
     Action: status -> COMPLETED, completed_by recorded
     Returns: { id, status, completed_by, counted_lines, message }
     Closes CompleteBtn gap from PhysicalStockTab.tsx v1.1
@@ -2155,7 +2130,7 @@ TSC: 14 errors -> 0 errors. Exit code 0.
 - backend/alembic/versions/v1373_sales_invoice_ext.py: already landed Sprint 14
 
 #### Sprint 17 Governance (commit ba259696)
-- docs/walkthrough/Legacy_Shoper9_SMRITI_Migration_v1.2.0.md [NEW]
+- docs/walkthrough/Legacy_Shoper9_TILEFLOW_Migration_v1.2.0.md [NEW]
   WGP 13-section walkthrough for Sprints 14-17
 - docs/walkthrough/README.md: v1.2.0 row appended
 - src/components/launchpad/launchpadCatalog.ts: physical-stock tile added
@@ -2404,10 +2379,10 @@ sales/quotations/convert/{id}, workflow/{docType}/{id}/{action}
 ## [3.16.0] â€” 2026-07-13 â€” Backend Tier 4 FastAPI Migration
 
 ### Added
-- **SMRITI Product Image Framework (SPIF) v1.0 (`backend/app/services/spif.py`, `src/components/common/ProductImage.tsx`, `src/components/common/ImageDisplayPolicy.tsx`)** â€” Centralized product image support, auto-optimization (WebP transcode, maximum bounds scaling, and alpha channel flattening), tenant-isolated storage path persistence, React thumbnail/preview rendering, and dynamic configuration policies.
-- **SMRITI Master Framework â€” Phase F.3 (`backend/app/models/barcode.py`, `src/routes/terms.ts`, `src/routes/barcode.ts`, `src/routes/system.ts`)** â€” Migrated terms library, terms defaults, terms snapshots, approval workflow logs, print templates, and print profiles configurations from memory arrays to PostgreSQL.
-- **SMRITI Master Framework â€” Phase F.2 (`backend/app/services/numbering.py`, `src/routes/numbering.ts`, `src/lib/helpers.ts`)** â€” Migrated document number series configuration and atomic allocation engine to PostgreSQL and FastAPI `FOR UPDATE` transaction locks.
-- **SMRITI Master Framework â€” Phase F.1 (`backend/app/models/inventory.py`, `src/routes/masters.ts`, `src/state/store.ts`)** â€” Migrated stores and warehouses master entities from legacy in-memory arrays to PostgreSQL tables via Alembic.
+- **TILEFLOW Product Image Framework (SPIF) v1.0 (`backend/app/services/spif.py`, `src/components/common/ProductImage.tsx`, `src/components/common/ImageDisplayPolicy.tsx`)** â€” Centralized product image support, auto-optimization (WebP transcode, maximum bounds scaling, and alpha channel flattening), tenant-isolated storage path persistence, React thumbnail/preview rendering, and dynamic configuration policies.
+- **TILEFLOW Master Framework â€” Phase F.3 (`backend/app/models/barcode.py`, `src/routes/terms.ts`, `src/routes/barcode.ts`, `src/routes/system.ts`)** â€” Migrated terms library, terms defaults, terms snapshots, approval workflow logs, print templates, and print profiles configurations from memory arrays to PostgreSQL.
+- **TILEFLOW Master Framework â€” Phase F.2 (`backend/app/services/numbering.py`, `src/routes/numbering.ts`, `src/lib/helpers.ts`)** â€” Migrated document number series configuration and atomic allocation engine to PostgreSQL and FastAPI `FOR UPDATE` transaction locks.
+- **TILEFLOW Master Framework â€” Phase F.1 (`backend/app/models/inventory.py`, `src/routes/masters.ts`, `src/state/store.ts`)** â€” Migrated stores and warehouses master entities from legacy in-memory arrays to PostgreSQL tables via Alembic.
 - **Masters Module (`backend/app/models/masters.py`)** â€” Added organizational branch/department master entities.
 - **Numbering Engine (`backend/app/models/numbering.py`)** â€” Atomic sequence generation with select-for-update locking.
 - **Terms & Conditions Engine (`backend/app/models/terms.py`)** â€” Defaults, snapshots, default resolution service.
@@ -2415,7 +2390,7 @@ sales/quotations/convert/{id}, workflow/{docType}/{id}/{action}
 - **Barcode Studio (`backend/app/models/barcode.py`)** â€” Barcode definitions and layout designer stubs.
 - **Data Exchange Hub (`backend/app/models/exchange.py`)** â€” DB table CSV dump/restore importer converter stubs.
 - **AI Assistant (`backend/app/api/v1/ai.py`)** â€” Analytical AI forecasting stubs.
-- **SMRITIDocker Repository** â€” Created standalone private Git repository for containerization, orchestration, and startup automation files.
+- **TILEFLOWDocker Repository** â€” Created standalone private Git repository for containerization, orchestration, and startup automation files.
 - **One-Command Installers (`install.ps1`, `install.sh`)** â€” Added automated single-command installers for Windows, Linux, and macOS with prerequisite checking, stable Python detection, and visual branding.
 - **System Configs & Tally (`backend/app/models/system.py`)** â€” Global system configurations registry.
 - **Roles Module (`backend/app/models/role.py`)** â€” Permissions matrix mapping database entities.
@@ -2450,7 +2425,7 @@ sales/quotations/convert/{id}, workflow/{docType}/{id}/{action}
 ### Added
 - **`backend/app/templates/errors/`** â€” Created branded HTML base layout, landing page, and status code error templates for SEEF v1.0.
 - **`backend/app/tests/test_seef.py`** â€” Added integration tests validating content negotiation and HTML/JSON status outputs.
-- **`docs/implementation/foundation/SMRITI_Error_Experience_Framework_v1.0_Plan.md`** â€” SEEF v1.0 implementation plan.
+- **`docs/implementation/foundation/TILEFLOW_Error_Experience_Framework_v1.0_Plan.md`** â€” SEEF v1.0 implementation plan.
 - **`docs/walkthrough/foundation/Foundation_SEEF_v1.0_Error_Experience_v3.16.0.md`** â€” Walkthrough document for SEEF v1.0.
 - **`src/constants/indianStates.ts`** â€” Shared Indian state constants.
 - **`src/utils/validators.ts`** â€” Indian-market form validators (GSTIN, PIN, Mobile).
@@ -2463,13 +2438,12 @@ sales/quotations/convert/{id}, workflow/{docType}/{id}/{action}
 
 ### Changed
 - **`backend/production.txt`** â€” Added `jinja2==3.1.4` dependency.
-- **`backend/app/core/errors.py`** â€” Expanded HREP error dictionary catalog to support custom titles and new error families (SMRITI-AUTH, SMRITI-CONN, SMRITI-CFG, SMRITI-INT).
+- **`backend/app/core/errors.py`** â€” Expanded HREP error dictionary catalog to support custom titles and new error families (TILEFLOW-AUTH, TILEFLOW-CONN, TILEFLOW-CFG, TILEFLOW-INT).
 - **`backend/app/core/error_handlers.py`** â€” Integrated template rendering, content negotiation (`Accept: text/html` vs `application/json`), and backward-compatible JSON error formats.
 - **`backend/app/main.py`** â€” Registered `GET /` API landing page endpoint displaying service diagnostic parameters, tracked application uptime, and consolidated import structures.
 - **`backend/app/api/v1/inventory.py`** â€” Fixed a runtime crash (`AttributeError` on `TenantContext.user_id`) in product soft-deletion by correctly extracting user identity from request dependencies.
 - **`backend/app/repositories/base.py`** â€” Type-safely bound repository models to `BaseEntity`.
 - **`backend/pyproject.toml` & `.github/workflows/ci.yml`** â€” Enforced automated baseline-filtered MyPy type checks in the build pipeline.
-- **Setup Wizard Defaults** â€” Updated default demo seeding company to "AITDL NETWORKS" located at GIDA Gorakhpur, Uttar Pradesh, with "Pushpa" (9324117007) as default contact.
 - **Form Controls** â€” Integrated street address, landmark, and state selection dropdowns into the setup wizard store registration form. Enforced GSTIN and Pincode validation gates before transitioning wizard steps.
 - **Validation Standardization** â€” Replaced ad hoc regular expression checks in `SalesStudioTab.tsx` and `src/routes/customers.ts` with shared helpers.
 - **`backend/app/tests/conftest.py`** â€” Set up a session-scoped event loop to prevent async loop mismatch issues across test suites.
@@ -2755,7 +2729,7 @@ All 21 prior tests continue to pass. 14 new auth tests added.
 ## [3.5.0] â€” 2026-07-11
 
 ### Added
-- Implemented **SMRITI Development Intelligence Center (SDIC)** module at `src/modules/dev_tracker/`.
+- Implemented **TILEFLOW Development Intelligence Center (SDIC)** module at `src/modules/dev_tracker/`.
 - Created codebase AST/regex scanner mapping 18 tracking dimensions (UI, Logic, DB, APIs, Auth, Reports, Printing, Barcodes, AI, Security, etc.).
 - Created GET `/api/dev-tracker` and POST `/api/dev-tracker/scan` controllers and routers.
 - Designed comprehensive `DevTrackerTab.tsx` dashboard displaying DHI gauges, Recharts progress line charts, and check matrices.
@@ -2776,7 +2750,7 @@ All 21 prior tests continue to pass. 14 new auth tests added.
 - Created `src/tests/about.test.ts` to assert package properties, config structure, and changelog contents.
 
 ### Changed
-- Redesigned `AboutSmritiTab.tsx` with a responsive split pane structure featuring 20 sub-navigation items, interactive search filtering, visual timelines, and diagnostic dashboards.
+- Redesigned `AboutTileFlowTab.tsx` with a responsive split pane structure featuring 20 sub-navigation items, interactive search filtering, visual timelines, and diagnostic dashboards.
 - Added print-friendly styles enabling high-contrast monochrome printing of active reference sheets.
 - Updated `package.json` to register automated test suite run scripts.
 
@@ -2789,7 +2763,6 @@ All 21 prior tests continue to pass. 14 new auth tests added.
 ## [3.3.0] â€” 2026-07-11
 
 ### Changed
-- Standardized project-wide headers across all eligible first-party source, script, style, and documentation files to uniform AITDL NETWORKS branding, copyright, and founding leadership metadata.
 - Preserved existing file created dates and codebase versions while updating modified dates.
 
 ### Documentation

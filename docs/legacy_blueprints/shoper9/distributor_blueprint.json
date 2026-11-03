@@ -1,7 +1,7 @@
 {
   "profile": "Distributor",
   "version": "18.0",
-  "description": "SMRITI Distributor Profile based on Shoper9 Distributor template",
+  "description": "TILEFLOW Distributor Profile based on Shoper9 Distributor template",
   "scope": [
     "Purchase order management & consolidation",
     "Sales orders & wholesale invoicing",
@@ -22,7 +22,7 @@
       "workflowId": "WF-DC-SALES",
       "title": "Sales Delivery Challan (Sales DC)",
       "legacyMenu": "Sales -> DC Generation -> Sales DC (SR115500.EXE / PgmOpt 8)",
-      "smritiTarget": "/distributor-invoicing (Delivery Challan Mode)",
+      "tileflowTarget": "/distributor-invoicing (Delivery Challan Mode)",
       "documentType": "DELIVERY_CHALLAN",
       "status": "MAPPED"
     },
@@ -30,7 +30,7 @@
       "workflowId": "WF-DC-APPROVAL",
       "title": "Approval Issue Delivery Challan",
       "legacyMenu": "Sales -> DC Generation -> Approval Issue DC (SR115500.EXE / PgmOpt 9)",
-      "smritiTarget": "/distributor-invoicing (Approval Issue Mode)",
+      "tileflowTarget": "/distributor-invoicing (Approval Issue Mode)",
       "documentType": "APPROVAL_ISSUE_DC",
       "status": "MAPPED"
     },
@@ -38,7 +38,7 @@
       "workflowId": "WF-TRANSPORT-RECEIPT",
       "title": "Transport Receipt Entry",
       "legacyMenu": "Sales -> DC Generation -> Transport Receipt Entry (SD400800.EXE / PgmOpt 8)",
-      "smritiTarget": "/dispatch-manifests (Transport LR & Carrier Receipt)",
+      "tileflowTarget": "/dispatch-manifests (Transport LR & Carrier Receipt)",
       "documentType": "TRANSPORT_RECEIPT",
       "status": "MAPPED"
     },
@@ -46,7 +46,7 @@
       "workflowId": "WF-CONV-SALES-APPROVAL",
       "title": "Conversion of Sales DC to Approval Issue DC",
       "legacyMenu": "Sales -> DC Generation -> Conversion of Sales DC to Approval Issue DC (SD100500.EXE)",
-      "smritiTarget": "/distributor-invoicing (Challan Type Reclassification)",
+      "tileflowTarget": "/distributor-invoicing (Challan Type Reclassification)",
       "documentType": "DC_RECLASSIFICATION",
       "status": "MAPPED"
     },
@@ -54,7 +54,7 @@
       "workflowId": "WF-PO-CONSOLIDATION",
       "title": "Purchase Order Consolidation",
       "legacyMenu": "Purchase Order -> Consolidation (SE100900.EXE / PgmOpt 3)",
-      "smritiTarget": "/purchase-studio (PO Batch Consolidation & Multi-Store Aggregation)",
+      "tileflowTarget": "/purchase-studio (PO Batch Consolidation & Multi-Store Aggregation)",
       "documentType": "PURCHASE_ORDER_CONSOLIDATION",
       "status": "MAPPED"
     }

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.8.0
-Created      : 2026-08-17
-Modified     : 2026-08-17
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import sys
 import re
@@ -43,12 +29,12 @@ def test_01_canonical_renderer_governance_and_config():
     assert CANONICAL_INVOICE_LAYOUT_CONFIG["version"] == "1.0.0"
     assert CANONICAL_INVOICE_LAYOUT_CONFIG["page_size"] == "A4"
     assert CANONICAL_INVOICE_LAYOUT_CONFIG["zero_text_wrapping"] is True
-    assert "SMRITI OS Retail Suite" in CANONICAL_INVOICE_LAYOUT_CONFIG["footer_disclaimer"]
+    assert "TILEFLOW OS Retail Suite" in CANONICAL_INVOICE_LAYOUT_CONFIG["footer_disclaimer"]
 
 
 def test_02_invoice_102_exact_mathematical_reconciliation():
-    """Verify exact financial calculations for TT2026-2027/102 in Company DB smriti001."""
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    """Verify exact financial calculations for TT2026-2027/102 in Company DB tileflow001."""
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     cur.execute("""
         SELECT i.id, i.invoice_no, i.date, i.tax_total, i.grand_total
@@ -56,7 +42,7 @@ def test_02_invoice_102_exact_mathematical_reconciliation():
         WHERE i.invoice_no = 'TT2026-2027/102';
     """)
     inv = cur.fetchone()
-    assert inv is not None, "Invoice TT2026-2027/102 not found in smriti001"
+    assert inv is not None, "Invoice TT2026-2027/102 not found in tileflow001"
 
     cur.execute("""
         SELECT id, name, quantity, price, tax_amount, total_amount
@@ -146,19 +132,19 @@ def test_05_canonical_api_routes_registered():
         assert ep in routes, f"Expected endpoint {ep} not found in FastAPI route registry"
 
 
-def test_06_smritisys_control_plane_zero_operational_invoices():
-    """Enforce architectural isolation: smritisys has 0 operational invoices and 0 operational templates."""
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smritisys")
+def test_06_tileflowsys_control_plane_zero_operational_invoices():
+    """Enforce architectural isolation: tileflowsys has 0 operational invoices and 0 operational templates."""
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflowsys")
     cur = conn.cursor()
     cur.execute("SELECT COUNT(*) FROM sales_invoices;")
     count = cur.fetchone()[0]
     conn.close()
-    assert count == 0, f"Architecture violation: smritisys has {count} operational invoices (must be 0)"
+    assert count == 0, f"Architecture violation: tileflowsys has {count} operational invoices (must be 0)"
 
 
 def test_07_persisted_canonical_template_in_company_database():
-    """Verify TAX_INVOICE_TATTLY_THREADS V1 is persisted in smriti001 company database."""
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    """Verify TAX_INVOICE_TATTLY_THREADS V1 is persisted in tileflow001 company database."""
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     cur.execute("""
         SELECT template_code, template_name, template_type, status, current_version, layout_configuration, configuration_hash
@@ -168,7 +154,7 @@ def test_07_persisted_canonical_template_in_company_database():
     tpl = cur.fetchone()
     conn.close()
 
-    assert tpl is not None, "Canonical template TAX_INVOICE_TATTLY_THREADS not found in smriti001"
+    assert tpl is not None, "Canonical template TAX_INVOICE_TATTLY_THREADS not found in tileflow001"
     assert tpl[0] == "TAX_INVOICE_TATTLY_THREADS"
     assert tpl[1] == "TATTLY THREADS Tax Invoice"
     assert tpl[2] == "TAX_INVOICE"
@@ -186,7 +172,7 @@ def test_07_persisted_canonical_template_in_company_database():
 
 def test_08_persisted_template_version_v1_immutability():
     """Verify version V1 is recorded with FROZEN status in tax_invoice_template_versions."""
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     cur.execute("""
         SELECT v.version, v.status, v.configuration_hash
@@ -205,7 +191,7 @@ def test_08_persisted_template_version_v1_immutability():
 
 def test_09_invoice_102_document_artifact_and_sha256_integrity():
     """Verify TT2026-2027/102 PDF artifact is persisted with cryptographic SHA256 integrity."""
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     cur.execute("""
         SELECT invoice_no, template_code, template_version, template_status, storage_path, sha256_hash, file_size, page_count, is_valid
@@ -215,7 +201,7 @@ def test_09_invoice_102_document_artifact_and_sha256_integrity():
     art = cur.fetchone()
     conn.close()
 
-    assert art is not None, "Document artifact for TT2026-2027/102 not found in smriti001"
+    assert art is not None, "Document artifact for TT2026-2027/102 not found in tileflow001"
     assert art[0] == "TT2026-2027/102"
     assert art[1] == "TAX_INVOICE_TATTLY_THREADS"
     assert art[2] == "V1"
@@ -231,8 +217,8 @@ def test_09_invoice_102_document_artifact_and_sha256_integrity():
 
 
 def test_10_all_30_batch_invoice_artifacts_indexed():
-    """Verify all 30 batch invoices have valid PDF artifacts with matching SHA256 checksums in smriti001."""
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    """Verify all 30 batch invoices have valid PDF artifacts with matching SHA256 checksums in tileflow001."""
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     cur.execute("""
         SELECT invoice_no, storage_path, sha256_hash, file_size, page_count
@@ -242,7 +228,7 @@ def test_10_all_30_batch_invoice_artifacts_indexed():
     artifacts = cur.fetchall()
     conn.close()
 
-    assert len(artifacts) >= 30, f"Expected at least 30 indexed PDF artifacts in smriti001, found {len(artifacts)}"
+    assert len(artifacts) >= 30, f"Expected at least 30 indexed PDF artifacts in tileflow001, found {len(artifacts)}"
     for a in artifacts:
         fpath = a[1]
         assert os.path.exists(fpath), f"Artifact file {fpath} does not exist"
@@ -254,7 +240,7 @@ def test_10_all_30_batch_invoice_artifacts_indexed():
 @pytest.mark.asyncio
 async def test_11_interstate_invoice_displays_igst_and_hides_cgst_sgst():
     """Verify that Interstate invoice renders explicit TAX % and IGST columns and hides CGST/SGST columns."""
-    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001")
+    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001")
     async_session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
     async with async_session() as session:
@@ -275,7 +261,7 @@ async def test_11_interstate_invoice_displays_igst_and_hides_cgst_sgst():
 @pytest.mark.asyncio
 async def test_12_intrastate_invoice_displays_cgst_sgst_and_hides_igst():
     """Verify that Intrastate invoice renders explicit CGST %, CGST, SGST %, SGST columns and hides IGST column with exact math."""
-    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001")
+    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001")
     async_session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
     async with async_session() as session:
@@ -299,7 +285,7 @@ async def test_12_intrastate_invoice_displays_cgst_sgst_and_hides_igst():
 
 def test_13_persisted_template_supports_both_interstate_and_intrastate_grid_specs():
     """Verify template JSONB layout stores both 10-col interstate and 12-col intrastate specifications."""
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     cur.execute("""
         SELECT layout_configuration
@@ -338,7 +324,7 @@ async def test_14_api_invoice_preview_and_print_contracts():
     from app.api.v1.sales import get_sales_invoice_preview_contract, get_sales_invoice_print_contract
     from app.api.deps import TenantContext
 
-    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001")
+    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001")
     async_session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
     tenant_ctx = TenantContext(company_id="COMP-001", branch_id="MAIN")
 
@@ -369,7 +355,7 @@ async def test_15_api_invoice_reprint_artifact_contract():
     from app.api.v1.sales import get_sales_invoice_reprint_contract
     from app.api.deps import TenantContext
 
-    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001")
+    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001")
     async_session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
     tenant_ctx = TenantContext(company_id="COMP-001", branch_id="MAIN")
 
@@ -389,7 +375,7 @@ async def test_16_api_invoice_pdf_stream_and_download_contracts():
     from app.api.v1.sales import get_sales_invoice_pdf_stream, get_sales_invoice_download_attachment
     from app.api.deps import TenantContext
 
-    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001")
+    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001")
     async_session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
     tenant_ctx = TenantContext(company_id="COMP-001", branch_id="MAIN")
 
@@ -414,7 +400,7 @@ async def test_16_api_invoice_pdf_stream_and_download_contracts():
 @pytest.mark.asyncio
 async def test_17_invoice_103_explicit_tax_rate_and_amount_reconciliation():
     """Verify Invoice TT2026-2027/103 has exact statutory totals and explicit separate TAX % / IGST / AMOUNT columns."""
-    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/smriti001")
+    engine = create_async_engine("postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow001")
     async_session = async_sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
 
     async with async_session() as session:

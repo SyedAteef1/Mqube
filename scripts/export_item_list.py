@@ -1,20 +1,7 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import os, json, csv, psycopg2
 
 def export_item_master():
-    conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+    conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
     cur = conn.cursor()
 
     cur.execute('''
@@ -43,8 +30,8 @@ def export_item_master():
             "stock_quantity": r[12]
         })
 
-    json_output = r"F:\SMRITRretailNX\exports\SMRITI_Item_Master_842.json"
-    csv_output = r"F:\SMRITRretailNX\exports\SMRITI_Item_Master_842.csv"
+    json_output = r"F:\SMRITRretailNX\exports\TILEFLOW_Item_Master_842.json"
+    csv_output = r"F:\SMRITRretailNX\exports\TILEFLOW_Item_Master_842.csv"
 
     with open(json_output, "w", encoding="utf-8") as f:
         json.dump(items, f, indent=2)

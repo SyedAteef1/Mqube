@@ -1,19 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-12
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-Revision ID: 6682e5e145bd
-Revises: 94d408c3ba68
-Create Date: 2026-07-12 16:03:54.995575
-"""
 from typing import Sequence, Union
 
 from alembic import op

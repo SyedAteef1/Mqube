@@ -2,18 +2,18 @@
 title: "Reporting & BI Engine: Phase 2 (Security Masking & Query Performance Router)"
 version: "1.0.0"
 date: "2026-08-28"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
 # Walkthrough: Reporting & BI Engine — Phase 2 (Security Masking & Query Performance Router)
 
 ## 1. Purpose
-Implement Phase 2 (Steps 03 and 04 of the 12-stage roadmap) for the SMRITI Retail OS Reporting & BI Engine v1.0.0-GA:
+Implement Phase 2 (Steps 03 and 04 of the 12-stage roadmap) for the TILEFLOW Retail OS Reporting & BI Engine v1.0.0-GA:
 1. **Server-Side RBAC & Data Masking Engine** (Enforcing Invariant 4: Zero frontend security trust).
 2. **Query Performance-Tier Router** (Enforcing Invariant 5: Workload isolation preventing heavy analytical/export jobs from degrading interactive POS queries).
 

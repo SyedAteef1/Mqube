@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 3.25.0
- * * Created    : 2026-07-10
- * * Modified   : 2026-08-16
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect, useRef } from "react";
 import { 
   Star, Clock, ChevronDown, ChevronRight, MoreHorizontal, 
@@ -31,7 +6,7 @@ import {
   ExternalLink, Maximize, Play
 } from "lucide-react";
 import { useLayoutEngine, WorkspaceConfig, DockPosition } from "./layout_store.js";
-import { SmritiScrollArea } from "../components/SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../components/TileFlowScrollArea.tsx";
 import { useWorkspace } from "../contexts/WorkspaceContext.tsx";
 
 interface NavigationRendererProps {
@@ -162,7 +137,7 @@ export const NavigationRenderer: React.FC<NavigationRendererProps> = ({
         )}
 
         {/* Navigation Content Area */}
-        <SmritiScrollArea className="flex-1" fadeColorClass="from-theme-surface-1">
+        <TileFlowScrollArea className="flex-1" fadeColorClass="from-theme-surface-1">
           <div className="p-3 space-y-4">
           
           {/* Favorites Section (if not collapsed and favorites exist) */}
@@ -352,19 +327,19 @@ export const NavigationRenderer: React.FC<NavigationRendererProps> = ({
             </div>
           )}
 
-          {/* SMRITI Desk Blocking warning card */}
+          {/* MQube Desk Blocking warning card */}
           {!isCollapsed && (
             <div className="p-3 bg-theme-surface-3 bg-opacity-40 rounded-xl border border-theme-divider/60 text-[10px] text-theme-muted leading-relaxed space-y-1 mx-1 mt-3">
               <div className="font-bold text-theme-body uppercase tracking-wider font-display text-[9px] flex items-center space-x-1">
                 <span className="material-symbols-outlined text-xs text-rose-500">security</span>
-                <span>SMRITI Desk Blocking</span>
+                <span>MQube Desk Blocking</span>
               </div>
-              <p>ERP Desk accesses are locked down. Desk access strictly restricted to secure SMRITI interfaces (Rule 7).</p>
+              <p>ERP Desk accesses are locked down. Desk access strictly restricted to secure MQube interfaces (Rule 7).</p>
             </div>
           )}
 
           </div>
-        </SmritiScrollArea>
+        </TileFlowScrollArea>
 
         {/* Collapse Toggle Trigger */}
         <div className="p-3 border-t border-theme-divider/60 flex items-center justify-between">
@@ -559,7 +534,7 @@ export const NavigationRenderer: React.FC<NavigationRendererProps> = ({
             <div className="relative bg-theme-surface-2 border-t border-theme-divider rounded-t-2xl max-h-[85vh] overflow-y-auto p-5 space-y-6 z-50 animate-in slide-in-from-bottom duration-250">
               <div className="flex items-center justify-between border-b border-theme-divider pb-3">
                 <div>
-                  <h4 className="font-display font-bold text-sm text-theme-body">SMRITI Navigation Ledger</h4>
+                  <h4 className="font-display font-bold text-sm text-theme-body">MQube Navigation Ledger</h4>
                   <p className="text-[10px] text-theme-muted">All operational suites and customization parameters</p>
                 </div>
                 <button 

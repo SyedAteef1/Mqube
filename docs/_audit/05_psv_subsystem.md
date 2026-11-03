@@ -1,16 +1,16 @@
 ﻿<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-17
   Modified     : 2026-08-17
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal -- Audit Artifact
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source -- Audit Artifact
 -->
 
-# SMRITI Retail OS -- PSV Subsystem Audit
+# TILEFLOW Retail OS -- PSV Subsystem Audit
 ## Phase 5: Party Stock Visibility (PSV)
 
 **Audit Date:** 2026-08-17
@@ -22,9 +22,9 @@
 
 ### Documentation claim (from multiple walkthrough/architecture docs):
 PSV is an optional observability/projection layer (shadow inventory).
-- Lives in a SEPARATE database: SmritiPSV (default) or SmritiPSV_<Code> (dedicated per company)
+- Lives in a SEPARATE database: TileFlowPSV (default) or TileFlowPSV_<Code> (dedicated per company)
 - Is NOT a transactional source of record
-- Is enabled/disabled per company via ControlPSVConfig in smritisys
+- Is enabled/disabled per company via ControlPSVConfig in tileflowsys
 
 ---
 
@@ -37,28 +37,27 @@ PSV is an optional observability/projection layer (shadow inventory).
 - PSVStockBalance: psv_stock_balances -- id, company_code, psv_party_id, psv_store_id, sku, billed_qty, received_qty, sold_qty, returned_qty, transferred_qty, current_balance, last_event_id, last_updated_at
 
 ### NOTABLE: PSV models do NOT have company_id/branch_id FK columns matching the base BaseEntity pattern. They use company_code (plain string) as the isolation boundary.
-### NOTABLE: PSVStockEvent has NO foreign key to smritisys.companies -- it uses company_code as a string tag.
+### NOTABLE: PSVStockEvent has NO foreign key to tileflowsys.companies -- it uses company_code as a string tag.
 
 ### Status: ALIGNED with architecture intent (separate DB, string-isolated by company_code)
 
 ---
 
-## 3. PSV Projection Service (backend/app/services/psv_projection.py)
 
 ### Class: PSVProjectionService
 ### Methods confirmed:
 - is_psv_enabled_for_company(control_session, company_code) -> bool
-  - Queries ControlPSVConfig in smritisys (SmritiSys) for the company code
+  - Queries ControlPSVConfig in tileflowsys (TileFlowSys) for the company code
   - Returns False if PSV disabled (fail-safe: no activity when disabled)
 - project_psv_stock_event(psv_session, event_payload) -> Dict
   - Checks idempotency via source_event_id uniqueness
   - Creates PSVStockEvent record
   - Updates PSVStockBalance (billed_qty, received_qty, sold_qty, returned_qty, current_balance)
-  - Commits to psv_session (SmritiPSV DB)
+  - Commits to psv_session (TileFlowPSV DB)
 
 ### Session routing:
-- control_session -> smritisys (reads ControlPSVConfig)
-- psv_session -> SmritiPSV (writes PSVStockEvent, PSVStockBalance)
+- control_session -> tileflowsys (reads ControlPSVConfig)
+- psv_session -> TileFlowPSV (writes PSVStockEvent, PSVStockBalance)
 - These are DISTINCT session objects -- architecture correctly separates read (control) and write (PSV) sessions
 
 ### Status: ALIGNED
@@ -70,10 +69,10 @@ PSV is an optional observability/projection layer (shadow inventory).
 ### Fields confirmed:
 - company_code (String, required)
 - psv_enabled (bool)
-- psv_mode: "CENTRAL" (shared SmritiPSV) or "DEDICATED" (SmritiPSV_<Code>)
-- psv_database_name: default "SmritiPSV"
+- psv_mode: "CENTRAL" (shared TileFlowPSV) or "DEDICATED" (TileFlowPSV_<Code>)
+- psv_database_name: default "TileFlowPSV"
 
-### This model lives in the smritisys control plane -- consistent with architecture.
+### This model lives in the tileflowsys control plane -- consistent with architecture.
 ### Status: ALIGNED
 
 ---
@@ -81,11 +80,11 @@ PSV is an optional observability/projection layer (shadow inventory).
 ## 5. PSV Database Configuration
 
 ### Evidence:
-- backend/app/core/config.py line 161: PSV_DATABASE_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/SmritiPSV"
-- SmritiPSV database MUST be provisioned separately from smritisys
+- backend/app/core/config.py line 161: PSV_DATABASE_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/TileFlowPSV"
+- TileFlowPSV database MUST be provisioned separately from tileflowsys
 
-### FINDING: No evidence of automatic SmritiPSV provisioning in the codebase. The PSV database must be manually created or provisioned separately.
-### Documentation impact: Docs should clarify that SmritiPSV requires separate provisioning.
+### FINDING: No evidence of automatic TileFlowPSV provisioning in the codebase. The PSV database must be manually created or provisioned separately.
+### Documentation impact: Docs should clarify that TileFlowPSV requires separate provisioning.
 ### Status: PARTIALLY_VERIFIED
 
 ---
@@ -99,7 +98,7 @@ Tests confirmed present:
 - test_psv_disabled_company_skip: is_psv_enabled returns False -> projection skipped
 
 ### conftest.py clear_db clears PSVPartySkuTracking and PSVParty (lines 92-93) -- confirms PSV model integration in test suite
-### Note: PSVStockEvent and PSVStockBalance are NOT in clear_db. This likely means they are in a different DB (SmritiPSV) not managed by the smritisys test engine.
+### Note: PSVStockEvent and PSVStockBalance are NOT in clear_db. This likely means they are in a different DB (TileFlowPSV) not managed by the tileflowsys test engine.
 
 ### Status: ALIGNED
 
@@ -125,7 +124,7 @@ Tests confirmed present:
 - docs/implementation/CONSOLIDATED_PLANS.md
 - docs/architecture/COMPANY_001.md
 - docs/audits/INTERNAL_ROLE.md
-- docs/audits/SMRITI_ERP_AUDIT.md
+- docs/audits/TILEFLOW_ERP_AUDIT.md
 - docs/audits/CONSIGNMENT_AUDIT.md
 
 ### FINDING: No dedicated PSV architecture document found in docs/architecture/. PSV is described in walkthroughs and implementation plans but lacks a standalone PSV_ARCHITECTURE spec.

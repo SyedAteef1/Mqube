@@ -1,12 +1,8 @@
-# Project      : SMRITI Retail OS
-# Author       : Jawahar Ramkripal Mallah
-# Email        : support@smritibooks.com
-# Websites     : smritibooks.com | erpnbook.com | aitdl.com
 # Version      : 3.17.0
 # Created      : 2026-08-16
 # Modified     : 2026-08-16
-# Copyright    : © SMRITIBooks.com. All Rights Reserved.
-# License      : Proprietary Commercial Software
+# Copyright    :  tileflow.in. Open Source - Permissive Use
+# License      : MIT Open Source License
 
 import asyncio
 import os
@@ -20,7 +16,7 @@ from playwright.async_api import async_playwright
 
 BASE_URL = "http://localhost:3000"
 API_URL = "http://localhost:8000"
-DB_DSN = "postgresql://postgres:postgres@localhost:5432/smritisys"
+DB_DSN = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
 SCREENSHOT_DIR = os.path.join(os.getcwd(), "scratch", "e2e_screenshots")
 os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 
@@ -56,7 +52,7 @@ def get_admin_jwt_token():
 
 async def run_hardened_certification():
     print("=" * 80)
-    print("SMRITI RETAIL OS — HARDENED PLAYWRIGHT CHROMIUM E2E CERTIFICATION")
+    print("TILEFLOW RETAIL OS — HARDENED PLAYWRIGHT CHROMIUM E2E CERTIFICATION")
     print("=" * 80)
     print(f"Base App URL : {BASE_URL}")
     print(f"FastAPI URL  : {API_URL}")
@@ -108,7 +104,7 @@ async def run_hardened_certification():
 
         if jwt_token:
             await page.goto(BASE_URL, wait_until="commit")
-            await page.evaluate(f"localStorage.setItem('smriti_jwt_token', '{jwt_token}')")
+            await page.evaluate(f"localStorage.setItem('tileflow_jwt_token', '{jwt_token}')")
 
         await page.goto(BASE_URL, wait_until="networkidle")
         await page.screenshot(path=os.path.join(SCREENSHOT_DIR, "hardened_00_desktop.png"))
@@ -148,7 +144,7 @@ async def run_hardened_certification():
                     items: [{{
                         product_id: 'PROD-001',
                         sku: 'SKU-E2E-01',
-                        item_name: 'SMRITI Premium Shirt',
+                        item_name: 'TILEFLOW Premium Shirt',
                         quantity: 2,
                         unit_price: 750.00,
                         total_price: 1500.00
@@ -209,10 +205,10 @@ async def run_hardened_certification():
                 }},
                 body: JSON.stringify({{
                     supplier_code: '{e2e_supplier_id}',
-                    name: 'SMRITI E2E Test Supplier Ltd',
+                    name: 'TILEFLOW E2E Test Supplier Ltd',
                     tax_number: '27AAAAA0000A1Z5',
                     contact_person: 'Rajesh Kumar',
-                    email: 'supplier@smriti-test.com',
+                    email: 'supplier@tileflow-test.com',
                     phone: '+91 9876543210',
                     is_active: true
                 }})
@@ -231,7 +227,7 @@ async def run_hardened_certification():
                 body: JSON.stringify({{
                     po_number: '{e2e_po_id}',
                     supplier_id: '{e2e_supplier_id}',
-                    supplier_name: 'SMRITI E2E Test Supplier Ltd',
+                    supplier_name: 'TILEFLOW E2E Test Supplier Ltd',
                     status: 'RECEIVED',
                     total_amount: 5000.00,
                     items: [{{
@@ -349,7 +345,7 @@ async def run_hardened_certification():
                     code: '{e2e_cust_code}',
                     customer_group_id: 'cg-default',
                     name: 'E2E Test Enterprise Customer',
-                    email: 'testcustomer@smriti.org',
+                    email: 'testcustomer@tileflow.org',
                     mobile: '{e2e_cust_mobile}',
                     gst_number: '27BBBCC0000D1Z2'
                 }})
@@ -478,7 +474,7 @@ async def run_hardened_certification():
             cls = "TEST-INDUCED"
             sev = "LOW"
             note = "Occurred during background API restart; resolved upon service reload."
-        elif "smriti-api:8000" in text or "ERR_NAME_NOT_RESOLVED" in text:
+        elif "tileflow-api:8000" in text or "ERR_NAME_NOT_RESOLVED" in text:
             cls = "BENIGN"
             sev = "LOW"
             note = "Docker hostname fallback in un-recompiled bundle asset."
@@ -505,7 +501,7 @@ async def run_hardened_certification():
             "test_mutations": [
                 "Updated admin user company_id to COMP-001 and role to SYSADMIN",
                 "Inserted user_company_assignments entry uca-admin-comp001",
-                "Sanitized smriti-api:8000 hostname in src/lib/apiFetchV1.ts",
+                "Sanitized tileflow-api:8000 hostname in src/lib/apiFetchV1.ts",
                 "Fixed DailySalesSummary Pydantic schema in backend/app/services/reports.py"
             ],
             "raw_console_errors_count": len(raw_console_errors),

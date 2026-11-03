@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 from datetime import datetime, timezone, date, timedelta
@@ -204,17 +190,17 @@ class UnifiedAccountingLedgerService:
             await cls.seed_default_chart_of_accounts(session, company_id)
             account = (await session.execute(stmt)).scalar_one_or_none()
             if not account:
-                raise HTTPException(status_code=404, detail=f"SMRITI-GL-404: Account code '{account_code}' not found for company '{company_id}'.")
+                raise HTTPException(status_code=404, detail=f"TILEFLOW-GL-404: Account code '{account_code}' not found for company '{company_id}'.")
         return account
 
     @staticmethod
     def validate_currency_code(code: str) -> str:
         """Validates that a currency code is a valid 3-letter uppercase ISO format."""
         if not code or not isinstance(code, str):
-            raise HTTPException(status_code=400, detail="SMRITI-VAL-001: Currency code must be a valid 3-letter ISO code.")
+            raise HTTPException(status_code=400, detail="TILEFLOW-VAL-001: Currency code must be a valid 3-letter ISO code.")
         clean_code = code.strip().upper()
         if len(clean_code) != 3 or not clean_code.isalpha():
-            raise HTTPException(status_code=400, detail=f"SMRITI-VAL-002: Invalid currency code '{code}'. Must be a 3-letter uppercase ISO code (e.g. USD, EUR, INR).")
+            raise HTTPException(status_code=400, detail=f"TILEFLOW-VAL-002: Invalid currency code '{code}'. Must be a 3-letter uppercase ISO code (e.g. USD, EUR, INR).")
         return clean_code
 
     @classmethod
@@ -239,14 +225,14 @@ class UnifiedAccountingLedgerService:
         Validates and atomically posts a balanced double-entry Journal Voucher.
         Strict invariant: sum(debit_amounts) == sum(credit_amounts) in Base Currency.
         Supports multi-currency conversion and foreign line amount tracking.
-        Enforces fiscal period lockouts (SMRITI-GL-006) and currency validation.
+        Enforces fiscal period lockouts (TILEFLOW-GL-006) and currency validation.
         """
         await cls.assert_fiscal_period_open(session, company_id, voucher_date)
 
         if not lines or len(lines) < 2:
             raise HTTPException(
                 status_code=400,
-                detail="SMRITI-GL-002: A double-entry journal voucher requires at least two lines."
+                detail="TILEFLOW-GL-002: A double-entry journal voucher requires at least two lines."
             )
 
         currency = cls.validate_currency_code(currency)
@@ -257,7 +243,7 @@ class UnifiedAccountingLedgerService:
         else:
             exchange_rate = Decimal(str(exchange_rate))
             if exchange_rate <= 0 or exchange_rate > Decimal("100000000.000000"):
-                raise HTTPException(status_code=400, detail="SMRITI-GL-008: Currency exchange rate must be strictly positive and <= 100,000,000.")
+                raise HTTPException(status_code=400, detail="TILEFLOW-GL-008: Currency exchange rate must be strictly positive and <= 100,000,000.")
 
         total_debit = Decimal("0.00")
         total_credit = Decimal("0.00")
@@ -272,7 +258,7 @@ class UnifiedAccountingLedgerService:
                 acc = await cls.get_account_by_code(session, company_id, acc_code)
                 acc_id = acc.id
             elif not acc_id:
-                raise HTTPException(status_code=400, detail="SMRITI-GL-003: Each voucher line must specify account_id or account_code.")
+                raise HTTPException(status_code=400, detail="TILEFLOW-GL-003: Each voucher line must specify account_id or account_code.")
 
             raw_curr = line.get("currency") or line.get("foreign_currency") or currency
             line_curr = cls.validate_currency_code(raw_curr)
@@ -280,7 +266,7 @@ class UnifiedAccountingLedgerService:
             if raw_line_rate is not None:
                 line_rate = Decimal(str(raw_line_rate))
                 if line_rate <= 0 or line_rate > Decimal("100000000.000000"):
-                    raise HTTPException(status_code=400, detail="SMRITI-GL-008: Line exchange rate must be strictly positive and <= 100,000,000.")
+                    raise HTTPException(status_code=400, detail="TILEFLOW-GL-008: Line exchange rate must be strictly positive and <= 100,000,000.")
             else:
                 line_rate = exchange_rate
 
@@ -307,9 +293,9 @@ class UnifiedAccountingLedgerService:
                 f_credit = credit
 
             if debit < 0 or credit < 0:
-                raise HTTPException(status_code=400, detail="SMRITI-GL-004: Debit and credit amounts must be non-negative.")
+                raise HTTPException(status_code=400, detail="TILEFLOW-GL-004: Debit and credit amounts must be non-negative.")
             if debit == 0 and credit == 0:
-                raise HTTPException(status_code=400, detail="SMRITI-GL-005: Line cannot have both zero debit and zero credit.")
+                raise HTTPException(status_code=400, detail="TILEFLOW-GL-005: Line cannot have both zero debit and zero credit.")
 
             total_debit += debit
             total_credit += credit
@@ -336,14 +322,14 @@ class UnifiedAccountingLedgerService:
             if same_foreign_curr and abs(total_f_debit - total_f_credit) > Decimal("0.001"):
                 raise HTTPException(
                     status_code=400,
-                    detail=f"SMRITI-GL-010: Unbalanced foreign currency voucher. Total foreign debits ({currency} {total_f_debit}) must equal total foreign credits ({currency} {total_f_credit})."
+                    detail=f"TILEFLOW-GL-010: Unbalanced foreign currency voucher. Total foreign debits ({currency} {total_f_debit}) must equal total foreign credits ({currency} {total_f_credit})."
                 )
 
         # Strict Double-Entry Invariant Validation in Base Currency
         if abs(total_debit - total_credit) > Decimal("0.001"):
             raise HTTPException(
                 status_code=400,
-                detail=f"SMRITI-GL-001: Unbalanced journal voucher. Total debits (₹{total_debit}) must equal total credits (₹{total_credit})."
+                detail=f"TILEFLOW-GL-001: Unbalanced journal voucher. Total debits (₹{total_debit}) must equal total credits (₹{total_credit})."
             )
 
 
@@ -1146,7 +1132,7 @@ class UnifiedAccountingLedgerService:
     ) -> None:
         """
         Guarantees that the posting date belongs to an OPEN fiscal period.
-        Rejects vouchers falling in HARD_LOCKED or CLOSED periods with HTTP 400 (SMRITI-GL-006).
+        Rejects vouchers falling in HARD_LOCKED or CLOSED periods with HTTP 400 (TILEFLOW-GL-006).
         """
         stmt = (
             select(FiscalPeriod)
@@ -1161,7 +1147,7 @@ class UnifiedAccountingLedgerService:
         if period and period.status in ["HARD_LOCKED", "CLOSED"]:
             raise HTTPException(
                 status_code=400,
-                detail=f"SMRITI-GL-006: Accounting period '{period.period_name}' is {period.status} for date {voucher_date}. Backdating and modifications are strictly prohibited."
+                detail=f"TILEFLOW-GL-006: Accounting period '{period.period_name}' is {period.status} for date {voucher_date}. Backdating and modifications are strictly prohibited."
             )
 
     @classmethod
@@ -1548,20 +1534,20 @@ class UnifiedAccountingLedgerService:
         if from_curr == to_curr:
             raise HTTPException(
                 status_code=400,
-                detail="SMRITI-GL-011: Exchange rate cannot be defined between identical currencies."
+                detail="TILEFLOW-GL-011: Exchange rate cannot be defined between identical currencies."
             )
 
         if rate_type not in ("SPOT", "CLOSING", "AVERAGE", "CUSTOM"):
             raise HTTPException(
                 status_code=400,
-                detail=f"SMRITI-VAL-003: Invalid rate_type '{rate_type}'. Must be SPOT, CLOSING, AVERAGE, or CUSTOM."
+                detail=f"TILEFLOW-VAL-003: Invalid rate_type '{rate_type}'. Must be SPOT, CLOSING, AVERAGE, or CUSTOM."
             )
 
         rate_val = Decimal(str(exchange_rate))
         if rate_val <= 0 or rate_val > Decimal("100000000.000000"):
             raise HTTPException(
                 status_code=400,
-                detail="SMRITI-GL-008: Currency exchange rate must be strictly positive (> 0) and <= 100,000,000."
+                detail="TILEFLOW-GL-008: Currency exchange rate must be strictly positive (> 0) and <= 100,000,000."
             )
 
         stmt = select(CurrencyExchangeRate).where(
@@ -1635,7 +1621,7 @@ class UnifiedAccountingLedgerService:
 
         raise HTTPException(
             status_code=400,
-            detail=f"SMRITI-GL-007: No exchange rate configured for currency pair '{from_curr}/{to_curr}' as of {eff_date.isoformat()}."
+            detail=f"TILEFLOW-GL-007: No exchange rate configured for currency pair '{from_curr}/{to_curr}' as of {eff_date.isoformat()}."
         )
 
     @classmethod
@@ -1656,7 +1642,7 @@ class UnifiedAccountingLedgerService:
         """
         foreign_amt = Decimal(str(settled_foreign_amount)).quantize(Decimal("0.01"))
         if foreign_amt <= 0:
-            raise HTTPException(status_code=400, detail="SMRITI-VAL-004: Settled foreign amount must be strictly positive.")
+            raise HTTPException(status_code=400, detail="TILEFLOW-VAL-004: Settled foreign amount must be strictly positive.")
 
         inv_stmt = select(JournalVoucher).where(
             JournalVoucher.id == invoice_voucher_id,
@@ -1665,7 +1651,7 @@ class UnifiedAccountingLedgerService:
         )
         invoice_voucher = (await session.execute(inv_stmt)).scalar_one_or_none()
         if not invoice_voucher:
-            raise HTTPException(status_code=404, detail=f"SMRITI-GL-404: Invoice voucher '{invoice_voucher_id}' not found.")
+            raise HTTPException(status_code=404, detail=f"TILEFLOW-GL-404: Invoice voucher '{invoice_voucher_id}' not found.")
 
         pay_stmt = select(JournalVoucher).where(
             JournalVoucher.id == payment_voucher_id,
@@ -1674,13 +1660,13 @@ class UnifiedAccountingLedgerService:
         )
         payment_voucher = (await session.execute(pay_stmt)).scalar_one_or_none()
         if not payment_voucher:
-            raise HTTPException(status_code=404, detail=f"SMRITI-GL-404: Payment voucher '{payment_voucher_id}' not found.")
+            raise HTTPException(status_code=404, detail=f"TILEFLOW-GL-404: Payment voucher '{payment_voucher_id}' not found.")
 
         # Currency consistency check
         if invoice_voucher.currency != payment_voucher.currency:
             raise HTTPException(
                 status_code=400,
-                detail=f"SMRITI-GL-014: Currency mismatch between invoice ({invoice_voucher.currency}) and payment ({payment_voucher.currency}) vouchers."
+                detail=f"TILEFLOW-GL-014: Currency mismatch between invoice ({invoice_voucher.currency}) and payment ({payment_voucher.currency}) vouchers."
             )
 
         # Over-settlement boundary protection
@@ -1689,7 +1675,7 @@ class UnifiedAccountingLedgerService:
         if foreign_amt > max_inv_foreign or foreign_amt > max_pay_foreign:
             raise HTTPException(
                 status_code=400,
-                detail=f"SMRITI-GL-009: Settled foreign amount ({foreign_amt}) exceeds invoice foreign limit ({max_inv_foreign}) or payment limit ({max_pay_foreign})."
+                detail=f"TILEFLOW-GL-009: Settled foreign amount ({foreign_amt}) exceeds invoice foreign limit ({max_inv_foreign}) or payment limit ({max_pay_foreign})."
             )
 
         # Idempotency check: check if realization voucher already posted for this pair
@@ -1926,7 +1912,7 @@ class UnifiedAccountingLedgerService:
         if v and v.is_posted:
             raise HTTPException(
                 status_code=400,
-                detail="SMRITI-GL-015: Immutable Ledger Policy: Posted journal vouchers and ledger entries cannot be modified directly. Post an authoritative reversing journal voucher."
+                detail="TILEFLOW-GL-015: Immutable Ledger Policy: Posted journal vouchers and ledger entries cannot be modified directly. Post an authoritative reversing journal voucher."
             )
 
 

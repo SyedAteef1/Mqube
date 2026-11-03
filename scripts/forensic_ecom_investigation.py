@@ -1,5 +1,5 @@
 """
-Forensic Investigation of alembic_version and Table Origins in smritisys and smriti001
+Forensic Investigation of alembic_version and Table Origins in tileflowsys and tileflow001
 """
 import psycopg2
 
@@ -12,7 +12,7 @@ tables_to_check = [
     'ecom_reconciliations'
 ]
 
-for db in ['smritisys', 'smriti001']:
+for db in ['tileflowsys', 'tileflow001']:
     conn = psycopg2.connect(f'postgresql://postgres:postgres@localhost:5432/{db}')
     cur = conn.cursor()
     print(f"\n========================================================")

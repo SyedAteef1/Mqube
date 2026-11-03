@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 4.9.5
-Created      : 2026-08-14
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import os
 import io
 import re
@@ -34,14 +20,14 @@ from ..models.tax_inv_template import (
     InvoiceDocumentArtifact,
 )
 from .tax_invoice_spec import (
-    SMRITITAXINVOICE_TEMPLATE_CODE,
-    SMRITITAXINVOICE_VERSION,
-    SMRITITAXINVOICE_STATUS,
-    SMRITI_INTERSTATE_COLUMNS,
-    SMRITI_INTRASTATE_COLUMNS,
+    TILEFLOWTAXINVOICE_TEMPLATE_CODE,
+    TILEFLOWTAXINVOICE_VERSION,
+    TILEFLOWTAXINVOICE_STATUS,
+    TILEFLOW_INTERSTATE_COLUMNS,
+    TILEFLOW_INTRASTATE_COLUMNS,
     build_colgroup,
     load_golden_css,
-    verify_smrititaxinvoice_integrity,
+    verify_tileflowtaxinvoice_integrity,
 )
 
 # Barcode & QR Code generators
@@ -203,7 +189,7 @@ GST_STATE_MAP: Dict[str, str] = {
 
 def format_place_of_supply(raw_state: str, is_interstate: bool, customer_gstin: str = "", supplier_gstin: str = "27AAXFT2508H1ZR") -> str:
     """
-    Dynamically formats Place of Supply strictly per SMRITI Governance:
+    Dynamically formats Place of Supply strictly per TILEFLOW Governance:
       {STATE NAME} ({STATE CODE}) — {SUPPLY TYPE}
     Examples:
       Maharashtra (27) — Intra-State
@@ -253,8 +239,8 @@ CANONICAL_INVOICE_LAYOUT_CONFIG: Dict[str, Any] = {
     "page_orientation": "portrait",
     "margins_mm": {"top": 8, "bottom": 10, "left": 8, "right": 8},
     "column_widths": {
-        "interstate": SMRITI_INTERSTATE_COLUMNS,
-        "intrastate": SMRITI_INTRASTATE_COLUMNS,
+        "interstate": TILEFLOW_INTERSTATE_COLUMNS,
+        "intrastate": TILEFLOW_INTRASTATE_COLUMNS,
     },
     "grid_borders": {
         "table_border": "1px solid #d1d5db",
@@ -264,7 +250,7 @@ CANONICAL_INVOICE_LAYOUT_CONFIG: Dict[str, Any] = {
         "subtotal_border_bottom": "2px solid #9ca3af"
     },
     "zero_text_wrapping": True,
-    "footer_disclaimer": "SMRITI OS Retail Suite -- Powered by SMRITI SYSTEMS"
+    "footer_disclaimer": "TILEFLOW OS Retail Suite -- Powered by TILEFLOW SYSTEMS"
 }
 
 
@@ -559,7 +545,7 @@ class InvoicePdfService:
         css = load_golden_css()
         
         if is_interstate:
-            colgroup = build_colgroup(SMRITI_INTERSTATE_COLUMNS)
+            colgroup = build_colgroup(TILEFLOW_INTERSTATE_COLUMNS)
             thead_html = """
             <thead>
               <tr>
@@ -577,7 +563,7 @@ class InvoicePdfService:
             </thead>
             """
         else:
-            colgroup = build_colgroup(SMRITI_INTRASTATE_COLUMNS)
+            colgroup = build_colgroup(TILEFLOW_INTRASTATE_COLUMNS)
             thead_html = """
             <thead>
               <tr>
@@ -907,7 +893,7 @@ class InvoicePdfService:
                   <span>Page {p_idx} of {total_pages}</span>
                 </div>
                 <div style="font-size: 5.50pt; font-weight: 600; color: #4b5563; text-align: center; flex: 1.5;">
-                  SMRITI OS Retail Suite -- Powered by SMRITI SYSTEMS
+                  TILEFLOW OS Retail Suite -- Powered by TILEFLOW SYSTEMS
                 </div>
                 <div style="display: flex; align-items: center; gap: 6px; flex: 1; justify-content: flex-end;">
                   {f'<img src="{barcode_uri}" style="height: 12px; width: auto;"/>' if barcode_uri else ''}
@@ -1029,7 +1015,7 @@ class InvoicePdfService:
             raise HTTPException(status_code=404, detail="Invoice not found under current company context.")
 
         # Verify layout integrity before rendering
-        verify_smrititaxinvoice_integrity()
+        verify_tileflowtaxinvoice_integrity()
 
         return cls.generate_invoice_html_from_model(
             invoice=invoice_rec,
@@ -1298,6 +1284,5 @@ class InvoicePdfService:
         }
 
 
-# Canonical aliases for project-wide architecture naming
 TaxInvoiceRenderer = InvoicePdfService
 TaxInvoicePrintService = InvoicePdfService

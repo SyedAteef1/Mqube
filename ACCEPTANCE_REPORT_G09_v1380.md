@@ -1,4 +1,4 @@
-# SMRITI G09 — v1380 PAYMENT SCHEMA MIGRATION
+# TILEFLOW G09 — v1380 PAYMENT SCHEMA MIGRATION
 ## ACCEPTANCE REPORT
 
 **Date:** 2025-01-06  
@@ -107,7 +107,7 @@
 
 | Step | Command | Result | Status |
 |------|---------|--------|--------|
-| Start | Create fresh smriti001 test DB | ✓ SUCCESS | ✓ PASS |
+| Start | Create fresh tileflow001 test DB | ✓ SUCCESS | ✓ PASS |
 | Baseline | `alembic upgrade base` | ✓ No errors | ✓ PASS |
 | Chain | `alembic upgrade head` | ✓ Applied v1379→v1380 | ✓ PASS |
 | Current | `alembic current` | v1380_payment_transactions | ✓ PASS |
@@ -145,9 +145,9 @@
 
 | Test | Result | Status |
 |------|--------|--------|
-| test_permission_schema.py::test_smriti_permissions_schema_is_present_and_queryable | PASSED | ✓ PASS |
-| smriti_permissions table exists | ✓ Verified | ✓ PASS |
-| smriti_audit_log table exists | ✓ Verified | ✓ PASS |
+| test_permission_schema.py::test_tileflow_permissions_schema_is_present_and_queryable | PASSED | ✓ PASS |
+| tileflow_permissions table exists | ✓ Verified | ✓ PASS |
+| tileflow_audit_log table exists | ✓ Verified | ✓ PASS |
 | Authorization layer functional | require_permission() executes without schema error | ✓ PASS |
 
 **Permission Tests:** 1/1 PASS ✓
@@ -460,5 +460,5 @@ pytest backend/app/tests/test_sales_return_contracts.py -q
 ---
 
 **Report Generated:** 2025-01-06  
-**Prepared By:** SMRITI System (Automated Acceptance Framework)  
+**Prepared By:** TILEFLOW System (Automated Acceptance Framework)  
 **Classification:** G09 — FINAL REGRESSION AFTER PERMISSION SCHEMA FIX

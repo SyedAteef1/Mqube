@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.21.0
-Created      : 2026-08-14
-Modified     : 2026-08-14
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import glob
 import re
@@ -23,8 +10,8 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import text
 
-DB_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/smritisys"
-EXPORT_DIR = r"F:\Smriti-Clients Data\Tattly Threads\exports\exported_pdf_invoices"
+DB_URL = "postgresql+asyncpg://postgres:postgres@localhost:5432/tileflowsys"
+EXPORT_DIR = r"F:\TileFlow-Clients Data\Tattly Threads\exports\exported_pdf_invoices"
 
 
 def parse_pdf_invoice(pdf_path: str) -> dict:
@@ -171,7 +158,7 @@ async def main():
             count += 1
 
         await session.commit()
-        print(f"Successfully created and synchronized {count} client bills into PostgreSQL database smritisys!")
+        print(f"Successfully created and synchronized {count} client bills into PostgreSQL database tileflowsys!")
 
 if __name__ == "__main__":
     asyncio.run(main())

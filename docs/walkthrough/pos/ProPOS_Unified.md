@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.0.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — ProPOS Unified Enterprise Billing Suite v6.0.0
@@ -38,8 +37,8 @@ Documents the complete implementation and deployment of the **ProPOS Unified Ent
 13. `src/components/billing/propos/ProPosTaxInvoiceRc.tsx`
 
 ## 4. Files Modified
-1. `src/components/PosTerminalTab.tsx` — Direct mount of `SmritiProPosWorkspace`.
-2. `src/components/AdvancedBillingEng.tsx` — Direct mount of `SmritiProPosWorkspace`.
+1. `src/components/PosTerminalTab.tsx` — Direct mount of `TileFlowProPosWorkspace`.
+2. `src/components/AdvancedBillingEng.tsx` — Direct mount of `TileFlowProPosWorkspace`.
 
 ## 5. Architecture Decisions
 * Modular dialog sub-components isolated under `src/components/billing/propos/`.
@@ -58,7 +57,7 @@ Retail cashiers require rapid keyboard workflows (<kbd>F7</kbd> Exact Cash, <kbd
 
 ## 8. Tests Executed
 * TypeScript build verification via `npm run build` (0 errors).
-* Docker image creation and container restart (`smriti-web`, `smriti-api`, `smriti-db` running and healthy).
+* Docker image creation and container restart (`tileflow-web`, `tileflow-api`, `tileflow-db` running and healthy).
 
 ## 9. Verification Results
 ```text

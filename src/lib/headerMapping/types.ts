@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.17.0
- * Created      : 2026-08-16
- * Modified     : 2026-08-16
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 export type ConfidenceLevel = 'EXACT' | 'HIGH' | 'MEDIUM' | 'LOW' | 'AMBIGUOUS' | 'UNMAPPED';
 
 export type MappingContext = 'ITEM_MASTER' | 'PURCHASE_ORDER' | 'GRN' | 'SALES_INVOICE';
@@ -35,7 +21,7 @@ export const REUSE_WARNING_THRESHOLDS = {
   TIER_4_CONFIRM: 4,
 } as const;
 
-export interface SmritiFieldDefinition {
+export interface TileFlowFieldDefinition {
   key: string;
   label: string;
   required: boolean;
@@ -75,6 +61,6 @@ export interface SavedMappingProfile {
   id: string;
   name: string;
   createdAt: string;
-  mappings: Record<string, string>; // Normalized Source Header -> Smriti Field Key
+  mappings: Record<string, string>; // Normalized Source Header -> MQube Field Key
 }
 

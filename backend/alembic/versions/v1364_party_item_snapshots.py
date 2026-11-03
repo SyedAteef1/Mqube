@@ -1,19 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-
-FORWARD-ONLY MIGRATION -- Party/Item Convergence & Transaction Governance Snapshots (P1 Section 6)
-"""
-
 from typing import Sequence, Union
 from alembic import op
 import sqlalchemy as sa
@@ -348,5 +332,5 @@ def upgrade():
 def downgrade():
     raise NotImplementedError(
         "v1364_party_item_snapshots is a FORWARD-ONLY migration. "
-        "Downgrade is blocked by SMRITI Data Governance Policy."
+        "Downgrade is blocked by TILEFLOW Data Governance Policy."
     )

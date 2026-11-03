@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.22.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from typing import Dict, Any, List, Optional, Tuple, Set
 from datetime import datetime, timezone
@@ -30,11 +16,11 @@ from ..models.capability_template import (
 class CapabilityService:
     """
     Authoritative Capability & Module Registry Engine (P1.2).
-    Governs the 26 canonical SMRITI capabilities, strict dependency graph validation (fail-closed),
+    Governs the 26 canonical TILEFLOW capabilities, strict dependency graph validation (fail-closed),
     and tenant subscription tier entitlements.
     """
 
-    # The 26 Frozen Canonical SMRITI Business Capabilities
+    # The 26 Frozen Canonical TILEFLOW Business Capabilities
     CANONICAL_CAPABILITIES: Dict[str, Dict[str, Any]] = {
         "POS": {
             "name": "Point of Sale (POS)",
@@ -332,7 +318,7 @@ class CapabilityService:
 
     @classmethod
     async def get_db_capabilities(cls, db: AsyncSession) -> List[PlatformCapability]:
-        """Fetch all platform capabilities from smritisys control plane."""
+        """Fetch all platform capabilities from tileflowsys control plane."""
         stmt = select(PlatformCapability).where(
             PlatformCapability.is_active == True,
             PlatformCapability.is_deleted == False,

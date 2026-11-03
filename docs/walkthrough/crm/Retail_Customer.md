@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 5.5.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough — Retail Customer Catalogue & Advanced Search Workspace (v5.5.0)
@@ -69,9 +68,9 @@ Implements high-density enterprise typography and palette (`#00355f` primary, `#
 ```
 dist/assets/index-CAKz5Efm.js  957.93 kB │ gzip: 215.81 kB
 ✓ built in 20.55s
-Container smriti-web Started
-Container smriti-api Healthy
-Container smriti-db Healthy
+Container tileflow-web Started
+Container tileflow-api Healthy
+Container tileflow-db Healthy
 ```
 
 ## 10. Known Limitations

@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os
 from datetime import datetime, timezone
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -71,8 +58,8 @@ def test_dashboard_manager_widget_composition():
     assert dash.code == "DASH_CEO_EXECUTIVE"
     assert dash.is_system_dashboard is True
 
-def test_reporting_co_location_in_smriti001():
-    """Verify reporting and dashboard models reside in smriti001 without separate reporting databases."""
+def test_reporting_co_location_in_tileflow001():
+    """Verify reporting and dashboard models reside in tileflow001 without separate reporting databases."""
     reporting_tables = [
         ReportDefinition.__tablename__,
         ReportSavedView.__tablename__,

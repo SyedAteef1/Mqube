@@ -1,29 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 1.0.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-
-Sprint 14 -- Sales creation hooks.
-
-Provides two async helper functions called INSIDE the sales transaction
-(before commit) to atomically write:
-  1. sales_invoice_lines  -- one row per invoice item (from SalesInvoiceItemCreate)
-  2. loyalty_transactions -- one EARN row per invoice (if customer has loyalty_member)
-
-Both helpers accept the raw SQLAlchemy session and MUST NOT commit --
-commit is owned by the caller (SalesService.create_sales_invoice).
-
-Called via:
-    from ...services.sales_hook import write_invoice_lines, write_loyalty_earn
-"""
-
 import uuid as _uuid
 from decimal import Decimal
 from typing import Any, List, Optional

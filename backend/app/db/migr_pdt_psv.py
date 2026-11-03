@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import asyncio
 from sqlalchemy import text
 from app.db.session import get_company_sessionmaker
@@ -255,7 +241,7 @@ TABLES_DDL = [
 
 
 async def migrate_pdt_psv():
-    tenants = ["smriti001", "smriti002"]
+    tenants = ["tileflow001", "tileflow002"]
     for t in tenants:
         print(f"Migrating PDT/PSV/CGE schema on {t}...")
         sm = get_company_sessionmaker(t)

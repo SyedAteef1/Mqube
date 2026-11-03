@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-SMRITI Staging Analysis - Phase 1: Detailed Regression Test Failure Diagnosis
+TILEFLOW Staging Analysis - Phase 1: Detailed Regression Test Failure Diagnosis
 ==============================================================================
 
 Re-run 8 regression suites with complete failure capture.
@@ -15,7 +15,7 @@ from pathlib import Path
 from datetime import datetime
 
 # Configuration
-COMPANY_001_DB = 'smriti001_stage'
+COMPANY_001_DB = 'tileflow001_stage'
 BACKEND_DIR = Path(__file__).parent
 WORKSPACE_ROOT = BACKEND_DIR.parent
 
@@ -179,7 +179,7 @@ class RegressionAnalyzer:
         """Generate detailed analysis report."""
         with open(self.report_file, 'w', encoding='utf-8') as f:
             f.write('=' * 80 + '\n')
-            f.write('SMRITI REGRESSION TEST FAILURE ANALYSIS\n')
+            f.write('TILEFLOW REGRESSION TEST FAILURE ANALYSIS\n')
             f.write(f'Generated: {self.results["timestamp"]}\n')
             f.write(f'Database: {self.results["database"]}\n')
             f.write('=' * 80 + '\n\n')

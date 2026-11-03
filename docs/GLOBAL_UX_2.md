@@ -1,18 +1,17 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.17.0
   Created      : 2026-08-16
   Modified     : 2026-08-16
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal Benchmark Audit
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source Benchmark Audit
 -->
 
-# SMRITI RETAIL OS — GLOBAL UX BENCHMARK AUDIT
+# TILEFLOW RETAIL OS — GLOBAL UX BENCHMARK AUDIT
 
 ## 1. Enterprise UX Evaluation Criteria
 
@@ -34,7 +33,7 @@
 
 ### E. Adaptability (SIMPLE / HYBRID / ADVANCED Modes)
 - **Score**: **9.3 / 10**
-- **Evaluation**: Respects SMRITI Adaptive UX Architecture. Users can toggle between **SIMPLE** (essential actions), **HYBRID** (standard business controls), and **ADVANCED** (deep configuration & tax controls) without changing workspaces.
+- **Evaluation**: Respects TILEFLOW Adaptive UX Architecture. Users can toggle between **SIMPLE** (essential actions), **HYBRID** (standard business controls), and **ADVANCED** (deep configuration & tax controls) without changing workspaces.
 
 ### F. Accessibility (WCAG 2.1 AA Compliance)
 - **Score**: **9.1 / 10**

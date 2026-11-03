@@ -4,7 +4,7 @@ Remove duplicate GUNMETAL products and keep proper GUNMTL variants with real bar
 """
 import psycopg2
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 cur = conn.cursor()
 
 print("Removing duplicate CH-17-D GUNMETAL products...")

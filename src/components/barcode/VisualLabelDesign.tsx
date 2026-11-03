@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.9.0
- * Created      : 2026-08-25
- * Modified     : 2026-08-25
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Source Module: SMRITI WYSIWYG Thermal Barcode Label Designer
- */
-
 import React, { useState, useEffect, useRef } from "react";
 import { Product } from "../../types.ts";
 import { apiFetchV1 } from "../../lib/apiFetchV1.ts";
@@ -174,7 +159,7 @@ const SAMPLE_PRODUCTS: Product[] = [
     id: "prod_001",
     code: "TSH-NAV-001",
     name: "Classic Cotton Polo T-Shirt",
-    brand: "SMRITI LUXE",
+    brand: "MQube LUXE",
     styleCode: "PL-NAVY-L",
     color: "Navy Blue",
     size: "L",
@@ -293,7 +278,7 @@ export const VisualLabelDesigner: React.FC<VisualLabelDesignerProps> = ({
     let val = "";
     switch (el.field) {
       case "brand":
-        val = activeProduct.brand || "SMRITI";
+        val = activeProduct.brand || "MQube";
         break;
       case "product_name":
         val = activeProduct.name || "Item Description";
@@ -320,7 +305,7 @@ export const VisualLabelDesigner: React.FC<VisualLabelDesignerProps> = ({
         val = activeProduct.hsnCode || "";
         break;
       case "custom_text":
-        val = el.staticText || "SMRITI RETAIL OS";
+        val = el.staticText || "MQube";
         break;
       default:
         val = "";

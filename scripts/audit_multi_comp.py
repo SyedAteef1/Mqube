@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json, glob, re
 from datetime import datetime, timezone
 import psycopg2
@@ -21,8 +8,8 @@ from openpyxl.utils import get_column_letter
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 
 DOC_MULTI_COMPANY = r"F:\SMRITRretailNX\docs\architecture\MULTI_COMPANY.md"
 DOC_ROUTING = r"F:\SMRITRretailNX\docs\architecture\DATABASE_ROUTING.md"
@@ -32,7 +19,7 @@ DOC_MATRIX = r"F:\SMRITRretailNX\docs\architecture\CONFIGURATION.md"
 
 def run_multi_company_audit():
     print("============================================================")
-    print("SMRITI MASTER CONTROL PLANE + MULTI-COMPANY DB ARCHITECTURE AUDIT v3.0")
+    print("TILEFLOW MASTER CONTROL PLANE + MULTI-COMPANY DB ARCHITECTURE AUDIT v3.0")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -41,10 +28,10 @@ def run_multi_company_audit():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
     # 2. Query 248 Tables Inventory
@@ -57,8 +44,8 @@ def run_multi_company_audit():
     all_tables = [r[0] for r in cur.fetchall()]
 
     control_plane_prefix_tables = [
-        "smriti_menus", "smriti_audit_log", "smriti_themes", "smriti_theme_variants",
-        "smriti_workspace_profiles", "smriti_field_security_masks", "smriti_settings",
+        "tileflow_menus", "tileflow_audit_log", "tileflow_themes", "tileflow_theme_variants",
+        "tileflow_workspace_profiles", "tileflow_field_security_masks", "tileflow_settings",
         "system_configs", "master_types", "master_values", "users", "roles", "companies",
         "branches", "user_company_assignments", "user_branch_assignments", "user_store_assignments",
         "document_series", "numbering_audit_logs", "barcode_layouts", "print_templates", "print_profiles",
@@ -98,26 +85,26 @@ def run_multi_company_audit():
 
     sheets["README"] = pd.DataFrame([
         ["Attribute", "Specification / Value"],
-        ["Workbook Title", "SMRITI Control Plane & Multi-Company DB Architecture Review"],
-        ["Official Database", "smritisys"],
+        ["Workbook Title", "TILEFLOW Control Plane & Multi-Company DB Architecture Review"],
+        ["Official Database", "tileflowsys"],
         ["Audit Timestamp", ts],
         ["Total Tables Classified", len(all_tables)],
-        ["Multi-Company DB Routing", "smritisys -> company_<tenant_N>"],
+        ["Multi-Company DB Routing", "tileflowsys -> company_<tenant_N>"],
         ["Audit Status", "AUDIT_COMPLETE — MIGRATION NOT YET APPROVED"],
         ["Database Mutations", "ZERO (0 Mutations Verified)"],
-        ["Governance Invariant", "smritisys governs Identity, Tenancy, DB Registry, Policies & Navigation. Company DB governs Business System-of-Record."],
+        ["Governance Invariant", "tileflowsys governs Identity, Tenancy, DB Registry, Policies & Navigation. Company DB governs Business System-of-Record."],
     ])
 
     sheets["DATABASE_INVENTORY"] = df_table_ownership
     sheets["TABLE_OWNERSHIP"] = df_table_ownership
     sheets["COMPANY_DATABASE_REGISTRY"] = pd.DataFrame([{"company_id": "COMP-001", "database_name": "company_comp_001", "status": "READY", "host": "localhost", "port": 5432}])
-    sheets["DATABASE_ROUTING"] = pd.DataFrame([{"step": 1, "actor": "User", "action": "Authenticate via smritisys"}, {"step": 2, "actor": "CompanyDatabaseResolver", "action": "Verify company assignment & READY status"}, {"step": 3, "actor": "CompanyBusinessSession", "action": "Connect to company_<tenant_N>"}])
+    sheets["DATABASE_ROUTING"] = pd.DataFrame([{"step": 1, "actor": "User", "action": "Authenticate via tileflowsys"}, {"step": 2, "actor": "CompanyDatabaseResolver", "action": "Verify company assignment & READY status"}, {"step": 3, "actor": "CompanyBusinessSession", "action": "Connect to company_<tenant_N>"}])
     sheets["DATABASE_LIFECYCLE"] = pd.DataFrame([{"state": "PROVISIONING", "description": "Database provisioning in progress"}, {"state": "READY", "description": "Database active and accepting connections"}, {"state": "SUSPENDED", "description": "Database routing disabled, business data intact"}])
-    sheets["DATABASE_PROVISIONING"] = pd.DataFrame([{"phase": "1. Create Company Record", "target": "smritisys.companies"}, {"phase": "2. Provision Schema", "target": "company_<tenant_N>"}, {"phase": "3. Register Route", "target": "smritisys.company_database_registries"}])
-    sheets["TENANT_DB_MAPPING"] = pd.DataFrame([{"tenant_id": "TENANT-001", "company_id": "COMP-001", "database_name": "smritisys (Default) / company_comp_001"}])
+    sheets["DATABASE_PROVISIONING"] = pd.DataFrame([{"phase": "1. Create Company Record", "target": "tileflowsys.companies"}, {"phase": "2. Provision Schema", "target": "company_<tenant_N>"}, {"phase": "3. Register Route", "target": "tileflowsys.company_database_registries"}])
+    sheets["TENANT_DB_MAPPING"] = pd.DataFrame([{"tenant_id": "TENANT-001", "company_id": "COMP-001", "database_name": "tileflowsys (Default) / company_comp_001"}])
     sheets["DATABASE_SECURITY"] = pd.DataFrame([{"rule": "No arbitrary client-supplied DB routing", "status": "ENFORCED"}, {"rule": "Cross-company access 403 Forbidden", "status": "ENFORCED"}])
     sheets["DATABASE_HEALTH"] = pd.DataFrame([{"health_check": "Ping PostgreSQL localhost:5432", "status": "HEALTHY"}])
-    sheets["DATABASE_SCHEMA_VERSION"] = pd.DataFrame([{"database": "smritisys", "schema_version": "3.16.0"}])
+    sheets["DATABASE_SCHEMA_VERSION"] = pd.DataFrame([{"database": "tileflowsys", "schema_version": "3.16.0"}])
 
     sheets["CONTROL_PLANE_BOUNDARY"] = df_table_ownership[df_table_ownership["primary_ownership"] == "CONTROL_PLANE"]
     sheets["BUSINESS_DB_BOUNDARY"] = df_table_ownership[df_table_ownership["primary_ownership"] == "COMPANY_BUSINESS"]
@@ -168,22 +155,21 @@ def run_multi_company_audit():
     # A. MULTI_COMPANY.md
     with open(DOC_MULTI_COMPANY, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Multi-Company Database Architecture Specification v1.0
+# TILEFLOW Multi-Company Database Architecture Specification v1.0
 
 **Status: AUDIT_COMPLETE / PENDING_HUMAN_APPROVAL**  
-**Official Control Plane DB:** `smritisys`  
+**Official Control Plane DB:** `tileflowsys`  
 **Audit Timestamp:** {ts}
 
 ---
@@ -193,11 +179,11 @@ def run_multi_company_audit():
 ```text
 PostgreSQL Server
 │
-├── smritisys (SMRITI Control Plane & System-of-Record for Control Info)
+├── tileflowsys (TILEFLOW Control Plane & System-of-Record for Control Info)
 │   ├── Identity (users, roles, permissions)
 │   ├── Tenancy & Company Database Registries (companies, branches, company_database_registries)
-│   ├── Menu Governance & UI/UX (smriti_menus, smriti_themes, smriti_workspace_profiles)
-│   └── System Configurations & Audit (system_configs, smriti_audit_log)
+│   ├── Menu Governance & UI/UX (tileflow_menus, tileflow_themes, tileflow_workspace_profiles)
+│   └── System Configurations & Audit (system_configs, tileflow_audit_log)
 │
 ├── company_<tenant_001> (Company Business System-of-Record)
 ├── company_<tenant_002> (Company Business System-of-Record)
@@ -216,19 +202,18 @@ User → Tenant Context → Company → CompanyDatabaseResolver → Target Compa
     # B. DATABASE_ROUTING.md
     with open(DOC_ROUTING, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Database Routing Architecture Specification v1.0
+# TILEFLOW Database Routing Architecture Specification v1.0
 
 **Status: AUDIT_COMPLETE**  
 **Centralized Resolver:** `app.services.company_database_resolver.CompanyDatabaseResolver`
@@ -244,19 +229,18 @@ User → Tenant Context → Company → CompanyDatabaseResolver → Target Compa
     # C. COMPANY_DATABASE_2.md
     with open(DOC_LIFECYCLE, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Company Database Lifecycle Management Specification v1.0
+# TILEFLOW Company Database Lifecycle Management Specification v1.0
 
 **Status: AUDIT_COMPLETE**
 
@@ -267,10 +251,10 @@ User → Tenant Context → Company → CompanyDatabaseResolver → Target Compa
 """)
 
     # 5. Database Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -278,8 +262,8 @@ User → Tenant Context → Company → CompanyDatabaseResolver → Target Compa
     mutated = (initial_menus != final_menus) or (initial_audit != final_audit)
 
     print("\nDATABASE MUTATION VERIFICATION:")
-    print(f"  smriti_menus     : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log : Initial={final_audit}, Final={final_audit}")
+    print(f"  tileflow_menus     : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log : Initial={final_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO MUTATIONS VERIFIED")

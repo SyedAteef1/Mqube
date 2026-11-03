@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 5.6.0
   Created      : 2026-08-21
   Modified     : 2026-08-21
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Implementation Plan — View Configuration & Excel Mapping Engine Stabilization (v5.6.0)
 
 ## 1. Objective
-Document and stabilize all operational updates resolved across the SMRITI Retail OS Item Master, Bulk Excel Paste & Mapping Engine, Attribute Management Studio, and View Configuration subsystems.
+Document and stabilize all operational updates resolved across the TILEFLOW Retail OS Item Master, Bulk Excel Paste & Mapping Engine, Attribute Management Studio, and View Configuration subsystems.
 
 ## 2. Business Motivation
 Ensure high-throughput inventory ingestion, zero-error spreadsheet mapping, predictable field alias management, and global schema visibility control across all operational grids and reports.
@@ -45,7 +44,7 @@ Ensure high-throughput inventory ingestion, zero-error spreadsheet mapping, pred
 
 ## 7. Proposed Design
 * Single unified source of truth for all field definitions, aliases, and custom business labels.
-* Reactive `smriti_field_visibility_updated` CustomEvent to synchronize all client components instantly.
+* Reactive `tileflow_field_visibility_updated` CustomEvent to synchronize all client components instantly.
 
 ## 8. Files Created
 * `docs/implementation/inventory/Plan_ViewConfig.md`

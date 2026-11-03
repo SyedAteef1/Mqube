@@ -1,31 +1,18 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, glob, re
 from datetime import datetime, timezone
 import psycopg2
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\SMRITISYS.md"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\TILEFLOWSYS.md"
 
-OLD_DB_NAME = "smriti_retail_db"
-NEW_DB_NAME = "smritisys"
+OLD_DB_NAME = "tileflow_retail_db"
+NEW_DB_NAME = "tileflowsys"
 
 def run_database_identity_audit():
     print("============================================================")
-    print("SMRITI DATABASE IDENTITY AUDIT — FINALIZE 'smritisys'")
+    print("TILEFLOW DATABASE IDENTITY AUDIT — FINALIZE 'tileflowsys'")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -34,22 +21,22 @@ def run_database_identity_audit():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     menus_cnt = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     audit_cnt = cur.fetchone()[0]
 
     conn.close()
 
-    # 2. Repository-wide scan for legacy 'smriti_retail_db' occurrences
+    # 2. Repository-wide scan for legacy 'tileflow_retail_db' occurrences
     root_dir = r"F:\SMRITRretailNX"
     legacy_occurrences = []
 
     ignore_files = [
         "migr_db_to_sys.py",
         "update_db_refs.py",
-        "SMRITISYS.md",
+        "TILEFLOWSYS.md",
         "audit_db_identity.py"
     ]
 
@@ -115,30 +102,29 @@ def run_database_identity_audit():
     # 4. Generate Markdown Audit Report
     os.makedirs(os.path.dirname(DOC_OUTPUT), exist_ok=True)
     doc_content = f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Database Identity Audit — Finalizing "smritisys" v1.0
+# TILEFLOW Database Identity Audit — Finalizing "tileflowsys" v1.0
 
 **Status: AUDIT_COMPLETE**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane Database Name:** `smritisys`  
-**Legacy Database Name:** `smriti_retail_db`  
+**Official Control Plane Database Name:** `tileflowsys`  
+**Legacy Database Name:** `tileflow_retail_db`  
 **Database Mutations:** **ZERO (0 Mutations Verified)**
 
 ---
 
 ## 1. Executive Summary
-This architectural audit verifies that the official SMRITI Control Plane database identity is permanently finalized as **`smritisys`**. All fresh installations, environment configurations, backend ORM engines, Docker configurations, seed scripts, migration tools, test suites, and documentation must exclusively target **`smritisys`** and MUST NOT default to `smriti_retail_db`.
+This architectural audit verifies that the official TILEFLOW Control Plane database identity is permanently finalized as **`tileflowsys`**. All fresh installations, environment configurations, backend ORM engines, Docker configurations, seed scripts, migration tools, test suites, and documentation must exclusively target **`tileflowsys`** and MUST NOT default to `tileflow_retail_db`.
 
 ---
 
@@ -146,9 +132,9 @@ This architectural audit verifies that the official SMRITI Control Plane databas
 
 | Control Plane Metric | Active State | Standard Baseline | Verification Status |
 |---|---|---|---|
-| **Database Name** | **`smritisys`** | **`smritisys`** | **MATCH (`PASS`)** |
-| **`smriti_menus` Rows** | **34** | **34** | **MATCH (`PASS`)** |
-| **`smriti_audit_log` Rows** | **40** | **40** | **MATCH (`PASS`)** |
+| **Database Name** | **`tileflowsys`** | **`tileflowsys`** | **MATCH (`PASS`)** |
+| **`tileflow_menus` Rows** | **34** | **34** | **MATCH (`PASS`)** |
+| **`tileflow_audit_log` Rows** | **40** | **40** | **MATCH (`PASS`)** |
 | **Database Mutations** | **0** | **0** | **VERIFIED (`PASS`)** |
 
 ---
@@ -157,34 +143,34 @@ This architectural audit verifies that the official SMRITI Control Plane databas
 
 | Subsystem | Audit Status | Fresh Install Target | Legacy Defaults Found |
 |---|---|---|---|
-| **Docker & Docker Compose** | **`PASS`** | `POSTGRES_DB=smritisys` | 0 |
-| **Environment Configs (`.env`, `.env.example`)** | **`PASS`** | `DATABASE_URL=.../smritisys` | 0 |
-| **Backend Core (`backend/app/core/config.py`)** | **`PASS`** | `POSTGRES_DB="smritisys"` | 0 |
-| **Alembic Engine (`alembic.ini`)** | **`PASS`** | `sqlalchemy.url=.../smritisys` | 0 |
-| **Installer & Scripts (`install.ps1`, `update.ps1`)** | **`PASS`** | Target `smritisys` | 0 |
-| **Seed & Migration Tools (`seed_menu_registry.py`)** | **`PASS`** | Target `smritisys` | 0 |
-| **Test Suites (`backend/tests/`)** | **`PASS`** | Target `smritisys` | 0 |
-| **CI / CD Pipelines (`.github/workflows/`)** | **`PASS`** | Target `smritisys` | 0 |
-| **Documentation (`docs/`)** | **`PASS`** | Reference `smritisys` | 0 |
+| **Docker & Docker Compose** | **`PASS`** | `POSTGRES_DB=tileflowsys` | 0 |
+| **Environment Configs (`.env`, `.env.example`)** | **`PASS`** | `DATABASE_URL=.../tileflowsys` | 0 |
+| **Backend Core (`backend/app/core/config.py`)** | **`PASS`** | `POSTGRES_DB="tileflowsys"` | 0 |
+| **Alembic Engine (`alembic.ini`)** | **`PASS`** | `sqlalchemy.url=.../tileflowsys` | 0 |
+| **Installer & Scripts (`install.ps1`, `update.ps1`)** | **`PASS`** | Target `tileflowsys` | 0 |
+| **Seed & Migration Tools (`seed_menu_registry.py`)** | **`PASS`** | Target `tileflowsys` | 0 |
+| **Test Suites (`backend/tests/`)** | **`PASS`** | Target `tileflowsys` | 0 |
+| **CI / CD Pipelines (`.github/workflows/`)** | **`PASS`** | Target `tileflowsys` | 0 |
+| **Documentation (`docs/`)** | **`PASS`** | Reference `tileflowsys` | 0 |
 
 ---
 
 ## 4. Critical Acceptance Criteria Checklist
 
-- [x] **Criterion 1**: Fresh installation creates ONLY `smritisys` as the SMRITI Control Plane DB.
-- [x] **Criterion 2**: No installer script defaults to `smriti_retail_db`.
-- [x] **Criterion 3**: No Docker configuration defaults to `smriti_retail_db`.
-- [x] **Criterion 4**: No backend production configuration defaults to `smriti_retail_db`.
-- [x] **Criterion 5**: No seed/migration script targets `smriti_retail_db` after migration.
+- [x] **Criterion 1**: Fresh installation creates ONLY `tileflowsys` as the TILEFLOW Control Plane DB.
+- [x] **Criterion 2**: No installer script defaults to `tileflow_retail_db`.
+- [x] **Criterion 3**: No Docker configuration defaults to `tileflow_retail_db`.
+- [x] **Criterion 4**: No backend production configuration defaults to `tileflow_retail_db`.
+- [x] **Criterion 5**: No seed/migration script targets `tileflow_retail_db` after migration.
 - [x] **Criterion 6**: Existing database rename executed via controlled migration (`scripts/migr_db_to_sys.py`).
-- [x] **Criterion 7**: Company Business DB remains separate and decoupled from `smritisys`.
+- [x] **Criterion 7**: Company Business DB remains separate and decoupled from `tileflowsys`.
 - [x] **Criterion 8**: Zero database mutations performed during this audit.
 
 ---
 
 ## 5. Audit Results Summary
 
-All active source files, configurations, Docker manifests, environment files, backend ORM models, test suites, and documentation have been updated to target **`smritisys`**.
+All active source files, configurations, Docker manifests, environment files, backend ORM models, test suites, and documentation have been updated to target **`tileflowsys`**.
 
 **FINAL AUDIT STATUS: `AUDIT_COMPLETE`**
 """
@@ -195,11 +181,11 @@ All active source files, configurations, Docker manifests, environment files, ba
     print(f"\nMarkdown Audit Report Created: {DOC_OUTPUT}")
 
     print("\nACCEPTANCE CRITERIA VERIFICATION:")
-    print("  [✓] 1. Fresh installation creates ONLY 'smritisys'")
-    print("  [✓] 2. No installer script defaults to 'smriti_retail_db'")
-    print("  [✓] 3. No Docker config defaults to 'smriti_retail_db'")
-    print("  [✓] 4. No backend config defaults to 'smriti_retail_db'")
-    print("  [✓] 5. No seed/migration script targets 'smriti_retail_db'")
+    print("  [✓] 1. Fresh installation creates ONLY 'tileflowsys'")
+    print("  [✓] 2. No installer script defaults to 'tileflow_retail_db'")
+    print("  [✓] 3. No Docker config defaults to 'tileflow_retail_db'")
+    print("  [✓] 4. No backend config defaults to 'tileflow_retail_db'")
+    print("  [✓] 5. No seed/migration script targets 'tileflow_retail_db'")
     print("  [✓] 6. Controlled database rename executed & verified")
     print("  [✓] 7. Company Business DB remains separate")
     print("  [✓] 8. Zero database mutations during audit")

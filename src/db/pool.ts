@@ -1,34 +1,9 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.4
- * * Created    : 2026-07-11
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import pg from "pg";
 import dotenv from "dotenv";
 
 dotenv.config();
 
-const databaseUrl = process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/smritisys";
+const databaseUrl = process.env.DATABASE_URL || "postgresql://postgres:postgres@localhost:5432/tileflowsys";
 
 export const pool = new pg.Pool({
   connectionString: databaseUrl,

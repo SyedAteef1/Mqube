@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, glob, re
 import psycopg2
 import pandas as pd
@@ -20,27 +7,27 @@ from openpyxl.utils import get_column_letter
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 
 def audit_naming_conventions():
     print("============================================================")
-    print("SMRITI COMPANY DATABASE NAMING CONVENTION AUDIT")
+    print("TILEFLOW COMPANY DATABASE NAMING CONVENTION AUDIT")
     print("============================================================")
 
     # 1. Connect & Initial Row Counts
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
     # 2. Scan repository for legacy DB naming references
     repo_root = r"F:\SMRITRretailNX"
-    legacy_keywords = ["smriti_retail_db", "company_comp_", "company_tenant", "company_001"]
+    legacy_keywords = ["tileflow_retail_db", "company_comp_", "company_tenant", "company_001"]
 
     findings = []
     for root, _, files in os.walk(repo_root):
@@ -60,7 +47,7 @@ def audit_naming_conventions():
                                     "file": rel_path,
                                     "line_number": line_num,
                                     "legacy_reference": kw,
-                                    "target_standard": "smriti<001-999>",
+                                    "target_standard": "tileflow<001-999>",
                                     "snippet": line.strip()[:80]
                                 })
                 except Exception:
@@ -71,13 +58,13 @@ def audit_naming_conventions():
     # Naming Standard Matrix Data
     naming_standard_matrix = pd.DataFrame([
         {"Company Code", "Target Database Name", "Status", "Notes"},
-        ["001", "smriti001", "APPROVED_STANDARD", "Company Business Database #001"],
-        ["002", "smriti002", "APPROVED_STANDARD", "Company Business Database #002"],
-        ["007", "smriti007", "APPROVED_STANDARD", "Enforced: 007 -> smriti007"],
-        ["125", "smriti125", "APPROVED_STANDARD", "Company Business Database #125"],
-        ["999", "smriti999", "APPROVED_STANDARD", "Upper limit namespace"],
-        ["000", "RESERVED_FORBIDDEN", "FORBIDDEN", "smriti000 is permanently reserved"],
-        ["smritisys", "smritisys", "APPROVED_CONTROL_PLANE", "Permanently reserved for SMRITI Control Plane"]
+        ["001", "tileflow001", "APPROVED_STANDARD", "Company Business Database #001"],
+        ["002", "tileflow002", "APPROVED_STANDARD", "Company Business Database #002"],
+        ["007", "tileflow007", "APPROVED_STANDARD", "Enforced: 007 -> tileflow007"],
+        ["125", "tileflow125", "APPROVED_STANDARD", "Company Business Database #125"],
+        ["999", "tileflow999", "APPROVED_STANDARD", "Upper limit namespace"],
+        ["000", "RESERVED_FORBIDDEN", "FORBIDDEN", "tileflow000 is permanently reserved"],
+        ["tileflowsys", "tileflowsys", "APPROVED_CONTROL_PLANE", "Permanently reserved for TILEFLOW Control Plane"]
     ])
 
     naming_standard_matrix.columns = naming_standard_matrix.iloc[0]
@@ -122,10 +109,10 @@ def audit_naming_conventions():
     wb.close()
 
     # 4. Database Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -134,8 +121,8 @@ def audit_naming_conventions():
 
     print("\nNAMING CONVENTION AUDIT RESULTS:")
     print(f"  Legacy References Identified : {len(findings)}")
-    print(f"  smriti_menus Count           : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log Count       : Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus Count           : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log Count       : Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO MUTATIONS VERIFIED")

@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-08-19
-Modified     : 2026-08-19
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import os
 import sys
 import asyncio
@@ -23,7 +10,7 @@ sys.path.insert(0, os.path.abspath("backend"))
 from app.services.invoice_pdf_service import generate_sales_invoice_pdf, render_invoice_to_html
 
 def test_render():
-    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/smriti001")
+    conn = psycopg2.connect("postgresql://postgres:postgres@localhost:5432/tileflow001")
     cur = conn.cursor()
     cur.execute("SELECT * FROM sales_invoices WHERE invoice_no = 'TT2026-2027/73';")
     inv_row = cur.fetchone()

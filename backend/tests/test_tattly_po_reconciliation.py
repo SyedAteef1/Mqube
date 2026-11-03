@@ -1,22 +1,8 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.28.0
-Created      : 2026-08-26
-Modified     : 2026-08-26
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import psycopg2
 from decimal import Decimal
 
-DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 @pytest.fixture
 def db_conn():
@@ -25,7 +11,7 @@ def db_conn():
     conn.close()
 
 def test_01_all_60_sales_orders_exist(db_conn):
-    """Verify that exactly 60 historical Sales Orders exist in smriti001."""
+    """Verify that exactly 60 historical Sales Orders exist in tileflow001."""
     cur = db_conn.cursor()
     cur.execute("SELECT COUNT(*) FROM sales_orders WHERE is_deleted = false;")
     count = cur.fetchone()[0]

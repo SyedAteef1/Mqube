@@ -1,30 +1,5 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { useState, useEffect } from "react";
-import { SmritiScrollArea } from "../components/SmritiScrollArea.tsx";
+import { TileFlowScrollArea } from "../components/TileFlowScrollArea.tsx";
 import { Printer, Settings, LayoutTemplate, FileText, Search, Play, Download, ScanBarcode, Clock, Tag } from "lucide-react";
 import { usePrintEngine } from "./print_store.tsx";
 import { useLayoutEngine } from "../layout_engine/layout_store.tsx";
@@ -36,7 +11,7 @@ import { BarcodeLabel } from "./templates/BarcodeLabel.tsx";
 const MOCK_DATA = {
   invoiceNo: "INV-2023-0891",
   date: "2023-10-25",
-  companyName: "SMRITI Enterprise Co.",
+  companyName: "MQube Enterprise Co.",
   customerName: "Acme Corp Ltd.",
   items: [
     { name: "Wireless Keyboard", qty: 2, rate: 45.00 },
@@ -54,7 +29,7 @@ const MOCK_DATA = {
 const BARCODE_DEMO_DATA = {
   invoiceNo: "LABEL-DEMO-001",
   date: "2026-07-18",
-  companyName: "SMRITI Demo Co.",
+  companyName: "MQube Demo Co.",
   customerName: "Demo Retail",
   items: [
     { name: "Demo Barcode Item", qty: 1, rate: 125.00, barcode: "8901234567890" }
@@ -136,7 +111,7 @@ export const PrintStudioTab: React.FC = () => {
           </div>
         </div>
         
-        <SmritiScrollArea className="flex-1">
+        <TileFlowScrollArea className="flex-1">
           <div className="p-2 space-y-1">
             <div className="text-[10px] font-bold text-theme-muted uppercase tracking-wider font-mono px-2 py-1.5 mt-2">A4 Documents</div>
             {templates.filter(t => t.format === 'A4').map(template => (
@@ -170,7 +145,7 @@ export const PrintStudioTab: React.FC = () => {
               </button>
             ))}
           </div>
-        </SmritiScrollArea>
+        </TileFlowScrollArea>
       </div>
 
       {/* Main Preview Area */}

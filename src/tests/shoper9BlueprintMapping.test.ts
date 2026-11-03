@@ -1,19 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.33.0
- * Created      : 2026-08-26
- * Modified     : 2026-08-26
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- *
- * Vitest Frontend Test Suite for Shoper9 Blueprint Schema, Menus & Profile Mappings
- */
-
 import { describe, it, expect } from "vitest";
 import fs from "fs";
 import path from "path";
@@ -55,7 +39,7 @@ describe("Shoper9 Legacy Blueprint Verification", () => {
     expect(dist.scope).toContain("Transport Receipt Entry");
   });
 
-  it("should verify distributor workflow mapping to canonical SMRITI modules", () => {
+  it("should verify distributor workflow mapping to canonical MQube modules", () => {
     const distPath = path.join(BLUEPRINT_DIR, "distributor_blueprint.json");
     const dist = JSON.parse(fs.readFileSync(distPath, "utf-8"));
 
@@ -89,9 +73,9 @@ describe("Shoper9 Legacy Blueprint Verification", () => {
 
     expect(distMenus.length).toBeGreaterThan(0);
 
-    // Verify all menus have proper SMRITI tile mappings
+    // Verify all menus have proper MQube tile mappings
     distMenus.forEach((m: any) => {
-      const mapping = m.smritiMapping || m.smritiTileMapping;
+      const mapping = m.tileflowMapping || m.tileflowTileMapping;
       expect(mapping).toBeDefined();
       expect(mapping.tileId).toBeDefined();
       expect(mapping.workspace).toBeDefined();

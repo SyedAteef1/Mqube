@@ -1,5 +1,5 @@
 ﻿
-> smriti-retail-os@3.16.0 lint
+> tileflow-retail-os@3.16.0 lint
 > tsc --noEmit
 
 src/components/SalesStudioTab.tsx(165,12): error TS2304: Cannot find name 'isValidMobile'.

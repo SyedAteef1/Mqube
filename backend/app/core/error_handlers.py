@@ -1,16 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.16.0
-Created      : 2026-07-11
-Modified     : 2026-07-12
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-"""
-
 import datetime
 from datetime import timezone
 import traceback
@@ -24,15 +11,15 @@ from sqlalchemy.exc import SQLAlchemyError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from app.core.config import settings
-from app.core.errors import SmritiErrorResponse, build_error_response
+from app.core.errors import TileFlowErrorResponse, build_error_response
 
 # Setup templates path using absolute resolution relative to app
 templates_dir = Path(__file__).resolve().parent.parent / "templates"
 templates = Jinja2Templates(directory=str(templates_dir))
 
 
-def build_enhanced_json(status_code: int, response_model: SmritiErrorResponse) -> dict:
-    """Helper to build enhanced, backward-compatible SMRITI HREP JSON object."""
+def build_enhanced_json(status_code: int, response_model: TileFlowErrorResponse) -> dict:
+    """Helper to build enhanced, backward-compatible TILEFLOW HREP JSON object."""
     content = response_model.model_dump()
     content.update({
         "success": False,
@@ -48,7 +35,7 @@ def build_enhanced_json(status_code: int, response_model: SmritiErrorResponse) -
     return content
 
 
-def dispatch_response(request: Request, exc: Exception | None, status_code: int, response_model: SmritiErrorResponse):
+def dispatch_response(request: Request, exc: Exception | None, status_code: int, response_model: TileFlowErrorResponse):
     """Dynamically route the exception to HTML page or JSON object based on content negotiation."""
     accept = request.headers.get("accept", "")
     if "text/html" in accept:
@@ -90,7 +77,7 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     
     explanation = "The input data provided was invalid. Details: " + "; ".join(errors)
     res = build_error_response(
-        error_code="SMRITI-VAL-001",
+        error_code="TILEFLOW-VAL-001",
         custom_explanation=explanation,
         reference_msg=str(exc)
     )
@@ -98,33 +85,33 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
 
 
 async def http_exception_handler(request: Request, exc: StarletteHTTPException):
-    # Map HTTP status codes to standard SMRITI families
+    # Map HTTP status codes to standard TILEFLOW families
     if exc.status_code == 400:
-        code = "SMRITI-VAL-001"
+        code = "TILEFLOW-VAL-001"
         title = "Bad Request"
     elif exc.status_code == 401:
-        code = "SMRITI-AUTH-001"
+        code = "TILEFLOW-AUTH-001"
         title = "Authentication Required"
     elif exc.status_code == 403:
-        code = "SMRITI-PERM-001"
+        code = "TILEFLOW-PERM-001"
         title = "Access Denied"
     elif exc.status_code == 404:
-        code = "SMRITI-VAL-001"
+        code = "TILEFLOW-VAL-001"
         title = "Page Not Found"
     elif exc.status_code == 405:
-        code = "SMRITI-VAL-001"
+        code = "TILEFLOW-VAL-001"
         title = "Method Not Allowed"
     elif exc.status_code == 409:
-        code = "SMRITI-DATA-001"
+        code = "TILEFLOW-DATA-001"
         title = "Data Conflict"
     elif exc.status_code == 429:
-        code = "SMRITI-NET-001"
+        code = "TILEFLOW-NET-001"
         title = "Too Many Requests"
     elif exc.status_code == 503:
-        code = "SMRITI-NET-001"
+        code = "TILEFLOW-NET-001"
         title = "Service Temporarily Unavailable"
     else:
-        code = "SMRITI-SYS-001"
+        code = "TILEFLOW-SYS-001"
         title = None  # Use dictionary default
         
     res = build_error_response(
@@ -141,7 +128,7 @@ async def db_exception_handler(request: Request, exc: SQLAlchemyError):
     import traceback
     traceback.print_exc()
     res = build_error_response(
-        error_code="SMRITI-DATA-001",
+        error_code="TILEFLOW-DATA-001",
         custom_explanation="A database operations conflict occurred or referential integrity check failed.",
         reference_msg=str(exc)
     )
@@ -150,7 +137,7 @@ async def db_exception_handler(request: Request, exc: SQLAlchemyError):
 
 async def generic_exception_handler(request: Request, exc: Exception):
     res = build_error_response(
-        error_code="SMRITI-SYS-001",
+        error_code="TILEFLOW-SYS-001",
         custom_explanation="An internal server error occurred while processing the request.",
         reference_msg=str(exc)
     )
@@ -158,7 +145,7 @@ async def generic_exception_handler(request: Request, exc: Exception):
 
 
 def register_error_handlers(app: FastAPI):
-    """Registers standard SMRITI HREP error handlers on the FastAPI application."""
+    """Registers standard TILEFLOW HREP error handlers on the FastAPI application."""
     app.add_exception_handler(RequestValidationError, validation_exception_handler)
     app.add_exception_handler(StarletteHTTPException, http_exception_handler)
     app.add_exception_handler(SQLAlchemyError, db_exception_handler)

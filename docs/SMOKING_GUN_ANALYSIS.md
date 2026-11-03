@@ -4,7 +4,7 @@
 
 ### Step 1: Fresh Database State After `alembic upgrade head`
 ```
-Database smriti_diag_fresh_test EXISTS: ✓ YES
+Database tileflow_diag_fresh_test EXISTS: ✓ YES
 Table count: 0
 Alembic version table: ERROR (can't query cross-database)
 Conclusion: DATABASE IS COMPLETELY EMPTY
@@ -12,9 +12,9 @@ Conclusion: DATABASE IS COMPLETELY EMPTY
 
 ### Step 2: Production Databases (for Comparison)
 ```
-smritisys: 214 tables, v1384_company_code_constraint
-smriti001: 211 tables, v1384_company_code_constraint  
-smriti_diag_fresh: 183 tables, v1384_company_code_constraint
+tileflowsys: 214 tables, v1384_company_code_constraint
+tileflow001: 211 tables, v1384_company_code_constraint  
+tileflow_diag_fresh: 183 tables, v1384_company_code_constraint
 ```
 
 ### Step 3: How This Happened
@@ -121,10 +121,10 @@ This 72-failure discrepancy suggests that tests relying on proper schema creatio
 ## Data as of 2025-08-27 15:30 UTC
 
 **Databases Checked:**
-- smritisys (production control-plane): 214 tables, v1384 (stamped)
-- smriti001 (production tenant 001): 211 tables, v1384 (stamped)
-- smriti_diag_fresh (baseline): 183 tables, v1384 (seeded then stamped)
-- smriti_diag_fresh_test (fresh upgrade test): 0 tables, CONNECTION_ERROR (failed upgrade)
+- tileflowsys (production control-plane): 214 tables, v1384 (stamped)
+- tileflow001 (production tenant 001): 211 tables, v1384 (stamped)
+- tileflow_diag_fresh (baseline): 183 tables, v1384 (seeded then stamped)
+- tileflow_diag_fresh_test (fresh upgrade test): 0 tables, CONNECTION_ERROR (failed upgrade)
 
 **Tests:**
 - Total: 306 executed, 203 passed (66.3%), 99 failed (32.4%)

@@ -1,28 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Repository   : SMRITIRetailNX
- * Organization : AITDL NETWORKS
- *
- * Founders
- *
- * * Pushpa Devi Jawahar Mallah
- *   * Founder & Chairperson
- *   * Phone: +91 9324117007
- *   * Email: founder@aitdl.com
- *
- * * Jawahar Ramkripal Mallah
- *   * Founder, Chief Executive Officer (CEO) & Chief Software Architect
- *   * Email: founder@aitdl.com
- *
- * * Websites: aitdl.com | erpnbook.com | smritibooks.com
- *
- * * Version    : 2.1.1
- * * Created    : 2026-07-10
- * * Modified   : 2026-07-11
- * * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
- * * License    : Proprietary Commercial Software
- */
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 
 export interface WindowTab {
@@ -93,17 +68,17 @@ const WorkspaceContext = createContext<WorkspaceContextType | undefined>(undefin
 export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Restore State from LocalStorage
   const [focusMode, setFocusModeState] = useState<boolean>(() => {
-    const saved = localStorage.getItem("smriti_workspace_focus_mode");
+    const saved = localStorage.getItem("tileflow_workspace_focus_mode");
     return saved === "true";
   });
 
   const [globalZoom, setGlobalZoom] = useState<number>(() => {
-    const saved = localStorage.getItem("smriti_workspace_global_zoom");
+    const saved = localStorage.getItem("tileflow_workspace_global_zoom");
     return saved ? parseFloat(saved) : 1.0;
   });
 
   const [floatingWindows, setFloatingWindows] = useState<FloatingWindow[]>(() => {
-    const saved = localStorage.getItem("smriti_workspace_floating_windows");
+    const saved = localStorage.getItem("tileflow_workspace_floating_windows");
     return saved ? JSON.parse(saved) : [];
   });
 
@@ -112,15 +87,15 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
 
   // Save changes to LocalStorage
   useEffect(() => {
-    localStorage.setItem("smriti_workspace_focus_mode", String(focusMode));
+    localStorage.setItem("tileflow_workspace_focus_mode", String(focusMode));
   }, [focusMode]);
 
   useEffect(() => {
-    localStorage.setItem("smriti_workspace_global_zoom", String(globalZoom));
+    localStorage.setItem("tileflow_workspace_global_zoom", String(globalZoom));
   }, [globalZoom]);
 
   useEffect(() => {
-    localStorage.setItem("smriti_workspace_floating_windows", JSON.stringify(floatingWindows));
+    localStorage.setItem("tileflow_workspace_floating_windows", JSON.stringify(floatingWindows));
   }, [floatingWindows]);
 
   const toggleFocusMode = () => {
@@ -185,7 +160,7 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
   const popOutExternalWindow = (tabId: string, title: string, icon?: string, options?: { fullScreen?: boolean }) => {
     const fullScreen = options?.fullScreen === true;
     const url = `${window.location.origin}${window.location.pathname}?standalone_tab=${encodeURIComponent(tabId)}${fullScreen ? "&fullscreen=1" : ""}`;
-    const windowName = `smriti_popout_${tabId}_${Date.now()}`;
+    const windowName = `tileflow_popout_${tabId}_${Date.now()}`;
     const windowFeatures = "popup=yes,toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=1280,height=800,left=100,top=100";
     try {
       const popupWindow = window.open(url, windowName, windowFeatures);
@@ -517,7 +492,7 @@ export const WorkspaceProvider: React.FC<{ children: React.ReactNode }> = ({ chi
       if (e.ctrlKey && e.shiftKey && e.key.toUpperCase() === "P") {
         e.preventDefault();
         // Dispatch custom event to get current tab details and trigger pop-out
-        const event = new CustomEvent("smriti_popout_current_tab");
+        const event = new CustomEvent("tileflow_popout_current_tab");
         window.dispatchEvent(event);
       }
 

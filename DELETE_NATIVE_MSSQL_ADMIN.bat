@@ -1,5 +1,5 @@
 @echo off
-:: SMRITI Retail OS: Delete all Native SQL Server Services & Registries
+:: TILEFLOW Retail OS: Delete all Native SQL Server Services & Registries
 echo ========================================================
 echo Deleting all Native SQL Server Services and Registries...
 echo ========================================================
@@ -35,6 +35,6 @@ rmdir /s /q "C:\Program Files (x86)\Microsoft SQL Server\160" 2>nul
 
 echo ========================================================
 echo SUCCESS: All Native SQL Server instances removed!
-echo Docker SQL Server (smriti-mssql) remains 100%% active.
+echo Docker SQL Server (tileflow-mssql) remains 100%% active.
 echo ========================================================
 pause

@@ -1,37 +1,36 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-14
   Modified     : 2026-08-14
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Training Academy — Learn → Practice → Verify → Certify — Implementation Plan v1.0
+# TILEFLOW Training Academy — Learn → Practice → Verify → Certify — Implementation Plan v1.0
 
 ## 1. Objective
-Build an operational, interactive training system (`src/components/training/TrainingAcademyTab.tsx`) inside SMRITI Retail OS that empowers store operators, cashiers, inventory managers, and supervisors to learn, practice, verify, and obtain server-authoritative certification on the 7-day business transaction lifecycle (`Master → PO → GRN → Stock → Sales → Reports`), with **100% strict isolation from production business data**.
+Build an operational, interactive training system (`src/components/training/TrainingAcademyTab.tsx`) inside TILEFLOW Retail OS that empowers store operators, cashiers, inventory managers, and supervisors to learn, practice, verify, and obtain server-authoritative certification on the 7-day business transaction lifecycle (`Master → PO → GRN → Stock → Sales → Reports`), with **100% strict isolation from production business data**.
 
 ## 2. Business Motivation
-Store onboarding is often slow and prone to user error when taught as disconnected UI screens. By embedding a session-based **Training Sandbox Engine** with real-time business effect tracking, SMRITI Retail OS guarantees rapid staff onboarding, zero live database contamination, and verifiable competency certification before staff operate live billing terminals.
+Store onboarding is often slow and prone to user error when taught as disconnected UI screens. By embedding a session-based **Training Sandbox Engine** with real-time business effect tracking, TILEFLOW Retail OS guarantees rapid staff onboarding, zero live database contamination, and verifiable competency certification before staff operate live billing terminals.
 
 ## 3. Golden Isolation Rule & Policy
-> **Golden Isolation Rule**: No Training Academy operation may create, modify, delete, reserve, deduct, or otherwise mutate any production business data in `Smritibus_<CompanyCode>`.
+> **Golden Isolation Rule**: No Training Academy operation may create, modify, delete, reserve, deduct, or otherwise mutate any production business data in `TileFlowbus_<CompanyCode>`.
 
 ```text
-                    SMRITI RETAIL OS
+                    TILEFLOW RETAIL OS
                            │
              ┌─────────────┴─────────────┐
              │                           │
        PRODUCTION                    TRAINING
              │                           │
-      SmritiSys                    Training Academy
+      TileFlowSys                    Training Academy
              │                           │
- Smritibus_<CompanyCode>          Training Session
+ TileFlowbus_<CompanyCode>          Training Session
              │                           │
    BUSINESS SOURCE TRUTH           Sandbox Engine
                                          │
@@ -41,7 +40,7 @@ Store onboarding is often slow and prone to user error when taught as disconnect
                               │                     │
                               └──────────┬──────────┘
                                          ↓
-                                  SmritiTraining
+                                  TileFlowTraining
                                          │
                               Progress / Assessment
                                          │
@@ -51,8 +50,8 @@ Store onboarding is often slow and prone to user error when taught as disconnect
 
 ## 4. Core Architecture & Clarifications
 
-### A. Dedicated Training Database (`SmritiTraining`)
-Production business truth resides in `Smritibus_<CompanyCode>`. All training progress, attempts, and certificate records are stored in a separate, dedicated `SmritiTraining` database schema containing:
+### A. Dedicated Training Database (`TileFlowTraining`)
+Production business truth resides in `TileFlowbus_<CompanyCode>`. All training progress, attempts, and certificate records are stored in a separate, dedicated `TileFlowTraining` database schema containing:
 - `training_sessions`
 - `training_progress`
 - `training_step_attempts`
@@ -60,7 +59,7 @@ Production business truth resides in `Smritibus_<CompanyCode>`. All training pro
 - `training_certificates`
 
 ### B. Header Isolation Policy (No `X-Company-Code` for Sandbox APIs)
-Training API endpoints (`/api/v1/training/...`) execute under an isolated training JWT authorization scope bound to `training_session_id`. Training APIs **never** accept or pass `X-Company-Code` headers targeting production databases (`Smritibus_<CompanyCode>`).
+Training API endpoints (`/api/v1/training/...`) execute under an isolated training JWT authorization scope bound to `training_session_id`. Training APIs **never** accept or pass `X-Company-Code` headers targeting production databases (`TileFlowbus_<CompanyCode>`).
 
 ### C. Session-Based Training Isolation (`training_session_id`)
 Each trainee operates within an isolated session scope (e.g. `TRAIN-2026-001`):
@@ -87,7 +86,6 @@ Expected Stock = 43
 ```
 Verification succeeds if `Actual Sandbox State == Expected Business State`. Upon success, awards the **🏆 DAY 5 — BUSINESS LIFECYCLE PASSED** badge.
 
-### E. Server-Authoritative Certificate & Public Verification Endpoint
 - Public read-only verification route: `GET /api/v1/training/certificates/{certificate_id}/verify`.
 - QR Code links directly to this public verification URL.
 - Returns non-sensitive verification payload (`VALID`, `Trainee Name`, `Certification Level`, `Issue Date`, `Certificate Status`).
@@ -106,10 +104,10 @@ SERVER-CERTIFIED
 ```
 
 ## 5. Scope of Phase 1 Implementation
-- **Curriculum Shell**: `TrainingAcademyTab.tsx` with clean native SMRITI UI layout.
+- **Curriculum Shell**: `TrainingAcademyTab.tsx` with clean native TILEFLOW UI layout.
 - **Session Model**: `training_session_id` session manager & state initializer.
 - **Sandbox Engine**: `trainingStore.ts` for handling local interactive UI simulation.
-- **Isolation Tests**: `backend/tests/t_prod_isolate.py` ensuring zero mutation of production database `Smritibus_<CompanyCode>`.
+- **Isolation Tests**: `backend/tests/t_prod_isolate.py` ensuring zero mutation of production database `TileFlowbus_<CompanyCode>`.
 
 ## 6. Files Created
 - `docs/implementation/user_guide/Training_Academy.md`: This plan file.
@@ -121,7 +119,7 @@ SERVER-CERTIFIED
 - `src/components/training/CertificateGenerat.tsx`: PDF certificate generator.
 - `src/services/trainingStore.ts`: Session-based training sandbox store.
 - `backend/app/api/v1/training.py`: FastAPI training backend routes & public verification endpoint.
-- `backend/app/models/training.py`: SQLAlchemy database models for `SmritiTraining`.
+- `backend/app/models/training.py`: SQLAlchemy database models for `TileFlowTraining`.
 - `backend/tests/t_prod_isolate.py`: Mandatory production isolation test suite.
 
 ## 7. Files Modified

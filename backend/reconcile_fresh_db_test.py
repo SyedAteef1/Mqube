@@ -12,7 +12,7 @@ from sqlalchemy.ext.asyncio import create_async_engine
 import os
 
 async def verify():
-    url = 'postgresql+asyncpg://postgres:postgres@localhost:5432/smriti_diag_fresh_test'
+    url = 'postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow_diag_fresh_test'
     engine = create_async_engine(url)
     try:
         async with engine.begin() as conn:
@@ -75,22 +75,22 @@ async def main():
             conn.execute(text("""
                 SELECT pg_terminate_backend(pg_stat_activity.pid)
                 FROM pg_stat_activity
-                WHERE pg_stat_activity.datname = 'smriti_diag_fresh_test'
+                WHERE pg_stat_activity.datname = 'tileflow_diag_fresh_test'
                 AND pid <> pg_backend_pid();
             """))
             # Drop database
-            conn.execute(text('DROP DATABASE IF EXISTS smriti_diag_fresh_test;'))
+            conn.execute(text('DROP DATABASE IF EXISTS tileflow_diag_fresh_test;'))
         print(f"   Status: dropped")
     except Exception as e:
         print(f"   Note: {str(e)[:50]}")
     
     # Step 2: Create new
-    print("2. Creating brand-new empty database (smriti_diag_fresh_test)...")
+    print("2. Creating brand-new empty database (tileflow_diag_fresh_test)...")
     try:
         admin_url = 'postgresql://postgres:postgres@localhost:5432/postgres'
         engine = create_engine(admin_url, poolclass=NullPool, isolation_level='AUTOCOMMIT')
         with engine.connect() as conn:
-            conn.execute(text('CREATE DATABASE smriti_diag_fresh_test;'))
+            conn.execute(text('CREATE DATABASE tileflow_diag_fresh_test;'))
         print(f"   Status: created")
     except Exception as e:
         print(f"   ERROR: {str(e)[:100]}")
@@ -100,7 +100,7 @@ async def main():
     print("   (NO MANUAL SQL, NO STAMP, NO DATA INSERT)")
     print()
     
-    os.environ['DATABASE_URL'] = 'postgresql+asyncpg://postgres:postgres@localhost:5432/smriti_diag_fresh_test'
+    os.environ['DATABASE_URL'] = 'postgresql+asyncpg://postgres:postgres@localhost:5432/tileflow_diag_fresh_test'
     result = subprocess.run(['alembic', 'upgrade', 'head'], 
                            capture_output=True, text=True)
     

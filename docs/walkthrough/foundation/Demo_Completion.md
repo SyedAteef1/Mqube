@@ -1,7 +1,7 @@
-# SMRITI Retail OS Demo Completion & Training Guide
+# TILEFLOW Retail OS Demo Completion & Training Guide
 
 ## Overview
-This document describes how to complete the local SMRITI Retail OS demo using the browser frontend and the FastAPI backend.
+This document describes how to complete the local TILEFLOW Retail OS demo using the browser frontend and the FastAPI backend.
 
 ## Prerequisites
 - Local PostgreSQL database running and accessible on `127.0.0.1:5432`
@@ -34,7 +34,7 @@ This document describes how to complete the local SMRITI Retail OS demo using th
      ```json
      {
        "username": "admin",
-       "email": "admin@smriti.local",
+       "email": "admin@tileflow.local",
        "password": "Admin@123"
      }
      ```
@@ -72,14 +72,14 @@ This document describes how to complete the local SMRITI Retail OS demo using th
 
 ## Notes
 - The frontend proxies `/api/v1/*` requests to `http://127.0.0.1:8000`
-- The login screen uses `localStorage` key `smriti_jwt_token`
+- The login screen uses `localStorage` key `tileflow_jwt_token`
 - The first admin user must be created before any authenticated operations
 
 ## Completed Demo Credentials
 - Username: `admin`
 - Initial password: `Admin@123`
 - Updated password: `Admin@Secure2`
-- Email: `admin@smriti.local`
+- Email: `admin@tileflow.local`
 
 ## Appendix: Helpful backend commands
 - Validate database connectivity:
@@ -88,4 +88,4 @@ This document describes how to complete the local SMRITI Retail OS demo using th
   - `py -3.11 -c "import socket; ..."`
 
 ---
-This guide is intended for local demo setup and training new operators on the SMRITI Retail OS browser workflow.
+This guide is intended for local demo setup and training new operators on the TILEFLOW Retail OS browser workflow.

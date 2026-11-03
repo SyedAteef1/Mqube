@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.100.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -127,7 +126,7 @@ export const WavePickingStudioModal: React.FC<WavePickingStudioModalProps> = ({ 
         {wave && (
           <div className="px-6 py-2 border-b border-slate-800 bg-slate-950/30">
             <div className="flex items-center justify-between text-[10px] text-slate-500 mb-1">
-              <span>Wave Progress â€” {wave.waveId}</span>
+              <span>Wave Progress — {wave.waveId}</span>
               <span>{wave.completedTasks + wave.shortedTasks}/{wave.totalTasks} tasks ({progressPct}%)</span>
             </div>
             <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden">

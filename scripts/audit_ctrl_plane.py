@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json, glob, re
 from datetime import datetime, timezone
 import psycopg2
@@ -21,8 +8,8 @@ from openpyxl.utils import get_column_letter
 
 sys.stdout.reconfigure(encoding='utf-8')
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 
 DOC_BOUNDARY_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\CONTROL_PLANE_2.md"
 DOC_AUDIT_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\CONTROL_PLANE_2_3.md"
@@ -32,36 +19,36 @@ DOC_MIGRATION_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\CONTROL_PLANE.md"
 
 # 25 Specific Configuration Areas with Refined Mappings
 CONFIG_AREAS_25_REFINED = [
-    {"area": "BILLING CONFIGURATION", "table": "system_configs", "db": "smritisys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "smritisys", "rec": "Billing parameters (tax mode, discount caps) live in system_configs. smriti_menus controls navigation only."},
-    {"area": "POS CONFIGURATION", "table": "cash_registers", "db": "smritisys", "scope": "BRANCH", "type": "CONFIGURATION", "candidate": "smritisys / COMPANY_BUSINESS_DB", "rec": "Register configuration lives in smritisys; shift transaction state lives in Company DB."},
-    {"area": "SALES CONFIGURATION", "table": "document_series", "db": "smritisys", "scope": "COMPANY", "type": "DOCUMENT_CONFIGURATION", "candidate": "smritisys", "rec": "REUSE document_series for sales invoice numbering policies."},
-    {"area": "PURCHASE CONFIGURATION", "table": "purchase_reorder_configs", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "REUSE purchase_reorder_configs for reorder thresholds."},
-    {"area": "GRN CONFIGURATION", "table": "master_values", "db": "smritisys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "smritisys", "rec": "REUSE master_values for GRN receipt types."},
-    {"area": "INVENTORY CONFIGURATION", "table": "attribute_definitions", "db": "smritisys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "smritisys", "rec": "REUSE attribute_definitions for dynamic product attributes."},
-    {"area": "STOCK POLICY", "table": "system_configs", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "Store stock valuation policy (FIFO / Weighted Avg) in system_configs."},
-    {"area": "TAX / GST CONFIGURATION", "table": "purchase_jurisdiction_configs", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "REUSE purchase_jurisdiction_configs for tax rules. Credentials in vault."},
-    {"area": "E-WAY BILL / E-INVOICE CONFIG", "table": "system_configs", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "Store NIC/E-Way Bill integration flags in system_configs."},
-    {"area": "DOCUMENT SERIES / NUMBERING", "table": "document_series", "db": "smritisys", "scope": "COMPANY", "type": "DOCUMENT_CONFIGURATION", "candidate": "smritisys", "rec": "REUSE document_series for numbering series rules."},
-    {"area": "PRINT CONFIGURATION", "table": "print_templates", "db": "smritisys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "smritisys", "rec": "REUSE print_templates and print_profiles for layout formatting."},
-    {"area": "TERMS & CONDITIONS", "table": "terms_defaults", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "REUSE terms_defaults for invoice terms & clauses."},
-    {"area": "DISCOUNT POLICY", "table": "system_configs", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "Store maximum discount policy & threshold in system_configs."},
-    {"area": "RETURN POLICY", "table": "system_configs", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "Store sales return window and refund policy in system_configs."},
-    {"area": "CREDIT POLICY", "table": "customer_groups", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "REUSE customer_groups credit limits & payment terms."},
-    {"area": "PAYMENT POLICY", "table": "master_values", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "REUSE master_values for accepted payment modes."},
-    {"area": "APPROVAL POLICY", "table": "requisition_approval_policies", "db": "smritisys", "scope": "COMPANY", "type": "POLICY", "candidate": "smritisys", "rec": "REUSE requisition_approval_policies for approval threshold definitions."},
-    {"area": "WORKFLOW CONFIGURATION", "table": "approval_workflow_logs", "db": "smritisys", "scope": "COMPANY", "type": "WORKFLOW_CONFIGURATION", "candidate": "smritisys", "rec": "Requisition policies define workflow rules; logs track execution audit history."},
-    {"area": "MODULE ENABLE / DISABLE", "table": "system_configs", "db": "smritisys", "scope": "PLATFORM / LICENSE", "type": "ENTITLEMENT", "candidate": "smritisys", "rec": "Module entitlements governed by SGIP License Vault. smriti_menus controls visibility."},
-    {"area": "LICENSE / ENTITLEMENT", "table": "SGIP Vault / roles", "db": "smritisys", "scope": "LICENSE", "type": "AUTHORIZATION", "candidate": "smritisys", "rec": "License vault governs entitlements; roles define RBAC capabilities."},
-    {"area": "FEATURE FLAGS", "table": "system_configs", "db": "smritisys", "scope": "PLATFORM", "type": "AUTHORIZATION", "candidate": "smritisys", "rec": "Feature flags govern platform capability rollouts, independent of menu permissions."},
-    {"area": "INTEGRATION ENABLE / DISABLE", "table": "tally_configs", "db": "smritisys", "scope": "COMPANY", "type": "INTEGRATION_CONFIGURATION", "candidate": "smritisys", "rec": "REUSE tally_configs for connector settings."},
-    {"area": "COMPANY SETTINGS", "table": "companies", "db": "smritisys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "smritisys", "rec": "REUSE companies table for enterprise identity & setup."},
-    {"area": "BRANCH SETTINGS", "table": "branches", "db": "smritisys", "scope": "BRANCH", "type": "CONFIGURATION", "candidate": "smritisys", "rec": "REUSE branches table for store location identity & setup."},
+    {"area": "BILLING CONFIGURATION", "table": "system_configs", "db": "tileflowsys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "tileflowsys", "rec": "Billing parameters (tax mode, discount caps) live in system_configs. tileflow_menus controls navigation only."},
+    {"area": "POS CONFIGURATION", "table": "cash_registers", "db": "tileflowsys", "scope": "BRANCH", "type": "CONFIGURATION", "candidate": "tileflowsys / COMPANY_BUSINESS_DB", "rec": "Register configuration lives in tileflowsys; shift transaction state lives in Company DB."},
+    {"area": "SALES CONFIGURATION", "table": "document_series", "db": "tileflowsys", "scope": "COMPANY", "type": "DOCUMENT_CONFIGURATION", "candidate": "tileflowsys", "rec": "REUSE document_series for sales invoice numbering policies."},
+    {"area": "PURCHASE CONFIGURATION", "table": "purchase_reorder_configs", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "REUSE purchase_reorder_configs for reorder thresholds."},
+    {"area": "GRN CONFIGURATION", "table": "master_values", "db": "tileflowsys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "tileflowsys", "rec": "REUSE master_values for GRN receipt types."},
+    {"area": "INVENTORY CONFIGURATION", "table": "attribute_definitions", "db": "tileflowsys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "tileflowsys", "rec": "REUSE attribute_definitions for dynamic product attributes."},
+    {"area": "STOCK POLICY", "table": "system_configs", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "Store stock valuation policy (FIFO / Weighted Avg) in system_configs."},
+    {"area": "TAX / GST CONFIGURATION", "table": "purchase_jurisdiction_configs", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "REUSE purchase_jurisdiction_configs for tax rules. Credentials in vault."},
+    {"area": "E-WAY BILL / E-INVOICE CONFIG", "table": "system_configs", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "Store NIC/E-Way Bill integration flags in system_configs."},
+    {"area": "DOCUMENT SERIES / NUMBERING", "table": "document_series", "db": "tileflowsys", "scope": "COMPANY", "type": "DOCUMENT_CONFIGURATION", "candidate": "tileflowsys", "rec": "REUSE document_series for numbering series rules."},
+    {"area": "PRINT CONFIGURATION", "table": "print_templates", "db": "tileflowsys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "tileflowsys", "rec": "REUSE print_templates and print_profiles for layout formatting."},
+    {"area": "TERMS & CONDITIONS", "table": "terms_defaults", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "REUSE terms_defaults for invoice terms & clauses."},
+    {"area": "DISCOUNT POLICY", "table": "system_configs", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "Store maximum discount policy & threshold in system_configs."},
+    {"area": "RETURN POLICY", "table": "system_configs", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "Store sales return window and refund policy in system_configs."},
+    {"area": "CREDIT POLICY", "table": "customer_groups", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "REUSE customer_groups credit limits & payment terms."},
+    {"area": "PAYMENT POLICY", "table": "master_values", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "REUSE master_values for accepted payment modes."},
+    {"area": "APPROVAL POLICY", "table": "requisition_approval_policies", "db": "tileflowsys", "scope": "COMPANY", "type": "POLICY", "candidate": "tileflowsys", "rec": "REUSE requisition_approval_policies for approval threshold definitions."},
+    {"area": "WORKFLOW CONFIGURATION", "table": "approval_workflow_logs", "db": "tileflowsys", "scope": "COMPANY", "type": "WORKFLOW_CONFIGURATION", "candidate": "tileflowsys", "rec": "Requisition policies define workflow rules; logs track execution audit history."},
+    {"area": "MODULE ENABLE / DISABLE", "table": "system_configs", "db": "tileflowsys", "scope": "PLATFORM / LICENSE", "type": "ENTITLEMENT", "candidate": "tileflowsys", "rec": "Module entitlements governed by SGIP License Vault. tileflow_menus controls visibility."},
+    {"area": "LICENSE / ENTITLEMENT", "table": "SGIP Vault / roles", "db": "tileflowsys", "scope": "LICENSE", "type": "AUTHORIZATION", "candidate": "tileflowsys", "rec": "License vault governs entitlements; roles define RBAC capabilities."},
+    {"area": "FEATURE FLAGS", "table": "system_configs", "db": "tileflowsys", "scope": "PLATFORM", "type": "AUTHORIZATION", "candidate": "tileflowsys", "rec": "Feature flags govern platform capability rollouts, independent of menu permissions."},
+    {"area": "INTEGRATION ENABLE / DISABLE", "table": "tally_configs", "db": "tileflowsys", "scope": "COMPANY", "type": "INTEGRATION_CONFIGURATION", "candidate": "tileflowsys", "rec": "REUSE tally_configs for connector settings."},
+    {"area": "COMPANY SETTINGS", "table": "companies", "db": "tileflowsys", "scope": "COMPANY", "type": "CONFIGURATION", "candidate": "tileflowsys", "rec": "REUSE companies table for enterprise identity & setup."},
+    {"area": "BRANCH SETTINGS", "table": "branches", "db": "tileflowsys", "scope": "BRANCH", "type": "CONFIGURATION", "candidate": "tileflowsys", "rec": "REUSE branches table for store location identity & setup."},
     {"area": "USER PERSONALIZATION", "table": "localStorage", "db": "Browser", "scope": "USER", "type": "USER_PERSONALIZATION", "candidate": "USER_PERSONALIZATION", "rec": "Must remain in browser localStorage (theme, sidebar, focus mode, zoom)."}
 ]
 
 def run_decision_gate_audit():
     print("============================================================")
-    print("SMRITI CONTROL PLANE — REFINED CONFIGURATION DECISION GATE v2.1")
+    print("TILEFLOW CONTROL PLANE — REFINED CONFIGURATION DECISION GATE v2.1")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -70,10 +57,10 @@ def run_decision_gate_audit():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
     # 2. Query 248 Tables Inventory
@@ -86,8 +73,8 @@ def run_decision_gate_audit():
     all_tables = [r[0] for r in cur.fetchall()]
 
     control_plane_prefix_tables = [
-        "smriti_menus", "smriti_audit_log", "smriti_themes", "smriti_theme_variants",
-        "smriti_workspace_profiles", "smriti_field_security_masks", "smriti_settings",
+        "tileflow_menus", "tileflow_audit_log", "tileflow_themes", "tileflow_theme_variants",
+        "tileflow_workspace_profiles", "tileflow_field_security_masks", "tileflow_settings",
         "system_configs", "master_types", "master_values", "users", "roles", "companies",
         "branches", "user_company_assignments", "user_branch_assignments", "user_store_assignments",
         "document_series", "numbering_audit_logs", "barcode_layouts", "print_templates", "print_profiles",
@@ -133,8 +120,8 @@ def run_decision_gate_audit():
 
     sheets["README"] = pd.DataFrame([
         ["Attribute", "Specification / Value"],
-        ["Workbook Title", "SMRITI Control Plane — Final Configuration Ownership Review Workbook"],
-        ["Official Database", "smritisys"],
+        ["Workbook Title", "TILEFLOW Control Plane — Final Configuration Ownership Review Workbook"],
+        ["Official Database", "tileflowsys"],
         ["Audit Timestamp", ts],
         ["Total Tables Classified", len(all_tables)],
         ["25 Config Areas Audited", len(CONFIG_AREAS_25_REFINED)],
@@ -150,12 +137,12 @@ def run_decision_gate_audit():
     sheets["USERS"] = pd.DataFrame([{"entity": "User Account", "table": "users", "scope": "GLOBAL"}])
     sheets["ROLES"] = pd.DataFrame([{"entity": "Role Matrix", "table": "roles", "scope": "GLOBAL"}])
     sheets["PERMISSIONS"] = pd.DataFrame([{"entity": "Permission Bitmask", "table": "roles.permission_mask", "scope": "GLOBAL"}])
-    sheets["CAPABILITIES"] = pd.DataFrame([{"entity": "System Capability Flag", "table": "smriti_menus.permission", "scope": "GLOBAL"}])
-    sheets["MENUS"] = pd.DataFrame([{"entity": "Menu Registry", "table": "smriti_menus", "count": 34, "status": "FROZEN"}])
-    sheets["UI_UX"] = pd.DataFrame([{"entity": "System Themes", "table": "smriti_themes"}, {"entity": "Workspace Profiles", "table": "smriti_workspace_profiles"}])
-    sheets["MODULES"] = pd.DataFrame([{"entity": "Core Platform Workspaces", "count": 34, "source": "smriti_menus"}])
+    sheets["CAPABILITIES"] = pd.DataFrame([{"entity": "System Capability Flag", "table": "tileflow_menus.permission", "scope": "GLOBAL"}])
+    sheets["MENUS"] = pd.DataFrame([{"entity": "Menu Registry", "table": "tileflow_menus", "count": 34, "status": "FROZEN"}])
+    sheets["UI_UX"] = pd.DataFrame([{"entity": "System Themes", "table": "tileflow_themes"}, {"entity": "Workspace Profiles", "table": "tileflow_workspace_profiles"}])
+    sheets["MODULES"] = pd.DataFrame([{"entity": "Core Platform Workspaces", "count": 34, "source": "tileflow_menus"}])
     sheets["LICENSING"] = pd.DataFrame([{"entity": "License Vault", "source": "SGIP Vault Key", "scope": "GLOBAL"}])
-    sheets["ENTITLEMENTS"] = pd.DataFrame([{"entitlement": "Module Access", "table": "smriti_menus.permission"}])
+    sheets["ENTITLEMENTS"] = pd.DataFrame([{"entitlement": "Module Access", "table": "tileflow_menus.permission"}])
     sheets["FEATURE_FLAGS"] = pd.DataFrame([{"flag": "system.menu.manage", "type": "CAPABILITY", "guard": "FastAPI API Guard"}])
 
     sheets["BUSINESS_BEHAVIOR"] = df_config_25
@@ -171,15 +158,15 @@ def run_decision_gate_audit():
     sheets["WORKFLOW_POLICIES"] = pd.DataFrame([{"policy": "Requisition Approval Policy", "table": "requisition_approval_policies", "owner": "Control Plane"}])
     sheets["APPROVAL_POLICIES"] = pd.DataFrame([{"policy": "Terms Clause Approval", "table": "approval_workflow_logs", "owner": "Control Plane"}])
     sheets["INTEGRATIONS"] = pd.DataFrame([{"connector": "TallyPrime", "table": "tally_configs"}, {"connector": "Barcode Provider", "table": "barcode_providers"}])
-    sheets["AUDIT"] = pd.DataFrame([{"entity": "Enterprise Audit Log", "table": "smriti_audit_log", "count": 44}])
+    sheets["AUDIT"] = pd.DataFrame([{"entity": "Enterprise Audit Log", "table": "tileflow_audit_log", "count": 44}])
 
-    sheets["USER_PERSONALIZATION"] = pd.DataFrame([{"key": "smriti_layout_preferences", "storage": "localStorage", "owner": "User Browser"}])
+    sheets["USER_PERSONALIZATION"] = pd.DataFrame([{"key": "tileflow_layout_preferences", "storage": "localStorage", "owner": "User Browser"}])
     sheets["COMPANY_DB_BOUNDARY"] = df_table_ownership[df_table_ownership["primary_ownership"] == "COMPANY_BUSINESS"]
-    sheets["DUPLICATE_REGISTRIES"] = pd.DataFrame([{"source_a": "layout_store static fallback", "source_b": "smriti_menus DB", "resolution": "REUSE smriti_menus"}])
+    sheets["DUPLICATE_REGISTRIES"] = pd.DataFrame([{"source_a": "layout_store static fallback", "source_b": "tileflow_menus DB", "resolution": "REUSE tileflow_menus"}])
     sheets["OWNERSHIP_CLASSIFICATION"] = df_table_ownership
     sheets["CONFIGURATION_HIERARCHY"] = pd.DataFrame([{"level": "Platform Default", "overrides_by": "Company -> Branch -> User Personalization"}])
-    sheets["TARGET_ARCHITECTURE"] = pd.DataFrame([{"domain": "smritisys Control Plane", "status": "ESTABLISHED", "tables": "smriti_menus, smriti_audit_log, system_configs, master_types, master_values, smriti_themes, smriti_workspace_profiles"}])
-    sheets["MIGRATION_PLAN"] = pd.DataFrame([{"phase": "Phase A - Audit & Database Rename to smritisys", "status": "COMPLETED"}, {"phase": "Phase B - Human Review on DECISION_BOARD", "status": "PENDING_APPROVAL"}])
+    sheets["TARGET_ARCHITECTURE"] = pd.DataFrame([{"domain": "tileflowsys Control Plane", "status": "ESTABLISHED", "tables": "tileflow_menus, tileflow_audit_log, system_configs, master_types, master_values, tileflow_themes, tileflow_workspace_profiles"}])
+    sheets["MIGRATION_PLAN"] = pd.DataFrame([{"phase": "Phase A - Audit & Database Rename to tileflowsys", "status": "COMPLETED"}, {"phase": "Phase B - Human Review on DECISION_BOARD", "status": "PENDING_APPROVAL"}])
     sheets["DECISION_BOARD"] = pd.DataFrame([{"Table / Artifact": t, "Proposed Owner": "CONTROL_PLANE" if t in control_plane_prefix_tables else "COMPANY_BUSINESS", "Decision": "", "Reason": "", "Reviewer Notes": ""} for t in all_tables])
     
     # DEDICATED SHEET: FINAL_CONFIGURATION_DECISION
@@ -241,23 +228,22 @@ def run_decision_gate_audit():
     # CONFIGURATION.md
     with open(DOC_MATRIX_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Configuration Ownership & Decision Matrix v1.0
+# TILEFLOW Configuration Ownership & Decision Matrix v1.0
 
 **Status: AUDIT_COMPLETE / PENDING_HUMAN_DECISION**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`
+**Official Control Plane DB:** `tileflowsys`
 
 ---
 
@@ -279,30 +265,30 @@ MENU VISIBILITY ≠ AUTHORIZATION
 
 | Configuration Area | Current Table | Scope Level | Artifact Type | Target Candidate | Ownership & Refined Recommendation |
 |---|---|---|---|---|---|
-| **BILLING CONFIGURATION** | `system_configs` | `COMPANY` | `CONFIGURATION` | `smritisys` | Billing parameters (tax mode, discount caps) live in `system_configs`. `smriti_menus` controls navigation only. |
-| **POS CONFIGURATION** | `cash_registers` | `BRANCH` | `CONFIGURATION` | `smritisys` / `COMPANY_DB` | Register metadata lives in `smritisys`; shift transaction state lives in Company DB. |
-| **SALES CONFIGURATION** | `document_series` | `COMPANY` | `DOCUMENT_CONFIGURATION` | `smritisys` | REUSE `document_series` for sales invoice numbering policies. |
-| **PURCHASE CONFIGURATION** | `purchase_reorder_configs` | `COMPANY` | `POLICY` | `smritisys` | REUSE `purchase_reorder_configs` for reorder thresholds. |
-| **GRN CONFIGURATION** | `master_values` | `COMPANY` | `CONFIGURATION` | `smritisys` | REUSE `master_values` for GRN receipt types. |
-| **INVENTORY CONFIGURATION** | `attribute_definitions` | `COMPANY` | `CONFIGURATION` | `smritisys` | REUSE `attribute_definitions` for dynamic product attributes. |
-| **STOCK POLICY** | `system_configs` | `COMPANY` | `POLICY` | `smritisys` | Store stock valuation policy (FIFO / Weighted Avg) in `system_configs`. |
-| **TAX / GST CONFIGURATION** | `purchase_jurisdiction_configs` | `COMPANY` | `POLICY` | `smritisys` | REUSE `purchase_jurisdiction_configs` for tax rules. Credentials in vault. |
-| **E-WAY BILL / E-INVOICE CONFIG** | `system_configs` | `COMPANY` | `POLICY` | `smritisys` | Store NIC/E-Way Bill integration flags in `system_configs`. |
-| **DOCUMENT SERIES / NUMBERING** | `document_series` | `COMPANY` | `DOCUMENT_CONFIGURATION` | `smritisys` | REUSE `document_series` for numbering series rules. |
-| **PRINT CONFIGURATION** | `print_templates` | `COMPANY` | `CONFIGURATION` | `smritisys` | REUSE `print_templates` and `print_profiles` for layout formatting. |
-| **TERMS & CONDITIONS** | `terms_defaults` | `COMPANY` | `POLICY` | `smritisys` | REUSE `terms_defaults` for invoice terms & clauses. |
-| **DISCOUNT POLICY** | `system_configs` | `COMPANY` | `POLICY` | `smritisys` | Store maximum discount policy & threshold in `system_configs`. |
-| **RETURN POLICY** | `system_configs` | `COMPANY` | `POLICY` | `smritisys` | Store sales return window and refund policy in `system_configs`. |
-| **CREDIT POLICY** | `customer_groups` | `COMPANY` | `POLICY` | `smritisys` | REUSE `customer_groups` credit limits & payment terms. |
-| **PAYMENT POLICY** | `master_values` | `COMPANY` | `POLICY` | `smritisys` | REUSE `master_values` for accepted payment modes. |
-| **APPROVAL POLICY** | `requisition_approval_policies` | `COMPANY` | `POLICY` | `smritisys` | REUSE `requisition_approval_policies` for approval threshold definitions. |
-| **WORKFLOW CONFIGURATION** | `approval_workflow_logs` | `COMPANY` | `WORKFLOW_CONFIGURATION` | `smritisys` | Requisition policies define workflow rules; logs track execution audit history. |
-| **MODULE ENABLE / DISABLE** | `system_configs` | `PLATFORM / LICENSE` | `ENTITLEMENT` | `smritisys` | Module entitlements governed by SGIP License Vault. `smriti_menus` controls visibility. |
-| **LICENSE / ENTITLEMENT** | `SGIP Vault / roles` | `LICENSE` | `AUTHORIZATION` | `smritisys` | License vault governs entitlements; `roles` define RBAC capabilities. |
-| **FEATURE FLAGS** | `system_configs` | `PLATFORM` | `AUTHORIZATION` | `smritisys` | Feature flags govern platform capability rollouts, independent of menu permissions. |
-| **INTEGRATION ENABLE / DISABLE** | `tally_configs` | `COMPANY` | `INTEGRATION_CONFIGURATION` | `smritisys` | REUSE `tally_configs` for connector settings. |
-| **COMPANY SETTINGS** | `companies` | `COMPANY` | `CONFIGURATION` | `smritisys` | REUSE `companies` table for enterprise identity & setup. |
-| **BRANCH SETTINGS** | `branches` | `BRANCH` | `CONFIGURATION` | `smritisys` | REUSE `branches` table for store location identity & setup. |
+| **BILLING CONFIGURATION** | `system_configs` | `COMPANY` | `CONFIGURATION` | `tileflowsys` | Billing parameters (tax mode, discount caps) live in `system_configs`. `tileflow_menus` controls navigation only. |
+| **POS CONFIGURATION** | `cash_registers` | `BRANCH` | `CONFIGURATION` | `tileflowsys` / `COMPANY_DB` | Register metadata lives in `tileflowsys`; shift transaction state lives in Company DB. |
+| **SALES CONFIGURATION** | `document_series` | `COMPANY` | `DOCUMENT_CONFIGURATION` | `tileflowsys` | REUSE `document_series` for sales invoice numbering policies. |
+| **PURCHASE CONFIGURATION** | `purchase_reorder_configs` | `COMPANY` | `POLICY` | `tileflowsys` | REUSE `purchase_reorder_configs` for reorder thresholds. |
+| **GRN CONFIGURATION** | `master_values` | `COMPANY` | `CONFIGURATION` | `tileflowsys` | REUSE `master_values` for GRN receipt types. |
+| **INVENTORY CONFIGURATION** | `attribute_definitions` | `COMPANY` | `CONFIGURATION` | `tileflowsys` | REUSE `attribute_definitions` for dynamic product attributes. |
+| **STOCK POLICY** | `system_configs` | `COMPANY` | `POLICY` | `tileflowsys` | Store stock valuation policy (FIFO / Weighted Avg) in `system_configs`. |
+| **TAX / GST CONFIGURATION** | `purchase_jurisdiction_configs` | `COMPANY` | `POLICY` | `tileflowsys` | REUSE `purchase_jurisdiction_configs` for tax rules. Credentials in vault. |
+| **E-WAY BILL / E-INVOICE CONFIG** | `system_configs` | `COMPANY` | `POLICY` | `tileflowsys` | Store NIC/E-Way Bill integration flags in `system_configs`. |
+| **DOCUMENT SERIES / NUMBERING** | `document_series` | `COMPANY` | `DOCUMENT_CONFIGURATION` | `tileflowsys` | REUSE `document_series` for numbering series rules. |
+| **PRINT CONFIGURATION** | `print_templates` | `COMPANY` | `CONFIGURATION` | `tileflowsys` | REUSE `print_templates` and `print_profiles` for layout formatting. |
+| **TERMS & CONDITIONS** | `terms_defaults` | `COMPANY` | `POLICY` | `tileflowsys` | REUSE `terms_defaults` for invoice terms & clauses. |
+| **DISCOUNT POLICY** | `system_configs` | `COMPANY` | `POLICY` | `tileflowsys` | Store maximum discount policy & threshold in `system_configs`. |
+| **RETURN POLICY** | `system_configs` | `COMPANY` | `POLICY` | `tileflowsys` | Store sales return window and refund policy in `system_configs`. |
+| **CREDIT POLICY** | `customer_groups` | `COMPANY` | `POLICY` | `tileflowsys` | REUSE `customer_groups` credit limits & payment terms. |
+| **PAYMENT POLICY** | `master_values` | `COMPANY` | `POLICY` | `tileflowsys` | REUSE `master_values` for accepted payment modes. |
+| **APPROVAL POLICY** | `requisition_approval_policies` | `COMPANY` | `POLICY` | `tileflowsys` | REUSE `requisition_approval_policies` for approval threshold definitions. |
+| **WORKFLOW CONFIGURATION** | `approval_workflow_logs` | `COMPANY` | `WORKFLOW_CONFIGURATION` | `tileflowsys` | Requisition policies define workflow rules; logs track execution audit history. |
+| **MODULE ENABLE / DISABLE** | `system_configs` | `PLATFORM / LICENSE` | `ENTITLEMENT` | `tileflowsys` | Module entitlements governed by SGIP License Vault. `tileflow_menus` controls visibility. |
+| **LICENSE / ENTITLEMENT** | `SGIP Vault / roles` | `LICENSE` | `AUTHORIZATION` | `tileflowsys` | License vault governs entitlements; `roles` define RBAC capabilities. |
+| **FEATURE FLAGS** | `system_configs` | `PLATFORM` | `AUTHORIZATION` | `tileflowsys` | Feature flags govern platform capability rollouts, independent of menu permissions. |
+| **INTEGRATION ENABLE / DISABLE** | `tally_configs` | `COMPANY` | `INTEGRATION_CONFIGURATION` | `tileflowsys` | REUSE `tally_configs` for connector settings. |
+| **COMPANY SETTINGS** | `companies` | `COMPANY` | `CONFIGURATION` | `tileflowsys` | REUSE `companies` table for enterprise identity & setup. |
+| **BRANCH SETTINGS** | `branches` | `BRANCH` | `CONFIGURATION` | `tileflowsys` | REUSE `branches` table for store location identity & setup. |
 | **USER PERSONALIZATION** | `localStorage` | `USER` | `USER_PERSONALIZATION` | `USER_PERSONALIZATION` | Must remain in browser `localStorage` (theme, sidebar, focus mode, zoom). |
 
 ---
@@ -327,10 +313,10 @@ USER PERSONALIZATION (Browser localStorage)
 """)
 
     # 5. Database Mutation Verification
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     final_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     final_audit = cur.fetchone()[0]
 
     conn.close()
@@ -338,8 +324,8 @@ USER PERSONALIZATION (Browser localStorage)
     mutated = (initial_menus != final_menus) or (initial_audit != final_audit)
 
     print("\nDATABASE MUTATION VERIFICATION:")
-    print(f"  smriti_menus     : Initial={initial_menus}, Final={final_menus}")
-    print(f"  smriti_audit_log : Initial={initial_audit}, Final={final_audit}")
+    print(f"  tileflow_menus     : Initial={initial_menus}, Final={final_menus}")
+    print(f"  tileflow_audit_log : Initial={initial_audit}, Final={final_audit}")
 
     if not mutated:
         print("\nRESULT: ZERO MUTATIONS VERIFIED")

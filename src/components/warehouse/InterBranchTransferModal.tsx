@@ -1,15 +1,14 @@
 ﻿/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
+ * Project      : MQube Retail OS
+ * Author       : Syed Ateef
  * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
+ * Email        : ateef@tileflow.in
  * Version      : 3.118.0
  * Created      : 2026-08-28
  * Modified     : 2026-08-28
- * Copyright    : Â© SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
+ * Copyright    : Â tileflow.in. Open Source - Permissive Use
+ * License      : MIT Open Source License
+ * Classification: Open Source
  */
 
 import React, { useState, useMemo } from "react";
@@ -71,7 +70,7 @@ export const InterBranchTransferModal: React.FC<InterBranchTransferModalProps> =
     try {
       const lineQtys = Object.fromEntries(selected.lines.map((l) => [l.lineId, l.requestedQty]));
       update(InterBranchTransferEngine.dispatch(selected, "DISPATCH-001", lineQtys));
-      onNotification?.("Dispatched", `${selected.transferNo} â€” IN_TRANSIT`, "info");
+      onNotification?.("Dispatched", `${selected.transferNo} — IN_TRANSIT`, "info");
     } catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
@@ -80,7 +79,7 @@ export const InterBranchTransferModal: React.FC<InterBranchTransferModalProps> =
     try {
       const lineQtys = Object.fromEntries(selected.lines.map((l) => [l.lineId, l.dispatchedQty]));
       update(InterBranchTransferEngine.receive(selected, "RECV-001", lineQtys));
-      onNotification?.("Received", `${selected.transferNo} â€” checking variance`, "success");
+      onNotification?.("Received", `${selected.transferNo} — checking variance`, "success");
     } catch (e: any) { onNotification?.("Error", e.message, "error"); }
   };
 
@@ -212,7 +211,7 @@ export const InterBranchTransferModal: React.FC<InterBranchTransferModalProps> =
                           <td className="py-2 px-3 text-right text-slate-400">{l.requestedQty}</td>
                           <td className="py-2 px-3 text-right text-amber-400">{l.dispatchedQty}</td>
                           <td className="py-2 px-3 text-right text-teal-400">{l.receivedQty}</td>
-                          <td className={`py-2 px-3 text-right font-bold ${l.variance > 0 ? "text-rose-400" : "text-emerald-400"}`}>{l.variance > 0 ? `-${l.variance}` : "â€”"}</td>
+                          <td className={`py-2 px-3 text-right font-bold ${l.variance > 0 ? "text-rose-400" : "text-emerald-400"}`}>{l.variance > 0 ? `-${l.variance}` : "—"}</td>
                         </tr>
                       ))}
                     </tbody>

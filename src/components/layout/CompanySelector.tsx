@@ -1,17 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.25.0
- * Created      : 2026-08-14
- * Modified     : 2026-08-18
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React, { useState, useEffect } from 'react';
 import { Building2, ChevronDown, Check, AlertCircle, RefreshCw, GitBranch } from 'lucide-react';
 import { apiFetchV1 } from '../../lib/apiFetchV1';
@@ -34,10 +20,10 @@ export const CompanySelector: React.FC = () => {
   const [companies, setCompanies] = useState<CompanyOption[]>([]);
   const [branches, setBranches] = useState<BranchOption[]>([]);
   const [selectedCompanyId, setSelectedCompanyId] = useState<string>(() => {
-    return localStorage.getItem("smriti_company_id") || "COMP-001";
+    return localStorage.getItem("tileflow_company_id") || "COMP-001";
   });
   const [selectedBranchId, setSelectedBranchId] = useState<string>(() => {
-    return localStorage.getItem("smriti_branch_id") || "MAIN";
+    return localStorage.getItem("tileflow_branch_id") || "MAIN";
   });
   const [isOpen, setIsOpen] = useState(false);
   const [switching, setSwitching] = useState(false);
@@ -52,7 +38,7 @@ export const CompanySelector: React.FC = () => {
           const mapped: CompanyOption[] = data.companies.map((item: any) => ({
             company_id: item.id || "COMP-001",
             company_code: (item.id || "COMP-001").replace(/^COMP-/, "") || "001",
-            company_name: item.name || "Tattly Threads",
+            company_name: item.name || "MQube Tiles & Sanitaryware",
             status: item.status || "READY"
           }));
           setCompanies(mapped);
@@ -102,13 +88,13 @@ export const CompanySelector: React.FC = () => {
 
       if (res && res.access_token) {
         // 2. Commit updated token and company/branch context ONLY on verified backend success
-        localStorage.setItem("smriti_jwt_token", res.access_token);
-        localStorage.setItem("smriti_company_id", comp.company_id);
-        localStorage.setItem("smriti_company_code", comp.company_code);
-        localStorage.setItem("smriti_company_name", comp.company_name);
-        localStorage.setItem("smriti_branch_id", targetBranch.id);
-        localStorage.setItem("smriti_branch_name", targetBranch.name);
-        localStorage.setItem("smriti_branch_code", targetBranch.code);
+        localStorage.setItem("tileflow_jwt_token", res.access_token);
+        localStorage.setItem("tileflow_company_id", comp.company_id);
+        localStorage.setItem("tileflow_company_code", comp.company_code);
+        localStorage.setItem("tileflow_company_name", comp.company_name);
+        localStorage.setItem("tileflow_branch_id", targetBranch.id);
+        localStorage.setItem("tileflow_branch_name", targetBranch.name);
+        localStorage.setItem("tileflow_branch_code", targetBranch.code);
         setSelectedCompanyId(comp.company_id);
         setSelectedBranchId(targetBranch.id);
         setIsOpen(false);
@@ -128,14 +114,14 @@ export const CompanySelector: React.FC = () => {
   const currentComp = companies.find(c => c.company_id === selectedCompanyId) || {
     company_id: selectedCompanyId,
     company_code: selectedCompanyId.replace(/^COMP-/, "") || "001",
-    company_name: localStorage.getItem("smriti_company_name") || "SMRITI Workspace",
+    company_name: localStorage.getItem("tileflow_company_name") || "MQube Workspace",
     status: "READY"
   };
 
   const currentBranch = branches.find(b => b.id === selectedBranchId) || {
     id: selectedBranchId,
-    name: localStorage.getItem("smriti_branch_name") || "Main Store",
-    code: localStorage.getItem("smriti_branch_code") || "MAIN",
+    name: localStorage.getItem("tileflow_branch_name") || "Main Store",
+    code: localStorage.getItem("tileflow_branch_code") || "MAIN",
     company: selectedCompanyId
   };
 
@@ -146,24 +132,20 @@ export const CompanySelector: React.FC = () => {
           setError(null);
           setIsOpen(!isOpen);
         }}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white border border-blue-400 transition-all text-xs font-bold shadow-md cursor-pointer select-none"
-        title="Switch Active Business Company & Branch (Alt+F3)"
+        className="flex items-center gap-2 px-3 py-1 rounded-full bg-white hover:bg-[#f5f5f5] text-[#0a0a0a] border border-[#e5e5e5] transition-all text-xs font-semibold cursor-pointer select-none"
+        title="Switch company or branch (Alt+F3)"
       >
-        <Building2 className="w-4 h-4 text-emerald-300 shrink-0" />
+        <Building2 className="w-4 h-4 text-[#737373] shrink-0" />
         <div className="flex flex-col text-left">
           <div className="flex items-center gap-1.5">
             <span className="max-w-[140px] truncate font-display">{currentComp.company_name}</span>
-            <span className="px-1 py-0.2 text-[9px] font-mono font-bold bg-blue-700 text-white rounded border border-blue-500">
-              {currentComp.company_code}
-            </span>
           </div>
-          <div className="flex items-center gap-1 text-[10px] text-blue-200 font-mono opacity-90">
+          <div className="flex items-center gap-1 text-[11px] font-normal text-[#737373]">
             <GitBranch className="w-2.5 h-2.5" />
-            <span className="max-w-[120px] truncate">{currentBranch.name}</span>
-            <span>({currentBranch.code})</span>
+            <span className="max-w-[160px] truncate">{currentBranch.name}</span>
           </div>
         </div>
-        <ChevronDown className="w-3.5 h-3.5 text-blue-200 shrink-0 ml-0.5" />
+        <ChevronDown className="w-3.5 h-3.5 text-[#737373] shrink-0 ml-0.5" />
       </button>
 
       {isOpen && (

@@ -1,18 +1,3 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.7.0
- * Created      : 2026-08-22
- * Modified     : 2026-08-22
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- * Test Suite   : Full Cycle Creating Bill, Multi-Tender Settlement & Printing
- */
-
 import { describe, it, expect } from "vitest";
 import { Product, Customer } from "../types.ts";
 import {
@@ -25,7 +10,7 @@ import {
   CashDenominationState
 } from "../components/billing/types.ts";
 
-describe("SMRITI Enterprise Billing Suite — Full Cycle Bill Creation, Settlement & Print Execution", () => {
+describe("MQube Enterprise Billing Suite — Full Cycle Bill Creation, Settlement & Print Execution", () => {
   // 1. Invoicing Header Initialization
   it("STEP 1: should initialize structured Invoice Header with prefix, document number and customer details", () => {
     const customer: Customer = {
@@ -278,7 +263,7 @@ describe("SMRITI Enterprise Billing Suite — Full Cycle Bill Creation, Settleme
     // Format 80mm Thermal Receipt Stream
     let thermalStream = "";
     thermalStream += `==========================================\n`;
-    thermalStream += `           SMRITI RETAIL OS               \n`;
+    thermalStream += `           MQube               \n`;
     thermalStream += `         CENTRAL DISTRIBUTION            \n`;
     thermalStream += `==========================================\n`;
     thermalStream += `Invoice: ${finalInvoice.invoiceNumber}  Date: ${finalInvoice.date}\n`;

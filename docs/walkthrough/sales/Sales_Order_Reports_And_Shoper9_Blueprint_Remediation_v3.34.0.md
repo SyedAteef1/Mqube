@@ -1,27 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 3.34.0
   * Created    : 2026-08-27
   * Modified   : 2026-08-27
-  * Copyright  : © SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
-  * Classification: Internal
+  * Copyright  :  tileflow.in. Open Source - Permissive Use
+  * License    : MIT Open Source License
+  * Classification: Open Source
 -->
 
 # Walkthrough: Sales Order Reports Enhancement & Shoper9 Blueprint Integration Remediation
@@ -33,7 +29,7 @@
 ---
 
 ## 1. Purpose
-Enhance and complete the 7 Sales Order reports (`RPT-SO-001` through `RPT-SO-007`) in the SMRITI Retail OS BI Center, wire real PostgreSQL database queries against canonical `sales_orders`, `sales_order_items`, and `sales_order_invoice_allocations` tables with multi-tenant isolation, remove placeholder fallbacks, and fix Shoper9 blueprint matrix mapping and test suites.
+Enhance and complete the 7 Sales Order reports (`RPT-SO-001` through `RPT-SO-007`) in the TILEFLOW Retail OS BI Center, wire real PostgreSQL database queries against canonical `sales_orders`, `sales_order_items`, and `sales_order_invoice_allocations` tables with multi-tenant isolation, remove placeholder fallbacks, and fix Shoper9 blueprint matrix mapping and test suites.
 
 ---
 
@@ -116,7 +112,7 @@ Enhance and complete the 7 Sales Order reports (`RPT-SO-001` through `RPT-SO-007
   - Pytest: 39 / 39 passed (100%)
   - TypeScript: 0 lint/compile errors
 - **Direct Database Execution:**
-  - Real database `smriti001` verified with 60 Sales Orders, 18,036 Sales Order Items, and 120 Sales Order Invoice Allocations.
+  - Real database `tileflow001` verified with 60 Sales Orders, 18,036 Sales Order Items, and 120 Sales Order Invoice Allocations.
   - Zero placeholder text rendered.
 
 ---

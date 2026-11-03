@@ -361,7 +361,7 @@ This guide contains:
 
 ## Conclusion
 
-The **Global F2 Lookup System** is now **fully implemented, tested, and production-ready** across the SMRITI Retail OS application. Users can press F2 on any input field to instantly access context-aware data lookups, significantly improving data entry speed and accuracy.
+The **Global F2 Lookup System** is now **fully implemented, tested, and production-ready** across the TILEFLOW Retail OS application. Users can press F2 on any input field to instantly access context-aware data lookups, significantly improving data entry speed and accuracy.
 
 **Key Achievements**:
 - ✅ Unified global F2 system across entire application
@@ -374,4 +374,4 @@ The **Global F2 Lookup System** is now **fully implemented, tested, and producti
 **Version**: 1.0.0  
 **Status**: COMPLETE ✅  
 **Last Updated**: 2026-09-01  
-**Author**: Jawahar Ramkripal Mallah
+**Author**: Syed Ateef

@@ -1,5 +1,5 @@
 """
-SMRITI — Historical Invoice Seed for test_stock_reconciliation.py
+TILEFLOW — Historical Invoice Seed for test_stock_reconciliation.py
 =================================================================
 Seeds exactly:
   120 sales_invoices   (company_id=COMP-001, branch_id=MAIN, is_deleted=false, status=CONFIRMED)
@@ -12,16 +12,16 @@ This data satisfies the hardcoded assertions in test_stock_reconciliation.py:
   summary["duplicate_risk_records"] == 0
 
 Backup has been taken at:
-  F:/SMRITRretailNX/backups/smriti001_pre_seed_20260830_205048.sql
+  F:/SMRITRretailNX/backups/tileflow001_pre_seed_20260830_205048.sql
 
 To restore:
-  psql -U postgres smriti001 < F:/SMRITRretailNX/backups/smriti001_pre_seed_20260830_205048.sql
+  psql -U postgres tileflow001 < F:/SMRITRretailNX/backups/tileflow001_pre_seed_20260830_205048.sql
 """
 import psycopg2
 import uuid
 import datetime
 
-conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/smriti001')
+conn = psycopg2.connect('postgresql://postgres:postgres@localhost:5432/tileflow001')
 conn.autocommit = False
 cur = conn.cursor()
 

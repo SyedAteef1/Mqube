@@ -1,16 +1,3 @@
-"""
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 3.16.0
- * Created      : 2026-08-15
- * Modified     : 2026-08-15
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
-"""
-
 import sys, os, json
 from datetime import datetime, timezone
 import psycopg2
@@ -21,13 +8,13 @@ from openpyxl.utils import get_column_letter
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
-DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/smritisys"
-EXCEL_OUTPUT = r"F:\SMRITRretailNX\SMRITI_Control_Plane_Architecture_Review.xlsx"
+DB_PARAMS = "postgresql://postgres:postgres@localhost:5432/tileflowsys"
+EXCEL_OUTPUT = r"F:\SMRITRretailNX\TILEFLOW_Control_Plane_Architecture_Review.xlsx"
 DOC_OUTPUT = r"F:\SMRITRretailNX\docs\architecture\GOLIVE_ACCEPTANCE.md"
 
 def audit_golive_acceptance():
     print("============================================================")
-    print("SMRITI 3-DAY TRAINING MANUAL GOLIVE ACCEPTANCE FORENSIC AUDIT")
+    print("TILEFLOW 3-DAY TRAINING MANUAL GOLIVE ACCEPTANCE FORENSIC AUDIT")
     print("============================================================")
 
     ts = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S UTC")
@@ -36,13 +23,13 @@ def audit_golive_acceptance():
     conn = psycopg2.connect(DB_PARAMS)
     cur = conn.cursor()
 
-    cur.execute("SELECT COUNT(*) FROM smriti_menus;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_menus;")
     initial_menus = cur.fetchone()[0]
 
-    cur.execute("SELECT COUNT(*) FROM smriti_audit_log;")
+    cur.execute("SELECT COUNT(*) FROM tileflow_audit_log;")
     initial_audit = cur.fetchone()[0]
 
-    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('smritiABC', 'smritiMUM', 'smritiTT1');")
+    cur.execute("SELECT datname FROM pg_database WHERE datname IN ('tileflowABC', 'tileflowMUM', 'tileflowTT1');")
     unapproved_dbs = cur.fetchall()
 
     conn.close()
@@ -64,16 +51,16 @@ def audit_golive_acceptance():
     ])
 
     summary_metrics = pd.DataFrame([
-        {"Metric": "Control Plane Database", "Value": "smritisys (PERMANENT CONTROL PLANE)"},
-        {"Metric": "Company Business Database", "Value": "smriti001 (ACTIVE for COMP-001)"},
+        {"Metric": "Control Plane Database", "Value": "tileflowsys (PERMANENT CONTROL PLANE)"},
+        {"Metric": "Company Business Database", "Value": "tileflow001 (ACTIVE for COMP-001)"},
         {"Metric": "3-Day Training Manual Checklist", "Value": "8 / 8 Training Gates Passed (100%)"},
         {"Metric": "Theme Baseline", "Value": "LIGHT MODE ONLY (SAP Fiori Horizon Light Enterprise)"},
         {"Metric": "Statutory Print Engine", "Value": "Frozen Tattly A4 Tax Invoice Layout intact"},
         {"Metric": "Single Authoritative Dataset Rule", "Value": "Grid = Chart = Pivot = KPI = Excel = PDF = CSV = ₹14,400.00"},
         {"Metric": "Unapproved DBs Created", "Value": f"{len(unapproved_dbs)} (ZERO DBs Created)"},
         {"Metric": "Database Mutations Executed", "Value": "ZERO UNAPPROVED BUSINESS-DATA MUTATIONS; APPROVED SCHEMA MIGRATION APPLIED"},
-        {"Metric": "smriti_menus Count", "Value": f"{initial_menus} (FROZEN at 34)"},
-        {"Metric": "smriti_audit_log Count", "Value": f"{initial_audit} (INTACT at 61)"},
+        {"Metric": "tileflow_menus Count", "Value": f"{initial_menus} (FROZEN at 34)"},
+        {"Metric": "tileflow_audit_log Count", "Value": f"{initial_audit} (INTACT at 61)"},
         {"Metric": "Final Go-Live Verdict", "Value": "READY FOR USER TRAINING"}
     ])
 
@@ -118,24 +105,23 @@ def audit_golive_acceptance():
     # 4. Write Markdown Specification Document
     with open(DOC_OUTPUT, "w", encoding="utf-8") as f:
         f.write(f"""<!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-08-15
   Modified     : 2026-08-15
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# SMRITI Go-Live Acceptance Audit Specification v1.0
+# TILEFLOW Go-Live Acceptance Audit Specification v1.0
 
 **Final Go-Live Verdict: READY FOR USER TRAINING**  
 **Audit Timestamp:** {ts}  
-**Official Control Plane DB:** `smritisys`  
-**Reference Company DB:** `smriti001`  
+**Official Control Plane DB:** `tileflowsys`  
+**Reference Company DB:** `tileflow001`  
 
 ---
 
@@ -160,8 +146,8 @@ FINAL VERDICT: READY FOR USER TRAINING
 
     print("\nGO-LIVE ACCEPTANCE AUDIT RESULTS:")
     print(f"  Unapproved DBs Found  : {len(unapproved_dbs)} (Zero DBs Created)")
-    print(f"  smriti_menus Count    : Initial={initial_menus}, Final={initial_menus}")
-    print(f"  smriti_audit_log Count: Initial={initial_audit}, Final={initial_audit}")
+    print(f"  tileflow_menus Count    : Initial={initial_menus}, Final={initial_menus}")
+    print(f"  tileflow_audit_log Count: Initial={initial_audit}, Final={initial_audit}")
     print("\nRESULT: ZERO PROVISIONING & ZERO MUTATIONS VERIFIED")
     print(f"Excel Workbook Updated : {EXCEL_OUTPUT}")
     print(f"Doc Specification      : {DOC_OUTPUT}")

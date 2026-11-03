@@ -1,4 +1,4 @@
-# SMRITI Brownfield Reconciliation — Staging Execution Summary
+# TILEFLOW Brownfield Reconciliation — Staging Execution Summary
 
 **Execution Date:** 2026-08-30  
 **Status:** ✓ STAGING VALIDATION COMPLETE  
@@ -10,7 +10,7 @@
 
 The brownfield reconciliation staging validation has been **successfully completed** on disposable clones of the production databases. All critical constraints have been honored:
 
-- ✓ Production databases (`smritisys`, `smriti001`) remain **completely unchanged**
+- ✓ Production databases (`tileflowsys`, `tileflow001`) remain **completely unchanged**
 - ✓ No schema modifications executed against production
 - ✓ No data modifications executed against production
 - ✓ Staging clones created and validated independently
@@ -27,8 +27,8 @@ Successfully created two disposable staging clones from production sources using
 
 | Database | Source | Size | Status |
 |----------|--------|------|--------|
-| `smritisys_stage` | `smritisys` (Control Plane) | 34.5 MB | ✓ Created |
-| `smriti001_stage` | `smriti001` (Company 001) | 54.7 MB | ✓ Created |
+| `tileflowsys_stage` | `tileflowsys` (Control Plane) | 34.5 MB | ✓ Created |
+| `tileflow001_stage` | `tileflow001` (Company 001) | 54.7 MB | ✓ Created |
 
 **Key Technical Detail:** Staging clones were created using `CREATE DATABASE ... WITH TEMPLATE` to ensure exact schema parity with production at the point of cloning (v1384).
 
@@ -38,7 +38,7 @@ Successfully created two disposable staging clones from production sources using
 
 Identified baseline schema gaps between production (v1384) and canonical target (v1385-v1388):
 
-#### smritisys_stage (Control Plane)
+#### tileflowsys_stage (Control Plane)
 - **Total tables:** 213
 - **Canonical tables present:** 29/40 (72.5%)
 - **Missing canonical tables (11):**
@@ -47,7 +47,7 @@ Identified baseline schema gaps between production (v1384) and canonical target 
   - `eway_bills` (v1386 - Distribution)
   - `pdt_demand_signals`, `pdt_distribution_predictions`, `pdt_model_registry`, `pdt_sku_twin_cache` (v1388 - Platform/Analytics)
 
-#### smriti001_stage (Company 001)
+#### tileflow001_stage (Company 001)
 - **Total tables:** 210
 - **Canonical tables present:** 34/40 (85%)
 - **Missing canonical tables (6):**
@@ -59,7 +59,7 @@ Identified baseline schema gaps between production (v1384) and canonical target 
 
 ### Phase 3: Application Regression Testing ✓
 
-Executed 8 regression test suites against staging clone (smriti001_stage):
+Executed 8 regression test suites against staging clone (tileflow001_stage):
 
 | Test | Result | Status |
 |------|--------|--------|
@@ -96,7 +96,7 @@ Validated structural integrity of staging databases:
 
 ### 1. Production Protection: CONFIRMED ✓
 - No modifications attempted or executed against production databases
-- Production `smritisys` and `smriti001` remain at v1384 (unchanged)
+- Production `tileflowsys` and `tileflow001` remain at v1384 (unchanged)
 - All validation happened exclusively on staging clones
 
 ### 2. Schema Baseline Established ✓
@@ -127,7 +127,7 @@ Create brownfield reconciliation migrations to:
 4. Validate data integrity
 
 ### Step 3: Production Execution (Only if Staging Passes)
-1. Execute reconciliation migrations on production databases (smritisys, smriti001)
+1. Execute reconciliation migrations on production databases (tileflowsys, tileflow001)
 2. Execute alembic stamp to mark versions in production
 3. Run production regression tests
 4. Monitor application functionality

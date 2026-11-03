@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from datetime import datetime, date, timezone
 from decimal import Decimal
@@ -52,7 +38,7 @@ from app.schemas.crm_cge import (
 
 class CrmGrowthEngine:
     """
-    Authoritative SMRITI CRM & Commercial Growth Engine (Blueprint Section 7).
+    Authoritative TILEFLOW CRM & Commercial Growth Engine (Blueprint Section 7).
     Governs Lead/Deal Pipeline, RFM Segmentation, Multi-Tier Loyalty Points,
     Universal Commission Settlement, and Referral Attribution.
     """

@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-14
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from decimal import Decimal
 from datetime import datetime, timezone
@@ -37,7 +23,7 @@ from ..schemas.psv import (
 
 class PSVProjectionService:
     """
-    PSV Optional Visibility Projection Engine in SMRITI Retail OS.
+    PSV Optional Visibility Projection Engine in MQube.
     Processes stock movements into immutable psv_stock_events ledger and psv_stock_balances projection.
     Operates strictly as a non-authoritative shadow visibility layer.
     """
@@ -48,7 +34,7 @@ class PSVProjectionService:
         control_session: AsyncSession,
         company_code: str
     ) -> bool:
-        """Checks PSV enablement status in SmritiSys Control Database."""
+        """Checks PSV enablement status in TileFlowSys Control Database."""
         clean_code = company_code.strip().upper()
         stmt = select(ControlPSVConfig).where(
             ControlPSVConfig.company_code == clean_code
@@ -134,7 +120,7 @@ class PSVProjectionService:
         event_payload: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        Idempotently projects stock event into SmritiPSV.
+        Idempotently projects stock event into TileFlowPSV.
         Enforces strict uniqueness on source_event_id.
         """
         source_event_id = event_payload["source_event_id"]
@@ -147,7 +133,7 @@ class PSVProjectionService:
             return {
                 "status": "SKIPPED_ALREADY_PROJECTED",
                 "source_event_id": source_event_id,
-                "message": f"Event '{source_event_id}' was already projected into SmritiPSV."
+                "message": f"Event '{source_event_id}' was already projected into TileFlowPSV."
             }
 
         # 1. Create PSVStockEvent record
@@ -166,7 +152,7 @@ class PSVProjectionService:
             causation_id=event_payload.get("causation_id"),
             event_schema_version=event_payload.get("event_schema_version", "1.0"),
             company_code=event_payload["company_code"].strip().upper(),
-            source_database=event_payload.get("source_database", "smriti001"),
+            source_database=event_payload.get("source_database", "tileflow001"),
             source_document_type=event_payload["source_document_type"],
             source_document_id=event_payload["source_document_id"],
             source_document_line_id=event_payload.get("source_document_line_id"),

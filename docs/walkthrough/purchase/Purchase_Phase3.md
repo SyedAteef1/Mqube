@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.18.2
   Created      : 2026-07-15
   Modified     : 2026-07-15
-  Copyright    : (c) SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    : (c) tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # MC2 Phase 3 - Purchase CANCEL/AMEND/Supplier UPDATE+DELETE Walkthrough
@@ -66,7 +65,7 @@ is required in that case (future scope).
 Express purchase mutations operated on db_store.json with no referential
 integrity. FastAPI implementation adds:
 - Tenant isolation on all queries (company_id + branch_id)
-- Soft-delete pattern consistent with all other SMRITI modules
+- Soft-delete pattern consistent with all other TILEFLOW modules
 - RECEIVED-terminal guard preventing accounting inconsistency
 - Atomic cancel+create for amendment (DB transaction)
 

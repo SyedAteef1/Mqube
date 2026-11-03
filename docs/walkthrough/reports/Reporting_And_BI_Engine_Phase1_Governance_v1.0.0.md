@@ -2,18 +2,18 @@
 title: "Reporting & BI Engine: Phase 1 (Governance & Data Contracts)"
 version: "1.0.0"
 date: "2026-08-28"
-author: "Jawahar Ramkripal Mallah"
+author: "Syed Ateef"
 designation: "Chief Systems Architect & Creator"
-email: "support@smritibooks.com"
-copyright: "© SMRITIBooks.com. All Rights Reserved."
-license: "Proprietary Commercial Software"
+email: "ateef@tileflow.in"
+copyright: " tileflow.in. Open Source - Permissive Use"
+license: "MIT Open Source License"
 classification: "Internal"
 ---
 
 # Walkthrough: Reporting & BI Engine — Phase 1 (Governance & Data Contracts)
 
 ## 1. Purpose
-Establish the foundational data contracts, Central Report Registry, and Governed Metric Dictionary for the SMRITI Retail OS Reporting & BI Engine v1.0.0-GA, enforcing the unidirectional authority chain:
+Establish the foundational data contracts, Central Report Registry, and Governed Metric Dictionary for the TILEFLOW Retail OS Reporting & BI Engine v1.0.0-GA, enforcing the unidirectional authority chain:
 $$\text{Business Policy} \longrightarrow \text{Governed Metric Layer} \longrightarrow \text{Report Registry} \longrightarrow \text{Security Policy} \longrightarrow \text{Query Engine} \longrightarrow \text{UI}$$
 
 ## 2. Scope

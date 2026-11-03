@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.41.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 from httpx import AsyncClient, ASGITransport
 from app.main import app
@@ -24,8 +10,8 @@ def _get_auth_headers():
         "role": "SYSADMIN",
         "company_id": "COMP-001",
         "branch_id": "BR-001",
-        "tenant_id": "smriti001",
-        "db_name": "smriti001",
+        "tenant_id": "tileflow001",
+        "db_name": "tileflow001",
         "is_active": True,
     })
     return {

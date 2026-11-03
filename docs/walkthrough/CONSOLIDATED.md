@@ -1,31 +1,26 @@
 <!--
-  Project      : SMRITI Retail OS
-  Repository   : SMRITIRetailNX
-  Organization : AITDL NETWORKS
+  Project      : TILEFLOW Retail OS
+  Repository   : TILEFLOWRetailNX
 
   Founders
 
   * Pushpa Devi Jawahar Mallah
     * Founder & Chairperson
     * Phone: +91 9324117007
-    * Email: founder@aitdl.com
 
-  * Jawahar Ramkripal Mallah
+  * Syed Ateef
     * Founder, Chief Executive Officer (CEO) & Chief Software Architect
-    * Email: founder@aitdl.com
 
-  * Websites: aitdl.com | erpnbook.com | smritibooks.com
 
   * Version    : 2.1.2
   * Created    : 2026-07-11
   * Modified   : 2026-07-11
-  * Copyright  : © AITDL.com and SMRITIBooks.com. All Rights Reserved.
-  * License    : Proprietary Commercial Software
+  * License    : MIT Open Source License
 -->
 
-# SMRITI Retail OS — Consolidated Walkthroughs Ledger
+# TILEFLOW Retail OS — Consolidated Walkthroughs Ledger
 
-This document serves as the master chronological repository of all development walkthroughs generated during the SMRITI Retail OS engineering lifecycle.
+This document serves as the master chronological repository of all development walkthroughs generated during the TILEFLOW Retail OS engineering lifecycle.
 
 ---
 
@@ -34,7 +29,7 @@ This document serves as the master chronological repository of all development w
 *Original File: [Sales_Studio.md](./sales/Sales_Studio.md)*
 
 ### 1. Purpose
-This walkthrough documents the aesthetic modernization of the SMRITI Sales & Commerce Studio (`SalesStudioTab.tsx`) subview selector to bring it in line with standard SMRITI visual and UX patterns.
+This walkthrough documents the aesthetic modernization of the TILEFLOW Sales & Commerce Studio (`SalesStudioTab.tsx`) subview selector to bring it in line with standard TILEFLOW visual and UX patterns.
 
 ### 2. Scope
 - Update visual structure of `SalesStudioTab.tsx`.
@@ -52,12 +47,12 @@ None.
 - **Micro-Animations integration**: Utilized `motion.div` from `motion/react` with a light vertical slide (`y: 10` to `y: 0`) and fade-in to polish transition states.
 
 ### 6. Design Rationale
-Using localized inline buttons for top-level module views was creating interface fragmentation in SMRITI. Standardizing navigation at the module root gives the screen a high-end commercial ERP feel, maximizes viewport space for the data tables below, and provides unified, custom scrollbars.
+Using localized inline buttons for top-level module views was creating interface fragmentation in TILEFLOW. Standardizing navigation at the module root gives the screen a high-end commercial ERP feel, maximizes viewport space for the data tables below, and provides unified, custom scrollbars.
 
 ### 7. Implementation Summary
-- Imported `motion` from `"motion/react"` and `SmritiScrollArea` from `"./SmritiScrollArea.tsx"`.
+- Imported `motion` from `"motion/react"` and `TileFlowScrollArea` from `"./TileFlowScrollArea.tsx"`.
 - Shifted original pill-based navigation block from the toolbar card into a top-level header and subtab block.
-- Wrapped metrics, filters, action triggers, and active subview tables inside `<SmritiScrollArea>` and `<motion.div>`.
+- Wrapped metrics, filters, action triggers, and active subview tables inside `<TileFlowScrollArea>` and `<motion.div>`.
 - Preserved all data-fetching functions, modal dialog forms, search parameters, and context menu integrations.
 
 ### 8. Tests Executed
@@ -87,7 +82,7 @@ None.
 *Original File: [Sales_CRM_Audit.md](./sales/Sales_CRM_Audit.md)*
 
 ### 1. Purpose
-This walkthrough documents the full-stack updates implemented to resolve the operational and architectural gaps identified in SMRITI Retail OS. This includes backend audit logging automation, remote database CRM synchronization, and POS checkout enhancements (split payments, hotkeys event listeners, and on-screen toolbar shortcuts).
+This walkthrough documents the full-stack updates implemented to resolve the operational and architectural gaps identified in TILEFLOW Retail OS. This includes backend audit logging automation, remote database CRM synchronization, and POS checkout enhancements (split payments, hotkeys event listeners, and on-screen toolbar shortcuts).
 
 ### 2. Scope
 - Add centralized Express interceptor middleware in the backend persistence layer to automatically generate audit logs on mutating APIs.
@@ -112,7 +107,7 @@ None.
 - **Tenders Ledger Allocations:** Map split checkout breakup to distinct Debit General Ledger accounts (Cash, Bank-POS, Bank-UPI, Accounts Receivable) per tender.
 
 ### 6. Design Rationale
-Using a hybrid local-storage cache sync model maintains SMRITI's signature high-velocity UI render times and ensures robust offline capabilities during internet dropouts. Global middleware auditing guarantees complete operational traceability without manual logging code cluttering business services.
+Using a hybrid local-storage cache sync model maintains TILEFLOW's signature high-velocity UI render times and ensures robust offline capabilities during internet dropouts. Global middleware auditing guarantees complete operational traceability without manual logging code cluttering business services.
 
 ### 7. Implementation Summary
 - **Backend Audit & CRM:**
@@ -160,10 +155,10 @@ None.
 ---
 
 ### 1. Purpose
-This walkthrough documents the integration of the standalone **PostgreSQL** database engine into the backend layer (`server.ts`) of SMRITI Retail OS, resolving the flat-file database storage issue while retaining the Node.js Express modular services framework.
+This walkthrough documents the integration of the standalone **PostgreSQL** database engine into the backend layer (`server.ts`) of TILEFLOW Retail OS, resolving the flat-file database storage issue while retaining the Node.js Express modular services framework.
 
 ### 2. Scope
-- Create the standard DDL schema script defining all SMRITI tables (customers, products, POS profiles, shifts, invoices, PSV ledger channels, and system audit logs).
+- Create the standard DDL schema script defining all TILEFLOW tables (customers, products, POS profiles, shifts, invoices, PSV ledger channels, and system audit logs).
 - Build the node-postgres pool manager loading connection strings dynamically from `.env` files.
 - Build the database initializer module executing table creation DDLs and seeding initial data from `db_store.json` on startup.
 - Hook database initialization asynchronously inside `server.ts` before the server starts listening on ports.
@@ -173,7 +168,7 @@ This walkthrough documents the integration of the standalone **PostgreSQL** data
 | File Path | Size | Description |
 | :--- | :--- | :--- |
 | `src/db/pool.ts` | 29 lines | PostgreSQL connection pool config with error handlers |
-| `src/db/schema.sql` | 228 lines | DDL schema script mapping SMRITI entities |
+| `src/db/schema.sql` | 228 lines | DDL schema script mapping TILEFLOW entities |
 | `src/db/init.ts` | 228 lines | DB initializer running SQL schema and imports flat-file seed JSON |
 
 ### 4. Files Modified
@@ -201,7 +196,7 @@ Using a centralized schema initialization module ensures that any fresh develope
 ```
 Command: npm run lint
 Output:
-> smriti-retail-os@2.1.1 lint
+> tileflow-retail-os@2.1.1 lint
 > tsc --noEmit
 
 (Exit code 0 — zero errors)
@@ -237,7 +232,7 @@ Output:
 ---
 
 ### 1. Purpose
-This walkthrough documents the implementation of the Ports and Adapters (Hexagonal) clean architecture layout and the background database-backed Synchronization Engine for SMRITI Retail OS. These changes separate core retail business workflows from database-specific drivers and HTTP web frameworks.
+This walkthrough documents the implementation of the Ports and Adapters (Hexagonal) clean architecture layout and the background database-backed Synchronization Engine for TILEFLOW Retail OS. These changes separate core retail business workflows from database-specific drivers and HTTP web frameworks.
 
 ### 2. Scope
 - Define domain data structures and repository interfaces (Ports).
@@ -274,7 +269,7 @@ This walkthrough documents the implementation of the Ports and Adapters (Hexagon
 - **Unified Boot DI Container:** Instantiates active repository implementations at startup using the `DATABASE_PROVIDER` configuration variable.
 
 ### 6. Design Rationale
-Decoupling application code from database APIs ensures that SMRITI Retail OS can run on different platforms (Windows Server with Postgres, Android Tablet with SQLite, and Web PWA with IndexedDB) using the exact same billing, discounts, and inventory deduction business logic.
+Decoupling application code from database APIs ensures that TILEFLOW Retail OS can run on different platforms (Windows Server with Postgres, Android Tablet with SQLite, and Web PWA with IndexedDB) using the exact same billing, discounts, and inventory deduction business logic.
 
 ### 7. Implementation Summary
 1. **Domain & Interfaces:** Defined clean TypeScript models and database transaction signatures.
@@ -287,7 +282,7 @@ Decoupling application code from database APIs ensures that SMRITI Retail OS can
 ```
 Command: npm run lint
 Output:
-> smriti-retail-os@2.1.1 lint
+> tileflow-retail-os@2.1.1 lint
 > tsc --noEmit
 
 (Exit code 0 — zero errors)
@@ -310,7 +305,7 @@ Output:
 - None.
 
 ### 13. Related RFCs
-- SMRITI Clean Architecture Implementation Plan (`Clean_Arch_And.md`).
+- TILEFLOW Clean Architecture Implementation Plan (`Clean_Arch_And.md`).
 
 ---
 
@@ -322,7 +317,7 @@ Output:
 ---
 
 ### 1. Purpose
-This walkthrough documents the creation of production-ready containerization configs and automated OS-level startup scripts for SMRITI Retail OS. This ensures the application recovers automatically after power outages, reboots, or crashes.
+This walkthrough documents the creation of production-ready containerization configs and automated OS-level startup scripts for TILEFLOW Retail OS. This ensures the application recovers automatically after power outages, reboots, or crashes.
 
 ### 2. Scope
 - Create a production multi-stage `Dockerfile`.
@@ -363,7 +358,7 @@ Providing Docker orchestration simplifies local sandbox testing and cloud hostin
 ```
 Command: npm run lint
 Output:
-> smriti-retail-os@2.1.1 lint
+> tileflow-retail-os@2.1.1 lint
 > tsc --noEmit
 
 (Exit code 0 — zero errors)
@@ -386,16 +381,14 @@ Output:
 - None.
 
 ### 13. Related RFCs
-- SMRITI Containerization and Auto-Startup Implementation Plan (`Clean_Arch_And.md`).
+- TILEFLOW Containerization and Auto-Startup Implementation Plan (`Clean_Arch_And.md`).
 
 ---
-## [2026-07-11] v3.3.0 — Project Header Standardization
 *Area: `foundation` | Original File: [Project_Header.md](./foundation/Project_Header.md)*
 
 # Walkthrough: Project Header Standardization — v3.3.0
 
 ## 1. Purpose
-This walkthrough documents the standardized repository-wide header update applying AITDL NETWORKS and founding leadership details to all source files.
 
 ---
 
@@ -422,7 +415,6 @@ This walkthrough documents the standardized repository-wide header update applyi
 ---
 
 ## 6. Design Rationale
-Attributing founding details and AITDL ownership uniformly across all source assets is critical for governance, brand compliance, and copyright registry.
 
 ---
 
@@ -437,7 +429,7 @@ Attributing founding details and AITDL ownership uniformly across all source ass
 ```
 Command: npm run lint
 Output:
-> smriti-retail-os@2.1.1 lint
+> tileflow-retail-os@2.1.1 lint
 > tsc --noEmit
 
 (Exit code 0 — zero errors)
@@ -467,26 +459,26 @@ Output:
 ---
 
 ## 13. Related RFCs
-- SMRITI Project Header Standardization Implementation Plan (`Project_Header.md`).
+- TILEFLOW Project Header Standardization Implementation Plan (`Project_Header.md`).
 
 ---
-## [2026-07-11] v3.4.0 — About SMRITI Retail OS
+## [2026-07-11] v3.4.0 — About TILEFLOW Retail OS
 *Area: `foundation` | Original File: [Fdn_About_Module.md](./foundation/Fdn_About_Module.md)*
 
-# Walkthrough: Complete "About SMRITI Retail OS" Module — v3.4.0
+# Walkthrough: Complete "About TILEFLOW Retail OS" Module — v3.4.0
 
-This walkthrough documents the design, implementation, and verification of the complete **About SMRITI Retail OS** reference desk module.
+This walkthrough documents the design, implementation, and verification of the complete **About TILEFLOW Retail OS** reference desk module.
 
 ---
 
 ## 1. Purpose
-Design and implement a complete **About SMRITI Retail OS** reference desk module to act as the single source of truth for product information, founding team leadership, system architectures, licenses, legal policies, contact channels, and system diagnostics.
+Design and implement a complete **About TILEFLOW Retail OS** reference desk module to act as the single source of truth for product information, founding team leadership, system architectures, licenses, legal policies, contact channels, and system diagnostics.
 
 ---
 
 ## 2. Scope
 - **Backend API:** Implementation of dynamic GET `/api/changelog` Express router to serve the `CHANGELOG.md` file contents.
-- **Frontend Tab Redesign:** Redesign of `AboutSmritiTab.tsx` with a responsive split pane structure featuring 20 submenus, search functionality, visual timelines, dynamic system diagnostics, and print stylesheets.
+- **Frontend Tab Redesign:** Redesign of `AboutTileFlowTab.tsx` with a responsive split pane structure featuring 20 submenus, search functionality, visual timelines, dynamic system diagnostics, and print stylesheets.
 - **Unit Testing:** Implement a regression test script `src/tests/about.test.ts` verifying metadata configuration and changelog structures.
 - **Project Configuration:** Register test commands in `package.json`.
 
@@ -498,7 +490,7 @@ Design and implement a complete **About SMRITI Retail OS** reference desk module
 ---
 
 ## 4. Files Modified
-- `src/components/AboutSmritiTab.tsx` (Complete redesign of internal submenus navigation and display panels)
+- `src/components/AboutTileFlowTab.tsx` (Complete redesign of internal submenus navigation and display panels)
 - `server.ts` (Register GET `/api/changelog` endpoint router)
 - `package.json` (Register test automation script runner)
 
@@ -519,7 +511,7 @@ Design and implement a complete **About SMRITI Retail OS** reference desk module
 
 ## 7. Implementation Summary
 - Added Express endpoint `/api/changelog` resolving the absolute path to `CHANGELOG.md` and caching/returning text responses.
-- Implemented `AboutSmritiTab.tsx` layout with categories, search state filters, SVG logo graphics, story and product flow timelines, and feedback contact forms.
+- Implemented `AboutTileFlowTab.tsx` layout with categories, search state filters, SVG logo graphics, story and product flow timelines, and feedback contact forms.
 - Programmed print stylesheet media queries to cleanly print only the active reference sheet in high-contrast monochrome.
 
 ---
@@ -531,8 +523,8 @@ Output:
 [TEST] Beginning About Module source file validations...
 [TEST] Checking package.json at: D:\IMP\GitHub\SMRITRretailNX\package.json
 [TEST] package.json version verified: 2.1.1
-[TEST] Checking smriti-config.json at: D:\IMP\GitHub\SMRITRretailNX\smriti-config.json
-[TEST] smriti-config.json schema layout verified successfully.
+[TEST] Checking tileflow-config.json at: D:\IMP\GitHub\SMRITRretailNX\tileflow-config.json
+[TEST] tileflow-config.json schema layout verified successfully.
 [TEST] Checking CHANGELOG.md at: D:\IMP\GitHub\SMRITRretailNX\CHANGELOG.md
 [TEST] CHANGELOG.md verified successfully.
 
@@ -553,7 +545,7 @@ Output:
 ---
 
 ## 11. Future Work
-- Integrate the SMRITI Wiki Copilot database with the system information metrics panels.
+- Integrate the TILEFLOW Wiki Copilot database with the system information metrics panels.
 
 ---
 
@@ -563,11 +555,11 @@ Output:
 ---
 
 ## 13. Related RFCs
-- SMRITI About Module Implementation Plan (`About_Module_Plan.md`).
+- TILEFLOW About Module Implementation Plan (`About_Module_Plan.md`).
 
 ---
 
-## [2026-07-11] v3.5.0 — SMRITI Development Intelligence Center (SDIC)
+## [2026-07-11] v3.5.0 — TILEFLOW Development Intelligence Center (SDIC)
 *Area: `foundation` | Original File: [Fdn_Dev_Tracker.md](./foundation/Fdn_Dev_Tracker.md)*
 
 ### 1. Purpose
@@ -603,7 +595,7 @@ Design and implement an automated development intelligence, diagnostics, and cod
 - Executed local git commands to sync metadata from the dev environment without remote dependencies.
 
 ### 6. Design Rationale
-Moving the code scanner from simple file checking to a modular Development Intelligence Center gives project developers and team leads immediate visibility into technical debt, missing tests, and unlinked endpoints directly from the SMRITI interface.
+Moving the code scanner from simple file checking to a modular Development Intelligence Center gives project developers and team leads immediate visibility into technical debt, missing tests, and unlinked endpoints directly from the TILEFLOW interface.
 
 ### 7. Implementation Summary
 Created recursive regex scanners, compiled weighted DHI metrics, mapped routes, and rendered a multi-tabbed React dashboard displaying progress rings, line charts, and check matrices.
@@ -612,7 +604,7 @@ Created recursive regex scanners, compiled weighted DHI metrics, mapped routes, 
 ```
 Command: npm run test
 Output:
-[TEST] Beginning SMRITI Development Intelligence Center (SDIC) unit tests...
+[TEST] Beginning TILEFLOW Development Intelligence Center (SDIC) unit tests...
 [TEST] Executing codebase parser...
 [TEST] Parser checks passed. Scanned 165 files.
 [TEST] Calculating development health metrics...
@@ -635,15 +627,15 @@ Incorporate dynamic pre-commit hooks to automatically execute scans.
 None.
 
 ### 13. Related RFCs
-- SMRITI SDIC Implementation Plan (`Dev_Tracker_Plan.md`).
+- TILEFLOW SDIC Implementation Plan (`Dev_Tracker_Plan.md`).
 
 ---
 
-## [2026-07-11] v3.6.0 — SMRITI FastAPI Core Backend
+## [2026-07-11] v3.6.0 — TILEFLOW FastAPI Core Backend
 *Area: `foundation` | Original File: [Fdn_FastAPI_Core.md](./foundation/Fdn_FastAPI_Core.md)*
 
 ### 1. Purpose
-Evolve SMRITI backend architecture by setting up a dedicated Python FastAPI core application in the root directory.
+Evolve TILEFLOW backend architecture by setting up a dedicated Python FastAPI core application in the root directory.
 
 ### 2. Scope
 - Set up a clean root `backend/` folder separate from Node configs.
@@ -680,7 +672,7 @@ Evolve SMRITI backend architecture by setting up a dedicated Python FastAPI core
 - Integrated SQLAlchemy 2.x async session pooling and Alembic configurations.
 
 ### 6. Design Rationale
-Decoupling the FastAPI backend from Express enables SMRITI to migrate modules incrementally, utilizing Python's mature data processing libraries.
+Decoupling the FastAPI backend from Express enables TILEFLOW to migrate modules incrementally, utilizing Python's mature data processing libraries.
 
 ### 7. Implementation Summary
 Created settings binders, created request logging middlewares, added database async pools, implemented v1 metadata, changelog, and dev-tracker routes, and stubbed AI modules.
@@ -707,6 +699,6 @@ Migrate Express data services to FastAPI.
 None.
 
 ### 13. Related RFCs
-- SMRITI FastAPI Core Plan (`FastAPI_Core_Plan.md`).
+- TILEFLOW FastAPI Core Plan (`FastAPI_Core_Plan.md`).
 
 

@@ -3,16 +3,16 @@ import psycopg2
 from app.core.config import settings
 
 
-def test_smriti_permissions_schema_is_present_and_queryable():
+def test_tileflow_permissions_schema_is_present_and_queryable():
     url = settings.DATABASE_URL.replace("postgresql+asyncpg://", "postgresql://")
     conn = psycopg2.connect(url)
     cur = conn.cursor()
 
-    cur.execute("SELECT to_regclass('public.smriti_permissions')")
-    assert cur.fetchone()[0] is not None, "smriti_permissions table must exist"
+    cur.execute("SELECT to_regclass('public.tileflow_permissions')")
+    assert cur.fetchone()[0] is not None, "tileflow_permissions table must exist"
 
     cur.execute(
-        "SELECT column_name FROM information_schema.columns WHERE table_name = 'smriti_permissions' ORDER BY ordinal_position"
+        "SELECT column_name FROM information_schema.columns WHERE table_name = 'tileflow_permissions' ORDER BY ordinal_position"
     )
     columns = {row[0] for row in cur.fetchall()}
     required = {
@@ -41,10 +41,10 @@ def test_smriti_permissions_schema_is_present_and_queryable():
     assert not missing, f"Missing permission columns: {missing}"
 
     scope = "User:test_perm_schema"
-    cur.execute("DELETE FROM smriti_permissions WHERE scope = %s", (scope,))
+    cur.execute("DELETE FROM tileflow_permissions WHERE scope = %s", (scope,))
     cur.execute(
         """
-        INSERT INTO smriti_permissions (
+        INSERT INTO tileflow_permissions (
             id, uuid, code, resource, action, scope, module, tenant_id,
             company_id, branch_id, is_active, is_deleted, created_at, modified_at, version
         )
@@ -59,7 +59,7 @@ def test_smriti_permissions_schema_is_present_and_queryable():
     conn.commit()
 
     cur.execute(
-        "SELECT resource, action, is_active FROM smriti_permissions WHERE scope = %s AND resource = 'sales_billing' AND action = 'VIEW'",
+        "SELECT resource, action, is_active FROM tileflow_permissions WHERE scope = %s AND resource = 'sales_billing' AND action = 'VIEW'",
         (scope,),
     )
     row = cur.fetchone()
@@ -68,7 +68,7 @@ def test_smriti_permissions_schema_is_present_and_queryable():
     assert row[1] == "VIEW"
     assert row[2] is True
 
-    cur.execute("DELETE FROM smriti_permissions WHERE id = 'perm-test-schema-001'")
+    cur.execute("DELETE FROM tileflow_permissions WHERE id = 'perm-test-schema-001'")
     conn.commit()
     cur.close()
     conn.close()

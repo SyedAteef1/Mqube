@@ -1,15 +1,14 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 6.16.0
   Created      : 2026-08-25
   Modified     : 2026-08-25
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Walkthrough: Sprint 41 — Section 7 CRM / Commercial Growth Engine (CGE) Completion
@@ -43,8 +42,8 @@ The purpose of Sprint 41 is to complete the final shared business engine of Blue
 - **Minimum Qualifying Threshold for Referrals**: Referral reward payouts verify that the triggering sales invoice meets or exceeds `min_qualifying_order_amount` before appending to `ReferralReward`.
 
 ## 6. Design Rationale
-- **Zero Express / Sole Backend**: In compliance with SMRITI Backend System-of-Record Policy, all CRM and commercial growth operations execute within FastAPI + Postgres (`backend/app/`), ensuring tenant multi-database isolation and full transactional durability.
-- **Strict Naming Policy Compliance**: All newly created python basenames (`crm_cge.py`, `crm_engine.py`, `t_crm_cge.py`) strictly adhere to `<= 22` characters and pass `scripts/smriti_naming_guard.py`.
+- **Zero Express / Sole Backend**: In compliance with TILEFLOW Backend System-of-Record Policy, all CRM and commercial growth operations execute within FastAPI + Postgres (`backend/app/`), ensuring tenant multi-database isolation and full transactional durability.
+- **Strict Naming Policy Compliance**: All newly created python basenames (`crm_cge.py`, `crm_engine.py`, `t_crm_cge.py`) strictly adhere to `<= 22` characters and pass `scripts/tileflow_naming_guard.py`.
 
 ## 7. Implementation Summary
 1. **Model Layer**: Provisioned `CrmLead`, `CrmOpportunity`, `CrmCampaign`, `CrmCustomerActivity` with multi-tenant company isolation and audit metadata.

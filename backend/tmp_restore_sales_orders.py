@@ -2,7 +2,7 @@ import io
 import psycopg2
 
 BACKUP_FILE = r"F:\SMRITRretailNX\backups\pre_branch_key_reconcile_20260826.sql"
-DB_URL = "postgresql://postgres:postgres@localhost:5432/smriti001"
+DB_URL = "postgresql://postgres:postgres@localhost:5432/tileflow001"
 
 print("Reading backup file...")
 with open(BACKUP_FILE, "rb") as f:

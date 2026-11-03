@@ -1,14 +1,13 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.14.0
   Created      : 2026-07-11
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
 -->
 
 # Technical Debt Audit Report
@@ -21,7 +20,7 @@
 - **Total HACK Comments:** 5
 
 ### Large Components (> 500 lines)
-- ⚠️ `src/components/AboutSmritiTab.tsx (1079 lines)`
+- ⚠️ `src/components/AboutTileFlowTab.tsx (1079 lines)`
 - ⚠️ `src/components/AdvancedBillingEng.tsx (1671 lines)`
 - ⚠️ `src/components/ApprovalMatrixTab.tsx (508 lines)`
 - ⚠️ `src/components/AttrManagerSec.tsx (641 lines)`

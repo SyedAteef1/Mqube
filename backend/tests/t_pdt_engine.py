@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-25
-Modified     : 2026-08-25
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import pytest
 import uuid
 from decimal import Decimal
@@ -39,8 +25,8 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
             "role": role,
             "company_id": company_id,
             "branch_id": branch_id,
-            "tenant_id": "smriti001",
-            "db_name": "smriti001",
+            "tenant_id": "tileflow001",
+            "db_name": "tileflow001",
             "is_active": True,
         }
     )
@@ -54,7 +40,7 @@ def get_auth_headers(role: str = "SYSADMIN", company_id: str = "COMP-001", branc
 @pytest.mark.asyncio
 async def test_pdt_model_registration_and_demand_signals():
     """Verify PDT forecasting model registration and market demand signals."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
 
     async with sessionmaker() as session:
@@ -95,7 +81,7 @@ async def test_pdt_model_registration_and_demand_signals():
 @pytest.mark.asyncio
 async def test_pdt_sku_twin_simulation_and_prediction():
     """Verify digital twin cache updates, demand forecasting, and stock replenishment recommendations."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     sku = f"SKU-PDT-{suffix.upper()}"
     model_code = f"MDL_TEST_{suffix.upper()}"
@@ -153,7 +139,7 @@ async def test_pdt_sku_twin_simulation_and_prediction():
 @pytest.mark.asyncio
 async def test_pdt_strict_read_only_isolation_guarantee():
     """Verify PDT operations strictly isolate from mutating physical stock and accounting ledgers."""
-    sessionmaker = get_company_sessionmaker("smriti001")
+    sessionmaker = get_company_sessionmaker("tileflow001")
     suffix = uuid.uuid4().hex[:6]
     sku = f"SKU-ISO-{suffix.upper()}"
     model_code = f"MDL_ISO_{suffix.upper()}"

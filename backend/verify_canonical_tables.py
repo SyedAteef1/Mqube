@@ -3,7 +3,7 @@
 import psycopg2
 import psycopg2.extensions
 
-conn = psycopg2.connect(dbname="smritisys", user="postgres", password="postgres", host="localhost")
+conn = psycopg2.connect(dbname="tileflowsys", user="postgres", password="postgres", host="localhost")
 conn.set_isolation_level(psycopg2.extensions.ISOLATION_LEVEL_AUTOCOMMIT)
 cur = conn.cursor()
 
@@ -21,7 +21,7 @@ ORDER BY table_name
 """, (canonical_sample,))
 
 result = cur.fetchall()
-print(f"✓ Production smritisys ALREADY HAS {len(result)}/{len(canonical_sample)} canonical tables:")
+print(f"✓ Production tileflowsys ALREADY HAS {len(result)}/{len(canonical_sample)} canonical tables:")
 for row in result:
     print(f"  ✓ {row[0]}")
 

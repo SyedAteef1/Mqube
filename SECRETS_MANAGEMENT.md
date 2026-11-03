@@ -1,4 +1,4 @@
-# 🔐 SECRETS MANAGEMENT GUIDE - SMRITI Retail OS
+# 🔐 SECRETS MANAGEMENT GUIDE - TILEFLOW Retail OS
 
 ## CRITICAL: Hardcoded Secrets Have Been Removed
 
@@ -13,7 +13,7 @@
 ### ⛔ Previous State (INSECURE)
 ```env
 JWT_SECRET_KEY=9a12c418-5a48-43d9-90b5-555a6d71b87a          # ❌ COMPROMISED
-INTERNAL_SERVICE_KEY=smriti_secret_fallback_key               # ❌ COMPROMISED
+INTERNAL_SERVICE_KEY=tileflow_secret_fallback_key               # ❌ COMPROMISED
 SGIP_VAULT_MASTER_KEY=sgip_vault_master_secret_key_12345      # ❌ COMPROMISED
 ```
 
@@ -81,14 +81,14 @@ echo "your-internal-service-key" | docker secret create internal_service_key -
 echo "your-vault-master-key" | docker secret create vault_master_key -
 
 # Step 3: Update docker-compose.yml
-docker stack deploy -c docker-compose.yml smriti
+docker stack deploy -c docker-compose.yml tileflow
 ```
 
 **docker-compose.yml Example:**
 ```yaml
 services:
-  smriti-api:
-    image: smriti-api:3.30.0
+  tileflow-api:
+    image: tileflow-api:3.30.0
     secrets:
       - jwt_secret
       - internal_service_key
@@ -146,7 +146,7 @@ vault operator unseal <key>
 
 # Step 3: Authenticate and store secrets
 vault login <token>
-vault kv put secret/smriti/production \
+vault kv put secret/tileflow/production \
   jwt_secret_key="$(openssl rand -hex 32)" \
   internal_service_key="$(openssl rand -hex 32)" \
   sgip_vault_master_key="$(openssl rand -hex 32)"
@@ -168,7 +168,7 @@ def init_vault():
     
     # Read secrets
     response = client.secrets.kv.read_secret_version(
-        path="smriti/production"
+        path="tileflow/production"
     )
     
     return response['data']['data']
@@ -198,7 +198,7 @@ def get_aws_secret(secret_name: str) -> str:
     response = client.get_secret_value(SecretId=secret_name)
     return response['SecretString']
 
-JWT_SECRET_KEY = get_aws_secret('smriti/jwt-secret')
+JWT_SECRET_KEY = get_aws_secret('tileflow/jwt-secret')
 ```
 
 #### Azure Key Vault
@@ -228,7 +228,7 @@ def get_gcp_secret(secret_id: str, version_id: str = "latest") -> str:
     response = client.access_secret_version(request={"name": name})
     return response.payload.data.decode("UTF-8")
 
-JWT_SECRET_KEY = get_gcp_secret('smriti-jwt-secret')
+JWT_SECRET_KEY = get_gcp_secret('tileflow-jwt-secret')
 ```
 
 ---
@@ -306,7 +306,7 @@ git log -p --all -S "JWT_SECRET_KEY" | grep -i "secret"
 
 # Search in current code
 grep -r "9a12c418-5a48-43d9-90b5-555a6d71b87a" .
-grep -r "smriti_secret_fallback_key" .
+grep -r "tileflow_secret_fallback_key" .
 grep -r "sgip_vault_master_secret" .
 ```
 

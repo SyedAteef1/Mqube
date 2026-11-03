@@ -1,26 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Repository   : SMRITIRetailNX
-Organization : AITDL NETWORKS
-
-Founders
-
-* Pushpa Devi Jawahar Mallah -- Founder & Chairperson
-* Jawahar Ramkripal Mallah   -- Founder, CEO & Chief Software Architect
-* Websites: aitdl.com | erpnbook.com | smritibooks.com
-
-* Version    : 3.28.0
-* Created    : 2026-08-24
-* Modified   : 2026-08-24
-* Copyright  : (c) AITDL.com and SMRITIBooks.com. All Rights Reserved.
-* License    : Proprietary Commercial Software
-
-Sprint 8b -- Business Ledger parity.
-Cash Report endpoints derived from Shoper9 MnuNo 460 gap analysis.
-Shoper9 EXE refs: SR203100, SR210600, SR212700, SR212900, SR234400,
-                  SR203300, SR203200, SR242900.
-"""
-
 from datetime import date
 from decimal import Decimal
 from typing import List, Optional, Dict, Any

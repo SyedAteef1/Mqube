@@ -1,21 +1,20 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
 # Architectural Decision Record (ADR-001) — Compliance Architecture
 
 ## Context
-SMRITI Retail OS requires robust, extensible compliance integrations (E-Way Bills, E-Invoices, GST returns) for Indian merchants. Previously, transactional business logic was split between Express and FastAPI, creating potential issues for credential security and data consistency.
+TILEFLOW Retail OS requires robust, extensible compliance integrations (E-Way Bills, E-Invoices, GST returns) for Indian merchants. Previously, transactional business logic was split between Express and FastAPI, creating potential issues for credential security and data consistency.
 
 ## Decision
 1. **FastAPI Backend System of Record**: All compliance schemas, event logs, credentials, and API connections are handled strictly in the FastAPI + Postgres backend. Express is confined to layout routing and UI proxies.

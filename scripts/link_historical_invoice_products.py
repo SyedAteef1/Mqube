@@ -1,23 +1,9 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 3.36.0
-Created      : 2026-08-27
-Modified     : 2026-08-27
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import sys
 import psycopg2
 from psycopg2.extras import RealDictCursor
 
 
-def link_historical_invoice_products(database: str = "smriti001", apply: bool = False):
+def link_historical_invoice_products(database: str = "tileflow001", apply: bool = False):
     conn = psycopg2.connect(f"postgresql://postgres:postgres@localhost:5432/{database}")
     cur = conn.cursor(cursor_factory=RealDictCursor)
 

@@ -1,21 +1,7 @@
-/**
- * Project      : SMRITI Retail OS
- * Author       : Jawahar Ramkripal Mallah
- * Designation  : Chief Systems Architect & Creator
- * Email        : support@smritibooks.com
- * Websites     : smritibooks.com | erpnbook.com | aitdl.com
- * Version      : 6.0.0
- * Created      : 2026-08-21
- * Modified     : 2026-08-21
- * Copyright    : © SMRITIBooks.com. All Rights Reserved.
- * License      : Proprietary Commercial Software
- * Classification: Internal
- */
-
 import React from "react";
 import { X, Keyboard, Check, Command } from "lucide-react";
 
-interface SmritiProPosHotkeysDlgProps {
+interface TileFlowProPosHotkeysDlgProps {
   onClose: () => void;
 }
 
@@ -58,26 +44,26 @@ const HOTKEY_GROUPS = [
   }
 ];
 
-export const SmritiProPosHotkeysDlg: React.FC<SmritiProPosHotkeysDlgProps> = ({ onClose }) => {
+export const TileFlowProPosHotkeysDlg: React.FC<TileFlowProPosHotkeysDlgProps> = ({ onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-xs p-4">
-      <div className="bg-white dark:bg-[#191c1e] text-[#191c1e] dark:text-[#eff1f3] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#c4c5d5] dark:border-[#444653] max-h-[85vh]">
+      <div className="bg-white dark:bg-[#1c1c1c] text-[#1c1c1c] dark:text-[#f1f1f1] w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden flex flex-col border border-[#c6c6c6] dark:border-[#474747] max-h-[85vh]">
         
         {/* Header */}
-        <div className="px-6 py-3.5 border-b border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e] flex justify-between items-center shrink-0">
+        <div className="px-6 py-3.5 border-b border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex justify-between items-center shrink-0">
           <div className="flex items-center gap-2.5">
-            <div className="p-1.5 bg-[#00288e] text-white rounded-lg">
+            <div className="p-1.5 bg-[#272727] text-white rounded-lg">
               <Keyboard size={18} />
             </div>
             <div>
-              <h3 className="text-base font-bold text-[#191c1d] dark:text-white">POS Hot Keys &amp; Shortcuts [Alt+H]</h3>
-              <p className="text-xs text-[#565e74] dark:text-[#bec6e0]">Standard Shoper 9 retail keyboard shortcuts &amp; quick action triggers.</p>
+              <h3 className="text-base font-bold text-[#1b1b1b] dark:text-white">POS Hot Keys &amp; Shortcuts [Alt+H]</h3>
+              <p className="text-xs text-[#5e5e5e] dark:text-[#c6c6c6]">Standard Shoper 9 retail keyboard shortcuts &amp; quick action triggers.</p>
             </div>
           </div>
           <button 
             type="button"
             onClick={onClose}
-            className="text-[#565e74] hover:bg-[#f3f4f5] p-1.5 rounded-lg transition"
+            className="text-[#5e5e5e] hover:bg-[#f4f4f4] p-1.5 rounded-lg transition"
           >
             <X size={18} />
           </button>
@@ -87,17 +73,17 @@ export const SmritiProPosHotkeysDlg: React.FC<SmritiProPosHotkeysDlgProps> = ({ 
         <div className="p-6 overflow-y-auto space-y-5 flex-1">
           {HOTKEY_GROUPS.map((grp, gIdx) => (
             <div key={gIdx} className="space-y-2">
-              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#00288e] dark:text-[#a8b8ff] pb-1 border-b border-[#eceef0] dark:border-[#2d3133]">
+              <h4 className="text-[11px] font-bold uppercase tracking-wider text-[#272727] dark:text-[#bababa] pb-1 border-b border-[#eeeeee] dark:border-[#303030]">
                 {grp.category}
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {grp.items.map((item, iIdx) => (
                   <div 
                     key={iIdx} 
-                    className="flex items-center justify-between p-2 rounded-lg bg-[#f8f9fa] dark:bg-[#131b2e] border border-[#eceef0] dark:border-[#2d3133]"
+                    className="flex items-center justify-between p-2 rounded-lg bg-[#f9f9f9] dark:bg-[#1b1b1b] border border-[#eeeeee] dark:border-[#303030]"
                   >
-                    <span className="text-xs text-[#191c1d] dark:text-white">{item.desc}</span>
-                    <kbd className="px-2 py-0.5 bg-white dark:bg-[#2d3133] border border-[#c4c5d5] dark:border-[#444653] rounded text-xs font-mono font-bold text-[#00288e] dark:text-[#a8b8ff] shadow-2xs">
+                    <span className="text-xs text-[#1b1b1b] dark:text-white">{item.desc}</span>
+                    <kbd className="px-2 py-0.5 bg-white dark:bg-[#303030] border border-[#c6c6c6] dark:border-[#474747] rounded text-xs font-mono font-bold text-[#272727] dark:text-[#bababa] shadow-2xs">
                       {item.key}
                     </kbd>
                   </div>
@@ -108,11 +94,11 @@ export const SmritiProPosHotkeysDlg: React.FC<SmritiProPosHotkeysDlgProps> = ({ 
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-[#c4c5d5] dark:border-[#444653] bg-[#f8f9fa] dark:bg-[#131b2e] flex justify-end shrink-0">
+        <div className="px-6 py-3 border-t border-[#c6c6c6] dark:border-[#474747] bg-[#f9f9f9] dark:bg-[#1b1b1b] flex justify-end shrink-0">
           <button
             type="button"
             onClick={onClose}
-            className="px-5 py-1.5 bg-[#00288e] text-white rounded-xl text-xs font-bold hover:bg-[#1e40af] transition"
+            className="px-5 py-1.5 bg-[#272727] text-white rounded-xl text-xs font-bold hover:bg-[#414141] transition"
           >
             Close [Esc]
           </button>
@@ -123,4 +109,4 @@ export const SmritiProPosHotkeysDlg: React.FC<SmritiProPosHotkeysDlgProps> = ({ 
   );
 };
 
-export default SmritiProPosHotkeysDlg;
+export default TileFlowProPosHotkeysDlg;

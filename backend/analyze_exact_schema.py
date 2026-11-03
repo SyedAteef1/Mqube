@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-SMRITI Staging Analysis - Phase 2: Exact Schema Difference Analysis
+TILEFLOW Staging Analysis - Phase 2: Exact Schema Difference Analysis
 ====================================================================
 
 Compare staging databases against canonical v1385-v1388 definitions.
@@ -163,7 +163,7 @@ class SchemaAnalyzer:
         
         # Critical missing tables that cause test failures
         critical = {
-            'smriti_permissions': 'Required by all permission checks (v1384 pre-canonical)',
+            'tileflow_permissions': 'Required by all permission checks (v1384 pre-canonical)',
             'company_database_registries': 'Required by bootstrap tests (v1384 pre-canonical)'
         }
         
@@ -286,5 +286,5 @@ class SchemaAnalyzer:
         self.log(f'Report: {self.report_file}')
 
 if __name__ == '__main__':
-    analyzer = SchemaAnalyzer('smriti001_stage')
+    analyzer = SchemaAnalyzer('tileflow001_stage')
     analyzer.execute()

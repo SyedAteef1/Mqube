@@ -1,17 +1,3 @@
-"""
-Project      : SMRITI Retail OS
-Author       : Jawahar Ramkripal Mallah
-Designation  : Chief Systems Architect & Creator
-Email        : support@smritibooks.com
-Websites     : smritibooks.com | erpnbook.com | aitdl.com
-Version      : 6.16.0
-Created      : 2026-08-23
-Modified     : 2026-08-23
-Copyright    : © SMRITIBooks.com. All Rights Reserved.
-License      : Proprietary Commercial Software
-Classification: Internal
-"""
-
 import uuid
 from typing import Optional, List, Dict, Any
 from sqlalchemy import select, or_, and_
@@ -24,7 +10,7 @@ from ..models.inventory import Product, ProductBatchStock
 
 class UniversalItemMasterService:
     """
-    Authoritative Universal Item Master Domain Service for Tenant Data Planes (smritiXXX).
+    Authoritative Universal Item Master Domain Service for Tenant Data Planes (tileflowXXX).
     Provides canonical item management, multi-attribute variants, barcode lookup, and batch ledger linking.
     """
 

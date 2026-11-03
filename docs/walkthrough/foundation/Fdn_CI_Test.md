@@ -1,24 +1,23 @@
 <!--
-  Project      : SMRITI Retail OS
-  Author       : Jawahar Ramkripal Mallah
+  Project      : TILEFLOW Retail OS
+  Author       : Syed Ateef
   Designation  : Chief Systems Architect & Creator
-  Email        : support@smritibooks.com
-  Websites     : smritibooks.com | erpnbook.com | aitdl.com
+  Email        : ateef@tileflow.in
   Version      : 3.16.0
   Created      : 2026-07-12
   Modified     : 2026-07-12
-  Copyright    : © SMRITIBooks.com. All Rights Reserved.
-  License      : Proprietary Commercial Software
-  Classification: Internal
+  Copyright    :  tileflow.in. Open Source - Permissive Use
+  License      : MIT Open Source License
+  Classification: Open Source
 -->
 
-# Walkthrough: SMRITI CI Test Enforcement & SGIP Planning (v3.16.0)
+# Walkthrough: TILEFLOW CI Test Enforcement & SGIP Planning (v3.16.0)
 
 ## 1. Purpose
-Enforce Python backend test suite runs in the GitHub Actions CI workflow, fix backend pytest configuration warnings, resolve database naming mismatches between CI and app defaults, and explicitly mark the SMRITI Government Integration Platform (SGIP) documents as planning-only (Phase 0).
+Enforce Python backend test suite runs in the GitHub Actions CI workflow, fix backend pytest configuration warnings, resolve database naming mismatches between CI and app defaults, and explicitly mark the TILEFLOW Government Integration Platform (SGIP) documents as planning-only (Phase 0).
 
 ## 2. Scope
-* **CI Workflow Configuration**: `.github/workflows/ci.yml` (Change Postgres DB service to `smritisys` and add migration + pytest run steps).
+* **CI Workflow Configuration**: `.github/workflows/ci.yml` (Change Postgres DB service to `tileflowsys` and add migration + pytest run steps).
 * **Pytest Testpaths**: `backend/pyproject.toml` (Set testpaths to `app/tests`).
 * **Safe Database Cleaning**: `backend/app/tests/conftest.py` (Add `clear_db` FK-safe helper), and update test modules (`test_auth.py`, `test_pos.py`, `t_user_mgmt.py`) to utilize it.
 * **SGIP Planning Status**: Append Phase 0 constitution-only status warnings to `SGIP_PRODUCT.md` and `SGIP_IMPLEMENTATION_PLAN_v1.0.md`.
@@ -42,7 +41,7 @@ Enforce Python backend test suite runs in the GitHub Actions CI workflow, fix ba
 * **Planning Only Isolation**: Explicitly added Phase 0 warning banners to all SGIP architecture and constitution plans, ensuring that subsequent coding agents or human reviewers do not mistake the SGIP framework as a built capability.
 
 ## 6. Design Rationale
-* Renaming the CI service database from `smriti_retail` to `smritisys` matches the configuration file defaults used throughout the python backend.
+* Renaming the CI service database from `tileflow_retail` to `tileflowsys` matches the configuration file defaults used throughout the python backend.
 * Pointing pytest `testpaths` to `["app/tests"]` solves compilation warnings and enables bare pytest execution.
 
 ## 7. Implementation Summary
