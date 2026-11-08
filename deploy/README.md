@@ -25,6 +25,19 @@ On first start the API migrates both databases, then creates:
 
 No demo users, demo customers or sample stock are created, and restarts never reset passwords.
 
+## Local server in the shop (no cloud, no domain)
+One computer in the shop runs MQube. Every other computer on the shop network opens it in a browser.
+
+- **Server:** a desktop or mini PC that stays on. Ubuntu 24.04 is recommended; Windows with Docker Desktop also works. 4 GB RAM or more, SSD, and a UPS.
+- **Install on Ubuntu:** `sudo bash local/install-linux.sh`. It installs Docker, asks for the owner password and a backup folder, generates every secret, and starts MQube.
+- **Install on Windows:** install Docker Desktop, then `powershell -ExecutionPolicy Bypass -File local\install-windows.ps1`.
+- **Open it:** `http://<server-ip>` from any shop computer. Sign in as `admin`.
+- **Fixed address:** reserve the server's IP in the router (DHCP reservation), so the address never changes.
+- **Starts by itself:** Docker starts on boot and MQube restarts automatically after a power cut.
+- **Backups:** point the backup folder at an external drive, and also copy it somewhere outside the shop each week.
+- **Internet:** needed only for the first install and for updates. Daily billing works on the shop network alone.
+- **HTTP:** traffic stays inside the shop network. A few "copy to clipboard" buttons need HTTPS and do not work over plain HTTP; billing, stock and printing are not affected.
+
 ## Day one, in the app
 1. **Business Profile:** add your legal name, GSTIN, address, phone and bank details. These print on every bill, and the GSTIN state decides CGST+SGST or IGST.
 2. **Godowns and showrooms:** rename or add your locations.
