@@ -1,9 +1,10 @@
 {$DOMAIN} {
 	encode zstd gzip
 
-	# API calls go to the FastAPI container.
+	# API calls go to the FastAPI container, or to API_UPSTREAM when the
+	# API runs on another server (for example 10.0.0.5:8000).
 	handle /api/* {
-		reverse_proxy api:8000
+		reverse_proxy {$API_UPSTREAM}
 	}
 
 	# Everything else is the single-page app.

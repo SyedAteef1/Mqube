@@ -4,10 +4,14 @@ set -e
 export PYTHONPATH=/app
 
 if [ "${SKIP_MIGRATIONS:-false}" != "true" ]; then
-    base="${DATABASE_URL%/*}"
+    # Keep connection options such as ?ssl=require when switching database name.
+    no_query="${DATABASE_URL%%\?*}"
+    query=""
+    [ "$no_query" != "$DATABASE_URL" ] && query="?${DATABASE_URL#*\?}"
+    base="${no_query%/*}"
     for db in tileflowsys ${COMPANY_DATABASES:-tileflow001}; do
         echo "Migrating database $db..."
-        alembic -x db_url="$base/$db" upgrade head
+        alembic -x db_url="$base/$db$query" upgrade head
     done
 else
     echo "SKIP_MIGRATIONS=true, skipping migrations."

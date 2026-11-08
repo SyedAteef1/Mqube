@@ -55,15 +55,16 @@ def _verify_database_is_registered(db_clean: str) -> bool:
     if db_clean in _verified_company_databases:
         return True
 
-    parsed_url = urlparse(settings.DATABASE_URL)
+    from sqlalchemy.engine import make_url
+    parsed_url = make_url(settings.DATABASE_URL)  # decodes %40 etc. in the password
     user = os.getenv("POSTGRES_USER") or parsed_url.username or "postgres"
     password = os.getenv("POSTGRES_PASSWORD") or parsed_url.password or "postgres"
-    db_host = os.getenv("POSTGRES_HOST") or parsed_url.hostname or "localhost"
+    db_host = os.getenv("POSTGRES_HOST") or parsed_url.host or "localhost"
     db_port = int(os.getenv("POSTGRES_PORT") or parsed_url.port or 5432)
-    ctrl_url = f"postgresql://{user}:{password}@{db_host}:{db_port}/tileflowsys"
-
     try:
-        conn = psycopg2.connect(ctrl_url)
+        # Keyword arguments, so a password with @ or # needs no escaping.
+        # psycopg2's default sslmode ("prefer") also works with hosted PostgreSQL.
+        conn = psycopg2.connect(host=db_host, port=db_port, user=user, password=password, dbname="tileflowsys")
         cur = conn.cursor()
         cur.execute(
             "SELECT 1 FROM company_database_registries WHERE LOWER(database_name) = %s AND status = 'READY';",
@@ -99,14 +100,11 @@ def get_company_async_engine(database_name: str, host: str = "localhost", port: 
         if not _verify_database_is_registered(db_clean):
             raise ValueError(f"Database '{database_name}' is not registered or not in READY status in Control Plane.")
 
-    parsed_url = urlparse(settings.DATABASE_URL)
-    user = parsed_url.username or "postgres"
-    password = parsed_url.password or "postgres"
-    db_host = parsed_url.hostname or host or "localhost"
-    db_port = parsed_url.port or port or 5432
-
-    # Authoritative postgresql+asyncpg driver string
-    company_db_url = f"postgresql+asyncpg://{user}:{password}@{db_host}:{db_port}/{db_clean}"
+    # Same server, user, password and connection options (e.g. ?ssl=require for a
+    # hosted PostgreSQL) as the control database; only the database name changes.
+    # make_url keeps special characters in the password correctly escaped.
+    from sqlalchemy.engine import make_url
+    company_db_url = make_url(settings.DATABASE_URL).set(drivername="postgresql+asyncpg", database=db_clean)
 
     _comp_engine_kwargs = {"echo": False, "pool_pre_ping": True}
     if _is_testing():

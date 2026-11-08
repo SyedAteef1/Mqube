@@ -52,6 +52,7 @@ services:
     restart: unless-stopped
     environment:
       DOMAIN: ${DOMAIN:?set DOMAIN}
+      API_UPSTREAM: ${API_UPSTREAM:-api:8000}
     ports:
       - "80:80"
       - "443:443"
