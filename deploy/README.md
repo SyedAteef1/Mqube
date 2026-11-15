@@ -58,3 +58,14 @@ One computer in the shop runs MQube. Every other computer on the shop network op
 git pull && docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
 ```
 Migrations run automatically on every start.
+
+## Frontend on Vercel, backend in the shop
+The screens can be hosted on Vercel while the database and API stay on the shop server.
+
+1. **Shop server first:** run the installer's online-access step (Tailscale Funnel is free and needs no domain). It prints a `https://…` address and saves it in `deploy/ONLINE_ADDRESS.txt`.
+2. **Vercel:** New Project → import the GitHub repository. Vercel auto-detects Vite (`npm run build` → `dist`); change nothing.
+3. **Connect it:** Project → Settings → Environment Variables → add
+   `API_ORIGIN` = the address from step 1 (e.g. `https://mqube-server.xyz.ts.net`) → redeploy.
+4. Open the `….vercel.app` address and sign in. `/api` calls are forwarded to the shop server by `api/[...path].js`.
+
+Notes: the shop server must be on and connected for the site to work; if it is off, the site shows "The shop server is not reachable." Cloudflare Pages works too (`functions/api/[[path]].js`, same `API_ORIGIN`).
