@@ -74,7 +74,10 @@ def _resolve_local_dev_postgres_url(conn_str: str) -> str:
 
     port = parsed.port or 5432
 
-    if _is_postgres_server(host, port):
+    # A server is listening where DATABASE_URL points: always use it. (The fallbacks below
+    # probe with the default postgres/postgres login, so they must never replace a URL whose
+    # server is up but uses a different password.)
+    if _is_port_open(host, port, timeout=0.8):
         return conn_str
 
     try:
