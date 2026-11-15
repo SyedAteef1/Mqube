@@ -94,7 +94,7 @@ case "${ra:-1}" in
 esac
 if [ -n "$ONLINE_URL" ]; then
   echo "$ONLINE_URL" > ONLINE_ADDRESS.txt
-  if curl -fsS "$ONLINE_URL/health" >/dev/null 2>&1; then echo "Checked: $ONLINE_URL/health answers."; else echo "Warning: $ONLINE_URL/health did not answer yet. Wait a minute and try it in a browser."; fi
+  if curl -fsS "$ONLINE_URL/health" 2>/dev/null | grep -q healthy; then echo "Checked: $ONLINE_URL/health answers."; else echo "Warning: $ONLINE_URL/health did not answer yet. Wait a minute and try it in a browser."; fi
   say "SEND THIS ADDRESS to the person who manages the MQube website"
   echo "    $ONLINE_URL"
   echo "(also saved in deploy/ONLINE_ADDRESS.txt)"

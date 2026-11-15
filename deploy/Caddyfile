@@ -1,9 +1,23 @@
+{
+	# Requests arriving through the shop network, Docker, Tailscale Funnel or
+	# Cloudflare Tunnel come from private addresses; trust their X-Forwarded-For
+	# so the API sees each user's real address (used by the login limit).
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
 {$DOMAIN} {
 	encode zstd gzip
 
 	# API calls go to the FastAPI container, or to API_UPSTREAM when the
 	# API runs on another server (for example 10.0.0.5:8000).
 	handle /api/* {
+		reverse_proxy {$API_UPSTREAM}
+	}
+
+	# Health check, so the installer and monitors can tell whether the API is up.
+	handle /health {
 		reverse_proxy {$API_UPSTREAM}
 	}
 

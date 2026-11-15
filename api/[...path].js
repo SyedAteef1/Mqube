@@ -6,7 +6,7 @@
 //   API_ORIGIN = the address printed by the installer (also saved in deploy/ONLINE_ADDRESS.txt),
 //                e.g. https://mqube-server.xyz.ts.net  or  https://api.yourshop.in
 // The browser only ever talks to the frontend's own address, so no CORS is needed.
-export default async function handler(request) {
+async function handler(request) {
   if (!process.env.API_ORIGIN) {
     return new Response(
       JSON.stringify({ detail: "This MQube site is not connected to the shop server yet. Set API_ORIGIN to the shop server address." }),
@@ -30,3 +30,6 @@ export default async function handler(request) {
     );
   }
 }
+
+// Vercel calls the exported function named after the HTTP method with a Web Request.
+export { handler as GET, handler as POST, handler as PUT, handler as PATCH, handler as DELETE, handler as OPTIONS, handler as HEAD };

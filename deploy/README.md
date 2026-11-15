@@ -8,7 +8,7 @@ One Linux server runs everything: PostgreSQL 16, the MQube API, the web app (Cad
 
 ## First start
 ```sh
-git clone <this repo> mqube && cd mqube/tileflowretail/deploy
+git clone https://github.com/SyedAteef1/Mqube.git mqube && cd mqube/deploy
 cp .env.production.example .env.production
 # fill in DOMAIN and the secrets (openssl rand -hex 32 for each), and the first admin password
 docker compose -f docker-compose.prod.yml --env-file .env.production up -d --build
