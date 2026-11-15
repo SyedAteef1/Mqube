@@ -35,9 +35,30 @@ async def bootstrap_admin(
     return user
 
 
+# Repeated wrong passwords: after LOGIN_MAX_FAILURES failures for one username (or 4x that
+# from one address) inside LOGIN_WINDOW_SECONDS, further attempts get 429 until the window
+# passes. Matters once the API is reachable from the internet (frontend hosted online).
+import os as _os
+import time as _time
+from collections import defaultdict as _defaultdict, deque as _deque
+from fastapi import HTTPException as _HTTPException, Request as _Request
+
+LOGIN_MAX_FAILURES = int(_os.getenv("LOGIN_MAX_FAILURES", "5"))
+LOGIN_WINDOW_SECONDS = int(_os.getenv("LOGIN_WINDOW_SECONDS", "600"))
+_login_failures: "dict[str, _deque]" = _defaultdict(_deque)
+
+
+def _recent_failures(key: str, now: float) -> int:
+    q = _login_failures[key]
+    while q and now - q[0] > LOGIN_WINDOW_SECONDS:
+        q.popleft()
+    return len(q)
+
+
 @router.post("/login", response_model=TokenResponse)
 async def login(
     req: LoginRequest,
+    request: _Request,
     db: AsyncSession = Depends(get_db),
 ):
     """
@@ -45,8 +66,25 @@ async def login(
 
     Returns an access token (60-min) and a refresh token (7-day).
     """
+    now = _time.monotonic()
+    user_key = "u:" + (req.username or "").strip().lower()
+    ip_key = "ip:" + (request.client.host if request.client else "unknown")
+    if (_recent_failures(user_key, now) >= LOGIN_MAX_FAILURES
+            or _recent_failures(ip_key, now) >= LOGIN_MAX_FAILURES * 4):
+        raise _HTTPException(
+            status_code=429,
+            detail=f"Too many wrong passwords. Try again in {LOGIN_WINDOW_SECONDS // 60} minutes.",
+        )
     service = AuthService(db)
-    return await service.login(req)
+    try:
+        result = await service.login(req)
+    except _HTTPException as exc:
+        if exc.status_code in (400, 401, 403):
+            _login_failures[user_key].append(now)
+            _login_failures[ip_key].append(now)
+        raise
+    _login_failures.pop(user_key, None)
+    return result
 
 
 @router.get("/tenants")

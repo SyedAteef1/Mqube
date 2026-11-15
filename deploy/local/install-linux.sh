@@ -69,6 +69,37 @@ done
 
 if need ufw && ufw status | grep -q active; then ufw allow 80/tcp >/dev/null && echo "Firewall: port 80 opened"; fi
 
+say "Online access for the hosted MQube website"
+echo "  1) Tailscale Funnel  - free, no domain needed (recommended)"
+echo "  2) Cloudflare Tunnel - needs a domain added to Cloudflare"
+echo "  3) Skip              - shop network only"
+read -rp "Choose 1, 2 or 3 [1]: " ra
+ONLINE_URL=""
+case "${ra:-1}" in
+  1)
+    need tailscale || curl -fsSL https://tailscale.com/install.sh | sh
+    echo "Sign in to Tailscale with the link below (first time only)."
+    tailscale up
+    echo "If asked, open the link shown to allow Funnel for this server."
+    tailscale funnel --bg 80
+    ONLINE_URL=$(tailscale funnel status 2>/dev/null | grep -oE 'https://[^ ]+' | head -1 | sed 's#/$##')
+    ;;
+  2)
+    read -rp "Paste the tunnel token from Cloudflare Zero Trust > Networks > Tunnels: " tok
+    grep -q '^TUNNEL_TOKEN=' "$ENV_FILE" || printf 'TUNNEL_TOKEN=%s\nCOMPOSE_PROFILES=tunnel\n' "$tok" >> "$ENV_FILE"
+    "${COMPOSE[@]}" --profile tunnel up -d tunnel
+    read -rp "The public hostname you gave the tunnel (e.g. https://api.yourshop.in): " ONLINE_URL
+    ;;
+  *) echo "Skipped. MQube is available on the shop network only." ;;
+esac
+if [ -n "$ONLINE_URL" ]; then
+  echo "$ONLINE_URL" > ONLINE_ADDRESS.txt
+  if curl -fsS "$ONLINE_URL/health" >/dev/null 2>&1; then echo "Checked: $ONLINE_URL/health answers."; else echo "Warning: $ONLINE_URL/health did not answer yet. Wait a minute and try it in a browser."; fi
+  say "SEND THIS ADDRESS to the person who manages the MQube website"
+  echo "    $ONLINE_URL"
+  echo "(also saved in deploy/ONLINE_ADDRESS.txt)"
+fi
+
 say "MQube is running"
 echo "Open  http://$IP  on any computer in the shop and sign in as  admin"
 echo "Give this server a fixed address in the router (DHCP reservation) so the address never changes."

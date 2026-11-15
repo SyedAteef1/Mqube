@@ -46,6 +46,20 @@ docker compose -f docker-compose.prod.yml --env-file $EnvFile ps
 
 try { New-NetFirewallRule -DisplayName "MQube (port 80)" -Direction Inbound -Protocol TCP -LocalPort 80 -Action Allow -ErrorAction Stop | Out-Null; Write-Host "Firewall: port 80 opened" } catch { Write-Host "Open port 80 in Windows Firewall if other computers cannot connect." }
 
+Write-Host ""
+Write-Host "Online access for the hosted MQube website (free, no domain): Tailscale Funnel"
+if (Get-Command tailscale -ErrorAction SilentlyContinue) {
+  $ans = Read-Host "Turn on Tailscale Funnel now? (Y/n)"
+  if ($ans -ne "n") {
+    tailscale up
+    tailscale funnel --bg 80
+    $url = ((tailscale funnel status) | Select-String -Pattern 'https://\S+' | Select-Object -First 1).Matches.Value.TrimEnd('/')
+    if ($url) { $url | Set-Content ONLINE_ADDRESS.txt; Write-Host ""; Write-Host "SEND THIS ADDRESS to the person who manages the MQube website:  $url" }
+  }
+} else {
+  Write-Host "Install Tailscale from https://tailscale.com/download, sign in, then run:  tailscale funnel --bg 80"
+}
+
 $ip = (Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike "127.*" -and $_.PrefixOrigin -ne "WellKnown" } | Select-Object -First 1).IPAddress
 Write-Host ""
 Write-Host "MQube is running. Open  http://$ip  on any computer in the shop and sign in as  admin"
