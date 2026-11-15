@@ -57,10 +57,12 @@ def _verify_database_is_registered(db_clean: str) -> bool:
 
     from sqlalchemy.engine import make_url
     parsed_url = make_url(settings.DATABASE_URL)  # decodes %40 etc. in the password
-    user = os.getenv("POSTGRES_USER") or parsed_url.username or "postgres"
-    password = os.getenv("POSTGRES_PASSWORD") or parsed_url.password or "postgres"
-    db_host = os.getenv("POSTGRES_HOST") or parsed_url.host or "localhost"
-    db_port = int(os.getenv("POSTGRES_PORT") or parsed_url.port or 5432)
+    # DATABASE_URL is the source of truth; POSTGRES_* only fill gaps (the example
+    # .env sets POSTGRES_PASSWORD=postgres, which must not override a real password).
+    user = parsed_url.username or os.getenv("POSTGRES_USER") or "postgres"
+    password = parsed_url.password or os.getenv("POSTGRES_PASSWORD") or "postgres"
+    db_host = parsed_url.host or os.getenv("POSTGRES_HOST") or "localhost"
+    db_port = int(parsed_url.port or os.getenv("POSTGRES_PORT") or 5432)
     try:
         # Keyword arguments, so a password with @ or # needs no escaping.
         # psycopg2's default sslmode ("prefer") also works with hosted PostgreSQL.

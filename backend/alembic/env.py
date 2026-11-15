@@ -218,6 +218,9 @@ def do_run_migrations(connection) -> None:
 
 async def run_async_migrations() -> None:
     database_url = get_target_db_url()
+    # Accept plain postgresql:// addresses too; migrations need the async driver.
+    if database_url.startswith(("postgresql://", "postgres://")):
+        database_url = "postgresql+asyncpg://" + database_url.split("://", 1)[1]
     connectable = create_async_engine(database_url)
 
     async with connectable.connect() as connection:

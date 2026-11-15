@@ -31,3 +31,19 @@ def test_registry_check_passes_password_as_keyword(monkeypatch):
     monkeypatch.setattr(s.psycopg2, "connect", fake_connect)
     assert s._verify_database_is_registered("tileflow008") is False
     assert seen == {"host": "db.example.com", "port": 6543, "user": "mqube", "password": "p@ss#word", "dbname": "tileflowsys"}
+
+
+def test_example_env_password_does_not_override_database_url(monkeypatch):
+    # backend/.env.example sets POSTGRES_PASSWORD=postgres; the real password is in DATABASE_URL.
+    monkeypatch.setattr(s.settings, "DATABASE_URL", "postgresql+asyncpg://postgres:RealPass@127.0.0.1:5440/tileflowsys")
+    monkeypatch.setenv("POSTGRES_PASSWORD", "postgres")
+    monkeypatch.setenv("POSTGRES_PORT", "5432")
+    seen = {}
+
+    def fake_connect(*args, **kwargs):
+        seen.update(kwargs)
+        raise RuntimeError("no server in tests")
+
+    monkeypatch.setattr(s.psycopg2, "connect", fake_connect)
+    s._verify_database_is_registered("tileflow007")
+    assert seen["password"] == "RealPass" and seen["port"] == 5440
