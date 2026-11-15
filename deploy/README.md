@@ -66,6 +66,6 @@ The screens can be hosted on Vercel while the database and API stay on the shop 
 2. **Vercel:** New Project → import the GitHub repository. Vercel auto-detects Vite (`npm run build` → `dist`); change nothing.
 3. **Connect it:** Project → Settings → Environment Variables → add
    `API_ORIGIN` = the address from step 1 (e.g. `https://mqube-server.xyz.ts.net`) → redeploy.
-4. Open the `….vercel.app` address and sign in. `/api` calls are forwarded to the shop server by `api/[...path].js`.
+4. Open the `….vercel.app` address and sign in. `/api` calls are forwarded to the shop server by `api/proxy.js` (`vercel.json` sends every `/api/...` address to it).
 
 Notes: the shop server must be on and connected for the site to work; if it is off, the site shows "The shop server is not reachable." Cloudflare Pages works too (`functions/api/[[path]].js`, same `API_ORIGIN`).
