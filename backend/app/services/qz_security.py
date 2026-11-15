@@ -8,7 +8,9 @@ from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.backends import default_backend
 
-CERTS_DIR = Path(__file__).resolve().parent.parent / "certs"
+# Each install creates its own signing key on first use. The key is never part of the
+# code; QZ_CERTS_DIR lets a server keep it on persistent storage.
+CERTS_DIR = Path(os.getenv("QZ_CERTS_DIR") or (Path(__file__).resolve().parent.parent / "certs"))
 PRIVATE_KEY_PATH = CERTS_DIR / "qz_private_key.pem"
 CERTIFICATE_PATH = CERTS_DIR / "qz_certificate.pem"
 
@@ -80,7 +82,8 @@ def _ensure_keys():
     cert_bytes = cert.public_bytes(serialization.Encoding.PEM)
     _certificate_pem = cert_bytes.decode("utf-8")
 
-    with open(PRIVATE_KEY_PATH, "wb") as f:
+    fd = os.open(PRIVATE_KEY_PATH, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    with os.fdopen(fd, "wb") as f:
         f.write(priv_pem)
     with open(CERTIFICATE_PATH, "wb") as f:
         f.write(cert_bytes)

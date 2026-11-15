@@ -8,7 +8,7 @@ COPY requirements.txt production.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
-RUN chmod +x entrypoint.sh && useradd --create-home mqube && chown -R mqube /app
+RUN chmod +x entrypoint.sh && mkdir -p /app/app/certs && useradd --create-home mqube && chown -R mqube /app
 USER mqube
 
 EXPOSE 8000

@@ -35,6 +35,8 @@ services:
       MQUBE_ADMIN_EMAIL: ${MQUBE_ADMIN_EMAIL:-}
       ALLOWED_ORIGINS: '["https://${DOMAIN}"]'
       GUNICORN_WORKERS: ${GUNICORN_WORKERS:-2}
+    volumes:
+      - qz_certs:/app/app/certs   # this install's own print-signing key, kept across updates
     depends_on:
       db:
         condition: service_healthy
@@ -93,6 +95,7 @@ services:
       - web
 
 volumes:
+  qz_certs:
   db_data:
   caddy_data:
   caddy_config:

@@ -143,3 +143,6 @@ playwright-report/
 deploy/.env.production
 deploy/ONLINE_ADDRESS.txt
 deploy/backups/
+
+# Print-signing keys are created per install, never committed
+backend/app/certs/*.pem
